@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var sessionId = Guid.NewGuid().ToString();
             await sender.SendMessageAsync(new ServiceBusMessage("message") { SessionId = sessionId });
 
-            var receiver = await client.AcceptSessionAsync(
+            await using var receiver = await client.AcceptSessionAsync(
                 scope.QueueName,
                 sessionId,
                 new ServiceBusSessionReceiverOptions { IsSessionExclusive = false });
@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
             // 2. Accept the next available session non-exclusively without specifying a session id. The feature
             // should behave the same as when a session id is supplied: the broker assigns the session and a lock token.
-            var receiverA = await client.AcceptNextSessionAsync(
+            await using var receiverA = await client.AcceptNextSessionAsync(
                 scope.QueueName,
                 new ServiceBusSessionReceiverOptions { IsSessionExclusive = false });
 
@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             Assert.That(received, Is.Not.Null, "The first receiver should receive the message.");
 
             // 5. A second receiver cooperatively takes over the assigned session by presenting the lock token.
-            var receiverB = await client.AcceptSessionAsync(
+            await using var receiverB = await client.AcceptSessionAsync(
                 scope.QueueName,
                 receiverA.SessionId,
                 new ServiceBusSessionReceiverOptions { IsSessionExclusive = false, SessionLockToken = receiverA.SessionLockToken });
@@ -85,7 +85,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await sender.SendMessageAsync(new ServiceBusMessage("message") { SessionId = sessionId });
 
             // An exclusive (default) session receiver should not be assigned a lock token.
-            var receiver = await client.AcceptSessionAsync(scope.QueueName, sessionId);
+            await using var receiver = await client.AcceptSessionAsync(scope.QueueName, sessionId);
 
             Assert.That(receiver.SessionLockToken, Is.Null, "An exclusive session should not be assigned a lock token.");
         }
@@ -102,7 +102,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await sender.SendMessageAsync(new ServiceBusMessage("m1") { SessionId = sessionId });
 
             // The first receiver acquires the session non-exclusively and receives the message.
-            var receiverA = await client.AcceptSessionAsync(
+            await using var receiverA = await client.AcceptSessionAsync(
                 scope.QueueName,
                 sessionId,
                 new ServiceBusSessionReceiverOptions { IsSessionExclusive = false });
@@ -112,7 +112,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             Assert.That(received, Is.Not.Null, "The first receiver should receive the message.");
 
             // A second receiver cooperatively takes over the session by presenting the assigned token.
-            var receiverB = await client.AcceptSessionAsync(
+            await using var receiverB = await client.AcceptSessionAsync(
                 scope.QueueName,
                 sessionId,
                 new ServiceBusSessionReceiverOptions { IsSessionExclusive = false, SessionLockToken = receiverA.SessionLockToken });
@@ -123,7 +123,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             Assert.That(async () => await receiverB.CompleteMessageAsync(received), Throws.Nothing);
 
             // The session should be drained once the message is completed by the new holder.
-            var receiverC = await client.AcceptSessionAsync(
+            await using var receiverC = await client.AcceptSessionAsync(
                 scope.QueueName,
                 sessionId,
                 new ServiceBusSessionReceiverOptions { IsSessionExclusive = false });
@@ -143,7 +143,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await sender.SendMessageAsync(new ServiceBusMessage("message") { SessionId = sessionId });
 
             // Hold the session non-exclusively so it has a current lock token.
-            var holder = await client.AcceptSessionAsync(
+            await using var holder = await client.AcceptSessionAsync(
                 scope.QueueName,
                 sessionId,
                 new ServiceBusSessionReceiverOptions { IsSessionExclusive = false });
@@ -169,7 +169,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await sender.SendMessageAsync(new ServiceBusMessage("m1") { SessionId = sessionId });
 
             // The original receiver acquires the session non-exclusively and receives the message.
-            var receiverA = await client.AcceptSessionAsync(
+            await using var receiverA = await client.AcceptSessionAsync(
                 scope.QueueName,
                 sessionId,
                 new ServiceBusSessionReceiverOptions { IsSessionExclusive = false });
@@ -177,7 +177,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             Assert.That(received, Is.Not.Null);
 
             // A second receiver cooperatively takes over the session, displacing the first receiver.
-            var receiverB = await client.AcceptSessionAsync(
+            await using var receiverB = await client.AcceptSessionAsync(
                 scope.QueueName,
                 sessionId,
                 new ServiceBusSessionReceiverOptions { IsSessionExclusive = false, SessionLockToken = receiverA.SessionLockToken });

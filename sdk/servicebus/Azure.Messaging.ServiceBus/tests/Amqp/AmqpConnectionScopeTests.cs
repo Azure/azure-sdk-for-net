@@ -368,7 +368,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         [Test]
-        public async Task OpenReceiverLinkOmitsSessionFiltersWhenExclusive()
+        public async Task OpenReceiverLinkUsesPlainSessionFilterWhenExclusive()
         {
             var mockScope = CreateMockReceiverScope();
             using var cancellationSource = new CancellationTokenSource();
@@ -394,7 +394,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         [Test]
-        public async Task OpenReceiverLinkAddsModeFilterWithoutTokenForFreshNonExclusiveSession()
+        public async Task OpenReceiverLinkAddsCompositeFilterWithoutTokenForFreshNonExclusiveSession()
         {
             var mockScope = CreateMockReceiverScope();
             using var cancellationSource = new CancellationTokenSource();
