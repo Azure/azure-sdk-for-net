@@ -1,9 +1,20 @@
 # Release History
 
+## 1.0.0-beta.8 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+- `ResponseContext.ConversationChainId` now returns a native identifier following the `IdGenerator` convention instead of an opaque 32-character hex hash: `cchain_<partition><scope>` for a conversation-scoped chain, or `rchain_<partition><scope>` for a response-linkage chain. The value embeds the chain's partition key for co-location and carries a deterministic `(agent, session)` scope.
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.7 (2026-07-07)
 
 ### Features Added
-- Added `ResponseContext.ConversationChainId`, a deterministic, agent- and session-scoped correlation key that identifies the logical conversation a response belongs to. Handlers can use it as a stable key into their own per-conversation state. The value follows the native id convention: `cchain_<partition><scope>` for a conversation-scoped chain, or `rchain_<partition><scope>` for a response-linkage chain. It embeds the chain's partition key for co-location and carries a deterministic `(agent, session)` scope.
+- Added `ResponseContext.ConversationChainId`, a deterministic, agent- and session-scoped correlation key that identifies the logical conversation a response belongs to. Handlers can use it as a stable key into their own per-conversation state.
 
 ## 1.0.0-beta.6 (2026-06-28)
 
