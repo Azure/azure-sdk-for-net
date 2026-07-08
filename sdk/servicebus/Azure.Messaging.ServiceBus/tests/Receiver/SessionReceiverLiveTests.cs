@@ -75,7 +75,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        [Ignore(NonExclusiveFeatureSkipReason)]
         public async Task AcceptSessionExclusiveReturnsNullLockToken()
         {
             await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);

@@ -35,7 +35,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         [Test]
         public void RoundTripsAcceptAnyWithoutSessionId()
         {
-            // Accept-any sends a null session id; the broker assigns one. The token may still be presented for takeover.
+            // Accept-any sends a null session id; the broker assigns one. This exercises codec coverage of the
+            // null-session-id shape carrying a token; client validation separately forbids presenting a takeover
+            // token without a specific session id.
             var token = Guid.NewGuid();
             var decoded = RoundTrip(new AmqpNonExclusiveSessionFilterCodec { SessionId = null, LockToken = token });
 
