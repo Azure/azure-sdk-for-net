@@ -232,6 +232,36 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_PutCreateEmitsResourceUpdateAlongsidePatchUpdate()
+        {
+            ResourceClientProvider resourceProvider = GetResourceClientProvider();
+
+            var syncUpdateMethods = resourceProvider.Methods.Where(m => m.Signature.Name == "Update").ToArray();
+            Assert.That(syncUpdateMethods, Has.Length.EqualTo(2));
+
+            static bool StartsWithWaitUntil(MethodProvider method) =>
+                method.Signature.Parameters[0].Type.IsFrameworkType &&
+                method.Signature.Parameters[0].Type.FrameworkType == typeof(WaitUntil);
+
+            var syncPatchUpdate = syncUpdateMethods.Single(m => !StartsWithWaitUntil(m));
+            Assert.That(syncPatchUpdate.Signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Response<>)));
+
+            var syncPutUpdate = syncUpdateMethods.Single(StartsWithWaitUntil);
+            Assert.That(syncPutUpdate.Signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
+
+            var asyncUpdateMethods = resourceProvider.Methods.Where(m => m.Signature.Name == "UpdateAsync").ToArray();
+            Assert.That(asyncUpdateMethods, Has.Length.EqualTo(2));
+
+            var asyncPatchUpdate = asyncUpdateMethods.Single(m => !StartsWithWaitUntil(m));
+            Assert.That(asyncPatchUpdate.Signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
+            Assert.That(asyncPatchUpdate.Signature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(Response<>)));
+
+            var asyncPutUpdate = asyncUpdateMethods.Single(StartsWithWaitUntil);
+            Assert.That(asyncPutUpdate.Signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
+            Assert.That(asyncPutUpdate.Signature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
+        }
+
+        [TestCase]
         public void Verify_ConstructorWithData()
         {
             var constructor = GetResourceClientProviderConstructorByName("data");

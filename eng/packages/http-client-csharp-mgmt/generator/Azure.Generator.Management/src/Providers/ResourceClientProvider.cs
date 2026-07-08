@@ -411,7 +411,6 @@ namespace Azure.Generator.Management.Providers
         protected override MethodProvider[] BuildMethods()
         {
             var operationMethods = new List<MethodProvider>();
-            UpdateOperationMethodProvider? updateMethodProvider = null;
 
             foreach (var resourceMethod in _resourceServiceMethods)
             {
@@ -442,10 +441,10 @@ namespace Azure.Generator.Management.Providers
                 if (isUpdateOperation)
                 {
                     var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _operationContext, restClientInfo, method, true, methodKind, isFakeLro);
-                    operationMethods.Add(updateAsyncMethodProvider);
+                    AddOperationMethodIfNotDuplicate(operationMethods, updateAsyncMethodProvider);
 
-                    updateMethodProvider = new UpdateOperationMethodProvider(this, _operationContext, restClientInfo, method, false, methodKind, isFakeLro);
-                    operationMethods.Add(updateMethodProvider);
+                    var updateMethodProvider = new UpdateOperationMethodProvider(this, _operationContext, restClientInfo, method, false, methodKind, isFakeLro);
+                    AddOperationMethodIfNotDuplicate(operationMethods, updateMethodProvider);
                 }
                 else
                 {
@@ -497,6 +496,34 @@ namespace Azure.Generator.Management.Providers
             return [.. methods];
         }
 
+        private static void AddOperationMethodIfNotDuplicate(List<MethodProvider> methods, MethodProvider candidate)
+        {
+            if (!methods.Any(method => HasSameSignature(method, candidate)))
+            {
+                methods.Add(candidate);
+            }
+        }
+
+        private static bool HasSameSignature(MethodProvider left, MethodProvider right)
+        {
+            var leftSignature = left.Signature;
+            var rightSignature = right.Signature;
+            if (leftSignature.Name != rightSignature.Name || leftSignature.Parameters.Count != rightSignature.Parameters.Count)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < leftSignature.Parameters.Count; i++)
+            {
+                if (!leftSignature.Parameters[i].Type.AreNamesEqual(rightSignature.Parameters[i].Type))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         private MethodProvider BuildResourceOperationMethod(InputServiceMethod method, RestClientInfo restClientInfo, bool isAsync, string? methodName, bool isFakeLro)
         {
             // Check if the response body type is a list - if so, wrap it in a single-page pageable.
@@ -518,6 +545,13 @@ namespace Azure.Generator.Management.Providers
             // no content cannot be used for tag operations — skip it.
             var patchMethod = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Update);
             var patchBodyParameter = patchMethod?.InputMethod.Operation.Parameters.OfType<InputBodyParameter>().FirstOrDefault();
+            if (patchMethod is not null && patchBodyParameter is null && !IsSingleton)
+            {
+                // A non-singleton resource's PUT compatibility Update is not a tag-update fallback
+                // when the PATCH operation exists but intentionally has no body.
+                return (false, null);
+            }
+
             if (patchMethod is not null && patchBodyParameter is not null)
             {
                 if (ModelHasTags(patchBodyParameter.Type as InputModelType) && OperationReturnsContent(patchMethod.InputMethod))
@@ -532,9 +566,6 @@ namespace Azure.Generator.Management.Providers
             }
 
             // If there is no patch method with a body, fall back to the put method.
-            // Search _resourceServiceMethods (the categorized set) instead of _resourceMetadata.Methods
-            // because for non-singleton resources with an Update method, the Create method is only
-            // assigned to the collection, not the resource.
             var putMethod = _resourceServiceMethods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Create);
             return (false, putMethod);
         }
