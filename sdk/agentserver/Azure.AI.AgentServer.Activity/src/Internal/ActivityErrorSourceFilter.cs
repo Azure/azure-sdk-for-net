@@ -10,8 +10,7 @@ namespace Azure.AI.AgentServer.Activity.Internal;
 /// <summary>
 /// Endpoint filter that catches exceptions from activity endpoints and sets
 /// the <c>x-platform-error-source</c> and <c>x-platform-error-detail</c>
-/// response headers per container-image-spec §8 before re-throwing to
-/// the ASP.NET pipeline.
+/// response headers before re-throwing to the ASP.NET pipeline.
 /// </summary>
 /// <remarks>
 /// Classification rules:
