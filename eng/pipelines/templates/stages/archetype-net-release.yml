@@ -42,43 +42,14 @@ stages:
   # whether the merged pull request carries the 'auto-release' label and which of this pipeline's
   # packages it changed. Runs after Signing so a signing failure fails fast (release cannot proceed).
   # Emits per-artifact 'ReleaseArtifact_<safeName>' output variables consumed by the Release stages.
+  # Implemented by the cross-language shared template synced under eng/common.
   - ${{ if and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['System.TeamProject'], 'internal')) }}:
-    - stage: AutoReleasePreparation
-      displayName: 'Auto-Release Preparation'
-      dependsOn: Signing
-      condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
-      variables:
-        - template: /eng/pipelines/templates/variables/globals.yml
-        - template: /eng/pipelines/templates/variables/image.yml
-      pool:
-        name: $(LINUXPOOL)
-        image: $(LINUXVMIMAGE)
-        os: linux
-      jobs:
-        - job: ResolveAutoReleasePackages
-          displayName: 'Resolve releasable packages from merged PR'
-          steps:
-            # Package detection reads package properties from source, so a full checkout is required.
-            - checkout: self
-              fetchDepth: 1
-            - template: /eng/common/pipelines/templates/steps/login-to-github.yml
-            - task: PowerShell@2
-              name: resolve
-              displayName: 'Determine releasable packages'
-              env:
-                # convertToJson emits multi-line JSON, so pass it via env instead of the command line.
-                # Do NOT wrap this in replace(..., '''', '`''') like the pwsh-inline call sites do: the
-                # value is consumed directly as JSON by ConvertFrom-Json (not embedded in a PowerShell
-                # single-quoted string), so that escaping would inject backticks and corrupt the JSON.
-                AUTORELEASE_ARTIFACTS: '${{ convertToJson(parameters.Artifacts) }}'
-                # Map the secret token to env so it is not written to the task command line.
-                GH_TOKEN: $(GH_TOKEN)
-              inputs:
-                filePath: $(System.DefaultWorkingDirectory)/eng/scripts/Resolve-AutoReleasePackages.ps1
-                pwsh: true
-                arguments: >
-                  -CommitSha '$(Build.SourceVersion)'
-                  -RepoId '$(Build.Repository.Name)'
+    - template: /eng/common/pipelines/templates/stages/archetype-auto-release-prepare.yml
+      parameters:
+        DependsOn:
+          - Signing
+        Artifacts: ${{ parameters.Artifacts }}
+        Condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
 
   # Release stages are compiled for manual releases (existing behavior, any branch) and for internal
   # post-merge CI on 'main' (IndividualCI) to enable auto-release. On the auto-release path each stage
@@ -95,14 +66,14 @@ stages:
             # Auto-release path: only release when the merged PR is labeled and changed this package.
             dependsOn:
               - Signing
-              - AutoReleasePreparation
+              - AutoReleasePrepare
             condition: >-
               and(succeeded(),
                   ne(variables['SetDevVersion'], 'true'),
                   ne(variables['Skip.Release'], 'true'),
                   ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'),
-                  eq(dependencies.AutoReleasePreparation.outputs['ResolveAutoReleasePackages.resolve.AutoReleaseLabelPresent'], 'true'),
-                  eq(dependencies.AutoReleasePreparation.outputs['ResolveAutoReleasePackages.resolve.ReleaseArtifact_${{artifact.safeName}}'], 'true'))
+                  eq(dependencies.AutoReleasePrepare.outputs['ResolveAutoReleasePackages.resolve.AutoReleaseLabelPresent'], 'true'),
+                  eq(dependencies.AutoReleasePrepare.outputs['ResolveAutoReleasePackages.resolve.ReleaseArtifact_${{artifact.safeName}}'], 'true'))
           ${{ else }}:
             # Manual release path: unchanged existing behavior.
             dependsOn: Signing
