@@ -459,7 +459,7 @@ namespace Azure.Generator.Management.Providers
             return action.InputMethod switch
             {
                 InputPagingServiceMethod pagingAction => new PageableOperationMethodProvider(this, parameterMappings, restClientInfo, pagingAction, isAsync, methodName: null, explicitResourceClient: _resource),
-                _ => BuildNonPagingResourceMethod(action.InputMethod, restClientInfo, isAsync, methodName: null, explicitResourceClient: _resource, parameterMappings: parameterMappings)
+                _ => BuildNonPagingResourceMethod(action.InputMethod, parameterMappings, restClientInfo, isAsync, methodName: null, explicitResourceClient: _resource)
             };
         }
 
@@ -540,11 +540,11 @@ namespace Azure.Generator.Management.Providers
             return getAll.InputMethod switch
             {
                 InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, parameterMappings, restClientInfo, pagingGetAll, isAsync, methodName, _resource),
-                _ => BuildNonPagingResourceMethod(getAll.InputMethod, restClientInfo, isAsync, methodName, explicitResourceClient: _resource, parameterMappings: parameterMappings)
+                _ => BuildNonPagingResourceMethod(getAll.InputMethod, parameterMappings, restClientInfo, isAsync, methodName, explicitResourceClient: _resource)
             };
         }
 
-        private MethodProvider BuildNonPagingResourceMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient, ParameterContextRegistry parameterMappings)
+        private MethodProvider BuildNonPagingResourceMethod(InputServiceMethod method, ParameterContextRegistry parameterMappings, RestClientInfo clientInfo, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient)
         {
             // Check if the response body type is a list - if so, wrap it in a single-page pageable.
             // Long-running operations are excluded: an LRO returning an array is surfaced as
