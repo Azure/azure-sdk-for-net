@@ -16,18 +16,17 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class ExistsOperationMethodProvider(
         ResourceCollectionClientProvider collection,
-        OperationContext operationContext,
+        ParameterContextRegistry parameterMappings,
         RestClientInfo restClientInfo,
         InputServiceMethod method,
-        bool isAsync,
-        ParameterContextRegistry parameterMappings)
+        bool isAsync
+        )
         : ResourceOperationMethodProvider(
             collection,
-            operationContext,
+            parameterMappings,
             restClientInfo,
             method,
             isAsync,
-            parameterMappings,
             methodName: isAsync ? "ExistsAsync" : "Exists",
             description: $"Checks to see if the resource exists in azure.")
     {

@@ -340,7 +340,7 @@ namespace Azure.Generator.Management.Providers
             var parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
             return method switch
             {
-                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, operationContext, clientInfo, pagingMethod, isAsync, parameterMappings, methodName, explicitResourceClient, scopeParameter: scopeParameter),
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, parameterMappings, clientInfo, pagingMethod, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter),
                 _ => BuildNonPagingServiceMethod(method, operationContext, clientInfo, isAsync, parameterMappings, methodName, explicitResourceClient, scopeParameter)
             };
         }
@@ -353,10 +353,10 @@ namespace Azure.Generator.Management.Providers
             var responseBodyType = method.GetResponseBodyType();
             if (responseBodyType != null && responseBodyType.IsList && !method.IsLongRunningOperation())
             {
-                return new ArrayResponseOperationMethodProvider(this, operationContext, clientInfo, method, isAsync, parameterMappings, methodName, explicitResourceClient, scopeParameter: scopeParameter);
+                return new ArrayResponseOperationMethodProvider(this, parameterMappings, clientInfo, method, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter);
             }
 
-            return new ResourceOperationMethodProvider(this, operationContext, clientInfo, method, isAsync, parameterMappings, methodName, explicitResourceClient: explicitResourceClient, scopeParameter: scopeParameter);
+            return new ResourceOperationMethodProvider(this, parameterMappings, clientInfo, method, isAsync, methodName, explicitResourceClient: explicitResourceClient, scopeParameter: scopeParameter);
         }
 
         public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)

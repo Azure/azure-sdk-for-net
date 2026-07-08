@@ -37,7 +37,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         protected virtual bool ShouldApplyLroHandling => IsLongRunningOperation || IsFakeLongRunningOperation;
 
         protected readonly TypeProvider _enclosingType;
-        protected readonly OperationContext _operationContext;
         protected readonly ParameterProvider? _scopeParameter;
         protected readonly ClientProvider _restClient;
         protected readonly InputServiceMethod _serviceMethod;
@@ -60,11 +59,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// Creates a new instance of <see cref="ResourceOperationMethodProvider"/> which represents a method on a client
         /// </summary>
         /// <param name="enclosingType">The enclosing type of this operation. </param>
-        /// <param name="operationContext">The contextual path of the enclosing type. </param>
+        /// <param name="parameterMappings">The parameter mappings to use for the operation. </param>
         /// <param name="restClientInfo">The rest client information containing the client provider and related fields. </param>
         /// <param name="method">The input service method that we are building from. </param>
         /// <param name="isAsync">Whether this method is an async method. </param>
-        /// <param name="parameterMappings">The parameter mappings to use for the operation. </param>
         /// <param name="methodName">Optional override for the method name. If not provided, uses the convenience method name. </param>
         /// <param name="description">Optional override for the method description. If not provided, uses the convenience method description.</param>
         /// <param name="forceLro">Generate this method in LRO signature even if it is not an actual LRO</param>
@@ -72,11 +70,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="scopeParameter">Optional scope parameter for extension-scoped non-resource methods. When provided, contextual parameters are extracted from this scope instead of Id.</param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
-            OperationContext operationContext,
+            ParameterContextRegistry parameterMappings,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             bool isAsync,
-            ParameterContextRegistry parameterMappings,
             string? methodName = null,
             FormattableString? description = null,
             bool forceLro = false,
@@ -84,7 +81,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
-            _operationContext = operationContext;
             _scopeParameter = scopeParameter;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;

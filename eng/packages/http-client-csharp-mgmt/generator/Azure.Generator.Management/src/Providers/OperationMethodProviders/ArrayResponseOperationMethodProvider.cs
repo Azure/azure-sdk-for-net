@@ -26,7 +26,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     internal class ArrayResponseOperationMethodProvider
     {
         private readonly TypeProvider _enclosingType;
-        private readonly OperationContext _operationContext;
         private readonly ClientProvider _restClient;
         private readonly InputServiceMethod _serviceMethod;
         private readonly MethodProvider _convenienceMethod;
@@ -45,17 +44,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public ArrayResponseOperationMethodProvider(
             TypeProvider enclosingType,
-            OperationContext operationContext,
+            ParameterContextRegistry parameterMapping,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             bool isAsync,
-            ParameterContextRegistry parameterMapping,
             string? methodName = null,
             ResourceClientProvider? explicitResourceClient = null,
             ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
-            _operationContext = operationContext;
             _scopeParameter = scopeParameter;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;

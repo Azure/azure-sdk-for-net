@@ -20,7 +20,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     internal class PageableOperationMethodProvider
     {
         private readonly TypeProvider _enclosingType;
-        private readonly OperationContext _operationContext;
         private readonly RestClientInfo _restClientInfo;
         private readonly InputPagingServiceMethod _method;
         private readonly MethodProvider _convenienceMethod;
@@ -37,17 +36,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public PageableOperationMethodProvider(
             TypeProvider enclosingType,
-            OperationContext operationContext,
+            ParameterContextRegistry parameterMappings,
             RestClientInfo restClientInfo,
             InputPagingServiceMethod method,
             bool isAsync,
-            ParameterContextRegistry parameterMappings,
             string? methodName = null,
             ResourceClientProvider? explicitResourceClient = null,
             ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
-            _operationContext = operationContext;
             _scopeParameter = scopeParameter;
             _restClientInfo = restClientInfo;
             _method = method;
