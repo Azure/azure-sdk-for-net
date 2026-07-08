@@ -4,7 +4,7 @@ license: MIT
 metadata:
   version: "1.0.0"
   distribution: shared
-description: 'Automatically fix Azure SDK CI/CD pipeline failures by applying code changes and verifying locally. USE FOR: "fix pipeline failure", "fix CI", "fix failing tests", "auto-fix and commit the fix", "fix build error", "fix mypy/pylint/type-check/lint errors", "auto-fix pipeline", "resolve pipeline failure". DO NOT USE FOR: pipeline analysis only (use azsdk-common-pipeline-troubleshooting), API design review, SDK publishing. INVOKES: azure-sdk-mcp:azsdk_analyze_pipeline, azure-sdk-mcp:azsdk_package_build_code, azure-sdk-mcp:azsdk_package_run_check, azure-sdk-mcp:azsdk_package_run_tests, azure-sdk-mcp:azsdk_verify_setup.'
+description: 'Automatically fix Azure SDK CI/CD pipeline failures by applying code changes and verifying locally. USE FOR: "fix pipeline failure", "fix CI", "fix failing tests", "auto-fix and commit the fix", "fix build error", "fix mypy/pylint/type-check/lint errors", "auto-fix pipeline", "resolve pipeline failure". DO NOT USE FOR: pipeline analysis (instead use azsdk-common-pipeline-troubleshooting), API design review, SDK publishing. INVOKES: azure-sdk-mcp:azsdk_package_build_code, azure-sdk-mcp:azsdk_package_run_check, azure-sdk-mcp:azsdk_package_run_tests, azure-sdk-mcp:azsdk_verify_setup.'
 compatibility: "azure-sdk-mcp server, local azure-sdk-for-{language} clone, language build tools"
 ---
 
@@ -30,7 +30,6 @@ DO NOT USE FOR: analysis only (use azsdk-common-pipeline-troubleshooting), API d
 
 | Tool                                     | Purpose                                     |
 | ---------------------------------------- | ------------------------------------------- |
-| `azure-sdk-mcp:azsdk_analyze_pipeline`   | Analyze pipeline failure to identify issues |
 | `azure-sdk-mcp:azsdk_verify_setup`       | Verify local environment is ready           |
 | `azure-sdk-mcp:azsdk_package_build_code` | Build the package locally                   |
 | `azure-sdk-mcp:azsdk_package_run_check`  | Run validation/lint/typecheck locally       |
@@ -40,7 +39,7 @@ DO NOT USE FOR: analysis only (use azsdk-common-pipeline-troubleshooting), API d
 
 ## Steps
 
-1. **Find analysis** - Reuse an existing analysis from the PR comments; if none, run `azsdk_analyze_pipeline` with the build ID or PR link.
+1. **Find analysis** - Reuse an existing analysis from the PR comments; if none, view the `azsdk-common-pipeline-troubleshooting` skill.
 2. **Classify** - Fixable (test, type, lint, import, assertion errors) vs retry (infrastructure) vs escalate (breaking API, credentials).
 3. **Locate** - Identify the affected package, its path, and the files/lines to change. See [language notes](references/language-notes.md).
 4. **Fix** - Read the failing code at the cited lines and apply the minimal fix.
