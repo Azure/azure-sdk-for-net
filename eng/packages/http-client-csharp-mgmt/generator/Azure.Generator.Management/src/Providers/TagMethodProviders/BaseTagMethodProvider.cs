@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
@@ -15,7 +14,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -233,7 +231,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 {
                     arguments.Add(dataVar);
                 }
-                else if (TryBuildContextualUpdateArgument(parameter, out var contextualArgument))
+                else if (_updateParameterMappings.TryPopulateContextualArgument(This.As<ArmResource>().Id(), parameter, out var contextualArgument))
                 {
                     arguments.Add(contextualArgument);
                 }
@@ -254,22 +252,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             return arguments;
         }
 
-        private bool TryBuildContextualUpdateArgument(ParameterProvider parameter, out ValueExpression argument)
-        {
-            if (_updateParameterMappings.TryGetValue(parameter.WireInfo.SerializedName, out var mapping) &&
-                mapping.ContextualParameter is not null)
-            {
-                argument = ConvertContextualArgument(
-                    mapping.ContextualParameter.BuildValueExpression(This.As<ArmResource>().Id()),
-                    mapping.ContextualParameter.ValueType,
-                    parameter.Type);
-                return true;
-            }
-
-            argument = Default.CastTo(parameter.Type);
-            return false;
-        }
-
         private bool TryBuildResourceIdUpdateArgument(ParameterProvider parameter, out ValueExpression argument)
         {
             var serializedName = parameter.WireInfo.SerializedName;
@@ -284,7 +266,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             if (value is not null)
             {
-                argument = ConvertContextualArgument(value, typeof(string), parameter.Type);
+                argument = ParameterContextRegistry.Convert(value, typeof(string), parameter.Type);
                 return true;
             }
 
@@ -304,26 +286,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             }
 
             return false;
-        }
-
-        private static ValueExpression ConvertContextualArgument(ValueExpression expression, Type fromType, CSharpType toType)
-        {
-            if (toType.Equals(fromType))
-            {
-                return expression;
-            }
-
-            if (toType.IsFrameworkType && toType.FrameworkType == typeof(Guid))
-            {
-                return Static<Guid>().Invoke(nameof(Guid.Parse), expression);
-            }
-
-            if (fromType == typeof(ResourceIdentifier) && toType.Equals(typeof(string)))
-            {
-                return expression.InvokeToString();
-            }
-
-            return expression;
         }
 
         protected List<MethodBodyStatement> BuildElseStatements(
