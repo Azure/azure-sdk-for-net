@@ -46,6 +46,10 @@ internal static class ActivityStack
     {
         ArgumentNullException.ThrowIfNull(services);
 
+        // The M365 channel client factory (RestChannelServiceClientFactory) depends on
+        // IHttpClientFactory for its outbound connector calls.
+        services.AddHttpClient();
+
         // In-memory storage for local/testing; a durable backend can be injected by the caller
         // via the injected-AgentApplication construction mode.
         services.TryAddSingleton<IStorage, MemoryStorage>();
@@ -77,7 +81,6 @@ internal static class ActivityStack
         // registration. The request-time adapter and background service come from the real host.
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddHttpClient();
         services.AddSingleton<IConfiguration>(
             new ConfigurationBuilder()
                 .AddEnvironmentVariables()
