@@ -226,6 +226,37 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
+        public async Task CreateNamespaceWithIPAddressType()
+        {
+            // Validates the 2026-01-01 'ipAddressType' property (replaces the legacy 'ipV6Enabled' boolean).
+            // Covers both enum values: create with DualStack, then update to IPv4 via the (now synchronous) PATCH.
+            _resourceGroup = await CreateResourceGroupAsync();
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+
+            // create with dual-stack (IPv4 + IPv6)
+            EventHubsNamespaceData parameter = new EventHubsNamespaceData(DefaultLocation)
+            {
+                IpAddressType = IpAddressType.DualStack
+            };
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameter)).Value;
+            VerifyNamespaceProperties(eventHubNamespace, false);
+            Assert.AreEqual(IpAddressType.DualStack, eventHubNamespace.Data.IpAddressType);
+
+            // re-fetch to confirm the value is persisted on the service
+            eventHubNamespace = await namespaceCollection.GetAsync(namespaceName);
+            Assert.AreEqual(IpAddressType.DualStack, eventHubNamespace.Data.IpAddressType);
+
+            // update to IPv4 via the (now synchronous in 2026-01-01) namespace PATCH and assert the round-trip
+            eventHubNamespace.Data.IpAddressType = IpAddressType.IPv4;
+            eventHubNamespace = (await eventHubNamespace.UpdateAsync(eventHubNamespace.Data)).Value;
+            Assert.AreEqual(IpAddressType.IPv4, eventHubNamespace.Data.IpAddressType);
+
+            await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task NamespaceAuthorizationRuleRegenerateKey()
         {
             //create namespace
