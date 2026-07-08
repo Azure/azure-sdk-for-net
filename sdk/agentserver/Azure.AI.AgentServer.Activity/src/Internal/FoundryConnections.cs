@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias AzureIdentity;
-using AzureIdentity::Azure.Identity;
+using Azure.Identity;
 using Microsoft.Agents.Authentication;
 using Microsoft.Agents.Core.Models;
 using Microsoft.Extensions.Logging;
@@ -185,7 +184,7 @@ internal sealed class FoundryAccessTokenProvider : IAccessTokenProvider
 
         try
         {
-            var credential = new ManagedIdentityCredential(_clientId);
+            var credential = new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedClientId(_clientId));
             _logger.LogInformation("[FoundryToken] ManagedIdentityCredential created, calling GetTokenAsync...");
 
             var tokenResult = await credential.GetTokenAsync(
@@ -211,6 +210,6 @@ internal sealed class FoundryAccessTokenProvider : IAccessTokenProvider
     {
         _logger.LogInformation("[FoundryToken] GetTokenCredential() called — returning ManagedIdentityCredential(clientId={ClientId})",
             _clientId.Length > 8 ? _clientId[..8] + "..." : _clientId);
-        return new ManagedIdentityCredential(_clientId);
+        return new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedClientId(_clientId));
     }
 }

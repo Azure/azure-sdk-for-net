@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias AzureIdentity;
-using AzureIdentity::Azure.Identity;
+using Azure.Identity;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;

@@ -18,7 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" Aliases="AzureIdentity" />
+    <!-- Azure.Identity is referenced so the CI project-reference swap
+         (UseProjectReferenceToAzureClients=true) resolves it to the repo project
+         rather than leaving a transitive NuGet package. The credential types are
+         provided by Azure.Core (1.60+); the HideTransitiveAzureIdentity target
+         below aliases Azure.Identity away to avoid the CS0433 ambiguity. -->
+    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Microsoft.Agents.Authentication.Msal" />
     <PackageReference Include="Microsoft.Agents.Connector" />
     <PackageReference Include="Microsoft.Agents.Hosting.AspNetCore" />
@@ -27,5 +32,26 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />
   </ItemGroup>
+
+  <!--
+    Azure.Core 1.60+ defines the credential types (DefaultAzureCredential,
+    ManagedIdentityCredential, DefaultAzureCredentialOptions) that older
+    Azure.Identity (pulled in transitively by Microsoft.Agents.Authentication.Msal)
+    also defines, which causes CS0433 "type exists in both" ambiguity. Hide the
+    transitive Azure.Identity behind an extern alias so the unqualified credential
+    types resolve to Azure.Core. This runs after reference resolution so it applies
+    whether Azure.Identity is a package reference or a project reference (CI builds
+    with UseProjectReferenceToAzureClients=true), avoiding the fragile
+    PackageReference 'Aliases' metadata that is dropped by the project-ref swap.
+  -->
+  <Target Name="HideTransitiveAzureIdentity"
+          AfterTargets="ResolveReferences"
+          BeforeTargets="FindReferenceAssembliesForReferences;CoreCompile">
+    <ItemGroup>
+      <ReferencePath Condition="'%(FileName)' == 'Azure.Identity'">
+        <Aliases>AzureIdentity</Aliases>
+      </ReferencePath>
+    </ItemGroup>
+  </Target>
 
 </Project>
