@@ -4,11 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Memory
 {
-    [Experimental("AAIP001")]
     internal partial class UnknownMemoryStoreDefinition : MemoryStoreDefinition
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMemoryStoreDefinition"/>. </summary>
