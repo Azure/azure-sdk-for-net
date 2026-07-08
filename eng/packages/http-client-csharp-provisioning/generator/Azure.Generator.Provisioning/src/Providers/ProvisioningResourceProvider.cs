@@ -502,13 +502,12 @@ namespace Azure.Generator.Provisioning.Providers
                 var propertyName = prop.Name.ToIdentifierName();
                 // For singleton resources, the "name" property is output-only with a default value
                 string? defaultValue = null;
-                if (string.Equals(serializedName, "name", StringComparison.OrdinalIgnoreCase)
+                if (serializedName == "name"
                     && _resourceProjection?.SingletonResourceName is string singletonResourceName)
                 {
                     defaultValue = singletonResourceName;
                     isOutput = true;
                     isSettable = false;
-                    isRequired = false;
                 }
                 // Ensure "location" at the resource level always uses AzureLocation,
                 // even when the TypeSpec defines it as plain string.
@@ -676,11 +675,6 @@ namespace Azure.Generator.Provisioning.Providers
         private static MethodProvider? BuildGetResourceNameRequirementsMethod(ProvisioningResourceProjection? resourceProjection, TypeProvider enclosingType)
         {
             if (resourceProjection is null)
-            {
-                return null;
-            }
-
-            if (resourceProjection.SingletonResourceName is not null)
             {
                 return null;
             }
