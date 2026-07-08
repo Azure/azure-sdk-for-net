@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PowerPlatform.Tests
         public async Task CreateCommonClient()
         {
             Client = GetArmClient();
-            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)

@@ -1,4 +1,4 @@
 directory: specification/powerplatform/resource-manager/Microsoft.PowerPlatform/PowerPlatform
-commit: 71550d7c13d3e2991a9f5599e477b275b8dba428
+commit: 9f7e5568d06084dbb8cab13792210e78ebc4e848
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
