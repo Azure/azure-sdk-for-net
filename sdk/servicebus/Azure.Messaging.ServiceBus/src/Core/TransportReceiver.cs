@@ -23,12 +23,12 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract bool IsSessionLinkClosed { get; }
 
         /// <summary>
-        ///
+        /// The Session Id associated with the receiver.
         /// </summary>
         public abstract string SessionId { get; protected set; }
 
         /// <summary>
-        /// The Session Id associated with the receiver.
+        /// The <see cref="DateTimeOffset" /> until which the session is locked by this receiver.
         /// </summary>
         public abstract DateTimeOffset SessionLockedUntil { get; protected set; }
 
