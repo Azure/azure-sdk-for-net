@@ -51,6 +51,15 @@ Do not bypass layers.
 - Retry, auth, logging, and diagnostics are centralized policies.
 - Do not implement custom retry/auth behavior unless explicitly requested.
 
+### Logging and DiagnosticScope for New APIs
+
+When adding a new public API (or new convenience path that performs service operations), include the same logging and `DiagnosticScope` structure used by existing APIs in that library.
+
+- Start and use a `DiagnosticScope` for the operation, following existing naming and placement patterns.
+- Ensure exceptions are failed on the scope before rethrowing, consistent with current implementations.
+- Keep logging/diagnostics behavior aligned with neighboring methods instead of inventing a new pattern.
+- Find examples in existing APIs in the same client type first, then mirror that structure.
+
 ### Async Model
 
 - Public operations should support async (`Task`, `AsyncPageable<T>`).
