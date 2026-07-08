@@ -1,0 +1,6 @@
+# The 2026-03-01 service API version makes the "type" query parameter required on getSupportedFormats.
+# As a result, the GetSupportedFormats/GetSupportedFormatsAsync convenience methods now take a required
+# FileFormatType instead of a nullable FileFormatType, which drops the 2.0.0 overloads below. This is an
+# intentional breaking change for the 3.0.0 major release.
+MembersMustExist : Member 'public Azure.Response<Azure.AI.Translation.Document.SupportedFileFormats> Azure.AI.Translation.Document.DocumentTranslationClient.GetSupportedFormats(System.Nullable<Azure.AI.Translation.Document.FileFormatType>, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.Threading.Tasks.Task<Azure.Response<Azure.AI.Translation.Document.SupportedFileFormats>> Azure.AI.Translation.Document.DocumentTranslationClient.GetSupportedFormatsAsync(System.Nullable<Azure.AI.Translation.Document.FileFormatType>, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
