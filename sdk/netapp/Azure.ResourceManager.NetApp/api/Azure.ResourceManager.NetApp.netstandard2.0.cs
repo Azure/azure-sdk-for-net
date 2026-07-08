@@ -2309,10 +2309,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator !=(Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel left, Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BindPasswordAkvConfigPatch
-    {
-        public BindPasswordAkvConfigPatch() { }
-    }
     public partial class BindPasswordKeyVaultConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig>
     {
         public BindPasswordKeyVaultConfig(System.Uri azureKeyVaultUri, string secretName) { }
