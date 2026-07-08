@@ -124,6 +124,16 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 writer.WritePropertyName("bastionEnabled"u8);
                 writer.WriteBooleanValue(IsBastionEnabled.Value);
             }
+            if (Optional.IsDefined(WorkloadResourceVisibility))
+            {
+                writer.WritePropertyName("workloadResourceVisibility"u8);
+                writer.WriteStringValue(WorkloadResourceVisibility.Value.ToString());
+            }
+            if (Optional.IsDefined(RbacInheritance))
+            {
+                writer.WritePropertyName("rbacInheritance"u8);
+                writer.WriteStringValue(RbacInheritance.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(EnclaveRoleAssignments))
             {
                 writer.WritePropertyName("enclaveRoleAssignments"u8);
@@ -163,6 +173,21 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 writer.WritePropertyName("maintenanceModeConfiguration"u8);
                 writer.WriteObjectValue(MaintenanceModeConfiguration, options);
+            }
+            if (Optional.IsDefined(DedicatedHubResourceId))
+            {
+                writer.WritePropertyName("dedicatedHubResourceId"u8);
+                writer.WriteStringValue(DedicatedHubResourceId);
+            }
+            if (Optional.IsDefined(ApprovalSettings))
+            {
+                writer.WritePropertyName("approvalSettings"u8);
+                writer.WriteObjectValue(ApprovalSettings, options);
+            }
+            if (Optional.IsDefined(MonitoringSettings))
+            {
+                writer.WritePropertyName("monitoringSettings"u8);
+                writer.WriteObjectValue(MonitoringSettings, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -214,11 +239,16 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             string managedResourceGroupName = default;
             ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration = default;
             bool? isBastionEnabled = default;
+            ResourceVisibilityMode? workloadResourceVisibility = default;
+            RbacInheritanceMode? rbacInheritance = default;
             IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = default;
             IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = default;
             IList<VirtualEnclaveGovernedService> governedServiceList = default;
             EnclaveDefaultSettings enclaveDefaultSettings = default;
             VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = default;
+            ResourceIdentifier dedicatedHubResourceId = default;
+            VirtualEnclaveApprovalSettings approvalSettings = default;
+            MonitoringSettingsModel monitoringSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -294,6 +324,24 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     isBastionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("workloadResourceVisibility"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    workloadResourceVisibility = new ResourceVisibilityMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("rbacInheritance"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rbacInheritance = new RbacInheritanceMode(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("enclaveRoleAssignments"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -354,6 +402,33 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     maintenanceModeConfiguration = VirtualEnclaveMaintenanceModeConfiguration.DeserializeVirtualEnclaveMaintenanceModeConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("dedicatedHubResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dedicatedHubResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("approvalSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    approvalSettings = VirtualEnclaveApprovalSettings.DeserializeVirtualEnclaveApprovalSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("monitoringSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    monitoringSettings = MonitoringSettingsModel.DeserializeMonitoringSettingsModel(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -368,11 +443,16 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 managedResourceGroupName,
                 managedOnBehalfOfConfiguration,
                 isBastionEnabled,
+                workloadResourceVisibility,
+                rbacInheritance,
                 enclaveRoleAssignments ?? new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>(),
                 workloadRoleAssignments ?? new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>(),
                 governedServiceList ?? new ChangeTrackingList<VirtualEnclaveGovernedService>(),
                 enclaveDefaultSettings,
                 maintenanceModeConfiguration,
+                dedicatedHubResourceId,
+                approvalSettings,
+                monitoringSettings,
                 additionalBinaryDataProperties);
         }
     }

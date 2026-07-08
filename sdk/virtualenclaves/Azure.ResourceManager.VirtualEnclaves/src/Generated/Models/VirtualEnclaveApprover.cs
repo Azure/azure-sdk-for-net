@@ -27,18 +27,21 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
 
             ApproverEntraId = approverEntraId;
             LastUpdatedOn = lastUpdatedOn;
+            MandatoryApprovalGroupMembershipIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveApprover"/>. </summary>
         /// <param name="approverEntraId"> Entra ObjectID of the approver. </param>
         /// <param name="actionPerformed"> Action Performed by approver. </param>
         /// <param name="lastUpdatedOn"> approval request last updated at. </param>
+        /// <param name="mandatoryApprovalGroupMembershipIds"> Indicates if this approver is part of a mandatory approver group with list of Entra IDs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveApprover(string approverEntraId, ApproverActionPerformed? actionPerformed, DateTimeOffset lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveApprover(string approverEntraId, ApproverActionPerformed? actionPerformed, DateTimeOffset lastUpdatedOn, IReadOnlyList<string> mandatoryApprovalGroupMembershipIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApproverEntraId = approverEntraId;
             ActionPerformed = actionPerformed;
             LastUpdatedOn = lastUpdatedOn;
+            MandatoryApprovalGroupMembershipIds = mandatoryApprovalGroupMembershipIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -50,5 +53,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
 
         /// <summary> approval request last updated at. </summary>
         public DateTimeOffset LastUpdatedOn { get; set; }
+
+        /// <summary> Indicates if this approver is part of a mandatory approver group with list of Entra IDs. </summary>
+        public IReadOnlyList<string> MandatoryApprovalGroupMembershipIds { get; }
     }
 }

@@ -119,15 +119,35 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 writer.WritePropertyName("firewallSku"u8);
                 writer.WriteStringValue(FirewallSku.Value.ToString());
             }
-            if (Optional.IsDefined(ApprovalSettings))
+            if (Optional.IsDefined(GranularApprovalSettings))
             {
                 writer.WritePropertyName("approvalSettings"u8);
-                writer.WriteObjectValue(ApprovalSettings, options);
+                writer.WriteObjectValue(GranularApprovalSettings, options);
             }
             if (Optional.IsDefined(MaintenanceModeConfiguration))
             {
                 writer.WritePropertyName("maintenanceModeConfiguration"u8);
                 writer.WriteObjectValue(MaintenanceModeConfiguration, options);
+            }
+            if (Optional.IsDefined(MonitoringSettings))
+            {
+                writer.WritePropertyName("monitoringSettings"u8);
+                writer.WriteObjectValue(MonitoringSettings, options);
+            }
+            if (Optional.IsCollectionDefined(AddressSpaces))
+            {
+                writer.WritePropertyName("addressSpaces"u8);
+                writer.WriteStartArray();
+                foreach (string item in AddressSpaces)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -176,8 +196,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             VirtualEnclaveCommunityPolicyOverride? policyOverride = default;
             IList<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments = default;
             VirtualEnclaveFirewallSku? firewallSku = default;
-            ApprovalSettingsPatchProperties approvalSettings = default;
+            ApprovalSettingsPatchProperties granularApprovalSettings = default;
             VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration = default;
+            MonitoringSettingsPatchModel monitoringSettings = default;
+            IList<string> addressSpaces = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -254,7 +276,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     {
                         continue;
                     }
-                    approvalSettings = ApprovalSettingsPatchProperties.DeserializeApprovalSettingsPatchProperties(prop.Value, options);
+                    granularApprovalSettings = ApprovalSettingsPatchProperties.DeserializeApprovalSettingsPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("maintenanceModeConfiguration"u8))
@@ -264,6 +286,36 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                         continue;
                     }
                     maintenanceModeConfiguration = VirtualEnclaveMaintenanceModeConfigurationPatch.DeserializeVirtualEnclaveMaintenanceModeConfigurationPatch(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("monitoringSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    monitoringSettings = MonitoringSettingsPatchModel.DeserializeMonitoringSettingsPatchModel(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("addressSpaces"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    addressSpaces = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -277,8 +329,10 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 policyOverride,
                 communityRoleAssignments ?? new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>(),
                 firewallSku,
-                approvalSettings,
+                granularApprovalSettings,
                 maintenanceModeConfiguration,
+                monitoringSettings,
+                addressSpaces ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

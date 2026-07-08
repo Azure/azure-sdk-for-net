@@ -155,15 +155,45 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 writer.WritePropertyName("firewallSku"u8);
                 writer.WriteStringValue(FirewallSku.Value.ToString());
             }
-            if (Optional.IsDefined(ApprovalSettings))
+            if (Optional.IsDefined(GranularApprovalSettings))
             {
                 writer.WritePropertyName("approvalSettings"u8);
-                writer.WriteObjectValue(ApprovalSettings, options);
+                writer.WriteObjectValue(GranularApprovalSettings, options);
             }
             if (Optional.IsDefined(MaintenanceModeConfiguration))
             {
                 writer.WritePropertyName("maintenanceModeConfiguration"u8);
                 writer.WriteObjectValue(MaintenanceModeConfiguration, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DedicatedHubList))
+            {
+                writer.WritePropertyName("dedicatedHubList"u8);
+                writer.WriteStartArray();
+                foreach (DedicatedHubResourceData item in DedicatedHubList)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(MonitoringSettings))
+            {
+                writer.WritePropertyName("monitoringSettings"u8);
+                writer.WriteObjectValue(MonitoringSettings, options);
+            }
+            if (Optional.IsCollectionDefined(AddressSpaces))
+            {
+                writer.WritePropertyName("addressSpaces"u8);
+                writer.WriteStartArray();
+                foreach (string item in AddressSpaces)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -217,8 +247,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             VirtualEnclaveCommunityPolicyOverride? policyOverride = default;
             IList<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments = default;
             VirtualEnclaveFirewallSku? firewallSku = default;
-            VirtualEnclaveApprovalSettings approvalSettings = default;
+            VirtualEnclaveBaseApprovalSettings granularApprovalSettings = default;
             VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = default;
+            IReadOnlyList<DedicatedHubResourceData> dedicatedHubList = default;
+            MonitoringSettingsModel monitoringSettings = default;
+            IList<string> addressSpaces = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -344,7 +377,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     {
                         continue;
                     }
-                    approvalSettings = VirtualEnclaveApprovalSettings.DeserializeVirtualEnclaveApprovalSettings(prop.Value, options);
+                    granularApprovalSettings = VirtualEnclaveBaseApprovalSettings.DeserializeVirtualEnclaveBaseApprovalSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("maintenanceModeConfiguration"u8))
@@ -354,6 +387,50 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                         continue;
                     }
                     maintenanceModeConfiguration = VirtualEnclaveMaintenanceModeConfiguration.DeserializeVirtualEnclaveMaintenanceModeConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("dedicatedHubList"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DedicatedHubResourceData> array = new List<DedicatedHubResourceData>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DedicatedHubResourceData.DeserializeDedicatedHubResourceData(item, options));
+                    }
+                    dedicatedHubList = array;
+                    continue;
+                }
+                if (prop.NameEquals("monitoringSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    monitoringSettings = MonitoringSettingsModel.DeserializeMonitoringSettingsModel(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("addressSpaces"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    addressSpaces = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -372,8 +449,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 policyOverride,
                 communityRoleAssignments ?? new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>(),
                 firewallSku,
-                approvalSettings,
+                granularApprovalSettings,
                 maintenanceModeConfiguration,
+                dedicatedHubList ?? new ChangeTrackingList<DedicatedHubResourceData>(),
+                monitoringSettings,
+                addressSpaces ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

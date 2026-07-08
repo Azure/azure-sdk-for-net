@@ -44,13 +44,18 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="managedResourceGroupName"> Managed resource group name. </param>
         /// <param name="managedOnBehalfOfConfiguration"> Managed On Behalf Of Configuration. </param>
         /// <param name="isBastionEnabled"> Deploy Bastion service (True or False). </param>
+        /// <param name="workloadResourceVisibility"> Specifies whether resources in the workload resource group(s) are visible through standard RBAC. </param>
+        /// <param name="rbacInheritance"> Controls whether standard Azure RBAC role inheritance applies to the workload resource group(s). </param>
         /// <param name="enclaveRoleAssignments"> Enclave role assignments. </param>
         /// <param name="workloadRoleAssignments"> Workload role assignments. </param>
         /// <param name="governedServiceList"> Enclave specific policies. </param>
         /// <param name="enclaveDefaultSettings"> Enclave default settings. </param>
         /// <param name="maintenanceModeConfiguration"> Maintenance Mode configuration. </param>
+        /// <param name="dedicatedHubResourceId"> DedicatedHub Resource ID. </param>
+        /// <param name="approvalSettings"> Approval requirements for various actions on the enclave's resources. </param>
+        /// <param name="monitoringSettings"> Virtual Enclave Monitoring Settings for diagnostic and virtual network flow logs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveProperties(VirtualEnclaveProvisioningState? provisioningState, EnclaveVirtualNetwork enclaveVirtualNetwork, EnclaveAddressSpaces enclaveAddressSpaces, ResourceIdentifier communityResourceId, IReadOnlyList<ResourceIdentifier> resourceCollection, string managedResourceGroupName, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, bool? isBastionEnabled, IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments, IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments, IList<VirtualEnclaveGovernedService> governedServiceList, EnclaveDefaultSettings enclaveDefaultSettings, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveProperties(VirtualEnclaveProvisioningState? provisioningState, EnclaveVirtualNetwork enclaveVirtualNetwork, EnclaveAddressSpaces enclaveAddressSpaces, ResourceIdentifier communityResourceId, IReadOnlyList<ResourceIdentifier> resourceCollection, string managedResourceGroupName, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, bool? isBastionEnabled, ResourceVisibilityMode? workloadResourceVisibility, RbacInheritanceMode? rbacInheritance, IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments, IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments, IList<VirtualEnclaveGovernedService> governedServiceList, EnclaveDefaultSettings enclaveDefaultSettings, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration, ResourceIdentifier dedicatedHubResourceId, VirtualEnclaveApprovalSettings approvalSettings, MonitoringSettingsModel monitoringSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             EnclaveVirtualNetwork = enclaveVirtualNetwork;
@@ -60,11 +65,16 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             ManagedResourceGroupName = managedResourceGroupName;
             ManagedOnBehalfOfConfiguration = managedOnBehalfOfConfiguration;
             IsBastionEnabled = isBastionEnabled;
+            WorkloadResourceVisibility = workloadResourceVisibility;
+            RbacInheritance = rbacInheritance;
             EnclaveRoleAssignments = enclaveRoleAssignments;
             WorkloadRoleAssignments = workloadRoleAssignments;
             GovernedServiceList = governedServiceList;
             EnclaveDefaultSettings = enclaveDefaultSettings;
             MaintenanceModeConfiguration = maintenanceModeConfiguration;
+            DedicatedHubResourceId = dedicatedHubResourceId;
+            ApprovalSettings = approvalSettings;
+            MonitoringSettings = monitoringSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -92,6 +102,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <summary> Deploy Bastion service (True or False). </summary>
         public bool? IsBastionEnabled { get; set; }
 
+        /// <summary> Specifies whether resources in the workload resource group(s) are visible through standard RBAC. </summary>
+        public ResourceVisibilityMode? WorkloadResourceVisibility { get; set; }
+
+        /// <summary> Controls whether standard Azure RBAC role inheritance applies to the workload resource group(s). </summary>
+        public RbacInheritanceMode? RbacInheritance { get; set; }
+
         /// <summary> Enclave role assignments. </summary>
         public IList<VirtualEnclaveRoleAssignmentItem> EnclaveRoleAssignments { get; }
 
@@ -106,6 +122,15 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
 
         /// <summary> Maintenance Mode configuration. </summary>
         public VirtualEnclaveMaintenanceModeConfiguration MaintenanceModeConfiguration { get; set; }
+
+        /// <summary> DedicatedHub Resource ID. </summary>
+        public ResourceIdentifier DedicatedHubResourceId { get; set; }
+
+        /// <summary> Approval requirements for various actions on the enclave's resources. </summary>
+        public VirtualEnclaveApprovalSettings ApprovalSettings { get; set; }
+
+        /// <summary> Virtual Enclave Monitoring Settings for diagnostic and virtual network flow logs. </summary>
+        public MonitoringSettingsModel MonitoringSettings { get; set; }
 
         /// <summary> Managed-On-Behalf-Of broker resources. </summary>
         public IReadOnlyList<MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources

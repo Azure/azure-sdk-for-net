@@ -120,6 +120,46 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 writer.WritePropertyName("stateChangedAt"u8);
                 writer.WriteStringValue(StateChangedOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(MandatoryApprovers))
+            {
+                writer.WritePropertyName("mandatoryApprovers"u8);
+                writer.WriteStartArray();
+                foreach (VirtualEnclaveMandatoryApprover item in MandatoryApprovers)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(MinimumApproversRequired))
+            {
+                writer.WritePropertyName("minimumApproversRequired"u8);
+                writer.WriteNumberValue(MinimumApproversRequired.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ApproversApprovedCount))
+            {
+                writer.WritePropertyName("approversApprovedCount"u8);
+                writer.WriteNumberValue(ApproversApprovedCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MandatoryApproversApprovedCount))
+            {
+                writer.WritePropertyName("mandatoryApproversApprovedCount"u8);
+                writer.WriteNumberValue(MandatoryApproversApprovedCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ApprovedByEntraIds))
+            {
+                writer.WritePropertyName("approvedByEntraIds"u8);
+                writer.WriteStartArray();
+                foreach (string item in ApprovedByEntraIds)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("requestMetadata"u8);
             writer.WriteObjectValue(RequestMetadata, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -171,6 +211,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             string ticketId = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? stateChangedOn = default;
+            IReadOnlyList<VirtualEnclaveMandatoryApprover> mandatoryApprovers = default;
+            long? minimumApproversRequired = default;
+            long? approversApprovedCount = default;
+            long? mandatoryApproversApprovedCount = default;
+            IReadOnlyList<string> approvedByEntraIds = default;
             ApprovalRequestMetadata requestMetadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -239,6 +284,68 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     stateChangedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (prop.NameEquals("mandatoryApprovers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VirtualEnclaveMandatoryApprover> array = new List<VirtualEnclaveMandatoryApprover>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(VirtualEnclaveMandatoryApprover.DeserializeVirtualEnclaveMandatoryApprover(item, options));
+                    }
+                    mandatoryApprovers = array;
+                    continue;
+                }
+                if (prop.NameEquals("minimumApproversRequired"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minimumApproversRequired = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("approversApprovedCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    approversApprovedCount = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("mandatoryApproversApprovedCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mandatoryApproversApprovedCount = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("approvedByEntraIds"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    approvedByEntraIds = array;
+                    continue;
+                }
                 if (prop.NameEquals("requestMetadata"u8))
                 {
                     requestMetadata = ApprovalRequestMetadata.DeserializeApprovalRequestMetadata(prop.Value, options);
@@ -257,6 +364,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 ticketId,
                 createdOn,
                 stateChangedOn,
+                mandatoryApprovers ?? new ChangeTrackingList<VirtualEnclaveMandatoryApprover>(),
+                minimumApproversRequired,
+                approversApprovedCount,
+                mandatoryApproversApprovedCount,
+                approvedByEntraIds ?? new ChangeTrackingList<string>(),
                 requestMetadata,
                 additionalBinaryDataProperties);
         }

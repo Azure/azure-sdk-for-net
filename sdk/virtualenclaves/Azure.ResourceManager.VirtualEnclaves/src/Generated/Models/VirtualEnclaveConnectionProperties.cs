@@ -43,8 +43,9 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="destinationEndpointId"> Destination Endpoint Resource Id. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="resourceCollection"> List of resource ids modified by enclave Connections. </param>
+        /// <param name="updateMode"> Destination Endpoint supports automatic or manual updates. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveConnectionProperties(EnclaveConnectionState? state, ResourceIdentifier communityResourceId, ResourceIdentifier sourceResourceId, string sourceCidr, ResourceIdentifier destinationEndpointId, VirtualEnclaveProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> resourceCollection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveConnectionProperties(EnclaveConnectionState? state, ResourceIdentifier communityResourceId, ResourceIdentifier sourceResourceId, string sourceCidr, ResourceIdentifier destinationEndpointId, VirtualEnclaveProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> resourceCollection, UpdateMode? updateMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             CommunityResourceId = communityResourceId;
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             DestinationEndpointId = destinationEndpointId;
             ProvisioningState = provisioningState;
             ResourceCollection = resourceCollection;
+            UpdateMode = updateMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -76,5 +78,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
 
         /// <summary> List of resource ids modified by enclave Connections. </summary>
         public IReadOnlyList<ResourceIdentifier> ResourceCollection { get; }
+
+        /// <summary> Destination Endpoint supports automatic or manual updates. </summary>
+        public UpdateMode? UpdateMode { get; }
     }
 }

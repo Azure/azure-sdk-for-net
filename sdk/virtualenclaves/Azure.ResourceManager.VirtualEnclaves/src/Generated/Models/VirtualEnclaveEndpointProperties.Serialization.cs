@@ -107,6 +107,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(UpdateMode))
+            {
+                writer.WritePropertyName("updateMode"u8);
+                writer.WriteStringValue(UpdateMode.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -152,6 +157,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             IList<EnclaveEndpointDestinationRule> ruleCollection = default;
             IReadOnlyList<ResourceIdentifier> resourceCollection = default;
             VirtualEnclaveProvisioningState? provisioningState = default;
+            UpdateMode? updateMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -195,12 +201,21 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     provisioningState = new VirtualEnclaveProvisioningState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("updateMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    updateMode = new UpdateMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualEnclaveEndpointProperties(ruleCollection, resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>(), provisioningState, additionalBinaryDataProperties);
+            return new VirtualEnclaveEndpointProperties(ruleCollection, resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>(), provisioningState, updateMode, additionalBinaryDataProperties);
         }
     }
 }

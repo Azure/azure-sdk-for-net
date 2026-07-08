@@ -88,6 +88,21 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             }
             writer.WritePropertyName("lastUpdatedAt"u8);
             writer.WriteStringValue(LastUpdatedOn, "O");
+            if (options.Format != "W" && Optional.IsCollectionDefined(MandatoryApprovalGroupMembershipIds))
+            {
+                writer.WritePropertyName("mandatoryApprovalGroupMembershipIds"u8);
+                writer.WriteStartArray();
+                foreach (string item in MandatoryApprovalGroupMembershipIds)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,6 +148,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             string approverEntraId = default;
             ApproverActionPerformed? actionPerformed = default;
             DateTimeOffset lastUpdatedOn = default;
+            IReadOnlyList<string> mandatoryApprovalGroupMembershipIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,12 +171,33 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (prop.NameEquals("mandatoryApprovalGroupMembershipIds"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    mandatoryApprovalGroupMembershipIds = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualEnclaveApprover(approverEntraId, actionPerformed, lastUpdatedOn, additionalBinaryDataProperties);
+            return new VirtualEnclaveApprover(approverEntraId, actionPerformed, lastUpdatedOn, mandatoryApprovalGroupMembershipIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

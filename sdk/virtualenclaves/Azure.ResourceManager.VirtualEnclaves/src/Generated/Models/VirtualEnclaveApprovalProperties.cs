@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             Argument.AssertNotNull(requestMetadata, nameof(requestMetadata));
 
             Approvers = new ChangeTrackingList<VirtualEnclaveApprover>();
+            MandatoryApprovers = new ChangeTrackingList<VirtualEnclaveMandatoryApprover>();
+            ApprovedByEntraIds = new ChangeTrackingList<string>();
             RequestMetadata = requestMetadata;
         }
 
@@ -37,9 +39,14 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="ticketId"> Ticket ID for the approval request. </param>
         /// <param name="createdOn"> Approval request creation time. </param>
         /// <param name="stateChangedOn"> Approval request state change time, time at which approval request state changed from pending to approved or rejected. </param>
+        /// <param name="mandatoryApprovers"> List of mandatory approvers for the approval request. </param>
+        /// <param name="minimumApproversRequired"> Minimum number of approvers required for the approval request. </param>
+        /// <param name="approversApprovedCount"> Current count of minimum approvers required. </param>
+        /// <param name="mandatoryApproversApprovedCount"> Current count of mandatory approvers that have approved. </param>
+        /// <param name="approvedByEntraIds"> Array of Entra IDs of approvers who have approved the approval request. </param>
         /// <param name="requestMetadata"> Request metadata for the approval request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveApprovalProperties(VirtualEnclaveProvisioningState? provisioningState, ResourceIdentifier parentResourceId, ResourceIdentifier grandparentResourceId, IList<VirtualEnclaveApprover> approvers, string ticketId, DateTimeOffset? createdOn, DateTimeOffset? stateChangedOn, ApprovalRequestMetadata requestMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveApprovalProperties(VirtualEnclaveProvisioningState? provisioningState, ResourceIdentifier parentResourceId, ResourceIdentifier grandparentResourceId, IList<VirtualEnclaveApprover> approvers, string ticketId, DateTimeOffset? createdOn, DateTimeOffset? stateChangedOn, IReadOnlyList<VirtualEnclaveMandatoryApprover> mandatoryApprovers, long? minimumApproversRequired, long? approversApprovedCount, long? mandatoryApproversApprovedCount, IReadOnlyList<string> approvedByEntraIds, ApprovalRequestMetadata requestMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ParentResourceId = parentResourceId;
@@ -48,6 +55,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             TicketId = ticketId;
             CreatedOn = createdOn;
             StateChangedOn = stateChangedOn;
+            MandatoryApprovers = mandatoryApprovers;
+            MinimumApproversRequired = minimumApproversRequired;
+            ApproversApprovedCount = approversApprovedCount;
+            MandatoryApproversApprovedCount = mandatoryApproversApprovedCount;
+            ApprovedByEntraIds = approvedByEntraIds;
             RequestMetadata = requestMetadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -72,6 +84,21 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
 
         /// <summary> Approval request state change time, time at which approval request state changed from pending to approved or rejected. </summary>
         public DateTimeOffset? StateChangedOn { get; set; }
+
+        /// <summary> List of mandatory approvers for the approval request. </summary>
+        public IReadOnlyList<VirtualEnclaveMandatoryApprover> MandatoryApprovers { get; }
+
+        /// <summary> Minimum number of approvers required for the approval request. </summary>
+        public long? MinimumApproversRequired { get; }
+
+        /// <summary> Current count of minimum approvers required. </summary>
+        public long? ApproversApprovedCount { get; }
+
+        /// <summary> Current count of mandatory approvers that have approved. </summary>
+        public long? MandatoryApproversApprovedCount { get; }
+
+        /// <summary> Array of Entra IDs of approvers who have approved the approval request. </summary>
+        public IReadOnlyList<string> ApprovedByEntraIds { get; }
 
         /// <summary> Request metadata for the approval request. </summary>
         public ApprovalRequestMetadata RequestMetadata { get; set; }

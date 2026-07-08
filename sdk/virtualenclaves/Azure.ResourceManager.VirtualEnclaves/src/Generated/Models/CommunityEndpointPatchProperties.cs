@@ -13,7 +13,7 @@ using Azure.ResourceManager.VirtualEnclaves;
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> Community Endpoint patchable Properties. </summary>
-    internal partial class CommunityEndpointPatchProperties
+    public partial class CommunityEndpointPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -30,14 +30,19 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
 
         /// <summary> Initializes a new instance of <see cref="CommunityEndpointPatchProperties"/>. </summary>
         /// <param name="ruleCollection"> Community Endpoint Rule Collection. </param>
+        /// <param name="updateMode"> Whether update mode is automatic or manual. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommunityEndpointPatchProperties(IList<CommunityEndpointDestinationRule> ruleCollection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommunityEndpointPatchProperties(IList<CommunityEndpointDestinationRule> ruleCollection, UpdateMode? updateMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleCollection = ruleCollection;
+            UpdateMode = updateMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Community Endpoint Rule Collection. </summary>
         public IList<CommunityEndpointDestinationRule> RuleCollection { get; }
+
+        /// <summary> Whether update mode is automatic or manual. </summary>
+        public UpdateMode? UpdateMode { get; set; }
     }
 }

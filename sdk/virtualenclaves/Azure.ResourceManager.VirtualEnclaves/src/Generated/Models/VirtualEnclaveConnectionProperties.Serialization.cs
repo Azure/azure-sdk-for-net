@@ -116,6 +116,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(UpdateMode))
+            {
+                writer.WritePropertyName("updateMode"u8);
+                writer.WriteStringValue(UpdateMode.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -165,6 +170,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             ResourceIdentifier destinationEndpointId = default;
             VirtualEnclaveProvisioningState? provisioningState = default;
             IReadOnlyList<ResourceIdentifier> resourceCollection = default;
+            UpdateMode? updateMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -227,6 +233,15 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     resourceCollection = array;
                     continue;
                 }
+                if (prop.NameEquals("updateMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    updateMode = new UpdateMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -240,6 +255,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 destinationEndpointId,
                 provisioningState,
                 resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>(),
+                updateMode,
                 additionalBinaryDataProperties);
         }
     }
