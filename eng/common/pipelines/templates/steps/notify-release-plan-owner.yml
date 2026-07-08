@@ -5,6 +5,7 @@ parameters:
   GitHubUser: ''
   ReleasePlanLink: ''
   SpecPullRequestUrl: ''
+  EmailCC: 'azsdkapex@microsoft.com'
   SourceRootPath: $(Build.SourcesDirectory)
 
 steps:
@@ -14,15 +15,16 @@ steps:
     continueOnError: true
     env:
       GH_TOKEN: $(GH_TOKEN)
+      AZURE_SDK_EMAIL_URI: ${{ parameters.AzureSDKEmailUri }}
+      PR_NUMBER: ${{ parameters.PullRequestNumber }}
+      BUILD_REPOSITORY_NAME: ${{ parameters.Repository }}
+      NOTIFY_GITHUB_USER: ${{ parameters.GitHubUser }}
+      RELEASE_PLAN_LINK: ${{ parameters.ReleasePlanLink }}
+      SPEC_PULL_REQUEST_URL: ${{ parameters.SpecPullRequestUrl }}
+      EMAIL_CC: ${{ parameters.EmailCC }}
     inputs:
       azureSubscription: opensource-api-connection
       scriptType: pscore
-      scriptLocation: scriptPath
-      scriptPath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Notify-ReleasePlanOwner.ps1
-      arguments: >
-        -AzureSDKEmailUri "${{ parameters.AzureSDKEmailUri }}"
-        -PullRequestNumber ${{ parameters.PullRequestNumber }}
-        -Repository "${{ parameters.Repository }}"
-        -GitHubUser "${{ parameters.GitHubUser }}"
-        -ReleasePlanLink "${{ parameters.ReleasePlanLink }}"
-        -SpecPullRequestUrl "${{ parameters.SpecPullRequestUrl }}"
+      scriptLocation: inlineScript
+      inlineScript: |
+        node "${{ parameters.SourceRootPath }}/eng/common/scripts/notify-release-plan-owner.js"
