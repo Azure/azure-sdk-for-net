@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Tuning knobs and run-mode for an optimization job. </summary>
-    [Experimental("AAIP001")]
     public partial class OptimizationOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

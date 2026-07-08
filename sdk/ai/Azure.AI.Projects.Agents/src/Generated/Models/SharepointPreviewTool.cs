@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
-    [Experimental("AAIP001")]
     public partial class SharepointPreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="SharepointPreviewTool"/>. </summary>

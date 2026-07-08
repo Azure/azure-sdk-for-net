@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
-    [Experimental("AAIP001")]
     public partial class ResponsesBrowserAutomationPreviewTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesBrowserAutomationPreviewTool"/>. </summary>
