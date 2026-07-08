@@ -49,8 +49,8 @@ public static class ActivityServer
     {
         var options = new ActivityServerOptions();
         configureOptions?.Invoke(options);
-        var (agentApp, adapter) = ActivityStack.Build(options);
-        return new ActivityServerHost(agentApp, adapter, options.DigitalWorker);
+        var agentApp = ActivityStack.CreateAgentApplication(options);
+        return new ActivityServerHost(agentApp, options);
     }
 
     /// <summary>
@@ -62,8 +62,7 @@ public static class ActivityServer
     public static ActivityServerHost Create(AgentApplication agentApp)
     {
         ArgumentNullException.ThrowIfNull(agentApp);
-        var adapter = ActivityStack.BuildAdapter(new ActivityServerOptions());
-        return new ActivityServerHost(agentApp, adapter);
+        return new ActivityServerHost(agentApp, new ActivityServerOptions());
     }
 
     /// <summary>

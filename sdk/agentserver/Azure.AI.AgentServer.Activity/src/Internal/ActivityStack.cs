@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Microsoft.Agents.Authentication;
-using Microsoft.Agents.Builder;
 using Microsoft.Agents.Builder.App;
 using Microsoft.Agents.Hosting.AspNetCore;
 using Microsoft.Agents.Storage;
@@ -13,77 +13,79 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 namespace Azure.AI.AgentServer.Activity.Internal;
 
 /// <summary>
-/// Builds the Microsoft 365 Agents SDK stack (an <see cref="AgentApplication"/> and its
-/// <see cref="IAgentHttpAdapter"/>) eagerly, using the real compile-time SDK APIs.
+/// Wires the Microsoft 365 Agents SDK stack into the host, using the real compile-time SDK APIs.
 /// </summary>
+/// <remarks>
+/// This registers the SDK's own <c>CloudAdapter</c> (via <c>AddAgentCore</c>) so its background
+/// <c>HostedActivityService</c> runs for the host's lifetime — meaning the activity endpoint can
+/// use the SDK's native <c>IAgentHttpAdapter.ProcessAsync</c> exactly as a native Microsoft 365
+/// Agents SDK application would. The only Foundry-specific substitution is
+/// <see cref="FoundryConnections"/> for outbound token acquisition.
+/// </remarks>
 internal static class ActivityStack
 {
     /// <summary>
-    /// Builds a fresh M365 <see cref="AgentApplication"/> and adapter from the environment.
+    /// Resolves the derived M365 <c>CONNECTIONS__*</c> connection settings for the selected
+    /// outbound-auth model, as a configuration map (never mutates the environment).
     /// </summary>
     /// <param name="options">The activity server options (selects the outbound-auth model).</param>
-    /// <returns>The built application and its HTTP adapter.</returns>
-    public static (AgentApplication AgentApp, IAgentHttpAdapter Adapter) Build(ActivityServerOptions options)
+    /// <returns>The effective connection settings keyed by their M365 configuration names.</returns>
+    public static IReadOnlyDictionary<string, string?> GetConnectionConfiguration(ActivityServerOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
-
-        var provider = BuildProvider(options);
-        var appOptions = provider.GetRequiredService<AgentApplicationOptions>();
-        var agentApp = new AgentApplication(appOptions);
-        var adapter = provider.GetRequiredService<IAgentHttpAdapter>();
-
-        return (agentApp, adapter);
+        return ActivityEnvironment.GetHostedAgentConfiguration(options.DigitalWorker);
     }
 
     /// <summary>
-    /// Builds a standalone M365 HTTP adapter (used to drive a pre-built, injected
-    /// <see cref="AgentApplication"/>). The adapter takes the agent as a per-turn argument,
-    /// so a freshly built adapter can process any application.
+    /// Registers the Microsoft 365 Agents SDK services into the given service collection so the
+    /// SDK's <c>CloudAdapter</c> (and its background activity service) are available from the
+    /// application's dependency-injection container.
     /// </summary>
-    /// <param name="options">The activity server options (selects the outbound-auth model).</param>
-    /// <returns>The built HTTP adapter.</returns>
-    public static IAgentHttpAdapter BuildAdapter(ActivityServerOptions options)
+    /// <param name="services">The host service collection.</param>
+    public static void RegisterM365Services(IServiceCollection services)
     {
-        ArgumentNullException.ThrowIfNull(options);
-        return BuildProvider(options).GetRequiredService<IAgentHttpAdapter>();
-    }
-
-    private static ServiceProvider BuildProvider(ActivityServerOptions options)
-    {
-        // Resolve the M365 CONNECTIONS__* settings from the Foundry-native identity as a
-        // configuration map — without mutating any process environment variables. The map
-        // is layered onto the environment-variable configuration below so the M365 SDK reads
-        // the derived values while any explicit environment values continue to win.
-        var connectionConfig = ActivityEnvironment.GetHostedAgentConfiguration(options.DigitalWorker);
-
-        var services = new ServiceCollection();
-
-        services.AddLogging();
-
-        // Required by the M365 adapter stack: RestChannelServiceClientFactory (registered by
-        // AddAgentCore) depends on IHttpClientFactory. In a normal ASP.NET host this is present;
-        // in this manually-built provider we must register it explicitly.
-        services.AddHttpClient();
-
-        services.AddSingleton<IConfiguration>(
-            new ConfigurationBuilder()
-                .AddEnvironmentVariables()
-                .AddInMemoryCollection(connectionConfig)
-                .Build());
+        ArgumentNullException.ThrowIfNull(services);
 
         // In-memory storage for local/testing; a durable backend can be injected by the caller
         // via the injected-AgentApplication construction mode.
         services.TryAddSingleton<IStorage, MemoryStorage>();
 
         // Register AgentApplicationOptions and the core M365 adapter services
-        // (IConnections, IChannelServiceClientFactory, CloudAdapter/IAgentHttpAdapter).
+        // (IConnections, IChannelServiceClientFactory, CloudAdapter/IAgentHttpAdapter, and the
+        // background HostedActivityService that drains normal-delivery turns).
         services.AddAgentApplicationOptions();
         services.AddAgentCore<CloudAdapter>();
 
         // Replace the default configuration-driven IConnections with the Foundry connections
         // that acquire Bot Connector tokens via the container's managed identity / FMI exchange.
         services.Replace(ServiceDescriptor.Singleton<IConnections, FoundryConnections>());
+    }
 
-        return services.BuildServiceProvider();
+    /// <summary>
+    /// Creates a fresh Microsoft 365 Agents SDK <see cref="AgentApplication"/> for handler
+    /// registration. The application instance is later hosted by the SDK adapter registered into
+    /// the application host via <see cref="RegisterM365Services"/>.
+    /// </summary>
+    /// <param name="options">The activity server options (selects the outbound-auth model).</param>
+    /// <returns>A new, empty <see cref="AgentApplication"/> ready for handler registration.</returns>
+    public static AgentApplication CreateAgentApplication(ActivityServerOptions options)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+
+        // A minimal standalone provider is used solely to resolve AgentApplicationOptions so the
+        // application instance can be created eagerly (before the host is built) for handler
+        // registration. The request-time adapter and background service come from the real host.
+        var services = new ServiceCollection();
+        services.AddLogging();
+        services.AddHttpClient();
+        services.AddSingleton<IConfiguration>(
+            new ConfigurationBuilder()
+                .AddEnvironmentVariables()
+                .AddInMemoryCollection(GetConnectionConfiguration(options))
+                .Build());
+        RegisterM365Services(services);
+
+        using var provider = services.BuildServiceProvider();
+        return new AgentApplication(provider.GetRequiredService<AgentApplicationOptions>());
     }
 }
