@@ -190,6 +190,11 @@ internal sealed class FoundryAccessTokenProvider : IAccessTokenProvider
                 _clientId.Length > 8 ? _clientId[..8] + "..." : _clientId,
                 tokenScope,
                 ex.Message);
+
+            // A managed-identity token failure is an infrastructure/misconfiguration problem
+            // (identity, scope, or environment) — not the developer's handler. Tag it so the
+            // error-source classifier reports it as a platform error.
+            PlatformErrorMarker.Tag(ex);
             throw;
         }
     }

@@ -16,15 +16,13 @@ namespace Azure.AI.AgentServer.Activity.Internal;
 /// Classification rules:
 /// <list type="bullet">
 ///   <item><b>user</b>: caller's input is invalid (BadRequest, ArgumentException).</item>
-///   <item><b>platform</b>: exception tagged with <c>PlatformErrorDataKey</c> in
-///     <see cref="Exception.Data"/> by SDK infrastructure code.</item>
+///   <item><b>platform</b>: exception tagged via <see cref="PlatformErrorMarker"/> by SDK
+///     infrastructure code (for example outbound token acquisition).</item>
 ///   <item><b>upstream</b>: everything else (default — developer's handler code failed).</item>
 /// </list>
 /// </remarks>
 internal sealed class ActivityErrorSourceFilter : IEndpointFilter
 {
-    private const string PlatformErrorDataKey = "Azure.AI.AgentServer.PlatformError";
-
     private readonly ILogger<ActivityErrorSourceFilter> _logger;
 
     public ActivityErrorSourceFilter(ILogger<ActivityErrorSourceFilter> logger)
@@ -58,7 +56,7 @@ internal sealed class ActivityErrorSourceFilter : IEndpointFilter
         }
         catch (Exception ex)
         {
-            bool isPlatform = ex.Data.Contains(PlatformErrorDataKey);
+            bool isPlatform = PlatformErrorMarker.IsTagged(ex);
             var source = isPlatform
                 ? PlatformHeaders.ErrorSourcePlatform
                 : PlatformHeaders.ErrorSourceUpstream;

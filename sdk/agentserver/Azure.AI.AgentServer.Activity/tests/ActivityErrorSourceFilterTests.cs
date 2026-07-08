@@ -25,8 +25,6 @@ namespace Azure.AI.AgentServer.Activity.Tests;
 [TestFixture]
 public class ActivityErrorSourceFilterTests
 {
-    private const string PlatformErrorDataKey = "Azure.AI.AgentServer.PlatformError";
-
     [Test]
     public async Task HandlerThrows_ErrorSource_IsUpstream()
     {
@@ -147,7 +145,7 @@ public class ActivityErrorSourceFilterTests
     private static Exception MakePlatformException(string message)
     {
         var ex = new InvalidOperationException(message);
-        ex.Data[PlatformErrorDataKey] = true;
+        PlatformErrorMarker.Tag(ex);
         return ex;
     }
 

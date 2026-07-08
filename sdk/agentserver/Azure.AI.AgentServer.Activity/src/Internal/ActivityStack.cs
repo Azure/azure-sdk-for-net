@@ -20,20 +20,24 @@ namespace Azure.AI.AgentServer.Activity.Internal;
 /// <c>HostedActivityService</c> runs for the host's lifetime — meaning the activity endpoint can
 /// use the SDK's native <c>IAgentHttpAdapter.ProcessAsync</c> exactly as a native Microsoft 365
 /// Agents SDK application would. The only Foundry-specific substitution is
-/// <see cref="FoundryConnections"/> for outbound token acquisition.
+/// <see cref="FoundryConnections"/> for outbound token acquisition (unless the caller supplies
+/// their own via <see cref="ActivityServerOptions.Connections"/>).
 /// </remarks>
 internal static class ActivityStack
 {
     /// <summary>
-    /// Resolves the derived M365 <c>CONNECTIONS__*</c> connection settings for the selected
-    /// outbound-auth model, as a configuration map (never mutates the environment).
+    /// Resolves the M365 <c>CONNECTIONS__*</c> connection settings for the selected outbound-auth
+    /// model, as a configuration map (never mutates the environment). A caller-supplied
+    /// <see cref="ActivityServerOptions.ConnectionConfiguration"/> is used as-is when present;
+    /// otherwise the settings are derived from the Foundry-native identity.
     /// </summary>
     /// <param name="options">The activity server options (selects the outbound-auth model).</param>
     /// <returns>The effective connection settings keyed by their M365 configuration names.</returns>
     public static IReadOnlyDictionary<string, string?> GetConnectionConfiguration(ActivityServerOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
-        return ActivityEnvironment.GetHostedAgentConfiguration(options.DigitalWorker);
+        return options.ConnectionConfiguration
+            ?? ActivityEnvironment.GetHostedAgentConfiguration(options.DigitalWorker);
     }
 
     /// <summary>
@@ -42,17 +46,37 @@ internal static class ActivityStack
     /// application's dependency-injection container.
     /// </summary>
     /// <param name="services">The host service collection.</param>
-    public static void RegisterM365Services(IServiceCollection services)
+    /// <param name="options">The activity server options (supplies optional service overrides).</param>
+    public static void RegisterM365Services(IServiceCollection services, ActivityServerOptions options)
     {
         ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(options);
 
         // The M365 channel client factory (RestChannelServiceClientFactory) depends on
         // IHttpClientFactory for its outbound connector calls.
         services.AddHttpClient();
 
-        // In-memory storage for local/testing; a durable backend can be injected by the caller
-        // via the injected-AgentApplication construction mode.
+        // Let the caller register overrides first. AddAgentCore only registers its defaults when a
+        // service is not already present, so anything registered here (custom adapter, channel
+        // factory, authorization, ...) takes precedence over the SDK defaults below.
+        options.ConfigureServices?.Invoke(services);
+
+        // Storage backend for the SDK turn state: the caller-supplied instance, else an in-memory
+        // store. TryAdd respects an override registered via ConfigureServices as well.
+        if (options.Storage is not null)
+        {
+            services.TryAddSingleton(options.Storage);
+        }
+
         services.TryAddSingleton<IStorage, MemoryStorage>();
+
+        // Outbound-auth connection provider: the caller-supplied instance, else the Foundry
+        // connections. Registering it before AddAgentCore makes the SDK skip its default
+        // (ConfigurationConnections).
+        if (options.Connections is not null)
+        {
+            services.TryAddSingleton(options.Connections);
+        }
 
         // Register AgentApplicationOptions and the core M365 adapter services
         // (IConnections, IChannelServiceClientFactory, CloudAdapter/IAgentHttpAdapter, and the
@@ -60,9 +84,12 @@ internal static class ActivityStack
         services.AddAgentApplicationOptions();
         services.AddAgentCore<CloudAdapter>();
 
-        // Replace the default configuration-driven IConnections with the Foundry connections
+        // When the caller did not supply their own connections, substitute the Foundry connections
         // that acquire Bot Connector tokens via the container's managed identity / FMI exchange.
-        services.Replace(ServiceDescriptor.Singleton<IConnections, FoundryConnections>());
+        if (options.Connections is null)
+        {
+            services.Replace(ServiceDescriptor.Singleton<IConnections, FoundryConnections>());
+        }
     }
 
     /// <summary>
@@ -86,7 +113,7 @@ internal static class ActivityStack
                 .AddEnvironmentVariables()
                 .AddInMemoryCollection(GetConnectionConfiguration(options))
                 .Build());
-        RegisterM365Services(services);
+        RegisterM365Services(services, options);
 
         using var provider = services.BuildServiceProvider();
         return new AgentApplication(provider.GetRequiredService<AgentApplicationOptions>());

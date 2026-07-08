@@ -22,7 +22,11 @@ namespace Azure.AI.AgentServer.Activity
     public partial class ActivityServerOptions
     {
         public ActivityServerOptions() { }
+        public System.Action<Microsoft.Extensions.DependencyInjection.IServiceCollection>? ConfigureServices { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string?>? ConnectionConfiguration { get { throw null; } set { } }
+        public Microsoft.Agents.Authentication.IConnections? Connections { get { throw null; } set { } }
         public bool DigitalWorker { get { throw null; } set { } }
+        public Microsoft.Agents.Storage.IStorage? Storage { get { throw null; } set { } }
     }
     public static partial class ActivityServerServiceCollectionExtensions
     {

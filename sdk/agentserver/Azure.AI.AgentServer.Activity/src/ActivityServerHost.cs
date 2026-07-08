@@ -102,7 +102,7 @@ public sealed class ActivityServerHost
             // Register the native Microsoft 365 Agents SDK stack into the real application host so
             // the SDK's CloudAdapter and its background HostedActivityService run for the host's
             // lifetime — this is what lets the endpoint use the SDK's ProcessAsync as-is.
-            ActivityStack.RegisterM365Services(builder.Services);
+            ActivityStack.RegisterM365Services(builder.Services, _options);
 
             // Host the pre-built application instance (with its registered handlers) as the agent
             // resolved by both the endpoint and the background activity service.
@@ -164,9 +164,10 @@ public sealed class ActivityServerHost
         var sessionId = ActivityIdSanitizer.Sanitize(ActivitySessionIdResolver.Resolve(context.Request));
         context.Response.Headers[PlatformHeaders.SessionId] = sessionId;
 
-        // Promote correlation baggage onto the current request span for downstream spans/logs.
+        // Promote correlation baggage onto the current request span so the core enrichment
+        // processor stamps the session id onto every span (and the core log enrichment onto logs).
         var tracing = context.RequestServices.GetService<ActivityProtocolActivitySource>();
-        tracing?.PropagateActivityBaggage(sessionId, sessionId, null, context.Request.Headers);
+        tracing?.PropagateActivityBaggage(sessionId);
     }
 
     /// <summary>
