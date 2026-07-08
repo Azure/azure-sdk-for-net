@@ -28,12 +28,12 @@ DO NOT USE FOR: analysis only (use azsdk-common-pipeline-troubleshooting), API d
 
 ## MCP Tools
 
-| Tool                                     | Purpose                                     |
-| ---------------------------------------- | ------------------------------------------- |
-| `azure-sdk-mcp:azsdk_verify_setup`       | Verify local environment is ready           |
-| `azure-sdk-mcp:azsdk_package_build_code` | Build the package locally                   |
-| `azure-sdk-mcp:azsdk_package_run_check`  | Run validation/lint/typecheck locally       |
-| `azure-sdk-mcp:azsdk_package_run_tests`  | Run tests locally                           |
+| Tool                                     | Purpose                               |
+| ---------------------------------------- | ------------------------------------- |
+| `azure-sdk-mcp:azsdk_verify_setup`       | Verify local environment is ready     |
+| `azure-sdk-mcp:azsdk_package_build_code` | Build the package locally             |
+| `azure-sdk-mcp:azsdk_package_run_check`  | Run validation/lint/typecheck locally |
+| `azure-sdk-mcp:azsdk_package_run_tests`  | Run tests locally                     |
 
 **Prerequisites:** azure-sdk-mcp server required. Local clone of the affected SDK language repo. Language build tools installed.
 

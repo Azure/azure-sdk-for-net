@@ -28,12 +28,12 @@ DO NOT USE FOR: applying code fixes (use azsdk-common-pipeline-fixer), local bui
 
 ## MCP Tools
 
-| Tool                                              | Purpose                                         |
-| ------------------------------------------------- | ----------------------------------------------- |
-| `azure-sdk-mcp:azsdk_analyze_pipeline`            | Analyze pipeline failure (logs + test results)  |
-| `azure-sdk-mcp:azsdk_get_pipeline_llm_artifacts`  | Download test result artifacts from pipeline    |
-| `azure-sdk-mcp:azsdk_get_pr_checks`               | Get pipeline/check results linked to a PR       |
-| `azure-sdk-mcp:azsdk_get_pipeline_status`          | Get pipeline run status                         |
+| Tool                                             | Purpose                                        |
+| ------------------------------------------------ | ---------------------------------------------- |
+| `azure-sdk-mcp:azsdk_analyze_pipeline`           | Analyze pipeline failure (logs + test results) |
+| `azure-sdk-mcp:azsdk_get_pipeline_llm_artifacts` | Download test result artifacts from pipeline   |
+| `azure-sdk-mcp:azsdk_get_pr_checks`              | Get pipeline/check results linked to a PR      |
+| `azure-sdk-mcp:azsdk_get_pipeline_status`        | Get pipeline run status                        |
 
 ## Steps
 
