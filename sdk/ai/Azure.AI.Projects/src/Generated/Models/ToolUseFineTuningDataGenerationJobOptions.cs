@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The options for a data generation job with ToolUse type. Used only for fine-tuning scenarios. </summary>
+    [Experimental("AAIP001")]
     public partial class ToolUseFineTuningDataGenerationJobOptions : DataGenerationJobOptions
     {
         /// <summary> Initializes a new instance of <see cref="ToolUseFineTuningDataGenerationJobOptions"/>. </summary>

@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Evaluator Generation Job resource — a long-running job that generates rubric-based evaluator definitions from source materials. On success, the result is the persisted EvaluatorVersion. </summary>
+    [Experimental("AAIP001")]
     public partial class EvaluatorGenerationJob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
