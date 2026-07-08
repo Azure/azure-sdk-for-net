@@ -49,11 +49,11 @@ jobs:
               sed -n '1s/^[^\t]*\t//p'
           }
 
-          has_management_review_check() {
+          has_active_management_review_check() {
             local head_sha="$1"
             local review_check_ids
             review_check_ids="$(gh api --paginate "repos/$REPOSITORY/commits/$head_sha/check-runs?per_page=100" \
-              --jq '.check_runs[] | select(.name == "Azure .NET Management SDK PR Review") | .id')"
+              --jq '.check_runs[] | select(.name == "Azure .NET Management SDK PR Review" and (.status == "queued" or .status == "in_progress")) | .id')"
             [ -n "$review_check_ids" ]
           }
 
@@ -61,8 +61,8 @@ jobs:
             local head_sha="$1"
             local details_url="${GITHUB_SERVER_URL:-https://github.com}/$REPOSITORY/actions/runs/$GITHUB_RUN_ID"
 
-            if has_management_review_check "$head_sha"; then
-              echo "Management review check already exists for $head_sha."
+            if has_active_management_review_check "$head_sha"; then
+              echo "Management review check is already active for $head_sha."
               return 0
             fi
 
@@ -114,8 +114,8 @@ jobs:
               return 0
             fi
 
-            if has_management_review_check "$check_run_head_sha"; then
-              echo "Skipping PR #$pr_number; management review check already exists for $check_run_head_sha."
+            if has_active_management_review_check "$check_run_head_sha"; then
+              echo "Skipping PR #$pr_number; management review check is already active for $check_run_head_sha."
               return 0
             fi
 
