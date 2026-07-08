@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
@@ -13,7 +12,6 @@ namespace Azure.AI.Projects.Evaluation
     /// Base evaluator configuration with discriminator
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CodeBasedEvaluatorDefinition"/>, <see cref="PromptBasedEvaluatorDefinition"/>, <see cref="RubricBasedEvaluatorDefinition"/>, and <see cref="EndpointBasedEvaluatorDefinition"/>.
     /// </summary>
-    [Experimental("AAIP001")]
     public abstract partial class EvaluatorDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

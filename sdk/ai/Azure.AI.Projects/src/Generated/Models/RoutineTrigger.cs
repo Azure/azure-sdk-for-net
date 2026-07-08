@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
@@ -12,7 +11,6 @@ namespace Azure.AI.Projects
     /// Base model for a routine trigger.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScheduleRoutineTrigger"/>, <see cref="TimerRoutineTrigger"/>, <see cref="GitHubIssueRoutineTrigger"/>, and <see cref="CustomRoutineTrigger"/>.
     /// </summary>
-    [Experimental("AAIP001")]
     public abstract partial class RoutineTrigger
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

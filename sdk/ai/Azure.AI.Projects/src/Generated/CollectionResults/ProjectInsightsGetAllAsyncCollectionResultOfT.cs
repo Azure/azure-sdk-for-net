@@ -6,13 +6,11 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    [Experimental("AAIP001")]
     internal partial class ProjectInsightsGetAllAsyncCollectionResultOfT : AsyncCollectionResult<ProjectsInsight>
     {
         private readonly ProjectInsights _client;

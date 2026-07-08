@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The bing custom search tool parameters. </summary>
-    [Experimental("AAIP001")]
     public partial class ResponsesBingCustomSearchToolParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
