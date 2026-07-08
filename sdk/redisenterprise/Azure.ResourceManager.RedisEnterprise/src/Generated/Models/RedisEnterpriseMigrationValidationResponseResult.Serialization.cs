@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
-                foreach (MigrationValidationError item in Errors)
+                foreach (RedisEnterpriseMigrationValidationError item in Errors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 writer.WritePropertyName("warnings"u8);
                 writer.WriteStartArray();
-                foreach (MigrationValidationWarning item in Warnings)
+                foreach (RedisEnterpriseMigrationValidationWarning item in Warnings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 return null;
             }
             bool isValid = default;
-            IList<MigrationValidationError> errors = default;
-            IList<MigrationValidationWarning> warnings = default;
+            IList<RedisEnterpriseMigrationValidationError> errors = default;
+            IList<RedisEnterpriseMigrationValidationWarning> warnings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    List<MigrationValidationError> array = new List<MigrationValidationError>();
+                    List<RedisEnterpriseMigrationValidationError> array = new List<RedisEnterpriseMigrationValidationError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MigrationValidationError.DeserializeMigrationValidationError(item, options));
+                        array.Add(RedisEnterpriseMigrationValidationError.DeserializeRedisEnterpriseMigrationValidationError(item, options));
                     }
                     errors = array;
                     continue;
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    List<MigrationValidationWarning> array = new List<MigrationValidationWarning>();
+                    List<RedisEnterpriseMigrationValidationWarning> array = new List<RedisEnterpriseMigrationValidationWarning>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MigrationValidationWarning.DeserializeMigrationValidationWarning(item, options));
+                        array.Add(RedisEnterpriseMigrationValidationWarning.DeserializeRedisEnterpriseMigrationValidationWarning(item, options));
                     }
                     warnings = array;
                     continue;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RedisEnterpriseMigrationValidationResponseResult(isValid, errors ?? new ChangeTrackingList<MigrationValidationError>(), warnings ?? new ChangeTrackingList<MigrationValidationWarning>(), additionalBinaryDataProperties);
+            return new RedisEnterpriseMigrationValidationResponseResult(isValid, errors ?? new ChangeTrackingList<RedisEnterpriseMigrationValidationError>(), warnings ?? new ChangeTrackingList<RedisEnterpriseMigrationValidationWarning>(), additionalBinaryDataProperties);
         }
     }
 }
