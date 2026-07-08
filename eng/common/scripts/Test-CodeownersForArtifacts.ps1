@@ -262,11 +262,11 @@ foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -Filter
 LogGroupEnd
 
 if ($failedPackages.Count -gt 0) {
-    LogError "Codeowners validation failed for one or more packages. See http://aka.ms/azsdk/codeowners for instructions to fix the issue."
     Write-Host ""
+    Write-Host "Codeowners validation failed for one or more packages. See http://aka.ms/azsdk/codeowners for instructions to fix the issue."
     Write-Host "Failed Packages:"
     foreach ($failedPackage in $failedPackages) {
-        LogError "  - $($failedPackage.DirectoryPath) does not have sufficient code owners coverage"
+        Write-Host "  - $($failedPackage.DirectoryPath) does not have sufficient code owners coverage"
         if ($failedPackage.HasParsedResponse -and @($failedPackage.Issues).Count -gt 0) {
             Write-Host "    Issue details:"
             foreach ($issue in $failedPackage.Issues) {
