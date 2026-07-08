@@ -539,6 +539,18 @@ namespace Azure.Storage
             public const int TimeWindowMinutes = 15;
             public const string ChangeFeedContainerHeader = "x-ms-file-blob-container-for-xfiles-change-feed";
 
+            /// <summary>
+            /// Path (relative to the change-feed container) of the mutable pointer blob
+            /// that identifies the most recent reset marker for the share.
+            /// </summary>
+            public const string ResetLatestJsonPath = "meta/reset-latest.json";
+
+            /// <summary>
+            /// Prefix (relative to the change-feed container) under which per-event
+            /// immutable reset marker blobs are stored (<c>meta/resets/&lt;20-digit-FILETIME&gt;.json</c>).
+            /// </summary>
+            public const string ResetEventPrefix = "meta/resets/";
+
             internal static class Event
             {
                 public const string SchemaVersion = "SchemaVersion";
@@ -567,6 +579,36 @@ namespace Azure.Storage
             {
                 public const string EntraOID = "EntraOID";
                 public const string SID = "SID";
+            }
+
+            /// <summary>
+            /// JSON field names for the mutable pointer blob <c>meta/reset-latest.json</c>.
+            /// </summary>
+            internal static class ResetPointer
+            {
+                public const string SchemaVersion = "schemaVersion";
+                public const string LatestResetId = "latestResetId";
+                public const string LatestResetFileTime = "latestResetFileTime";
+                public const string LatestResetTimeUtc = "latestResetTimeUtc";
+                public const string LatestMarkerPath = "latestMarkerPath";
+                public const string AccountName = "accountName";
+                public const string ContainerName = "containerName";
+                public const string Reason = "reason";
+            }
+
+            /// <summary>
+            /// JSON field names for the per-event immutable reset marker blobs
+            /// <c>meta/resets/&lt;20-digit-FILETIME&gt;.json</c>.
+            /// </summary>
+            internal static class ResetMarker
+            {
+                public const string SchemaVersion = "schemaVersion";
+                public const string ResetId = "resetId";
+                public const string ResetFileTime = "resetFileTime";
+                public const string ResetTimeUtc = "resetTimeUtc";
+                public const string AccountName = "accountName";
+                public const string ContainerName = "containerName";
+                public const string Reason = "reason";
             }
         }
 
