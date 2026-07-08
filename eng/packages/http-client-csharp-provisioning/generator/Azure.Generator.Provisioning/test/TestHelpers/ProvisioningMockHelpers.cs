@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.SourceInput;
@@ -10,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using Azure.Generator.Management;
+using Azure.Generator.Management.Models;
 
 namespace Azure.Generator.Provisioning.Tests.TestHelpers
 {
@@ -24,6 +25,7 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             Func<IReadOnlyList<InputEnumType>>? inputEnums = null,
             Func<IReadOnlyList<InputModelType>>? inputModels = null,
             Func<IReadOnlyList<InputClient>>? clients = null,
+            Func<ArmProviderSchema>? armProviderSchema = null,
             string? primaryNamespace = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
@@ -39,10 +41,14 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
                 inputNsModels,
                 inputNsClients,
                 new InputAuth(null, null));
-            // ProvisioningGenerator inherits ManagementClientGenerator and does not define a
-            // provisioning-specific input library type, so tests mock ManagementInputLibrary.
-            var mockInputLibrary = new Mock<ManagementInputLibrary>(_configFilePath);
+            var mockInputLibrary = new Mock<ProvisioningInputLibrary>(_configFilePath);
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNamespace.Object);
+            if (armProviderSchema is not null)
+            {
+                typeof(ManagementInputLibrary)
+                    .GetField("_providerSchema", BindingFlags.Instance | BindingFlags.NonPublic)!
+                    .SetValue(mockInputLibrary.Object, armProviderSchema());
+            }
 
             var loadMethod = typeof(Configuration).GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic);
             var config = loadMethod!.Invoke(null, [_configFilePath, null]);
