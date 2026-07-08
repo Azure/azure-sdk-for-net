@@ -40,6 +40,8 @@ extends:
             Paths:
               - "/sdk"
               - "/common"
+        # Authenticate npm to Azure Artifacts so CodeChecks does not pull packages from npmjs
+        - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
         - template: /eng/pipelines/templates/steps/install-dotnet.yml
         - pwsh: |
             dotnet build .
