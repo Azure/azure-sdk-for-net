@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Activity.Internal;
 /// <remarks>
 /// The Activity protocol adds the request header as a session ID source
 /// (priority 2) compared to the Invocations protocol, which does not
-/// check the header. This matches the Python SDK's session resolution order.
+/// check the header.
 /// </remarks>
 internal static class ActivitySessionIdResolver
 {

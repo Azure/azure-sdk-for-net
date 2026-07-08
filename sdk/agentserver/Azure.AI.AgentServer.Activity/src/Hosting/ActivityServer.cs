@@ -8,8 +8,7 @@ using Microsoft.AspNetCore.Http;
 namespace Azure.AI.AgentServer.Activity;
 
 /// <summary>
-/// Entry point for creating an Activity protocol host — the .NET counterpart of the
-/// Python package's <c>ActivityAgentServerHost</c> constructor.
+/// Entry point for creating an Activity protocol host.
 /// </summary>
 /// <remarks>
 /// <para>A single factory selects one of three mutually-exclusive construction modes:</para>

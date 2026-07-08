@@ -12,11 +12,9 @@ namespace Azure.AI.AgentServer.Activity.Internal;
 /// <summary>
 /// Custom <see cref="IConnections"/> implementation for Foundry hosted containers.
 ///
-/// This is the C# equivalent of Python's monkey-patch on
-/// <c>MsalAuth.get_agentic_application_token</c>. Instead of patching sealed
-/// M365 SDK classes, we register our own <c>IConnections</c> that provides a
+/// Registers an <c>IConnections</c> that provides a
 /// <see cref="FoundryAccessTokenProvider"/> which acquires tokens via
-/// <c>DefaultAzureCredential</c> with the blueprint managed identity.
+/// <c>ManagedIdentityCredential</c> with the configured managed identity.
 ///
 /// The M365 adapter's ConnectorClient calls <c>IConnections.GetTokenProvider()</c>
 /// → gets our provider → calls <c>GetAccessTokenAsync()</c> → gets correct token
@@ -36,9 +34,9 @@ internal sealed class FoundryConnections : IConnections
     {
         _logger = logger;
 
-        var clientId = Environment.GetEnvironmentVariable("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__CLIENTID") ?? "";
-        var tenantId = Environment.GetEnvironmentVariable("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__TENANTID") ?? "";
-        var scope = Environment.GetEnvironmentVariable("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__SCOPES__0") ?? "";
+        var clientId = Environment.GetEnvironmentVariable(ConnectionEnvironment.ClientId) ?? "";
+        var tenantId = Environment.GetEnvironmentVariable(ConnectionEnvironment.TenantId) ?? "";
+        var scope = Environment.GetEnvironmentVariable(ConnectionEnvironment.Scope0) ?? "";
 
         _logger.LogInformation(
             "[FoundryConnections] Initialized | clientId={ClientId} | tenantId={TenantId} | scope_from_env={Scope}",
@@ -49,7 +47,7 @@ internal sealed class FoundryConnections : IConnections
         // If no scope from env, default to botframework (simple mode)
         if (string.IsNullOrEmpty(scope))
         {
-            scope = "https://api.botframework.com/.default";
+            scope = ConnectionEnvironment.BotConnectorScope;
             _logger.LogInformation("[FoundryConnections] No SCOPES__0 env var — defaulting to: {Scope}", scope);
         }
 
@@ -94,22 +92,11 @@ internal sealed class FoundryConnections : IConnections
 }
 
 /// <summary>
-/// Token provider that acquires tokens using <c>DefaultAzureCredential</c>
-/// with the blueprint managed identity client ID.
+/// Token provider that acquires tokens using <c>ManagedIdentityCredential</c>
+/// with the configured managed identity client ID.
 ///
-/// Equivalent to Python's patched <c>MsalAuth.get_agentic_application_token</c>:
-/// <code>
-/// credential = DefaultAzureCredential(
-///     managed_identity_client_id=client_id,
-///     identity_config={"fmi_path": agent_app_instance_id}
-/// )
-/// token = await credential.get_token("api://AzureADTokenExchange/.default")
-/// </code>
-///
-/// In C#, <c>DefaultAzureCredential</c> with <c>ManagedIdentityClientId</c>
-/// acquires a token via the managed identity endpoint. The scope
-/// <c>api://AzureADTokenExchange/.default</c> yields a client assertion that
-/// can be used for outbound Bot Connector calls.
+/// The scope <c>api://AzureADTokenExchange/.default</c> yields a client assertion
+/// that can be used for outbound Bot Connector calls.
 /// </summary>
 internal sealed class FoundryAccessTokenProvider : IAccessTokenProvider
 {

@@ -20,7 +20,7 @@ internal class ActivityProtocolActivitySource
     /// </summary>
     public const string DefaultName = "Azure.AI.AgentServer.Activity";
 
-    // Span attribute keys (matching Python ActivityConstants)
+    // Span attribute keys
     internal const string AttrSpanSessionId = "azure.ai.agentserver.activity.session_id";
     internal const string AttrSpanProtocol = "azure.ai.agentserver.activity.protocol";
     internal const string AttrSpanErrorCode = "azure.ai.agentserver.activity.error.code";
@@ -65,7 +65,7 @@ internal class ActivityProtocolActivitySource
         activity.AddBaggage("azure.ai.agentserver.session_id", sessionId ?? string.Empty);
         activity.AddBaggage("azure.ai.agentserver.protocol", "activity");
 
-        // gen_ai semantic convention span attributes (matching Python SDK)
+        // gen_ai semantic convention span attributes
         activity.SetTag("service.name", "azure.ai.agentserver");
         activity.SetTag("gen_ai.provider.name", "AzureAI Hosted Agents");
         activity.SetTag("gen_ai.operation.name", "handle_activity");

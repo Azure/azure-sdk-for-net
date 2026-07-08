@@ -81,9 +81,8 @@ central error hook.
 
 ### ActivityHandlerBuilder
 
-A fluent builder for registering activity handlers as lambda delegates (the C# equivalent of the
-Python SDK's `@app.activity` / `@app.error` decorators). Use `OnMessage`, `OnActivity(type, ...)`,
-`OnConversationUpdate`, `OnInvoke`, `OnUnhandledActivity`, and `OnError`.
+A fluent builder for registering activity handlers as lambda delegates. Use `OnMessage`,
+`OnActivity(type, ...)`, `OnConversationUpdate`, `OnInvoke`, `OnUnhandledActivity`, and `OnError`.
 
 ### ActivityContext
 

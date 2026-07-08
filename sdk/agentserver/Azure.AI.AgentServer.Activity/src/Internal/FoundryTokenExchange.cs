@@ -12,13 +12,8 @@ namespace Azure.AI.AgentServer.Activity.Internal;
 /// <summary>
 /// Handles the 3-step agentic token exchange for Foundry containers.
 ///
-/// This is the .NET equivalent of the Python SDK's <c>_apply_msal_patches()</c>
-/// which patches <c>MsalAuth.get_agentic_application_token</c> to use
-/// <c>DefaultAzureCredential</c> with <c>fmi_path</c> support.
-///
-/// In .NET, instead of monkey-patching, we provide a standalone token
-/// helper that agents can use to acquire tokens for outbound Bot Connector
-/// calls, implementing the same 3-step flow:
+/// Provides a standalone token helper that agents can use to acquire tokens for
+/// outbound Bot Connector calls, implementing the 3-step flow:
 ///   1. Blueprint Managed Identity → api://AzureADTokenExchange/.default
 ///   2. Client assertion exchange → instance token
 ///   3. user_fic grant → agentic user token

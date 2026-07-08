@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Activity.Internal;
 
 namespace Azure.AI.AgentServer.Activity;
 
@@ -30,8 +31,6 @@ namespace Azure.AI.AgentServer.Activity;
 ///     federated-identity exchange, scoped to the agentic resource.</item>
 /// </list>
 /// </para>
-/// <para>This is the .NET equivalent of the Python SDK's
-/// <c>ActivityAgentServerHost._initialize_default_env_vars()</c>.</para>
 /// </remarks>
 public static class ActivityEnvironment
 {
@@ -68,61 +67,38 @@ public static class ActivityEnvironment
         if (digitalWorker)
         {
             // Digital worker: blueprint identity + FMI token exchange
-            scope = "5a807f24-c9de-44ee-a3a7-329e88a00ffc/.default";
-            clientIdEnvVar = "FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID";
+            scope = ConnectionEnvironment.DigitalWorkerScope;
+            clientIdEnvVar = ConnectionEnvironment.FoundryBlueprintClientId;
         }
         else
         {
             // Simple agent: instance identity mints Bot Connector token directly
-            scope = "https://api.botframework.com/.default";
-            clientIdEnvVar = "FOUNDRY_AGENT_INSTANCE_CLIENT_ID";
+            scope = ConnectionEnvironment.BotConnectorScope;
+            clientIdEnvVar = ConnectionEnvironment.FoundryInstanceClientId;
         }
 
-        // Log what mode we're in and what env vars we see
-        Console.WriteLine($"[ENV-INIT] digitalWorker={digitalWorker}, clientIdEnvVar={clientIdEnvVar}");
-        Console.WriteLine($"[ENV-INIT] CONNECTIONS__SERVICE_CONNECTION__SETTINGS__AUTHTYPE={Environment.GetEnvironmentVariable("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__AUTHTYPE") ?? "(not set)"}");
-        Console.WriteLine($"[ENV-INIT] CONNECTIONS__SERVICE_CONNECTION__SETTINGS__CLIENTID={Environment.GetEnvironmentVariable("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__CLIENTID") ?? "(not set)"}");
-        Console.WriteLine($"[ENV-INIT] CONNECTIONS__SERVICE_CONNECTION__SETTINGS__TENANTID={Environment.GetEnvironmentVariable("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__TENANTID") ?? "(not set)"}");
-        Console.WriteLine($"[ENV-INIT] CONNECTIONS__SERVICE_CONNECTION__SETTINGS__SCOPES__0={Environment.GetEnvironmentVariable("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__SCOPES__0") ?? "(not set)"}");
-        Console.WriteLine($"[ENV-INIT] CONNECTIONSMAP__0__SERVICEURL={Environment.GetEnvironmentVariable("CONNECTIONSMAP__0__SERVICEURL") ?? "(not set)"}");
-        Console.WriteLine($"[ENV-INIT] CONNECTIONSMAP__0__CONNECTION={Environment.GetEnvironmentVariable("CONNECTIONSMAP__0__CONNECTION") ?? "(not set)"}");
-        Console.WriteLine($"[ENV-INIT] {clientIdEnvVar}={Environment.GetEnvironmentVariable(clientIdEnvVar) ?? "(not set)"}");
-        Console.WriteLine($"[ENV-INIT] FOUNDRY_AGENT_TENANT_ID={Environment.GetEnvironmentVariable("FOUNDRY_AGENT_TENANT_ID") ?? "(not set)"}");
-
         // Static defaults for M365 connection settings
-        SetIfMissing("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__AUTHTYPE", "UserManagedIdentity");
-        SetIfMissing("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__SCOPES__0", scope);
-        SetIfMissing("CONNECTIONSMAP__0__SERVICEURL", "*");
-        SetIfMissing("CONNECTIONSMAP__0__CONNECTION", "SERVICE_CONNECTION");
+        SetIfMissing(ConnectionEnvironment.AuthType, ConnectionEnvironment.DefaultAuthType);
+        SetIfMissing(ConnectionEnvironment.Scope0, scope);
+        SetIfMissing(ConnectionEnvironment.ConnectionMapServiceUrl, ConnectionEnvironment.DefaultServiceUrl);
+        SetIfMissing(ConnectionEnvironment.ConnectionMapConnection, ConnectionEnvironment.DefaultConnectionName);
 
         // Derive client ID from the appropriate Foundry env var
         var clientId = GetNonEmpty(clientIdEnvVar)
             ?? (digitalWorker ? FoundryEnvironment.AgentBlueprintClientId : FoundryEnvironment.AgentInstanceClientId);
-        var tenantId = GetNonEmpty("FOUNDRY_AGENT_TENANT_ID")
+        var tenantId = GetNonEmpty(ConnectionEnvironment.FoundryTenantId)
             ?? FoundryEnvironment.AgentTenantId;
 
         if (!string.IsNullOrEmpty(clientId))
         {
-            SetIfMissing("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__CLIENTID", clientId);
+            SetIfMissing(ConnectionEnvironment.ClientId, clientId);
         }
 
         if (!string.IsNullOrEmpty(tenantId))
         {
-            SetIfMissing("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__TENANTID", tenantId);
-            SetIfMissing(
-                "CONNECTIONS__SERVICE_CONNECTION__SETTINGS__AUTHORITY",
-                $"https://login.microsoftonline.com/{tenantId}");
+            SetIfMissing(ConnectionEnvironment.TenantId, tenantId);
+            SetIfMissing(ConnectionEnvironment.Authority, ConnectionEnvironment.AuthorityFor(tenantId));
         }
-
-        // Log final state after initialization
-        Console.WriteLine($"[ENV-INIT] === FINAL STATE ===");
-        Console.WriteLine($"[ENV-INIT] AUTHTYPE={Environment.GetEnvironmentVariable("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__AUTHTYPE")}");
-        Console.WriteLine($"[ENV-INIT] CLIENTID={Environment.GetEnvironmentVariable("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__CLIENTID")}");
-        Console.WriteLine($"[ENV-INIT] TENANTID={Environment.GetEnvironmentVariable("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__TENANTID")}");
-        Console.WriteLine($"[ENV-INIT] SCOPES__0={Environment.GetEnvironmentVariable("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__SCOPES__0")}");
-        Console.WriteLine($"[ENV-INIT] AUTHORITY={Environment.GetEnvironmentVariable("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__AUTHORITY")}");
-        Console.WriteLine($"[ENV-INIT] CONNECTIONSMAP__0__SERVICEURL={Environment.GetEnvironmentVariable("CONNECTIONSMAP__0__SERVICEURL")}");
-        Console.WriteLine($"[ENV-INIT] CONNECTIONSMAP__0__CONNECTION={Environment.GetEnvironmentVariable("CONNECTIONSMAP__0__CONNECTION")}");
     }
 
     private static string? GetNonEmpty(string name)

@@ -15,7 +15,6 @@ namespace Azure.AI.AgentServer.Activity.Internal;
 /// <summary>
 /// Builds the Microsoft 365 Agents SDK stack (an <see cref="AgentApplication"/> and its
 /// <see cref="IAgentHttpAdapter"/>) eagerly, using the real compile-time SDK APIs.
-/// This is the .NET counterpart of the Python package's <c>_m365_bridge.build_m365_app</c>.
 /// </summary>
 internal static class ActivityStack
 {

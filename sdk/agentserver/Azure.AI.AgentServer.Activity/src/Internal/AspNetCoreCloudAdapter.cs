@@ -10,9 +10,8 @@ using Microsoft.AspNetCore.Http;
 namespace Azure.AI.AgentServer.Activity.Internal;
 
 /// <summary>
-/// ASP.NET Core CloudAdapter for the Activity protocol host — the .NET counterpart of the
-/// Python package's <c>StarletteCloudAdapter</c> (and modelled on the Microsoft 365 Agents SDK
-/// per-framework adapter <c>Microsoft.Agents.Hosting.AspNetCore.CloudAdapter</c>).
+/// ASP.NET Core CloudAdapter for the Activity protocol host, modelled on the Microsoft 365
+/// Agents SDK per-framework adapter <c>Microsoft.Agents.Hosting.AspNetCore.CloudAdapter</c>.
 /// </summary>
 /// <remarks>
 /// <para>
@@ -28,8 +27,7 @@ namespace Azure.AI.AgentServer.Activity.Internal;
 /// a background <c>HostedActivityService</c>; the Activity host builds the M365 stack in a
 /// standalone container where that background service is not running, so queued turns would never
 /// execute. Running inline guarantees the handler runs and the connector delivers the reply during
-/// the turn. This mirrors the Python bridge, which likewise calls the shared request pipeline
-/// rather than the queueing framework entry point.
+/// the turn.
 /// </para>
 /// </remarks>
 internal sealed class AspNetCoreCloudAdapter
@@ -68,8 +66,8 @@ internal sealed class AspNetCoreCloudAdapter
 
         // Synthesize the outbound claims for this turn. The Foundry gateway is a trusted,
         // network-isolated proxy — inbound requests are NOT Bot Framework channel JWTs — so we do
-        // not rely on inbound authentication (HttpHelper.GetClaimsIdentity). This mirrors the
-        // Python bridge's _build_outbound_claims and lets the connector mint the outbound token.
+        // not rely on inbound authentication (HttpHelper.GetClaimsIdentity). The synthesized claims
+        // let the connector mint the outbound reply token.
         var claims = BuildOutboundClaims();
 
         // Run the turn synchronously in-request (see the class remarks for why we bypass the
@@ -92,11 +90,10 @@ internal sealed class AspNetCoreCloudAdapter
     }
 
     /// <summary>
-    /// Builds the outbound <see cref="ClaimsIdentity"/> for a turn. Mirrors the Python bridge's
-    /// <c>_build_outbound_claims</c>: the digital-worker model uses anonymous claims (the FMI
-    /// patch supplies the token); the simple model presents authenticated claims whose
-    /// <c>appid</c>/<c>aud</c> match the agent-instance client id so the connector uses the
-    /// managed-identity connection for the outbound reply.
+    /// Builds the outbound <see cref="ClaimsIdentity"/> for a turn. The digital-worker model uses
+    /// anonymous claims (the FMI token exchange supplies the token); the simple model presents
+    /// authenticated claims whose <c>appid</c>/<c>aud</c> match the agent-instance client id so the
+    /// connector uses the managed-identity connection for the outbound reply.
     /// </summary>
     private ClaimsIdentity BuildOutboundClaims()
     {
@@ -106,7 +103,7 @@ internal sealed class AspNetCoreCloudAdapter
         }
 
         var botAppId = Environment
-            .GetEnvironmentVariable("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__CLIENTID")?
+            .GetEnvironmentVariable(ConnectionEnvironment.ClientId)?
             .Trim();
 
         if (string.IsNullOrEmpty(botAppId))

@@ -14,8 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Azure.AI.AgentServer.Activity;
 
 /// <summary>
-/// Activity protocol host for Azure AI Hosted Agents — the .NET counterpart of the
-/// Python package's <c>ActivityAgentServerHost</c>.
+/// Activity protocol host for Azure AI Hosted Agents.
 /// </summary>
 /// <remarks>
 /// <para>
@@ -133,8 +132,8 @@ public sealed class ActivityServerHost
             return;
         }
 
-        // Delegate to the ASP.NET Core CloudAdapter (mirrors the Python StarletteCloudAdapter):
-        // read the activity, synthesize claims, run the turn inline, and write the response.
+        // Delegate to the ASP.NET Core CloudAdapter: read the activity, synthesize claims,
+        // run the turn inline, and write the response.
         await _cloudAdapter!.ProcessAsync(context, _agentApp!, cancellationToken).ConfigureAwait(false);
     }
 }
