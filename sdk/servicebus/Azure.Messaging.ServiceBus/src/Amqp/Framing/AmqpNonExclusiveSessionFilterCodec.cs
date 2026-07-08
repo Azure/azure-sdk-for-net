@@ -51,5 +51,10 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
             return AmqpCodec.GetStringEncodeSize(SessionId) +
                    AmqpCodec.GetUuidEncodeSize(LockToken);
         }
+
+        public override string ToString()
+        {
+            return $"non-exclusive-session-filter(session-id:{SessionId},lock-token:{LockToken})";
+        }
     }
 }

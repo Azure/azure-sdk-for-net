@@ -43,6 +43,19 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.That(decoded.LockToken, Is.EqualTo(token), "The lock token should survive a wire round-trip.");
         }
 
+        [Test]
+        public void ToStringDescribesSessionIdAndLockToken()
+        {
+            var token = Guid.NewGuid();
+            var codec = new AmqpNonExclusiveSessionFilterCodec { SessionId = "session-1", LockToken = token };
+
+            var text = codec.ToString();
+
+            Assert.That(text, Does.Contain("non-exclusive-session-filter"), "The filter name should be present.");
+            Assert.That(text, Does.Contain("session-1"), "The session id should be present.");
+            Assert.That(text, Does.Contain(token.ToString()), "The lock token should be present.");
+        }
+
         private static AmqpNonExclusiveSessionFilterCodec RoundTrip(AmqpNonExclusiveSessionFilterCodec original)
         {
             // The described type must be registered before it can be decoded by descriptor; AmqpReceiver's static
