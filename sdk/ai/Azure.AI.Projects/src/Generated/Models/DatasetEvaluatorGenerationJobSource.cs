@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Evaluation;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Dataset source for evaluator generation jobs — reference to a dataset. </summary>
+    [Experimental("AAIP001")]
     public partial class DatasetEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
     {
         /// <summary> Initializes a new instance of <see cref="DatasetEvaluatorGenerationJobSource"/>. </summary>

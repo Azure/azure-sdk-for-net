@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Reference to a registered Foundry dataset. </summary>
+    [Experimental("AAIP001")]
     public partial class OptimizationReferenceDatasetInput : OptimizationDatasetInput
     {
         /// <summary> Initializes a new instance of <see cref="OptimizationReferenceDatasetInput"/>. </summary>

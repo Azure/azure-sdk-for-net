@@ -622,7 +622,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.Evaluation.InsightsMetadata InsightsMetadata(System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.AI.Projects.Evaluation.InsightSummary InsightSummary(int sampleCount = 0, int uniqueSubclusterCount = 0, int uniqueClusterCount = 0, string methodName = null, Azure.AI.Projects.Evaluation.ClusterTokenUsage usage = null) { throw null; }
         public static Azure.AI.Projects.ManagedAzureAISearchIndex ManagedAzureAISearchIndex(string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string vectorStoreId = null) { throw null; }
-        public static Azure.AI.Projects.MemoryDeletionResult MemoryDeletionResult(string memoryId = null, bool deleted = false) { throw null; }
+        public static Azure.AI.Projects.Memory.MemoryDeletionResult MemoryDeletionResult(string memoryId = null, bool deleted = false) { throw null; }
         public static Azure.AI.Projects.Memory.MemoryItem MemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null, string kind = null) { throw null; }
         public static Azure.AI.Projects.Memory.MemoryOperation MemoryOperation(Azure.AI.Projects.Memory.MemoryOperationKind kind = default(Azure.AI.Projects.Memory.MemoryOperationKind), Azure.AI.Projects.Memory.MemoryItem memoryItem = null) { throw null; }
         public static Azure.AI.Projects.Memory.MemorySearchItem MemorySearchItem(Azure.AI.Projects.Memory.MemoryItem memoryItem = null) { throw null; }
@@ -1208,23 +1208,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.ManagedAzureAISearchIndex System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ManagedAzureAISearchIndex>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ManagedAzureAISearchIndex>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ManagedAzureAISearchIndex>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MemoryDeletionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.MemoryDeletionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.MemoryDeletionResult>
-    {
-        internal MemoryDeletionResult() { }
-        public bool Deleted { get { throw null; } }
-        public string MemoryId { get { throw null; } }
-        public Azure.AI.Projects.Memory.MemoryStoreObjectType Object { get { throw null; } }
-        protected virtual Azure.AI.Projects.MemoryDeletionResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.AI.Projects.MemoryDeletionResult (System.ClientModel.ClientResult result) { throw null; }
-        protected virtual Azure.AI.Projects.MemoryDeletionResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.MemoryDeletionResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.MemoryDeletionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.MemoryDeletionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.MemoryDeletionResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.MemoryDeletionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.MemoryDeletionResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.MemoryDeletionResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ModelDeployment : Azure.AI.Projects.AIProjectDeployment, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ModelDeployment>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ModelDeployment>
     {
@@ -3356,9 +3339,9 @@ namespace Azure.AI.Projects.Memory
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateMemoryStoreAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryStore>> CreateMemoryStoreAsync(string name, Azure.AI.Projects.Memory.MemoryStoreDefinition definition, string description = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult DeleteMemory(string name, string memoryId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.MemoryDeletionResult> DeleteMemory(string name, string memoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryDeletionResult> DeleteMemory(string name, string memoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteMemoryAsync(string name, string memoryId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.MemoryDeletionResult>> DeleteMemoryAsync(string name, string memoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Memory.MemoryDeletionResult>> DeleteMemoryAsync(string name, string memoryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult DeleteMemoryStore(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Memory.DeleteMemoryStoreResponse> DeleteMemoryStore(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteMemoryStoreAsync(string name, System.ClientModel.Primitives.RequestOptions options) { throw null; }
@@ -3432,6 +3415,23 @@ namespace Azure.AI.Projects.Memory
         Azure.AI.Projects.Memory.DeleteMemoryStoreResponse System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.DeleteMemoryStoreResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.DeleteMemoryStoreResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.DeleteMemoryStoreResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MemoryDeletionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Memory.MemoryDeletionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.MemoryDeletionResult>
+    {
+        internal MemoryDeletionResult() { }
+        public bool Deleted { get { throw null; } }
+        public string MemoryId { get { throw null; } }
+        public Azure.AI.Projects.Memory.MemoryStoreObjectType Object { get { throw null; } }
+        protected virtual Azure.AI.Projects.Memory.MemoryDeletionResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.Projects.Memory.MemoryDeletionResult (System.ClientModel.ClientResult result) { throw null; }
+        protected virtual Azure.AI.Projects.Memory.MemoryDeletionResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Memory.MemoryDeletionResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Memory.MemoryDeletionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Memory.MemoryDeletionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Memory.MemoryDeletionResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.MemoryDeletionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.MemoryDeletionResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.MemoryDeletionResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class MemoryItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Memory.MemoryItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.MemoryItem>
     {

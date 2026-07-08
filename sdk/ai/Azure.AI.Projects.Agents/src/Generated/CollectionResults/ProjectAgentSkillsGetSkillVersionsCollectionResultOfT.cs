@@ -6,9 +6,11 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
+    [Experimental("AAIP001")]
     internal partial class ProjectAgentSkillsGetSkillVersionsCollectionResultOfT : CollectionResult<SkillVersion>
     {
         private readonly ProjectAgentSkills _client;

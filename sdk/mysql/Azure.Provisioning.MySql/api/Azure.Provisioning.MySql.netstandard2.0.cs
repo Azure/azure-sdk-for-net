@@ -387,9 +387,9 @@ namespace Azure.Provisioning.MySql
     }
     public partial class MySqlFlexibleServersCapability : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public MySqlFlexibleServersCapability(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal MySqlFlexibleServersCapability() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.MySql.MySqlFlexibleServerFeatureProperty> SupportedFeatures { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.MySql.ServerEditionCapabilityV2> SupportedFlexibleServerEditions { get { throw null; } }
         public Azure.Provisioning.BicepList<string> SupportedGeoBackupRegions { get { throw null; } }

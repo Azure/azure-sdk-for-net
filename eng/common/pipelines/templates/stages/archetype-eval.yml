@@ -1,0 +1,106 @@
+# Reusable eval CI orchestrator. Stages: Prepare (build MCP + glob a fan-out matrix),
+# Eval (one shard job per matrix leg), Summary (merge JUnit + gate). Each stage just
+# references a job template — no inline steps live here.
+# A thin entrypoint supplies trigger + params + `extends` this.
+#
+# The per-shard timeout flows in as the `shardTimeoutInMinutes` parameter (compile-time, so
+# 1ES can set the job's timeoutInMinutes); the live tier raises it via the same param.
+
+parameters:
+  - name: vallyRoot
+    # Dir each shard runs `vally eval` from; anchor for the matrix's -e paths. Required (no default).
+    type: string
+  - name: evalGlobs
+    # Globs selecting *.eval.yaml under vallyRoot. Default = hermetic mock suite; skill/live override.
+    # collect-stimuli.js mirrors this list as its no-args fallback — keep them in sync.
+    type: object
+    default:
+      - 'evals/tools/*.eval.yaml'
+      - 'evals/workflow-scenarios/mock/*.eval.yaml'
+  - name: mcpSetupTemplate
+    # SWAP POINT: builds/installs the MCP server(s) under artifacts/mcp/<name>. Required (no default):
+    # each repo passes its own build template. This repo uses the shared mock/live builder
+    # steps/eval-mcp-setup.yml and selects the tier via TestType.
+    type: string
+  - name: TestType
+    # Which MCP tier the mcpSetupTemplate builds: mock, live, or none (repo template is param-free).
+    type: string
+    default: none
+    values:
+      - mock
+      - live
+      - none
+  - name: toolsRepo
+    # Optional azure-sdk-tools repository-resource alias for a cross-repo MCP build (running the eval
+    # outside the tools repo). Blank in azure-sdk-tools. The consuming pipeline declares the resource.
+    type: string
+    default: ''
+  - name: evalInvokeTemplate
+    # SWAP POINT: runs `vally eval` per shard. Default = the conditional common invoke template.
+    type: string
+    default: /eng/common/pipelines/templates/steps/eval-invoke.yml
+  - name: UseAzSdkAuthentication
+    # When true, the invoke step runs under AzureCLI@2 (live MCP inherits the service connection).
+    type: boolean
+    default: false
+  - name: threshold
+    # Pass-rate gate forwarded to `vally eval --threshold` and the shard verdict. Repos may override.
+    type: number
+    default: 0.8
+  - name: preEvalTemplate
+    # Optional repo-specific setup before the eval runs. Blank by default.
+    type: string
+    default: ''
+  - name: postEvalTemplate
+    # Optional repo-specific teardown after the eval runs. Blank by default.
+    type: string
+    default: ''
+  - name: failOnFailedTests
+    type: boolean
+    default: false
+  - name: shardTimeoutInMinutes
+    # Per-shard job timeout, passed to the shard job's timeoutInMinutes. Live tier raises it.
+    type: number
+    default: 20
+
+extends:
+  # 1es-redirect picks Official (internal) vs Unofficial; its Use1ESOfficial defaults true.
+  template: /eng/pipelines/templates/stages/1es-redirect.yml
+  parameters:
+    stages:
+      - stage: Prepare
+        displayName: 'Build MCP'
+        jobs:
+          - template: /eng/common/pipelines/templates/jobs/build-mcp.yml
+            parameters:
+              mcpSetupTemplate: ${{ parameters.mcpSetupTemplate }}
+              TestType: ${{ parameters.TestType }}
+              toolsRepo: ${{ parameters.toolsRepo }}
+
+          - template: /eng/common/pipelines/templates/jobs/generate-eval-matrix.yml
+            parameters:
+              vallyRoot: ${{ parameters.vallyRoot }}
+              evalGlobs: ${{ parameters.evalGlobs }}
+
+      - stage: Eval
+        displayName: 'Run eval shards'
+        dependsOn: Prepare
+        jobs:
+          - template: /eng/common/pipelines/templates/jobs/eval-shard.yml
+            parameters:
+              vallyRoot: ${{ parameters.vallyRoot }}
+              evalInvokeTemplate: ${{ parameters.evalInvokeTemplate }}
+              UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
+              threshold: ${{ parameters.threshold }}
+              preEvalTemplate: ${{ parameters.preEvalTemplate }}
+              postEvalTemplate: ${{ parameters.postEvalTemplate }}
+              shardTimeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
+
+      - stage: Summary
+        displayName: 'Summarize results'
+        dependsOn: Eval
+        condition: always()
+        jobs:
+          - template: /eng/common/pipelines/templates/jobs/eval-summarize.yml
+            parameters:
+              failOnFailedTests: ${{ parameters.failOnFailedTests }}
