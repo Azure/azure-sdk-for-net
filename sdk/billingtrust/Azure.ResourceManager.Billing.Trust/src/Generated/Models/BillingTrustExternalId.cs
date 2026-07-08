@@ -12,16 +12,16 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> External-registry identifier (e.g. DUNS) used to disambiguate ambiguous verification matches. </summary>
-    public partial class ExternalId
+    public partial class BillingTrustExternalId
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExternalId"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustExternalId"/>. </summary>
         /// <param name="type"> Identifier type. Currently `DUNS` is supported. </param>
         /// <param name="value"> Identifier value (e.g. the DUNS number string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="value"/> is null. </exception>
-        public ExternalId(string @type, string value)
+        public BillingTrustExternalId(string @type, string value)
         {
             Argument.AssertNotNull(@type, nameof(@type));
             Argument.AssertNotNull(value, nameof(value));
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExternalId"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustExternalId"/>. </summary>
         /// <param name="type"> Identifier type. Currently `DUNS` is supported. </param>
         /// <param name="value"> Identifier value (e.g. the DUNS number string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExternalId(string @type, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingTrustExternalId(string @type, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Value = value;

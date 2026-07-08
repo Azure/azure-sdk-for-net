@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingTrustAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AssessmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal BillingTrustAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingTrustAssessmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public AssessmentProperties Properties { get; set; }
+        public BillingTrustAssessmentProperties Properties { get; set; }
     }
 }

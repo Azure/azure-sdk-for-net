@@ -13,12 +13,12 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> Properties of an eduQualification rule. Verifies education-domain ownership for a billing account. </summary>
-    public partial class EduQualificationRuleProperties : RuleProperties
+    public partial class EduQualificationRuleProperties : BillingTrustRuleProperties
     {
         /// <summary> Initializes a new instance of <see cref="EduQualificationRuleProperties"/>. </summary>
         public EduQualificationRuleProperties()
         {
-            Domains = new ChangeTrackingList<DomainEntry>();
+            Domains = new ChangeTrackingList<BillingTrustDomainEntry>();
             SupplementalDocuments = new ChangeTrackingList<Uri>();
         }
 
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="domains"> Per-tenant domain entries to verify. </param>
         /// <param name="supplementalDocuments"> References to supplemental documents. Settable only when evaluationState is `actionRequired`. </param>
-        internal EduQualificationRuleProperties(RuleKind kind, RuleState? evaluationState, ResponseError error, BillingTrustProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<DomainEntry> domains, IList<Uri> supplementalDocuments) : base(kind, evaluationState, error, provisioningState, additionalBinaryDataProperties)
+        internal EduQualificationRuleProperties(RuleKind kind, BillingTrustRuleState? evaluationState, ResponseError error, BillingTrustProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<BillingTrustDomainEntry> domains, IList<Uri> supplementalDocuments) : base(kind, evaluationState, error, provisioningState, additionalBinaryDataProperties)
         {
             Domains = domains;
             SupplementalDocuments = supplementalDocuments;
         }
 
         /// <summary> Per-tenant domain entries to verify. </summary>
-        public IList<DomainEntry> Domains { get; }
+        public IList<BillingTrustDomainEntry> Domains { get; }
 
         /// <summary> References to supplemental documents. Settable only when evaluationState is `actionRequired`. </summary>
         public IList<Uri> SupplementalDocuments { get; }

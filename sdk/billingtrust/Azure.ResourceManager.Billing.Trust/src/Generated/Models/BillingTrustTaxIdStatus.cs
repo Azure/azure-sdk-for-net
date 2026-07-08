@@ -12,7 +12,7 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> Status of a tax id record. </summary>
-    public readonly partial struct TaxIdStatus : IEquatable<TaxIdStatus>
+    public readonly partial struct BillingTrustTaxIdStatus : IEquatable<BillingTrustTaxIdStatus>
     {
         private readonly string _value;
         /// <summary> The tax id has been verified and is currently valid. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <summary> Status could not be determined from the upstream registry. </summary>
         private const string OtherValue = "other";
 
-        /// <summary> Initializes a new instance of <see cref="TaxIdStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustTaxIdStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TaxIdStatus(string value)
+        public BillingTrustTaxIdStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         }
 
         /// <summary> The tax id has been verified and is currently valid. </summary>
-        public static TaxIdStatus Valid { get; } = new TaxIdStatus(ValidValue);
+        public static BillingTrustTaxIdStatus Valid { get; } = new BillingTrustTaxIdStatus(ValidValue);
 
         /// <summary> The tax id is no longer valid (e.g. expired or revoked). </summary>
-        public static TaxIdStatus Invalid { get; } = new TaxIdStatus(InvalidValue);
+        public static BillingTrustTaxIdStatus Invalid { get; } = new BillingTrustTaxIdStatus(InvalidValue);
 
         /// <summary> Status could not be determined from the upstream registry. </summary>
-        public static TaxIdStatus Other { get; } = new TaxIdStatus(OtherValue);
+        public static BillingTrustTaxIdStatus Other { get; } = new BillingTrustTaxIdStatus(OtherValue);
 
-        /// <summary> Determines if two <see cref="TaxIdStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BillingTrustTaxIdStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(TaxIdStatus left, TaxIdStatus right) => left.Equals(right);
+        public static bool operator ==(BillingTrustTaxIdStatus left, BillingTrustTaxIdStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TaxIdStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BillingTrustTaxIdStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(TaxIdStatus left, TaxIdStatus right) => !left.Equals(right);
+        public static bool operator !=(BillingTrustTaxIdStatus left, BillingTrustTaxIdStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TaxIdStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BillingTrustTaxIdStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TaxIdStatus(string value) => new TaxIdStatus(value);
+        public static implicit operator BillingTrustTaxIdStatus(string value) => new BillingTrustTaxIdStatus(value);
 
-        /// <summary> Converts a string to a <see cref="TaxIdStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BillingTrustTaxIdStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TaxIdStatus?(string value) => value == null ? null : new TaxIdStatus(value);
+        public static implicit operator BillingTrustTaxIdStatus?(string value) => value == null ? null : new BillingTrustTaxIdStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TaxIdStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is BillingTrustTaxIdStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(TaxIdStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BillingTrustTaxIdStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

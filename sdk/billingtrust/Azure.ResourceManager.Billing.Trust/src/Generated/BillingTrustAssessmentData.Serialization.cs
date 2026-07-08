@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Billing.Trust
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            AssessmentProperties properties = default;
+            BillingTrustAssessmentProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Billing.Trust
                     {
                         continue;
                     }
-                    properties = AssessmentProperties.DeserializeAssessmentProperties(prop.Value, options);
+                    properties = BillingTrustAssessmentProperties.DeserializeBillingTrustAssessmentProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

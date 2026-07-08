@@ -12,7 +12,7 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> The evaluation state of a rule. </summary>
-    public readonly partial struct RuleState : IEquatable<RuleState>
+    public readonly partial struct BillingTrustRuleState : IEquatable<BillingTrustRuleState>
     {
         private readonly string _value;
         /// <summary> Rule is queued and not yet evaluated. </summary>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <summary> Rule expired and requires re-evaluation. </summary>
         private const string ExpiredValue = "expired";
 
-        /// <summary> Initializes a new instance of <see cref="RuleState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustRuleState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RuleState(string value)
+        public BillingTrustRuleState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -47,59 +47,59 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         }
 
         /// <summary> Rule is queued and not yet evaluated. </summary>
-        public static RuleState Pending { get; } = new RuleState(PendingValue);
+        public static BillingTrustRuleState Pending { get; } = new BillingTrustRuleState(PendingValue);
 
         /// <summary> Rule evaluation is in progress. </summary>
-        public static RuleState Running { get; } = new RuleState(RunningValue);
+        public static BillingTrustRuleState Running { get; } = new BillingTrustRuleState(RunningValue);
 
         /// <summary> Customer input is required to proceed. </summary>
-        public static RuleState ActionRequired { get; } = new RuleState(ActionRequiredValue);
+        public static BillingTrustRuleState ActionRequired { get; } = new BillingTrustRuleState(ActionRequiredValue);
 
         /// <summary> Operations review is in progress. </summary>
-        public static RuleState UnderReview { get; } = new RuleState(UnderReviewValue);
+        public static BillingTrustRuleState UnderReview { get; } = new BillingTrustRuleState(UnderReviewValue);
 
         /// <summary> Rule preconditions (runAfter) were not met; rule was skipped. </summary>
-        public static RuleState Skipped { get; } = new RuleState(SkippedValue);
+        public static BillingTrustRuleState Skipped { get; } = new BillingTrustRuleState(SkippedValue);
 
         /// <summary> Rule evaluation failed. </summary>
-        public static RuleState Failed { get; } = new RuleState(FailedValue);
+        public static BillingTrustRuleState Failed { get; } = new BillingTrustRuleState(FailedValue);
 
         /// <summary> Rule evaluation succeeded. </summary>
-        public static RuleState Succeeded { get; } = new RuleState(SucceededValue);
+        public static BillingTrustRuleState Succeeded { get; } = new BillingTrustRuleState(SucceededValue);
 
         /// <summary> Rule succeeded but with a manual override applied by operations. </summary>
-        public static RuleState SucceededWithOverride { get; } = new RuleState(SucceededWithOverrideValue);
+        public static BillingTrustRuleState SucceededWithOverride { get; } = new BillingTrustRuleState(SucceededWithOverrideValue);
 
         /// <summary> Rule failed but with a manual override applied by operations. </summary>
-        public static RuleState FailedWithOverride { get; } = new RuleState(FailedWithOverrideValue);
+        public static BillingTrustRuleState FailedWithOverride { get; } = new BillingTrustRuleState(FailedWithOverrideValue);
 
         /// <summary> Rule expired and requires re-evaluation. </summary>
-        public static RuleState Expired { get; } = new RuleState(ExpiredValue);
+        public static BillingTrustRuleState Expired { get; } = new BillingTrustRuleState(ExpiredValue);
 
-        /// <summary> Determines if two <see cref="RuleState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BillingTrustRuleState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RuleState left, RuleState right) => left.Equals(right);
+        public static bool operator ==(BillingTrustRuleState left, BillingTrustRuleState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RuleState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BillingTrustRuleState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RuleState left, RuleState right) => !left.Equals(right);
+        public static bool operator !=(BillingTrustRuleState left, BillingTrustRuleState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RuleState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BillingTrustRuleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleState(string value) => new RuleState(value);
+        public static implicit operator BillingTrustRuleState(string value) => new BillingTrustRuleState(value);
 
-        /// <summary> Converts a string to a <see cref="RuleState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BillingTrustRuleState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleState?(string value) => value == null ? null : new RuleState(value);
+        public static implicit operator BillingTrustRuleState?(string value) => value == null ? null : new BillingTrustRuleState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RuleState other && Equals(other);
+        public override bool Equals(object obj) => obj is BillingTrustRuleState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RuleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BillingTrustRuleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

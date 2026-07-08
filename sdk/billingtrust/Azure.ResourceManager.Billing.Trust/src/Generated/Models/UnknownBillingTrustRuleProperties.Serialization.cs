@@ -15,59 +15,59 @@ using Azure.ResourceManager.Billing.Trust;
 
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
-    internal partial class UnknownRuleProperties : RuleProperties, IJsonModel<RuleProperties>
+    internal partial class UnknownBillingTrustRuleProperties : BillingTrustRuleProperties, IJsonModel<BillingTrustRuleProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownRuleProperties"/> for deserialization. </summary>
-        internal UnknownRuleProperties()
+        /// <summary> Initializes a new instance of <see cref="UnknownBillingTrustRuleProperties"/> for deserialization. </summary>
+        internal UnknownBillingTrustRuleProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BillingTrustRuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRuleProperties(document.RootElement, options);
+                        return DeserializeBillingTrustRuleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuleProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingTrustRuleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingTrustContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RuleProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingTrustRuleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RuleProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BillingTrustRuleProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RuleProperties IPersistableModel<RuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BillingTrustRuleProperties IPersistableModel<BillingTrustRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return PersistableModelCreateCore(data, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BillingTrustRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BillingTrustRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -78,44 +78,44 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingTrustRuleProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RuleProperties IJsonModel<RuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BillingTrustRuleProperties IJsonModel<BillingTrustRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             return JsonModelCreateCore(ref reader, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RuleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BillingTrustRuleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingTrustRuleProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRuleProperties(document.RootElement, options);
+            return DeserializeBillingTrustRuleProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownRuleProperties DeserializeUnknownRuleProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownBillingTrustRuleProperties DeserializeUnknownBillingTrustRuleProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             RuleKind kind = default;
-            RuleState? evaluationState = default;
+            BillingTrustRuleState? evaluationState = default;
             ResponseError error = default;
             BillingTrustProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     {
                         continue;
                     }
-                    evaluationState = new RuleState(prop.Value.GetString());
+                    evaluationState = new BillingTrustRuleState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownRuleProperties(kind, evaluationState, error, provisioningState, additionalBinaryDataProperties);
+            return new UnknownBillingTrustRuleProperties(kind, evaluationState, error, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

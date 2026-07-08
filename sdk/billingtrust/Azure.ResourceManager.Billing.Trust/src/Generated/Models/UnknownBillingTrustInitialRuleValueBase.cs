@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
-    internal partial class UnknownInitialRuleValueBase : InitialRuleValueBase
+    internal partial class UnknownBillingTrustInitialRuleValueBase : BillingTrustInitialRuleValueBase
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownInitialRuleValueBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownBillingTrustInitialRuleValueBase"/>. </summary>
         /// <param name="kind"> The kind of rule to initialize. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownInitialRuleValueBase(RuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownBillingTrustInitialRuleValueBase(RuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

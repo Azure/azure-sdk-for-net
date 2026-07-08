@@ -13,20 +13,20 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> The properties of an Assessment resource. </summary>
-    public partial class AssessmentProperties
+    public partial class BillingTrustAssessmentProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AssessmentProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustAssessmentProperties"/>. </summary>
         /// <param name="assessmentType"> The name of the assessment template whose rules will be evaluated (e.g. 'Edu'). Immutable after creation. </param>
-        public AssessmentProperties(AssessmentType assessmentType)
+        public BillingTrustAssessmentProperties(BillingTrustAssessmentType assessmentType)
         {
             AssessmentType = assessmentType;
-            InitialValues = new ChangeTrackingList<InitialRuleValueBase>();
+            InitialValues = new ChangeTrackingList<BillingTrustInitialRuleValueBase>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssessmentProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustAssessmentProperties"/>. </summary>
         /// <param name="assessmentType"> The name of the assessment template whose rules will be evaluated (e.g. 'Edu'). Immutable after creation. </param>
         /// <param name="evaluationState"> The aggregated evaluation state of all active rules within this assessment. </param>
         /// <param name="nextEvaluation"> The next scheduled re-evaluation of this assessment. Only present when one or more rules in this assessment have a configured recurrence. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="initialValues"> Optional initial values applied to the rules created with this assessment. Write-only — these values are routed to the per-kind rules and are not returned on read. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssessmentProperties(AssessmentType assessmentType, AssessmentState? evaluationState, DateTimeOffset? nextEvaluation, ResponseError error, IList<InitialRuleValueBase> initialValues, BillingTrustProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingTrustAssessmentProperties(BillingTrustAssessmentType assessmentType, BillingTrustAssessmentState? evaluationState, DateTimeOffset? nextEvaluation, ResponseError error, IList<BillingTrustInitialRuleValueBase> initialValues, BillingTrustProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AssessmentType = assessmentType;
             EvaluationState = evaluationState;
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         }
 
         /// <summary> The name of the assessment template whose rules will be evaluated (e.g. 'Edu'). Immutable after creation. </summary>
-        public AssessmentType AssessmentType { get; set; }
+        public BillingTrustAssessmentType AssessmentType { get; set; }
 
         /// <summary> The aggregated evaluation state of all active rules within this assessment. </summary>
-        public AssessmentState? EvaluationState { get; }
+        public BillingTrustAssessmentState? EvaluationState { get; }
 
         /// <summary> The next scheduled re-evaluation of this assessment. Only present when one or more rules in this assessment have a configured recurrence. </summary>
         public DateTimeOffset? NextEvaluation { get; }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         public ResponseError Error { get; }
 
         /// <summary> Optional initial values applied to the rules created with this assessment. Write-only — these values are routed to the per-kind rules and are not returned on read. </summary>
-        public IList<InitialRuleValueBase> InitialValues { get; }
+        public IList<BillingTrustInitialRuleValueBase> InitialValues { get; }
 
         /// <summary> The provisioning state of the resource. </summary>
         public BillingTrustProvisioningState? ProvisioningState { get; }

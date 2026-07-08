@@ -12,7 +12,7 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> The verification state of a single domain entry within an eduQualification rule. </summary>
-    public readonly partial struct DomainEntryState : IEquatable<DomainEntryState>
+    public readonly partial struct BillingTrustDomainEntryState : IEquatable<BillingTrustDomainEntryState>
     {
         private readonly string _value;
         /// <summary> Domain verification queued or in progress. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <summary> Domain verification succeeded. </summary>
         private const string SucceededValue = "succeeded";
 
-        /// <summary> Initializes a new instance of <see cref="DomainEntryState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustDomainEntryState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DomainEntryState(string value)
+        public BillingTrustDomainEntryState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         }
 
         /// <summary> Domain verification queued or in progress. </summary>
-        public static DomainEntryState Pending { get; } = new DomainEntryState(PendingValue);
+        public static BillingTrustDomainEntryState Pending { get; } = new BillingTrustDomainEntryState(PendingValue);
 
         /// <summary> Customer must supply additional evidence (e.g. supplemental documents). </summary>
-        public static DomainEntryState ActionRequired { get; } = new DomainEntryState(ActionRequiredValue);
+        public static BillingTrustDomainEntryState ActionRequired { get; } = new BillingTrustDomainEntryState(ActionRequiredValue);
 
         /// <summary> Domain verification failed. </summary>
-        public static DomainEntryState Failed { get; } = new DomainEntryState(FailedValue);
+        public static BillingTrustDomainEntryState Failed { get; } = new BillingTrustDomainEntryState(FailedValue);
 
         /// <summary> Domain verification succeeded. </summary>
-        public static DomainEntryState Succeeded { get; } = new DomainEntryState(SucceededValue);
+        public static BillingTrustDomainEntryState Succeeded { get; } = new BillingTrustDomainEntryState(SucceededValue);
 
-        /// <summary> Determines if two <see cref="DomainEntryState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BillingTrustDomainEntryState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DomainEntryState left, DomainEntryState right) => left.Equals(right);
+        public static bool operator ==(BillingTrustDomainEntryState left, BillingTrustDomainEntryState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DomainEntryState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BillingTrustDomainEntryState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DomainEntryState left, DomainEntryState right) => !left.Equals(right);
+        public static bool operator !=(BillingTrustDomainEntryState left, BillingTrustDomainEntryState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DomainEntryState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BillingTrustDomainEntryState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainEntryState(string value) => new DomainEntryState(value);
+        public static implicit operator BillingTrustDomainEntryState(string value) => new BillingTrustDomainEntryState(value);
 
-        /// <summary> Converts a string to a <see cref="DomainEntryState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BillingTrustDomainEntryState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainEntryState?(string value) => value == null ? null : new DomainEntryState(value);
+        public static implicit operator BillingTrustDomainEntryState?(string value) => value == null ? null : new BillingTrustDomainEntryState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DomainEntryState other && Equals(other);
+        public override bool Equals(object obj) => obj is BillingTrustDomainEntryState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DomainEntryState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BillingTrustDomainEntryState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

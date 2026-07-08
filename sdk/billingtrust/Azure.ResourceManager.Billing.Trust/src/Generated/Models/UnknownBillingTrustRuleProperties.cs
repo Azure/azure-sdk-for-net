@@ -11,15 +11,15 @@ using Azure;
 
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
-    internal partial class UnknownRuleProperties : RuleProperties
+    internal partial class UnknownBillingTrustRuleProperties : BillingTrustRuleProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownBillingTrustRuleProperties"/>. </summary>
         /// <param name="kind"> The kind of rule. Acts as a discriminator for kind-specific properties. </param>
         /// <param name="evaluationState"> The evaluation state of the rule. Server-managed. </param>
         /// <param name="error"> Error information when evaluationState is `failed` or `actionRequired`. Server-managed. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRuleProperties(RuleKind kind, RuleState? evaluationState, ResponseError error, BillingTrustProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", evaluationState, error, provisioningState, additionalBinaryDataProperties)
+        internal UnknownBillingTrustRuleProperties(RuleKind kind, BillingTrustRuleState? evaluationState, ResponseError error, BillingTrustProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", evaluationState, error, provisioningState, additionalBinaryDataProperties)
         {
         }
     }

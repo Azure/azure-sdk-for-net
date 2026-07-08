@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Billing.Trust.Models
     /// Sold-to fields (`soldTo`, `registrationNumber`, `taxIds`) reflect the billing
     /// account's information on file and cannot be supplied by end users.
     /// </summary>
-    public partial class BusinessVerificationRuleProperties : RuleProperties
+    public partial class BusinessVerificationRuleProperties : BillingTrustRuleProperties
     {
         /// <summary> Initializes a new instance of <see cref="BusinessVerificationRuleProperties"/>. </summary>
         public BusinessVerificationRuleProperties()
         {
-            TaxIds = new ChangeTrackingList<TaxId>();
+            TaxIds = new ChangeTrackingList<BillingTrustTaxId>();
             SupplementalDocuments = new ChangeTrackingList<Uri>();
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="taxIds"> Tax ids associated with the sold-to identity. Populated from the billing account at the time the rule is created. Server-managed. </param>
         /// <param name="externalId"> Optional external-registry identifier (e.g. DUNS) used to disambiguate verification matches. Settable on PATCH while `evaluationState` is `pending` or `actionRequired`. </param>
         /// <param name="supplementalDocuments"> References to supplemental documents (businessVerification rules only; only settable while evaluationState is `pending` or `actionRequired`). </param>
-        internal BusinessVerificationRuleProperties(RuleKind kind, RuleState? evaluationState, ResponseError error, BillingTrustProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, SoldTo soldTo, RegistrationNumber registrationNumber, IReadOnlyList<TaxId> taxIds, ExternalId externalId, IList<Uri> supplementalDocuments) : base(kind, evaluationState, error, provisioningState, additionalBinaryDataProperties)
+        internal BusinessVerificationRuleProperties(RuleKind kind, BillingTrustRuleState? evaluationState, ResponseError error, BillingTrustProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, BillingTrustSoldTo soldTo, BillingTrustRegistrationNumber registrationNumber, IReadOnlyList<BillingTrustTaxId> taxIds, BillingTrustExternalId externalId, IList<Uri> supplementalDocuments) : base(kind, evaluationState, error, provisioningState, additionalBinaryDataProperties)
         {
             SoldTo = soldTo;
             RegistrationNumber = registrationNumber;
@@ -48,16 +48,16 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         }
 
         /// <summary> Sold-to identity used for business verification. Populated from the billing account at the time the rule is created. Server-managed. </summary>
-        public SoldTo SoldTo { get; }
+        public BillingTrustSoldTo SoldTo { get; }
 
         /// <summary> Registration number context (allowed types and registration id). Populated from the billing account at the time the rule is created. Server-managed. </summary>
-        public RegistrationNumber RegistrationNumber { get; }
+        public BillingTrustRegistrationNumber RegistrationNumber { get; }
 
         /// <summary> Tax ids associated with the sold-to identity. Populated from the billing account at the time the rule is created. Server-managed. </summary>
-        public IReadOnlyList<TaxId> TaxIds { get; }
+        public IReadOnlyList<BillingTrustTaxId> TaxIds { get; }
 
         /// <summary> Optional external-registry identifier (e.g. DUNS) used to disambiguate verification matches. Settable on PATCH while `evaluationState` is `pending` or `actionRequired`. </summary>
-        public ExternalId ExternalId { get; set; }
+        public BillingTrustExternalId ExternalId { get; set; }
 
         /// <summary> References to supplemental documents (businessVerification rules only; only settable while evaluationState is `pending` or `actionRequired`). </summary>
         public IList<Uri> SupplementalDocuments { get; }

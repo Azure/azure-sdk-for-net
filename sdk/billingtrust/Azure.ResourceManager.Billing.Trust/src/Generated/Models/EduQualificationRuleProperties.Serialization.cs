@@ -16,11 +16,11 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> Properties of an eduQualification rule. Verifies education-domain ownership for a billing account. </summary>
-    public partial class EduQualificationRuleProperties : RuleProperties, IJsonModel<EduQualificationRuleProperties>
+    public partial class EduQualificationRuleProperties : BillingTrustRuleProperties, IJsonModel<EduQualificationRuleProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BillingTrustRuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EduQualificationRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             {
                 writer.WritePropertyName("domains"u8);
                 writer.WriteStartArray();
-                foreach (DomainEntry item in Domains)
+                foreach (BillingTrustDomainEntry item in Domains)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RuleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BillingTrustRuleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EduQualificationRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                 return null;
             }
             RuleKind kind = default;
-            RuleState? evaluationState = default;
+            BillingTrustRuleState? evaluationState = default;
             ResponseError error = default;
             BillingTrustProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<DomainEntry> domains = default;
+            IList<BillingTrustDomainEntry> domains = default;
             IList<Uri> supplementalDocuments = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     {
                         continue;
                     }
-                    evaluationState = new RuleState(prop.Value.GetString());
+                    evaluationState = new BillingTrustRuleState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     {
                         continue;
                     }
-                    List<DomainEntry> array = new List<DomainEntry>();
+                    List<BillingTrustDomainEntry> array = new List<BillingTrustDomainEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DomainEntry.DeserializeDomainEntry(item, options));
+                        array.Add(BillingTrustDomainEntry.DeserializeBillingTrustDomainEntry(item, options));
                     }
                     domains = array;
                     continue;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                 error,
                 provisioningState,
                 additionalBinaryDataProperties,
-                domains ?? new ChangeTrackingList<DomainEntry>(),
+                domains ?? new ChangeTrackingList<BillingTrustDomainEntry>(),
                 supplementalDocuments ?? new ChangeTrackingList<Uri>());
         }
     }

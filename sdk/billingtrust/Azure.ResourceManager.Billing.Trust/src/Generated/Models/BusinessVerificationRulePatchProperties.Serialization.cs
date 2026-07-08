@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             }
             RuleKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ExternalId externalId = default;
+            BillingTrustExternalId externalId = default;
             IList<Uri> supplementalDocuments = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     {
                         continue;
                     }
-                    externalId = ExternalId.DeserializeExternalId(prop.Value, options);
+                    externalId = BillingTrustExternalId.DeserializeBillingTrustExternalId(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("supplementalDocuments"u8))

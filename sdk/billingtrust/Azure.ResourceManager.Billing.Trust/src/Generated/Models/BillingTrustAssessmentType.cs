@@ -12,7 +12,7 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> Assessment template name. Each template defines a fixed set of rules and their configuration. The list of templates may be extended in future API versions. </summary>
-    public readonly partial struct AssessmentType : IEquatable<AssessmentType>
+    public readonly partial struct BillingTrustAssessmentType : IEquatable<BillingTrustAssessmentType>
     {
         private readonly string _value;
         /// <summary> Education qualification assessment. Verifies that the billing account qualifies for education programs based on customer-supplied domains. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <summary> Payee profile assessment. Verifies the payee profile associated with a billing account. Rule names within this template may change between API versions — iterate `rules` via LIST rather than addressing rules by name. </summary>
         private const string PayeeProfileValue = "PayeeProfile";
 
-        /// <summary> Initializes a new instance of <see cref="AssessmentType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustAssessmentType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AssessmentType(string value)
+        public BillingTrustAssessmentType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         }
 
         /// <summary> Education qualification assessment. Verifies that the billing account qualifies for education programs based on customer-supplied domains. </summary>
-        public static AssessmentType Edu { get; } = new AssessmentType(EduValue);
+        public static BillingTrustAssessmentType Edu { get; } = new BillingTrustAssessmentType(EduValue);
 
         /// <summary> Business verification assessment. Verifies the billing account's business identity against the sold-to information on file. </summary>
-        public static AssessmentType BusinessVerification { get; } = new AssessmentType(BusinessVerificationValue);
+        public static BillingTrustAssessmentType BusinessVerification { get; } = new BillingTrustAssessmentType(BusinessVerificationValue);
 
         /// <summary> Payee enrollment assessment. Verifies a billing account is eligible to enroll as a payee. Rule names within this template may change between API versions — iterate `rules` via LIST rather than addressing rules by name. </summary>
-        public static AssessmentType PayeeEnrollment { get; } = new AssessmentType(PayeeEnrollmentValue);
+        public static BillingTrustAssessmentType PayeeEnrollment { get; } = new BillingTrustAssessmentType(PayeeEnrollmentValue);
 
         /// <summary> Payee profile assessment. Verifies the payee profile associated with a billing account. Rule names within this template may change between API versions — iterate `rules` via LIST rather than addressing rules by name. </summary>
-        public static AssessmentType PayeeProfile { get; } = new AssessmentType(PayeeProfileValue);
+        public static BillingTrustAssessmentType PayeeProfile { get; } = new BillingTrustAssessmentType(PayeeProfileValue);
 
-        /// <summary> Determines if two <see cref="AssessmentType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BillingTrustAssessmentType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AssessmentType left, AssessmentType right) => left.Equals(right);
+        public static bool operator ==(BillingTrustAssessmentType left, BillingTrustAssessmentType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AssessmentType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BillingTrustAssessmentType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AssessmentType left, AssessmentType right) => !left.Equals(right);
+        public static bool operator !=(BillingTrustAssessmentType left, BillingTrustAssessmentType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AssessmentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BillingTrustAssessmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AssessmentType(string value) => new AssessmentType(value);
+        public static implicit operator BillingTrustAssessmentType(string value) => new BillingTrustAssessmentType(value);
 
-        /// <summary> Converts a string to a <see cref="AssessmentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BillingTrustAssessmentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AssessmentType?(string value) => value == null ? null : new AssessmentType(value);
+        public static implicit operator BillingTrustAssessmentType?(string value) => value == null ? null : new BillingTrustAssessmentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AssessmentType other && Equals(other);
+        public override bool Equals(object obj) => obj is BillingTrustAssessmentType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AssessmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BillingTrustAssessmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

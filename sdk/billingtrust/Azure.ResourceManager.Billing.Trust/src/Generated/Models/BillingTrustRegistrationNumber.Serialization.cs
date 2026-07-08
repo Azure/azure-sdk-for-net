@@ -8,64 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.ResourceManager.Billing.Trust;
 
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
-    /// <summary> A domain entry within an education qualification rule. `domainNames` and `tenantId` are supplied on creation; `state` and `error` are returned by the service. </summary>
-    public partial class DomainEntry : IJsonModel<DomainEntry>
+    /// <summary> Registration number context for business verification. </summary>
+    public partial class BillingTrustRegistrationNumber : IJsonModel<BillingTrustRegistrationNumber>
     {
-        /// <summary> Initializes a new instance of <see cref="DomainEntry"/> for deserialization. </summary>
-        internal DomainEntry()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DomainEntry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BillingTrustRegistrationNumber PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainEntry>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustRegistrationNumber>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDomainEntry(document.RootElement, options);
+                        return DeserializeBillingTrustRegistrationNumber(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DomainEntry)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingTrustRegistrationNumber)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainEntry>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustRegistrationNumber>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingTrustContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DomainEntry)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingTrustRegistrationNumber)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DomainEntry>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BillingTrustRegistrationNumber>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DomainEntry IPersistableModel<DomainEntry>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BillingTrustRegistrationNumber IPersistableModel<BillingTrustRegistrationNumber>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DomainEntry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BillingTrustRegistrationNumber>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DomainEntry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BillingTrustRegistrationNumber>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,37 +69,35 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainEntry>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustRegistrationNumber>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainEntry)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingTrustRegistrationNumber)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("domainNames"u8);
-            writer.WriteStartArray();
-            foreach (string item in DomainNames)
+            if (Optional.IsCollectionDefined(Type))
             {
-                if (item == null)
+                writer.WritePropertyName("type"u8);
+                writer.WriteStartArray();
+                foreach (string item in Type)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
                 }
-                writer.WriteStringValue(item);
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (Optional.IsDefined(RegistrationRequirement))
             {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error"u8);
-                ((IJsonModel<ResponseError>)Error).Write(writer, options);
+                writer.WritePropertyName("registrationRequirement"u8);
+                writer.WriteStringValue(RegistrationRequirement.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,38 +118,41 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DomainEntry IJsonModel<DomainEntry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BillingTrustRegistrationNumber IJsonModel<BillingTrustRegistrationNumber>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DomainEntry JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BillingTrustRegistrationNumber JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainEntry>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustRegistrationNumber>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainEntry)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingTrustRegistrationNumber)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDomainEntry(document.RootElement, options);
+            return DeserializeBillingTrustRegistrationNumber(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DomainEntry DeserializeDomainEntry(JsonElement element, ModelReaderWriterOptions options)
+        internal static BillingTrustRegistrationNumber DeserializeBillingTrustRegistrationNumber(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<string> domainNames = default;
-            Guid? tenantId = default;
-            DomainEntryState? state = default;
-            ResponseError error = default;
+            IList<string> @type = default;
+            string value = default;
+            BillingTrustRegistrationRequirement? registrationRequirement = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("domainNames"u8))
+                if (prop.NameEquals("type"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -171,34 +165,21 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                             array.Add(item.GetString());
                         }
                     }
-                    domainNames = array;
+                    @type = array;
                     continue;
                 }
-                if (prop.NameEquals("tenantId"u8))
+                if (prop.NameEquals("value"u8))
+                {
+                    value = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("registrationRequirement"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tenantId = new Guid(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("state"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new DomainEntryState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("error"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBillingTrustContext.Default);
+                    registrationRequirement = new BillingTrustRegistrationRequirement(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -206,7 +187,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DomainEntry(domainNames, tenantId, state, error, additionalBinaryDataProperties);
+            return new BillingTrustRegistrationNumber(@type ?? new ChangeTrackingList<string>(), value, registrationRequirement, additionalBinaryDataProperties);
         }
     }
 }

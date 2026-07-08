@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Billing.Trust
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            RuleProperties properties = default;
+            BillingTrustRuleProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Billing.Trust
                     {
                         continue;
                     }
-                    properties = RuleProperties.DeserializeRuleProperties(prop.Value, options);
+                    properties = BillingTrustRuleProperties.DeserializeBillingTrustRuleProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

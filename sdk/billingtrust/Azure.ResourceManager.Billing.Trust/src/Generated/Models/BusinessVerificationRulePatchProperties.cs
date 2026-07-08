@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="externalId"> Optional external-registry identifier (e.g. DUNS) used to disambiguate ambiguous verification matches. </param>
         /// <param name="supplementalDocuments"> References to supplemental documents (businessVerification rules only; only settable while evaluationState is `pending` or `actionRequired`). </param>
-        internal BusinessVerificationRulePatchProperties(RuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExternalId externalId, IList<Uri> supplementalDocuments) : base(kind, additionalBinaryDataProperties)
+        internal BusinessVerificationRulePatchProperties(RuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, BillingTrustExternalId externalId, IList<Uri> supplementalDocuments) : base(kind, additionalBinaryDataProperties)
         {
             ExternalId = externalId;
             SupplementalDocuments = supplementalDocuments;
         }
 
         /// <summary> Optional external-registry identifier (e.g. DUNS) used to disambiguate ambiguous verification matches. </summary>
-        public ExternalId ExternalId { get; set; }
+        public BillingTrustExternalId ExternalId { get; set; }
 
         /// <summary> References to supplemental documents (businessVerification rules only; only settable while evaluationState is `pending` or `actionRequired`). </summary>
         public IList<Uri> SupplementalDocuments { get; }

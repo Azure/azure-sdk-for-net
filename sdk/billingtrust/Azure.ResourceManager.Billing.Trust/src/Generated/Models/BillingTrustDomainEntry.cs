@@ -14,28 +14,28 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> A domain entry within an education qualification rule. `domainNames` and `tenantId` are supplied on creation; `state` and `error` are returned by the service. </summary>
-    public partial class DomainEntry
+    public partial class BillingTrustDomainEntry
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DomainEntry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustDomainEntry"/>. </summary>
         /// <param name="domainNames"> Domain names associated with a tenant. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainNames"/> is null. </exception>
-        public DomainEntry(IEnumerable<string> domainNames)
+        public BillingTrustDomainEntry(IEnumerable<string> domainNames)
         {
             Argument.AssertNotNull(domainNames, nameof(domainNames));
 
             DomainNames = domainNames.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DomainEntry"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustDomainEntry"/>. </summary>
         /// <param name="domainNames"> Domain names associated with a tenant. </param>
         /// <param name="tenantId"> The Microsoft Entra tenant ID owning these domains. Defaults to the calling user's tenant when omitted. </param>
         /// <param name="state"> The verification state of this domain entry. Server-managed. </param>
         /// <param name="error"> Error detail when state is `failed` or `actionRequired`. Omitted otherwise. Server-managed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DomainEntry(IList<string> domainNames, Guid? tenantId, DomainEntryState? state, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingTrustDomainEntry(IList<string> domainNames, Guid? tenantId, BillingTrustDomainEntryState? state, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DomainNames = domainNames;
             TenantId = tenantId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         public Guid? TenantId { get; set; }
 
         /// <summary> The verification state of this domain entry. Server-managed. </summary>
-        public DomainEntryState? State { get; }
+        public BillingTrustDomainEntryState? State { get; }
 
         /// <summary> Error detail when state is `failed` or `actionRequired`. Omitted otherwise. Server-managed. </summary>
         public ResponseError Error { get; }

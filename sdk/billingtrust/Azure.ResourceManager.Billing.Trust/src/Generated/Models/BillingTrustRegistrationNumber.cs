@@ -12,23 +12,23 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> Registration number context for business verification. </summary>
-    public partial class RegistrationNumber
+    public partial class BillingTrustRegistrationNumber
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RegistrationNumber"/>. </summary>
-        internal RegistrationNumber()
+        /// <summary> Initializes a new instance of <see cref="BillingTrustRegistrationNumber"/>. </summary>
+        internal BillingTrustRegistrationNumber()
         {
             Type = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RegistrationNumber"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustRegistrationNumber"/>. </summary>
         /// <param name="type"> Allowed registration-number types based on the billing-account country (e.g. `VAT`, `GST`, `EIN`). </param>
         /// <param name="value"> Registration number value (e.g. the VAT / GST / EIN identifier string). </param>
         /// <param name="registrationRequirement"> Whether a registration number is required for the sold-to country. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegistrationNumber(IList<string> @type, string value, RegistrationRequirement? registrationRequirement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingTrustRegistrationNumber(IList<string> @type, string value, BillingTrustRegistrationRequirement? registrationRequirement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Value = value;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         public string Value { get; }
 
         /// <summary> Whether a registration number is required for the sold-to country. </summary>
-        public RegistrationRequirement? RegistrationRequirement { get; }
+        public BillingTrustRegistrationRequirement? RegistrationRequirement { get; }
     }
 }

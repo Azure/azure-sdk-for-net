@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.Billing.Trust.Models
     /// follow-up alignment with ARM ARG002 (control-plane PII guidance) — see
     /// PR description.
     /// </summary>
-    public partial class SoldTo
+    public partial class BillingTrustSoldTo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SoldTo"/>. </summary>
-        internal SoldTo()
+        /// <summary> Initializes a new instance of <see cref="BillingTrustSoldTo"/>. </summary>
+        internal BillingTrustSoldTo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SoldTo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustSoldTo"/>. </summary>
         /// <param name="addressLine1"> First address line. PII — postal address. </param>
         /// <param name="addressLine2"> Second address line. PII — postal address. </param>
         /// <param name="addressLine3"> Third address line. PII — postal address. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="postalCode"> Postal or ZIP code. PII — postal address. </param>
         /// <param name="region"> State, province, or region. PII — postal address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SoldTo(string addressLine1, string addressLine2, string addressLine3, string city, string country, string companyName, string district, string email, string firstName, string lastName, string middleName, string phoneNumber, string postalCode, string region, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingTrustSoldTo(string addressLine1, string addressLine2, string addressLine3, string city, string country, string companyName, string district, string email, string firstName, string lastName, string middleName, string phoneNumber, string postalCode, string region, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressLine1 = addressLine1;
             AddressLine2 = addressLine2;

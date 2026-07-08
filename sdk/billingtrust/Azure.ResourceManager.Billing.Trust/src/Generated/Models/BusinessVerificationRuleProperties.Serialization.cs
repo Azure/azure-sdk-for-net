@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.Billing.Trust.Models
     /// Sold-to fields (`soldTo`, `registrationNumber`, `taxIds`) reflect the billing
     /// account's information on file and cannot be supplied by end users.
     /// </summary>
-    public partial class BusinessVerificationRuleProperties : RuleProperties, IJsonModel<BusinessVerificationRuleProperties>
+    public partial class BusinessVerificationRuleProperties : BillingTrustRuleProperties, IJsonModel<BusinessVerificationRuleProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BillingTrustRuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BusinessVerificationRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             {
                 writer.WritePropertyName("taxIds"u8);
                 writer.WriteStartArray();
-                foreach (TaxId item in TaxIds)
+                foreach (BillingTrustTaxId item in TaxIds)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RuleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BillingTrustRuleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BusinessVerificationRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -150,14 +150,14 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                 return null;
             }
             RuleKind kind = default;
-            RuleState? evaluationState = default;
+            BillingTrustRuleState? evaluationState = default;
             ResponseError error = default;
             BillingTrustProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SoldTo soldTo = default;
-            RegistrationNumber registrationNumber = default;
-            IReadOnlyList<TaxId> taxIds = default;
-            ExternalId externalId = default;
+            BillingTrustSoldTo soldTo = default;
+            BillingTrustRegistrationNumber registrationNumber = default;
+            IReadOnlyList<BillingTrustTaxId> taxIds = default;
+            BillingTrustExternalId externalId = default;
             IList<Uri> supplementalDocuments = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     {
                         continue;
                     }
-                    evaluationState = new RuleState(prop.Value.GetString());
+                    evaluationState = new BillingTrustRuleState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     {
                         continue;
                     }
-                    soldTo = SoldTo.DeserializeSoldTo(prop.Value, options);
+                    soldTo = BillingTrustSoldTo.DeserializeBillingTrustSoldTo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("registrationNumber"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     {
                         continue;
                     }
-                    registrationNumber = RegistrationNumber.DeserializeRegistrationNumber(prop.Value, options);
+                    registrationNumber = BillingTrustRegistrationNumber.DeserializeBillingTrustRegistrationNumber(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("taxIds"u8))
@@ -217,10 +217,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     {
                         continue;
                     }
-                    List<TaxId> array = new List<TaxId>();
+                    List<BillingTrustTaxId> array = new List<BillingTrustTaxId>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TaxId.DeserializeTaxId(item, options));
+                        array.Add(BillingTrustTaxId.DeserializeBillingTrustTaxId(item, options));
                     }
                     taxIds = array;
                     continue;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     {
                         continue;
                     }
-                    externalId = ExternalId.DeserializeExternalId(prop.Value, options);
+                    externalId = BillingTrustExternalId.DeserializeBillingTrustExternalId(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("supplementalDocuments"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                 additionalBinaryDataProperties,
                 soldTo,
                 registrationNumber,
-                taxIds ?? new ChangeTrackingList<TaxId>(),
+                taxIds ?? new ChangeTrackingList<BillingTrustTaxId>(),
                 externalId,
                 supplementalDocuments ?? new ChangeTrackingList<Uri>());
         }

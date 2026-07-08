@@ -14,56 +14,56 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> External-registry identifier (e.g. DUNS) used to disambiguate ambiguous verification matches. </summary>
-    public partial class ExternalId : IJsonModel<ExternalId>
+    public partial class BillingTrustExternalId : IJsonModel<BillingTrustExternalId>
     {
-        /// <summary> Initializes a new instance of <see cref="ExternalId"/> for deserialization. </summary>
-        internal ExternalId()
+        /// <summary> Initializes a new instance of <see cref="BillingTrustExternalId"/> for deserialization. </summary>
+        internal BillingTrustExternalId()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExternalId PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BillingTrustExternalId PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalId>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustExternalId>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExternalId(document.RootElement, options);
+                        return DeserializeBillingTrustExternalId(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExternalId)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingTrustExternalId)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalId>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustExternalId>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingTrustContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExternalId)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingTrustExternalId)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExternalId>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BillingTrustExternalId>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExternalId IPersistableModel<ExternalId>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BillingTrustExternalId IPersistableModel<BillingTrustExternalId>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExternalId>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BillingTrustExternalId>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExternalId>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BillingTrustExternalId>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalId>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustExternalId>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExternalId)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingTrustExternalId)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -102,24 +102,24 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExternalId IJsonModel<ExternalId>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BillingTrustExternalId IJsonModel<BillingTrustExternalId>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExternalId JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BillingTrustExternalId JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalId>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustExternalId>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExternalId)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingTrustExternalId)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExternalId(document.RootElement, options);
+            return DeserializeBillingTrustExternalId(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExternalId DeserializeExternalId(JsonElement element, ModelReaderWriterOptions options)
+        internal static BillingTrustExternalId DeserializeBillingTrustExternalId(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExternalId(@type, value, additionalBinaryDataProperties);
+            return new BillingTrustExternalId(@type, value, additionalBinaryDataProperties);
         }
     }
 }

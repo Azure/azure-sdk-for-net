@@ -12,7 +12,7 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> The aggregated evaluation state of an assessment, derived from its rules. </summary>
-    public readonly partial struct AssessmentState : IEquatable<AssessmentState>
+    public readonly partial struct BillingTrustAssessmentState : IEquatable<BillingTrustAssessmentState>
     {
         private readonly string _value;
         /// <summary> One or more rules have not reached a steady state. </summary>
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <summary> Assessment expired and requires re-evaluation. </summary>
         private const string ExpiredValue = "expired";
 
-        /// <summary> Initializes a new instance of <see cref="AssessmentState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustAssessmentState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AssessmentState(string value)
+        public BillingTrustAssessmentState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -45,56 +45,56 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         }
 
         /// <summary> One or more rules have not reached a steady state. </summary>
-        public static AssessmentState Pending { get; } = new AssessmentState(PendingValue);
+        public static BillingTrustAssessmentState Pending { get; } = new BillingTrustAssessmentState(PendingValue);
 
         /// <summary> One or more rules are currently being evaluated. </summary>
-        public static AssessmentState Running { get; } = new AssessmentState(RunningValue);
+        public static BillingTrustAssessmentState Running { get; } = new BillingTrustAssessmentState(RunningValue);
 
         /// <summary> One or more rules require user action. </summary>
-        public static AssessmentState ActionRequired { get; } = new AssessmentState(ActionRequiredValue);
+        public static BillingTrustAssessmentState ActionRequired { get; } = new BillingTrustAssessmentState(ActionRequiredValue);
 
         /// <summary> One or more rules require manual review. </summary>
-        public static AssessmentState UnderReview { get; } = new AssessmentState(UnderReviewValue);
+        public static BillingTrustAssessmentState UnderReview { get; } = new BillingTrustAssessmentState(UnderReviewValue);
 
         /// <summary> All rules reached a steady state, and the last non-skipped rule failed. </summary>
-        public static AssessmentState Failed { get; } = new AssessmentState(FailedValue);
+        public static BillingTrustAssessmentState Failed { get; } = new BillingTrustAssessmentState(FailedValue);
 
         /// <summary> All rules reached a steady state, and the last non-skipped rule succeeded. </summary>
-        public static AssessmentState Succeeded { get; } = new AssessmentState(SucceededValue);
+        public static BillingTrustAssessmentState Succeeded { get; } = new BillingTrustAssessmentState(SucceededValue);
 
         /// <summary> Assessment succeeded but with a manual override applied by operations. </summary>
-        public static AssessmentState SucceededWithOverride { get; } = new AssessmentState(SucceededWithOverrideValue);
+        public static BillingTrustAssessmentState SucceededWithOverride { get; } = new BillingTrustAssessmentState(SucceededWithOverrideValue);
 
         /// <summary> Assessment failed but with a manual override applied by operations. </summary>
-        public static AssessmentState FailedWithOverride { get; } = new AssessmentState(FailedWithOverrideValue);
+        public static BillingTrustAssessmentState FailedWithOverride { get; } = new BillingTrustAssessmentState(FailedWithOverrideValue);
 
         /// <summary> Assessment expired and requires re-evaluation. </summary>
-        public static AssessmentState Expired { get; } = new AssessmentState(ExpiredValue);
+        public static BillingTrustAssessmentState Expired { get; } = new BillingTrustAssessmentState(ExpiredValue);
 
-        /// <summary> Determines if two <see cref="AssessmentState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BillingTrustAssessmentState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AssessmentState left, AssessmentState right) => left.Equals(right);
+        public static bool operator ==(BillingTrustAssessmentState left, BillingTrustAssessmentState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AssessmentState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BillingTrustAssessmentState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AssessmentState left, AssessmentState right) => !left.Equals(right);
+        public static bool operator !=(BillingTrustAssessmentState left, BillingTrustAssessmentState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AssessmentState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BillingTrustAssessmentState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AssessmentState(string value) => new AssessmentState(value);
+        public static implicit operator BillingTrustAssessmentState(string value) => new BillingTrustAssessmentState(value);
 
-        /// <summary> Converts a string to a <see cref="AssessmentState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BillingTrustAssessmentState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AssessmentState?(string value) => value == null ? null : new AssessmentState(value);
+        public static implicit operator BillingTrustAssessmentState?(string value) => value == null ? null : new BillingTrustAssessmentState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AssessmentState other && Equals(other);
+        public override bool Equals(object obj) => obj is BillingTrustAssessmentState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AssessmentState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BillingTrustAssessmentState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

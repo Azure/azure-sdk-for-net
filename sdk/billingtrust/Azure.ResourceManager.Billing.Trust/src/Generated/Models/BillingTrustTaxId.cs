@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> Tax id entry associated with the sold-to identity. </summary>
-    public partial class TaxId
+    public partial class BillingTrustTaxId
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TaxId"/>. </summary>
-        internal TaxId()
+        /// <summary> Initializes a new instance of <see cref="BillingTrustTaxId"/>. </summary>
+        internal BillingTrustTaxId()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TaxId"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustTaxId"/>. </summary>
         /// <param name="value"> Tax id value (e.g. the VAT / GST / EIN identifier string). </param>
         /// <param name="country"> ISO 3166-1 alpha-2 country code the tax id is registered in. </param>
         /// <param name="scope"> Scope of the tax id (e.g. `Federal`, `State`). </param>
         /// <param name="status"> Status of the tax id. </param>
         /// <param name="type"> Type of tax id (e.g. `VAT`, `GST`, `EIN`). Extensible — additional types may be returned as upstream registries evolve. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaxId(string value, string country, string scope, TaxIdStatus? status, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingTrustTaxId(string value, string country, string scope, BillingTrustTaxIdStatus? status, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             Country = country;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         public string Scope { get; }
 
         /// <summary> Status of the tax id. </summary>
-        public TaxIdStatus? Status { get; }
+        public BillingTrustTaxIdStatus? Status { get; }
 
         /// <summary> Type of tax id (e.g. `VAT`, `GST`, `EIN`). Extensible — additional types may be returned as upstream registries evolve. </summary>
         public string Type { get; }

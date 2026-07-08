@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> Initial values for an education qualification rule. Per-domain entries (`domainNames` + `tenantId`) are used to populate the rule when the assessment is created. </summary>
-    public partial class EduInitialValue : InitialRuleValueBase, IJsonModel<EduInitialValue>
+    public partial class EduInitialValue : BillingTrustInitialRuleValueBase, IJsonModel<EduInitialValue>
     {
         /// <summary> Initializes a new instance of <see cref="EduInitialValue"/> for deserialization. </summary>
         internal EduInitialValue()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InitialRuleValueBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BillingTrustInitialRuleValueBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EduInitialValue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("domains"u8);
             writer.WriteStartArray();
-            foreach (DomainEntry item in Domains)
+            foreach (BillingTrustDomainEntry item in Domains)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InitialRuleValueBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BillingTrustInitialRuleValueBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EduInitialValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             }
             RuleKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<DomainEntry> domains = default;
+            IList<BillingTrustDomainEntry> domains = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                 }
                 if (prop.NameEquals("domains"u8))
                 {
-                    List<DomainEntry> array = new List<DomainEntry>();
+                    List<BillingTrustDomainEntry> array = new List<BillingTrustDomainEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DomainEntry.DeserializeDomainEntry(item, options));
+                        array.Add(BillingTrustDomainEntry.DeserializeBillingTrustDomainEntry(item, options));
                     }
                     domains = array;
                     continue;

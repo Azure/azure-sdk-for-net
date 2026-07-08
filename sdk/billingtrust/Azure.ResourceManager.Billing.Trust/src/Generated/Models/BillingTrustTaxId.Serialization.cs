@@ -14,51 +14,51 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> Tax id entry associated with the sold-to identity. </summary>
-    public partial class TaxId : IJsonModel<TaxId>
+    public partial class BillingTrustTaxId : IJsonModel<BillingTrustTaxId>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TaxId PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BillingTrustTaxId PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TaxId>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustTaxId>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTaxId(document.RootElement, options);
+                        return DeserializeBillingTrustTaxId(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TaxId)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingTrustTaxId)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TaxId>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustTaxId>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingTrustContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TaxId)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingTrustTaxId)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TaxId>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BillingTrustTaxId>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TaxId IPersistableModel<TaxId>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BillingTrustTaxId IPersistableModel<BillingTrustTaxId>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TaxId>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BillingTrustTaxId>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TaxId>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BillingTrustTaxId>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TaxId>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustTaxId>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TaxId)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingTrustTaxId)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Value))
             {
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TaxId IJsonModel<TaxId>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BillingTrustTaxId IJsonModel<BillingTrustTaxId>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TaxId JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BillingTrustTaxId JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TaxId>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustTaxId>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TaxId)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingTrustTaxId)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTaxId(document.RootElement, options);
+            return DeserializeBillingTrustTaxId(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TaxId DeserializeTaxId(JsonElement element, ModelReaderWriterOptions options)
+        internal static BillingTrustTaxId DeserializeBillingTrustTaxId(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             string value = default;
             string country = default;
             string scope = default;
-            TaxIdStatus? status = default;
+            BillingTrustTaxIdStatus? status = default;
             string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     {
                         continue;
                     }
-                    status = new TaxIdStatus(prop.Value.GetString());
+                    status = new BillingTrustTaxIdStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TaxId(
+            return new BillingTrustTaxId(
                 value,
                 country,
                 scope,

@@ -14,22 +14,22 @@ namespace Azure.ResourceManager.Billing.Trust.Models
     /// Base type for write-only initial values supplied when creating an assessment. Polymorphic by `kind`; per-kind initial values forward into the corresponding rule.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EduInitialValue"/>.
     /// </summary>
-    public abstract partial class InitialRuleValueBase
+    public abstract partial class BillingTrustInitialRuleValueBase
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InitialRuleValueBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustInitialRuleValueBase"/>. </summary>
         /// <param name="kind"> The kind of rule to initialize. </param>
-        private protected InitialRuleValueBase(RuleKind kind)
+        private protected BillingTrustInitialRuleValueBase(RuleKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InitialRuleValueBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustInitialRuleValueBase"/>. </summary>
         /// <param name="kind"> The kind of rule to initialize. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InitialRuleValueBase(RuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingTrustInitialRuleValueBase(RuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

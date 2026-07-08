@@ -16,57 +16,57 @@ namespace Azure.ResourceManager.Billing.Trust.Models
     /// Base type for write-only initial values supplied when creating an assessment. Polymorphic by `kind`; per-kind initial values forward into the corresponding rule.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EduInitialValue"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownInitialRuleValueBase))]
-    public abstract partial class InitialRuleValueBase : IJsonModel<InitialRuleValueBase>
+    [PersistableModelProxy(typeof(UnknownBillingTrustInitialRuleValueBase))]
+    public abstract partial class BillingTrustInitialRuleValueBase : IJsonModel<BillingTrustInitialRuleValueBase>
     {
-        /// <summary> Initializes a new instance of <see cref="InitialRuleValueBase"/> for deserialization. </summary>
-        internal InitialRuleValueBase()
+        /// <summary> Initializes a new instance of <see cref="BillingTrustInitialRuleValueBase"/> for deserialization. </summary>
+        internal BillingTrustInitialRuleValueBase()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InitialRuleValueBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BillingTrustInitialRuleValueBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InitialRuleValueBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustInitialRuleValueBase>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInitialRuleValueBase(document.RootElement, options);
+                        return DeserializeBillingTrustInitialRuleValueBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InitialRuleValueBase)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingTrustInitialRuleValueBase)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InitialRuleValueBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustInitialRuleValueBase>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingTrustContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InitialRuleValueBase)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingTrustInitialRuleValueBase)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InitialRuleValueBase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BillingTrustInitialRuleValueBase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InitialRuleValueBase IPersistableModel<InitialRuleValueBase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BillingTrustInitialRuleValueBase IPersistableModel<BillingTrustInitialRuleValueBase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InitialRuleValueBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BillingTrustInitialRuleValueBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InitialRuleValueBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BillingTrustInitialRuleValueBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InitialRuleValueBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustInitialRuleValueBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InitialRuleValueBase)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingTrustInitialRuleValueBase)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InitialRuleValueBase IJsonModel<InitialRuleValueBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BillingTrustInitialRuleValueBase IJsonModel<BillingTrustInitialRuleValueBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InitialRuleValueBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BillingTrustInitialRuleValueBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InitialRuleValueBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustInitialRuleValueBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InitialRuleValueBase)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingTrustInitialRuleValueBase)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInitialRuleValueBase(document.RootElement, options);
+            return DeserializeBillingTrustInitialRuleValueBase(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static InitialRuleValueBase DeserializeInitialRuleValueBase(JsonElement element, ModelReaderWriterOptions options)
+        internal static BillingTrustInitialRuleValueBase DeserializeBillingTrustInitialRuleValueBase(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                         return EduInitialValue.DeserializeEduInitialValue(element, options);
                 }
             }
-            return UnknownInitialRuleValueBase.DeserializeUnknownInitialRuleValueBase(element, options);
+            return UnknownBillingTrustInitialRuleValueBase.DeserializeUnknownBillingTrustInitialRuleValueBase(element, options);
         }
     }
 }

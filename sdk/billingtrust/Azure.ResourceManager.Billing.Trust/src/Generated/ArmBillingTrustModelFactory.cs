@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Trust.BillingTrustAssessmentData"/> instance for mocking. </returns>
-        public static BillingTrustAssessmentData BillingTrustAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AssessmentProperties properties = default)
+        public static BillingTrustAssessmentData BillingTrustAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingTrustAssessmentProperties properties = default)
         {
             return new BillingTrustAssessmentData(
                 id,
@@ -42,47 +42,47 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="error"> Error information when evaluationState is failed. </param>
         /// <param name="initialValues"> Optional initial values applied to the rules created with this assessment. Write-only — these values are routed to the per-kind rules and are not returned on read. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.AssessmentProperties"/> instance for mocking. </returns>
-        public static AssessmentProperties AssessmentProperties(AssessmentType assessmentType = default, AssessmentState? evaluationState = default, DateTimeOffset? nextEvaluation = default, ResponseError error = default, IEnumerable<InitialRuleValueBase> initialValues = default, BillingTrustProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.BillingTrustAssessmentProperties"/> instance for mocking. </returns>
+        public static BillingTrustAssessmentProperties BillingTrustAssessmentProperties(BillingTrustAssessmentType assessmentType = default, BillingTrustAssessmentState? evaluationState = default, DateTimeOffset? nextEvaluation = default, ResponseError error = default, IEnumerable<BillingTrustInitialRuleValueBase> initialValues = default, BillingTrustProvisioningState? provisioningState = default)
         {
-            initialValues ??= new ChangeTrackingList<InitialRuleValueBase>();
+            initialValues ??= new ChangeTrackingList<BillingTrustInitialRuleValueBase>();
 
-            return new AssessmentProperties(
+            return new BillingTrustAssessmentProperties(
                 assessmentType,
                 evaluationState,
                 nextEvaluation,
                 error,
-                (initialValues ?? new ChangeTrackingList<InitialRuleValueBase>()).ToList(),
+                (initialValues ?? new ChangeTrackingList<BillingTrustInitialRuleValueBase>()).ToList(),
                 provisioningState,
                 default);
         }
 
         /// <param name="kind"> The kind of rule to initialize. </param>
-        /// <returns> A new <see cref="Models.InitialRuleValueBase"/> instance for mocking. </returns>
-        public static InitialRuleValueBase InitialRuleValueBase(string kind = default)
+        /// <returns> A new <see cref="Models.BillingTrustInitialRuleValueBase"/> instance for mocking. </returns>
+        public static BillingTrustInitialRuleValueBase BillingTrustInitialRuleValueBase(string kind = default)
         {
-            return new UnknownInitialRuleValueBase(default, default);
+            return new UnknownBillingTrustInitialRuleValueBase(default, default);
         }
 
         /// <param name="domains"> Per-domain entries to use when populating the education qualification rule. Only `domainNames` and `tenantId` are read from this payload; `state` and `error` on each entry are populated by the service. </param>
         /// <returns> A new <see cref="Models.EduInitialValue"/> instance for mocking. </returns>
-        public static EduInitialValue EduInitialValue(IEnumerable<DomainEntry> domains = default)
+        public static EduInitialValue EduInitialValue(IEnumerable<BillingTrustDomainEntry> domains = default)
         {
-            domains ??= new ChangeTrackingList<DomainEntry>();
+            domains ??= new ChangeTrackingList<BillingTrustDomainEntry>();
 
-            return new EduInitialValue(default, default, (domains ?? new ChangeTrackingList<DomainEntry>()).ToList());
+            return new EduInitialValue(default, default, (domains ?? new ChangeTrackingList<BillingTrustDomainEntry>()).ToList());
         }
 
         /// <param name="domainNames"> Domain names associated with a tenant. </param>
         /// <param name="tenantId"> The Microsoft Entra tenant ID owning these domains. Defaults to the calling user's tenant when omitted. </param>
         /// <param name="state"> The verification state of this domain entry. Server-managed. </param>
         /// <param name="error"> Error detail when state is `failed` or `actionRequired`. Omitted otherwise. Server-managed. </param>
-        /// <returns> A new <see cref="Models.DomainEntry"/> instance for mocking. </returns>
-        public static DomainEntry DomainEntry(IEnumerable<string> domainNames = default, Guid? tenantId = default, DomainEntryState? state = default, ResponseError error = default)
+        /// <returns> A new <see cref="Models.BillingTrustDomainEntry"/> instance for mocking. </returns>
+        public static BillingTrustDomainEntry BillingTrustDomainEntry(IEnumerable<string> domainNames = default, Guid? tenantId = default, BillingTrustDomainEntryState? state = default, ResponseError error = default)
         {
             domainNames ??= new ChangeTrackingList<string>();
 
-            return new DomainEntry((domainNames ?? new ChangeTrackingList<string>()).ToList(), tenantId, state, error, default);
+            return new BillingTrustDomainEntry((domainNames ?? new ChangeTrackingList<string>()).ToList(), tenantId, state, error, default);
         }
 
         /// <param name="token"> The time-bound, principal-bound upload token. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Trust.BillingTrustRuleData"/> instance for mocking. </returns>
-        public static BillingTrustRuleData BillingTrustRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RuleProperties properties = default)
+        public static BillingTrustRuleData BillingTrustRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingTrustRuleProperties properties = default)
         {
             return new BillingTrustRuleData(
                 id,
@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="evaluationState"> The evaluation state of the rule. Server-managed. </param>
         /// <param name="error"> Error information when evaluationState is `failed` or `actionRequired`. Server-managed. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.RuleProperties"/> instance for mocking. </returns>
-        public static RuleProperties RuleProperties(string kind = default, RuleState? evaluationState = default, ResponseError error = default, BillingTrustProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.BillingTrustRuleProperties"/> instance for mocking. </returns>
+        public static BillingTrustRuleProperties BillingTrustRuleProperties(string kind = default, BillingTrustRuleState? evaluationState = default, ResponseError error = default, BillingTrustProvisioningState? provisioningState = default)
         {
-            return new UnknownRuleProperties(default, evaluationState, error, provisioningState, default);
+            return new UnknownBillingTrustRuleProperties(default, evaluationState, error, provisioningState, default);
         }
 
         /// <param name="evaluationState"> The evaluation state of the rule. Server-managed. </param>
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="domains"> Per-tenant domain entries to verify. </param>
         /// <param name="supplementalDocuments"> References to supplemental documents. Settable only when evaluationState is `actionRequired`. </param>
         /// <returns> A new <see cref="Models.EduQualificationRuleProperties"/> instance for mocking. </returns>
-        public static EduQualificationRuleProperties EduQualificationRuleProperties(RuleState? evaluationState = default, ResponseError error = default, BillingTrustProvisioningState? provisioningState = default, IEnumerable<DomainEntry> domains = default, IEnumerable<Uri> supplementalDocuments = default)
+        public static EduQualificationRuleProperties EduQualificationRuleProperties(BillingTrustRuleState? evaluationState = default, ResponseError error = default, BillingTrustProvisioningState? provisioningState = default, IEnumerable<BillingTrustDomainEntry> domains = default, IEnumerable<Uri> supplementalDocuments = default)
         {
-            domains ??= new ChangeTrackingList<DomainEntry>();
+            domains ??= new ChangeTrackingList<BillingTrustDomainEntry>();
             supplementalDocuments ??= new ChangeTrackingList<Uri>();
 
             return new EduQualificationRuleProperties(
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                 error,
                 provisioningState,
                 default,
-                (domains ?? new ChangeTrackingList<DomainEntry>()).ToList(),
+                (domains ?? new ChangeTrackingList<BillingTrustDomainEntry>()).ToList(),
                 (supplementalDocuments ?? new ChangeTrackingList<Uri>()).ToList());
         }
 
@@ -149,9 +149,9 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="externalId"> Optional external-registry identifier (e.g. DUNS) used to disambiguate verification matches. Settable on PATCH while `evaluationState` is `pending` or `actionRequired`. </param>
         /// <param name="supplementalDocuments"> References to supplemental documents (businessVerification rules only; only settable while evaluationState is `pending` or `actionRequired`). </param>
         /// <returns> A new <see cref="Models.BusinessVerificationRuleProperties"/> instance for mocking. </returns>
-        public static BusinessVerificationRuleProperties BusinessVerificationRuleProperties(RuleState? evaluationState = default, ResponseError error = default, BillingTrustProvisioningState? provisioningState = default, SoldTo soldTo = default, RegistrationNumber registrationNumber = default, IEnumerable<TaxId> taxIds = default, ExternalId externalId = default, IEnumerable<Uri> supplementalDocuments = default)
+        public static BusinessVerificationRuleProperties BusinessVerificationRuleProperties(BillingTrustRuleState? evaluationState = default, ResponseError error = default, BillingTrustProvisioningState? provisioningState = default, BillingTrustSoldTo soldTo = default, BillingTrustRegistrationNumber registrationNumber = default, IEnumerable<BillingTrustTaxId> taxIds = default, BillingTrustExternalId externalId = default, IEnumerable<Uri> supplementalDocuments = default)
         {
-            taxIds ??= new ChangeTrackingList<TaxId>();
+            taxIds ??= new ChangeTrackingList<BillingTrustTaxId>();
             supplementalDocuments ??= new ChangeTrackingList<Uri>();
 
             return new BusinessVerificationRuleProperties(
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                 default,
                 soldTo,
                 registrationNumber,
-                (taxIds ?? new ChangeTrackingList<TaxId>()).ToList(),
+                (taxIds ?? new ChangeTrackingList<BillingTrustTaxId>()).ToList(),
                 externalId,
                 (supplementalDocuments ?? new ChangeTrackingList<Uri>()).ToList());
         }
@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="phoneNumber"> Contact phone number (free-form string; format not validated server-side). PII — contact. </param>
         /// <param name="postalCode"> Postal or ZIP code. PII — postal address. </param>
         /// <param name="region"> State, province, or region. PII — postal address. </param>
-        /// <returns> A new <see cref="Models.SoldTo"/> instance for mocking. </returns>
-        public static SoldTo SoldTo(string addressLine1 = default, string addressLine2 = default, string addressLine3 = default, string city = default, string country = default, string companyName = default, string district = default, string email = default, string firstName = default, string lastName = default, string middleName = default, string phoneNumber = default, string postalCode = default, string region = default)
+        /// <returns> A new <see cref="Models.BillingTrustSoldTo"/> instance for mocking. </returns>
+        public static BillingTrustSoldTo BillingTrustSoldTo(string addressLine1 = default, string addressLine2 = default, string addressLine3 = default, string city = default, string country = default, string companyName = default, string district = default, string email = default, string firstName = default, string lastName = default, string middleName = default, string phoneNumber = default, string postalCode = default, string region = default)
         {
-            return new SoldTo(
+            return new BillingTrustSoldTo(
                 addressLine1,
                 addressLine2,
                 addressLine3,
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="type"> Allowed registration-number types based on the billing-account country (e.g. `VAT`, `GST`, `EIN`). </param>
         /// <param name="value"> Registration number value (e.g. the VAT / GST / EIN identifier string). </param>
         /// <param name="registrationRequirement"> Whether a registration number is required for the sold-to country. </param>
-        /// <returns> A new <see cref="Models.RegistrationNumber"/> instance for mocking. </returns>
-        public static RegistrationNumber RegistrationNumber(IEnumerable<string> @type = default, string value = default, RegistrationRequirement? registrationRequirement = default)
+        /// <returns> A new <see cref="Models.BillingTrustRegistrationNumber"/> instance for mocking. </returns>
+        public static BillingTrustRegistrationNumber BillingTrustRegistrationNumber(IEnumerable<string> @type = default, string value = default, BillingTrustRegistrationRequirement? registrationRequirement = default)
         {
             @type ??= new ChangeTrackingList<string>();
 
-            return new RegistrationNumber((@type ?? new ChangeTrackingList<string>()).ToList(), value, registrationRequirement, default);
+            return new BillingTrustRegistrationNumber((@type ?? new ChangeTrackingList<string>()).ToList(), value, registrationRequirement, default);
         }
 
         /// <param name="value"> Tax id value (e.g. the VAT / GST / EIN identifier string). </param>
@@ -218,10 +218,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="scope"> Scope of the tax id (e.g. `Federal`, `State`). </param>
         /// <param name="status"> Status of the tax id. </param>
         /// <param name="type"> Type of tax id (e.g. `VAT`, `GST`, `EIN`). Extensible — additional types may be returned as upstream registries evolve. </param>
-        /// <returns> A new <see cref="Models.TaxId"/> instance for mocking. </returns>
-        public static TaxId TaxId(string value = default, string country = default, string scope = default, TaxIdStatus? status = default, string @type = default)
+        /// <returns> A new <see cref="Models.BillingTrustTaxId"/> instance for mocking. </returns>
+        public static BillingTrustTaxId BillingTrustTaxId(string value = default, string country = default, string scope = default, BillingTrustTaxIdStatus? status = default, string @type = default)
         {
-            return new TaxId(
+            return new BillingTrustTaxId(
                 value,
                 country,
                 scope,
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <param name="type"> Identifier type. Currently `DUNS` is supported. </param>
         /// <param name="value"> Identifier value (e.g. the DUNS number string). </param>
-        /// <returns> A new <see cref="Models.ExternalId"/> instance for mocking. </returns>
-        public static ExternalId ExternalId(string @type = default, string value = default)
+        /// <returns> A new <see cref="Models.BillingTrustExternalId"/> instance for mocking. </returns>
+        public static BillingTrustExternalId BillingTrustExternalId(string @type = default, string value = default)
         {
-            return new ExternalId(@type, value, default);
+            return new BillingTrustExternalId(@type, value, default);
         }
 
         /// <param name="kind"> The kind of rule. Acts as a discriminator for per-kind patchable fields. Must match the existing rule's kind; PATCH cannot mutate kind. </param>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="externalId"> Optional external-registry identifier (e.g. DUNS) used to disambiguate ambiguous verification matches. </param>
         /// <param name="supplementalDocuments"> References to supplemental documents (businessVerification rules only; only settable while evaluationState is `pending` or `actionRequired`). </param>
         /// <returns> A new <see cref="Models.BusinessVerificationRulePatchProperties"/> instance for mocking. </returns>
-        public static BusinessVerificationRulePatchProperties BusinessVerificationRulePatchProperties(ExternalId externalId = default, IEnumerable<Uri> supplementalDocuments = default)
+        public static BusinessVerificationRulePatchProperties BusinessVerificationRulePatchProperties(BillingTrustExternalId externalId = default, IEnumerable<Uri> supplementalDocuments = default)
         {
             supplementalDocuments ??= new ChangeTrackingList<Uri>();
 

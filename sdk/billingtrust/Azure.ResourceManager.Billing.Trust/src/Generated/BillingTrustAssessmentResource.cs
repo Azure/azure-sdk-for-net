@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, BillingTrustAssessmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingTrustAssessmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BillingTrustAssessmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -128,10 +128,16 @@ namespace Azure.ResourceManager.Billing.Trust
                 };
                 HttpMessage message = _assessmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), BillingTrustAssessmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TrustArmOperation operation = new TrustArmOperation(_assessmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                TrustArmOperation<BillingTrustAssessmentResource> operation = new TrustArmOperation<BillingTrustAssessmentResource>(
+                    new BillingTrustAssessmentResourceOperationSource(Client),
+                    _assessmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -167,7 +173,7 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, BillingTrustAssessmentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingTrustAssessmentResource> CreateOrUpdate(WaitUntil waitUntil, BillingTrustAssessmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -181,10 +187,16 @@ namespace Azure.ResourceManager.Billing.Trust
                 };
                 HttpMessage message = _assessmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), BillingTrustAssessmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TrustArmOperation operation = new TrustArmOperation(_assessmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                TrustArmOperation<BillingTrustAssessmentResource> operation = new TrustArmOperation<BillingTrustAssessmentResource>(
+                    new BillingTrustAssessmentResourceOperationSource(Client),
+                    _assessmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }

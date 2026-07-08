@@ -13,12 +13,12 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> Initial values for an education qualification rule. Per-domain entries (`domainNames` + `tenantId`) are used to populate the rule when the assessment is created. </summary>
-    public partial class EduInitialValue : InitialRuleValueBase
+    public partial class EduInitialValue : BillingTrustInitialRuleValueBase
     {
         /// <summary> Initializes a new instance of <see cref="EduInitialValue"/>. </summary>
         /// <param name="domains"> Per-domain entries to use when populating the education qualification rule. Only `domainNames` and `tenantId` are read from this payload; `state` and `error` on each entry are populated by the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domains"/> is null. </exception>
-        public EduInitialValue(IEnumerable<DomainEntry> domains) : base(RuleKind.EduQualification)
+        public EduInitialValue(IEnumerable<BillingTrustDomainEntry> domains) : base(RuleKind.EduQualification)
         {
             Argument.AssertNotNull(domains, nameof(domains));
 
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="kind"> The kind of rule to initialize. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="domains"> Per-domain entries to use when populating the education qualification rule. Only `domainNames` and `tenantId` are read from this payload; `state` and `error` on each entry are populated by the service. </param>
-        internal EduInitialValue(RuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<DomainEntry> domains) : base(kind, additionalBinaryDataProperties)
+        internal EduInitialValue(RuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<BillingTrustDomainEntry> domains) : base(kind, additionalBinaryDataProperties)
         {
             Domains = domains;
         }
 
         /// <summary> Per-domain entries to use when populating the education qualification rule. Only `domainNames` and `tenantId` are read from this payload; `state` and `error` on each entry are populated by the service. </summary>
-        public IList<DomainEntry> Domains { get; }
+        public IList<BillingTrustDomainEntry> Domains { get; }
     }
 }
