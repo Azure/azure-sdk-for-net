@@ -1,4 +1,4 @@
-# Azure.ResourceManager.ImageBuilder management client library for .NET
+# Microsoft Azure Image Builder management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
