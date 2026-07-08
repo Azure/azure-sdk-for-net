@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -546,24 +547,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        /// <summary> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </summary>
-        [WirePath("properties.enforceHierarchicalPartitionKeyIdLastLevel")]
-        public bool? EnforceHierarchicalPartitionKeyIdLastLevel
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnforceHierarchicalPartitionKeyIdLastLevel;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DatabaseAccountUpdateProperties();
-                }
-                Properties.EnforceHierarchicalPartitionKeyIdLastLevel = value;
-            }
-        }
-
         /// <summary> Describes the version of the MongoDB account. </summary>
         [WirePath("properties.apiProperties.serverVersion")]
         public CosmosDBServerVersion? ApiServerVersion
@@ -615,6 +598,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     Properties = new DatabaseAccountUpdateProperties();
                 }
                 Properties.CapacityTotalThroughputLimit = value;
+            }
+        }
+
+        /// <summary> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </summary>
+        [CodeGenMember("EnforceHierarchicalPartitionKeyIdLastLevel")]
+        [WirePath("properties.enforceHierarchicalPartitionKeyIdLastLevel")]
+        public bool? IsHierarchicalPartitionKeyIdLastLevelEnforced
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsHierarchicalPartitionKeyIdLastLevelEnforced;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountUpdateProperties();
+                }
+                Properties.IsHierarchicalPartitionKeyIdLastLevelEnforced = value;
             }
         }
     }

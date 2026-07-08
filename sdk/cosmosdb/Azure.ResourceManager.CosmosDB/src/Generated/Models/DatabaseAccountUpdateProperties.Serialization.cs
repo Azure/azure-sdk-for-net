@@ -14,7 +14,6 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Properties to update Azure Cosmos DB database accounts. </summary>
     internal partial class DatabaseAccountUpdateProperties : IJsonModel<DatabaseAccountUpdateProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -270,10 +269,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("enablePerRegionPerPartitionAutoscale"u8);
                 writer.WriteBooleanValue(EnablePerRegionPerPartitionAutoscale.Value);
             }
-            if (Optional.IsDefined(EnforceHierarchicalPartitionKeyIdLastLevel))
+            if (Optional.IsDefined(IsHierarchicalPartitionKeyIdLastLevelEnforced))
             {
                 writer.WritePropertyName("enforceHierarchicalPartitionKeyIdLastLevel"u8);
-                writer.WriteBooleanValue(EnforceHierarchicalPartitionKeyIdLastLevel.Value);
+                writer.WriteBooleanValue(IsHierarchicalPartitionKeyIdLastLevelEnforced.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -349,7 +348,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             bool? enablePriorityBasedExecution = default;
             DefaultPriorityLevel? defaultPriorityLevel = default;
             bool? enablePerRegionPerPartitionAutoscale = default;
-            bool? enforceHierarchicalPartitionKeyIdLastLevel = default;
+            bool? isHierarchicalPartitionKeyIdLastLevelEnforced = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -676,7 +675,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    enforceHierarchicalPartitionKeyIdLastLevel = prop.Value.GetBoolean();
+                    isHierarchicalPartitionKeyIdLastLevelEnforced = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -717,7 +716,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 enablePriorityBasedExecution,
                 defaultPriorityLevel,
                 enablePerRegionPerPartitionAutoscale,
-                enforceHierarchicalPartitionKeyIdLastLevel,
+                isHierarchicalPartitionKeyIdLastLevelEnforced,
                 additionalBinaryDataProperties);
         }
     }
