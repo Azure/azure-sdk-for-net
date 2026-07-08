@@ -273,7 +273,7 @@ LogGroupEnd
 
 if ($failedPackages.Count -gt 0) {
     Write-Host ""
-    Write-Host "Codeowners validation failed for one or more packages. See http://aka.ms/azsdk/codeowners for instructions to fix the issue."
+    Write-Host "Codeowners validation failed for one or more packages. See https://aka.ms/azsdk/codeowners for instructions to fix the issue."
     Write-Host "Failed Packages:"
     foreach ($failedPackage in $failedPackages) {
         Write-Host "  - $($failedPackage.DirectoryPath) does not have sufficient code owners coverage"
