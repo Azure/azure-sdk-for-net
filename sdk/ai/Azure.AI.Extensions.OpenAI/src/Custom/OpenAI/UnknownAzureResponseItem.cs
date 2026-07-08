@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using OpenAI;
 using OpenAI.Responses;
@@ -19,9 +20,58 @@ namespace Azure.AI.Extensions.OpenAI
     /// </summary>
     internal partial class UnknownAzureResponseItem : ResponseItem
     {
+        // The single source of truth for the Azure-specific item discriminators this package can strongly type.
+        // Keyed by the named ResponseItemKind extension constants (ResponseItemKindExtensions), each entry carries
+        // the concrete subtype and its deserializer. It is used both to dispatch a polymorphic read
+        // (DeserializeFromDiscriminator) and to decide whether an already materialized item still needs
+        // normalization (TryGetAzureItemType), so the two never drift apart.
+        private static readonly IReadOnlyDictionary<ResponseItemKind, (Type Type, Func<JsonElement, ModelReaderWriterOptions, ResponseItem> Deserialize)> AzureItemDispatch =
+            new Dictionary<ResponseItemKind, (Type, Func<JsonElement, ModelReaderWriterOptions, ResponseItem>)>
+            {
+                [ResponseItemKind.A2APreviewCall] = (typeof(A2AToolCall), A2AToolCall.DeserializeA2AToolCall),
+                [ResponseItemKind.A2APreviewCallOutput] = (typeof(A2AToolCallOutput), A2AToolCallOutput.DeserializeA2AToolCallOutput),
+                [ResponseItemKind.StructuredOutputs] = (typeof(AgentStructuredOutputsResponseItem), AgentStructuredOutputsResponseItem.DeserializeAgentStructuredOutputsResponseItem),
+                [ResponseItemKind.WorkflowAction] = (typeof(AgentWorkflowPreviewActionResponseItem), AgentWorkflowPreviewActionResponseItem.DeserializeAgentWorkflowPreviewActionResponseItem),
+                [ResponseItemKind.AzureAISearchCall] = (typeof(AzureAISearchToolCall), AzureAISearchToolCall.DeserializeAzureAISearchToolCall),
+                [ResponseItemKind.AzureAISearchCallOutput] = (typeof(AzureAISearchToolCallOutput), AzureAISearchToolCallOutput.DeserializeAzureAISearchToolCallOutput),
+                [ResponseItemKind.AzureFunctionCall] = (typeof(AzureFunctionToolCall), AzureFunctionToolCall.DeserializeAzureFunctionToolCall),
+                [ResponseItemKind.AzureFunctionCallOutput] = (typeof(AzureFunctionToolCallOutput), AzureFunctionToolCallOutput.DeserializeAzureFunctionToolCallOutput),
+                [ResponseItemKind.BingCustomSearchPreviewCall] = (typeof(BingCustomSearchToolCall), BingCustomSearchToolCall.DeserializeBingCustomSearchToolCall),
+                [ResponseItemKind.BingCustomSearchPreviewCallOutput] = (typeof(BingCustomSearchToolCallOutput), BingCustomSearchToolCallOutput.DeserializeBingCustomSearchToolCallOutput),
+                [ResponseItemKind.BingGroundingCall] = (typeof(BingGroundingToolCall), BingGroundingToolCall.DeserializeBingGroundingToolCall),
+                [ResponseItemKind.BingGroundingCallOutput] = (typeof(BingGroundingToolCallOutput), BingGroundingToolCallOutput.DeserializeBingGroundingToolCallOutput),
+                [ResponseItemKind.BrowserAutomationPreviewCall] = (typeof(BrowserAutomationToolCall), BrowserAutomationToolCall.DeserializeBrowserAutomationToolCall),
+                [ResponseItemKind.BrowserAutomationPreviewCallOutput] = (typeof(BrowserAutomationToolCallOutput), BrowserAutomationToolCallOutput.DeserializeBrowserAutomationToolCallOutput),
+                [ResponseItemKind.FabricDataAgentPreviewCall] = (typeof(FabricDataAgentToolCall), FabricDataAgentToolCall.DeserializeFabricDataAgentToolCall),
+                [ResponseItemKind.FabricDataAgentPreviewCallOutput] = (typeof(FabricDataAgentToolCallOutput), FabricDataAgentToolCallOutput.DeserializeFabricDataAgentToolCallOutput),
+                [ResponseItemKind.MemoryCommandPreviewCall] = (typeof(MemoryCommandToolCall), MemoryCommandToolCall.DeserializeMemoryCommandToolCall),
+                [ResponseItemKind.MemoryCommandPreviewCallOutput] = (typeof(MemoryCommandToolCallOutput), MemoryCommandToolCallOutput.DeserializeMemoryCommandToolCallOutput),
+                [ResponseItemKind.MemorySearchCall] = (typeof(MemorySearchToolCall), MemorySearchToolCall.DeserializeMemorySearchToolCall),
+                [ResponseItemKind.OAuthConsentRequest] = (typeof(OAuthConsentRequestResponseItem), OAuthConsentRequestResponseItem.DeserializeOAuthConsentRequestResponseItem),
+                [ResponseItemKind.OpenApiCall] = (typeof(OpenApiToolCall), OpenApiToolCall.DeserializeOpenApiToolCall),
+                [ResponseItemKind.OpenApiCallOutput] = (typeof(OpenApiToolCallOutput), OpenApiToolCallOutput.DeserializeOpenApiToolCallOutput),
+                [ResponseItemKind.SharepointGroundingPreviewCall] = (typeof(SharepointGroundingToolCall), SharepointGroundingToolCall.DeserializeSharepointGroundingToolCall),
+                [ResponseItemKind.SharepointGroundingPreviewCallOutput] = (typeof(SharepointGroundingToolCallOutput), SharepointGroundingToolCallOutput.DeserializeSharepointGroundingToolCallOutput),
+            };
+
         internal UnknownAzureResponseItem()
             : base(new ResponseItemKind("azure.unknown"))
         {
+        }
+
+        // Returns the concrete Azure subtype this package materializes for the given discriminator, if any. Used by
+        // the client-side normalization gate to decide whether an already-materialized item needs re-dispatch,
+        // keyed off the known discriminator set rather than any OpenAI-internal opaque type name.
+        internal static bool TryGetAzureItemType(ResponseItemKind kind, out Type type)
+        {
+            if (AzureItemDispatch.TryGetValue(kind, out (Type Type, Func<JsonElement, ModelReaderWriterOptions, ResponseItem> Deserialize) dispatch))
+            {
+                type = dispatch.Type;
+                return true;
+            }
+
+            type = null;
+            return false;
         }
 
         protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -38,71 +88,20 @@ namespace Azure.AI.Extensions.OpenAI
 
         private static ResponseItem DeserializeFromDiscriminator(JsonElement element, ModelReaderWriterOptions options)
         {
-            string kind = null;
-            if (element.TryGetProperty("type"u8, out JsonElement typeProperty) && typeProperty.ValueKind == JsonValueKind.String)
+            if (element.TryGetProperty("type"u8, out JsonElement typeProperty)
+                && typeProperty.ValueKind == JsonValueKind.String
+                && AzureItemDispatch.TryGetValue(new ResponseItemKind(typeProperty.GetString()), out (Type Type, Func<JsonElement, ModelReaderWriterOptions, ResponseItem> Deserialize) dispatch))
             {
-                kind = typeProperty.GetString();
+                return dispatch.Deserialize(element, options);
             }
 
-            switch (kind)
-            {
-                case "a2a_preview_call":
-                    return A2AToolCall.DeserializeA2AToolCall(element, options);
-                case "a2a_preview_call_output":
-                    return A2AToolCallOutput.DeserializeA2AToolCallOutput(element, options);
-                case "structured_outputs":
-                    return AgentStructuredOutputsResponseItem.DeserializeAgentStructuredOutputsResponseItem(element, options);
-                case "workflow_action":
-                    return AgentWorkflowPreviewActionResponseItem.DeserializeAgentWorkflowPreviewActionResponseItem(element, options);
-                case "azure_ai_search_call":
-                    return AzureAISearchToolCall.DeserializeAzureAISearchToolCall(element, options);
-                case "azure_ai_search_call_output":
-                    return AzureAISearchToolCallOutput.DeserializeAzureAISearchToolCallOutput(element, options);
-                case "azure_function_call":
-                    return AzureFunctionToolCall.DeserializeAzureFunctionToolCall(element, options);
-                case "azure_function_call_output":
-                    return AzureFunctionToolCallOutput.DeserializeAzureFunctionToolCallOutput(element, options);
-                case "bing_custom_search_preview_call":
-                    return BingCustomSearchToolCall.DeserializeBingCustomSearchToolCall(element, options);
-                case "bing_custom_search_preview_call_output":
-                    return BingCustomSearchToolCallOutput.DeserializeBingCustomSearchToolCallOutput(element, options);
-                case "bing_grounding_call":
-                    return BingGroundingToolCall.DeserializeBingGroundingToolCall(element, options);
-                case "bing_grounding_call_output":
-                    return BingGroundingToolCallOutput.DeserializeBingGroundingToolCallOutput(element, options);
-                case "browser_automation_preview_call":
-                    return BrowserAutomationToolCall.DeserializeBrowserAutomationToolCall(element, options);
-                case "browser_automation_preview_call_output":
-                    return BrowserAutomationToolCallOutput.DeserializeBrowserAutomationToolCallOutput(element, options);
-                case "fabric_dataagent_preview_call":
-                    return FabricDataAgentToolCall.DeserializeFabricDataAgentToolCall(element, options);
-                case "fabric_dataagent_preview_call_output":
-                    return FabricDataAgentToolCallOutput.DeserializeFabricDataAgentToolCallOutput(element, options);
-                case "memory_command_preview_call":
-                    return MemoryCommandToolCall.DeserializeMemoryCommandToolCall(element, options);
-                case "memory_command_preview_call_output":
-                    return MemoryCommandToolCallOutput.DeserializeMemoryCommandToolCallOutput(element, options);
-                case "memory_search_call":
-                    return MemorySearchToolCall.DeserializeMemorySearchToolCall(element, options);
-                case "oauth_consent_request":
-                    return OAuthConsentRequestResponseItem.DeserializeOAuthConsentRequestResponseItem(element, options);
-                case "openapi_call":
-                    return OpenApiToolCall.DeserializeOpenApiToolCall(element, options);
-                case "openapi_call_output":
-                    return OpenApiToolCallOutput.DeserializeOpenApiToolCallOutput(element, options);
-                case "sharepoint_grounding_preview_call":
-                    return SharepointGroundingToolCall.DeserializeSharepointGroundingToolCall(element, options);
-                case "sharepoint_grounding_preview_call_output":
-                    return SharepointGroundingToolCallOutput.DeserializeSharepointGroundingToolCallOutput(element, options);
-                default:
-                    // Not an Azure-specific kind; defer to OpenAI's own deserialization (which yields either a
-                    // known OpenAI subtype or its internal unknown-item fallback). Use the OpenAI context here so
-                    // this dispatcher is not re-entered.
-                    return ModelReaderWriter.Read<ResponseItem>(
-                        BinaryData.FromString(element.GetRawText()),
-                        options,
-                        OpenAIContext.Default);
-            }
+            // Not an Azure-specific kind; defer to OpenAI's own deserialization (which yields either a
+            // known OpenAI subtype or its internal unknown-item fallback). Use the OpenAI context here so
+            // this dispatcher is not re-entered.
+            return ModelReaderWriter.Read<ResponseItem>(
+                BinaryData.FromString(element.GetRawText()),
+                options,
+                OpenAIContext.Default);
         }
     }
 }

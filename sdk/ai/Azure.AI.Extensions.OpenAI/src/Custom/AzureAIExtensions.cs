@@ -33,20 +33,37 @@ public static partial class AzureAIExtensions
         return ModelReaderWriter.Read<ResponseItem>(serializedResponseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
     }
 
-    // The runtime type OpenAI materializes for any response item whose "type" discriminator
-    // it does not recognize (this includes all Azure-specific kinds). Matched by name because
-    // the type is internal to the OpenAI assembly.
-    private const string OpenAIUnknownResponseItemTypeName = "OpenAI.Responses.InternalUnknownItemResource";
-
-    // True when OpenAI could not recognize the item's discriminator and bucketed it into its
-    // opaque unknown type. Those are the only items that need re-dispatch through the Azure context.
-    private static bool IsOpaqueAgentResponseItem(ResponseItem item)
+    // Whether an already-materialized item still needs client-side normalization: its discriminator is one this
+    // package can strongly type (per UnknownAzureResponseItem's dispatch table) and it is not already that concrete
+    // type. Keying off the known-discriminator set — rather than matching OpenAI's internal opaque type name — means
+    // an upstream rename of that fallback cannot silently disable normalization, and it is naturally idempotent.
+    private static bool NeedsAgentItemNormalization(ResponseItem item)
         => item is not null
-            && string.Equals(item.GetType().FullName, OpenAIUnknownResponseItemTypeName, StringComparison.Ordinal);
+            && UnknownAzureResponseItem.TryGetAzureItemType(item.Kind, out Type azureType)
+            && !azureType.IsInstanceOfType(item);
 
-    // Returns the strongly-typed Azure subtype for an opaque item, or the item unchanged otherwise.
+    // Returns the strongly-typed Azure subtype for an item that needs it, or the item unchanged otherwise.
     private static ResponseItem NormalizeAgentResponseItem(ResponseItem item)
-        => IsOpaqueAgentResponseItem(item) ? item.AsAgentResponseItem() : item;
+        => NeedsAgentItemNormalization(item) ? item.AsAgentResponseItem() : item;
+
+    // Round-trips a tool through the Azure context so a tool that OpenAI could not strongly type re-dispatches
+    // to its concrete Azure subtype, mirroring AsAgentResponseItem for the tool axis.
+    private static ResponseTool AsAgentResponseTool(ResponseTool responseTool)
+    {
+        BinaryData serializedTool = ModelReaderWriter.Write(responseTool, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
+        return ModelReaderWriter.Read<ResponseTool>(serializedTool, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
+    }
+
+    // Whether an already-materialized tool still needs client-side normalization, keyed off the known Azure tool
+    // discriminator set (see NeedsAgentItemNormalization for the rationale).
+    private static bool NeedsAgentToolNormalization(ResponseTool tool)
+        => tool is not null
+            && UnknownAzureResponseTool.TryGetAzureToolType(tool.Kind, out Type azureType)
+            && !azureType.IsInstanceOfType(tool);
+
+    // Returns the strongly-typed Azure subtype for a tool that needs it, or the tool unchanged otherwise.
+    private static ResponseTool NormalizeAgentResponseTool(ResponseTool tool)
+        => NeedsAgentToolNormalization(tool) ? AsAgentResponseTool(tool) : tool;
 
     /// <summary>
     /// Re-dispatches any opaque (unrecognized) items in a response's output through the Azure
@@ -72,7 +89,7 @@ public static partial class AzureAIExtensions
         for (int i = 0; i < items.Count; i++)
         {
             ResponseItem item = items[i];
-            if (IsOpaqueAgentResponseItem(item))
+            if (NeedsAgentItemNormalization(item))
             {
                 items[i] = item.AsAgentResponseItem();
             }
@@ -80,12 +97,54 @@ public static partial class AzureAIExtensions
     }
 
     /// <summary>
-    /// Re-dispatches opaque response items carried by a streaming update into their strongly-typed
-    /// Azure subtypes, mutating the update in place. Incremental item updates carry a single
-    /// <c>ResponseItem</c>; the terminal completed update carries the full aggregate
-    /// <see cref="ResponseResult"/>, whose output items are normalized via
-    /// <see cref="NormalizeAgentOutputItems(ResponseResult)"/>. Other update kinds pass through
-    /// unchanged. Temporary client-side bridge, mirroring <see cref="NormalizeAgentOutputItems"/>.
+    /// Re-dispatches any opaque (unrecognized) tool definitions echoed on a response through the
+    /// Azure context so callers receive strongly-typed Azure tool subtypes (e.g.
+    /// <c>BingGroundingTool</c>) rather than OpenAI's opaque unknown-tool fallback. Mutates the
+    /// tool list in place. Non-Azure unknowns round-trip back to the same opaque type, so this is a
+    /// no-op for them. Temporary client-side bridge, mirroring <see cref="NormalizeAgentOutputItems"/>.
+    /// </summary>
+    internal static void NormalizeAgentTools(ResponseResult response)
+    {
+        if (response is null)
+        {
+            return;
+        }
+
+        IList<ResponseTool> tools = response.Tools;
+        if (tools is null || tools.IsReadOnly)
+        {
+            return;
+        }
+
+        for (int i = 0; i < tools.Count; i++)
+        {
+            ResponseTool tool = tools[i];
+            if (NeedsAgentToolNormalization(tool))
+            {
+                tools[i] = AsAgentResponseTool(tool);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Normalizes both the output items and the echoed tool definitions of a response, so callers
+    /// receive strongly-typed Azure subtypes across the whole result. Null-safe.
+    /// </summary>
+    internal static void NormalizeAgentResponse(ResponseResult response)
+    {
+        NormalizeAgentOutputItems(response);
+        NormalizeAgentTools(response);
+    }
+
+    /// <summary>
+    /// Re-dispatches opaque response items and tools carried by a streaming update into their
+    /// strongly-typed Azure subtypes, mutating the update in place. Incremental item updates carry a
+    /// single <c>ResponseItem</c>; every lifecycle update
+    /// (created/in&#8209;progress/queued/incomplete/failed/completed) carries a snapshot
+    /// <see cref="ResponseResult"/> whose output items and tools are normalized via
+    /// <see cref="NormalizeAgentResponse(ResponseResult)"/> — a consumer inspecting the response on,
+    /// say, a failed update must still see typed items. Other update kinds pass through unchanged.
+    /// Temporary client-side bridge, mirroring <see cref="NormalizeAgentResponse"/>.
     /// </summary>
     internal static StreamingResponseUpdate NormalizeStreamingUpdate(StreamingResponseUpdate update)
     {
@@ -98,7 +157,22 @@ public static partial class AzureAIExtensions
                 done.Item = NormalizeAgentResponseItem(done.Item);
                 break;
             case StreamingResponseCompletedUpdate completed:
-                NormalizeAgentOutputItems(completed.Response);
+                NormalizeAgentResponse(completed.Response);
+                break;
+            case StreamingResponseCreatedUpdate created:
+                NormalizeAgentResponse(created.Response);
+                break;
+            case StreamingResponseInProgressUpdate inProgress:
+                NormalizeAgentResponse(inProgress.Response);
+                break;
+            case StreamingResponseQueuedUpdate queued:
+                NormalizeAgentResponse(queued.Response);
+                break;
+            case StreamingResponseIncompleteUpdate incomplete:
+                NormalizeAgentResponse(incomplete.Response);
+                break;
+            case StreamingResponseFailedUpdate failed:
+                NormalizeAgentResponse(failed.Response);
                 break;
         }
 
@@ -130,7 +204,7 @@ public static partial class AzureAIExtensions
             cancellationToken.ToRequestOptions() ?? new RequestOptions()
         );
         ResponseResult convenienceValue = (ResponseResult)protocolResult;
-        NormalizeAgentOutputItems(convenienceValue);
+        NormalizeAgentResponse(convenienceValue);
         return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
     }
 
@@ -148,7 +222,7 @@ public static partial class AzureAIExtensions
             cancellationToken.ToRequestOptions() ?? new RequestOptions()
         ).ConfigureAwait(false);
         ResponseResult convenienceValue = (ResponseResult)protocolResult;
-        NormalizeAgentOutputItems(convenienceValue);
+        NormalizeAgentResponse(convenienceValue);
         return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
     }
 

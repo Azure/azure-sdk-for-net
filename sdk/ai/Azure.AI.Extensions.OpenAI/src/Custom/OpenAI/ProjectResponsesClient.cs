@@ -218,7 +218,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         {
             var result = base.CreateResponse(options, cancellationToken);
             scope?.RecordResponse(result.Value);
-            AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
+            AzureAIExtensions.NormalizeAgentResponse(result.Value);
             return result;
         }
         catch (Exception ex)
@@ -258,7 +258,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
         ApplyClientDefaults(options);
         var result = base.CreateResponse(options, cancellationToken);
-        AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
+        AzureAIExtensions.NormalizeAgentResponse(result.Value);
         return result;
     }
 
@@ -293,7 +293,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         {
             var result = base.CreateResponse(options, cancellationToken);
             scope?.RecordResponse(result.Value);
-            AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
+            AzureAIExtensions.NormalizeAgentResponse(result.Value);
             return result;
         }
         catch (Exception ex)
@@ -316,7 +316,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         {
             var result = await base.CreateResponseAsync(options, cancellationToken).ConfigureAwait(false);
             scope?.RecordResponse(result.Value);
-            AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
+            AzureAIExtensions.NormalizeAgentResponse(result.Value);
             return result;
         }
         catch (Exception ex)
@@ -361,7 +361,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         {
             var result = await base.CreateResponseAsync(options, cancellationToken).ConfigureAwait(false);
             scope?.RecordResponse(result.Value);
-            AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
+            AzureAIExtensions.NormalizeAgentResponse(result.Value);
             return result;
         }
         catch (Exception ex)
@@ -401,7 +401,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         {
             var result = await base.CreateResponseAsync(options, cancellationToken).ConfigureAwait(false);
             scope?.RecordResponse(result.Value);
-            AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
+            AzureAIExtensions.NormalizeAgentResponse(result.Value);
             return result;
         }
         catch (Exception ex)
@@ -673,7 +673,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     public override ClientResult<ResponseResult> GetResponse(GetResponseOptions options, CancellationToken cancellationToken = default)
     {
         var result = base.GetResponse(options, cancellationToken);
-        AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
+        AzureAIExtensions.NormalizeAgentResponse(result.Value);
         return result;
     }
 
@@ -684,7 +684,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     public override async Task<ClientResult<ResponseResult>> GetResponseAsync(GetResponseOptions options, CancellationToken cancellationToken = default)
     {
         var result = await base.GetResponseAsync(options, cancellationToken).ConfigureAwait(false);
-        AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
+        AzureAIExtensions.NormalizeAgentResponse(result.Value);
         return result;
     }
 
@@ -695,7 +695,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     public override ClientResult<ResponseResult> GetResponse(string responseId, CancellationToken cancellationToken = default)
     {
         var result = base.GetResponse(responseId, cancellationToken);
-        AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
+        AzureAIExtensions.NormalizeAgentResponse(result.Value);
         return result;
     }
 
@@ -706,7 +706,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     public override async Task<ClientResult<ResponseResult>> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
     {
         var result = await base.GetResponseAsync(responseId, cancellationToken).ConfigureAwait(false);
-        AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
+        AzureAIExtensions.NormalizeAgentResponse(result.Value);
         return result;
     }
 
@@ -736,7 +736,7 @@ public partial class ProjectResponsesClient : ResponsesClient
             BinaryData.FromString(element.GetRawText()),
             options,
             OpenAIContext.Default);
-        AzureAIExtensions.NormalizeAgentOutputItems(result);
+        AzureAIExtensions.NormalizeAgentResponse(result);
         return result;
     }
 

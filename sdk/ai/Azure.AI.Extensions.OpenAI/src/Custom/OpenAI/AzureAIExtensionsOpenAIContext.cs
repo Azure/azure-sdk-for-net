@@ -11,15 +11,17 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class AzureAIExtensionsOpenAIContext
     {
         // Registers custom type builders that the source generator cannot emit:
-        //  - ResponseItem: dispatches polymorphic reads to concrete Azure subtypes (OpenAI's closed
-        //    discriminator switch otherwise buckets them into an opaque unknown-item fallback).
-        //  - ResponseItemKind: a referenced extensible enum with no IPersistableModel implementation, which
-        //    generated discriminator reads route through ModelReaderWriter.
+        //  - ResponseItem / ResponseTool: dispatch polymorphic reads to concrete Azure subtypes (OpenAI's closed
+        //    discriminator switches otherwise bucket them into opaque unknown fallbacks).
+        //  - ResponseItemKind / ResponseToolKind: referenced extensible enums with no IPersistableModel
+        //    implementation, which generated discriminator reads route through ModelReaderWriter.
         // These factories are consulted before the referenced OpenAI context, so they take precedence.
         partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
         {
             factories[typeof(ResponseItem)] = static () => new AzureResponseItemTypeBuilder();
             factories[typeof(ResponseItemKind)] = static () => new ResponseItemKindTypeBuilder();
+            factories[typeof(ResponseTool)] = static () => new AzureResponseToolTypeBuilder();
+            factories[typeof(ResponseToolKind)] = static () => new ResponseToolKindTypeBuilder();
         }
     }
 }
