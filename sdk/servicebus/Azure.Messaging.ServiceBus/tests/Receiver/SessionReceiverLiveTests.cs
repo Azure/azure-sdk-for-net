@@ -15,11 +15,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 {
     public class SessionReceiverLiveTests : ServiceBusLiveTestBase
     {
-        private const string NonExclusiveFeatureSkipReason =
-            "Re-enable once non-exclusive session locking is available in the production Service Bus service. These tests exercise the new opt-in behavior and require the service-side support to be globally deployed before they can run against a live namespace.";
-
         [Test]
-        [Ignore(NonExclusiveFeatureSkipReason)]
         public async Task AcceptSessionNonExclusiveReturnsLockToken()
         {
             await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
@@ -38,7 +34,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        [Ignore(NonExclusiveFeatureSkipReason)]
         public async Task AcceptNextSessionNonExclusiveAssignsSessionAndCanBeTakenOver()
         {
             await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
@@ -91,7 +86,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        [Ignore(NonExclusiveFeatureSkipReason)]
         public async Task NonExclusiveSessionCanBeTakenOverAndSettledAcrossReceivers()
         {
             await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
@@ -132,7 +126,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        [Ignore(NonExclusiveFeatureSkipReason)]
         public async Task TakeOverWithInvalidTokenThrowsSessionCannotBeLocked()
         {
             await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
@@ -158,7 +151,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        [Ignore(NonExclusiveFeatureSkipReason)]
         public async Task OriginalHolderLosesSessionLockAfterTakeover()
         {
             await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
