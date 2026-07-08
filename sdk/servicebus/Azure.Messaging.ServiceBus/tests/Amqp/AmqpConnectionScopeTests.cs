@@ -329,9 +329,10 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         /// <summary>
-        ///   Verifies that <see cref="AmqpConnectionScope.OpenReceiverLinkAsync" /> adds the non-exclusive
-        ///   session mode filter and the session lock token filter to the receive link source when a
-        ///   non-exclusive session takeover is requested.
+        ///   Verifies that <see cref="AmqpConnectionScope.OpenReceiverLinkAsync" /> adds a single composite
+        ///   non-exclusive session filter (carrying both the session id and the supplied lock token) to the
+        ///   receive link source, and omits the plain session filter, when a non-exclusive session takeover
+        ///   is requested.
         /// </summary>
         ///
         [Test]
@@ -388,8 +389,8 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         /// <summary>
-        ///   Verifies that <see cref="AmqpConnectionScope.OpenReceiverLinkAsync" /> adds the non-exclusive mode
-        ///   filter but NO token filter for a fresh non-exclusive acquire (the first holder presents no token).
+        ///   Verifies that <see cref="AmqpConnectionScope.OpenReceiverLinkAsync" /> adds the composite non-exclusive
+        ///   session filter with a null lock token for a fresh non-exclusive acquire (the first holder presents no token).
         /// </summary>
         ///
         [Test]

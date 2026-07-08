@@ -421,7 +421,7 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Non-exclusive session locking is not supported by the Service Bus endpoint. Verify that the namespace has been updated to a version that supports this feature..
+        ///   Looks up a localized string similar to Non-exclusive session locking is not supported by the Service Bus endpoint. This feature may not yet be available for the namespace..
         /// </summary>
         internal static string NonExclusiveSessionModeNotSupported {
             get {
