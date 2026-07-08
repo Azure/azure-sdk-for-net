@@ -231,6 +231,11 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (Optional.IsDefined(ExpiresAt))
+            {
+                writer.WritePropertyName("expires_at"u8);
+                writer.WriteNumberValue(ExpiresAt.Value);
+            }
             if (Optional.IsDefined(_turnDetection))
             {
                 writer.WritePropertyName("turn_detection"u8);
@@ -309,6 +314,7 @@ namespace Azure.AI.VoiceLive
             IDictionary<string, string> metadata = default;
             RespondingAgentOptions agent = default;
             string id = default;
+            long? expiresAt = default;
             BinaryData turnDetection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -549,6 +555,15 @@ namespace Azure.AI.VoiceLive
                     id = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("expires_at"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expiresAt = prop.Value.GetInt64();
+                    continue;
+                }
                 if (prop.NameEquals("turn_detection"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -588,6 +603,7 @@ namespace Azure.AI.VoiceLive
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 agent,
                 id,
+                expiresAt,
                 turnDetection,
                 additionalBinaryDataProperties);
         }

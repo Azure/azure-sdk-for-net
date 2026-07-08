@@ -1,9 +1,27 @@
 # Release History
 
-## 1.2.0-beta.2 (2026-06-16)
+## 1.2.0-beta.2 (Unreleased)
+
+### Features Added
+
+- Added `VoiceLiveSessionResponse.ExpiresAt` (`long?`), a server-provided session expiration timestamp (epoch seconds). This helps clients proactively refresh or recreate sessions before expiry.
+
+### Breaking Changes
+
+- Removed preview-only smart end-of-turn detection support from the stable API surface:
+  - `SmartEndOfTurnDetection`
+- Removed preview-only WebRTC signaling/event types from the stable API surface:
+  - `ClientEventRtcCallSdpCreate`
+  - `ServerEventRtcCallSdpCreated`
+  - `ServerEventRtcCallError`
+  - `RtcCallErrorDetails`
+- Removed preview-only output audio buffer lifecycle events:
+  - `ServerEventOutputAudioBufferStarted`
+  - `ServerEventOutputAudioBufferStopped`
 
 ### Other Changes
-- Updated samples to use MCPApprovalKind
+
+- Updated samples to use `McpApprovalKind`.
 
 ## 1.2.0-beta.1 (2026-06-09)
 
