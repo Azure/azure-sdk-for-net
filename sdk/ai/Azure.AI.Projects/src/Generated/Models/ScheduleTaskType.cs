@@ -4,13 +4,11 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Type of the task. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct ScheduleTaskType : IEquatable<ScheduleTaskType>
     {
         private readonly string _value;

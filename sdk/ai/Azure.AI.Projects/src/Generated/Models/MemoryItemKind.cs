@@ -4,13 +4,11 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Memory
 {
     /// <summary> Memory item kind. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct MemoryItemKind : IEquatable<MemoryItemKind>
     {
         private readonly string _value;
