@@ -83,7 +83,7 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the ControlPlaneProfile. </summary>
+        /// <summary> Gets the ControlPlaneProfile. </summary>
         public ManagedClusterPoolUpgradeProfile ControlPlaneProfile
         {
             get
@@ -92,7 +92,7 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the AgentPoolProfiles. </summary>
+        /// <summary> Gets the AgentPoolProfiles. </summary>
         public BicepList<ManagedClusterPoolUpgradeProfile> AgentPoolProfiles
         {
             get
@@ -108,7 +108,7 @@ namespace Azure.Provisioning.ContainerService
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true, isRequired: true, defaultValue: "default");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<ManagedClusterUpgradeProfileProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
+            _properties = DefineModelProperty<ManagedClusterUpgradeProfileProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<ContainerServiceManagedCluster>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
