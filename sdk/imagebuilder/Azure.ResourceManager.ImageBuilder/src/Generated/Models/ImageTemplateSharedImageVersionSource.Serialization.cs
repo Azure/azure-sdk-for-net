@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ImageBuilder;
 
 namespace Azure.ResourceManager.ImageBuilder.Models
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             }
             string @type = "SharedImageVersion";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string imageVersionId = default;
+            ResourceIdentifier imageVersionId = default;
             string exactVersion = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 }
                 if (prop.NameEquals("imageVersionId"u8))
                 {
-                    imageVersionId = prop.Value.GetString();
+                    imageVersionId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("exactVersion"u8))

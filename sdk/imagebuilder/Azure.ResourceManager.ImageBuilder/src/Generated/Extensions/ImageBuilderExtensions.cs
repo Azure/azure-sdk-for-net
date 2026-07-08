@@ -74,21 +74,21 @@ namespace Azure.ResourceManager.ImageBuilder
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RunOutputResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ImageTemplateRunOutputResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableImageBuilderArmClient.GetRunOutputResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableImageBuilderArmClient.GetImageTemplateRunOutputResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RunOutputResource"/> object. </returns>
-        public static RunOutputResource GetRunOutputResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ImageTemplateRunOutputResource"/> object. </returns>
+        public static ImageTemplateRunOutputResource GetImageTemplateRunOutputResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableImageBuilderArmClient(client).GetRunOutputResource(id);
+            return GetMockableImageBuilderArmClient(client).GetImageTemplateRunOutputResource(id);
         }
 
         /// <summary>

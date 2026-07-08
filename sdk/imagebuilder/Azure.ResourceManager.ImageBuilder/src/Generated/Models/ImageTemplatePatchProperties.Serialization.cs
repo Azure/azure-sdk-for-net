@@ -14,7 +14,7 @@ using Azure.ResourceManager.ImageBuilder;
 namespace Azure.ResourceManager.ImageBuilder.Models
 {
     /// <summary> Parameters for updating an image template. </summary>
-    public partial class ImageTemplatePatchProperties : IJsonModel<ImageTemplatePatchProperties>
+    internal partial class ImageTemplatePatchProperties : IJsonModel<ImageTemplatePatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

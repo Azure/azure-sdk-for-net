@@ -43,6 +43,36 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Parameters for updating an image template. </summary>
-        public ImageTemplatePatchProperties Properties { get; set; }
+        internal ImageTemplatePatchProperties Properties { get; set; }
+
+        /// <summary> The distribution targets where the image output needs to go to. </summary>
+        public IList<ImageTemplateDistributor> Distribute
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ImageTemplatePatchProperties();
+                }
+                return Properties.Distribute;
+            }
+        }
+
+        /// <summary> Describes how virtual machine is set up to build images. </summary>
+        public ImageTemplateVmProfile VmProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ImageTemplatePatchProperties();
+                }
+                Properties.VmProfile = value;
+            }
+        }
     }
 }

@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <summary> Initializes a new instance of <see cref="ImageTemplateAutoRun"/>. </summary>
         /// <param name="state"> Enabling this field will trigger an automatic build on image template creation or update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageTemplateAutoRun(AutoRunState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplateAutoRun(ImageTemplateAutoRunState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enabling this field will trigger an automatic build on image template creation or update. </summary>
-        public AutoRunState? State { get; set; }
+        public ImageTemplateAutoRunState? State { get; set; }
     }
 }

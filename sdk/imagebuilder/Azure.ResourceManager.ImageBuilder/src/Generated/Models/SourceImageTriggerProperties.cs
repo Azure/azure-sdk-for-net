@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="status"> Trigger status. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourceImageTriggerProperties(string kind, TriggerStatus status, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, status, provisioningState, additionalBinaryDataProperties)
+        internal SourceImageTriggerProperties(string kind, ImageTemplateTriggerStatus status, ImageBuilderProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, status, provisioningState, additionalBinaryDataProperties)
         {
         }
     }

@@ -11,11 +11,11 @@ namespace Azure.ResourceManager.ImageBuilder
         public static Azure.Response<Azure.ResourceManager.ImageBuilder.ImageTemplateResource> GetImageTemplate(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string imageTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ImageBuilder.ImageTemplateResource>> GetImageTemplateAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string imageTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.ImageTemplateResource GetImageTemplateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource GetImageTemplateRunOutputResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.ImageTemplateCollection GetImageTemplates(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ImageBuilder.ImageTemplateResource> GetImageTemplates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ImageBuilder.ImageTemplateResource> GetImageTemplatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.ImageTemplateTriggerResource GetImageTemplateTriggerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.RunOutputResource GetRunOutputResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class ImageTemplateCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ImageBuilder.ImageTemplateResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.ImageTemplateResource>, System.Collections.IEnumerable
     {
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.ImageBuilder
     public partial class ImageTemplateData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.ImageTemplateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.ImageTemplateData>
     {
         public ImageTemplateData(Azure.Core.AzureLocation location, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateIdentity identity) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ImageBuilder.Models.DataDisk> AdditionalDataDisks { get { throw null; } }
-        public Azure.ResourceManager.ImageBuilder.Models.AutoRunState? AutoRunState { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderDataDisk> AdditionalDataDisks { get { throw null; } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageTemplateAutoRunState? AutoRunState { get { throw null; } set { } }
         public int? BuildTimeoutInMinutes { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateCustomizer> Customize { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateDistributor> Distribute { get { throw null; } }
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.ImageBuilder
         public Azure.ResourceManager.ImageBuilder.Models.ImageTemplateLastRunStatus LastRunStatus { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> ManagedResourceTags { get { throw null; } }
         public Azure.ResourceManager.ImageBuilder.Models.ImageTemplateOptimizeConfig Optimize { get { throw null; } set { } }
-        public Azure.ResourceManager.ImageBuilder.Models.ProvisioningError ProvisioningError { get { throw null; } }
-        public Azure.ResourceManager.ImageBuilder.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningError ProvisioningError { get { throw null; } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSource Source { get { throw null; } set { } }
         public string StagingResourceGroup { get { throw null; } set { } }
         public Azure.ResourceManager.ImageBuilder.Models.ImageTemplateValidationConfig Validate { get { throw null; } set { } }
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.ImageBuilder
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ImageBuilder.ImageTemplateResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ImageBuilder.ImageTemplateResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource> GetImageTemplateRunOutput(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource>> GetImageTemplateRunOutputAsync(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputCollection GetImageTemplateRunOutputs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ImageBuilder.ImageTemplateTriggerResource> GetImageTemplateTrigger(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ImageBuilder.ImageTemplateTriggerResource>> GetImageTemplateTriggerAsync(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ImageBuilder.ImageTemplateTriggerCollection GetImageTemplateTriggers() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ImageBuilder.RunOutputResource> GetRunOutput(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ImageBuilder.RunOutputResource>> GetRunOutputAsync(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ImageBuilder.RunOutputCollection GetRunOutputs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ImageBuilder.ImageTemplateResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ImageBuilder.ImageTemplateResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Run(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -98,6 +98,52 @@ namespace Azure.ResourceManager.ImageBuilder
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.ImageTemplateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ImageBuilder.ImageTemplateResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ImageBuilder.ImageTemplateResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ImageTemplateRunOutputCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource>, System.Collections.IEnumerable
+    {
+        protected ImageTemplateRunOutputCollection() { }
+        public virtual Azure.Response<bool> Exists(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource> Get(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource>> GetAsync(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource> GetIfExists(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource>> GetIfExistsAsync(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ImageTemplateRunOutputData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData>
+    {
+        internal ImageTemplateRunOutputData() { }
+        public string ArtifactId { get { throw null; } }
+        public string ArtifactUri { get { throw null; } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ImageTemplateRunOutputResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ImageTemplateRunOutputResource() { }
+        public virtual Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string imageTemplateName, string runOutputName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ImageTemplateTriggerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ImageBuilder.ImageTemplateTriggerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.ImageTemplateTriggerResource>, System.Collections.IEnumerable
     {
@@ -149,52 +195,6 @@ namespace Azure.ResourceManager.ImageBuilder
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ImageBuilder.ImageTemplateTriggerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ImageBuilder.ImageTemplateTriggerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ImageBuilder.ImageTemplateTriggerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ImageBuilder.ImageTemplateTriggerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class RunOutputCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ImageBuilder.RunOutputResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.RunOutputResource>, System.Collections.IEnumerable
-    {
-        protected RunOutputCollection() { }
-        public virtual Azure.Response<bool> Exists(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ImageBuilder.RunOutputResource> Get(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ImageBuilder.RunOutputResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ImageBuilder.RunOutputResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ImageBuilder.RunOutputResource>> GetAsync(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.ImageBuilder.RunOutputResource> GetIfExists(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ImageBuilder.RunOutputResource>> GetIfExistsAsync(string runOutputName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ImageBuilder.RunOutputResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ImageBuilder.RunOutputResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ImageBuilder.RunOutputResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.RunOutputResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class RunOutputData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.RunOutputData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.RunOutputData>
-    {
-        internal RunOutputData() { }
-        public string ArtifactId { get { throw null; } }
-        public string ArtifactUri { get { throw null; } }
-        public Azure.ResourceManager.ImageBuilder.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ImageBuilder.RunOutputData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.RunOutputData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.RunOutputData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ImageBuilder.RunOutputData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.RunOutputData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.RunOutputData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.RunOutputData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RunOutputResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.RunOutputData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.RunOutputData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected RunOutputResource() { }
-        public virtual Azure.ResourceManager.ImageBuilder.RunOutputData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string imageTemplateName, string runOutputName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ImageBuilder.RunOutputResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ImageBuilder.RunOutputResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.ImageBuilder.RunOutputData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.RunOutputData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.RunOutputData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ImageBuilder.RunOutputData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.RunOutputData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.RunOutputData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.RunOutputData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
 }
 namespace Azure.ResourceManager.ImageBuilder.Mocking
 {
@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.ImageBuilder.Mocking
     {
         protected MockableImageBuilderArmClient() { }
         public virtual Azure.ResourceManager.ImageBuilder.ImageTemplateResource GetImageTemplateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputResource GetImageTemplateRunOutputResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ImageBuilder.ImageTemplateTriggerResource GetImageTemplateTriggerResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.ImageBuilder.RunOutputResource GetRunOutputResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableImageBuilderResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -223,66 +223,46 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 {
     public static partial class ArmImageBuilderModelFactory
     {
-        public static Azure.ResourceManager.ImageBuilder.Models.DataDisk DataDisk(int? sizeGB = default(int?)) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.DistributeVersioner DistributeVersioner(string scheme = null) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.DistributeVersionerLatest DistributeVersionerLatest(int? major = default(int?)) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.DistributeVersionerSource DistributeVersionerSource() { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderDataDisk ImageBuilderDataDisk(int? sizeGB = default(int?)) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningError ImageBuilderProvisioningError(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode? provisioningErrorCode = default(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode?), string message = null) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderVirtualNetworkConfig ImageBuilderVirtualNetworkConfig(Azure.Core.ResourceIdentifier subnetId = null, Azure.Core.ResourceIdentifier containerInstanceSubnetId = null, string proxyVmSize = null) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateCustomizer ImageTemplateCustomizer(string type = null, string name = null) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.ImageTemplateData ImageTemplateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSource source = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateCustomizer> customize = null, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateOptimizeConfig optimize = null, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateValidationConfig validate = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateDistributor> distribute = null, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateErrorHandling errorHandling = null, Azure.ResourceManager.ImageBuilder.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ImageBuilder.Models.ProvisioningState?), Azure.ResourceManager.ImageBuilder.Models.ProvisioningError provisioningError = null, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateLastRunStatus lastRunStatus = null, int? buildTimeoutInMinutes = default(int?), Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVmProfile vmProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.Models.DataDisk> additionalDataDisks = null, string stagingResourceGroup = null, string exactStagingResourceGroup = null, System.Collections.Generic.IDictionary<string, string> managedResourceTags = null, Azure.ResourceManager.ImageBuilder.Models.AutoRunState? autoRunState = default(Azure.ResourceManager.ImageBuilder.Models.AutoRunState?), Azure.ResourceManager.ImageBuilder.Models.ImageTemplateIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.ImageTemplateData ImageTemplateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSource source = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateCustomizer> customize = null, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateOptimizeConfig optimize = null, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateValidationConfig validate = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateDistributor> distribute = null, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateErrorHandling errorHandling = null, Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningState? provisioningState = default(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningState?), Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningError provisioningError = null, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateLastRunStatus lastRunStatus = null, int? buildTimeoutInMinutes = default(int?), Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVmProfile vmProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderDataDisk> additionalDataDisks = null, string stagingResourceGroup = null, string exactStagingResourceGroup = null, System.Collections.Generic.IDictionary<string, string> managedResourceTags = null, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateAutoRunState? autoRunState = default(Azure.ResourceManager.ImageBuilder.Models.ImageTemplateAutoRunState?), Azure.ResourceManager.ImageBuilder.Models.ImageTemplateIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateDistributor ImageTemplateDistributor(string type = null, string runOutputName = null, System.Collections.Generic.IDictionary<string, string> artifactTags = null) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateErrorHandling ImageTemplateErrorHandling(Azure.ResourceManager.ImageBuilder.Models.OnBuildError? onCustomizerError = default(Azure.ResourceManager.ImageBuilder.Models.OnBuildError?), Azure.ResourceManager.ImageBuilder.Models.OnBuildError? onValidationError = default(Azure.ResourceManager.ImageBuilder.Models.OnBuildError?)) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateErrorHandling ImageTemplateErrorHandling(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError? onCustomizerError = default(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError?), Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError? onValidationError = default(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError?)) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateFileCustomizer ImageTemplateFileCustomizer(string name = null, string sourceUri = null, string sha256Checksum = null, string destination = null) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateFileValidator ImageTemplateFileValidator(string name = null, string sourceUri = null, string sha256Checksum = null, string destination = null) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateIdentity ImageTemplateIdentity(Azure.ResourceManager.ImageBuilder.Models.ResourceIdentityType? type = default(Azure.ResourceManager.ImageBuilder.Models.ResourceIdentityType?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> userAssignedIdentities = null) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateIdentity ImageTemplateIdentity(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderIdentityType? type = default(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderIdentityType?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> userAssignedIdentities = null) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateInVMValidator ImageTemplateInVMValidator(string type = null, string name = null) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateLastRunStatus ImageTemplateLastRunStatus(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.ImageBuilder.Models.RunState? runState = default(Azure.ResourceManager.ImageBuilder.Models.RunState?), Azure.ResourceManager.ImageBuilder.Models.RunSubState? runSubState = default(Azure.ResourceManager.ImageBuilder.Models.RunSubState?), string message = null) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateManagedImageDistributor ImageTemplateManagedImageDistributor(string runOutputName = null, System.Collections.Generic.IDictionary<string, string> artifactTags = null, string imageId = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation)) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateManagedImageSource ImageTemplateManagedImageSource(string imageId = null) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateOptimizeConfig ImageTemplateOptimizeConfig(Azure.ResourceManager.ImageBuilder.Models.VMBootOptimizationState? vmBootState = default(Azure.ResourceManager.ImageBuilder.Models.VMBootOptimizationState?), Azure.ResourceManager.ImageBuilder.Models.ImageTemplateWorkloadOptimization workload = null) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatch ImageTemplatePatch(Azure.ResourceManager.ImageBuilder.Models.ImageTemplateIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatchProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatchProperties ImageTemplatePatchProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateDistributor> distribute = null, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVmProfile vmProfile = null) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateLastRunStatus ImageTemplateLastRunStatus(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.ImageBuilder.Models.ImageTemplateRunState? runState = default(Azure.ResourceManager.ImageBuilder.Models.ImageTemplateRunState?), Azure.ResourceManager.ImageBuilder.Models.ImageTemplateRunSubState? runSubState = default(Azure.ResourceManager.ImageBuilder.Models.ImageTemplateRunSubState?), string message = null) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateManagedImageDistributor ImageTemplateManagedImageDistributor(string runOutputName = null, System.Collections.Generic.IDictionary<string, string> artifactTags = null, Azure.Core.ResourceIdentifier imageId = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation)) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateManagedImageSource ImageTemplateManagedImageSource(Azure.Core.ResourceIdentifier imageId = null) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateOptimizeConfig ImageTemplateOptimizeConfig(Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVMBootOptimizationState? vmBootState = default(Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVMBootOptimizationState?), Azure.ResourceManager.ImageBuilder.Models.ImageTemplateWorkloadOptimization workload = null) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatch ImageTemplatePatch(Azure.ResourceManager.ImageBuilder.Models.ImageTemplateIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateDistributor> distribute = null, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVmProfile vmProfile = null) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePlatformImageSource ImageTemplatePlatformImageSource(string publisher = null, string offer = null, string sku = null, string version = null, string exactVersion = null, Azure.ResourceManager.ImageBuilder.Models.PlatformImagePurchasePlan planInfo = null) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePowerShellCustomizer ImageTemplatePowerShellCustomizer(string name = null, string scriptUri = null, string sha256Checksum = null, System.Collections.Generic.IEnumerable<string> inline = null, bool? isRunElevated = default(bool?), bool? isRunAsSystem = default(bool?), System.Collections.Generic.IEnumerable<int> validExitCodes = null) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePowerShellValidator ImageTemplatePowerShellValidator(string name = null, string scriptUri = null, string sha256Checksum = null, System.Collections.Generic.IEnumerable<string> inline = null, bool? isRunElevated = default(bool?), bool? isRunAsSystem = default(bool?), System.Collections.Generic.IEnumerable<int> validExitCodes = null) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateRestartCustomizer ImageTemplateRestartCustomizer(string name = null, string restartCommand = null, string restartCheckCommand = null, string restartTimeout = null) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSharedImageDistributor ImageTemplateSharedImageDistributor(string runOutputName = null, System.Collections.Generic.IDictionary<string, string> artifactTags = null, string galleryImageId = null, System.Collections.Generic.IEnumerable<string> replicationRegions = null, bool? isExcludedFromLatest = default(bool?), Azure.ResourceManager.ImageBuilder.Models.SharedImageStorageAccountType? storageAccountType = default(Azure.ResourceManager.ImageBuilder.Models.SharedImageStorageAccountType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.Models.TargetRegion> targetRegions = null, Azure.ResourceManager.ImageBuilder.Models.DistributeVersioner versioning = null, Azure.ResourceManager.ImageBuilder.Models.ReplicationMode? replicationMode = default(Azure.ResourceManager.ImageBuilder.Models.ReplicationMode?)) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSharedImageVersionSource ImageTemplateSharedImageVersionSource(string imageVersionId = null, string exactVersion = null) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.ImageTemplateRunOutputData ImageTemplateRunOutputData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string artifactId = null, string artifactUri = null, Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningState? provisioningState = default(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSharedImageDistributor ImageTemplateSharedImageDistributor(string runOutputName = null, System.Collections.Generic.IDictionary<string, string> artifactTags = null, Azure.Core.ResourceIdentifier galleryImageId = null, System.Collections.Generic.IEnumerable<string> replicationRegions = null, bool? isExcludedFromLatest = default(bool?), Azure.ResourceManager.ImageBuilder.Models.SharedImageStorageAccountType? storageAccountType = default(Azure.ResourceManager.ImageBuilder.Models.SharedImageStorageAccountType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTargetRegion> targetRegions = null, Azure.ResourceManager.ImageBuilder.Models.DistributeVersioner versioning = null, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateReplicationMode? replicationMode = default(Azure.ResourceManager.ImageBuilder.Models.ImageTemplateReplicationMode?)) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSharedImageVersionSource ImageTemplateSharedImageVersionSource(Azure.Core.ResourceIdentifier imageVersionId = null, string exactVersion = null) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateShellCustomizer ImageTemplateShellCustomizer(string name = null, string scriptUri = null, string sha256Checksum = null, System.Collections.Generic.IEnumerable<string> inline = null) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateShellValidator ImageTemplateShellValidator(string name = null, string scriptUri = null, string sha256Checksum = null, System.Collections.Generic.IEnumerable<string> inline = null) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSource ImageTemplateSource(string type = null) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTargetRegion ImageTemplateTargetRegion(string name = null, int? replicaCount = default(int?), Azure.ResourceManager.ImageBuilder.Models.SharedImageStorageAccountType? storageAccountType = default(Azure.ResourceManager.ImageBuilder.Models.SharedImageStorageAccountType?)) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.ImageTemplateTriggerData ImageTemplateTriggerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ImageBuilder.Models.TriggerProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTriggerStatus ImageTemplateTriggerStatus(string code = null, string message = null, System.DateTimeOffset? recordedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateValidationConfig ImageTemplateValidationConfig(bool? shouldContinueDistributeOnFailure = default(bool?), bool? isSourceValidationOnly = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateInVMValidator> inVMValidations = null) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVhdDistributor ImageTemplateVhdDistributor(string runOutputName = null, System.Collections.Generic.IDictionary<string, string> artifactTags = null, string uri = null) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVmProfile ImageTemplateVmProfile(string vmSize = null, int? osDiskSizeGB = default(int?), System.Collections.Generic.IEnumerable<string> userAssignedIdentities = null, Azure.ResourceManager.ImageBuilder.Models.VirtualNetworkConfig vnetConfig = null) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVmProfile ImageTemplateVmProfile(string vmSize = null, int? osDiskSizeGB = default(int?), System.Collections.Generic.IEnumerable<string> userAssignedIdentities = null, Azure.ResourceManager.ImageBuilder.Models.ImageBuilderVirtualNetworkConfig vnetConfig = null) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateWindowsUpdateCustomizer ImageTemplateWindowsUpdateCustomizer(string name = null, string searchCriteria = null, System.Collections.Generic.IEnumerable<string> filters = null, int? updateLimit = default(int?)) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateWorkloadOptimization ImageTemplateWorkloadOptimization(Azure.ResourceManager.ImageBuilder.Models.WorkloadOptimizationState? state = default(Azure.ResourceManager.ImageBuilder.Models.WorkloadOptimizationState?), string scriptUri = null, string sha256Checksum = null) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateWorkloadOptimization ImageTemplateWorkloadOptimization(Azure.ResourceManager.ImageBuilder.Models.ImageTemplateWorkloadOptimizationState? state = default(Azure.ResourceManager.ImageBuilder.Models.ImageTemplateWorkloadOptimizationState?), string scriptUri = null, string sha256Checksum = null) { throw null; }
         public static Azure.ResourceManager.ImageBuilder.Models.PlatformImagePurchasePlan PlatformImagePurchasePlan(string planName = null, string planProduct = null, string planPublisher = null) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningError ProvisioningError(Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode? provisioningErrorCode = default(Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode?), string message = null) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.RunOutputData RunOutputData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string artifactId = null, string artifactUri = null, Azure.ResourceManager.ImageBuilder.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ImageBuilder.Models.ProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.SourceImageTriggerProperties SourceImageTriggerProperties(Azure.ResourceManager.ImageBuilder.Models.TriggerStatus status = null, Azure.ResourceManager.ImageBuilder.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ImageBuilder.Models.ProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.TargetRegion TargetRegion(string name = null, int? replicaCount = default(int?), Azure.ResourceManager.ImageBuilder.Models.SharedImageStorageAccountType? storageAccountType = default(Azure.ResourceManager.ImageBuilder.Models.SharedImageStorageAccountType?)) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.TriggerProperties TriggerProperties(string kind = null, Azure.ResourceManager.ImageBuilder.Models.TriggerStatus status = null, Azure.ResourceManager.ImageBuilder.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ImageBuilder.Models.ProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.TriggerStatus TriggerStatus(string code = null, string message = null, System.DateTimeOffset? recordedOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.VirtualNetworkConfig VirtualNetworkConfig(string subnetId = null, string containerInstanceSubnetId = null, string proxyVmSize = null) { throw null; }
-    }
-    public enum AutoRunState
-    {
-        AutoRunEnabled = 0,
-        AutoRunDisabled = 1,
-    }
-    public partial class DataDisk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.DataDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.DataDisk>
-    {
-        public DataDisk() { }
-        public int? SizeGB { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ImageBuilder.Models.DataDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ImageBuilder.Models.DataDisk PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ImageBuilder.Models.DataDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.DataDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.DataDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ImageBuilder.Models.DataDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.DataDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.DataDisk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.DataDisk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.SourceImageTriggerProperties SourceImageTriggerProperties(Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTriggerStatus status = null, Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningState? provisioningState = default(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.TriggerProperties TriggerProperties(string kind = null, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTriggerStatus status = null, Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningState? provisioningState = default(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningState?)) { throw null; }
     }
     public abstract partial class DistributeVersioner : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.DistributeVersioner>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.DistributeVersioner>
     {
@@ -324,6 +304,117 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.DistributeVersionerSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.DistributeVersionerSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ImageBuilderDataDisk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderDataDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderDataDisk>
+    {
+        public ImageBuilderDataDisk() { }
+        public int? SizeGB { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageBuilderDataDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageBuilderDataDisk PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ImageBuilder.Models.ImageBuilderDataDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderDataDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderDataDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ImageBuilder.Models.ImageBuilderDataDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderDataDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderDataDisk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderDataDisk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum ImageBuilderIdentityType
+    {
+        UserAssigned = 0,
+        None = 1,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ImageBuilderOnBuildError : System.IEquatable<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ImageBuilderOnBuildError(string value) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError Abort { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError Cleanup { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError left, Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError left, Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ImageBuilderProvisioningError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningError>
+    {
+        internal ImageBuilderProvisioningError() { }
+        public string Message { get { throw null; } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode? ProvisioningErrorCode { get { throw null; } }
+        protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ImageBuilderProvisioningErrorCode : System.IEquatable<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ImageBuilderProvisioningErrorCode(string value) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode BadCustomizerType { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode BadDistributeType { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode BadManagedImageSource { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode BadPIRSource { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode BadSharedImageDistribute { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode BadSharedImageVersionSource { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode BadSourceType { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode BadStagingResourceGroup { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode BadValidatorType { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode NoCustomizerScript { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode NoValidatorScript { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode Other { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode ServerError { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode UnsupportedCustomizerType { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode UnsupportedValidatorType { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode left, Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode left, Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningErrorCode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public enum ImageBuilderProvisioningState
+    {
+        Creating = 0,
+        Updating = 1,
+        Succeeded = 2,
+        Failed = 3,
+        Deleting = 4,
+        Canceled = 5,
+    }
+    public partial class ImageBuilderVirtualNetworkConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderVirtualNetworkConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderVirtualNetworkConfig>
+    {
+        public ImageBuilderVirtualNetworkConfig() { }
+        public Azure.Core.ResourceIdentifier ContainerInstanceSubnetId { get { throw null; } set { } }
+        public string ProxyVmSize { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageBuilderVirtualNetworkConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageBuilderVirtualNetworkConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ImageBuilder.Models.ImageBuilderVirtualNetworkConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderVirtualNetworkConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderVirtualNetworkConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ImageBuilder.Models.ImageBuilderVirtualNetworkConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderVirtualNetworkConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderVirtualNetworkConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageBuilderVirtualNetworkConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum ImageTemplateAutoRunState
+    {
+        AutoRunEnabled = 0,
+        AutoRunDisabled = 1,
+    }
     public abstract partial class ImageTemplateCustomizer : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateCustomizer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateCustomizer>
     {
         internal ImageTemplateCustomizer() { }
@@ -356,8 +447,8 @@ namespace Azure.ResourceManager.ImageBuilder.Models
     public partial class ImageTemplateErrorHandling : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateErrorHandling>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateErrorHandling>
     {
         public ImageTemplateErrorHandling() { }
-        public Azure.ResourceManager.ImageBuilder.Models.OnBuildError? OnCustomizerError { get { throw null; } set { } }
-        public Azure.ResourceManager.ImageBuilder.Models.OnBuildError? OnValidationError { get { throw null; } set { } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError? OnCustomizerError { get { throw null; } set { } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageBuilderOnBuildError? OnValidationError { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplateErrorHandling JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplateErrorHandling PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -403,7 +494,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
     public partial class ImageTemplateIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateIdentity>
     {
         public ImageTemplateIdentity() { }
-        public Azure.ResourceManager.ImageBuilder.Models.ResourceIdentityType? Type { get { throw null; } set { } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageBuilderIdentityType? Type { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
         protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplateIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -434,8 +525,8 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         internal ImageTemplateLastRunStatus() { }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public string Message { get { throw null; } }
-        public Azure.ResourceManager.ImageBuilder.Models.RunState? RunState { get { throw null; } }
-        public Azure.ResourceManager.ImageBuilder.Models.RunSubState? RunSubState { get { throw null; } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageTemplateRunState? RunState { get { throw null; } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageTemplateRunSubState? RunSubState { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplateLastRunStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -449,8 +540,8 @@ namespace Azure.ResourceManager.ImageBuilder.Models
     }
     public partial class ImageTemplateManagedImageDistributor : Azure.ResourceManager.ImageBuilder.Models.ImageTemplateDistributor, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateManagedImageDistributor>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateManagedImageDistributor>
     {
-        public ImageTemplateManagedImageDistributor(string runOutputName, string imageId, Azure.Core.AzureLocation location) { }
-        public string ImageId { get { throw null; } set { } }
+        public ImageTemplateManagedImageDistributor(string runOutputName, Azure.Core.ResourceIdentifier imageId, Azure.Core.AzureLocation location) { }
+        public Azure.Core.ResourceIdentifier ImageId { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         protected override Azure.ResourceManager.ImageBuilder.Models.ImageTemplateDistributor JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -464,8 +555,8 @@ namespace Azure.ResourceManager.ImageBuilder.Models
     }
     public partial class ImageTemplateManagedImageSource : Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateManagedImageSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateManagedImageSource>
     {
-        public ImageTemplateManagedImageSource(string imageId) { }
-        public string ImageId { get { throw null; } set { } }
+        public ImageTemplateManagedImageSource(Azure.Core.ResourceIdentifier imageId) { }
+        public Azure.Core.ResourceIdentifier ImageId { get { throw null; } set { } }
         protected override Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -479,7 +570,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
     public partial class ImageTemplateOptimizeConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateOptimizeConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateOptimizeConfig>
     {
         public ImageTemplateOptimizeConfig() { }
-        public Azure.ResourceManager.ImageBuilder.Models.VMBootOptimizationState? VmBootState { get { throw null; } set { } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVMBootOptimizationState? VmBootState { get { throw null; } set { } }
         public Azure.ResourceManager.ImageBuilder.Models.ImageTemplateWorkloadOptimization Workload { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplateOptimizeConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -494,9 +585,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
     public partial class ImageTemplatePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatch>
     {
         public ImageTemplatePatch() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateDistributor> Distribute { get { throw null; } }
         public Azure.ResourceManager.ImageBuilder.Models.ImageTemplateIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVmProfile VmProfile { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -506,21 +598,6 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ImageTemplatePatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatchProperties>
-    {
-        public ImageTemplatePatchProperties() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateDistributor> Distribute { get { throw null; } }
-        public Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVmProfile VmProfile { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatchProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePatchProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ImageTemplatePlatformImageSource : Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePlatformImageSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePlatformImageSource>
     {
@@ -579,6 +656,23 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePowerShellValidator>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplatePowerShellValidator>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ImageTemplateReplicationMode : System.IEquatable<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateReplicationMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ImageTemplateReplicationMode(string value) { throw null; }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateReplicationMode Full { get { throw null; } }
+        public static Azure.ResourceManager.ImageBuilder.Models.ImageTemplateReplicationMode Shallow { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ImageBuilder.Models.ImageTemplateReplicationMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ImageBuilder.Models.ImageTemplateReplicationMode left, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateReplicationMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ImageBuilder.Models.ImageTemplateReplicationMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ImageBuilder.Models.ImageTemplateReplicationMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ImageBuilder.Models.ImageTemplateReplicationMode left, Azure.ResourceManager.ImageBuilder.Models.ImageTemplateReplicationMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ImageTemplateRestartCustomizer : Azure.ResourceManager.ImageBuilder.Models.ImageTemplateCustomizer, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateRestartCustomizer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateRestartCustomizer>
     {
         public ImageTemplateRestartCustomizer() { }
@@ -595,15 +689,33 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateRestartCustomizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateRestartCustomizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public enum ImageTemplateRunState
+    {
+        Running = 0,
+        Canceling = 1,
+        Succeeded = 2,
+        PartiallySucceeded = 3,
+        Failed = 4,
+        Canceled = 5,
+    }
+    public enum ImageTemplateRunSubState
+    {
+        Queued = 0,
+        Building = 1,
+        Customizing = 2,
+        Optimizing = 3,
+        Validating = 4,
+        Distributing = 5,
+    }
     public partial class ImageTemplateSharedImageDistributor : Azure.ResourceManager.ImageBuilder.Models.ImageTemplateDistributor, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSharedImageDistributor>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSharedImageDistributor>
     {
-        public ImageTemplateSharedImageDistributor(string runOutputName, string galleryImageId) { }
-        public string GalleryImageId { get { throw null; } set { } }
+        public ImageTemplateSharedImageDistributor(string runOutputName, Azure.Core.ResourceIdentifier galleryImageId) { }
+        public Azure.Core.ResourceIdentifier GalleryImageId { get { throw null; } set { } }
         public bool? IsExcludedFromLatest { get { throw null; } set { } }
-        public Azure.ResourceManager.ImageBuilder.Models.ReplicationMode? ReplicationMode { get { throw null; } set { } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageTemplateReplicationMode? ReplicationMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ReplicationRegions { get { throw null; } }
         public Azure.ResourceManager.ImageBuilder.Models.SharedImageStorageAccountType? StorageAccountType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ImageBuilder.Models.TargetRegion> TargetRegions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTargetRegion> TargetRegions { get { throw null; } }
         public Azure.ResourceManager.ImageBuilder.Models.DistributeVersioner Versioning { get { throw null; } set { } }
         protected override Azure.ResourceManager.ImageBuilder.Models.ImageTemplateDistributor JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -617,9 +729,9 @@ namespace Azure.ResourceManager.ImageBuilder.Models
     }
     public partial class ImageTemplateSharedImageVersionSource : Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSharedImageVersionSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSharedImageVersionSource>
     {
-        public ImageTemplateSharedImageVersionSource(string imageVersionId) { }
+        public ImageTemplateSharedImageVersionSource(Azure.Core.ResourceIdentifier imageVersionId) { }
         public string ExactVersion { get { throw null; } }
-        public string ImageVersionId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ImageVersionId { get { throw null; } set { } }
         protected override Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -675,6 +787,38 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ImageTemplateTargetRegion : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTargetRegion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTargetRegion>
+    {
+        public ImageTemplateTargetRegion(string name) { }
+        public string Name { get { throw null; } set { } }
+        public int? ReplicaCount { get { throw null; } set { } }
+        public Azure.ResourceManager.ImageBuilder.Models.SharedImageStorageAccountType? StorageAccountType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTargetRegion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTargetRegion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTargetRegion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTargetRegion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTargetRegion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTargetRegion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTargetRegion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTargetRegion>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTargetRegion>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ImageTemplateTriggerStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTriggerStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTriggerStatus>
+    {
+        internal ImageTemplateTriggerStatus() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+        public System.DateTimeOffset? RecordedOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTriggerStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTriggerStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTriggerStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTriggerStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTriggerStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTriggerStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTriggerStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTriggerStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTriggerStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ImageTemplateValidationConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateValidationConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateValidationConfig>
     {
         public ImageTemplateValidationConfig() { }
@@ -705,13 +849,18 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVhdDistributor>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVhdDistributor>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public enum ImageTemplateVMBootOptimizationState
+    {
+        Enabled = 0,
+        Disabled = 1,
+    }
     public partial class ImageTemplateVmProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVmProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVmProfile>
     {
         public ImageTemplateVmProfile() { }
         public int? OsDiskSizeGB { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> UserAssignedIdentities { get { throw null; } }
         public string VmSize { get { throw null; } set { } }
-        public Azure.ResourceManager.ImageBuilder.Models.VirtualNetworkConfig VnetConfig { get { throw null; } set { } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageBuilderVirtualNetworkConfig VnetConfig { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVmProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplateVmProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -743,7 +892,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public ImageTemplateWorkloadOptimization() { }
         public string ScriptUri { get { throw null; } set { } }
         public string Sha256Checksum { get { throw null; } set { } }
-        public Azure.ResourceManager.ImageBuilder.Models.WorkloadOptimizationState? State { get { throw null; } set { } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageTemplateWorkloadOptimizationState? State { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplateWorkloadOptimization JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ImageBuilder.Models.ImageTemplateWorkloadOptimization PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -754,22 +903,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateWorkloadOptimization>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ImageTemplateWorkloadOptimization>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OnBuildError : System.IEquatable<Azure.ResourceManager.ImageBuilder.Models.OnBuildError>
+    public enum ImageTemplateWorkloadOptimizationState
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OnBuildError(string value) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.OnBuildError Abort { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.OnBuildError Cleanup { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ImageBuilder.Models.OnBuildError other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ImageBuilder.Models.OnBuildError left, Azure.ResourceManager.ImageBuilder.Models.OnBuildError right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ImageBuilder.Models.OnBuildError (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ImageBuilder.Models.OnBuildError? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ImageBuilder.Models.OnBuildError left, Azure.ResourceManager.ImageBuilder.Models.OnBuildError right) { throw null; }
-        public override string ToString() { throw null; }
+        Enabled = 0,
+        Disabled = 1,
     }
     public partial class PlatformImagePurchasePlan : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.PlatformImagePurchasePlan>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.PlatformImagePurchasePlan>
     {
@@ -786,100 +923,6 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         Azure.ResourceManager.ImageBuilder.Models.PlatformImagePurchasePlan System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.PlatformImagePurchasePlan>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.PlatformImagePurchasePlan>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.PlatformImagePurchasePlan>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ProvisioningError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ProvisioningError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ProvisioningError>
-    {
-        internal ProvisioningError() { }
-        public string Message { get { throw null; } }
-        public Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode? ProvisioningErrorCode { get { throw null; } }
-        protected virtual Azure.ResourceManager.ImageBuilder.Models.ProvisioningError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ImageBuilder.Models.ProvisioningError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ImageBuilder.Models.ProvisioningError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ProvisioningError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.ProvisioningError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ImageBuilder.Models.ProvisioningError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ProvisioningError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ProvisioningError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.ProvisioningError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningErrorCode : System.IEquatable<Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningErrorCode(string value) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode BadCustomizerType { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode BadDistributeType { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode BadManagedImageSource { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode BadPIRSource { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode BadSharedImageDistribute { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode BadSharedImageVersionSource { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode BadSourceType { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode BadStagingResourceGroup { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode BadValidatorType { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode NoCustomizerScript { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode NoValidatorScript { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode Other { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode ServerError { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode UnsupportedCustomizerType { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode UnsupportedValidatorType { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode left, Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode left, Azure.ResourceManager.ImageBuilder.Models.ProvisioningErrorCode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public enum ProvisioningState
-    {
-        Creating = 0,
-        Updating = 1,
-        Succeeded = 2,
-        Failed = 3,
-        Deleting = 4,
-        Canceled = 5,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ReplicationMode : System.IEquatable<Azure.ResourceManager.ImageBuilder.Models.ReplicationMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ReplicationMode(string value) { throw null; }
-        public static Azure.ResourceManager.ImageBuilder.Models.ReplicationMode Full { get { throw null; } }
-        public static Azure.ResourceManager.ImageBuilder.Models.ReplicationMode Shallow { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ImageBuilder.Models.ReplicationMode other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ImageBuilder.Models.ReplicationMode left, Azure.ResourceManager.ImageBuilder.Models.ReplicationMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ImageBuilder.Models.ReplicationMode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ImageBuilder.Models.ReplicationMode? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ImageBuilder.Models.ReplicationMode left, Azure.ResourceManager.ImageBuilder.Models.ReplicationMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public enum ResourceIdentityType
-    {
-        UserAssigned = 0,
-        None = 1,
-    }
-    public enum RunState
-    {
-        Running = 0,
-        Canceling = 1,
-        Succeeded = 2,
-        PartiallySucceeded = 3,
-        Failed = 4,
-        Canceled = 5,
-    }
-    public enum RunSubState
-    {
-        Queued = 0,
-        Building = 1,
-        Customizing = 2,
-        Optimizing = 3,
-        Validating = 4,
-        Distributing = 5,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SharedImageStorageAccountType : System.IEquatable<Azure.ResourceManager.ImageBuilder.Models.SharedImageStorageAccountType>
@@ -912,27 +955,11 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.SourceImageTriggerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.SourceImageTriggerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TargetRegion : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.TargetRegion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.TargetRegion>
-    {
-        public TargetRegion(string name) { }
-        public string Name { get { throw null; } set { } }
-        public int? ReplicaCount { get { throw null; } set { } }
-        public Azure.ResourceManager.ImageBuilder.Models.SharedImageStorageAccountType? StorageAccountType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ImageBuilder.Models.TargetRegion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ImageBuilder.Models.TargetRegion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ImageBuilder.Models.TargetRegion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.TargetRegion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.TargetRegion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ImageBuilder.Models.TargetRegion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.TargetRegion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.TargetRegion>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.TargetRegion>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public abstract partial class TriggerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.TriggerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.TriggerProperties>
     {
         internal TriggerProperties() { }
-        public Azure.ResourceManager.ImageBuilder.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.ImageBuilder.Models.TriggerStatus Status { get { throw null; } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageBuilderProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ImageBuilder.Models.ImageTemplateTriggerStatus Status { get { throw null; } }
         protected virtual Azure.ResourceManager.ImageBuilder.Models.TriggerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ImageBuilder.Models.TriggerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -942,47 +969,5 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         Azure.ResourceManager.ImageBuilder.Models.TriggerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.TriggerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.TriggerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.TriggerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class TriggerStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.TriggerStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.TriggerStatus>
-    {
-        internal TriggerStatus() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
-        public System.DateTimeOffset? RecordedOn { get { throw null; } }
-        protected virtual Azure.ResourceManager.ImageBuilder.Models.TriggerStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ImageBuilder.Models.TriggerStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ImageBuilder.Models.TriggerStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.TriggerStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.TriggerStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ImageBuilder.Models.TriggerStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.TriggerStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.TriggerStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.TriggerStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class VirtualNetworkConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.VirtualNetworkConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.VirtualNetworkConfig>
-    {
-        public VirtualNetworkConfig() { }
-        public string ContainerInstanceSubnetId { get { throw null; } set { } }
-        public string ProxyVmSize { get { throw null; } set { } }
-        public string SubnetId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ImageBuilder.Models.VirtualNetworkConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ImageBuilder.Models.VirtualNetworkConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ImageBuilder.Models.VirtualNetworkConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.VirtualNetworkConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImageBuilder.Models.VirtualNetworkConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ImageBuilder.Models.VirtualNetworkConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.VirtualNetworkConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.VirtualNetworkConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImageBuilder.Models.VirtualNetworkConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public enum VMBootOptimizationState
-    {
-        Enabled = 0,
-        Disabled = 1,
-    }
-    public enum WorkloadOptimizationState
-    {
-        Enabled = 0,
-        Disabled = 1,
     }
 }

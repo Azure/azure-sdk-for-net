@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             }
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            RunState? runState = default;
-            RunSubState? runSubState = default;
+            ImageTemplateRunState? runState = default;
+            ImageTemplateRunSubState? runSubState = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    runState = prop.Value.GetString().ToRunState();
+                    runState = prop.Value.GetString().ToImageTemplateRunState();
                     continue;
                 }
                 if (prop.NameEquals("runSubState"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    runSubState = prop.Value.GetString().ToRunSubState();
+                    runSubState = prop.Value.GetString().ToImageTemplateRunSubState();
                     continue;
                 }
                 if (prop.NameEquals("message"u8))

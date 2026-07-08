@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (RunOutputData item in Value)
+            foreach (ImageTemplateRunOutputData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             {
                 return null;
             }
-            IList<RunOutputData> value = default;
+            IList<ImageTemplateRunOutputData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<RunOutputData> array = new List<RunOutputData>();
+                    List<ImageTemplateRunOutputData> array = new List<ImageTemplateRunOutputData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RunOutputData.DeserializeRunOutputData(item, options));
+                        array.Add(ImageTemplateRunOutputData.DeserializeImageTemplateRunOutputData(item, options));
                     }
                     value = array;
                     continue;

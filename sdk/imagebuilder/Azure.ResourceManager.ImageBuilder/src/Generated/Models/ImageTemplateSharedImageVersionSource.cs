@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ImageBuilder;
 
 namespace Azure.ResourceManager.ImageBuilder.Models
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <summary> Initializes a new instance of <see cref="ImageTemplateSharedImageVersionSource"/>. </summary>
         /// <param name="imageVersionId"> ARM resource id of the image version. When image version name is 'latest', the version is evaluated when the image build takes place. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageVersionId"/> is null. </exception>
-        public ImageTemplateSharedImageVersionSource(string imageVersionId) : base("SharedImageVersion")
+        public ImageTemplateSharedImageVersionSource(ResourceIdentifier imageVersionId) : base("SharedImageVersion")
         {
             Argument.AssertNotNull(imageVersionId, nameof(imageVersionId));
 
@@ -29,14 +30,14 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageVersionId"> ARM resource id of the image version. When image version name is 'latest', the version is evaluated when the image build takes place. </param>
         /// <param name="exactVersion"> Exact ARM resource id of the image version. This readonly field differs from the image version Id in 'imageVersionId' only if the version name specified in 'imageVersionId' field is 'latest'. </param>
-        internal ImageTemplateSharedImageVersionSource(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string imageVersionId, string exactVersion) : base(@type, additionalBinaryDataProperties)
+        internal ImageTemplateSharedImageVersionSource(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier imageVersionId, string exactVersion) : base(@type, additionalBinaryDataProperties)
         {
             ImageVersionId = imageVersionId;
             ExactVersion = exactVersion;
         }
 
         /// <summary> ARM resource id of the image version. When image version name is 'latest', the version is evaluated when the image build takes place. </summary>
-        public string ImageVersionId { get; set; }
+        public ResourceIdentifier ImageVersionId { get; set; }
 
         /// <summary> Exact ARM resource id of the image version. This readonly field differs from the image version Id in 'imageVersionId' only if the version name specified in 'imageVersionId' field is 'latest'. </summary>
         public string ExactVersion { get; }

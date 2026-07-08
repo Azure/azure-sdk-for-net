@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="onCustomizerError"> If there is a customizer error and this field is set to 'cleanup', the build VM and associated network resources will be cleaned up. This is the default behavior. If there is a customizer error and this field is set to 'abort', the build VM will be preserved. </param>
         /// <param name="onValidationError"> If there is a validation error and this field is set to 'cleanup', the build VM and associated network resources will be cleaned up. This is the default behavior. If there is a validation error and this field is set to 'abort', the build VM will be preserved. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageTemplateErrorHandling(OnBuildError? onCustomizerError, OnBuildError? onValidationError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplateErrorHandling(ImageBuilderOnBuildError? onCustomizerError, ImageBuilderOnBuildError? onValidationError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OnCustomizerError = onCustomizerError;
             OnValidationError = onValidationError;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         }
 
         /// <summary> If there is a customizer error and this field is set to 'cleanup', the build VM and associated network resources will be cleaned up. This is the default behavior. If there is a customizer error and this field is set to 'abort', the build VM will be preserved. </summary>
-        public OnBuildError? OnCustomizerError { get; set; }
+        public ImageBuilderOnBuildError? OnCustomizerError { get; set; }
 
         /// <summary> If there is a validation error and this field is set to 'cleanup', the build VM and associated network resources will be cleaned up. This is the default behavior. If there is a validation error and this field is set to 'abort', the build VM will be preserved. </summary>
-        public OnBuildError? OnValidationError { get; set; }
+        public ImageBuilderOnBuildError? OnValidationError { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ImageBuilder;
 
 namespace Azure.ResourceManager.ImageBuilder.Models
@@ -18,14 +19,14 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="runOutputName"> The name to be used for the associated RunOutput. </param>
         /// <param name="galleryImageId"> Resource Id of the Azure Compute Gallery image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runOutputName"/> or <paramref name="galleryImageId"/> is null. </exception>
-        public ImageTemplateSharedImageDistributor(string runOutputName, string galleryImageId) : base("SharedImage", runOutputName)
+        public ImageTemplateSharedImageDistributor(string runOutputName, ResourceIdentifier galleryImageId) : base("SharedImage", runOutputName)
         {
             Argument.AssertNotNull(runOutputName, nameof(runOutputName));
             Argument.AssertNotNull(galleryImageId, nameof(galleryImageId));
 
             GalleryImageId = galleryImageId;
             ReplicationRegions = new ChangeTrackingList<string>();
-            TargetRegions = new ChangeTrackingList<TargetRegion>();
+            TargetRegions = new ChangeTrackingList<ImageTemplateTargetRegion>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageTemplateSharedImageDistributor"/>. </summary>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="targetRegions"> The target regions where the distributed Image Version is going to be replicated to. This object supersedes replicationRegions and can be specified only if replicationRegions is not specified. </param>
         /// <param name="versioning"> Describes how to generate new x.y.z version number for distribution. </param>
         /// <param name="replicationMode"> Describes replication mode for distribution in Azure Compute Gallery. Omit to use the default (Full). </param>
-        internal ImageTemplateSharedImageDistributor(string @type, string runOutputName, IDictionary<string, string> artifactTags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string galleryImageId, IList<string> replicationRegions, bool? isExcludedFromLatest, SharedImageStorageAccountType? storageAccountType, IList<TargetRegion> targetRegions, DistributeVersioner versioning, ReplicationMode? replicationMode) : base(@type, runOutputName, artifactTags, additionalBinaryDataProperties)
+        internal ImageTemplateSharedImageDistributor(string @type, string runOutputName, IDictionary<string, string> artifactTags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier galleryImageId, IList<string> replicationRegions, bool? isExcludedFromLatest, SharedImageStorageAccountType? storageAccountType, IList<ImageTemplateTargetRegion> targetRegions, DistributeVersioner versioning, ImageTemplateReplicationMode? replicationMode) : base(@type, runOutputName, artifactTags, additionalBinaryDataProperties)
         {
             GalleryImageId = galleryImageId;
             ReplicationRegions = replicationRegions;
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         }
 
         /// <summary> Resource Id of the Azure Compute Gallery image. </summary>
-        public string GalleryImageId { get; set; }
+        public ResourceIdentifier GalleryImageId { get; set; }
 
         /// <summary> [Deprecated] A list of regions that the image will be replicated to. This list can be specified only if targetRegions is not specified. This field is deprecated - use targetRegions instead. </summary>
         public IList<string> ReplicationRegions { get; }
@@ -64,12 +65,12 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public SharedImageStorageAccountType? StorageAccountType { get; set; }
 
         /// <summary> The target regions where the distributed Image Version is going to be replicated to. This object supersedes replicationRegions and can be specified only if replicationRegions is not specified. </summary>
-        public IList<TargetRegion> TargetRegions { get; }
+        public IList<ImageTemplateTargetRegion> TargetRegions { get; }
 
         /// <summary> Describes how to generate new x.y.z version number for distribution. </summary>
         public DistributeVersioner Versioning { get; set; }
 
         /// <summary> Describes replication mode for distribution in Azure Compute Gallery. Omit to use the default (Full). </summary>
-        public ReplicationMode? ReplicationMode { get; set; }
+        public ImageTemplateReplicationMode? ReplicationMode { get; set; }
     }
 }

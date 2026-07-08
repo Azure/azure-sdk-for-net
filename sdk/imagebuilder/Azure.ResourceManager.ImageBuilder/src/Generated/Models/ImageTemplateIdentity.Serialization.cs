@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             {
                 return null;
             }
-            ResourceIdentityType? @type = default;
+            ImageBuilderIdentityType? @type = default;
             IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToResourceIdentityType();
+                    @type = prop.Value.GetString().ToImageBuilderIdentityType();
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentities"u8))

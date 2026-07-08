@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.ImageBuilder.Mocking
             return new ImageTemplateResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="RunOutputResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ImageTemplateRunOutputResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RunOutputResource"/> object. </returns>
-        public virtual RunOutputResource GetRunOutputResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ImageTemplateRunOutputResource"/> object. </returns>
+        public virtual ImageTemplateRunOutputResource GetImageTemplateRunOutputResource(ResourceIdentifier id)
         {
-            RunOutputResource.ValidateResourceId(id);
-            return new RunOutputResource(Client, id);
+            ImageTemplateRunOutputResource.ValidateResourceId(id);
+            return new ImageTemplateRunOutputResource(Client, id);
         }
     }
 }

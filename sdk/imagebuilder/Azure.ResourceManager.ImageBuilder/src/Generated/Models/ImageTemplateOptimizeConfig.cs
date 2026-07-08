@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public ImageTemplateWorkloadOptimization Workload { get; set; }
 
         /// <summary> Enabling this field will improve VM boot time by optimizing the final customized image output. </summary>
-        public VMBootOptimizationState? VmBootState
+        public ImageTemplateVMBootOptimizationState? VmBootState
         {
             get
             {

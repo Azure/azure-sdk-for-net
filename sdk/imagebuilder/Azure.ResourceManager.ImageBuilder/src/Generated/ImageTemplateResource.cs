@@ -908,11 +908,11 @@ namespace Azure.ResourceManager.ImageBuilder
             return GetImageTemplateTriggers().Get(triggerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RunOutputs in the <see cref="ImageTemplateResource"/>. </summary>
-        /// <returns> An object representing collection of RunOutputs and their operations over a RunOutputResource. </returns>
-        public virtual RunOutputCollection GetRunOutputs()
+        /// <summary> Gets a collection of ImageTemplateRunOutputs in the <see cref="ImageTemplateResource"/>. </summary>
+        /// <returns> An object representing collection of ImageTemplateRunOutputs and their operations over a ImageTemplateRunOutputResource. </returns>
+        public virtual ImageTemplateRunOutputCollection GetImageTemplateRunOutputs()
         {
-            return GetCachedClient(client => new RunOutputCollection(client, Id));
+            return GetCachedClient(client => new ImageTemplateRunOutputCollection(client, Id));
         }
 
         /// <summary> Get the specified run output for the specified image template resource. </summary>
@@ -921,11 +921,11 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <exception cref="ArgumentNullException"> <paramref name="runOutputName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runOutputName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RunOutputResource>> GetRunOutputAsync(string runOutputName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImageTemplateRunOutputResource>> GetImageTemplateRunOutputAsync(string runOutputName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runOutputName, nameof(runOutputName));
 
-            return await GetRunOutputs().GetAsync(runOutputName, cancellationToken).ConfigureAwait(false);
+            return await GetImageTemplateRunOutputs().GetAsync(runOutputName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the specified run output for the specified image template resource. </summary>
@@ -934,11 +934,11 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <exception cref="ArgumentNullException"> <paramref name="runOutputName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runOutputName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RunOutputResource> GetRunOutput(string runOutputName, CancellationToken cancellationToken = default)
+        public virtual Response<ImageTemplateRunOutputResource> GetImageTemplateRunOutput(string runOutputName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runOutputName, nameof(runOutputName));
 
-            return GetRunOutputs().Get(runOutputName, cancellationToken);
+            return GetImageTemplateRunOutputs().Get(runOutputName, cancellationToken);
         }
     }
 }

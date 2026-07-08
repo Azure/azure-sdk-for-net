@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="artifactUri"> The location URI of the artifact. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunOutputProperties(string artifactId, string artifactUri, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunOutputProperties(string artifactId, string artifactUri, ImageBuilderProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ArtifactId = artifactId;
             ArtifactUri = artifactUri;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public string ArtifactUri { get; }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ImageBuilderProvisioningState? ProvisioningState { get; }
     }
 }

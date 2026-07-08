@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ImageBuilder
         }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState
+        public ImageBuilderProvisioningState? ProvisioningState
         {
             get
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ImageBuilder
         }
 
         /// <summary> Provisioning error, if any. </summary>
-        public ProvisioningError ProvisioningError
+        public ImageBuilderProvisioningError ProvisioningError
         {
             get
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ImageBuilder
         }
 
         /// <summary> Optional array of additional data disks to be added to the image. </summary>
-        public IList<DataDisk> AdditionalDataDisks
+        public IList<ImageBuilderDataDisk> AdditionalDataDisks
         {
             get
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ImageBuilder
         }
 
         /// <summary> Enabling this field will trigger an automatic build on image template creation or update. </summary>
-        public AutoRunState? AutoRunState
+        public ImageTemplateAutoRunState? AutoRunState
         {
             get
             {

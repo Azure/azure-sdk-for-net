@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 return null;
             }
             string kind = "unknown";
-            TriggerStatus status = default;
-            ProvisioningState? provisioningState = default;
+            ImageTemplateTriggerStatus status = default;
+            ImageBuilderProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    status = TriggerStatus.DeserializeTriggerStatus(prop.Value, options);
+                    status = ImageTemplateTriggerStatus.DeserializeImageTemplateTriggerStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    provisioningState = prop.Value.GetString().ToProvisioningState();
+                    provisioningState = prop.Value.GetString().ToImageBuilderProvisioningState();
                     continue;
                 }
                 if (options.Format != "W")

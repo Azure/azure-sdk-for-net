@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             Source = source;
             Customize = new ChangeTrackingList<ImageTemplateCustomizer>();
             Distribute = distribute.ToList();
-            AdditionalDataDisks = new ChangeTrackingList<DataDisk>();
+            AdditionalDataDisks = new ChangeTrackingList<ImageBuilderDataDisk>();
             ManagedResourceTags = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="autoRun"> Indicates whether or not to automatically run the image template build on template creation or update. </param>
         /// <param name="managedResourceTags"> Tags that will be applied to the resource group and/or resources created by the service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageTemplateProperties(ImageTemplateSource source, IList<ImageTemplateCustomizer> customize, ImageTemplateOptimizeConfig optimize, ImageTemplateValidationConfig validate, IList<ImageTemplateDistributor> distribute, ImageTemplateErrorHandling errorHandling, ProvisioningState? provisioningState, ProvisioningError provisioningError, ImageTemplateLastRunStatus lastRunStatus, int? buildTimeoutInMinutes, ImageTemplateVmProfile vmProfile, IList<DataDisk> additionalDataDisks, string stagingResourceGroup, string exactStagingResourceGroup, ImageTemplateAutoRun autoRun, IDictionary<string, string> managedResourceTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplateProperties(ImageTemplateSource source, IList<ImageTemplateCustomizer> customize, ImageTemplateOptimizeConfig optimize, ImageTemplateValidationConfig validate, IList<ImageTemplateDistributor> distribute, ImageTemplateErrorHandling errorHandling, ImageBuilderProvisioningState? provisioningState, ImageBuilderProvisioningError provisioningError, ImageTemplateLastRunStatus lastRunStatus, int? buildTimeoutInMinutes, ImageTemplateVmProfile vmProfile, IList<ImageBuilderDataDisk> additionalDataDisks, string stagingResourceGroup, string exactStagingResourceGroup, ImageTemplateAutoRun autoRun, IDictionary<string, string> managedResourceTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             Customize = customize;
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public ImageTemplateErrorHandling ErrorHandling { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ImageBuilderProvisioningState? ProvisioningState { get; }
 
         /// <summary> Provisioning error, if any. </summary>
-        public ProvisioningError ProvisioningError { get; }
+        public ImageBuilderProvisioningError ProvisioningError { get; }
 
         /// <summary> State of 'run' that is currently executing or was last executed. </summary>
         public ImageTemplateLastRunStatus LastRunStatus { get; }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public ImageTemplateVmProfile VmProfile { get; set; }
 
         /// <summary> Optional array of additional data disks to be added to the image. </summary>
-        public IList<DataDisk> AdditionalDataDisks { get; } = new ChangeTrackingList<DataDisk>();
+        public IList<ImageBuilderDataDisk> AdditionalDataDisks { get; } = new ChangeTrackingList<ImageBuilderDataDisk>();
 
         /// <summary> The staging resource group id in the same subscription as the image template that will be used to build the image. If this field is empty, a resource group with a random name will be created. If the resource group specified in this field doesn't exist, it will be created with the same name. If the resource group specified exists, it must be empty and in the same region as the image template. The resource group created will be deleted during template deletion if this field is empty or the resource group specified doesn't exist, but if the resource group specified exists the resources created in the resource group will be deleted during template deletion and the resource group itself will remain. </summary>
         public string StagingResourceGroup { get; set; }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public IDictionary<string, string> ManagedResourceTags { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> Enabling this field will trigger an automatic build on image template creation or update. </summary>
-        public AutoRunState? AutoRunState
+        public ImageTemplateAutoRunState? AutoRunState
         {
             get
             {

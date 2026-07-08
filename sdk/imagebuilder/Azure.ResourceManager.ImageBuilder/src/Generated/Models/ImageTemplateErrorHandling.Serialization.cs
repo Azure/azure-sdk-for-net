@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             {
                 return null;
             }
-            OnBuildError? onCustomizerError = default;
-            OnBuildError? onValidationError = default;
+            ImageBuilderOnBuildError? onCustomizerError = default;
+            ImageBuilderOnBuildError? onValidationError = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    onCustomizerError = new OnBuildError(prop.Value.GetString());
+                    onCustomizerError = new ImageBuilderOnBuildError(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("onValidationError"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    onValidationError = new OnBuildError(prop.Value.GetString());
+                    onValidationError = new ImageBuilderOnBuildError(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

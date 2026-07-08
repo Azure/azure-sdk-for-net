@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="type"> The type of identity used for the image template. The type 'None' will remove any identities from the image template. </param>
         /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageTemplateIdentity(ResourceIdentityType? @type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplateIdentity(ImageBuilderIdentityType? @type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             UserAssignedIdentities = userAssignedIdentities;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         }
 
         /// <summary> The type of identity used for the image template. The type 'None' will remove any identities from the image template. </summary>
-        public ResourceIdentityType? Type { get; set; }
+        public ImageBuilderIdentityType? Type { get; set; }
 
         /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }

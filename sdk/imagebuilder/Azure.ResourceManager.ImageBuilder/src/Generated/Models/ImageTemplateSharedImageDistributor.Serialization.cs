@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ImageBuilder;
 
 namespace Azure.ResourceManager.ImageBuilder.Models
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             {
                 writer.WritePropertyName("targetRegions"u8);
                 writer.WriteStartArray();
-                foreach (TargetRegion item in TargetRegions)
+                foreach (ImageTemplateTargetRegion item in TargetRegions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -158,13 +159,13 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             string runOutputName = default;
             IDictionary<string, string> artifactTags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string galleryImageId = default;
+            ResourceIdentifier galleryImageId = default;
             IList<string> replicationRegions = default;
             bool? isExcludedFromLatest = default;
             SharedImageStorageAccountType? storageAccountType = default;
-            IList<TargetRegion> targetRegions = default;
+            IList<ImageTemplateTargetRegion> targetRegions = default;
             DistributeVersioner versioning = default;
-            ReplicationMode? replicationMode = default;
+            ImageTemplateReplicationMode? replicationMode = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 }
                 if (prop.NameEquals("galleryImageId"u8))
                 {
-                    galleryImageId = prop.Value.GetString();
+                    galleryImageId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("replicationRegions"u8))
@@ -248,10 +249,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    List<TargetRegion> array = new List<TargetRegion>();
+                    List<ImageTemplateTargetRegion> array = new List<ImageTemplateTargetRegion>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TargetRegion.DeserializeTargetRegion(item, options));
+                        array.Add(ImageTemplateTargetRegion.DeserializeImageTemplateTargetRegion(item, options));
                     }
                     targetRegions = array;
                     continue;
@@ -271,7 +272,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    replicationMode = new ReplicationMode(prop.Value.GetString());
+                    replicationMode = new ImageTemplateReplicationMode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -288,7 +289,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 replicationRegions ?? new ChangeTrackingList<string>(),
                 isExcludedFromLatest,
                 storageAccountType,
-                targetRegions ?? new ChangeTrackingList<TargetRegion>(),
+                targetRegions ?? new ChangeTrackingList<ImageTemplateTargetRegion>(),
                 versioning,
                 replicationMode);
         }

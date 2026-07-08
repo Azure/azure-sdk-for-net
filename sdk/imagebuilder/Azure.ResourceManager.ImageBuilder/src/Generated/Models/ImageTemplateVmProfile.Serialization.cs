@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             string vmSize = default;
             int? osDiskSizeGB = default;
             IList<string> userAssignedIdentities = default;
-            VirtualNetworkConfig vnetConfig = default;
+            ImageBuilderVirtualNetworkConfig vnetConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    vnetConfig = VirtualNetworkConfig.DeserializeVirtualNetworkConfig(prop.Value, options);
+                    vnetConfig = ImageBuilderVirtualNetworkConfig.DeserializeImageBuilderVirtualNetworkConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

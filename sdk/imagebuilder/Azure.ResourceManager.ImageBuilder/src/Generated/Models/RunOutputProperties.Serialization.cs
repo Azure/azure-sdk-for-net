@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             }
             string artifactId = default;
             string artifactUri = default;
-            ProvisioningState? provisioningState = default;
+            ImageBuilderProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    provisioningState = prop.Value.GetString().ToProvisioningState();
+                    provisioningState = prop.Value.GetString().ToImageBuilderProvisioningState();
                     continue;
                 }
                 if (options.Format != "W")

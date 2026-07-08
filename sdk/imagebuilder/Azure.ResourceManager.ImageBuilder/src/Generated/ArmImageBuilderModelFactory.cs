@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="status"> Trigger status. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.TriggerProperties"/> instance for mocking. </returns>
-        public static TriggerProperties TriggerProperties(string kind = default, TriggerStatus status = default, ProvisioningState? provisioningState = default)
+        public static TriggerProperties TriggerProperties(string kind = default, ImageTemplateTriggerStatus status = default, ImageBuilderProvisioningState? provisioningState = default)
         {
             return new UnknownTriggerProperties(kind, status, provisioningState, default);
         }
@@ -48,16 +48,16 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="code"> The status code. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="recordedOn"> The time of the status. </param>
-        /// <returns> A new <see cref="Models.TriggerStatus"/> instance for mocking. </returns>
-        public static TriggerStatus TriggerStatus(string code = default, string message = default, DateTimeOffset? recordedOn = default)
+        /// <returns> A new <see cref="Models.ImageTemplateTriggerStatus"/> instance for mocking. </returns>
+        public static ImageTemplateTriggerStatus ImageTemplateTriggerStatus(string code = default, string message = default, DateTimeOffset? recordedOn = default)
         {
-            return new TriggerStatus(code, message, recordedOn, default);
+            return new ImageTemplateTriggerStatus(code, message, recordedOn, default);
         }
 
         /// <param name="status"> Trigger status. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.SourceImageTriggerProperties"/> instance for mocking. </returns>
-        public static SourceImageTriggerProperties SourceImageTriggerProperties(TriggerStatus status = default, ProvisioningState? provisioningState = default)
+        public static SourceImageTriggerProperties SourceImageTriggerProperties(ImageTemplateTriggerStatus status = default, ImageBuilderProvisioningState? provisioningState = default)
         {
             return new SourceImageTriggerProperties(default, status, provisioningState, default);
         }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="autoRunState"> Enabling this field will trigger an automatic build on image template creation or update. </param>
         /// <param name="identity"> The identity of the image template, if configured. </param>
         /// <returns> A new <see cref="ImageBuilder.ImageTemplateData"/> instance for mocking. </returns>
-        public static ImageTemplateData ImageTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ImageTemplateSource source = default, IEnumerable<ImageTemplateCustomizer> customize = default, ImageTemplateOptimizeConfig optimize = default, ImageTemplateValidationConfig validate = default, IEnumerable<ImageTemplateDistributor> distribute = default, ImageTemplateErrorHandling errorHandling = default, ProvisioningState? provisioningState = default, ProvisioningError provisioningError = default, ImageTemplateLastRunStatus lastRunStatus = default, int? buildTimeoutInMinutes = default, ImageTemplateVmProfile vmProfile = default, IEnumerable<DataDisk> additionalDataDisks = default, string stagingResourceGroup = default, string exactStagingResourceGroup = default, IDictionary<string, string> managedResourceTags = default, AutoRunState? autoRunState = default, ImageTemplateIdentity identity = default)
+        public static ImageTemplateData ImageTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ImageTemplateSource source = default, IEnumerable<ImageTemplateCustomizer> customize = default, ImageTemplateOptimizeConfig optimize = default, ImageTemplateValidationConfig validate = default, IEnumerable<ImageTemplateDistributor> distribute = default, ImageTemplateErrorHandling errorHandling = default, ImageBuilderProvisioningState? provisioningState = default, ImageBuilderProvisioningError provisioningError = default, ImageTemplateLastRunStatus lastRunStatus = default, int? buildTimeoutInMinutes = default, ImageTemplateVmProfile vmProfile = default, IEnumerable<ImageBuilderDataDisk> additionalDataDisks = default, string stagingResourceGroup = default, string exactStagingResourceGroup = default, IDictionary<string, string> managedResourceTags = default, ImageTemplateAutoRunState? autoRunState = default, ImageTemplateIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     lastRunStatus,
                     buildTimeoutInMinutes,
                     vmProfile,
-                    (additionalDataDisks ?? new ChangeTrackingList<DataDisk>()).ToList(),
+                    (additionalDataDisks ?? new ChangeTrackingList<ImageBuilderDataDisk>()).ToList(),
                     stagingResourceGroup,
                     exactStagingResourceGroup,
                     new ImageTemplateAutoRun(autoRunState, default),
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <param name="imageId"> ARM resource id of the managed image in customer subscription. </param>
         /// <returns> A new <see cref="Models.ImageTemplateManagedImageSource"/> instance for mocking. </returns>
-        public static ImageTemplateManagedImageSource ImageTemplateManagedImageSource(string imageId = default)
+        public static ImageTemplateManagedImageSource ImageTemplateManagedImageSource(ResourceIdentifier imageId = default)
         {
             return new ImageTemplateManagedImageSource(default, default, imageId);
         }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="imageVersionId"> ARM resource id of the image version. When image version name is 'latest', the version is evaluated when the image build takes place. </param>
         /// <param name="exactVersion"> Exact ARM resource id of the image version. This readonly field differs from the image version Id in 'imageVersionId' only if the version name specified in 'imageVersionId' field is 'latest'. </param>
         /// <returns> A new <see cref="Models.ImageTemplateSharedImageVersionSource"/> instance for mocking. </returns>
-        public static ImageTemplateSharedImageVersionSource ImageTemplateSharedImageVersionSource(string imageVersionId = default, string exactVersion = default)
+        public static ImageTemplateSharedImageVersionSource ImageTemplateSharedImageVersionSource(ResourceIdentifier imageVersionId = default, string exactVersion = default)
         {
             return new ImageTemplateSharedImageVersionSource(default, default, imageVersionId, exactVersion);
         }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="vmBootState"> Enabling this field will improve VM boot time by optimizing the final customized image output. </param>
         /// <param name="workload"> Optimization is applied on the image for specific workloads. </param>
         /// <returns> A new <see cref="Models.ImageTemplateOptimizeConfig"/> instance for mocking. </returns>
-        public static ImageTemplateOptimizeConfig ImageTemplateOptimizeConfig(VMBootOptimizationState? vmBootState = default, ImageTemplateWorkloadOptimization workload = default)
+        public static ImageTemplateOptimizeConfig ImageTemplateOptimizeConfig(ImageTemplateVMBootOptimizationState? vmBootState = default, ImageTemplateWorkloadOptimization workload = default)
         {
             return new ImageTemplateOptimizeConfig(vmBootState is null ? default : new ImageTemplatePropertiesOptimizeVmBoot(vmBootState, default), workload, default);
         }
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="scriptUri"> URI of the script to be run for workload optimization. It can be a github link, SAS URI for Azure Storage, etc. </param>
         /// <param name="sha256Checksum"> SHA256 checksum of the script provided in the scriptUri field. </param>
         /// <returns> A new <see cref="Models.ImageTemplateWorkloadOptimization"/> instance for mocking. </returns>
-        public static ImageTemplateWorkloadOptimization ImageTemplateWorkloadOptimization(WorkloadOptimizationState? state = default, string scriptUri = default, string sha256Checksum = default)
+        public static ImageTemplateWorkloadOptimization ImageTemplateWorkloadOptimization(ImageTemplateWorkloadOptimizationState? state = default, string scriptUri = default, string sha256Checksum = default)
         {
             return new ImageTemplateWorkloadOptimization(state, scriptUri, sha256Checksum, default);
         }
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="imageId"> Resource Id of the Managed Disk Image. </param>
         /// <param name="location"> Azure location for the image, should match if image already exists. </param>
         /// <returns> A new <see cref="Models.ImageTemplateManagedImageDistributor"/> instance for mocking. </returns>
-        public static ImageTemplateManagedImageDistributor ImageTemplateManagedImageDistributor(string runOutputName = default, IDictionary<string, string> artifactTags = default, string imageId = default, AzureLocation location = default)
+        public static ImageTemplateManagedImageDistributor ImageTemplateManagedImageDistributor(string runOutputName = default, IDictionary<string, string> artifactTags = default, ResourceIdentifier imageId = default, AzureLocation location = default)
         {
             artifactTags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -405,11 +405,11 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="versioning"> Describes how to generate new x.y.z version number for distribution. </param>
         /// <param name="replicationMode"> Describes replication mode for distribution in Azure Compute Gallery. Omit to use the default (Full). </param>
         /// <returns> A new <see cref="Models.ImageTemplateSharedImageDistributor"/> instance for mocking. </returns>
-        public static ImageTemplateSharedImageDistributor ImageTemplateSharedImageDistributor(string runOutputName = default, IDictionary<string, string> artifactTags = default, string galleryImageId = default, IEnumerable<string> replicationRegions = default, bool? isExcludedFromLatest = default, SharedImageStorageAccountType? storageAccountType = default, IEnumerable<TargetRegion> targetRegions = default, DistributeVersioner versioning = default, ReplicationMode? replicationMode = default)
+        public static ImageTemplateSharedImageDistributor ImageTemplateSharedImageDistributor(string runOutputName = default, IDictionary<string, string> artifactTags = default, ResourceIdentifier galleryImageId = default, IEnumerable<string> replicationRegions = default, bool? isExcludedFromLatest = default, SharedImageStorageAccountType? storageAccountType = default, IEnumerable<ImageTemplateTargetRegion> targetRegions = default, DistributeVersioner versioning = default, ImageTemplateReplicationMode? replicationMode = default)
         {
             artifactTags ??= new ChangeTrackingDictionary<string, string>();
             replicationRegions ??= new ChangeTrackingList<string>();
-            targetRegions ??= new ChangeTrackingList<TargetRegion>();
+            targetRegions ??= new ChangeTrackingList<ImageTemplateTargetRegion>();
 
             return new ImageTemplateSharedImageDistributor(
                 default,
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 (replicationRegions ?? new ChangeTrackingList<string>()).ToList(),
                 isExcludedFromLatest,
                 storageAccountType,
-                (targetRegions ?? new ChangeTrackingList<TargetRegion>()).ToList(),
+                (targetRegions ?? new ChangeTrackingList<ImageTemplateTargetRegion>()).ToList(),
                 versioning,
                 replicationMode);
         }
@@ -428,10 +428,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="name"> The name of the region. </param>
         /// <param name="replicaCount"> The number of replicas of the Image Version to be created in this region. Omit to use the default (1). </param>
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image in this region. Omit to use the default (Standard_LRS). </param>
-        /// <returns> A new <see cref="Models.TargetRegion"/> instance for mocking. </returns>
-        public static TargetRegion TargetRegion(string name = default, int? replicaCount = default, SharedImageStorageAccountType? storageAccountType = default)
+        /// <returns> A new <see cref="Models.ImageTemplateTargetRegion"/> instance for mocking. </returns>
+        public static ImageTemplateTargetRegion ImageTemplateTargetRegion(string name = default, int? replicaCount = default, SharedImageStorageAccountType? storageAccountType = default)
         {
-            return new TargetRegion(name, replicaCount, storageAccountType, default);
+            return new ImageTemplateTargetRegion(name, replicaCount, storageAccountType, default);
         }
 
         /// <param name="scheme"> Version numbering scheme to be used. </param>
@@ -468,17 +468,17 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="onCustomizerError"> If there is a customizer error and this field is set to 'cleanup', the build VM and associated network resources will be cleaned up. This is the default behavior. If there is a customizer error and this field is set to 'abort', the build VM will be preserved. </param>
         /// <param name="onValidationError"> If there is a validation error and this field is set to 'cleanup', the build VM and associated network resources will be cleaned up. This is the default behavior. If there is a validation error and this field is set to 'abort', the build VM will be preserved. </param>
         /// <returns> A new <see cref="Models.ImageTemplateErrorHandling"/> instance for mocking. </returns>
-        public static ImageTemplateErrorHandling ImageTemplateErrorHandling(OnBuildError? onCustomizerError = default, OnBuildError? onValidationError = default)
+        public static ImageTemplateErrorHandling ImageTemplateErrorHandling(ImageBuilderOnBuildError? onCustomizerError = default, ImageBuilderOnBuildError? onValidationError = default)
         {
             return new ImageTemplateErrorHandling(onCustomizerError, onValidationError, default);
         }
 
         /// <param name="provisioningErrorCode"> Error code of the provisioning failure. </param>
         /// <param name="message"> Verbose error message about the provisioning failure. </param>
-        /// <returns> A new <see cref="Models.ProvisioningError"/> instance for mocking. </returns>
-        public static ProvisioningError ProvisioningError(ProvisioningErrorCode? provisioningErrorCode = default, string message = default)
+        /// <returns> A new <see cref="Models.ImageBuilderProvisioningError"/> instance for mocking. </returns>
+        public static ImageBuilderProvisioningError ImageBuilderProvisioningError(ImageBuilderProvisioningErrorCode? provisioningErrorCode = default, string message = default)
         {
-            return new ProvisioningError(provisioningErrorCode, message, default);
+            return new ImageBuilderProvisioningError(provisioningErrorCode, message, default);
         }
 
         /// <param name="startOn"> Start time of the last run (UTC). </param>
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="runSubState"> Sub-state of the last run. </param>
         /// <param name="message"> Verbose information about the last run state. </param>
         /// <returns> A new <see cref="Models.ImageTemplateLastRunStatus"/> instance for mocking. </returns>
-        public static ImageTemplateLastRunStatus ImageTemplateLastRunStatus(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, RunState? runState = default, RunSubState? runSubState = default, string message = default)
+        public static ImageTemplateLastRunStatus ImageTemplateLastRunStatus(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ImageTemplateRunState? runState = default, ImageTemplateRunSubState? runSubState = default, string message = default)
         {
             return new ImageTemplateLastRunStatus(
                 startOn,
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="userAssignedIdentities"> Optional array of resource IDs of user assigned managed identities to be configured on the build VM and validation VM. This may include the identity of the image template. </param>
         /// <param name="vnetConfig"> Optional configuration of the virtual network to use to deploy the build VM and validation VM in. Omit if no specific virtual network needs to be used. </param>
         /// <returns> A new <see cref="Models.ImageTemplateVmProfile"/> instance for mocking. </returns>
-        public static ImageTemplateVmProfile ImageTemplateVmProfile(string vmSize = default, int? osDiskSizeGB = default, IEnumerable<string> userAssignedIdentities = default, VirtualNetworkConfig vnetConfig = default)
+        public static ImageTemplateVmProfile ImageTemplateVmProfile(string vmSize = default, int? osDiskSizeGB = default, IEnumerable<string> userAssignedIdentities = default, ImageBuilderVirtualNetworkConfig vnetConfig = default)
         {
             userAssignedIdentities ??= new ChangeTrackingList<string>();
 
@@ -513,23 +513,23 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="subnetId"> Resource id of a pre-existing subnet on which the build VM and validation VM will be deployed. </param>
         /// <param name="containerInstanceSubnetId"> Resource id of a pre-existing subnet on which Azure Container Instance will be deployed for Isolated Builds. This field may be specified only if `subnetId` is also specified and must be on the same Virtual Network as the subnet specified in `subnetId`. </param>
         /// <param name="proxyVmSize"> Size of the proxy virtual machine used to pass traffic to the build VM and validation VM. This must not be specified if `containerInstanceSubnetId` is specified because no proxy virtual machine is deployed in that case. Omit or specify empty string to use the default (Standard_A1_v2). </param>
-        /// <returns> A new <see cref="Models.VirtualNetworkConfig"/> instance for mocking. </returns>
-        public static VirtualNetworkConfig VirtualNetworkConfig(string subnetId = default, string containerInstanceSubnetId = default, string proxyVmSize = default)
+        /// <returns> A new <see cref="Models.ImageBuilderVirtualNetworkConfig"/> instance for mocking. </returns>
+        public static ImageBuilderVirtualNetworkConfig ImageBuilderVirtualNetworkConfig(ResourceIdentifier subnetId = default, ResourceIdentifier containerInstanceSubnetId = default, string proxyVmSize = default)
         {
-            return new VirtualNetworkConfig(subnetId, containerInstanceSubnetId, proxyVmSize, default);
+            return new ImageBuilderVirtualNetworkConfig(subnetId, containerInstanceSubnetId, proxyVmSize, default);
         }
 
         /// <param name="sizeGB"> Size of the data disk in GB. </param>
-        /// <returns> A new <see cref="Models.DataDisk"/> instance for mocking. </returns>
-        public static DataDisk DataDisk(int? sizeGB = default)
+        /// <returns> A new <see cref="Models.ImageBuilderDataDisk"/> instance for mocking. </returns>
+        public static ImageBuilderDataDisk ImageBuilderDataDisk(int? sizeGB = default)
         {
-            return new DataDisk(sizeGB, default);
+            return new ImageBuilderDataDisk(sizeGB, default);
         }
 
         /// <param name="type"> The type of identity used for the image template. The type 'None' will remove any identities from the image template. </param>
         /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
         /// <returns> A new <see cref="Models.ImageTemplateIdentity"/> instance for mocking. </returns>
-        public static ImageTemplateIdentity ImageTemplateIdentity(ResourceIdentityType? @type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
+        public static ImageTemplateIdentity ImageTemplateIdentity(ImageBuilderIdentityType? @type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
         {
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
 
@@ -538,23 +538,14 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <param name="identity"> The identity of the image template, if configured. </param>
         /// <param name="tags"> The user-specified tags associated with the image template. </param>
-        /// <param name="properties"> Parameters for updating an image template. </param>
+        /// <param name="distribute"> The distribution targets where the image output needs to go to. </param>
+        /// <param name="vmProfile"> Describes how virtual machine is set up to build images. </param>
         /// <returns> A new <see cref="Models.ImageTemplatePatch"/> instance for mocking. </returns>
-        public static ImageTemplatePatch ImageTemplatePatch(ImageTemplateIdentity identity = default, IDictionary<string, string> tags = default, ImageTemplatePatchProperties properties = default)
+        public static ImageTemplatePatch ImageTemplatePatch(ImageTemplateIdentity identity = default, IDictionary<string, string> tags = default, IEnumerable<ImageTemplateDistributor> distribute = default, ImageTemplateVmProfile vmProfile = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ImageTemplatePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
-        }
-
-        /// <param name="distribute"> The distribution targets where the image output needs to go to. </param>
-        /// <param name="vmProfile"> Describes how virtual machine is set up to build images. </param>
-        /// <returns> A new <see cref="Models.ImageTemplatePatchProperties"/> instance for mocking. </returns>
-        public static ImageTemplatePatchProperties ImageTemplatePatchProperties(IEnumerable<ImageTemplateDistributor> distribute = default, ImageTemplateVmProfile vmProfile = default)
-        {
-            distribute ??= new ChangeTrackingList<ImageTemplateDistributor>();
-
-            return new ImageTemplatePatchProperties((distribute ?? new ChangeTrackingList<ImageTemplateDistributor>()).ToList(), vmProfile, default);
+            return new ImageTemplatePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), distribute is null && vmProfile is null ? default : new ImageTemplatePatchProperties((distribute ?? new ChangeTrackingList<ImageTemplateDistributor>()).ToList(), vmProfile, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -564,10 +555,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="artifactId"> The resource id of the artifact. </param>
         /// <param name="artifactUri"> The location URI of the artifact. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="ImageBuilder.RunOutputData"/> instance for mocking. </returns>
-        public static RunOutputData RunOutputData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string artifactId = default, string artifactUri = default, ProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="ImageBuilder.ImageTemplateRunOutputData"/> instance for mocking. </returns>
+        public static ImageTemplateRunOutputData ImageTemplateRunOutputData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string artifactId = default, string artifactUri = default, ImageBuilderProvisioningState? provisioningState = default)
         {
-            return new RunOutputData(
+            return new ImageTemplateRunOutputData(
                 id,
                 name,
                 resourceType,

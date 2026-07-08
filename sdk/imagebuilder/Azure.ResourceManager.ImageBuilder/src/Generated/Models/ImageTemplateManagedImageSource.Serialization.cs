@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ImageBuilder;
 
 namespace Azure.ResourceManager.ImageBuilder.Models
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             }
             string @type = "ManagedImage";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string imageId = default;
+            ResourceIdentifier imageId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 }
                 if (prop.NameEquals("imageId"u8))
                 {
-                    imageId = prop.Value.GetString();
+                    imageId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

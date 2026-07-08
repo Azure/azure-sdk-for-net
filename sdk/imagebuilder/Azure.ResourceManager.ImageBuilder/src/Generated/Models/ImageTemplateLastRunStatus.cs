@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="runSubState"> Sub-state of the last run. </param>
         /// <param name="message"> Verbose information about the last run state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageTemplateLastRunStatus(DateTimeOffset? startOn, DateTimeOffset? endOn, RunState? runState, RunSubState? runSubState, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplateLastRunStatus(DateTimeOffset? startOn, DateTimeOffset? endOn, ImageTemplateRunState? runState, ImageTemplateRunSubState? runSubState, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> State of the last run. </summary>
-        public RunState? RunState { get; }
+        public ImageTemplateRunState? RunState { get; }
 
         /// <summary> Sub-state of the last run. </summary>
-        public RunSubState? RunSubState { get; }
+        public ImageTemplateRunSubState? RunSubState { get; }
 
         /// <summary> Verbose information about the last run state. </summary>
         public string Message { get; }

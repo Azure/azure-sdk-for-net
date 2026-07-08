@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="userAssignedIdentities"> Optional array of resource IDs of user assigned managed identities to be configured on the build VM and validation VM. This may include the identity of the image template. </param>
         /// <param name="vnetConfig"> Optional configuration of the virtual network to use to deploy the build VM and validation VM in. Omit if no specific virtual network needs to be used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageTemplateVmProfile(string vmSize, int? osDiskSizeGB, IList<string> userAssignedIdentities, VirtualNetworkConfig vnetConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplateVmProfile(string vmSize, int? osDiskSizeGB, IList<string> userAssignedIdentities, ImageBuilderVirtualNetworkConfig vnetConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             OsDiskSizeGB = osDiskSizeGB;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public IList<string> UserAssignedIdentities { get; }
 
         /// <summary> Optional configuration of the virtual network to use to deploy the build VM and validation VM in. Omit if no specific virtual network needs to be used. </summary>
-        public VirtualNetworkConfig VnetConfig { get; set; }
+        public ImageBuilderVirtualNetworkConfig VnetConfig { get; set; }
     }
 }

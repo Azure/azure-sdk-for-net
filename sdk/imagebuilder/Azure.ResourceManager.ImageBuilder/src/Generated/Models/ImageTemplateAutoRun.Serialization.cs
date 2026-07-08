@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             {
                 return null;
             }
-            AutoRunState? state = default;
+            ImageTemplateAutoRunState? state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    state = prop.Value.GetString().ToAutoRunState();
+                    state = prop.Value.GetString().ToImageTemplateAutoRunState();
                     continue;
                 }
                 if (options.Format != "W")

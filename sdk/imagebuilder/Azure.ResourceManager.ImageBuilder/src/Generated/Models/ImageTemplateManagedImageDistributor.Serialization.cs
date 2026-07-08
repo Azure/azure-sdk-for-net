@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             string runOutputName = default;
             IDictionary<string, string> artifactTags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string imageId = default;
+            ResourceIdentifier imageId = default;
             AzureLocation location = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 }
                 if (prop.NameEquals("imageId"u8))
                 {
-                    imageId = prop.Value.GetString();
+                    imageId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("location"u8))

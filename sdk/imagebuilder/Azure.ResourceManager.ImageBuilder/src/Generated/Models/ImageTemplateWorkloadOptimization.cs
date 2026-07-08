@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="scriptUri"> URI of the script to be run for workload optimization. It can be a github link, SAS URI for Azure Storage, etc. </param>
         /// <param name="sha256Checksum"> SHA256 checksum of the script provided in the scriptUri field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageTemplateWorkloadOptimization(WorkloadOptimizationState? state, string scriptUri, string sha256Checksum, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplateWorkloadOptimization(ImageTemplateWorkloadOptimizationState? state, string scriptUri, string sha256Checksum, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             ScriptUri = scriptUri;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         }
 
         /// <summary> Enabling this field will optimize vm images for specific workloads. </summary>
-        public WorkloadOptimizationState? State { get; set; }
+        public ImageTemplateWorkloadOptimizationState? State { get; set; }
 
         /// <summary> URI of the script to be run for workload optimization. It can be a github link, SAS URI for Azure Storage, etc. </summary>
         public string ScriptUri { get; set; }

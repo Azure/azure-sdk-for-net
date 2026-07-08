@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             {
                 writer.WritePropertyName("additionalDataDisks"u8);
                 writer.WriteStartArray();
-                foreach (DataDisk item in AdditionalDataDisks)
+                foreach (ImageBuilderDataDisk item in AdditionalDataDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -227,12 +227,12 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             ImageTemplateValidationConfig validate = default;
             IList<ImageTemplateDistributor> distribute = default;
             ImageTemplateErrorHandling errorHandling = default;
-            ProvisioningState? provisioningState = default;
-            ProvisioningError provisioningError = default;
+            ImageBuilderProvisioningState? provisioningState = default;
+            ImageBuilderProvisioningError provisioningError = default;
             ImageTemplateLastRunStatus lastRunStatus = default;
             int? buildTimeoutInMinutes = default;
             ImageTemplateVmProfile vmProfile = default;
-            IList<DataDisk> additionalDataDisks = default;
+            IList<ImageBuilderDataDisk> additionalDataDisks = default;
             string stagingResourceGroup = default;
             string exactStagingResourceGroup = default;
             ImageTemplateAutoRun autoRun = default;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    provisioningState = prop.Value.GetString().ToProvisioningState();
+                    provisioningState = prop.Value.GetString().ToImageBuilderProvisioningState();
                     continue;
                 }
                 if (prop.NameEquals("provisioningError"u8))
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    provisioningError = ProvisioningError.DeserializeProvisioningError(prop.Value, options);
+                    provisioningError = ImageBuilderProvisioningError.DeserializeImageBuilderProvisioningError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("lastRunStatus"u8))
@@ -347,10 +347,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    List<DataDisk> array = new List<DataDisk>();
+                    List<ImageBuilderDataDisk> array = new List<ImageBuilderDataDisk>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DataDisk.DeserializeDataDisk(item, options));
+                        array.Add(ImageBuilderDataDisk.DeserializeImageBuilderDataDisk(item, options));
                     }
                     additionalDataDisks = array;
                     continue;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 lastRunStatus,
                 buildTimeoutInMinutes,
                 vmProfile,
-                additionalDataDisks ?? new ChangeTrackingList<DataDisk>(),
+                additionalDataDisks ?? new ChangeTrackingList<ImageBuilderDataDisk>(),
                 stagingResourceGroup,
                 exactStagingResourceGroup,
                 autoRun,

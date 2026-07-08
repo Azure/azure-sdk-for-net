@@ -15,7 +15,7 @@ using Azure.ResourceManager.ImageBuilder.Models;
 
 namespace Azure.ResourceManager.ImageBuilder
 {
-    internal partial class VirtualMachineImageTemplatesGetRunOutputsAsyncCollectionResultOfT : AsyncPageable<RunOutputData>
+    internal partial class VirtualMachineImageTemplatesGetRunOutputsAsyncCollectionResultOfT : AsyncPageable<ImageTemplateRunOutputData>
     {
         private readonly VirtualMachineImageTemplates _client;
         private readonly string _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of VirtualMachineImageTemplatesGetRunOutputsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<RunOutputData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ImageTemplateRunOutputData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 }
                 RunOutputListResult result = RunOutputListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<RunOutputData>.FromValues((IReadOnlyList<RunOutputData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ImageTemplateRunOutputData>.FromValues((IReadOnlyList<ImageTemplateRunOutputData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ImageBuilder;
 
 namespace Azure.ResourceManager.ImageBuilder.Models
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <summary> Initializes a new instance of <see cref="ImageTemplateManagedImageSource"/>. </summary>
         /// <param name="imageId"> ARM resource id of the managed image in customer subscription. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageId"/> is null. </exception>
-        public ImageTemplateManagedImageSource(string imageId) : base("ManagedImage")
+        public ImageTemplateManagedImageSource(ResourceIdentifier imageId) : base("ManagedImage")
         {
             Argument.AssertNotNull(imageId, nameof(imageId));
 
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="type"> Specifies the type of source image you want to start with. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageId"> ARM resource id of the managed image in customer subscription. </param>
-        internal ImageTemplateManagedImageSource(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string imageId) : base(@type, additionalBinaryDataProperties)
+        internal ImageTemplateManagedImageSource(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier imageId) : base(@type, additionalBinaryDataProperties)
         {
             ImageId = imageId;
         }
 
         /// <summary> ARM resource id of the managed image in customer subscription. </summary>
-        public string ImageId { get; set; }
+        public ResourceIdentifier ImageId { get; set; }
     }
 }

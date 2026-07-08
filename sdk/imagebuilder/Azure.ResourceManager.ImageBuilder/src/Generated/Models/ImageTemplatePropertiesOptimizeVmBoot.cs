@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <summary> Initializes a new instance of <see cref="ImageTemplatePropertiesOptimizeVmBoot"/>. </summary>
         /// <param name="state"> Enabling this field will improve VM boot time by optimizing the final customized image output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageTemplatePropertiesOptimizeVmBoot(VMBootOptimizationState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplatePropertiesOptimizeVmBoot(ImageTemplateVMBootOptimizationState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enabling this field will improve VM boot time by optimizing the final customized image output. </summary>
-        public VMBootOptimizationState? State { get; set; }
+        public ImageTemplateVMBootOptimizationState? State { get; set; }
     }
 }

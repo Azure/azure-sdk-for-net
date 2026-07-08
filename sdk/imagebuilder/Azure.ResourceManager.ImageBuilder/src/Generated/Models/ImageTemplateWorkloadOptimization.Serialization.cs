@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             {
                 return null;
             }
-            WorkloadOptimizationState? state = default;
+            ImageTemplateWorkloadOptimizationState? state = default;
             string scriptUri = default;
             string sha256Checksum = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    state = prop.Value.GetString().ToWorkloadOptimizationState();
+                    state = prop.Value.GetString().ToImageTemplateWorkloadOptimizationState();
                     continue;
                 }
                 if (prop.NameEquals("scriptUri"u8))

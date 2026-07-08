@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="status"> Trigger status. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerProperties(string kind, TriggerStatus status, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TriggerProperties(string kind, ImageTemplateTriggerStatus status, ImageBuilderProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Status = status;
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         internal string Kind { get; set; }
 
         /// <summary> Trigger status. </summary>
-        public TriggerStatus Status { get; }
+        public ImageTemplateTriggerStatus Status { get; }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ImageBuilderProvisioningState? ProvisioningState { get; }
     }
 }

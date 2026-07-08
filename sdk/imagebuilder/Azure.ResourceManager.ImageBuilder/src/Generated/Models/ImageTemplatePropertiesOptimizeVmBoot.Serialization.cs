@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             {
                 return null;
             }
-            VMBootOptimizationState? state = default;
+            ImageTemplateVMBootOptimizationState? state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    state = prop.Value.GetString().ToVMBootOptimizationState();
+                    state = prop.Value.GetString().ToImageTemplateVMBootOptimizationState();
                     continue;
                 }
                 if (options.Format != "W")

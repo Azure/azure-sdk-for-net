@@ -12,7 +12,7 @@ using Azure.ResourceManager.ImageBuilder;
 namespace Azure.ResourceManager.ImageBuilder.Models
 {
     /// <summary> Parameters for updating an image template. </summary>
-    public partial class ImageTemplatePatchProperties
+    internal partial class ImageTemplatePatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         }
 
         /// <summary> The distribution targets where the image output needs to go to. </summary>
-        public IList<ImageTemplateDistributor> Distribute { get; }
+        public IList<ImageTemplateDistributor> Distribute { get; } = new ChangeTrackingList<ImageTemplateDistributor>();
 
         /// <summary> Describes how virtual machine is set up to build images. </summary>
         public ImageTemplateVmProfile VmProfile { get; set; }
