@@ -423,12 +423,6 @@
 # ServiceLabel: %PostgreSQL Auth
 # ServiceOwners: @alxhghs @carlovi81 @mattboentoro @nasc17 @nehrao1 @rmendiza
 
-# PRLabel: %Provisioning
-/sdk/provisioning/    @ArcturusZhang @ArthurMa1978 @m-nash
-
-# AzureSdkOwners: @ArthurMa1978
-# ServiceLabel: %Provisioning
-
 # PRLabel: %Schema Registry
 /sdk/schemaregistry/    @axisc @hmlam @sjkwak
 
@@ -906,9 +900,6 @@
 # PRLabel: %Mgmt
 /**/Azure.ResourceManager*/                                        @ArcturusZhang @ArthurMa1978 @live1206
 
-# PRLabel: %Provisioning
-/**/Azure.Provisioning*/                                           @ArcturusZhang @ArthurMa1978 @m-nash
-
 # -----------------------------------------------------------------
 # IMPORTANT NOTE:
 #   This block acts as a catch-all, assigning Arthur triage for
@@ -1187,6 +1178,16 @@
 
 # PRLabel: %Workload Orchestration %Mgmt
 /sdk/workloadorchestration/Azure.ResourceManager.*/                @ArcturusZhang @ArthurMa1978
+
+##########################
+# Provisioning Libraries
+##########################
+
+# PRLabel: %Provisioning
+/**/Azure.Provisioning*/                                           @ArcturusZhang @ArthurMa1978 @m-nash
+
+# ServiceLabel: %Provisioning
+# AzureSdkOwners:                                                  @ArcturusZhang @ArthurMa1978
 
 # ######## Eng Sys ########
 /eng/                                                              @danieljurek @benbp @raych1
