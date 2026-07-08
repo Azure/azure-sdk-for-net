@@ -111,8 +111,10 @@ namespace Azure.Generator.Management.Tests.Providers
         public void Verify_MockingCrefFormatsGenericParameters()
         {
             var stringEnumerableType = new CSharpType(typeof(IEnumerable<>), typeof(string));
+            var dictionaryType = new CSharpType(typeof(IReadOnlyDictionary<,>), typeof(string), stringEnumerableType);
 
             Assert.That(stringEnumerableType.GetXmlDocTypeName(), Is.EqualTo("IEnumerable{string}"));
+            Assert.That(dictionaryType.GetXmlDocTypeName(), Is.EqualTo("IReadOnlyDictionary{string, IEnumerable{string}}"));
         }
 
         [TestCase]
