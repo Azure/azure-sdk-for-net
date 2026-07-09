@@ -373,7 +373,7 @@ namespace Azure.Generator.Management.Providers
             {
                 if (segment.IsConstant)
                 {
-                    formatBuilder.Append($"/{segment}");
+                    formatBuilder.Append($"/{EscapeFormatLiteral(segment.Value)}");
                 }
                 else
                 {
@@ -403,6 +403,9 @@ namespace Azure.Generator.Management.Providers
             };
 
             return new MethodProvider(signature, bodyStatements, this);
+
+            static string EscapeFormatLiteral(string value)
+                => value.Replace("{", "{{{{").Replace("}", "}}}}");
         }
 
         internal ResourceTypePattern ResourceType => _resourceMetadata.ResourceType;
