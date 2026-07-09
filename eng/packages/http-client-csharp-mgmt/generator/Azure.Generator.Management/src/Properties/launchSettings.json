@@ -1,5 +1,10 @@
 {
   "profiles": {
+    "Mgmt-Solutions": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Local/Mgmt-Solutions -g MgmtClientGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "Mgmt-TypeSpec": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Local/Mgmt-TypeSpec -g MgmtClientGenerator",
       "commandName": "Executable",
