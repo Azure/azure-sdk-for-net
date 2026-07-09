@@ -293,22 +293,6 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
-        public void Verify_TagMethodsUsePatchBody_WhenPatchBodyFollowsPathParameters()
-        {
-            var (client, models) = InputResourceData.ClientWithResourcePatchBodyAfterNonContextualPathParameters();
-            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
-            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
-            Assert.That(resourceClientProvider, Is.Not.Null);
-
-            var addTagMethod = resourceClientProvider.Methods.Single(m => m.Signature.Name == "AddTag");
-            var bodyStatements = addTagMethod.BodyStatements?.ToDisplayString();
-            Assert.That(bodyStatements, Is.Not.Null);
-            Assert.That(bodyStatements, Does.Contain("global::Samples.Models.ResponseTypePatch patch = new global::Samples.Models.ResponseTypePatch();"));
-            Assert.That(bodyStatements, Does.Not.Contain("global::System.String patch"));
-            Assert.That(bodyStatements, Does.Contain("this.Update(patch, cancellationToken: cancellationToken);"));
-        }
-
-        [TestCase]
         public void Verify_NoTagMethods_WhenUpdatePathHasQuerySuffix()
         {
             var (client, models) = InputResourceData.ClientWithResourcePatchBodyAfterNonContextualPathParameters(includeQueryInUpdatePath: true);

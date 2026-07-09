@@ -41,7 +41,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected static readonly ParameterProvider _valueParameter = new ParameterProvider("value", $"The value for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
 
         private readonly ParameterContextRegistry _parameterMappings;
-        private readonly ParameterContextRegistry _updateParameterMappings;
 
         // TODO: make a struct to group the input parameters
         protected BaseTagMethodProvider(
@@ -61,10 +60,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _getMethodProvider = getMethod;
             _operationContext = operationContext;
             _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(getMethod.Operation.Path));
-            var updatePath = new RequestPathPattern(updateMethodProvider.ServiceMethod.Operation.Path);
-            _updateParameterMappings = operationContext
-                .BuildParameterMapping(updatePath)
-                .WithContextualParameterOverrides(OperationContext.BuildResourceIdentifierParameterMappings(updatePath));
             _enclosingType = resource;
             _updateRestClient = updateRestClientInfo.RestClientProvider;
             _getRestClient = getRestClientInfo.RestClientProvider;
@@ -218,34 +213,13 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             ParameterProvider cancellationTokenParam)
         {
             var arguments = new List<ValueExpression>();
-            foreach (var parameter in _updateMethodProvider.Signature.Parameters)
+            if (_isLongRunningUpdateOperation)
             {
-                if (parameter.Type.Equals(typeof(WaitUntil)))
-                {
-                    arguments.Add(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed)));
-                }
-                else if (parameter.Type.Equals(typeof(CancellationToken)))
-                {
-                    arguments.Add(KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(cancellationTokenParam));
-                }
-                else if (parameter.Location == ParameterLocation.Body)
-                {
-                    arguments.Add(dataVar);
-                }
-                else if (_updateParameterMappings.TryPopulateContextualArgument(This.As<ArmResource>().Id(), parameter, out var contextualArgument))
-                {
-                    arguments.Add(contextualArgument);
-                }
-                else if (parameter.DefaultValue is not null)
-                {
-                    continue;
-                }
-                else
-                {
-                    arguments.Add(Default.CastTo(parameter.Type));
-                }
+                arguments.Add(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed)));
             }
 
+            arguments.Add(dataVar);
+            arguments.Add(KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(cancellationTokenParam));
             return arguments;
         }
 
@@ -259,7 +233,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             // Get current resource data
             statements.Add(GetResourceDataStatements("current", _resource, _isAsync, cancellationTokenParam, out var resourceDataVar));
 
-            var updateParam = _updateMethodProvider.Signature.Parameters.First(p => p.Location == ParameterLocation.Body);
+            var updateParam = _updateMethodProvider.Signature.Parameters.Where(p => !p.Type.Equals(typeof(WaitUntil))).First();
 
             VariableExpression resultVar;
             if (_isPatch) // patch case
