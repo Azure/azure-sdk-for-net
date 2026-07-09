@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 GitHubOwnerListResult result = GitHubOwnerListResult.FromResponse(response);
-                yield return Page<GitHubOwnerData>.FromValues((IReadOnlyList<GitHubOwnerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<GitHubOwnerData>.FromValues((IReadOnlyList<GitHubOwnerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

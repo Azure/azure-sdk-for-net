@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Billing
                     yield break;
                 }
                 BillingSubscriptionAliasListResult result = BillingSubscriptionAliasListResult.FromResponse(response);
-                yield return Page<BillingSubscriptionAliasData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BillingSubscriptionAliasData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

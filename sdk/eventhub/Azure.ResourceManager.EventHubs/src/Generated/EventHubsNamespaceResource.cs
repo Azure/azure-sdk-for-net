@@ -198,124 +198,6 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// Creates or updates a namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EHNamespaces_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="EventHubsNamespaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Parameters for updating a namespace resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<EventHubsNamespaceResource>> UpdateAsync(WaitUntil waitUntil, EventHubsNamespaceData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("EventHubsNamespaceResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNamespaceData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                EventHubsArmOperation<EventHubsNamespaceResource> operation = new EventHubsArmOperation<EventHubsNamespaceResource>(
-                    new EventHubsNamespaceResourceOperationSource(Client),
-                    _namespacesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates or updates a namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EHNamespaces_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="EventHubsNamespaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Parameters for updating a namespace resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<EventHubsNamespaceResource> Update(WaitUntil waitUntil, EventHubsNamespaceData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("EventHubsNamespaceResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNamespaceData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                EventHubsArmOperation<EventHubsNamespaceResource> operation = new EventHubsArmOperation<EventHubsNamespaceResource>(
-                    new EventHubsNamespaceResourceOperationSource(Client),
-                    _namespacesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Deletes an existing namespace. This operation also removes all associated resources under the namespace.
         /// <list type="bullet">
         /// <item>
@@ -844,7 +726,7 @@ namespace Azure.ResourceManager.EventHubs
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<EventHubsNamespaceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<EventHubsNamespaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -892,7 +774,7 @@ namespace Azure.ResourceManager.EventHubs
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<EventHubsNamespaceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    Response<EventHubsNamespaceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -935,7 +817,7 @@ namespace Azure.ResourceManager.EventHubs
                     EventHubsNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     EventHubsNamespaceData patch = new EventHubsNamespaceData(current.Location);
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<EventHubsNamespaceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<EventHubsNamespaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -978,7 +860,7 @@ namespace Azure.ResourceManager.EventHubs
                     EventHubsNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     EventHubsNamespaceData patch = new EventHubsNamespaceData(current.Location);
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<EventHubsNamespaceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    Response<EventHubsNamespaceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1024,7 +906,7 @@ namespace Azure.ResourceManager.EventHubs
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<EventHubsNamespaceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<EventHubsNamespaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1070,7 +952,7 @@ namespace Azure.ResourceManager.EventHubs
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<EventHubsNamespaceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    Response<EventHubsNamespaceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ListVpnServerConfigurationsResult result = ListVpnServerConfigurationsResult.FromResponse(response);
-                yield return Page<VpnServerConfigurationData>.FromValues((IReadOnlyList<VpnServerConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VpnServerConfigurationData>.FromValues((IReadOnlyList<VpnServerConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.PolicyInsights
                     yield break;
                 }
                 AttestationListResult result = AttestationListResult.FromResponse(response);
-                yield return Page<PolicyAttestationData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PolicyAttestationData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

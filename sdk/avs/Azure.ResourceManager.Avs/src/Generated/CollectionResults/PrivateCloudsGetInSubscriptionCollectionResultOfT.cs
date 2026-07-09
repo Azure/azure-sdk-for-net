@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 PrivateCloudList result = PrivateCloudList.FromResponse(response);
-                yield return Page<AvsPrivateCloudData>.FromValues((IReadOnlyList<AvsPrivateCloudData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AvsPrivateCloudData>.FromValues((IReadOnlyList<AvsPrivateCloudData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

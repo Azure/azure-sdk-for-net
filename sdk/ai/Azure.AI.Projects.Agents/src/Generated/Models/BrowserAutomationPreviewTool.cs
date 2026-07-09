@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+    [Experimental("AAIP001")]
     public partial class BrowserAutomationPreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewTool"/>. </summary>

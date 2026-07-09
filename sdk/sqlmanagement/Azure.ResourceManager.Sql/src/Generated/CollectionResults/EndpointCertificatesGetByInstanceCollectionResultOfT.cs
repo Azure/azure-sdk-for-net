@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 EndpointCertificateListResult result = EndpointCertificateListResult.FromResponse(response);
-                yield return Page<EndpointCertificateData>.FromValues((IReadOnlyList<EndpointCertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EndpointCertificateData>.FromValues((IReadOnlyList<EndpointCertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Projects.Evaluation;
 
 [CodeGenType("AgentTaxonomyInput")] public partial class AgentTaxonomyInput { }
@@ -68,10 +70,12 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("PagedEvaluationTaxonomy")] internal partial class PagedEvaluationTaxonomy { }
 [CodeGenType("PagedEvaluatorVersion")] internal partial class PagedEvaluatorVersion { }
 [CodeGenType("PagedRedTeam")] internal partial class PagedRedTeam { }
+/// <summary> Represents an insight produced by a project insight run. </summary>
+[CodeGenType("ProjectInsight")] public partial class ProjectInsight { }
 [CodeGenType("PagedSchedule")] internal partial class PagedSchedule { }
 [CodeGenType("PagedScheduleRun")] internal partial class PagedScheduleRun { }
 /// <summary> Represents an insight produced by a project insight run. </summary>
-[CodeGenType("ProjectInsight")] public partial class ProjectInsight { }
+[CodeGenType("ProjectsInsight")] public partial class ProjectsInsight { }
 [CodeGenType("RecurrenceSchedule")] public abstract partial class RecurrenceSchedule { }
 [CodeGenType("RecurrenceTrigger")] public partial class RecurrenceTrigger { }
 [CodeGenType("RecurrenceType")] internal readonly partial struct RecurrenceType { }
@@ -94,5 +98,17 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("UnknownInsightSample")] internal partial class UnknownInsightSample { }
 [CodeGenType("UnknownRecurrenceSchedule")] internal partial class UnknownRecurrenceSchedule { }
 [CodeGenType("UnknownScheduleTask")] internal partial class UnknownScheduleTask { }
-[CodeGenType("UnknownRedTeamTargetConfig")] internal partial class UnknownTargetConfig { }
+[CodeGenType("UnknownRedTeamTargetConfig")][Experimental("AAIP001")] internal partial class UnknownTargetConfig { }
 [CodeGenType("UnknownTrigger")] internal partial class UnknownTrigger { }
+
+// Mark experimental classes if they cannot be marked automatically.
+[CodeGenType("ProjectEvaluatorsGetLatestVersionsCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetLatestVersionsCollectionResult { }
+[CodeGenType("ProjectEvaluatorsGetLatestVersionsAsyncCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetLatestVersionsAsyncCollectionResult { }
+[CodeGenType("ProjectInsightsGetAllAsyncCollectionResult")][Experimental("AAIP001")] internal partial class ProjectInsightsGetAllAsyncCollectionResult { }
+[CodeGenType("ProjectEvaluatorsGetVersionsAsyncCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetVersionsAsyncCollectionResult { }
+[CodeGenType("ProjectEvaluatorsGetVersionsCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetVersionsCollectionResult { }
+[CodeGenType("ProjectInsightsGetAllCollectionResult")][Experimental("AAIP001")] internal partial class ProjectInsightsGetAllCollectionResult { }
+[CodeGenType("EvaluationTaxonomiesGetAllAsyncCollectionResult")][Experimental("AAIP001")] internal partial class EvaluationTaxonomiesGetAllAsyncCollectionResult { }
+[CodeGenType("EvaluationTaxonomiesGetAllCollectionResult")][Experimental("AAIP001")] internal partial class EvaluationTaxonomiesGetAllCollectionResult { }
+[CodeGenType("RedTeamsGetAllAsyncCollectionResult")][Experimental("AAIP001")] internal partial class RedTeamsGetAllAsyncCollectionResult { }
+[CodeGenType("RedTeamsGetAllCollectionResult")][Experimental("AAIP001")] internal partial class RedTeamsGetAllCollectionResult { }

@@ -6,9 +6,11 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
+    [Experimental("AAIP001")]
     internal partial class ProjectEvaluatorsGetVersionsCollectionResultOfT : CollectionResult<EvaluatorVersion>
     {
         private readonly ProjectEvaluators _client;

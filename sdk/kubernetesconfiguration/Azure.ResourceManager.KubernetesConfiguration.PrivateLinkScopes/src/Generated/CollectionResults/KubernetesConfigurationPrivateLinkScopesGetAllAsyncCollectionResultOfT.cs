@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                     yield break;
                 }
                 KubernetesConfigurationPrivateLinkScopeListResult result = KubernetesConfigurationPrivateLinkScopeListResult.FromResponse(response);
-                yield return Page<KubernetesConfigurationPrivateLinkScopeData>.FromValues((IReadOnlyList<KubernetesConfigurationPrivateLinkScopeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<KubernetesConfigurationPrivateLinkScopeData>.FromValues((IReadOnlyList<KubernetesConfigurationPrivateLinkScopeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

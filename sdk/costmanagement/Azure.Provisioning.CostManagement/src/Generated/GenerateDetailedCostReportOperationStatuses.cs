@@ -28,7 +28,7 @@ namespace Azure.Provisioning.CostManagement
         /// <summary> Creates a new GenerateDetailedCostReportOperationStatuses. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public GenerateDetailedCostReportOperationStatuses(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CostManagement/operationStatus", resourceVersion ?? "2025-03-01")
+        internal GenerateDetailedCostReportOperationStatuses(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CostManagement/operationStatus", resourceVersion ?? "2025-03-01")
         {
         }
 
@@ -67,7 +67,7 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal DownloadURL Properties
         {
             get
@@ -75,14 +75,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _properties;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
-            }
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         internal ReportOperationStatus Status
         {
             get
@@ -90,14 +85,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _status;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _status, value);
-            }
         }
 
-        /// <summary> Gets or sets the StartTime. </summary>
+        /// <summary> Gets the StartTime. </summary>
         public BicepValue<string> StartTime
         {
             get
@@ -105,14 +95,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _startTime;
             }
-            set
-            {
-                Initialize();
-                _startTime.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the EndTime. </summary>
+        /// <summary> Gets the EndTime. </summary>
         public BicepValue<string> EndTime
         {
             get
@@ -120,25 +105,15 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _endTime;
             }
-            set
-            {
-                Initialize();
-                _endTime.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Error. </summary>
+        /// <summary> Gets the Error. </summary>
         public ExportRunErrorDetails Error
         {
             get
             {
                 Initialize();
                 return _error;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _error, value);
             }
         }
 
@@ -147,62 +122,34 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new DownloadURL();
-                }
                 return Properties.ExpiryOn;
             }
         }
 
-        /// <summary> Gets or sets the ValidTill. </summary>
+        /// <summary> Gets the ValidTill. </summary>
         public BicepValue<DateTimeOffset> ValidTill
         {
             get
             {
-                return Properties is null ? default : Properties.ValidTill;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DownloadURL();
-                }
-                Properties.ValidTill = value;
+                return Properties.ValidTill;
             }
         }
 
-        /// <summary> Gets or sets the DownloadUri. </summary>
+        /// <summary> Gets the DownloadUri. </summary>
         public BicepValue<Uri> DownloadUri
         {
             get
             {
-                return Properties is null ? default : Properties.DownloadUri;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DownloadURL();
-                }
-                Properties.DownloadUri = value;
+                return Properties.DownloadUri;
             }
         }
 
-        /// <summary> Gets or sets the StatusValue. </summary>
+        /// <summary> Gets the StatusValue. </summary>
         public BicepValue<ReportOperationStatusType> StatusValue
         {
             get
             {
-                return Status is null ? default : Status.StatusValue;
-            }
-            set
-            {
-                if (Status is null)
-                {
-                    Status = new ReportOperationStatus();
-                }
-                Status.StatusValue = value;
+                return Status.StatusValue;
             }
         }
 
