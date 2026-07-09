@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Specs.Azure.ClientGenerator.Core.Usage.Models;
-using Specs.Azure.ClientGenerator.Core.Usage.Models.Nested;
 using Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation;
 
 namespace Specs.Azure.ClientGenerator.Core.Usage
@@ -20,11 +18,5 @@ namespace Specs.Azure.ClientGenerator.Core.Usage
         public static RoundTripModel RoundTripModel(ResultModel result = default) => throw null;
 
         public static ResultModel ResultModel(string name = default) => throw null;
-
-        public static NamespaceModel NamespaceModel(string name = default) => throw null;
-
-        public static NestedNamespaceModel NestedNamespaceModel(string value = default) => throw null;
-
-        public static OrphanModel OrphanModel(string modelName = default, string description = default) => throw null;
     }
 }
