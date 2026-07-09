@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2026-07-10)
 
 ### Features Added
 
@@ -10,8 +10,6 @@
 ### Breaking Changes
 
 - Removed the generated `CommunicationServiceKeys` type and `CommunicationService.GetKeys()` helper.
-
-### Bugs Fixed
 
 ### Other Changes
 
