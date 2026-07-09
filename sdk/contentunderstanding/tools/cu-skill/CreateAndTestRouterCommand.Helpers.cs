@@ -142,7 +142,10 @@ internal static partial class CreateAndTestRouterCommand
                 missing.Add(alias);
                 continue;
             }
-            resolved[alias] = matches[^1];
+            // NOTE: Avoid the `matches[^1]` index-from-end operator here — this file is
+            // <Compile Link>ed into the package test project which multi-targets net462,
+            // where `System.Index` is not available.
+            resolved[alias] = matches[matches.Count - 1];
         }
 
         if (missing.Count > 0)
