@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,27 +23,51 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="VpnClientRevokedCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="thumbprint"> The revoked VPN client certificate thumbprint. </param>
-        /// <param name="provisioningState"> The provisioning state of the VPN client revoked certificate resource. </param>
-        internal VpnClientRevokedCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string thumbprint, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the vpn client revoked certificate. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VpnClientRevokedCertificate(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VpnClientRevokedCertificatePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            Thumbprint = thumbprint;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the vpn client revoked certificate. </summary>
+        [WirePath("properties")]
+        internal VpnClientRevokedCertificatePropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The revoked VPN client certificate thumbprint. </summary>
         [WirePath("properties.thumbprint")]
-        public string Thumbprint { get; set; }
+        public string Thumbprint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Thumbprint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnClientRevokedCertificatePropertiesFormat();
+                }
+                Properties.Thumbprint = value;
+            }
+        }
+
         /// <summary> The provisioning state of the VPN client revoked certificate resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

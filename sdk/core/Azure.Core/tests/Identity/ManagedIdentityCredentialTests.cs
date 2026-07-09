@@ -243,6 +243,54 @@ namespace Azure.Core.Tests.Identity
             ApplicationBase.ResetStateForTest();
         }
 
+        // Regression test for https://github.com/Azure/azure-sdk-for-net/issues/59961
+        // When the MSAL-based managed identity source/capability detection fails (for example, because the
+        // IMDS endpoint is unreachable on a developer machine running in Visual Studio), a chained
+        // ManagedIdentityCredential must surface a CredentialUnavailableException so that DefaultAzureCredential
+        // continues to the next credential in the chain instead of aborting with an AuthenticationFailedException.
+        [NonParallelizable]
+        [Test]
+        public void ChainedManagedIdentitySourceDetectionFailureThrowsCredentialUnavailable()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var probeFailure = new MsalClientException(
+                "managed_identity_request_failed",
+                "All Managed Identity sources are unavailable. The Azure Instance Metadata Service (IMDS) that runs on VMs was not detected: IMDSv2: IMDSv2 probe failed. Exception: Retry failed after 6 tries.");
+
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = new MockTransport(_ => CreateSuccessResponse(ExpectedToken)), IsChainedCredential = true },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock => mock.GetManagedIdentityCapabilitiesFactory = (_, _) => throw probeFailure);
+
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            Assert.AreSame(probeFailure, ex.InnerException);
+        }
+
+        // Companion to the regression test above: a standalone (non-chained) ManagedIdentityCredential keeps
+        // surfacing AuthenticationFailedException when source/capability detection fails, preserving the
+        // documented single-credential behavior (only chained credentials downgrade to CredentialUnavailableException).
+        [NonParallelizable]
+        [Test]
+        public void StandaloneManagedIdentitySourceDetectionFailureThrowsAuthenticationFailed()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var probeFailure = new MsalClientException(
+                "managed_identity_request_failed",
+                "All Managed Identity sources are unavailable. The Azure Instance Metadata Service (IMDS) that runs on VMs was not detected: IMDSv2: IMDSv2 probe failed. Exception: Retry failed after 6 tries.");
+
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = new MockTransport(_ => CreateSuccessResponse(ExpectedToken)), IsChainedCredential = false },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock => mock.GetManagedIdentityCapabilitiesFactory = (_, _) => throw probeFailure);
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            Assert.IsNotInstanceOf<CredentialUnavailableException>(ex);
+        }
+
         [NonParallelizable]
         [Test]
         public async Task VerifyImdsRequestWithClientIdMock()

@@ -25,29 +25,57 @@ For example: `Azure.Storage.Blobs.txt`, `Azure.Identity.txt`
 # Comments start with #
 # Blank lines are ignored
 
-# NoWarn entries — codes allowed in <NoWarn> in the .csproj
+# Whole-assembly NoWarn entries — codes injected into $(NoWarn) at build time
 nowarn:AZC0035
 nowarn:CS1591
 
-# (Future) Inline suppression entries — codes allowed in #pragma / [SuppressMessage]
-# AZC0002:M:Azure.Storage.Blobs.AppendBlobClient.AppendBlock
+# Per-symbol entries — handled by AllowListDiagnosticSuppressor in Azure.SdkAnalyzers
+nowarn:AZC0034 T:Azure.Foo.Bar                       # all sites inside type Foo.Bar
+nowarn:AZC0007 M:Azure.Foo.Bar.#ctor(System.String)  # one specific member
+nowarn:CS0618 N:Azure.Foo.Models                     # everything in namespace + descendants
 ```
 
 ### `nowarn:CODE`
 
-Each `nowarn:` line approves the use of `CODE` for the project **and applies it
-automatically** — the build system injects approved codes into `$(NoWarn)` before
-compilation, so projects should **not** keep an equivalent entry in the csproj's
-`<NoWarn>` property. The allow-list file is the single source of truth: every
-listed code is both reviewed and active.
+A bare `nowarn:` line (no scope) approves the use of `CODE` for the entire project
+**and applies it automatically** — the build system injects approved codes into
+`$(NoWarn)` before compilation, so projects should **not** keep an equivalent entry
+in the csproj's `<NoWarn>` property. The allow-list file is the single source of
+truth: every listed code is both reviewed and active.
 
 If a code appears in the csproj's `<NoWarn>` without being on this list (and not
 in the central allow-list), the build fails with `AZSDK0002`.
 
-### `CODE:SYMBOL` (future)
+### `nowarn:CODE Target` — per-symbol suppression
 
-These entries will be consumed by a Roslyn analyzer to approve inline suppressions
-(`#pragma warning disable` and `[SuppressMessage]`). This format is not yet enforced.
+A scoped entry is written as `nowarn:CODE Target` where `CODE` and `Target` are
+separated by **a single space character** (not a tab or any other whitespace).
+The `Target` is a Roslyn DocumentationCommentId; the kind prefix tells the
+analyzer what scope to apply:
+
+| Prefix | Scope |
+|--------|-------|
+| `T:`   | The named type and everything declared inside it (including nested types) |
+| `M:`   | The named method or constructor |
+| `N:`   | The named namespace and every type / member declared inside it |
+| `P:`   | The named property |
+| `F:`   | The named field |
+| `E:`   | The named event |
+
+A leading `~` (e.g., `~T:Foo`) is tolerated for parity with the
+`[SuppressMessage(Target = "~T:Foo")]` attribute form but is not required.
+
+**Why use scoped entries?** A bare `nowarn:AZC0034` silences the diagnostic for
+the entire assembly forever — including types that don't exist yet. A scoped
+entry keeps the analyzer live for every site except the specific symbol the
+SDK team has reviewed and approved.
+
+**Limitation:** scoped suppression only works for diagnostics whose descriptor
+declares `DiagnosticSeverity.Warning` (or lower). Diagnostics that ship as
+`DiagnosticSeverity.Error` (e.g., `AZC0034` in `azure-sdk-tools`) are skipped
+by Roslyn's `DiagnosticSuppressor` pipeline — for those, the underlying
+analyzer needs to ship the descriptor as Warning instead, with `/warnaserror+`
+elevating it back to Error globally.
 
 ## How It Works
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewayFirewallRateLimitDuration : IEquatable<ApplicationGatewayFirewallRateLimitDuration>
     {
         private readonly string _value;
+        /// <summary> OneMin. </summary>
+        private const string OneMinValue = "OneMin";
+        /// <summary> FiveMins. </summary>
+        private const string FiveMinsValue = "FiveMins";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRateLimitDuration"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewayFirewallRateLimitDuration(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OneMinValue = "OneMin";
-        private const string FiveMinsValue = "FiveMins";
+            _value = value;
+        }
 
         /// <summary> OneMin. </summary>
         public static ApplicationGatewayFirewallRateLimitDuration OneMin { get; } = new ApplicationGatewayFirewallRateLimitDuration(OneMinValue);
+
         /// <summary> FiveMins. </summary>
         public static ApplicationGatewayFirewallRateLimitDuration FiveMins { get; } = new ApplicationGatewayFirewallRateLimitDuration(FiveMinsValue);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayFirewallRateLimitDuration"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewayFirewallRateLimitDuration left, ApplicationGatewayFirewallRateLimitDuration right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayFirewallRateLimitDuration"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewayFirewallRateLimitDuration left, ApplicationGatewayFirewallRateLimitDuration right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayFirewallRateLimitDuration"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayFirewallRateLimitDuration"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewayFirewallRateLimitDuration(string value) => new ApplicationGatewayFirewallRateLimitDuration(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayFirewallRateLimitDuration"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewayFirewallRateLimitDuration?(string value) => value == null ? null : new ApplicationGatewayFirewallRateLimitDuration(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewayFirewallRateLimitDuration other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewayFirewallRateLimitDuration other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

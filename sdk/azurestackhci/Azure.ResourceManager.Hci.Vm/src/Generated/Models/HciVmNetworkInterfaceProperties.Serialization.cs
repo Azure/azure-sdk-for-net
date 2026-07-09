@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings, options);
             }
-            if (Optional.IsDefined(CreateFromLocal))
+            if (Optional.IsDefined(IsCreatingFromLocal))
             {
                 writer.WritePropertyName("createFromLocal"u8);
-                writer.WriteBooleanValue(CreateFromLocal.Value);
+                writer.WriteBooleanValue(IsCreatingFromLocal.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             IList<HciVmIPConfiguration> ipConfigurations = default;
             string macAddress = default;
             HciVmInterfaceDnsSettings dnsSettings = default;
-            bool? createFromLocal = default;
+            bool? isCreatingFromLocal = default;
             HciVmProvisioningState? provisioningState = default;
             HciVmNetworkInterfaceStatus status = default;
             NetworkSecurityGroupArmReference networkSecurityGroup = default;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    createFromLocal = prop.Value.GetBoolean();
+                    isCreatingFromLocal = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 ipConfigurations ?? new ChangeTrackingList<HciVmIPConfiguration>(),
                 macAddress,
                 dnsSettings,
-                createFromLocal,
+                isCreatingFromLocal,
                 provisioningState,
                 status,
                 networkSecurityGroup,

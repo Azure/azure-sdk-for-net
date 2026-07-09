@@ -56,6 +56,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _requests = DefineModelProperty<ContainerResourceRequestsContent>(nameof(Requests), new string[] { "requests" }, isRequired: true);
             _limits = DefineModelProperty<ContainerResourceLimits>(nameof(Limits), new string[] { "limits" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerResourceRequirements that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

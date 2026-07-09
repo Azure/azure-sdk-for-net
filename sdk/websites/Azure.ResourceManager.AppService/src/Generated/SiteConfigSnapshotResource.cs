@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a SiteConfigSnapshot along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteConfigSnapshotResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSiteConfigSnapshotResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteConfigResource"/> using the GetSiteConfigSnapshot method.
+    /// A class representing a SiteConfigSnapshot along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteConfigSnapshotResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteConfigResource"/> using the GetSiteConfigSnapshots method.
     /// </summary>
     public partial class SiteConfigSnapshotResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SiteConfigSnapshotResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="snapshotId"> The snapshotId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string snapshotId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _siteConfigSnapshotWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _siteConfigSnapshotWebAppsRestClient;
+        private readonly ClientDiagnostics _siteConfigResourceOperationGroupClientDiagnostics;
+        private readonly SiteConfigResourceOperationGroup _siteConfigResourceOperationGroupRestClient;
         private readonly SiteConfigData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/config/snapshots";
 
-        /// <summary> Initializes a new instance of the <see cref="SiteConfigSnapshotResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteConfigSnapshotResource for mocking. </summary>
         protected SiteConfigSnapshotResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteConfigSnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigSnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteConfigSnapshotResource(ArmClient client, SiteConfigData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteConfigSnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigSnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteConfigSnapshotResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteConfigSnapshotWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string siteConfigSnapshotWebAppsApiVersion);
-            _siteConfigSnapshotWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteConfigSnapshotWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string siteConfigSnapshotApiVersion);
+            _siteConfigResourceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _siteConfigResourceOperationGroupRestClient = new SiteConfigResourceOperationGroup(_siteConfigResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, siteConfigSnapshotApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SiteConfigData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="snapshotId"> The snapshotId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string snapshotId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetConfigurationSnapshot</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteConfigResourceOperationGroup_GetConfigurationSnapshot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteConfigSnapshotResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteConfigSnapshotResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SiteConfigSnapshotResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotResource.Get");
+            using DiagnosticScope scope = _siteConfigResourceOperationGroupClientDiagnostics.CreateScope("SiteConfigSnapshotResource.Get");
             scope.Start();
             try
             {
-                var response = await _siteConfigSnapshotWebAppsRestClient.GetConfigurationSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateGetConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SiteConfigData> response = Response.FromValue(SiteConfigData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteConfigSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetConfigurationSnapshot</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteConfigResourceOperationGroup_GetConfigurationSnapshot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteConfigSnapshotResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteConfigSnapshotResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteConfigSnapshotResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotResource.Get");
+            using DiagnosticScope scope = _siteConfigResourceOperationGroupClientDiagnostics.CreateScope("SiteConfigSnapshotResource.Get");
             scope.Start();
             try
             {
-                var response = _siteConfigSnapshotWebAppsRestClient.GetConfigurationSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateGetConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SiteConfigData> response = Response.FromValue(SiteConfigData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteConfigSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,31 +191,36 @@ namespace Azure.ResourceManager.AppService
         /// Description for Reverts the configuration of an app to a previous snapshot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}/recover</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}/recover. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_RecoverSiteConfigurationSnapshot</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteConfigResourceOperationGroup_RecoverSiteConfigurationSnapshot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteConfigSnapshotResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteConfigSnapshotResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RecoverSiteConfigurationSnapshotAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotResource.RecoverSiteConfigurationSnapshot");
+            using DiagnosticScope scope = _siteConfigResourceOperationGroupClientDiagnostics.CreateScope("SiteConfigSnapshotResource.RecoverSiteConfigurationSnapshot");
             scope.Start();
             try
             {
-                var response = await _siteConfigSnapshotWebAppsRestClient.RecoverSiteConfigurationSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateRecoverSiteConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -210,31 +234,36 @@ namespace Azure.ResourceManager.AppService
         /// Description for Reverts the configuration of an app to a previous snapshot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}/recover</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}/recover. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_RecoverSiteConfigurationSnapshot</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteConfigResourceOperationGroup_RecoverSiteConfigurationSnapshot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteConfigSnapshotResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteConfigSnapshotResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response RecoverSiteConfigurationSnapshot(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshotResource.RecoverSiteConfigurationSnapshot");
+            using DiagnosticScope scope = _siteConfigResourceOperationGroupClientDiagnostics.CreateScope("SiteConfigSnapshotResource.RecoverSiteConfigurationSnapshot");
             scope.Start();
             try
             {
-                var response = _siteConfigSnapshotWebAppsRestClient.RecoverSiteConfigurationSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateRecoverSiteConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)

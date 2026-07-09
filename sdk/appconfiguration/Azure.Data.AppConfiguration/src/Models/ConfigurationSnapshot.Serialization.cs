@@ -23,6 +23,7 @@ namespace Azure.Data.AppConfiguration
             long? size = default;
             long? itemsCount = default;
             IDictionary<string, string> tags = default;
+            string description = default;
             string etag = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -131,6 +132,11 @@ namespace Azure.Data.AppConfiguration
                     etag = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("description"))
+                {
+                    description = property.Value.ValueKind == JsonValueKind.Null ? null : property.Value.GetString();
+                    continue;
+                }
             }
             return new ConfigurationSnapshot(
                 name,
@@ -143,6 +149,7 @@ namespace Azure.Data.AppConfiguration
                 size,
                 itemsCount,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                description,
                 new ETag(etag));
         }
 
@@ -222,6 +229,11 @@ namespace Azure.Data.AppConfiguration
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteObjectValue(ETag, options);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

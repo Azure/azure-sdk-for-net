@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryPipelineCollection : ArmCollection, IEnumerable<DataFactoryPipelineResource>, IAsyncEnumerable<DataFactoryPipelineResource>
     {
-        private readonly ClientDiagnostics _dataFactoryPipelinePipelinesClientDiagnostics;
-        private readonly PipelinesRestOperations _dataFactoryPipelinePipelinesRestClient;
+        private readonly ClientDiagnostics _pipelinesClientDiagnostics;
+        private readonly Pipelines _pipelinesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataFactoryPipelineCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataFactoryPipelineCollection for mocking. </summary>
         protected DataFactoryPipelineCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataFactoryPipelineCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataFactoryPipelineCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataFactoryPipelinePipelinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryPipelineResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataFactoryPipelineResource.ResourceType, out string dataFactoryPipelinePipelinesApiVersion);
-            _dataFactoryPipelinePipelinesRestClient = new PipelinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryPipelinePipelinesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DataFactoryPipelineResource.ResourceType, out string dataFactoryPipelineApiVersion);
+            _pipelinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryPipelineResource.ResourceType.Namespace, Diagnostics);
+            _pipelinesRestClient = new Pipelines(_pipelinesClientDiagnostics, Pipeline, Endpoint, dataFactoryPipelineApiVersion ?? "2018-06-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DataFactoryResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataFactoryResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataFactoryResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a pipeline.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pipelines_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="data"> Pipeline resource definition. </param>
         /// <param name="ifMatch"> ETag of the pipeline entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataFactoryPipelineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string pipelineName, DataFactoryPipelineData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DataFactoryPipelineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string pipelineName, DataFactoryPipelineData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _pipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataFactoryPipelinePipelinesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _dataFactoryPipelinePipelinesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataFactoryArmOperation<DataFactoryPipelineResource>(Response.FromValue(new DataFactoryPipelineResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelinesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, pipelineName, DataFactoryPipelineData.ToRequestContent(data), ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataFactoryPipelineData> response = Response.FromValue(DataFactoryPipelineData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataFactoryArmOperation<DataFactoryPipelineResource> operation = new DataFactoryArmOperation<DataFactoryPipelineResource>(Response.FromValue(new DataFactoryPipelineResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.DataFactory
         /// Creates or updates a pipeline.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pipelines_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,23 +132,31 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="data"> Pipeline resource definition. </param>
         /// <param name="ifMatch"> ETag of the pipeline entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DataFactoryPipelineResource> CreateOrUpdate(WaitUntil waitUntil, string pipelineName, DataFactoryPipelineData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DataFactoryPipelineResource> CreateOrUpdate(WaitUntil waitUntil, string pipelineName, DataFactoryPipelineData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _pipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataFactoryPipelinePipelinesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, data, ifMatch, cancellationToken);
-                var uri = _dataFactoryPipelinePipelinesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataFactoryArmOperation<DataFactoryPipelineResource>(Response.FromValue(new DataFactoryPipelineResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelinesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, pipelineName, DataFactoryPipelineData.ToRequestContent(data), ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataFactoryPipelineData> response = Response.FromValue(DataFactoryPipelineData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataFactoryArmOperation<DataFactoryPipelineResource> operation = new DataFactoryArmOperation<DataFactoryPipelineResource>(Response.FromValue(new DataFactoryPipelineResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -159,39 +170,43 @@ namespace Azure.ResourceManager.DataFactory
         /// Gets a pipeline.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pipelines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
         /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
-        public virtual async Task<Response<DataFactoryPipelineResource>> GetAsync(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DataFactoryPipelineResource>> GetAsync(string pipelineName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
 
-            using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.Get");
+            using DiagnosticScope scope = _pipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataFactoryPipelinePipelinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, pipelineName, ifNoneMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataFactoryPipelineData> response = Response.FromValue(DataFactoryPipelineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataFactoryPipelineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,39 +220,43 @@ namespace Azure.ResourceManager.DataFactory
         /// Gets a pipeline.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pipelines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
         /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
-        public virtual Response<DataFactoryPipelineResource> Get(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DataFactoryPipelineResource> Get(string pipelineName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
 
-            using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.Get");
+            using DiagnosticScope scope = _pipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataFactoryPipelinePipelinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, ifNoneMatch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, pipelineName, ifNoneMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataFactoryPipelineData> response = Response.FromValue(DataFactoryPipelineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataFactoryPipelineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -251,50 +270,50 @@ namespace Azure.ResourceManager.DataFactory
         /// Lists pipelines.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pipelines_ListByFactory</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineResources_ListByFactory. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryPipelineResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryPipelineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryPipelineResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryPipelinePipelinesRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryPipelinePipelinesRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryPipelineResource(Client, DataFactoryPipelineData.DeserializeDataFactoryPipelineData(e)), _dataFactoryPipelinePipelinesClientDiagnostics, Pipeline, "DataFactoryPipelineCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataFactoryPipelineData, DataFactoryPipelineResource>(new PipelinesGetByFactoryAsyncCollectionResultOfT(
+                _pipelinesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataFactoryPipelineCollection.GetAll"), data => new DataFactoryPipelineResource(Client, data));
         }
 
         /// <summary>
         /// Lists pipelines.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pipelines_ListByFactory</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineResources_ListByFactory. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,46 +321,68 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> A collection of <see cref="DataFactoryPipelineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryPipelineResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryPipelinePipelinesRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryPipelinePipelinesRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryPipelineResource(Client, DataFactoryPipelineData.DeserializeDataFactoryPipelineData(e)), _dataFactoryPipelinePipelinesClientDiagnostics, Pipeline, "DataFactoryPipelineCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataFactoryPipelineData, DataFactoryPipelineResource>(new PipelinesGetByFactoryCollectionResultOfT(
+                _pipelinesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataFactoryPipelineCollection.GetAll"), data => new DataFactoryPipelineResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pipelines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
         /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string pipelineName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
 
-            using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.Exists");
+            using DiagnosticScope scope = _pipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataFactoryPipelinePipelinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, pipelineName, ifNoneMatch, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataFactoryPipelineData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataFactoryPipelineData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataFactoryPipelineData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -355,37 +396,51 @@ namespace Azure.ResourceManager.DataFactory
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pipelines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
         /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
-        public virtual Response<bool> Exists(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string pipelineName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
 
-            using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.Exists");
+            using DiagnosticScope scope = _pipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataFactoryPipelinePipelinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, ifNoneMatch, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, pipelineName, ifNoneMatch, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataFactoryPipelineData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataFactoryPipelineData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataFactoryPipelineData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -399,39 +454,55 @@ namespace Azure.ResourceManager.DataFactory
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pipelines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
         /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
-        public virtual async Task<NullableResponse<DataFactoryPipelineResource>> GetIfExistsAsync(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DataFactoryPipelineResource>> GetIfExistsAsync(string pipelineName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
 
-            using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.GetIfExists");
+            using DiagnosticScope scope = _pipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataFactoryPipelinePipelinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, pipelineName, ifNoneMatch, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataFactoryPipelineData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataFactoryPipelineData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataFactoryPipelineData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataFactoryPipelineResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataFactoryPipelineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -445,39 +516,55 @@ namespace Azure.ResourceManager.DataFactory
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pipelines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryPipelineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
         /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
-        public virtual NullableResponse<DataFactoryPipelineResource> GetIfExists(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DataFactoryPipelineResource> GetIfExists(string pipelineName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
 
-            using var scope = _dataFactoryPipelinePipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.GetIfExists");
+            using DiagnosticScope scope = _pipelinesClientDiagnostics.CreateScope("DataFactoryPipelineCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataFactoryPipelinePipelinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pipelineName, ifNoneMatch, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, pipelineName, ifNoneMatch, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataFactoryPipelineData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataFactoryPipelineData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataFactoryPipelineData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataFactoryPipelineResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataFactoryPipelineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -497,6 +584,7 @@ namespace Azure.ResourceManager.DataFactory
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataFactoryPipelineResource> IAsyncEnumerable<DataFactoryPipelineResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

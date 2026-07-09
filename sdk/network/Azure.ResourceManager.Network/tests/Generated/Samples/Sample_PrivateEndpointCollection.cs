@@ -57,7 +57,6 @@ RequestMessage = "Please approve my connection.",
 }},
                 IPConfigurations = {new PrivateEndpointIPConfiguration
 {
-Name = "pestaticconfig",
 GroupId = "file",
 MemberName = "file",
 PrivateIPAddress = IPAddress.Parse("192.168.0.6"),
@@ -65,7 +64,7 @@ PrivateIPAddress = IPAddress.Parse("192.168.0.6"),
                 CustomNetworkInterfaceName = "testPeNic",
                 Location = new AzureLocation("eastus2euap"),
             };
-            ArmOperation<PrivateEndpointResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, data);
+            ArmOperation<PrivateEndpointResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, data, cancellationToken: System.Threading.CancellationToken.None);
             PrivateEndpointResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -117,7 +116,7 @@ Id = new ResourceIdentifier("/subscriptions/subId/resourceGroups/rg1/provders/Mi
 }},
                 Location = new AzureLocation("eastus2euap"),
             };
-            ArmOperation<PrivateEndpointResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, data);
+            ArmOperation<PrivateEndpointResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, data, cancellationToken: System.Threading.CancellationToken.None);
             PrivateEndpointResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -165,7 +164,6 @@ RequestMessage = "Please manually approve my connection.",
 }},
                 IPConfigurations = {new PrivateEndpointIPConfiguration
 {
-Name = "pestaticconfig",
 GroupId = "file",
 MemberName = "file",
 PrivateIPAddress = IPAddress.Parse("192.168.0.5"),
@@ -173,7 +171,7 @@ PrivateIPAddress = IPAddress.Parse("192.168.0.5"),
                 CustomNetworkInterfaceName = "testPeNic",
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<PrivateEndpointResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, data);
+            ArmOperation<PrivateEndpointResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, data, cancellationToken: System.Threading.CancellationToken.None);
             PrivateEndpointResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

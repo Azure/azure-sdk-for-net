@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Billing.Models;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
@@ -26,69 +26,75 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class BillingAccountCollection : ArmCollection, IEnumerable<BillingAccountResource>, IAsyncEnumerable<BillingAccountResource>
     {
-        private readonly ClientDiagnostics _billingAccountClientDiagnostics;
-        private readonly BillingAccountsRestOperations _billingAccountRestClient;
+        private readonly ClientDiagnostics _billingAccountsClientDiagnostics;
+        private readonly BillingAccounts _billingAccountsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BillingAccountCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingAccountCollection for mocking. </summary>
         protected BillingAccountCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingAccountCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingAccountCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingAccountResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(BillingAccountResource.ResourceType, out string billingAccountApiVersion);
-            _billingAccountRestClient = new BillingAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingAccountApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _billingAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingAccountResource.ResourceType.Namespace, Diagnostics);
+            _billingAccountsRestClient = new BillingAccounts(_billingAccountsClientDiagnostics, Pipeline, Endpoint, billingAccountApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != TenantResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a billing account by its ID.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<BillingAccountResource>> GetAsync(string billingAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
 
-            using var scope = _billingAccountClientDiagnostics.CreateScope("BillingAccountCollection.Get");
+            using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountCollection.Get");
             scope.Start();
             try
             {
-                var response = await _billingAccountRestClient.GetAsync(billingAccountName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingAccountsRestClient.CreateGetRequest(billingAccountName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingAccountData> response = Response.FromValue(BillingAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -102,38 +108,42 @@ namespace Azure.ResourceManager.Billing
         /// Gets a billing account by its ID.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<BillingAccountResource> Get(string billingAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
 
-            using var scope = _billingAccountClientDiagnostics.CreateScope("BillingAccountCollection.Get");
+            using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountCollection.Get");
             scope.Start();
             try
             {
-                var response = _billingAccountRestClient.Get(billingAccountName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingAccountsRestClient.CreateGetRequest(billingAccountName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingAccountData> response = Response.FromValue(BillingAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -147,102 +157,160 @@ namespace Azure.ResourceManager.Billing
         /// Lists the billing accounts that a user has access to.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingAccounts_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingAccounts_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="includeAll"> When true, results will include Billing Accounts that the user does not have a direct role assignment on if the user has one of the following AAD roles: Global Administrator, Global Reader, Billing Administrator. </param>
+        /// <param name="includeAllWithoutBillingProfiles"> When true, results will include Billing Accounts that are not fully created if the user has one of the following AAD roles: Global Administrator, Global Reader, Billing Administrator. </param>
+        /// <param name="includeDeleted"> When true, results will include any billing accounts in a deleted state. </param>
+        /// <param name="includePendingAgreement"> Includes billing accounts with agreement pending signature that the user has access to. </param>
+        /// <param name="includeResellee"> Includes the customer's billing account of Microsoft Partner Agreement that the user has access to. </param>
+        /// <param name="legalOwnerTID"> Must be combined with legalOwnerOID, results will only include Billing Accounts for whom is legally responsible for the Billing Accounts. Optional. </param>
+        /// <param name="legalOwnerOID"> Must be combined with legalOwnerTID, results will only include Billing Accounts for whom is legally responsible for the Billing Accounts. Optional. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="expand"> Expand is allowed for SoldTo and EnrollmentDetails/PONumber. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingAccountResource> GetAllAsync(BillingAccountCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingAccountResource> GetAllAsync(bool? includeAll = default, bool? includeAllWithoutBillingProfiles = default, bool? includeDeleted = default, bool? includePendingAgreement = default, bool? includeResellee = default, string legalOwnerTID = default, string legalOwnerOID = default, string filter = default, string expand = default, long? maxCount = default, long? skip = default, string search = default, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingAccountCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingAccountRestClient.CreateListRequest(options.IncludeAll, options.IncludeAllWithoutBillingProfiles, options.IncludeDeleted, options.IncludePendingAgreement, options.IncludeResellee, options.LegalOwnerTID, options.LegalOwnerOID, options.Filter, options.Expand, options.Top, options.Skip, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingAccountRestClient.CreateListNextPageRequest(nextLink, options.IncludeAll, options.IncludeAllWithoutBillingProfiles, options.IncludeDeleted, options.IncludePendingAgreement, options.IncludeResellee, options.LegalOwnerTID, options.LegalOwnerOID, options.Filter, options.Expand, options.Top, options.Skip, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingAccountResource(Client, BillingAccountData.DeserializeBillingAccountData(e)), _billingAccountClientDiagnostics, Pipeline, "BillingAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingAccountData, BillingAccountResource>(new BillingAccountsGetAllAsyncCollectionResultOfT(
+                _billingAccountsRestClient,
+                includeAll,
+                includeAllWithoutBillingProfiles,
+                includeDeleted,
+                includePendingAgreement,
+                includeResellee,
+                legalOwnerTID,
+                legalOwnerOID,
+                filter,
+                expand,
+                maxCount,
+                skip,
+                search,
+                context,
+                "BillingAccountCollection.GetAll"), data => new BillingAccountResource(Client, data));
         }
 
         /// <summary>
         /// Lists the billing accounts that a user has access to.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingAccounts_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingAccounts_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="includeAll"> When true, results will include Billing Accounts that the user does not have a direct role assignment on if the user has one of the following AAD roles: Global Administrator, Global Reader, Billing Administrator. </param>
+        /// <param name="includeAllWithoutBillingProfiles"> When true, results will include Billing Accounts that are not fully created if the user has one of the following AAD roles: Global Administrator, Global Reader, Billing Administrator. </param>
+        /// <param name="includeDeleted"> When true, results will include any billing accounts in a deleted state. </param>
+        /// <param name="includePendingAgreement"> Includes billing accounts with agreement pending signature that the user has access to. </param>
+        /// <param name="includeResellee"> Includes the customer's billing account of Microsoft Partner Agreement that the user has access to. </param>
+        /// <param name="legalOwnerTID"> Must be combined with legalOwnerOID, results will only include Billing Accounts for whom is legally responsible for the Billing Accounts. Optional. </param>
+        /// <param name="legalOwnerOID"> Must be combined with legalOwnerTID, results will only include Billing Accounts for whom is legally responsible for the Billing Accounts. Optional. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="expand"> Expand is allowed for SoldTo and EnrollmentDetails/PONumber. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingAccountResource> GetAll(BillingAccountCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingAccountResource> GetAll(bool? includeAll = default, bool? includeAllWithoutBillingProfiles = default, bool? includeDeleted = default, bool? includePendingAgreement = default, bool? includeResellee = default, string legalOwnerTID = default, string legalOwnerOID = default, string filter = default, string expand = default, long? maxCount = default, long? skip = default, string search = default, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingAccountCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingAccountRestClient.CreateListRequest(options.IncludeAll, options.IncludeAllWithoutBillingProfiles, options.IncludeDeleted, options.IncludePendingAgreement, options.IncludeResellee, options.LegalOwnerTID, options.LegalOwnerOID, options.Filter, options.Expand, options.Top, options.Skip, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingAccountRestClient.CreateListNextPageRequest(nextLink, options.IncludeAll, options.IncludeAllWithoutBillingProfiles, options.IncludeDeleted, options.IncludePendingAgreement, options.IncludeResellee, options.LegalOwnerTID, options.LegalOwnerOID, options.Filter, options.Expand, options.Top, options.Skip, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingAccountResource(Client, BillingAccountData.DeserializeBillingAccountData(e)), _billingAccountClientDiagnostics, Pipeline, "BillingAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingAccountData, BillingAccountResource>(new BillingAccountsGetAllCollectionResultOfT(
+                _billingAccountsRestClient,
+                includeAll,
+                includeAllWithoutBillingProfiles,
+                includeDeleted,
+                includePendingAgreement,
+                includeResellee,
+                legalOwnerTID,
+                legalOwnerOID,
+                filter,
+                expand,
+                maxCount,
+                skip,
+                search,
+                context,
+                "BillingAccountCollection.GetAll"), data => new BillingAccountResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string billingAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
 
-            using var scope = _billingAccountClientDiagnostics.CreateScope("BillingAccountCollection.Exists");
+            using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _billingAccountRestClient.GetAsync(billingAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingAccountsRestClient.CreateGetRequest(billingAccountName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -256,36 +324,50 @@ namespace Azure.ResourceManager.Billing
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string billingAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
 
-            using var scope = _billingAccountClientDiagnostics.CreateScope("BillingAccountCollection.Exists");
+            using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountCollection.Exists");
             scope.Start();
             try
             {
-                var response = _billingAccountRestClient.Get(billingAccountName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingAccountsRestClient.CreateGetRequest(billingAccountName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -299,38 +381,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<BillingAccountResource>> GetIfExistsAsync(string billingAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
 
-            using var scope = _billingAccountClientDiagnostics.CreateScope("BillingAccountCollection.GetIfExists");
+            using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _billingAccountRestClient.GetAsync(billingAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingAccountsRestClient.CreateGetRequest(billingAccountName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingAccountResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,38 +442,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<BillingAccountResource> GetIfExists(string billingAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
 
-            using var scope = _billingAccountClientDiagnostics.CreateScope("BillingAccountCollection.GetIfExists");
+            using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _billingAccountRestClient.Get(billingAccountName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingAccountsRestClient.CreateGetRequest(billingAccountName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingAccountResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,17 +501,18 @@ namespace Azure.ResourceManager.Billing
 
         IEnumerator<BillingAccountResource> IEnumerable<BillingAccountResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BillingAccountResource> IAsyncEnumerable<BillingAccountResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

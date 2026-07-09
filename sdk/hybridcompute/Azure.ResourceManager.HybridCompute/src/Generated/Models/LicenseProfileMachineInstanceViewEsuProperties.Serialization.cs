@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class LicenseProfileMachineInstanceViewEsuProperties : IUtf8JsonSerializable, IJsonModel<LicenseProfileMachineInstanceViewEsuProperties>
+    /// <summary> Properties for the Machine ESU profile. </summary>
+    public partial class LicenseProfileMachineInstanceViewEsuProperties : LicenseProfileArmEsuPropertiesWithoutAssignedLicense, IJsonModel<LicenseProfileMachineInstanceViewEsuProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LicenseProfileMachineInstanceViewEsuProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LicenseProfileStorageModelEsuProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLicenseProfileMachineInstanceViewEsuProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LicenseProfileMachineInstanceViewEsuProperties IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (LicenseProfileMachineInstanceViewEsuProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LicenseProfileMachineInstanceViewEsuProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(AssignedLicense))
             {
@@ -49,281 +87,123 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
         }
 
-        LicenseProfileMachineInstanceViewEsuProperties IJsonModel<LicenseProfileMachineInstanceViewEsuProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LicenseProfileMachineInstanceViewEsuProperties IJsonModel<LicenseProfileMachineInstanceViewEsuProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LicenseProfileMachineInstanceViewEsuProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LicenseProfileStorageModelEsuProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLicenseProfileMachineInstanceViewEsuProperties(document.RootElement, options);
         }
 
-        internal static LicenseProfileMachineInstanceViewEsuProperties DeserializeLicenseProfileMachineInstanceViewEsuProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LicenseProfileMachineInstanceViewEsuProperties DeserializeLicenseProfileMachineInstanceViewEsuProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            HybridComputeLicenseData assignedLicense = default;
-            LicenseAssignmentState? licenseAssignmentState = default;
+            Guid? assignedLicenseImmutableId = default;
+            IReadOnlyList<EsuKey> esuKeys = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             EsuServerType? serverType = default;
             EsuEligibility? esuEligibility = default;
             EsuKeyState? esuKeyState = default;
-            Guid? assignedLicenseImmutableId = default;
-            IReadOnlyList<EsuKey> esuKeys = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            HybridComputeLicenseData assignedLicense = default;
+            LicenseAssignmentState? licenseAssignmentState = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("assignedLicense"u8))
+                if (prop.NameEquals("assignedLicenseImmutableId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    assignedLicense = HybridComputeLicenseData.DeserializeHybridComputeLicenseData(property.Value, options);
+                    assignedLicenseImmutableId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("licenseAssignmentState"u8))
+                if (prop.NameEquals("esuKeys"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    licenseAssignmentState = new LicenseAssignmentState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("serverType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    serverType = new EsuServerType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("esuEligibility"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    esuEligibility = new EsuEligibility(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("esuKeyState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    esuKeyState = new EsuKeyState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("assignedLicenseImmutableId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    assignedLicenseImmutableId = property.Value.GetGuid();
-                    continue;
-                }
-                if (property.NameEquals("esuKeys"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<EsuKey> array = new List<EsuKey>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(EsuKey.DeserializeEsuKey(item, options));
                     }
                     esuKeys = array;
                     continue;
                 }
+                if (prop.NameEquals("serverType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serverType = new EsuServerType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("esuEligibility"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    esuEligibility = new EsuEligibility(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("esuKeyState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    esuKeyState = new EsuKeyState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("assignedLicense"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    assignedLicense = HybridComputeLicenseData.DeserializeHybridComputeLicenseData(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("licenseAssignmentState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    licenseAssignmentState = new LicenseAssignmentState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new LicenseProfileMachineInstanceViewEsuProperties(
                 assignedLicenseImmutableId,
                 esuKeys ?? new ChangeTrackingList<EsuKey>(),
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 serverType,
                 esuEligibility,
                 esuKeyState,
                 assignedLicense,
                 licenseAssignmentState);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssignedLicense), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  assignedLicense: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AssignedLicense))
-                {
-                    builder.Append("  assignedLicense: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AssignedLicense, options, 2, false, "  assignedLicense: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LicenseAssignmentState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  licenseAssignmentState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LicenseAssignmentState))
-                {
-                    builder.Append("  licenseAssignmentState: ");
-                    builder.AppendLine($"'{LicenseAssignmentState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serverType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServerType))
-                {
-                    builder.Append("  serverType: ");
-                    builder.AppendLine($"'{ServerType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EsuEligibility), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  esuEligibility: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EsuEligibility))
-                {
-                    builder.Append("  esuEligibility: ");
-                    builder.AppendLine($"'{EsuEligibility.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EsuKeyState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  esuKeyState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EsuKeyState))
-                {
-                    builder.Append("  esuKeyState: ");
-                    builder.AppendLine($"'{EsuKeyState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssignedLicenseImmutableId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  assignedLicenseImmutableId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AssignedLicenseImmutableId))
-                {
-                    builder.Append("  assignedLicenseImmutableId: ");
-                    builder.AppendLine($"'{AssignedLicenseImmutableId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EsuKeys), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  esuKeys: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(EsuKeys))
-                {
-                    if (EsuKeys.Any())
-                    {
-                        builder.Append("  esuKeys: ");
-                        builder.AppendLine("[");
-                        foreach (var item in EsuKeys)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  esuKeys: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        LicenseProfileMachineInstanceViewEsuProperties IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLicenseProfileMachineInstanceViewEsuProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

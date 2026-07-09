@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.IotHub.Models
     public readonly partial struct IotHubIPVersion : IEquatable<IotHubIPVersion>
     {
         private readonly string _value;
+        /// <summary> ipv4. </summary>
+        private const string IPv4Value = "ipv4";
+        /// <summary> ipv6. </summary>
+        private const string IPv6Value = "ipv6";
+        /// <summary> ipv4ipv6. </summary>
+        private const string IPv4IPv6Value = "ipv4ipv6";
 
         /// <summary> Initializes a new instance of <see cref="IotHubIPVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotHubIPVersion(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IPv4Value = "ipv4";
-        private const string IPv6Value = "ipv6";
-        private const string IPv4IPv6Value = "ipv4ipv6";
+            _value = value;
+        }
 
         /// <summary> ipv4. </summary>
         public static IotHubIPVersion IPv4 { get; } = new IotHubIPVersion(IPv4Value);
+
         /// <summary> ipv6. </summary>
         public static IotHubIPVersion IPv6 { get; } = new IotHubIPVersion(IPv6Value);
+
         /// <summary> ipv4ipv6. </summary>
         public static IotHubIPVersion IPv4IPv6 { get; } = new IotHubIPVersion(IPv4IPv6Value);
+
         /// <summary> Determines if two <see cref="IotHubIPVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotHubIPVersion left, IotHubIPVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotHubIPVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotHubIPVersion left, IotHubIPVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubIPVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotHubIPVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotHubIPVersion(string value) => new IotHubIPVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotHubIPVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotHubIPVersion?(string value) => value == null ? null : new IotHubIPVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotHubIPVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotHubIPVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

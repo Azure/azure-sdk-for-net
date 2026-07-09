@@ -7,13 +7,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Memory;
 
-namespace Azure.AI.Projects;
+namespace Azure.AI.Projects.Evaluation;
 
 [Experimental("AAIP001")]
+
 [CodeGenSuppress("GetAll", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAllAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAll", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAllAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenType("EvaluatorGenerationJobs")]
 public partial class EvaluatorGenerationJobs
 {
     /// <summary>
@@ -27,8 +29,8 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<EvaluatorGenerationJob> Create(EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
-        using BinaryContent jobInput = BinaryContent.Create(job.Inputs);
-        ClientResult result = Create(jobInput, default, operationId, cancellationToken.ToRequestOptions());
+        Argument.AssertNotNull(job, nameof(job));
+        ClientResult result = Create(job, default, operationId, cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
     }
 
@@ -43,8 +45,8 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<EvaluatorGenerationJob>> CreateAsync(EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
-        using BinaryContent jobInput = BinaryContent.Create(job.Inputs);
-        ClientResult result = await CreateAsync(jobInput, default, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        Argument.AssertNotNull(job, nameof(job));
+        ClientResult result = await CreateAsync(job, default, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
     }
 

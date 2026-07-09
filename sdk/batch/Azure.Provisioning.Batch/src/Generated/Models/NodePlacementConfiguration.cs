@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Batch
         {
             base.DefineProvisionableProperties();
             _policy = DefineProperty<BatchNodePlacementPolicyType>(nameof(Policy), new string[] { "policy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NodePlacementConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

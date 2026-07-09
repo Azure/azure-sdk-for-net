@@ -8,12 +8,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -24,73 +26,82 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerDevOpsAuditingSettingCollection : ArmCollection, IEnumerable<SqlServerDevOpsAuditingSettingResource>, IAsyncEnumerable<SqlServerDevOpsAuditingSettingResource>
     {
-        private readonly ClientDiagnostics _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics;
-        private readonly ServerDevOpsAuditSettingsRestOperations _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient;
+        private readonly ClientDiagnostics _serverDevOpsAuditSettingsClientDiagnostics;
+        private readonly ServerDevOpsAuditSettings _serverDevOpsAuditSettingsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerDevOpsAuditingSettingCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SqlServerDevOpsAuditingSettingCollection for mocking. </summary>
         protected SqlServerDevOpsAuditingSettingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerDevOpsAuditingSettingCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerDevOpsAuditingSettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlServerDevOpsAuditingSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDevOpsAuditingSettingResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SqlServerDevOpsAuditingSettingResource.ResourceType, out string sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsApiVersion);
-            _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient = new ServerDevOpsAuditSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SqlServerDevOpsAuditingSettingResource.ResourceType, out string sqlServerDevOpsAuditingSettingApiVersion);
+            _serverDevOpsAuditSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDevOpsAuditingSettingResource.ResourceType.Namespace, Diagnostics);
+            _serverDevOpsAuditSettingsRestClient = new ServerDevOpsAuditSettings(_serverDevOpsAuditSettingsClientDiagnostics, Pipeline, Endpoint, sqlServerDevOpsAuditingSettingApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SqlServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a server's DevOps audit settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDevOpsAuditSettings_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDevOpsAuditSettings_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDevOpsAuditingSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
+        /// <param name="devOpsAuditingSettingsName"></param>
         /// <param name="data"> Properties of DevOps audit settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlServerDevOpsAuditingSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string devOpsAuditingSettingsName, SqlServerDevOpsAuditingSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SqlServerDevOpsAuditingSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, DevOpsAuditingSettingsName devOpsAuditingSettingsName, SqlServerDevOpsAuditingSettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _serverDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerDevOpsAuditingSettingResource>(new SqlServerDevOpsAuditingSettingOperationSource(Client), _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics, Pipeline, _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDevOpsAuditSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName.ToString(), SqlServerDevOpsAuditingSettingData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SqlArmOperation<SqlServerDevOpsAuditingSettingResource> operation = new SqlArmOperation<SqlServerDevOpsAuditingSettingResource>(
+                    new SqlServerDevOpsAuditingSettingResourceOperationSource(Client),
+                    _serverDevOpsAuditSettingsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,42 +115,49 @@ namespace Azure.ResourceManager.Sql
         /// Creates or updates a server's DevOps audit settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDevOpsAuditSettings_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDevOpsAuditSettings_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDevOpsAuditingSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
+        /// <param name="devOpsAuditingSettingsName"></param>
         /// <param name="data"> Properties of DevOps audit settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SqlServerDevOpsAuditingSettingResource> CreateOrUpdate(WaitUntil waitUntil, string devOpsAuditingSettingsName, SqlServerDevOpsAuditingSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SqlServerDevOpsAuditingSettingResource> CreateOrUpdate(WaitUntil waitUntil, DevOpsAuditingSettingsName devOpsAuditingSettingsName, SqlServerDevOpsAuditingSettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _serverDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerDevOpsAuditingSettingResource>(new SqlServerDevOpsAuditingSettingOperationSource(Client), _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics, Pipeline, _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDevOpsAuditSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName.ToString(), SqlServerDevOpsAuditingSettingData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SqlArmOperation<SqlServerDevOpsAuditingSettingResource> operation = new SqlArmOperation<SqlServerDevOpsAuditingSettingResource>(
+                    new SqlServerDevOpsAuditingSettingResourceOperationSource(Client),
+                    _serverDevOpsAuditSettingsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +171,38 @@ namespace Azure.ResourceManager.Sql
         /// Gets a server's DevOps audit settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDevOpsAuditSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDevOpsAuditSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDevOpsAuditingSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
+        /// <param name="devOpsAuditingSettingsName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
-        public virtual async Task<Response<SqlServerDevOpsAuditingSettingResource>> GetAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerDevOpsAuditingSettingResource>> GetAsync(DevOpsAuditingSettingsName devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
-
-            using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.Get");
+            using DiagnosticScope scope = _serverDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDevOpsAuditSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SqlServerDevOpsAuditingSettingData> response = Response.FromValue(SqlServerDevOpsAuditingSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerDevOpsAuditingSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +216,38 @@ namespace Azure.ResourceManager.Sql
         /// Gets a server's DevOps audit settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDevOpsAuditSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDevOpsAuditSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDevOpsAuditingSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
+        /// <param name="devOpsAuditingSettingsName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
-        public virtual Response<SqlServerDevOpsAuditingSettingResource> Get(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerDevOpsAuditingSettingResource> Get(DevOpsAuditingSettingsName devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
-
-            using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.Get");
+            using DiagnosticScope scope = _serverDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDevOpsAuditSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SqlServerDevOpsAuditingSettingData> response = Response.FromValue(SqlServerDevOpsAuditingSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerDevOpsAuditingSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +261,50 @@ namespace Azure.ResourceManager.Sql
         /// Lists DevOps audit settings of a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDevOpsAuditSettings_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDevOpsAuditSettings_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDevOpsAuditingSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerDevOpsAuditingSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerDevOpsAuditingSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerDevOpsAuditingSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerDevOpsAuditingSettingResource(Client, SqlServerDevOpsAuditingSettingData.DeserializeSqlServerDevOpsAuditingSettingData(e)), _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics, Pipeline, "SqlServerDevOpsAuditingSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SqlServerDevOpsAuditingSettingData, SqlServerDevOpsAuditingSettingResource>(new ServerDevOpsAuditSettingsGetByServerAsyncCollectionResultOfT(
+                _serverDevOpsAuditSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SqlServerDevOpsAuditingSettingCollection.GetAll"), data => new SqlServerDevOpsAuditingSettingResource(Client, data));
         }
 
         /// <summary>
         /// Lists DevOps audit settings of a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDevOpsAuditSettings_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDevOpsAuditSettings_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDevOpsAuditingSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +312,63 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerDevOpsAuditingSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerDevOpsAuditingSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerDevOpsAuditingSettingResource(Client, SqlServerDevOpsAuditingSettingData.DeserializeSqlServerDevOpsAuditingSettingData(e)), _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics, Pipeline, "SqlServerDevOpsAuditingSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SqlServerDevOpsAuditingSettingData, SqlServerDevOpsAuditingSettingResource>(new ServerDevOpsAuditSettingsGetByServerCollectionResultOfT(
+                _serverDevOpsAuditSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SqlServerDevOpsAuditingSettingCollection.GetAll"), data => new SqlServerDevOpsAuditingSettingResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDevOpsAuditSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDevOpsAuditSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDevOpsAuditingSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
+        /// <param name="devOpsAuditingSettingsName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(DevOpsAuditingSettingsName devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
-
-            using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.Exists");
+            using DiagnosticScope scope = _serverDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDevOpsAuditSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SqlServerDevOpsAuditingSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerDevOpsAuditingSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerDevOpsAuditingSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +382,46 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDevOpsAuditSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDevOpsAuditSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDevOpsAuditingSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
+        /// <param name="devOpsAuditingSettingsName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
-        public virtual Response<bool> Exists(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(DevOpsAuditingSettingsName devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
-
-            using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.Exists");
+            using DiagnosticScope scope = _serverDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDevOpsAuditSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SqlServerDevOpsAuditingSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerDevOpsAuditingSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerDevOpsAuditingSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +435,50 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDevOpsAuditSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDevOpsAuditSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDevOpsAuditingSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
+        /// <param name="devOpsAuditingSettingsName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
-        public virtual async Task<NullableResponse<SqlServerDevOpsAuditingSettingResource>> GetIfExistsAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SqlServerDevOpsAuditingSettingResource>> GetIfExistsAsync(DevOpsAuditingSettingsName devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
-
-            using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _serverDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDevOpsAuditSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SqlServerDevOpsAuditingSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerDevOpsAuditingSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerDevOpsAuditingSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SqlServerDevOpsAuditingSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerDevOpsAuditingSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +492,50 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDevOpsAuditSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDevOpsAuditSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDevOpsAuditingSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
+        /// <param name="devOpsAuditingSettingsName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
-        public virtual NullableResponse<SqlServerDevOpsAuditingSettingResource> GetIfExists(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SqlServerDevOpsAuditingSettingResource> GetIfExists(DevOpsAuditingSettingsName devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
-
-            using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _serverDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDevOpsAuditSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SqlServerDevOpsAuditingSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerDevOpsAuditingSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerDevOpsAuditingSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SqlServerDevOpsAuditingSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerDevOpsAuditingSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +555,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SqlServerDevOpsAuditingSettingResource> IAsyncEnumerable<SqlServerDevOpsAuditingSettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

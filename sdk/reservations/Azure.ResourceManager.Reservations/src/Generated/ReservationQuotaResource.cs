@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Reservations
 {
     /// <summary>
-    /// A Class representing a ReservationQuota along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReservationQuotaResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetReservationQuotaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetReservationQuota method.
+    /// A class representing a ReservationQuota along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReservationQuotaResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetAllReservationQuota method.
     /// </summary>
     public partial class ReservationQuotaResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ReservationQuotaResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="providerId"> The providerId. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resourceName"> The resourceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerId, AzureLocation location, string resourceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _reservationQuotaQuotaClientDiagnostics;
-        private readonly QuotaRestOperations _reservationQuotaQuotaRestClient;
+        private readonly ClientDiagnostics _quotaClientDiagnostics;
+        private readonly Quota _quotaRestClient;
         private readonly ReservationQuotaData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Capacity/resourceProviders/locations/serviceLimits";
 
-        /// <summary> Initializes a new instance of the <see cref="ReservationQuotaResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ReservationQuotaResource for mocking. </summary>
         protected ReservationQuotaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReservationQuotaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ReservationQuotaResource(ArmClient client, ReservationQuotaData data) : this(client, data.Id)
@@ -55,71 +44,93 @@ namespace Azure.ResourceManager.Reservations
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReservationQuotaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ReservationQuotaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _reservationQuotaQuotaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string reservationQuotaQuotaApiVersion);
-            _reservationQuotaQuotaRestClient = new QuotaRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, reservationQuotaQuotaApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string reservationQuotaApiVersion);
+            _quotaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ResourceType.Namespace, Diagnostics);
+            _quotaRestClient = new Quota(_quotaClientDiagnostics, Pipeline, Endpoint, reservationQuotaApiVersion ?? "2020-10-25");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ReservationQuotaData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerId"> The providerId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerId, AzureLocation location, string resourceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get the current quota (service limit) and usage of a resource. You can use the response from the GET operation to submit quota update request.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-25</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-10-25. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReservationQuotaResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ReservationQuotaResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ReservationQuotaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _reservationQuotaQuotaClientDiagnostics.CreateScope("ReservationQuotaResource.Get");
+            using DiagnosticScope scope = _quotaClientDiagnostics.CreateScope("ReservationQuotaResource.Get");
             scope.Start();
             try
             {
-                var response = await _reservationQuotaQuotaRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _quotaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ReservationQuotaData> response = Response.FromValue(ReservationQuotaData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ReservationQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.Reservations
         /// Get the current quota (service limit) and usage of a resource. You can use the response from the GET operation to submit quota update request.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-25</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-10-25. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReservationQuotaResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ReservationQuotaResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ReservationQuotaResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _reservationQuotaQuotaClientDiagnostics.CreateScope("ReservationQuotaResource.Get");
+            using DiagnosticScope scope = _quotaClientDiagnostics.CreateScope("ReservationQuotaResource.Get");
             scope.Start();
             try
             {
-                var response = _reservationQuotaQuotaRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _quotaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ReservationQuotaData> response = Response.FromValue(ReservationQuotaData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ReservationQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,26 +190,26 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Update the quota (service limits) of this resource to the requested value.
-        ///   • To get the quota information for specific resource, send a GET request.
-        ///   • To increase the quota, update the limit field from the GET response to a new value.
-        ///   • To update the quota value, submit the JSON response to the quota request API to update the quota.
-        ///   • To update the quota. use the PATCH operation.
+        /// • To get the quota information for specific resource, send a GET request.
+        /// • To increase the quota, update the limit field from the GET response to a new value.
+        /// • To update the quota value, submit the JSON response to the quota request API to update the quota.
+        /// • To update the quota. use the PATCH operation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Quota_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-25</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-10-25. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReservationQuotaResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ReservationQuotaResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,14 +221,27 @@ namespace Azure.ResourceManager.Reservations
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _reservationQuotaQuotaClientDiagnostics.CreateScope("ReservationQuotaResource.Update");
+            using DiagnosticScope scope = _quotaClientDiagnostics.CreateScope("ReservationQuotaResource.Update");
             scope.Start();
             try
             {
-                var response = await _reservationQuotaQuotaRestClient.UpdateAsync(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ReservationQuotaResource>(new ReservationQuotaOperationSource(Client), _reservationQuotaQuotaClientDiagnostics, Pipeline, _reservationQuotaQuotaRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _quotaRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ReservationQuotaData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ReservationsArmOperation<ReservationQuotaResource> operation = new ReservationsArmOperation<ReservationQuotaResource>(
+                    new ReservationQuotaResourceOperationSource(Client),
+                    _quotaClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -221,26 +253,26 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Update the quota (service limits) of this resource to the requested value.
-        ///   • To get the quota information for specific resource, send a GET request.
-        ///   • To increase the quota, update the limit field from the GET response to a new value.
-        ///   • To update the quota value, submit the JSON response to the quota request API to update the quota.
-        ///   • To update the quota. use the PATCH operation.
+        /// • To get the quota information for specific resource, send a GET request.
+        /// • To increase the quota, update the limit field from the GET response to a new value.
+        /// • To update the quota value, submit the JSON response to the quota request API to update the quota.
+        /// • To update the quota. use the PATCH operation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Quota_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> CurrentQuotaLimitBases_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-25</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-10-25. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReservationQuotaResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ReservationQuotaResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -252,14 +284,27 @@ namespace Azure.ResourceManager.Reservations
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _reservationQuotaQuotaClientDiagnostics.CreateScope("ReservationQuotaResource.Update");
+            using DiagnosticScope scope = _quotaClientDiagnostics.CreateScope("ReservationQuotaResource.Update");
             scope.Start();
             try
             {
-                var response = _reservationQuotaQuotaRestClient.Update(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, data, cancellationToken);
-                var operation = new ReservationsArmOperation<ReservationQuotaResource>(new ReservationQuotaOperationSource(Client), _reservationQuotaQuotaClientDiagnostics, Pipeline, _reservationQuotaQuotaRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _quotaRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ReservationQuotaData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ReservationsArmOperation<ReservationQuotaResource> operation = new ReservationsArmOperation<ReservationQuotaResource>(
+                    new ReservationQuotaResourceOperationSource(Client),
+                    _quotaClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

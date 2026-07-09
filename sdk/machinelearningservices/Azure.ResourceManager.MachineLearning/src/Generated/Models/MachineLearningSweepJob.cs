@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -15,178 +17,124 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningSweepJob : MachineLearningJobProperties
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJob"/>. </summary>
-        /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
-        /// <param name="samplingAlgorithm">
-        /// [Required] The hyperparameter sampling algorithm
-        /// Please note <see cref="Models.SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
-        /// </param>
-        /// <param name="objective"> [Required] Optimization objective. </param>
-        /// <param name="trial"> [Required] Trial component definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchSpace"/>, <paramref name="samplingAlgorithm"/>, <paramref name="objective"/> or <paramref name="trial"/> is null. </exception>
-        public MachineLearningSweepJob(BinaryData searchSpace, SamplingAlgorithm samplingAlgorithm, MachineLearningObjective objective, MachineLearningTrialComponent trial)
-        {
-            Argument.AssertNotNull(searchSpace, nameof(searchSpace));
-            Argument.AssertNotNull(samplingAlgorithm, nameof(samplingAlgorithm));
-            Argument.AssertNotNull(objective, nameof(objective));
-            Argument.AssertNotNull(trial, nameof(trial));
-
-            SearchSpace = searchSpace;
-            SamplingAlgorithm = samplingAlgorithm;
-            Objective = objective;
-            Trial = trial;
-            Inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
-            Outputs = new ChangeTrackingDictionary<string, MachineLearningJobOutput>();
-            JobType = JobType.Sweep;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="jobType"> [Required] Specifies the type of job. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="componentId"> ARM resource ID of the component resource. </param>
+        /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
-        /// <param name="status"> Status of the job. </param>
         /// <param name="experimentName"> The name of the experiment the job belongs to. If not set, the job is placed in the "Default" experiment. </param>
+        /// <param name="identity">
+        /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
+        /// Defaults to AmlToken if null.
+        /// </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="jobType"> [Required] Specifies the type of job. </param>
+        /// <param name="notificationSetting"> Notification setting for the job. </param>
+        /// <param name="parentJobName"> Parent job name. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </param>
-        /// <param name="computeId"> ARM resource ID of the compute resource. </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
-        /// <param name="identity">
-        /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
-        /// Defaults to AmlToken if null.
-        /// Please note <see cref="MachineLearningIdentityConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/> and <see cref="MachineLearningUserIdentity"/>.
-        /// </param>
-        /// <param name="componentId"> ARM resource ID of the component resource. </param>
-        /// <param name="notificationSetting"> Notification setting for the job. </param>
-        /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
-        /// <param name="samplingAlgorithm">
-        /// [Required] The hyperparameter sampling algorithm
-        /// Please note <see cref="Models.SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
-        /// </param>
+        /// <param name="status"> Status of the job. </param>
+        /// <param name="earlyTermination"> Early termination policies enable canceling poor-performing runs before they complete. </param>
+        /// <param name="inputs"> Mapping of input data bindings used in the job. </param>
         /// <param name="limits"> Sweep Job limit. </param>
-        /// <param name="earlyTermination">
-        /// Early termination policies enable canceling poor-performing runs before they complete
-        /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
-        /// </param>
         /// <param name="objective"> [Required] Optimization objective. </param>
-        /// <param name="trial"> [Required] Trial component definition. </param>
-        /// <param name="inputs">
-        /// Mapping of input data bindings used in the job.
-        /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
-        /// </param>
-        /// <param name="outputs">
-        /// Mapping of output data bindings used in the job.
-        /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
-        /// </param>
+        /// <param name="outputs"> Mapping of output data bindings used in the job. </param>
         /// <param name="queueSettings"> Queue settings for the job. </param>
-        internal MachineLearningSweepJob(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, JobType jobType, string displayName, MachineLearningJobStatus? status, string experimentName, IDictionary<string, MachineLearningJobService> services, ResourceIdentifier computeId, bool? isArchived, MachineLearningIdentityConfiguration identity, ResourceIdentifier componentId, NotificationSetting notificationSetting, BinaryData searchSpace, SamplingAlgorithm samplingAlgorithm, MachineLearningSweepJobLimits limits, MachineLearningEarlyTerminationPolicy earlyTermination, MachineLearningObjective objective, MachineLearningTrialComponent trial, IDictionary<string, MachineLearningJobInput> inputs, IDictionary<string, MachineLearningJobOutput> outputs, JobQueueSettings queueSettings) : base(description, tags, properties, serializedAdditionalRawData, jobType, displayName, status, experimentName, services, computeId, isArchived, identity, componentId, notificationSetting)
+        /// <param name="samplingAlgorithm"> [Required] The hyperparameter sampling algorithm. </param>
+        /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
+        /// <param name="trial"> [Required] Trial component definition. </param>
+        internal MachineLearningSweepJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, string parentJobName, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, MachineLearningEarlyTerminationPolicy earlyTermination, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningSweepJobLimits limits, MachineLearningObjective objective, IDictionary<string, MachineLearningJobOutput> outputs, QueueSettings queueSettings, SamplingAlgorithm samplingAlgorithm, BinaryData searchSpace, MachineLearningTrialComponent trial) : base(description, properties, tags, additionalBinaryDataProperties, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, parentJobName, services, status)
         {
-            SearchSpace = searchSpace;
-            SamplingAlgorithm = samplingAlgorithm;
-            Limits = limits;
             EarlyTermination = earlyTermination;
-            Objective = objective;
-            Trial = trial;
             Inputs = inputs;
+            Limits = limits;
+            Objective = objective;
             Outputs = outputs;
             QueueSettings = queueSettings;
-            JobType = jobType;
+            SamplingAlgorithm = samplingAlgorithm;
+            SearchSpace = searchSpace;
+            Trial = trial;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJob"/> for deserialization. </summary>
-        internal MachineLearningSweepJob()
-        {
-        }
+        /// <summary> Early termination policies enable canceling poor-performing runs before they complete. </summary>
+        [WirePath("earlyTermination")]
+        public MachineLearningEarlyTerminationPolicy EarlyTermination { get; set; }
+
+        /// <summary> Mapping of input data bindings used in the job. </summary>
+        [WirePath("inputs")]
+        public IDictionary<string, MachineLearningJobInput> Inputs { get; set; }
+
+        /// <summary> Sweep Job limit. </summary>
+        [WirePath("limits")]
+        public MachineLearningSweepJobLimits Limits { get; set; }
+
+        /// <summary> [Required] Optimization objective. </summary>
+        [WirePath("objective")]
+        public MachineLearningObjective Objective { get; set; }
+
+        /// <summary> Mapping of output data bindings used in the job. </summary>
+        [WirePath("outputs")]
+        public IDictionary<string, MachineLearningJobOutput> Outputs { get; set; }
+
+        /// <summary> Queue settings for the job. </summary>
+        [WirePath("queueSettings")]
+        internal QueueSettings QueueSettings { get; set; }
+
+        /// <summary> [Required] The hyperparameter sampling algorithm. </summary>
+        [WirePath("samplingAlgorithm")]
+        public SamplingAlgorithm SamplingAlgorithm { get; set; }
 
         /// <summary>
         /// [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         [WirePath("searchSpace")]
         public BinaryData SearchSpace { get; set; }
-        /// <summary>
-        /// [Required] The hyperparameter sampling algorithm
-        /// Please note <see cref="Models.SamplingAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/> and <see cref="RandomSamplingAlgorithm"/>.
-        /// </summary>
-        [WirePath("samplingAlgorithm")]
-        public SamplingAlgorithm SamplingAlgorithm { get; set; }
-        /// <summary> Sweep Job limit. </summary>
-        [WirePath("limits")]
-        public MachineLearningSweepJobLimits Limits { get; set; }
-        /// <summary>
-        /// Early termination policies enable canceling poor-performing runs before they complete
-        /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
-        /// </summary>
-        [WirePath("earlyTermination")]
-        public MachineLearningEarlyTerminationPolicy EarlyTermination { get; set; }
-        /// <summary> [Required] Optimization objective. </summary>
-        [WirePath("objective")]
-        public MachineLearningObjective Objective { get; set; }
+
         /// <summary> [Required] Trial component definition. </summary>
         [WirePath("trial")]
         public MachineLearningTrialComponent Trial { get; set; }
-        /// <summary>
-        /// Mapping of input data bindings used in the job.
-        /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
-        /// </summary>
-        [WirePath("inputs")]
-        public IDictionary<string, MachineLearningJobInput> Inputs { get; set; }
-        /// <summary>
-        /// Mapping of output data bindings used in the job.
-        /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
-        /// </summary>
-        [WirePath("outputs")]
-        public IDictionary<string, MachineLearningJobOutput> Outputs { get; set; }
-        /// <summary> Queue settings for the job. </summary>
-        internal JobQueueSettings QueueSettings { get; set; }
-        /// <summary> Controls the compute job tier. </summary>
+
+        /// <summary> Enum to determine the job tier. </summary>
         [WirePath("queueSettings.jobTier")]
         public JobTier? QueueJobTier
         {
-            get => QueueSettings is null ? default : QueueSettings.JobTier;
+            get
+            {
+                return QueueSettings is null ? default : QueueSettings.JobTier;
+            }
             set
             {
                 if (QueueSettings is null)
-                    QueueSettings = new JobQueueSettings();
+                {
+                    QueueSettings = new QueueSettings();
+                }
                 QueueSettings.JobTier = value;
             }
         }

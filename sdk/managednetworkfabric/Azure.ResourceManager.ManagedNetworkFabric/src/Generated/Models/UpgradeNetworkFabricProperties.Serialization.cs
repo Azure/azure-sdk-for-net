@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class UpgradeNetworkFabricProperties : IUtf8JsonSerializable, IJsonModel<UpgradeNetworkFabricProperties>
+    /// <summary> Model used for Upgrade Network Fabric Properties. </summary>
+    public partial class UpgradeNetworkFabricProperties : NetworkFabricUpdateVersionContent, IJsonModel<UpgradeNetworkFabricProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpgradeNetworkFabricProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkFabricUpdateVersionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UpgradeNetworkFabricProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeUpgradeNetworkFabricProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UpgradeNetworkFabricProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UpgradeNetworkFabricProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(UpgradeNetworkFabricProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<UpgradeNetworkFabricProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UpgradeNetworkFabricProperties IPersistableModel<UpgradeNetworkFabricProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (UpgradeNetworkFabricProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<UpgradeNetworkFabricProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="upgradeNetworkFabricProperties"> The <see cref="UpgradeNetworkFabricProperties"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(UpgradeNetworkFabricProperties upgradeNetworkFabricProperties)
+        {
+            if (upgradeNetworkFabricProperties == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(upgradeNetworkFabricProperties, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UpgradeNetworkFabricProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +80,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpgradeNetworkFabricProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpgradeNetworkFabricProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UpgradeNetworkFabricProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Action))
             {
@@ -42,84 +93,56 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        UpgradeNetworkFabricProperties IJsonModel<UpgradeNetworkFabricProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UpgradeNetworkFabricProperties IJsonModel<UpgradeNetworkFabricProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UpgradeNetworkFabricProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkFabricUpdateVersionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpgradeNetworkFabricProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpgradeNetworkFabricProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UpgradeNetworkFabricProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeUpgradeNetworkFabricProperties(document.RootElement, options);
         }
 
-        internal static UpgradeNetworkFabricProperties DeserializeUpgradeNetworkFabricProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static UpgradeNetworkFabricProperties DeserializeUpgradeNetworkFabricProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            NetworkFabricUpgradeAction? action = default;
             string version = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            NetworkFabricUpgradeAction? action = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("action"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    version = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("action"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    action = new NetworkFabricUpgradeAction(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("version"u8))
-                {
-                    version = property.Value.GetString();
+                    action = new NetworkFabricUpgradeAction(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new UpgradeNetworkFabricProperties(version, serializedAdditionalRawData, action);
+            return new UpgradeNetworkFabricProperties(version, additionalBinaryDataProperties, action);
         }
-
-        BinaryData IPersistableModel<UpgradeNetworkFabricProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UpgradeNetworkFabricProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(UpgradeNetworkFabricProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        UpgradeNetworkFabricProperties IPersistableModel<UpgradeNetworkFabricProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UpgradeNetworkFabricProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUpgradeNetworkFabricProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(UpgradeNetworkFabricProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<UpgradeNetworkFabricProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

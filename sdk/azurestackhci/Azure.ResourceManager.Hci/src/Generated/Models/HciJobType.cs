@@ -15,10 +15,22 @@ namespace Azure.ResourceManager.Hci.Models
     internal readonly partial struct HciJobType : IEquatable<HciJobType>
     {
         private readonly string _value;
+        /// <summary> Job to add a server to the cluster. </summary>
+        private const string AddServerValue = "AddServer";
+        /// <summary> Job to repair a server in the cluster. </summary>
+        private const string RepairServerValue = "RepairServer";
+        /// <summary> Job to create GPU partitions for the cluster. </summary>
+        private const string GpuCreatePartitionValue = "GpuCreatePartition";
+        /// <summary> Job to switch GPU mode for the cluster. </summary>
+        private const string GpuSwitchModeValue = "GpuSwitchMode";
         /// <summary> Job to CVM  intent for the cluster. </summary>
         private const string ConfigureCVMValue = "ConfigureCVM";
         /// <summary> Job to configure SDN (Software Defined Networking) integration for the cluster. </summary>
         private const string ConfigureSdnIntegrationValue = "ConfigureSdnIntegration";
+        /// <summary> Job to open port to enable RDP Connection. </summary>
+        private const string VmConnectProvisionValue = "VmConnectProvision";
+        /// <summary> Job to close port to disable RDP Connection. </summary>
+        private const string VmConnectRemoveValue = "VmConnectRemove";
 
         /// <summary> Initializes a new instance of <see cref="HciJobType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,11 +42,29 @@ namespace Azure.ResourceManager.Hci.Models
             _value = value;
         }
 
+        /// <summary> Job to add a server to the cluster. </summary>
+        public static HciJobType AddServer { get; } = new HciJobType(AddServerValue);
+
+        /// <summary> Job to repair a server in the cluster. </summary>
+        public static HciJobType RepairServer { get; } = new HciJobType(RepairServerValue);
+
+        /// <summary> Job to create GPU partitions for the cluster. </summary>
+        public static HciJobType GpuCreatePartition { get; } = new HciJobType(GpuCreatePartitionValue);
+
+        /// <summary> Job to switch GPU mode for the cluster. </summary>
+        public static HciJobType GpuSwitchMode { get; } = new HciJobType(GpuSwitchModeValue);
+
         /// <summary> Job to CVM  intent for the cluster. </summary>
         public static HciJobType ConfigureCVM { get; } = new HciJobType(ConfigureCVMValue);
 
         /// <summary> Job to configure SDN (Software Defined Networking) integration for the cluster. </summary>
         public static HciJobType ConfigureSdnIntegration { get; } = new HciJobType(ConfigureSdnIntegrationValue);
+
+        /// <summary> Job to open port to enable RDP Connection. </summary>
+        public static HciJobType VmConnectProvision { get; } = new HciJobType(VmConnectProvisionValue);
+
+        /// <summary> Job to close port to disable RDP Connection. </summary>
+        public static HciJobType VmConnectRemove { get; } = new HciJobType(VmConnectRemoveValue);
 
         /// <summary> Determines if two <see cref="HciJobType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

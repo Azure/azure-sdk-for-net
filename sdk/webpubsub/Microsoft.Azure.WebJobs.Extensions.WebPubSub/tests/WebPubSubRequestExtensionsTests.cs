@@ -25,8 +25,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = await request.ReadWebPubSubRequestAsync(validator);
 
-            Assert.IsInstanceOf<PreflightRequest>(result);
-            Assert.IsTrue(((PreflightRequest)result).IsValid);
+            Assert.That(result, Is.InstanceOf<PreflightRequest>());
+            Assert.That(((PreflightRequest)result).IsValid, Is.True);
         }
 
         [Test]
@@ -39,8 +39,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = await request.ReadWebPubSubRequestAsync(validator);
 
-            Assert.IsInstanceOf<PreflightRequest>(result);
-            Assert.IsFalse(((PreflightRequest)result).IsValid);
+            Assert.That(result, Is.InstanceOf<PreflightRequest>());
+            Assert.That(((PreflightRequest)result).IsValid, Is.False);
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = await request.ReadWebPubSubRequestAsync(validator);
 
-            Assert.IsInstanceOf<ConnectedEventRequest>(result);
+            Assert.That(result, Is.InstanceOf<ConnectedEventRequest>());
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = await request.ReadWebPubSubRequestAsync(validator);
 
-            Assert.IsInstanceOf<ConnectedEventRequest>(result);
+            Assert.That(result, Is.InstanceOf<ConnectedEventRequest>());
         }
 
         private static IHeaderDictionary CreateCloudEventsHeaders(
@@ -122,14 +122,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             string input = null;
             var result = input.DecodeConnectionStates();
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
         public void DecodeConnectionStates_WhenEmpty_ReturnsNull()
         {
             var result = "".DecodeConnectionStates();
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -145,10 +145,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = base64.DecodeConnectionStates();
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Count);
-            Assert.AreEqual("value1", result["key1"].ToString());
-            Assert.AreEqual(123, result["key2"].ToObjectFromJson<int>());
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Count, Is.EqualTo(2));
+            Assert.That(result["key1"].ToString(), Is.EqualTo("value1"));
+            Assert.That(result["key2"].ToObjectFromJson<int>(), Is.EqualTo(123));
         }
 
         [Test]
@@ -156,8 +156,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var result = "not-valid-base64!!!".DecodeConnectionStates();
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Count);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -167,8 +167,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var result = base64.DecodeConnectionStates();
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Count);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -183,10 +183,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var encoded = states.EncodeConnectionStates();
             var decoded = encoded.DecodeConnectionStates();
 
-            Assert.IsNotNull(decoded);
-            Assert.AreEqual(2, decoded.Count);
-            Assert.AreEqual("hello", decoded["strKey"].ToString());
-            Assert.AreEqual(42, decoded["intKey"].ToObjectFromJson<int>());
+            Assert.That(decoded, Is.Not.Null);
+            Assert.That(decoded.Count, Is.EqualTo(2));
+            Assert.That(decoded["strKey"].ToString(), Is.EqualTo("hello"));
+            Assert.That(decoded["intKey"].ToObjectFromJson<int>(), Is.EqualTo(42));
         }
 
         private static string ComputeSignature(string accessKey, string connectionId)

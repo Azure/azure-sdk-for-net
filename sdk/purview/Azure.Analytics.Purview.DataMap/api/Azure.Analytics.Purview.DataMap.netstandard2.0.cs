@@ -45,7 +45,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.AutoCompleteResult AutoCompleteResult(System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.AutoCompleteResultValue> value = null) { throw null; }
         public static Azure.Analytics.Purview.DataMap.AutoCompleteResultValue AutoCompleteResultValue(string text = null, string queryPlusText = null) { throw null; }
         public static Azure.Analytics.Purview.DataMap.BulkImportResult BulkImportResult(System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.ImportInfo> failedImportInfoList = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.ImportInfo> successImportInfoList = null) { throw null; }
-        public static Azure.Analytics.Purview.DataMap.BusinessMetadataOptions BusinessMetadataOptions(System.BinaryData file = null) { throw null; }
+        public static Azure.Analytics.Purview.DataMap.BusinessMetadataOptions BusinessMetadataOptions(System.ClientModel.FileBinaryContent file = null) { throw null; }
         public static Azure.Analytics.Purview.DataMap.ClassificationAssociateConfig ClassificationAssociateConfig(Azure.Analytics.Purview.DataMap.AtlasClassification classification = null, System.Collections.Generic.IEnumerable<string> entityGuids = null) { throw null; }
         public static Azure.Analytics.Purview.DataMap.ContactInfo ContactInfo(string id = null, string info = null) { throw null; }
         public static Azure.Analytics.Purview.DataMap.ContactSearchResultValue ContactSearchResultValue(string id = null, string info = null, string contactType = null) { throw null; }
@@ -1164,20 +1164,13 @@ namespace Azure.Analytics.Purview.DataMap
         public static bool operator !=(Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior left, Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BusinessMetadataOptions : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>
+    public partial class BusinessMetadataOptions
     {
         public BusinessMetadataOptions(System.BinaryData file) { }
-        public System.BinaryData File { get { throw null; } }
-        protected virtual Azure.Analytics.Purview.DataMap.BusinessMetadataOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator Azure.Core.RequestContent (Azure.Analytics.Purview.DataMap.BusinessMetadataOptions businessMetadataOptions) { throw null; }
-        protected virtual Azure.Analytics.Purview.DataMap.BusinessMetadataOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Analytics.Purview.DataMap.BusinessMetadataOptions System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Analytics.Purview.DataMap.BusinessMetadataOptions System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public BusinessMetadataOptions(System.ClientModel.FileBinaryContent file) { }
+        public BusinessMetadataOptions(System.IO.Stream file) { }
+        public BusinessMetadataOptions(string filePath) { }
+        public System.ClientModel.FileBinaryContent File { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CardinalityValue : System.IEquatable<Azure.Analytics.Purview.DataMap.CardinalityValue>
@@ -1385,8 +1378,9 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasEntityHeader> GetHeader(string guid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetHeaderAsync(string guid, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasEntityHeader>> GetHeaderAsync(string guid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.BulkImportResult> ImportBusinessMetadata(Azure.Analytics.Purview.DataMap.BusinessMetadataOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ImportBusinessMetadata(Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.BulkImportResult> ImportBusinessMetadata(System.BinaryData file, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.BulkImportResult>> ImportBusinessMetadataAsync(Azure.Analytics.Purview.DataMap.BusinessMetadataOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ImportBusinessMetadataAsync(Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult> MoveEntitiesToCollection(string collectionId, Azure.Analytics.Purview.DataMap.MoveEntitiesConfig body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response MoveEntitiesToCollection(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }

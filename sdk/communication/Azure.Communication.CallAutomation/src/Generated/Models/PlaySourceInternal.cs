@@ -11,18 +11,18 @@ namespace Azure.Communication.CallAutomation
     internal partial class PlaySourceInternal
     {
         /// <summary> Initializes a new instance of <see cref="PlaySourceInternal"/>. </summary>
-        /// <param name="kind"> Defines the type of the play source. </param>
+        /// <param name="kind"> Defines the types of play source. </param>
         public PlaySourceInternal(PlaySourceTypeInternal kind)
         {
             Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="PlaySourceInternal"/>. </summary>
-        /// <param name="kind"> Defines the type of the play source. </param>
+        /// <param name="kind"> Defines the types of play source. </param>
         /// <param name="playSourceCacheId"> Defines the identifier to be used for caching related media. </param>
-        /// <param name="file"> Defines the file source info to be used for play. </param>
-        /// <param name="text"> Defines the text source info to be used for play. </param>
-        /// <param name="ssml"> Defines the ssml(Speech Synthesis Markup Language) source info to be used for play. </param>
+        /// <param name="file"></param>
+        /// <param name="text"></param>
+        /// <param name="ssml"></param>
         internal PlaySourceInternal(PlaySourceTypeInternal kind, string playSourceCacheId, FileSourceInternal file, TextSourceInternal text, SsmlSourceInternal ssml)
         {
             Kind = kind;
@@ -32,15 +32,15 @@ namespace Azure.Communication.CallAutomation
             Ssml = ssml;
         }
 
-        /// <summary> Defines the type of the play source. </summary>
+        /// <summary> Defines the types of play source. </summary>
         public PlaySourceTypeInternal Kind { get; }
         /// <summary> Defines the identifier to be used for caching related media. </summary>
         public string PlaySourceCacheId { get; set; }
-        /// <summary> Defines the file source info to be used for play. </summary>
+        /// <summary> Gets or sets the file. </summary>
         public FileSourceInternal File { get; set; }
-        /// <summary> Defines the text source info to be used for play. </summary>
+        /// <summary> Gets or sets the text. </summary>
         public TextSourceInternal Text { get; set; }
-        /// <summary> Defines the ssml(Speech Synthesis Markup Language) source info to be used for play. </summary>
+        /// <summary> Gets or sets the ssml. </summary>
         public SsmlSourceInternal Ssml { get; set; }
     }
 }

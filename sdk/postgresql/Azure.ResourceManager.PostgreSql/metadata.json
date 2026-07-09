@@ -1,5 +1,5 @@
 {
   "apiVersions": {
-    "Microsoft.DBforPostgreSQL": "2026-01-01-preview"
+    "Microsoft.DBforPostgreSQL": "2026-04-01-preview"
   }
 }

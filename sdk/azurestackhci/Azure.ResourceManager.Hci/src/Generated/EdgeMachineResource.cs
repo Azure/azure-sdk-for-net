@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string edgeMachineApiVersion);
             _edgeMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _edgeMachinesRestClient = new EdgeMachines(_edgeMachinesClientDiagnostics, Pipeline, Endpoint, edgeMachineApiVersion ?? "2026-04-01-preview");
+            _edgeMachinesRestClient = new EdgeMachines(_edgeMachinesClientDiagnostics, Pipeline, Endpoint, edgeMachineApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -395,6 +395,124 @@ namespace Azure.ResourceManager.Hci
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A long-running resource action to validate the edge machine.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/edgeMachines/{edgeMachineName}/validate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeMachines_Validate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeMachineResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<HciEdgeMachineValidateResult>> ValidateAsync(WaitUntil waitUntil, HciEdgeMachineValidateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _edgeMachinesClientDiagnostics.CreateScope("EdgeMachineResource.Validate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeMachinesRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciEdgeMachineValidateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HciArmOperation<HciEdgeMachineValidateResult> operation = new HciArmOperation<HciEdgeMachineValidateResult>(
+                    new HciEdgeMachineValidateResultOperationSource(),
+                    _edgeMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A long-running resource action to validate the edge machine.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/edgeMachines/{edgeMachineName}/validate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeMachines_Validate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeMachineResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<HciEdgeMachineValidateResult> Validate(WaitUntil waitUntil, HciEdgeMachineValidateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _edgeMachinesClientDiagnostics.CreateScope("EdgeMachineResource.Validate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeMachinesRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciEdgeMachineValidateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HciArmOperation<HciEdgeMachineValidateResult> operation = new HciArmOperation<HciEdgeMachineValidateResult>(
+                    new HciEdgeMachineValidateResultOperationSource(),
+                    _edgeMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }
@@ -710,6 +828,171 @@ namespace Azure.ResourceManager.Hci
             Argument.AssertNotNullOrEmpty(jobsName, nameof(jobsName));
 
             return GetEdgeMachineJobs().Get(jobsName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EdgeMachineUpdates in the <see cref="EdgeMachineResource"/>. </summary>
+        /// <returns> An object representing collection of EdgeMachineUpdates and their operations over a EdgeMachineUpdateResource. </returns>
+        public virtual EdgeMachineUpdateCollection GetEdgeMachineUpdates()
+        {
+            return GetCachedClient(client => new EdgeMachineUpdateCollection(client, Id));
+        }
+
+        /// <summary> Get EdgeMachine update. </summary>
+        /// <param name="default"> Name of EdgeMachine update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="default"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="default"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeMachineUpdateResource>> GetEdgeMachineUpdateAsync(string @default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(@default, nameof(@default));
+
+            return await GetEdgeMachineUpdates().GetAsync(@default, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get EdgeMachine update. </summary>
+        /// <param name="default"> Name of EdgeMachine update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="default"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="default"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeMachineUpdateResource> GetEdgeMachineUpdate(string @default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(@default, nameof(@default));
+
+            return GetEdgeMachineUpdates().Get(@default, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EdgeMachineGpus in the <see cref="EdgeMachineResource"/>. </summary>
+        /// <returns> An object representing collection of EdgeMachineGpus and their operations over a EdgeMachineGpuResource. </returns>
+        public virtual EdgeMachineGpuCollection GetEdgeMachineGpus()
+        {
+            return GetCachedClient(client => new EdgeMachineGpuCollection(client, Id));
+        }
+
+        /// <summary> Get a specific GPU on an Edge Machine. </summary>
+        /// <param name="gpuName"> The name of the EdgeMachineGpu. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gpuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gpuName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeMachineGpuResource>> GetEdgeMachineGpuAsync(string gpuName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gpuName, nameof(gpuName));
+
+            return await GetEdgeMachineGpus().GetAsync(gpuName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a specific GPU on an Edge Machine. </summary>
+        /// <param name="gpuName"> The name of the EdgeMachineGpu. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gpuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gpuName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeMachineGpuResource> GetEdgeMachineGpu(string gpuName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gpuName, nameof(gpuName));
+
+            return GetEdgeMachineGpus().Get(gpuName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EdgeMachineNetworkAdapters in the <see cref="EdgeMachineResource"/>. </summary>
+        /// <returns> An object representing collection of EdgeMachineNetworkAdapters and their operations over a EdgeMachineNetworkAdapterResource. </returns>
+        public virtual EdgeMachineNetworkAdapterCollection GetEdgeMachineNetworkAdapters()
+        {
+            return GetCachedClient(client => new EdgeMachineNetworkAdapterCollection(client, Id));
+        }
+
+        /// <summary> Get a specific network adapter on an Edge Machine. </summary>
+        /// <param name="networkAdapterName"> The name of the EdgeMachineNetworkAdapter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkAdapterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkAdapterName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeMachineNetworkAdapterResource>> GetEdgeMachineNetworkAdapterAsync(string networkAdapterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkAdapterName, nameof(networkAdapterName));
+
+            return await GetEdgeMachineNetworkAdapters().GetAsync(networkAdapterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a specific network adapter on an Edge Machine. </summary>
+        /// <param name="networkAdapterName"> The name of the EdgeMachineNetworkAdapter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkAdapterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkAdapterName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeMachineNetworkAdapterResource> GetEdgeMachineNetworkAdapter(string networkAdapterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkAdapterName, nameof(networkAdapterName));
+
+            return GetEdgeMachineNetworkAdapters().Get(networkAdapterName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EdgeMachineDisks in the <see cref="EdgeMachineResource"/>. </summary>
+        /// <returns> An object representing collection of EdgeMachineDisks and their operations over a EdgeMachineDiskResource. </returns>
+        public virtual EdgeMachineDiskCollection GetEdgeMachineDisks()
+        {
+            return GetCachedClient(client => new EdgeMachineDiskCollection(client, Id));
+        }
+
+        /// <summary> Get a specific disk on an Edge Machine. </summary>
+        /// <param name="diskName"> The name of the EdgeMachineDisk. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeMachineDiskResource>> GetEdgeMachineDiskAsync(string diskName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
+
+            return await GetEdgeMachineDisks().GetAsync(diskName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a specific disk on an Edge Machine. </summary>
+        /// <param name="diskName"> The name of the EdgeMachineDisk. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeMachineDiskResource> GetEdgeMachineDisk(string diskName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
+
+            return GetEdgeMachineDisks().Get(diskName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EdgeMachineVolumes in the <see cref="EdgeMachineResource"/>. </summary>
+        /// <returns> An object representing collection of EdgeMachineVolumes and their operations over a EdgeMachineVolumeResource. </returns>
+        public virtual EdgeMachineVolumeCollection GetEdgeMachineVolumes()
+        {
+            return GetCachedClient(client => new EdgeMachineVolumeCollection(client, Id));
+        }
+
+        /// <summary> Get a specific volume on an Edge Machine. </summary>
+        /// <param name="volumeName"> The name of the EdgeMachineVolume. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeMachineVolumeResource>> GetEdgeMachineVolumeAsync(string volumeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+
+            return await GetEdgeMachineVolumes().GetAsync(volumeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a specific volume on an Edge Machine. </summary>
+        /// <param name="volumeName"> The name of the EdgeMachineVolume. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeMachineVolumeResource> GetEdgeMachineVolume(string volumeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+
+            return GetEdgeMachineVolumes().Get(volumeName, cancellationToken);
         }
     }
 }

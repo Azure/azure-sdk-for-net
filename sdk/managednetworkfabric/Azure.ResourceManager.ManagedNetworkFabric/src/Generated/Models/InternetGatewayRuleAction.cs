@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct InternetGatewayRuleAction : IEquatable<InternetGatewayRuleAction>
     {
         private readonly string _value;
+        /// <summary> Action Allow. </summary>
+        private const string AllowValue = "Allow";
+        /// <summary> Action Deny. </summary>
+        private const string DenyValue = "Deny";
 
         /// <summary> Initializes a new instance of <see cref="InternetGatewayRuleAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InternetGatewayRuleAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllowValue = "Allow";
-        private const string DenyValue = "Deny";
+            _value = value;
+        }
 
         /// <summary> Action Allow. </summary>
         public static InternetGatewayRuleAction Allow { get; } = new InternetGatewayRuleAction(AllowValue);
+
         /// <summary> Action Deny. </summary>
         public static InternetGatewayRuleAction Deny { get; } = new InternetGatewayRuleAction(DenyValue);
+
         /// <summary> Determines if two <see cref="InternetGatewayRuleAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InternetGatewayRuleAction left, InternetGatewayRuleAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InternetGatewayRuleAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InternetGatewayRuleAction left, InternetGatewayRuleAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InternetGatewayRuleAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InternetGatewayRuleAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InternetGatewayRuleAction(string value) => new InternetGatewayRuleAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InternetGatewayRuleAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InternetGatewayRuleAction?(string value) => value == null ? null : new InternetGatewayRuleAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InternetGatewayRuleAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InternetGatewayRuleAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

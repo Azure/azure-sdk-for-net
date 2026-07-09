@@ -171,7 +171,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 return;
             }
 
-            string id = Azure.Storage.Shared.StorageExtensions.GenerateBlockId(position);
+            string id = BlobHelpers.GenerateBlockId();
             if (!_blocks.TryAdd(position, id))
             {
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{position}\", it already exists in the block list.");
@@ -249,7 +249,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            string id = options?.BlockId ?? Storage.Shared.StorageExtensions.GenerateBlockId(range.Offset);
+            string id = options?.BlockId ?? BlobHelpers.GenerateBlockId();
             if (!_blocks.TryAdd(range.Offset, id))
             {
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the block list");

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IList<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus = default;
             AgentPoolStatus status = default;
             LocalDnsProfile localDnsProfile = default;
-            NodeCustomizationProfile nodeCustomizationProfile = default;
+            PreparedImageSpecificationProfile preparedImageSpecificationProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             foreach (var prop in element.EnumerateObject())
@@ -747,13 +747,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                     localDnsProfile = LocalDnsProfile.DeserializeLocalDnsProfile(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("nodeCustomizationProfile"u8))
+                if (prop.NameEquals("preparedImageSpecificationProfile"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nodeCustomizationProfile = NodeCustomizationProfile.DeserializeNodeCustomizationProfile(prop.Value, options);
+                    preparedImageSpecificationProfile = PreparedImageSpecificationProfile.DeserializePreparedImageSpecificationProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 virtualMachineNodesStatus ?? new ChangeTrackingList<AgentPoolVirtualMachineNodes>(),
                 status,
                 localDnsProfile,
-                nodeCustomizationProfile,
+                preparedImageSpecificationProfile,
                 additionalBinaryDataProperties,
                 name);
         }

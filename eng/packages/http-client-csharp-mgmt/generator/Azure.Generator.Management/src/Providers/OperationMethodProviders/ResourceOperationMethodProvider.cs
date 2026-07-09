@@ -37,7 +37,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         protected virtual bool ShouldApplyLroHandling => IsLongRunningOperation || IsFakeLongRunningOperation;
 
         protected readonly TypeProvider _enclosingType;
-        protected readonly OperationContext _operationContext;
         protected readonly ParameterProvider? _scopeParameter;
         protected readonly ClientProvider _restClient;
         protected readonly InputServiceMethod _serviceMethod;
@@ -60,7 +59,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// Creates a new instance of <see cref="ResourceOperationMethodProvider"/> which represents a method on a client
         /// </summary>
         /// <param name="enclosingType">The enclosing type of this operation. </param>
-        /// <param name="operationContext">The contextual path of the enclosing type. </param>
+        /// <param name="parameterMappings">The parameter mappings to use for the operation. </param>
         /// <param name="restClientInfo">The rest client information containing the client provider and related fields. </param>
         /// <param name="method">The input service method that we are building from. </param>
         /// <param name="isAsync">Whether this method is an async method. </param>
@@ -71,7 +70,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="scopeParameter">Optional scope parameter for extension-scoped non-resource methods. When provided, contextual parameters are extracted from this scope instead of Id.</param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
-            OperationContext operationContext,
+            ParameterContextRegistry parameterMappings,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             bool isAsync,
@@ -82,11 +81,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
-            _operationContext = operationContext;
             _scopeParameter = scopeParameter;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
-            _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
+            _parameterMappings = parameterMappings;
             _isAsync = isAsync;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
             bool isLongRunningOperation = false;
@@ -139,9 +137,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             {
                 // If explicit resource client is provided, use it to avoid incorrect lookup
                 // when multiple resources share the same model
-                if (explicitResourceClient != null && explicitResourceClient.ResourceData.Type == originalBodyType)
+                if (explicitResourceClient != null && explicitResourceClient.IsResourceDataType(originalBodyType))
                 {
                     wrappedResourceClient = explicitResourceClient;
+                    originalBodyType = wrappedResourceClient.ResourceData.Type;
                     returnBodyType = wrappedResourceClient.Type;
                     return;
                 }
@@ -151,9 +150,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 if (enclosingType is ResourceCollectionClientProvider collectionProvider)
                 {
                     // Check if the collection's resource data type matches the response body type
-                    if (collectionProvider.ResourceData.Type == originalBodyType)
+                    if (collectionProvider.Resource.IsResourceDataType(originalBodyType))
                     {
                         wrappedResourceClient = collectionProvider.Resource;
+                        originalBodyType = wrappedResourceClient.ResourceData.Type;
                         returnBodyType = wrappedResourceClient.Type;
                         return;
                     }
@@ -162,9 +162,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 else if (enclosingType is ResourceClientProvider resourceProvider)
                 {
                     // Check if this resource's data type matches the response body type
-                    if (resourceProvider.ResourceData.Type == originalBodyType)
+                    if (resourceProvider.IsResourceDataType(originalBodyType))
                     {
                         wrappedResourceClient = resourceProvider;
+                        originalBodyType = wrappedResourceClient.ResourceData.Type;
                         returnBodyType = wrappedResourceClient.Type;
                         return;
                     }
@@ -472,7 +473,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             if (_returnBodyResourceClient != null)
             {
                 // Resource type - pass client to operation source constructor
-                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_returnBodyResourceClient.Type].Type;
+                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.GetOperationSource(_returnBodyResourceClient).Type;
                 operationSourceInstance = New.Instance(operationSourceType, This.As<ArmResource>().Client());
             }
             else if (_originalBodyType != null)

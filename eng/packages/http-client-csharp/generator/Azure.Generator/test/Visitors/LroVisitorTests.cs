@@ -5,17 +5,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Azure.Generator.Visitors;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Tests.Visitors
 {
@@ -430,6 +433,134 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual(Helpers.GetExpectedFromFile(), actual);
         }
 
+        // Regression test for the Async-suffix scope-name bug: when both visitors run
+        // (DistributedTracingVisitor adds the outer client-method scope, LroVisitor rewrites
+        // the ProcessMessage call and injects the polling scope argument), the async protocol
+        // method must use the stripped scope name ("TestClient.Foo") in BOTH places, never
+        // "TestClient.FooAsync".
+        [Test]
+        public void AsyncProtocolMethodUsesStrippedScopeNameForOuterScopeAndScopeArg()
+        {
+            var lroVisitor = new TestLroVisitor();
+            var tracingVisitor = new TestDistributedTracingVisitor();
+            List<InputParameter> parameters =
+            [
+                InputFactory.BodyParameter("p1", InputPrimitiveType.String)
+            ];
+            List<InputMethodParameter> methodParameters =
+            [
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
+            ];
+            var lro = InputFactory.Operation(
+                "foo",
+                parameters: parameters);
+            var responseModel = InputFactory.Model("foo");
+            var lroServiceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                lro, parameters: methodParameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
+            var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
+            var plugin = MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            var outputLibrary = plugin.Object.OutputLibrary;
+
+            // Run the visitors in the same order as the real generation pipeline:
+            // DistributedTracingVisitor wraps the body with the outer scope first,
+            // then LroVisitor rewrites the inner ProcessMessage call / scope argument.
+            tracingVisitor.InvokeVisitLibrary(outputLibrary);
+            lroVisitor.InvokeVisitLibrary(outputLibrary);
+
+            var clientProvider = outputLibrary.TypeProviders.OfType<ClientProvider>().FirstOrDefault();
+            Assert.IsNotNull(clientProvider);
+            var asyncProtocolMethod = clientProvider!.Methods
+                .FirstOrDefault(m => m.Signature.Name == "FooAsync"
+                    && m.Signature.Parameters.Any(p => p.Name == "context"));
+
+            Assert.IsNotNull(asyncProtocolMethod);
+            var actual = asyncProtocolMethod!.BodyStatements!.ToDisplayString();
+
+            // The expected snapshot captures both the outer scope (added by
+            // DistributedTracingVisitor) and the ProcessMessageAsync scope argument (added by
+            // LroVisitor), both of which must use the stripped scope name "TestClient.Foo"
+            // rather than the Async-suffixed "TestClient.FooAsync".
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), actual);
+        }
+
+        // Regression: a convenience LRO method body whose `return Response.FromValue(...)` call has
+        // an argument shape that does NOT match `(T)response` (i.e. Arguments[0] is not a CastExpression)
+        // must not crash the visitor. Before the fix, the cast was unwrapped via
+        // `(Arguments[0] as CastExpression)!.Inner`, which threw NullReferenceException for any
+        // unexpected shape. The visitor should leave such statements unchanged.
+        [Test]
+        public void VisitExpressionStatement_FromValueWithNonCastArg_LeavesStatementUnchanged()
+        {
+            var (visitor, convenienceMethod) = BuildConvenienceMethodForExpressionStatementGuardTests();
+
+            // return Response.FromValue("not-a-cast", "response");  // Arguments[0] is a Literal, not a Cast.
+            var statement = new KeywordExpression(
+                "return",
+                Static(typeof(Response)).Invoke(
+                    "FromValue",
+                    [Literal("not-a-cast"), Literal("response")])).Terminate();
+            var expressionStatement = (ExpressionStatement)statement;
+
+            MethodBodyStatement? result = null;
+            Assert.DoesNotThrow(() =>
+                result = visitor.InvokeVisitExpressionStatement(expressionStatement, convenienceMethod));
+            Assert.AreSame(expressionStatement, result);
+        }
+
+        // Regression: a `return Response.FromValue()` call with no arguments must not crash the
+        // visitor on the Arguments[0] index access.
+        [Test]
+        public void VisitExpressionStatement_FromValueWithNoArgs_LeavesStatementUnchanged()
+        {
+            var (visitor, convenienceMethod) = BuildConvenienceMethodForExpressionStatementGuardTests();
+
+            var statement = new KeywordExpression(
+                "return",
+                Static(typeof(Response)).Invoke("FromValue", System.Array.Empty<ValueExpression>())).Terminate();
+            var expressionStatement = (ExpressionStatement)statement;
+
+            MethodBodyStatement? result = null;
+            Assert.DoesNotThrow(() =>
+                result = visitor.InvokeVisitExpressionStatement(expressionStatement, convenienceMethod));
+            Assert.AreSame(expressionStatement, result);
+        }
+
+        private static (TestLroVisitor Visitor, ScmMethodProvider ConvenienceMethod)
+            BuildConvenienceMethodForExpressionStatementGuardTests()
+        {
+            var visitor = new TestLroVisitor();
+            List<InputMethodParameter> parameters =
+            [
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
+            ];
+            var responseModel = InputFactory.Model("foo");
+            var lro = InputFactory.Operation(
+                "foo",
+                parameters: parameters,
+                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
+            var lroServiceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                lro,
+                parameters: parameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
+            var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            // Pick the synchronous convenience method (no `context` param) to satisfy the visitor's
+            // gate `scmMethod.IsLroMethod() && scmMethod.Kind != ScmMethodKind.Protocol`.
+            var convenienceMethod = clientProvider!.Methods
+                .OfType<ScmMethodProvider>()
+                .FirstOrDefault(m => m.Signature.Name == "Foo"
+                    && m.Signature.Parameters.All(p => p.Name != "context"));
+            Assert.IsNotNull(convenienceMethod);
+            return (visitor, convenienceMethod!);
+        }
+
         private class TestLroVisitor : LroVisitor
         {
             public MethodProvider? InvokeVisitMethod(MethodProvider method)
@@ -445,6 +576,21 @@ namespace Azure.Generator.Tests.Visitors
                 return base.Visit(serviceMethod, client, methodCollection);
             }
 
+            public void InvokeVisitLibrary(OutputLibrary library)
+            {
+                base.VisitLibrary(library);
+            }
+
+            public MethodBodyStatement? InvokeVisitExpressionStatement(
+                ExpressionStatement expressionStatement,
+                MethodProvider method)
+            {
+                return base.VisitExpressionStatement(expressionStatement, method);
+            }
+        }
+
+        private class TestDistributedTracingVisitor : DistributedTracingVisitor
+        {
             public void InvokeVisitLibrary(OutputLibrary library)
             {
                 base.VisitLibrary(library);

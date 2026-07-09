@@ -103,6 +103,30 @@ namespace Azure.Generator.Management.Tests.Providers
                 "Shared data type should NOT be resource-wrapped for List operations");
         }
 
+        [TestCase]
+        public void PagingAction_OverriddenResourceData_Wraps_Sync()
+        {
+            SetupScenario(ResourceOperationKind.Action, isPaging: true, sharedDataType: false, out var plugin, useDataOverride: true);
+            var returnType = FindSyncMethodReturnType(plugin, "ServerResource", "GetConfigurations", "listConfigurations");
+
+            Assert.That(returnType!.FrameworkType, Is.EqualTo(typeof(Pageable<>)),
+                $"Sync return type should be Pageable<>, but was {returnType}");
+            Assert.That(returnType.Arguments[0].Name, Is.EqualTo("ConfigurationResource"),
+                "Original data type should still wrap to the resource when the resource data type is overridden");
+        }
+
+        [TestCase]
+        public void ArrayResponseAction_OverriddenResourceData_Wraps_Sync()
+        {
+            SetupScenario(ResourceOperationKind.Action, isPaging: false, sharedDataType: false, out var plugin, useDataOverride: true, isArrayResponse: true);
+            var returnType = FindSyncMethodReturnType(plugin, "ServerResource", "GetConfigurations", "listConfigurations");
+
+            Assert.That(returnType!.FrameworkType, Is.EqualTo(typeof(Pageable<>)),
+                $"Array response action should be wrapped as Pageable<>, but was {returnType}");
+            Assert.That(returnType.Arguments[0].Name, Is.EqualTo("ConfigurationResource"),
+                "Original array item type should still wrap to the resource when the resource data type is overridden");
+        }
+
         // ===== Non-paging Action (returns single item): Single resource -> wraps =====
 
         [TestCase]
@@ -236,9 +260,22 @@ namespace Azure.Generator.Management.Tests.Providers
             ResourceOperationKind operationKind,
             bool isPaging,
             bool sharedDataType,
-            out Moq.Mock<ManagementClientGenerator> plugin)
+            out Moq.Mock<ManagementClientGenerator> plugin,
+            bool useDataOverride = false,
+            bool isArrayResponse = false)
         {
             var configModel = InputFactory.Model("ConfigurationData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("value", InputPrimitiveType.String, isReadOnly: false),
+                ],
+                decorators: []);
+
+            var customConfigModel = InputFactory.Model("CustomConfigurationData",
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
                 properties:
                 [
@@ -340,7 +377,7 @@ namespace Azure.Generator.Management.Tests.Providers
             }
             else
             {
-                var listConfigsResponse = InputFactory.OperationResponse(statusCodes: [200], bodytype: configModel);
+                var listConfigsResponse = InputFactory.OperationResponse(statusCodes: [200], bodytype: isArrayResponse ? InputFactory.Array(configModel) : configModel);
 
                 var listConfigsOp = InputFactory.Operation(
                     name: "listConfigurations",
@@ -385,6 +422,10 @@ namespace Azure.Generator.Management.Tests.Providers
 
             var methods = new List<InputServiceMethod> { getServerMethod, getConfigMethod, listConfigsMethod };
             var decorators = new List<InputDecoratorInfo> { serverDecorator, configDecorator };
+            if (useDataOverride)
+            {
+                inputModels.Add(customConfigModel);
+            }
 
             // Optionally add a second resource sharing ConfigurationData
             if (sharedDataType)
@@ -432,7 +473,29 @@ namespace Azure.Generator.Management.Tests.Providers
 
             plugin = ManagementMockHelpers.LoadMockPlugin(
                 inputModels: () => inputModels,
-                clients: () => [client]);
+                clients: () => [client],
+                customizationSources: useDataOverride ? ["""
+                    namespace Microsoft.TypeSpec.Generator.Customizations
+                    {
+                        internal class CodeGenResourceDataAttribute : System.Attribute
+                        {
+                            public CodeGenResourceDataAttribute(System.Type dataType) { }
+                        }
+                    }
+
+                    namespace Samples
+                    {
+                        using Microsoft.TypeSpec.Generator.Customizations;
+
+                        [CodeGenResourceData(typeof(Models.CustomConfigurationData))]
+                        public partial class ConfigurationResource { }
+                    }
+
+                    namespace Samples.Models
+                    {
+                        public partial class CustomConfigurationData { }
+                    }
+                    """] : null);
         }
 
         private static InputDecoratorInfo BuildArmProviderSchema(

@@ -560,6 +560,24 @@ namespace Azure.ResourceManager.StorageMover.Models
                 default);
         }
 
+        /// <param name="code"> Error code of the given entry. </param>
+        /// <param name="message"> Error message of the given entry. </param>
+        /// <param name="target"> Target of the given error entry. </param>
+        /// <returns> A new <see cref="Models.JobRunError"/> instance for mocking. </returns>
+        public static JobRunError JobRunError(string code = default, string message = default, string target = default)
+        {
+            return new JobRunError(code, message, target, default);
+        }
+
+        /// <param name="code"> Error code of the given entry. </param>
+        /// <param name="message"> Warning message of the given entry. </param>
+        /// <param name="target"> Target of the given error entry. </param>
+        /// <returns> A new <see cref="Models.JobRunWarning"/> instance for mocking. </returns>
+        public static JobRunWarning JobRunWarning(string code = default, string message = default, string target = default)
+        {
+            return new JobRunWarning(code, message, target, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -596,6 +614,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="warnings"> Warning details. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <returns> A new <see cref="StorageMover.JobRunData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static JobRunData JobRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, JobRunStatus? status = default, JobRunScanStatus? scanStatus = default, string agentName = default, ResourceIdentifier agentResourceId = default, DateTimeOffset? executionStartOn = default, DateTimeOffset? executionEndOn = default, StorageMoverJobTriggerType? triggerType = default, DateTimeOffset? scheduledExecutionOn = default, DateTimeOffset? lastStatusUpdate = default, long? itemsScanned = default, long? itemsExcluded = default, long? itemsUnsupported = default, long? itemsNoTransferNeeded = default, long? itemsFailed = default, long? itemsTransferred = default, long? bytesScanned = default, long? bytesExcluded = default, long? bytesUnsupported = default, long? bytesNoTransferNeeded = default, long? bytesFailed = default, long? bytesTransferred = default, string sourceName = default, ResourceIdentifier sourceResourceId = default, BinaryData sourceProperties = default, string targetName = default, ResourceIdentifier targetResourceId = default, BinaryData targetProperties = default, BinaryData jobDefinitionProperties = default, JobRunError error = default, IEnumerable<JobRunWarning> warnings = default, StorageMoverProvisioningState? provisioningState = default)
         {
             return new JobRunData(
@@ -637,24 +656,6 @@ namespace Azure.ResourceManager.StorageMover.Models
                     provisioningState,
                     default),
                 default);
-        }
-
-        /// <param name="code"> Error code of the given entry. </param>
-        /// <param name="message"> Error message of the given entry. </param>
-        /// <param name="target"> Target of the given error entry. </param>
-        /// <returns> A new <see cref="Models.JobRunError"/> instance for mocking. </returns>
-        public static JobRunError JobRunError(string code = default, string message = default, string target = default)
-        {
-            return new JobRunError(code, message, target, default);
-        }
-
-        /// <param name="code"> Error code of the given entry. </param>
-        /// <param name="message"> Warning message of the given entry. </param>
-        /// <param name="target"> Target of the given error entry. </param>
-        /// <returns> A new <see cref="Models.JobRunWarning"/> instance for mocking. </returns>
-        public static JobRunWarning JobRunWarning(string code = default, string message = default, string target = default)
-        {
-            return new JobRunWarning(code, message, target, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageBlobContainerEndpointProperties"/>. </summary>

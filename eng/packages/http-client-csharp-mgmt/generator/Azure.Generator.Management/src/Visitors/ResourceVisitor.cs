@@ -124,13 +124,14 @@ internal class ResourceVisitor : ScmLibraryVisitor
     {
         if (type is ModelProvider model && ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(model.Type))
         {
-            type.Update(@namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
+            var resourceNamespace = model.CustomCodeView?.Type.Namespace ?? ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace;
+            type.Update(@namespace: resourceNamespace);
 
             foreach (var serialization in type.SerializationProviders)
             {
                 serialization.Update(
                     relativeFilePath: Path.Combine("src", "Generated", $"{model.Name}.Serialization.cs"),
-                    @namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
+                    @namespace: resourceNamespace);
             }
         }
     }

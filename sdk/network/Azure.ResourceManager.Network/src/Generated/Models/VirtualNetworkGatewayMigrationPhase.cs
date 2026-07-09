@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VirtualNetworkGatewayMigrationPhase : IEquatable<VirtualNetworkGatewayMigrationPhase>
     {
         private readonly string _value;
+        /// <summary> No migration phase set on gateway. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Gateway is going through prepare migration or prepare has failed. Please see state and error details for more information. </summary>
+        private const string PrepareValue = "Prepare";
+        /// <summary> Prepare succeeded on gateway. </summary>
+        private const string PrepareSucceededValue = "PrepareSucceeded";
+        /// <summary> Gateway is going through execute migration or execute has failed. Please see state and error details for more information. </summary>
+        private const string ExecuteValue = "Execute";
+        /// <summary> Execute succeeded on gateway. </summary>
+        private const string ExecuteSucceededValue = "ExecuteSucceeded";
+        /// <summary> Gateway is going through commit migration or commit has failed. Please see state and error details for more information. </summary>
+        private const string CommitValue = "Commit";
+        /// <summary> Commit succeeded, represent migration is complete for the gateway. </summary>
+        private const string CommitSucceededValue = "CommitSucceeded";
+        /// <summary> Represent abort succeeded on gateway, start with prepare to retrigger migration. </summary>
+        private const string AbortSucceededValue = "AbortSucceeded";
+        /// <summary> Gateway is going through abort migration or abort has failed. Please see state and error details for more information. </summary>
+        private const string AbortValue = "Abort";
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayMigrationPhase"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualNetworkGatewayMigrationPhase(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string PrepareValue = "Prepare";
-        private const string PrepareSucceededValue = "PrepareSucceeded";
-        private const string ExecuteValue = "Execute";
-        private const string ExecuteSucceededValue = "ExecuteSucceeded";
-        private const string CommitValue = "Commit";
-        private const string CommitSucceededValue = "CommitSucceeded";
-        private const string AbortSucceededValue = "AbortSucceeded";
-        private const string AbortValue = "Abort";
+            _value = value;
+        }
 
         /// <summary> No migration phase set on gateway. </summary>
         public static VirtualNetworkGatewayMigrationPhase None { get; } = new VirtualNetworkGatewayMigrationPhase(NoneValue);
+
         /// <summary> Gateway is going through prepare migration or prepare has failed. Please see state and error details for more information. </summary>
         public static VirtualNetworkGatewayMigrationPhase Prepare { get; } = new VirtualNetworkGatewayMigrationPhase(PrepareValue);
+
         /// <summary> Prepare succeeded on gateway. </summary>
         public static VirtualNetworkGatewayMigrationPhase PrepareSucceeded { get; } = new VirtualNetworkGatewayMigrationPhase(PrepareSucceededValue);
+
         /// <summary> Gateway is going through execute migration or execute has failed. Please see state and error details for more information. </summary>
         public static VirtualNetworkGatewayMigrationPhase Execute { get; } = new VirtualNetworkGatewayMigrationPhase(ExecuteValue);
+
         /// <summary> Execute succeeded on gateway. </summary>
         public static VirtualNetworkGatewayMigrationPhase ExecuteSucceeded { get; } = new VirtualNetworkGatewayMigrationPhase(ExecuteSucceededValue);
+
         /// <summary> Gateway is going through commit migration or commit has failed. Please see state and error details for more information. </summary>
         public static VirtualNetworkGatewayMigrationPhase Commit { get; } = new VirtualNetworkGatewayMigrationPhase(CommitValue);
+
         /// <summary> Commit succeeded, represent migration is complete for the gateway. </summary>
         public static VirtualNetworkGatewayMigrationPhase CommitSucceeded { get; } = new VirtualNetworkGatewayMigrationPhase(CommitSucceededValue);
+
         /// <summary> Represent abort succeeded on gateway, start with prepare to retrigger migration. </summary>
         public static VirtualNetworkGatewayMigrationPhase AbortSucceeded { get; } = new VirtualNetworkGatewayMigrationPhase(AbortSucceededValue);
+
         /// <summary> Gateway is going through abort migration or abort has failed. Please see state and error details for more information. </summary>
         public static VirtualNetworkGatewayMigrationPhase Abort { get; } = new VirtualNetworkGatewayMigrationPhase(AbortValue);
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayMigrationPhase"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualNetworkGatewayMigrationPhase left, VirtualNetworkGatewayMigrationPhase right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayMigrationPhase"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualNetworkGatewayMigrationPhase left, VirtualNetworkGatewayMigrationPhase right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkGatewayMigrationPhase"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualNetworkGatewayMigrationPhase"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualNetworkGatewayMigrationPhase(string value) => new VirtualNetworkGatewayMigrationPhase(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualNetworkGatewayMigrationPhase"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualNetworkGatewayMigrationPhase?(string value) => value == null ? null : new VirtualNetworkGatewayMigrationPhase(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualNetworkGatewayMigrationPhase other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualNetworkGatewayMigrationPhase other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

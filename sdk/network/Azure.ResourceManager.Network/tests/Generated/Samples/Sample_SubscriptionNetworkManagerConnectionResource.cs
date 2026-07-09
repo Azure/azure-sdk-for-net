@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Samples
             SubscriptionNetworkManagerConnectionResource subscriptionNetworkManagerConnection = client.GetSubscriptionNetworkManagerConnectionResource(subscriptionNetworkManagerConnectionResourceId);
 
             // invoke the operation
-            await subscriptionNetworkManagerConnection.DeleteAsync(WaitUntil.Completed);
+            await subscriptionNetworkManagerConnection.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 NetworkManagerId = new ResourceIdentifier("/subscriptions/subscriptionC/resourceGroup/rg1/providers/Microsoft.Network/networkManagers/testNetworkManager"),
             };
-            ArmOperation<SubscriptionNetworkManagerConnectionResource> lro = await subscriptionNetworkManagerConnection.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<SubscriptionNetworkManagerConnectionResource> lro = await subscriptionNetworkManagerConnection.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             SubscriptionNetworkManagerConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
