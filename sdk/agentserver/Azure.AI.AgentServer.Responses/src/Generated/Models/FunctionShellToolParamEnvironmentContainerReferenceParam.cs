@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -14,8 +15,11 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellToolParamEnvironmentContainerReferenceParam"/>. </summary>
         /// <param name="containerId"> The ID of the referenced container. </param>
-        internal FunctionShellToolParamEnvironmentContainerReferenceParam(string containerId) : base("container_reference")
+        /// <exception cref="ArgumentNullException"> <paramref name="containerId"/> is null. </exception>
+        public FunctionShellToolParamEnvironmentContainerReferenceParam(string containerId) : base(FunctionShellToolParamEnvironmentType.ContainerReference)
         {
+            Argument.AssertNotNull(containerId, nameof(containerId));
+
             ContainerId = containerId;
         }
 
@@ -29,6 +33,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The ID of the referenced container. </summary>
-        public string ContainerId { get; }
+        public string ContainerId { get; set; }
     }
 }

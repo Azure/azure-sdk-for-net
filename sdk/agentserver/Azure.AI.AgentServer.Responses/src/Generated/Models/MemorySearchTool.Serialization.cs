@@ -9,12 +9,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A tool for integrating memories into the agent. </summary>
-    public partial class MemorySearchTool : ResponseTool, IJsonModel<MemorySearchTool>
+    public partial class MemorySearchTool : Tool, IJsonModel<MemorySearchTool>
     {
         /// <summary> Initializes a new instance of <see cref="MemorySearchTool"/> for deserialization. </summary>
         internal MemorySearchTool()
@@ -23,7 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override Tool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemorySearchTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -80,6 +79,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(MemorySearchTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
             writer.WritePropertyName("memory_store_name"u8);
             writer.WriteStringValue(MemoryStoreName);
             writer.WritePropertyName("scope"u8);
@@ -94,21 +103,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("update_delay"u8);
                 writer.WriteNumberValue(UpdateDelay.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -117,7 +111,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override Tool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemorySearchTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -136,17 +130,29 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            ResponseToolKind @type = "memory_search";
+            ToolType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string name = default;
+            string description = default;
             string memoryStoreName = default;
             string scope = default;
             MemorySearchOptions searchOptions = default;
             int? updateDelay = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = ModelReaderWriter.Read<ResponseToolKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
+                    @type = new ToolType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("memory_store_name"u8))
@@ -184,11 +190,13 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new MemorySearchTool(
                 @type,
+                additionalBinaryDataProperties,
+                name,
+                description,
                 memoryStoreName,
                 scope,
                 searchOptions,
-                updateDelay,
-                additionalBinaryDataProperties);
+                updateDelay);
         }
     }
 }

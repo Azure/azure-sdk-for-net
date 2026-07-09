@@ -10,14 +10,13 @@ using System.Linq;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Output text. </summary>
-    public partial class OutputMessageContentOutputTextContent : OutputMessageContent
+    internal partial class OutputMessageContentOutputTextContent : OutputMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentOutputTextContent"/>. </summary>
         /// <param name="text"> The text output from the model. </param>
         /// <param name="annotations"> The annotations of the text output. </param>
         /// <param name="logprobs"></param>
-        internal OutputMessageContentOutputTextContent(string text, IEnumerable<Annotation> annotations, IEnumerable<LogProb> logprobs) : base("output_text")
+        public OutputMessageContentOutputTextContent(string text, IEnumerable<Annotation> annotations, IEnumerable<LogProb> logprobs) : base(OutputMessageContentType.OutputText)
         {
             Text = text;
             Annotations = annotations.ToList();
@@ -38,7 +37,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The text output from the model. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
 
         /// <summary> The annotations of the text output. </summary>
         public IList<Annotation> Annotations { get; }

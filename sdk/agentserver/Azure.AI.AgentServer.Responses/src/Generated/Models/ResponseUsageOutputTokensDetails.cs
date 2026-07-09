@@ -17,7 +17,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseUsageOutputTokensDetails"/>. </summary>
         /// <param name="reasoningTokens"></param>
-        internal ResponseUsageOutputTokensDetails(long reasoningTokens)
+        public ResponseUsageOutputTokensDetails(long reasoningTokens)
         {
             ReasoningTokens = reasoningTokens;
         }
@@ -31,7 +31,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the ReasoningTokens. </summary>
-        public long ReasoningTokens { get; }
+        /// <summary> Gets or sets the ReasoningTokens. </summary>
+        public long ReasoningTokens { get; set; }
     }
 }

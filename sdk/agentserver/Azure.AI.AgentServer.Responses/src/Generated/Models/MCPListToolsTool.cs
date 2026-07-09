@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -18,8 +19,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="MCPListToolsTool"/>. </summary>
         /// <param name="name"> The name of the tool. </param>
         /// <param name="inputSchema"> The JSON schema describing the tool's input. </param>
-        internal MCPListToolsTool(string name, MCPListToolsToolInputSchema inputSchema)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputSchema"/> is null. </exception>
+        public MCPListToolsTool(string name, MCPListToolsToolInputSchema inputSchema)
         {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(inputSchema, nameof(inputSchema));
+
             Name = name;
             InputSchema = inputSchema;
         }
@@ -40,15 +45,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The name of the tool. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
-        /// <summary> Gets the Description. </summary>
-        public string Description { get; }
+        /// <summary> Gets or sets the Description. </summary>
+        public string Description { get; set; }
 
         /// <summary> The JSON schema describing the tool's input. </summary>
-        public MCPListToolsToolInputSchema InputSchema { get; }
+        public MCPListToolsToolInputSchema InputSchema { get; set; }
 
-        /// <summary> Gets the Annotations. </summary>
-        public MCPListToolsToolAnnotations Annotations { get; }
+        /// <summary> Gets or sets the Annotations. </summary>
+        public MCPListToolsToolAnnotations Annotations { get; set; }
     }
 }

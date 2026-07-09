@@ -28,7 +28,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         private const string CodeInterpreterValue = "code_interpreter";
         private const string ComputerValue = "computer";
         private const string ComputerUseValue = "computer_use";
-        private const string RemoteToolValue = "remote_tool";
 
         /// <summary> Initializes a new instance of <see cref="ToolChoiceParamType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -81,9 +80,6 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Gets the ComputerUse. </summary>
         public static ToolChoiceParamType ComputerUse { get; } = new ToolChoiceParamType(ComputerUseValue);
-
-        /// <summary> Gets the RemoteTool. </summary>
-        public static ToolChoiceParamType RemoteTool { get; } = new ToolChoiceParamType(RemoteToolValue);
 
         /// <summary> Determines if two <see cref="ToolChoiceParamType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

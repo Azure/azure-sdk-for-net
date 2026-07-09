@@ -6,25 +6,20 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Image generation tool. </summary>
-    public partial class ImageGenTool : ResponseTool
+    public partial class ImageGenTool : Tool
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ImageGenTool"/>. </summary>
-        internal ImageGenTool() : base("image_generation")
+        public ImageGenTool() : base(ToolType.ImageGeneration)
         {
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageGenTool"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="model"></param>
         /// <param name="quality">
         /// The quality of the generated image. One of `low`, `medium`, `high`,
@@ -51,11 +46,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </param>
         /// <param name="partialImages"> Number of partial images to generate in streaming mode, from 0 (default value) to 3. </param>
         /// <param name="action"> Whether to generate a new image or edit an existing image. Default: `auto`. </param>
-        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageGenTool(ResponseToolKind @type, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, ImageGenToolInputImageMask inputImageMask, long? partialImages, ImageGenActionEnum? action, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        internal ImageGenTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, ImageGenToolInputImageMask inputImageMask, long? partialImages, ImageGenActionEnum? action, string name, string description) : base(@type, additionalBinaryDataProperties)
         {
             Model = model;
             Quality = quality;
@@ -70,65 +63,60 @@ namespace Azure.AI.AgentServer.Responses.Models
             Action = action;
             Name = name;
             Description = description;
-            ToolConfigs = toolConfigs;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Model. </summary>
-        public ImageGenToolModel? Model { get; }
+        /// <summary> Gets or sets the Model. </summary>
+        public ImageGenToolModel? Model { get; set; }
 
         /// <summary>
         /// The quality of the generated image. One of `low`, `medium`, `high`,
         ///   or `auto`. Default: `auto`.
         /// </summary>
-        public ImageGenToolQuality? Quality { get; }
+        public ImageGenToolQuality? Quality { get; set; }
 
         /// <summary>
         /// The size of the generated image. One of `1024x1024`, `1024x1536`,
         ///   `1536x1024`, or `auto`. Default: `auto`.
         /// </summary>
-        public ImageGenToolSize? Size { get; }
+        public ImageGenToolSize? Size { get; set; }
 
         /// <summary>
         /// The output format of the generated image. One of `png`, `webp`, or
         ///   `jpeg`. Default: `png`.
         /// </summary>
-        public ImageGenToolOutputFormat? OutputFormat { get; }
+        public ImageGenToolOutputFormat? OutputFormat { get; set; }
 
         /// <summary> Compression level for the output image. Default: 100. </summary>
-        public long? OutputCompression { get; }
+        public long? OutputCompression { get; set; }
 
         /// <summary> Moderation level for the generated image. Default: `auto`. </summary>
-        public ImageGenToolModeration? Moderation { get; }
+        public ImageGenToolModeration? Moderation { get; set; }
 
         /// <summary>
         /// Background type for the generated image. One of `transparent`,
         ///   `opaque`, or `auto`. Default: `auto`.
         /// </summary>
-        public ImageGenToolBackground? Background { get; }
+        public ImageGenToolBackground? Background { get; set; }
 
-        /// <summary> Gets the InputFidelity. </summary>
-        public InputFidelity? InputFidelity { get; }
+        /// <summary> Gets or sets the InputFidelity. </summary>
+        public InputFidelity? InputFidelity { get; set; }
 
         /// <summary>
         /// Optional mask for inpainting. Contains `image_url`
         ///   (string, optional) and `file_id` (string, optional).
         /// </summary>
-        public ImageGenToolInputImageMask InputImageMask { get; }
+        public ImageGenToolInputImageMask InputImageMask { get; set; }
 
         /// <summary> Number of partial images to generate in streaming mode, from 0 (default value) to 3. </summary>
-        public long? PartialImages { get; }
+        public long? PartialImages { get; set; }
 
         /// <summary> Whether to generate a new image or edit an existing image. Default: `auto`. </summary>
-        public ImageGenActionEnum? Action { get; }
+        public ImageGenActionEnum? Action { get; set; }
 
-        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public string Name { get; }
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
 
-        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public string Description { get; }
-
-        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
     }
 }

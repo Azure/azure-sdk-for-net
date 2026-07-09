@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class FunctionShellToolParamEnvironmentLocalEnvironmentParam : FunctionShellToolParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellToolParamEnvironmentLocalEnvironmentParam"/>. </summary>
-        internal FunctionShellToolParamEnvironmentLocalEnvironmentParam() : base("local")
+        public FunctionShellToolParamEnvironmentLocalEnvironmentParam() : base(FunctionShellToolParamEnvironmentType.Local)
         {
             Skills = new ChangeTrackingList<LocalSkillParam>();
         }

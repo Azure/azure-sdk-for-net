@@ -9,12 +9,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Web search tool call. </summary>
-    public partial class ItemWebSearchToolCall : ResponseItem, IJsonModel<ItemWebSearchToolCall>
+    public partial class ItemWebSearchToolCall : Item, IJsonModel<ItemWebSearchToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="ItemWebSearchToolCall"/> for deserialization. </summary>
         internal ItemWebSearchToolCall()
@@ -23,7 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override Item PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ItemWebSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -93,21 +92,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -116,7 +100,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override Item JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ItemWebSearchToolCall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -136,10 +120,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ItemType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             ItemWebSearchToolCallStatus status = default;
             BinaryData action = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -167,7 +151,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ItemWebSearchToolCall(@type, id, status, action, additionalBinaryDataProperties);
+            return new ItemWebSearchToolCall(@type, additionalBinaryDataProperties, id, status, action);
         }
     }
 }

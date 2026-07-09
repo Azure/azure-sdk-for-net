@@ -7,50 +7,42 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
-    public partial class BingGroundingTool : ResponseTool
+    public partial class BingGroundingTool : Tool
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="BingGroundingTool"/>. </summary>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
-        internal BingGroundingTool(BingGroundingSearchToolParameters bingGrounding) : base("bing_grounding")
+        /// <exception cref="ArgumentNullException"> <paramref name="bingGrounding"/> is null. </exception>
+        public BingGroundingTool(BingGroundingSearchToolParameters bingGrounding) : base(ToolType.BingGrounding)
         {
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            Argument.AssertNotNull(bingGrounding, nameof(bingGrounding));
+
             BingGrounding = bingGrounding;
         }
 
         /// <summary> Initializes a new instance of <see cref="BingGroundingTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BingGroundingTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, BingGroundingSearchToolParameters bingGrounding, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
+        internal BingGroundingTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, BingGroundingSearchToolParameters bingGrounding) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
-            ToolConfigs = toolConfigs;
             BingGrounding = bingGrounding;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public string Name { get; }
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
 
-        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public string Description { get; }
-
-        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
 
         /// <summary> The bing grounding search tool parameters. </summary>
-        public BingGroundingSearchToolParameters BingGrounding { get; }
+        public BingGroundingSearchToolParameters BingGrounding { get; set; }
     }
 }

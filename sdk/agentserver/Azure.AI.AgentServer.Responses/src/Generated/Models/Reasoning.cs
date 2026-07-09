@@ -25,7 +25,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="summary"></param>
         /// <param name="generateSummary"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Reasoning(PromptAgentDefinitionReasoningEffort? effort, PromptAgentDefinitionReasoningSummary? summary, PromptAgentDefinitionReasoningGenerateSummary? generateSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Reasoning(CreateResponseReasoningEffort? effort, CreateResponseReasoningSummary? summary, CreateResponseReasoningGenerateSummary? generateSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Effort = effort;
             Summary = summary;
@@ -34,12 +34,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Gets or sets the Effort. </summary>
-        public PromptAgentDefinitionReasoningEffort? Effort { get; set; }
+        public CreateResponseReasoningEffort? Effort { get; set; }
 
         /// <summary> Gets or sets the Summary. </summary>
-        public PromptAgentDefinitionReasoningSummary? Summary { get; set; }
+        public CreateResponseReasoningSummary? Summary { get; set; }
 
         /// <summary> Gets or sets the GenerateSummary. </summary>
-        public PromptAgentDefinitionReasoningGenerateSummary? GenerateSummary { get; set; }
+        public CreateResponseReasoningGenerateSummary? GenerateSummary { get; set; }
     }
 }

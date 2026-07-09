@@ -7,40 +7,32 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
-    public partial class AzureFunctionTool : ResponseTool
+    public partial class AzureFunctionTool : Tool
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="AzureFunctionTool"/>. </summary>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
-        internal AzureFunctionTool(AzureFunctionDefinition azureFunction) : base("azure_function")
+        /// <exception cref="ArgumentNullException"> <paramref name="azureFunction"/> is null. </exception>
+        public AzureFunctionTool(AzureFunctionDefinition azureFunction) : base(ToolType.AzureFunction)
         {
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            Argument.AssertNotNull(azureFunction, nameof(azureFunction));
+
             AzureFunction = azureFunction;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="azureFunction"> The Azure Function Tool definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFunctionTool(ResponseToolKind @type, IDictionary<string, ToolConfig> toolConfigs, AzureFunctionDefinition azureFunction, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        /// <param name="azureFunction"> The Azure Function Tool definition. </param>
+        internal AzureFunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureFunctionDefinition azureFunction) : base(@type, additionalBinaryDataProperties)
         {
-            ToolConfigs = toolConfigs;
             AzureFunction = azureFunction;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
-
         /// <summary> The Azure Function Tool definition. </summary>
-        public AzureFunctionDefinition AzureFunction { get; }
+        public AzureFunctionDefinition AzureFunction { get; set; }
     }
 }

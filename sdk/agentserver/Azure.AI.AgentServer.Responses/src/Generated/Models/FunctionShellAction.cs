@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -20,8 +21,11 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="commands"></param>
         /// <param name="timeoutMs"></param>
         /// <param name="maxOutputLength"></param>
-        internal FunctionShellAction(IEnumerable<string> commands, long? timeoutMs, long? maxOutputLength)
+        /// <exception cref="ArgumentNullException"> <paramref name="commands"/> is null. </exception>
+        public FunctionShellAction(IEnumerable<string> commands, long? timeoutMs, long? maxOutputLength)
         {
+            Argument.AssertNotNull(commands, nameof(commands));
+
             Commands = commands.ToList();
             TimeoutMs = timeoutMs;
             MaxOutputLength = maxOutputLength;
@@ -43,10 +47,10 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Gets the Commands. </summary>
         public IList<string> Commands { get; }
 
-        /// <summary> Gets the TimeoutMs. </summary>
-        public long? TimeoutMs { get; }
+        /// <summary> Gets or sets the TimeoutMs. </summary>
+        public long? TimeoutMs { get; set; }
 
-        /// <summary> Gets the MaxOutputLength. </summary>
-        public long? MaxOutputLength { get; }
+        /// <summary> Gets or sets the MaxOutputLength. </summary>
+        public long? MaxOutputLength { get; set; }
     }
 }

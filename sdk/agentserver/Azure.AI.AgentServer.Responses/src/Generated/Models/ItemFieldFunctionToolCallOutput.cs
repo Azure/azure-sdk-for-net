@@ -41,7 +41,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal ItemFieldFunctionToolCallOutput(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, BinaryData output, ItemFieldFunctionToolCallOutputStatus? status) : base(@type, additionalBinaryDataProperties)
+        internal ItemFieldFunctionToolCallOutput(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, BinaryData output, OutputItemFunctionToolCallOutputStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -104,6 +104,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public ItemFieldFunctionToolCallOutputStatus? Status { get; }
+        public OutputItemFunctionToolCallOutputStatus? Status { get; }
     }
 }

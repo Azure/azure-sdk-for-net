@@ -6,53 +6,42 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI.Responses;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Message. </summary>
-    public partial class ItemMessage : ResponseItem
+    public partial class ItemMessage : Item
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ItemMessage"/>. </summary>
         /// <param name="role"> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </param>
-        /// <param name="content"> The content of the message. </param>
-        internal ItemMessage(MessageRole role, BinaryData content) : base(ItemType.Message)
+        /// <param name="content"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public ItemMessage(MessageRole role, BinaryData content) : base(ItemType.Message)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             Role = role;
             Content = content;
         }
 
         /// <summary> Initializes a new instance of <see cref="ItemMessage"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="role"> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </param>
-        /// <param name="content"> The content of the message. </param>
-        /// <param name="phase"></param>
-        /// <param name="id"></param>
-        /// <param name="status"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ItemMessage(ItemType @type, MessageRole role, BinaryData content, MessagePhase? phase, string id, MessageStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        /// <param name="role"> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </param>
+        /// <param name="phase"></param>
+        /// <param name="content"></param>
+        internal ItemMessage(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageRole role, MessagePhase? phase, BinaryData content) : base(@type, additionalBinaryDataProperties)
         {
             Role = role;
-            Content = content;
             Phase = phase;
-            Id = id;
-            Status = status;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Content = content;
         }
 
         /// <summary> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </summary>
-        public MessageRole Role { get; }
+        public MessageRole Role { get; set; }
 
-        /// <summary> Gets the Phase. </summary>
-        public MessagePhase? Phase { get; }
-
-        /// <summary> Gets the Id. </summary>
-        public string Id { get; }
-
-        /// <summary> Gets the Status. </summary>
-        public MessageStatus? Status { get; }
+        /// <summary> Gets or sets the Phase. </summary>
+        public MessagePhase? Phase { get; set; }
     }
 }

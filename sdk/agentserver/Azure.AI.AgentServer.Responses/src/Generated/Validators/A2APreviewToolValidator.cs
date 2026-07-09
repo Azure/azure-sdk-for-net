@@ -45,18 +45,25 @@ internal static partial class A2APreviewToolValidator
                 errors.Add(new ValidationError("$.base_url", $"Expected string, got {baseUrlProp.ValueKind}"));
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
+        }
+
         // Optional: project_connection_id
         if (element.TryGetProperty("project_connection_id", out var projectConnectionIdProp))
         {
             if (projectConnectionIdProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.project_connection_id", $"Expected string, got {projectConnectionIdProp.ValueKind}"));
-        }
-
-        // Optional: send_credentials_for_agent_card
-        if (element.TryGetProperty("send_credentials_for_agent_card", out var sendCredentialsForAgentCardProp))
-        {
-            if (sendCredentialsForAgentCardProp.ValueKind != JsonValueKind.True && sendCredentialsForAgentCardProp.ValueKind != JsonValueKind.False)
-                errors.Add(new ValidationError("$.send_credentials_for_agent_card", $"Expected boolean, got {sendCredentialsForAgentCardProp.ValueKind}"));
         }
 
         // Required: type

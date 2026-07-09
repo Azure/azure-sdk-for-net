@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -19,8 +20,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="stdout"> Captured stdout output for the shell call. </param>
         /// <param name="stderr"> Captured stderr output for the shell call. </param>
         /// <param name="outcome"> The exit or timeout outcome associated with this shell call. </param>
-        internal FunctionShellCallOutputContentParam(string stdout, string stderr, FunctionShellCallOutputOutcomeParam outcome)
+        /// <exception cref="ArgumentNullException"> <paramref name="stdout"/>, <paramref name="stderr"/> or <paramref name="outcome"/> is null. </exception>
+        public FunctionShellCallOutputContentParam(string stdout, string stderr, FunctionShellCallOutputOutcomeParam outcome)
         {
+            Argument.AssertNotNull(stdout, nameof(stdout));
+            Argument.AssertNotNull(stderr, nameof(stderr));
+            Argument.AssertNotNull(outcome, nameof(outcome));
+
             Stdout = stdout;
             Stderr = stderr;
             Outcome = outcome;
@@ -40,12 +46,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Captured stdout output for the shell call. </summary>
-        public string Stdout { get; }
+        public string Stdout { get; set; }
 
         /// <summary> Captured stderr output for the shell call. </summary>
-        public string Stderr { get; }
+        public string Stderr { get; set; }
 
         /// <summary> The exit or timeout outcome associated with this shell call. </summary>
-        public FunctionShellCallOutputOutcomeParam Outcome { get; }
+        public FunctionShellCallOutputOutcomeParam Outcome { get; set; }
     }
 }

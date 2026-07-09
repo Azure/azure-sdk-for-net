@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentInputImageContent"/>. </summary>
         /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </param>
-        internal MessageContentInputImageContent(ImageDetail detail) : base(MessageContentType.InputImage)
+        public MessageContentInputImageContent(ImageDetail detail) : base(MessageContentType.InputImage)
         {
             Detail = detail;
         }
@@ -32,13 +32,13 @@ namespace Azure.AI.AgentServer.Responses.Models
             Detail = detail;
         }
 
-        /// <summary> Gets the ImageUrl. </summary>
-        public Uri ImageUrl { get; }
+        /// <summary> Gets or sets the ImageUrl. </summary>
+        public Uri ImageUrl { get; set; }
 
-        /// <summary> Gets the FileId. </summary>
-        public string FileId { get; }
+        /// <summary> Gets or sets the FileId. </summary>
+        public string FileId { get; set; }
 
         /// <summary> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </summary>
-        public ImageDetail Detail { get; }
+        public ImageDetail Detail { get; set; }
     }
 }

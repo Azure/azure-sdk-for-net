@@ -31,20 +31,6 @@ internal static partial class CaptureStructuredOutputsToolValidator
             return ValidationResult.Failure(errors);
         }
 
-        // Optional: description
-        if (element.TryGetProperty("description", out var descriptionProp))
-        {
-            if (descriptionProp.ValueKind != JsonValueKind.String)
-                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
-        }
-
-        // Optional: name
-        if (element.TryGetProperty("name", out var nameProp))
-        {
-            if (nameProp.ValueKind != JsonValueKind.String)
-                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
-        }
-
         // Required: outputs
         if (!element.TryGetProperty("outputs", out var outputsProp))
             errors.Add(new ValidationError("$.outputs", "Required property 'outputs' is missing"));
@@ -56,13 +42,6 @@ internal static partial class CaptureStructuredOutputsToolValidator
                 foreach (var e in outputsResult.Errors)
                     errors.Add(new ValidationError("$.outputs" + e.Path.Substring(1), e.Message));
             }
-        }
-
-        // Optional: tool_configs
-        if (element.TryGetProperty("tool_configs", out var toolConfigsProp))
-        {
-            if (toolConfigsProp.ValueKind != JsonValueKind.Object)
-                errors.Add(new ValidationError("$.tool_configs", $"Expected object, got {toolConfigsProp.ValueKind}"));
         }
 
         // Required: type

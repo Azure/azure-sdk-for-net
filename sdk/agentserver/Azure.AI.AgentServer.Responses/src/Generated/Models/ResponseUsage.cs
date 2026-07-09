@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -24,8 +25,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="outputTokens"> The number of output tokens. </param>
         /// <param name="outputTokensDetails"> A detailed breakdown of the output tokens. </param>
         /// <param name="totalTokens"> The total number of tokens used. </param>
-        internal ResponseUsage(long inputTokens, ResponseUsageInputTokensDetails inputTokensDetails, long outputTokens, ResponseUsageOutputTokensDetails outputTokensDetails, long totalTokens)
+        /// <exception cref="ArgumentNullException"> <paramref name="inputTokensDetails"/> or <paramref name="outputTokensDetails"/> is null. </exception>
+        public ResponseUsage(long inputTokens, ResponseUsageInputTokensDetails inputTokensDetails, long outputTokens, ResponseUsageOutputTokensDetails outputTokensDetails, long totalTokens)
         {
+            Argument.AssertNotNull(inputTokensDetails, nameof(inputTokensDetails));
+            Argument.AssertNotNull(outputTokensDetails, nameof(outputTokensDetails));
+
             InputTokens = inputTokens;
             InputTokensDetails = inputTokensDetails;
             OutputTokens = outputTokens;
@@ -51,18 +56,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The number of input tokens. </summary>
-        public long InputTokens { get; }
+        public long InputTokens { get; set; }
 
         /// <summary> A detailed breakdown of the input tokens. </summary>
-        public ResponseUsageInputTokensDetails InputTokensDetails { get; }
+        public ResponseUsageInputTokensDetails InputTokensDetails { get; set; }
 
         /// <summary> The number of output tokens. </summary>
-        public long OutputTokens { get; }
+        public long OutputTokens { get; set; }
 
         /// <summary> A detailed breakdown of the output tokens. </summary>
-        public ResponseUsageOutputTokensDetails OutputTokensDetails { get; }
+        public ResponseUsageOutputTokensDetails OutputTokensDetails { get; set; }
 
         /// <summary> The total number of tokens used. </summary>
-        public long TotalTokens { get; }
+        public long TotalTokens { get; set; }
     }
 }

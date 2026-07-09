@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class WaitParam : ComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="WaitParam"/>. </summary>
-        internal WaitParam() : base(ComputerActionType.Wait)
+        public WaitParam() : base(ComputerActionType.Wait)
         {
         }
 

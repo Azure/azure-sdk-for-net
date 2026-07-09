@@ -40,6 +40,15 @@ internal static partial class BingCustomSearchToolCallOutputValidator
                 errors.Add(new ValidationError("$.call_id", $"Expected string, got {callIdProp.ValueKind}"));
         }
 
+        // Required: id
+        if (!element.TryGetProperty("id", out var idProp))
+            errors.Add(new ValidationError("$.id", "Required property 'id' is missing"));
+        else
+        {
+            if (idProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));
+        }
+
         // Optional: output
         if (element.TryGetProperty("output", out var outputProp))
         {

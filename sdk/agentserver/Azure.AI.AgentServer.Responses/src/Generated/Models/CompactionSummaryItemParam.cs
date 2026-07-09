@@ -6,39 +6,38 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI.Responses;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Compaction item. </summary>
-    public partial class CompactionSummaryItemParam : ResponseItem
+    public partial class CompactionSummaryItemParam : Item
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="CompactionSummaryItemParam"/>. </summary>
         /// <param name="encryptedContent"> The encrypted content of the compaction summary. </param>
-        internal CompactionSummaryItemParam(string encryptedContent) : base(ItemType.Compaction)
+        /// <exception cref="ArgumentNullException"> <paramref name="encryptedContent"/> is null. </exception>
+        public CompactionSummaryItemParam(string encryptedContent) : base(ItemType.Compaction)
         {
+            Argument.AssertNotNull(encryptedContent, nameof(encryptedContent));
+
             EncryptedContent = encryptedContent;
         }
 
         /// <summary> Initializes a new instance of <see cref="CompactionSummaryItemParam"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"></param>
         /// <param name="encryptedContent"> The encrypted content of the compaction summary. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CompactionSummaryItemParam(ItemType @type, string id, string encryptedContent, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal CompactionSummaryItemParam(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string encryptedContent) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             EncryptedContent = encryptedContent;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Id. </summary>
-        public string Id { get; }
+        /// <summary> Gets or sets the Id. </summary>
+        public string Id { get; set; }
 
         /// <summary> The encrypted content of the compaction summary. </summary>
-        public string EncryptedContent { get; }
+        public string EncryptedContent { get; set; }
     }
 }

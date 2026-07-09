@@ -8,16 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.AgentServer.Responses;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Computer tool call. </summary>
-    public partial class ItemComputerToolCall : ResponseItem
+    public partial class ItemComputerToolCall : Item
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ItemComputerToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the computer call. </param>
         /// <param name="callId"> An identifier used when responding to the tool call with output. </param>
@@ -26,8 +22,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal ItemComputerToolCall(string id, string callId, IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks, ItemComputerToolCallStatus status) : base(ItemType.ComputerCall)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="callId"/> or <paramref name="pendingSafetyChecks"/> is null. </exception>
+        public ItemComputerToolCall(string id, string callId, IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks, ItemComputerToolCallStatus status) : base(ItemType.ComputerCall)
         {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(callId, nameof(callId));
+            Argument.AssertNotNull(pendingSafetyChecks, nameof(pendingSafetyChecks));
+
             Id = id;
             CallId = callId;
             Actions = new ChangeTrackingList<ComputerAction>();
@@ -37,6 +38,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ItemComputerToolCall"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The unique ID of the computer call. </param>
         /// <param name="callId"> An identifier used when responding to the tool call with output. </param>
         /// <param name="action"></param>
@@ -46,8 +48,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ItemComputerToolCall(ItemType @type, string id, string callId, ComputerAction action, IList<ComputerAction> actions, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, ItemComputerToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ItemComputerToolCall(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ComputerAction action, IList<ComputerAction> actions, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, ItemComputerToolCallStatus status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -55,17 +56,16 @@ namespace Azure.AI.AgentServer.Responses.Models
             Actions = actions;
             PendingSafetyChecks = pendingSafetyChecks;
             Status = status;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique ID of the computer call. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> An identifier used when responding to the tool call with output. </summary>
-        public string CallId { get; }
+        public string CallId { get; set; }
 
-        /// <summary> Gets the Action. </summary>
-        public ComputerAction Action { get; }
+        /// <summary> Gets or sets the Action. </summary>
+        public ComputerAction Action { get; set; }
 
         /// <summary> Gets the Actions. </summary>
         public IList<ComputerAction> Actions { get; }
@@ -77,6 +77,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public ItemComputerToolCallStatus Status { get; }
+        public ItemComputerToolCallStatus Status { get; set; }
     }
 }

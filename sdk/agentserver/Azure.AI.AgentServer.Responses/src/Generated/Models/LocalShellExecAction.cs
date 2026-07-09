@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -19,8 +20,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="LocalShellExecAction"/>. </summary>
         /// <param name="command"> The command to run. </param>
         /// <param name="env"> Environment variables to set for the command. </param>
-        internal LocalShellExecAction(IEnumerable<string> command, IDictionary<string, string> env)
+        /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="env"/> is null. </exception>
+        public LocalShellExecAction(IEnumerable<string> command, IDictionary<string, string> env)
         {
+            Argument.AssertNotNull(command, nameof(command));
+            Argument.AssertNotNull(env, nameof(env));
+
             Command = command.ToList();
             Env = env;
         }
@@ -50,16 +55,16 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> The command to run. </summary>
         public IList<string> Command { get; }
 
-        /// <summary> Gets the TimeoutMs. </summary>
-        public long? TimeoutMs { get; }
+        /// <summary> Gets or sets the TimeoutMs. </summary>
+        public long? TimeoutMs { get; set; }
 
-        /// <summary> Gets the WorkingDirectory. </summary>
-        public string WorkingDirectory { get; }
+        /// <summary> Gets or sets the WorkingDirectory. </summary>
+        public string WorkingDirectory { get; set; }
 
         /// <summary> Environment variables to set for the command. </summary>
         public IDictionary<string, string> Env { get; }
 
-        /// <summary> Gets the User. </summary>
-        public string User { get; }
+        /// <summary> Gets or sets the User. </summary>
+        public string User { get; set; }
     }
 }

@@ -49,6 +49,15 @@ internal static partial class BrowserAutomationToolCallValidator
                 errors.Add(new ValidationError("$.call_id", $"Expected string, got {callIdProp.ValueKind}"));
         }
 
+        // Required: id
+        if (!element.TryGetProperty("id", out var idProp))
+            errors.Add(new ValidationError("$.id", "Required property 'id' is missing"));
+        else
+        {
+            if (idProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));
+        }
+
         // Required: status
         if (!element.TryGetProperty("status", out var statusProp))
             errors.Add(new ValidationError("$.status", "Required property 'status' is missing"));

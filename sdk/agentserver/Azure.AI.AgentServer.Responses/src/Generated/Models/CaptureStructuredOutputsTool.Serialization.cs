@@ -9,12 +9,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A tool for capturing structured outputs. </summary>
-    public partial class CaptureStructuredOutputsTool : ResponseTool, IJsonModel<CaptureStructuredOutputsTool>
+    public partial class CaptureStructuredOutputsTool : Tool, IJsonModel<CaptureStructuredOutputsTool>
     {
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/> for deserialization. </summary>
         internal CaptureStructuredOutputsTool()
@@ -23,7 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override Tool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CaptureStructuredOutputsTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -80,44 +79,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(CaptureStructuredOutputsTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(ToolConfigs))
-            {
-                writer.WritePropertyName("tool_configs"u8);
-                writer.WriteStartObject();
-                foreach (var item in ToolConfigs)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
             writer.WritePropertyName("outputs"u8);
             writer.WriteObjectValue(Outputs, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -126,7 +89,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override Tool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CaptureStructuredOutputsTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -145,41 +108,14 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            ResponseToolKind @type = "capture_structured_outputs";
-            string name = default;
-            string description = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
-            StructuredOutputDefinition outputs = default;
+            ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            StructuredOutputDefinition outputs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = ModelReaderWriter.Read<ResponseToolKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("tool_configs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
-                    }
-                    toolConfigs = dictionary;
+                    @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("outputs"u8))
@@ -192,13 +128,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CaptureStructuredOutputsTool(
-                @type,
-                name,
-                description,
-                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
-                outputs,
-                additionalBinaryDataProperties);
+            return new CaptureStructuredOutputsTool(@type, additionalBinaryDataProperties, outputs);
         }
     }
 }

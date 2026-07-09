@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -21,22 +22,35 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        internal BingCustomSearchToolParameters(IEnumerable<BingCustomSearchConfiguration> searchConfigurations)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
+        public BingCustomSearchToolParameters(IEnumerable<BingCustomSearchConfiguration> searchConfigurations)
         {
+            Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
+
             SearchConfigurations = searchConfigurations.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolParameters"/>. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="searchConfigurations">
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BingCustomSearchToolParameters(IList<BingCustomSearchConfiguration> searchConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BingCustomSearchToolParameters(string name, string description, IList<BingCustomSearchConfiguration> searchConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Name = name;
+            Description = description;
             SearchConfigurations = searchConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
 
         /// <summary>
         /// The project connections attached to this tool. There can be a maximum of 1 connection

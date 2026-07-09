@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -17,8 +18,11 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="WebSearchActionSearchSources"/>. </summary>
         /// <param name="url"></param>
-        internal WebSearchActionSearchSources(string url)
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public WebSearchActionSearchSources(string url)
         {
+            Argument.AssertNotNull(url, nameof(url));
+
             Url = url;
         }
 
@@ -36,7 +40,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Gets the Type. </summary>
         public string Type { get; } = "url";
 
-        /// <summary> Gets the Url. </summary>
-        public string Url { get; }
+        /// <summary> Gets or sets the Url. </summary>
+        public string Url { get; set; }
     }
 }

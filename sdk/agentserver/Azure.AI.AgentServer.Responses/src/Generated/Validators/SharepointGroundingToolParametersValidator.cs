@@ -31,6 +31,20 @@ internal static partial class SharepointGroundingToolParametersValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
+        }
+
         // Optional: project_connections
         if (element.TryGetProperty("project_connections", out var projectConnectionsProp))
         {

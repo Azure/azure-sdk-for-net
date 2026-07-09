@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -15,8 +16,11 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="CustomGrammarFormatParam"/>. </summary>
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
         /// <param name="definition"> The grammar definition. </param>
-        internal CustomGrammarFormatParam(GrammarSyntax1 syntax, string definition) : base("grammar")
+        /// <exception cref="ArgumentNullException"> <paramref name="definition"/> is null. </exception>
+        public CustomGrammarFormatParam(GrammarSyntax1 syntax, string definition) : base(CustomToolParamFormatType.Grammar)
         {
+            Argument.AssertNotNull(definition, nameof(definition));
+
             Syntax = syntax;
             Definition = definition;
         }
@@ -33,9 +37,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The syntax of the grammar definition. One of `lark` or `regex`. </summary>
-        public GrammarSyntax1 Syntax { get; }
+        public GrammarSyntax1 Syntax { get; set; }
 
         /// <summary> The grammar definition. </summary>
-        public string Definition { get; }
+        public string Definition { get; set; }
     }
 }

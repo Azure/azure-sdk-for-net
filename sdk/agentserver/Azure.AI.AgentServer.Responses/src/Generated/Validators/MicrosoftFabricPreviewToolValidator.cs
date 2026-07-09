@@ -31,6 +31,13 @@ internal static partial class MicrosoftFabricPreviewToolValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
         // Required: fabric_dataagent_preview
         if (!element.TryGetProperty("fabric_dataagent_preview", out var fabricDataagentPreviewProp))
             errors.Add(new ValidationError("$.fabric_dataagent_preview", "Required property 'fabric_dataagent_preview' is missing"));
@@ -42,6 +49,13 @@ internal static partial class MicrosoftFabricPreviewToolValidator
                 foreach (var e in fabricDataagentPreviewResult.Errors)
                     errors.Add(new ValidationError("$.fabric_dataagent_preview" + e.Path.Substring(1), e.Message));
             }
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
         }
 
         // Required: type

@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="MoveParam"/>. </summary>
         /// <param name="x"> The x-coordinate to move to. </param>
         /// <param name="y"> The y-coordinate to move to. </param>
-        internal MoveParam(long x, long y) : base(ComputerActionType.Move)
+        public MoveParam(long x, long y) : base(ComputerActionType.Move)
         {
             X = x;
             Y = y;
@@ -37,12 +37,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The x-coordinate to move to. </summary>
-        public long X { get; }
+        public long X { get; set; }
 
         /// <summary> The y-coordinate to move to. </summary>
-        public long Y { get; }
+        public long Y { get; set; }
 
-        /// <summary> Gets the Keys. </summary>
-        public IList<string> Keys { get; }
+        /// <summary> Gets or sets the Keys. </summary>
+        public IList<string> Keys { get; set; }
     }
 }

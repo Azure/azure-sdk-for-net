@@ -9,12 +9,10 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Output message. </summary>
-    public partial class ItemOutputMessage : ResponseItem, IJsonModel<ItemOutputMessage>
+    internal partial class ItemOutputMessage : Item, IJsonModel<ItemOutputMessage>
     {
         /// <summary> Initializes a new instance of <see cref="ItemOutputMessage"/> for deserialization. </summary>
         internal ItemOutputMessage()
@@ -23,7 +21,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override Item PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ItemOutputMessage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -98,21 +96,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -121,7 +104,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override Item JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ItemOutputMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -141,12 +124,12 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ItemType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string role = default;
             IList<OutputMessageContent> content = default;
             MessagePhase? phase = default;
             ItemOutputMessageStatus status = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -196,12 +179,12 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new ItemOutputMessage(
                 @type,
+                additionalBinaryDataProperties,
                 id,
                 role,
                 content,
                 phase,
-                status,
-                additionalBinaryDataProperties);
+                status);
         }
     }
 }

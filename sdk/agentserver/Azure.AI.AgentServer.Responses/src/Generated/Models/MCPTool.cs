@@ -8,27 +8,26 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> MCP tool. </summary>
-    public partial class MCPTool : ResponseTool
+    public partial class MCPTool : Tool
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="MCPTool"/>. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
-        internal MCPTool(string serverLabel) : base("mcp")
+        /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> is null. </exception>
+        public MCPTool(string serverLabel) : base(ToolType.Mcp)
         {
+            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
+
             ServerLabel = serverLabel;
             Headers = new ChangeTrackingDictionary<string, string>();
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MCPTool"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
         /// <param name="serverUrl">
         /// The URL for the MCP server. One of `server_url` or `connector_id` must be
@@ -52,9 +51,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="requireApproval"></param>
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
-        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MCPTool(ResponseToolKind @type, string serverLabel, Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal MCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, bool? deferLoading, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
@@ -66,18 +63,16 @@ namespace Azure.AI.AgentServer.Responses.Models
             RequireApproval = requireApproval;
             DeferLoading = deferLoading;
             ProjectConnectionId = projectConnectionId;
-            ToolConfigs = toolConfigs;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A label for this MCP server, used to identify it in tool calls. </summary>
-        public string ServerLabel { get; }
+        public string ServerLabel { get; set; }
 
         /// <summary>
         /// The URL for the MCP server. One of `server_url` or `connector_id` must be
         ///   provided.
         /// </summary>
-        public Uri ServerUrl { get; }
+        public Uri ServerUrl { get; set; }
 
         /// <summary>
         /// Identifier for service connectors, like those available in ChatGPT. One of
@@ -86,23 +81,23 @@ namespace Azure.AI.AgentServer.Responses.Models
         ///   Currently supported `connector_id` values are:
         /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
         /// </summary>
-        public MCPToolConnectorId? ConnectorId { get; }
+        public MCPToolConnectorId? ConnectorId { get; set; }
 
         /// <summary>
         /// An OAuth access token that can be used with a remote MCP server, either
         ///   with a custom MCP server URL or a service connector. Your application
         ///   must handle the OAuth authorization flow and provide the token here.
         /// </summary>
-        public string Authorization { get; }
+        public string Authorization { get; set; }
 
         /// <summary> Optional description of the MCP server, used to provide more context. </summary>
-        public string ServerDescription { get; }
+        public string ServerDescription { get; set; }
 
-        /// <summary> Gets the Headers. </summary>
-        public IDictionary<string, string> Headers { get; }
+        /// <summary> Gets or sets the Headers. </summary>
+        public IDictionary<string, string> Headers { get; set; }
 
         /// <summary>
-        /// Gets the AllowedTools.
+        /// Gets or sets the AllowedTools.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -140,10 +135,10 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData AllowedTools { get; }
+        public BinaryData AllowedTools { get; set; }
 
         /// <summary>
-        /// Gets the RequireApproval.
+        /// Gets or sets the RequireApproval.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -184,15 +179,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData RequireApproval { get; }
+        public BinaryData RequireApproval { get; set; }
 
         /// <summary> Whether this MCP tool is deferred and discovered via tool search. </summary>
-        public bool? DeferLoading { get; }
+        public bool? DeferLoading { get; set; }
 
         /// <summary> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </summary>
-        public string ProjectConnectionId { get; }
-
-        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public string ProjectConnectionId { get; set; }
     }
 }

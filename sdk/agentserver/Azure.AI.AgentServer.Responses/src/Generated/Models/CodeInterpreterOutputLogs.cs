@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -17,8 +18,11 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterOutputLogs"/>. </summary>
         /// <param name="logs"> The logs output from the code interpreter. </param>
-        internal CodeInterpreterOutputLogs(string logs)
+        /// <exception cref="ArgumentNullException"> <paramref name="logs"/> is null. </exception>
+        public CodeInterpreterOutputLogs(string logs)
         {
+            Argument.AssertNotNull(logs, nameof(logs));
+
             Logs = logs;
         }
 
@@ -37,6 +41,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Type { get; } = "logs";
 
         /// <summary> The logs output from the code interpreter. </summary>
-        public string Logs { get; }
+        public string Logs { get; set; }
     }
 }

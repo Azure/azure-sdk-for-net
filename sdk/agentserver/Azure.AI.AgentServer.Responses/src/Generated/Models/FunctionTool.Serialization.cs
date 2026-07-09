@@ -9,12 +9,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Function. </summary>
-    public partial class FunctionTool : ResponseTool, IJsonModel<FunctionTool>
+    public partial class FunctionTool : Tool, IJsonModel<FunctionTool>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionTool"/> for deserialization. </summary>
         internal FunctionTool()
@@ -23,7 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override Tool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FunctionTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -128,21 +127,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("defer_loading"u8);
                 writer.WriteBooleanValue(DeferLoading.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -151,7 +135,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override Tool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FunctionTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -170,18 +154,18 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            ResponseToolKind @type = "function";
+            ToolType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string description = default;
             IDictionary<string, BinaryData> parameters = default;
             bool? strict = default;
             bool? deferLoading = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = ModelReaderWriter.Read<ResponseToolKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
+                    @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -247,12 +231,12 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new FunctionTool(
                 @type,
+                additionalBinaryDataProperties,
                 name,
                 description,
                 parameters,
                 strict,
-                deferLoading,
-                additionalBinaryDataProperties);
+                deferLoading);
         }
     }
 }
