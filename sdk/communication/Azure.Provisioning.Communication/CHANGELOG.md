@@ -9,12 +9,13 @@
 
 ### Breaking Changes
 
-- Renamed generated resource types to align with the management SDK naming, for example `CommunicationServiceResource`, `EmailServiceResource`, `CommunicationDomainResource`, and `SenderUsernameResource`.
 - Removed the generated `CommunicationServiceKeys` type and `CommunicationService.GetKeys()` helper.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Preserved the existing public resource type names while migrating to the TypeSpec-based generator's internal resource naming.
 
 ## 1.0.0-beta.4 (2026-03-03)
 
