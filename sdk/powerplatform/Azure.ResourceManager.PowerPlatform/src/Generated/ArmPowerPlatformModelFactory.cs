@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Models.PatchTrackedResource"/> instance for mocking. </returns>
-        public static PatchTrackedResource PatchTrackedResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation? location = default)
+        /// <returns> A new <see cref="Models.PatchTrackedResourceData"/> instance for mocking. </returns>
+        public static PatchTrackedResourceData PatchTrackedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation? location = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PatchTrackedResource(
+            return new PatchTrackedResourceData(
                 id,
                 name,
                 resourceType,

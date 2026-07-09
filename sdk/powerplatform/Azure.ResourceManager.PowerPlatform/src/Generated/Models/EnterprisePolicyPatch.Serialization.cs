@@ -17,7 +17,7 @@ using Azure.ResourceManager.PowerPlatform;
 namespace Azure.ResourceManager.PowerPlatform.Models
 {
     /// <summary> Definition of the EnterprisePolicy. </summary>
-    public partial class EnterprisePolicyPatch : PatchTrackedResource, IJsonModel<EnterprisePolicyPatch>
+    public partial class EnterprisePolicyPatch : PatchTrackedResourceData, IJsonModel<EnterprisePolicyPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

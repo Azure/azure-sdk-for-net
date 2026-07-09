@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.PowerPlatform.Models
 {
     /// <summary> Definition of the account. </summary>
-    public partial class PowerPlatformAccountPatch : PatchTrackedResource
+    public partial class PowerPlatformAccountPatch : PatchTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="PowerPlatformAccountPatch"/>. </summary>
         public PowerPlatformAccountPatch()

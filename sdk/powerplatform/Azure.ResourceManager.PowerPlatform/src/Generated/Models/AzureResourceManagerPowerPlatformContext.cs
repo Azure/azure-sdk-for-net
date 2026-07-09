@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PowerPlatform
     [ModelReaderWriterBuildable(typeof(EnterprisePolicyResource))]
     [ModelReaderWriterBuildable(typeof(KeyProperties))]
     [ModelReaderWriterBuildable(typeof(Models.KeyVaultProperties))]
-    [ModelReaderWriterBuildable(typeof(PatchTrackedResource))]
+    [ModelReaderWriterBuildable(typeof(PatchTrackedResourceData))]
     [ModelReaderWriterBuildable(typeof(PowerPlatformAccountData))]
     [ModelReaderWriterBuildable(typeof(PowerPlatformAccountPatch))]
     [ModelReaderWriterBuildable(typeof(PowerPlatformAccountResource))]

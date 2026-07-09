@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.PowerPlatform.Models
 {
     /// <summary> Definition of the EnterprisePolicy. </summary>
-    public partial class EnterprisePolicyPatch : PatchTrackedResource
+    public partial class EnterprisePolicyPatch : PatchTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="EnterprisePolicyPatch"/>. </summary>
         public EnterprisePolicyPatch()
