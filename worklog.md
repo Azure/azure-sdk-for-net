@@ -51,9 +51,9 @@ It intentionally does **not** alternate AgentServer models directly to `OpenAI.*
 Running:
 
 ```bash
-cd /root/github/azure-sdk-for-net/sdk/agentserver
-PIP_BREAK_SYSTEM_PACKAGES=1 pwsh -NoProfile -File ./scripts/Generate-Contracts.ps1 \
-  -LocalSpecRepoPath /root/github/azure-rest-api-specs-agentserver-extensions/specification/ai-foundry/data-plane/Foundry/src/sdk-csharp-azure-ai-agent-contracts
+cd /root/github/azure-sdk-for-net
+PIP_BREAK_SYSTEM_PACKAGES=1 pwsh -NoProfile -File ./sdk/agentserver/scripts/Generate-Contracts.ps1 \
+  -LocalSpecRepoPath /root/github/azure-rest-api-specs-agentserver-extensions
 ```
 
 fails in the C# emitter:
@@ -72,6 +72,30 @@ Object reference not set to an instance of an object.
 ```
 
 This occurs when AgentServer keeps a local generated polymorphic hierarchy but selected concrete variants are external `@@alternateType` references to `Azure.AI.Extensions.OpenAI`.
+
+## Latest architecture-compliant attempt
+
+Following the recommendation to alternate out the OpenAI models and avoid generating them, the spec spike now alternates the shared OpenAI bases and enums to Extensions-owned facade names instead of `OpenAI.*`:
+
+- `OpenAI.OutputItemType` -> `Azure.AI.Extensions.OpenAI.ResponseItemKind`
+- `OpenAI.ToolType` -> `Azure.AI.Extensions.OpenAI.ResponseToolKind`
+- `OpenAI.OutputItem` / `OpenAI.InputItem` -> `Azure.AI.Extensions.OpenAI.OutputItem`
+- `OpenAI.Tool` -> `Azure.AI.Extensions.OpenAI.ResponseTool`
+- `OpenAI.Response` -> `Azure.AI.Extensions.OpenAI.ResponseObject`
+- `OpenAI.CreateResponse` -> `Azure.AI.Extensions.OpenAI.CreateResponseBody`
+- `OpenAI.ResponseStreamEvent` -> `Azure.AI.Extensions.OpenAI.ResponseStreamEvent`
+
+The spike also scopes all imported service operations out of C# generation because AgentServer needs the protocol models and OpenAPI validators, not generated clients. This avoids a separate generated-client parameter crash:
+
+```text
+Failed to create CSharpType for Microsoft.TypeSpec.Generator.Input.InputArrayType
+   at ParameterProvider..ctor(...)
+   at RestClientProvider.GetMethodParameters(...)
+```
+
+Finally, `unreferenced-types-handling: keepAll` was removed so the emitter uses its default `removeOrInternalize` behavior and does not keep every unreferenced OpenAI model just because it was imported.
+
+Even with those changes, the C# emitter still crashes in `SwitchStatement.Accept`, so the remaining blocker is not simply “some unreferenced OpenAI models are still being generated.” The blocker is the emitter's handling of this strict architecture shape: AgentServer consuming Extensions alternates across polymorphic response/event/tool models.
 
 ## Workaround assessment
 
