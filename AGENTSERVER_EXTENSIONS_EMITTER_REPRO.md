@@ -1,6 +1,6 @@
 # AgentServer Extensions model alternate repro
 
-This spike reproduces a C# emitter crash for the full model-consolidation architecture where `Azure.AI.AgentServer.Responses` keeps its local protocol/event model surface but consumes shared concrete Azure/Foundry models from `Azure.AI.Extensions.OpenAI`.
+This spike reproduces a C# emitter crash for the full model-consolidation architecture where `Azure.AI.AgentServer.Responses` consumes shared OpenAI/Foundry response models through `Azure.AI.Extensions.OpenAI`, not the OpenAI SDK directly.
 
 ## Branches / working trees
 
@@ -21,7 +21,7 @@ OpenAI SDK
       -> Azure.AI.AgentServer.Responses
 ```
 
-The important part of this repro is that AgentServer still generates local protocol/base/event models such as `OutputItem` and response stream events, but selected concrete Azure-specific models are externalized with `@@alternateType` to `Azure.AI.Extensions.OpenAI`.
+The important part of this repro is that AgentServer's dependency graph stays Extensions-only. The current spike alternates the shared OpenAI response/tool bases, enums, and Azure-specific concrete variants to `Azure.AI.Extensions.OpenAI` identities, and scopes imported service operations out of C# generation so the emitter only needs protocol models/OpenAPI validation output.
 
 Example shape in:
 
@@ -30,6 +30,12 @@ Example shape in:
 ```
 
 ```tsp
+@@alternateType(OpenAI.OutputItem, {
+  identity: "Azure.AI.Extensions.OpenAI.OutputItem",
+  package: "Azure.AI.Extensions.OpenAI",
+  minVersion: "3.0.0-beta.1"
+}, "csharp");
+
 @@alternateType(A2AToolCall, {
   identity: "Azure.AI.Extensions.OpenAI.A2AToolCall",
   package: "Azure.AI.Extensions.OpenAI",
@@ -42,9 +48,9 @@ Example shape in:
 From the SDK repo:
 
 ```bash
-cd /root/github/azure-sdk-for-net/sdk/agentserver
-PIP_BREAK_SYSTEM_PACKAGES=1 pwsh -NoProfile -File ./scripts/Generate-Contracts.ps1 \
-  -LocalSpecRepoPath /root/github/azure-rest-api-specs-agentserver-extensions/specification/ai-foundry/data-plane/Foundry/src/sdk-csharp-azure-ai-agent-contracts
+cd /root/github/azure-sdk-for-net
+PIP_BREAK_SYSTEM_PACKAGES=1 pwsh -NoProfile -File ./sdk/agentserver/scripts/Generate-Contracts.ps1 \
+  -LocalSpecRepoPath /root/github/azure-rest-api-specs-agentserver-extensions
 ```
 
 ## Actual result
@@ -73,10 +79,11 @@ Object reference not set to an instance of an object.
 The full architecture needs emitter support for this shape:
 
 ```text
-local generated polymorphic base in AgentServer
-  -> selected concrete derived variants supplied by external alternate types
+AgentServer generated protocol package
+  -> shared response/tool/event types supplied by Extensions alternate types
+  -> Extensions is the only package that adapts OpenAI SDK types
 ```
 
-If the AgentServer base types are also alternated to OpenAI/Extensions types, generation can avoid this crash, but AgentServer's handwritten builders then fail because they depend on local generated protocol/event types such as `OutputItem`, `ResponseOutputItemAddedEvent`, and `ResponseOutputItemDoneEvent`.
+Directly alternating AgentServer to `OpenAI.*` is not an acceptable workaround because it violates the required dependency direction. In addition, when tested, direct OpenAI alternates broke AgentServer's handwritten builders because they depend on protocol/event concepts such as `OutputItem`, `ResponseOutputItemAddedEvent`, and `ResponseOutputItemDoneEvent`.
 
-So the issue to inspect is the emitter's generated discriminator/switch path for a local polymorphic base with external alternate concrete variants.
+The issue to inspect is the emitter's generated discriminator/switch path when a package consumes polymorphic response/event/tool models through external alternate types.
