@@ -141,7 +141,7 @@ function Get-ResourceInfo
     }
 
     $combinedSource = $classSources -join [Environment]::NewLine
-    $constructorPattern = '(?ms)public\s+' + [regex]::Escape($className) + '\s*\(\s*string\s+bicepIdentifier\s*,\s*string\??\s+resourceVersion\s*=\s*(?:default|null)\s*\)\s*:\s*base\(\s*bicepIdentifier\s*,\s*"(?<resourceType>[^"]+)"\s*,\s*resourceVersion\s*\?\?\s*"(?<defaultApiVersion>[^"]+)"\s*\)'
+    $constructorPattern = '(?ms)(?:public|internal)\s+' + [regex]::Escape($className) + '\s*\(\s*string\s+bicepIdentifier\s*,\s*string\??\s+resourceVersion\s*=\s*(?:default|null)\s*\)\s*:\s*base\(\s*bicepIdentifier\s*,\s*"(?<resourceType>[^"]+)"\s*,\s*resourceVersion\s*\?\?\s*"(?<defaultApiVersion>[^"]+)"\s*\)'
     $constructorMatch = [regex]::Match($source, $constructorPattern)
 
     $apiVersions = [System.Collections.Generic.List[string]]::new()
