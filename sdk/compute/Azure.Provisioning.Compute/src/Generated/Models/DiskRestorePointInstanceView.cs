@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<string> Id
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _id;
             }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the SnapshotAccessState. </summary>
+        /// <summary> Gets the SnapshotAccessState. </summary>
         public BicepValue<SnapshotAccessState> SnapshotAccessState
         {
             get
@@ -45,25 +40,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _snapshotAccessState;
             }
-            set
-            {
-                Initialize();
-                _snapshotAccessState.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ReplicationStatus. </summary>
+        /// <summary> Gets the ReplicationStatus. </summary>
         public DiskRestorePointReplicationStatus ReplicationStatus
         {
             get
             {
                 Initialize();
                 return _replicationStatus;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _replicationStatus, value);
             }
         }
 

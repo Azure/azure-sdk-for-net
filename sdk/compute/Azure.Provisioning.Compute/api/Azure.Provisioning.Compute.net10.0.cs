@@ -196,16 +196,16 @@ namespace Azure.Provisioning.Compute
     public partial class CapacityReservationInstanceView : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CapacityReservationInstanceView() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } set { } }
-        public Azure.Provisioning.Compute.CapacityReservationUtilization UtilizationInfo { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } }
+        public Azure.Provisioning.Compute.CapacityReservationUtilization UtilizationInfo { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class CapacityReservationInstanceViewWithName : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CapacityReservationInstanceViewWithName() { }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } set { } }
-        public Azure.Provisioning.Compute.CapacityReservationUtilization UtilizationInfo { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } }
+        public Azure.Provisioning.Compute.CapacityReservationUtilization UtilizationInfo { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum CapacityReservationType
@@ -251,19 +251,19 @@ namespace Azure.Provisioning.Compute
     public partial class ComputeApiError : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ComputeApiError() { }
-        public Azure.Provisioning.BicepValue<string> Code { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.ComputeApiErrorBase> Details { get { throw null; } set { } }
-        public Azure.Provisioning.Compute.InnerError Innererror { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Message { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Target { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Code { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.ComputeApiErrorBase> Details { get { throw null; } }
+        public Azure.Provisioning.Compute.InnerError Innererror { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Message { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Target { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ComputeApiErrorBase : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ComputeApiErrorBase() { }
-        public Azure.Provisioning.BicepValue<string> Code { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Message { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Target { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Code { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Message { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Target { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ComputeDeleteOption
@@ -536,8 +536,8 @@ namespace Azure.Provisioning.Compute
     public partial class DedicatedHostAllocatableVm : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DedicatedHostAllocatableVm() { }
-        public Azure.Provisioning.BicepValue<double> Count { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> VmSize { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<double> Count { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> VmSize { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DedicatedHostGroup : Azure.Provisioning.Primitives.ProvisionableResource
@@ -568,17 +568,17 @@ namespace Azure.Provisioning.Compute
     {
         public DedicatedHostInstanceView() { }
         public Azure.Provisioning.BicepValue<string> AssetId { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.DedicatedHostAllocatableVm> AvailableCapacityAllocatableVMs { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.DedicatedHostAllocatableVm> AvailableCapacityAllocatableVMs { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DedicatedHostInstanceViewWithName : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DedicatedHostInstanceViewWithName() { }
         public Azure.Provisioning.BicepValue<string> AssetId { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.DedicatedHostAllocatableVm> AvailableCapacityAllocatableVMs { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.DedicatedHostAllocatableVm> AvailableCapacityAllocatableVMs { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum DedicatedHostLicenseType
@@ -765,10 +765,10 @@ namespace Azure.Provisioning.Compute
     public partial class DiskInstanceView : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DiskInstanceView() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.DiskEncryptionSettings> EncryptionSettings { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.ComputeStorageAlignmentStatus> StorageAlignmentStatus { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.DiskEncryptionSettings> EncryptionSettings { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.ComputeStorageAlignmentStatus> StorageAlignmentStatus { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum DiskPublicNetworkAccess
@@ -795,7 +795,7 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.HyperVGeneration> HyperVGeneration { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> LogicalSectorSize { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.NetworkAccessPolicy> NetworkAccessPolicy { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.SupportedOperatingSystemType> OSType { get { throw null; } }
         public Azure.Provisioning.Compute.RestorePoint Parent { get { throw null; } set { } }
@@ -831,16 +831,16 @@ namespace Azure.Provisioning.Compute
     public partial class DiskRestorePointInstanceView : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DiskRestorePointInstanceView() { }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
-        public Azure.Provisioning.Compute.DiskRestorePointReplicationStatus ReplicationStatus { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.SnapshotAccessState> SnapshotAccessState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public Azure.Provisioning.Compute.DiskRestorePointReplicationStatus ReplicationStatus { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.SnapshotAccessState> SnapshotAccessState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DiskRestorePointReplicationStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DiskRestorePointReplicationStatus() { }
-        public Azure.Provisioning.BicepValue<int> CompletionPercent { get { throw null; } set { } }
-        public Azure.Provisioning.Compute.InstanceViewStatus Status { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> CompletionPercent { get { throw null; } }
+        public Azure.Provisioning.Compute.InstanceViewStatus Status { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DiskSecurityProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1128,10 +1128,10 @@ namespace Azure.Provisioning.Compute
     public partial class GalleryImageExecutedValidation : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public GalleryImageExecutedValidation() { }
-        public Azure.Provisioning.BicepValue<string> ExecutedValidationType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExecutionOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.ComputeGalleryValidationStatus> Status { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ExecutedValidationType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExecutionOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.ComputeGalleryValidationStatus> Status { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class GalleryImageFeature : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1153,9 +1153,9 @@ namespace Azure.Provisioning.Compute
     public partial class GalleryImageValidationsProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public GalleryImageValidationsProfile() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.GalleryImageExecutedValidation> ExecutedValidations { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.ComputeGalleryPlatformAttribute> PlatformAttributes { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ValidationETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.GalleryImageExecutedValidation> ExecutedValidations { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.ComputeGalleryPlatformAttribute> PlatformAttributes { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ValidationETag { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class GalleryImageVersion : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1187,8 +1187,8 @@ namespace Azure.Provisioning.Compute
     public partial class GalleryImageVersionPolicyViolation : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public GalleryImageVersionPolicyViolation() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.GalleryImageVersionPolicyViolationCategory> Category { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Details { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.GalleryImageVersionPolicyViolationCategory> Category { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Details { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum GalleryImageVersionPolicyViolationCategory
@@ -1617,8 +1617,8 @@ namespace Azure.Provisioning.Compute
     public partial class InnerError : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public InnerError() { }
-        public Azure.Provisioning.BicepValue<string> Errordetail { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Exceptiontype { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Errordetail { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Exceptiontype { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class InstanceViewStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1784,13 +1784,13 @@ namespace Azure.Provisioning.Compute
     public partial class MaintenanceRedeployStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MaintenanceRedeployStatus() { }
-        public Azure.Provisioning.BicepValue<bool> IsCustomerInitiatedMaintenanceAllowed { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> LastOperationMessage { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.MaintenanceOperationResultCodeType> LastOperationResultCode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceWindowEndOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceWindowStartOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> PreMaintenanceWindowEndOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> PreMaintenanceWindowStartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsCustomerInitiatedMaintenanceAllowed { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> LastOperationMessage { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.MaintenanceOperationResultCodeType> LastOperationResultCode { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceWindowEndOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceWindowStartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> PreMaintenanceWindowEndOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> PreMaintenanceWindowStartOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ManagedDisk : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2015,8 +2015,8 @@ namespace Azure.Provisioning.Compute
     public partial class RegionalSharingStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public RegionalSharingStatus() { }
-        public Azure.Provisioning.BicepValue<string> Details { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Region { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Details { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Region { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.SharingState> State { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -2128,8 +2128,8 @@ namespace Azure.Provisioning.Compute
     public partial class RestorePointInstanceView : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public RestorePointInstanceView() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.DiskRestorePointInstanceView> DiskRestorePoints { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.DiskRestorePointInstanceView> DiskRestorePoints { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class RestorePointSourceMetadata : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2321,8 +2321,8 @@ namespace Azure.Provisioning.Compute
     public partial class SharingProfileGroup : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SharingProfileGroup() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.SharingProfileGroupType> GroupType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> Ids { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.SharingProfileGroupType> GroupType { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> Ids { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum SharingProfileGroupType
@@ -2341,7 +2341,7 @@ namespace Azure.Provisioning.Compute
     {
         public SharingStatus() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.SharingState> AggregatedState { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.RegionalSharingStatus> Summary { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.RegionalSharingStatus> Summary { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum SnapshotAccessState
@@ -2645,9 +2645,9 @@ namespace Azure.Provisioning.Compute
     public partial class VirtualMachineAgentInstanceView : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VirtualMachineAgentInstanceView() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.VirtualMachineExtensionHandlerInstanceView> ExtensionHandlers { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> VmAgentVersion { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.VirtualMachineExtensionHandlerInstanceView> ExtensionHandlers { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> VmAgentVersion { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class VirtualMachineDataDisk : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2718,9 +2718,9 @@ namespace Azure.Provisioning.Compute
     public partial class VirtualMachineExtensionHandlerInstanceView : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VirtualMachineExtensionHandlerInstanceView() { }
-        public Azure.Provisioning.Compute.InstanceViewStatus Status { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TypeHandlerVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> VirtualMachineExtensionHandlerInstanceViewType { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.InstanceViewStatus Status { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TypeHandlerVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> VirtualMachineExtensionHandlerInstanceViewType { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class VirtualMachineExtensionImage : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2730,7 +2730,7 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<string> HandlerSchema { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> OperatingSystem { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> SupportsMultipleExtensions { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -2778,22 +2778,22 @@ namespace Azure.Provisioning.Compute
     {
         public VirtualMachineInstanceView() { }
         public Azure.Provisioning.BicepValue<string> AssignedHost { get { throw null; } }
-        public Azure.Provisioning.Compute.BootDiagnosticsInstanceView BootDiagnostics { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ComputerName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.DiskInstanceView> Disks { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.VirtualMachineExtensionInstanceView> Extensions { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.HyperVGeneration> HyperVGeneration { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.BootDiagnosticsInstanceView BootDiagnostics { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ComputerName { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.DiskInstanceView> Disks { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.VirtualMachineExtensionInstanceView> Extensions { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.HyperVGeneration> HyperVGeneration { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> InterconnectSubgroupId { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsVmInStandbyPool { get { throw null; } }
-        public Azure.Provisioning.Compute.MaintenanceRedeployStatus MaintenanceRedeployStatus { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> OSName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> OSVersion { get { throw null; } set { } }
-        public Azure.Provisioning.Compute.VirtualMachinePatchStatus PatchStatus { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> PlatformFaultDomain { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> PlatformUpdateDomain { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> RdpThumbPrint { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } set { } }
-        public Azure.Provisioning.Compute.VirtualMachineAgentInstanceView VmAgent { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.MaintenanceRedeployStatus MaintenanceRedeployStatus { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> OSName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> OSVersion { get { throw null; } }
+        public Azure.Provisioning.Compute.VirtualMachinePatchStatus PatchStatus { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> PlatformFaultDomain { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> PlatformUpdateDomain { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> RdpThumbPrint { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } }
+        public Azure.Provisioning.Compute.VirtualMachineAgentInstanceView VmAgent { get { throw null; } }
         public Azure.Provisioning.Compute.InstanceViewStatus VmHealthStatus { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -2897,9 +2897,9 @@ namespace Azure.Provisioning.Compute
     public partial class VirtualMachinePatchStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VirtualMachinePatchStatus() { }
-        public Azure.Provisioning.Compute.AvailablePatchSummary AvailablePatchSummary { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.AvailablePatchSummary AvailablePatchSummary { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> ConfigurationStatuses { get { throw null; } }
-        public Azure.Provisioning.Compute.LastPatchInstallationSummary LastPatchInstallationSummary { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.LastPatchInstallationSummary LastPatchInstallationSummary { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class VirtualMachinePlacement : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2974,14 +2974,14 @@ namespace Azure.Provisioning.Compute
     public partial class VirtualMachineRunCommandInstanceView : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VirtualMachineRunCommandInstanceView() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Error { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ExecutionMessage { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.ExecutionState> ExecutionState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> ExitCode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Output { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Error { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ExecutionMessage { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.ExecutionState> ExecutionState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> ExitCode { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Output { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class VirtualMachineRunCommandScriptSource : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -3407,21 +3407,21 @@ namespace Azure.Provisioning.Compute
     {
         public VirtualMachineScaleSetVmInstanceView() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> AssignedHost { get { throw null; } }
-        public Azure.Provisioning.Compute.BootDiagnosticsInstanceView BootDiagnostics { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ComputerName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.DiskInstanceView> Disks { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.VirtualMachineExtensionInstanceView> Extensions { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.HyperVGeneration> HyperVGeneration { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.BootDiagnosticsInstanceView BootDiagnostics { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ComputerName { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.DiskInstanceView> Disks { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.VirtualMachineExtensionInstanceView> Extensions { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.HyperVGeneration> HyperVGeneration { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> InterconnectSubgroupId { get { throw null; } }
-        public Azure.Provisioning.Compute.MaintenanceRedeployStatus MaintenanceRedeployStatus { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> OSName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> OSVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> PlacementGroupId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> PlatformFaultDomain { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> PlatformUpdateDomain { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> RdpThumbPrint { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } set { } }
-        public Azure.Provisioning.Compute.VirtualMachineAgentInstanceView VmAgent { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.MaintenanceRedeployStatus MaintenanceRedeployStatus { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> OSName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> OSVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PlacementGroupId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> PlatformFaultDomain { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> PlatformUpdateDomain { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> RdpThumbPrint { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } }
+        public Azure.Provisioning.Compute.VirtualMachineAgentInstanceView VmAgent { get { throw null; } }
         public Azure.Provisioning.Compute.InstanceViewStatus VmHealthStatus { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }

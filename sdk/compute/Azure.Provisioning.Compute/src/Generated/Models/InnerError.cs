@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the Exceptiontype. </summary>
+        /// <summary> Gets the Exceptiontype. </summary>
         public BicepValue<string> Exceptiontype
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _exceptiontype;
             }
-            set
-            {
-                Initialize();
-                _exceptiontype.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Errordetail. </summary>
+        /// <summary> Gets the Errordetail. </summary>
         public BicepValue<string> Errordetail
         {
             get
             {
                 Initialize();
                 return _errordetail;
-            }
-            set
-            {
-                Initialize();
-                _errordetail.Assign(value);
             }
         }
 

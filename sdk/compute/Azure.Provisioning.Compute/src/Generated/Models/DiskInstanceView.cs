@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _name;
             }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the EncryptionSettings. </summary>
+        /// <summary> Gets the EncryptionSettings. </summary>
         public BicepList<DiskEncryptionSettings> EncryptionSettings
         {
             get
@@ -46,14 +41,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _encryptionSettings;
             }
-            set
-            {
-                Initialize();
-                _encryptionSettings.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Statuses. </summary>
+        /// <summary> Gets the Statuses. </summary>
         public BicepList<InstanceViewStatus> Statuses
         {
             get
@@ -61,25 +51,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _statuses;
             }
-            set
-            {
-                Initialize();
-                _statuses.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the StorageAlignmentStatus. </summary>
+        /// <summary> Gets the StorageAlignmentStatus. </summary>
         public BicepValue<ComputeStorageAlignmentStatus> StorageAlignmentStatus
         {
             get
             {
                 Initialize();
                 return _storageAlignmentStatus;
-            }
-            set
-            {
-                Initialize();
-                _storageAlignmentStatus.Assign(value);
             }
         }
 

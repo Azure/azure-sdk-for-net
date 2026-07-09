@@ -20,18 +20,13 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the Hosts. </summary>
+        /// <summary> Gets the Hosts. </summary>
         public BicepList<DedicatedHostInstanceViewWithName> Hosts
         {
             get
             {
                 Initialize();
                 return _hosts;
-            }
-            set
-            {
-                Initialize();
-                _hosts.Assign(value);
             }
         }
 

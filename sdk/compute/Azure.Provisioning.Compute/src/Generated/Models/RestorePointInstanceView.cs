@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the DiskRestorePoints. </summary>
+        /// <summary> Gets the DiskRestorePoints. </summary>
         public BicepList<DiskRestorePointInstanceView> DiskRestorePoints
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _diskRestorePoints;
             }
-            set
-            {
-                Initialize();
-                _diskRestorePoints.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Statuses. </summary>
+        /// <summary> Gets the Statuses. </summary>
         public BicepList<InstanceViewStatus> Statuses
         {
             get
             {
                 Initialize();
                 return _statuses;
-            }
-            set
-            {
-                Initialize();
-                _statuses.Assign(value);
             }
         }
 

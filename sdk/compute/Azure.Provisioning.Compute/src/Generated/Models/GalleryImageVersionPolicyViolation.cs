@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the Category. </summary>
+        /// <summary> Gets the Category. </summary>
         public BicepValue<GalleryImageVersionPolicyViolationCategory> Category
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _category;
             }
-            set
-            {
-                Initialize();
-                _category.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Details. </summary>
+        /// <summary> Gets the Details. </summary>
         public BicepValue<string> Details
         {
             get
             {
                 Initialize();
                 return _details;
-            }
-            set
-            {
-                Initialize();
-                _details.Assign(value);
             }
         }
 

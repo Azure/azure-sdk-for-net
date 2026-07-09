@@ -32,7 +32,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the UtilizationInfo. </summary>
+        /// <summary> Gets the UtilizationInfo. </summary>
         public CapacityReservationUtilization UtilizationInfo
         {
             get
@@ -40,25 +40,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _utilizationInfo;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _utilizationInfo, value);
-            }
         }
 
-        /// <summary> Gets or sets the Statuses. </summary>
+        /// <summary> Gets the Statuses. </summary>
         public BicepList<InstanceViewStatus> Statuses
         {
             get
             {
                 Initialize();
                 return _statuses;
-            }
-            set
-            {
-                Initialize();
-                _statuses.Assign(value);
             }
         }
 

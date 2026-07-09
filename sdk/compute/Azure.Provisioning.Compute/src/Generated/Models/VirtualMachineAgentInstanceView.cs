@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the VmAgentVersion. </summary>
+        /// <summary> Gets the VmAgentVersion. </summary>
         public BicepValue<string> VmAgentVersion
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _vmAgentVersion;
             }
-            set
-            {
-                Initialize();
-                _vmAgentVersion.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ExtensionHandlers. </summary>
+        /// <summary> Gets the ExtensionHandlers. </summary>
         public BicepList<VirtualMachineExtensionHandlerInstanceView> ExtensionHandlers
         {
             get
@@ -45,25 +40,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _extensionHandlers;
             }
-            set
-            {
-                Initialize();
-                _extensionHandlers.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Statuses. </summary>
+        /// <summary> Gets the Statuses. </summary>
         public BicepList<InstanceViewStatus> Statuses
         {
             get
             {
                 Initialize();
                 return _statuses;
-            }
-            set
-            {
-                Initialize();
-                _statuses.Assign(value);
             }
         }
 

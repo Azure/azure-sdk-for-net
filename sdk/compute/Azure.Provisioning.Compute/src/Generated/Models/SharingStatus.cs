@@ -31,18 +31,13 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Summary. </summary>
+        /// <summary> Gets the Summary. </summary>
         public BicepList<RegionalSharingStatus> Summary
         {
             get
             {
                 Initialize();
                 return _summary;
-            }
-            set
-            {
-                Initialize();
-                _summary.Assign(value);
             }
         }
 

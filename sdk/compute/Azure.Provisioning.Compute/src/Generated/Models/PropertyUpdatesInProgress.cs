@@ -20,18 +20,13 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the TargetTier. </summary>
+        /// <summary> Gets the TargetTier. </summary>
         public BicepValue<string> TargetTier
         {
             get
             {
                 Initialize();
                 return _targetTier;
-            }
-            set
-            {
-                Initialize();
-                _targetTier.Assign(value);
             }
         }
 

@@ -27,7 +27,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the IsCustomerInitiatedMaintenanceAllowed. </summary>
+        /// <summary> Gets the IsCustomerInitiatedMaintenanceAllowed. </summary>
         public BicepValue<bool> IsCustomerInitiatedMaintenanceAllowed
         {
             get
@@ -35,14 +35,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _isCustomerInitiatedMaintenanceAllowed;
             }
-            set
-            {
-                Initialize();
-                _isCustomerInitiatedMaintenanceAllowed.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the PreMaintenanceWindowStartOn. </summary>
+        /// <summary> Gets the PreMaintenanceWindowStartOn. </summary>
         public BicepValue<DateTimeOffset> PreMaintenanceWindowStartOn
         {
             get
@@ -50,14 +45,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _preMaintenanceWindowStartOn;
             }
-            set
-            {
-                Initialize();
-                _preMaintenanceWindowStartOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the PreMaintenanceWindowEndOn. </summary>
+        /// <summary> Gets the PreMaintenanceWindowEndOn. </summary>
         public BicepValue<DateTimeOffset> PreMaintenanceWindowEndOn
         {
             get
@@ -65,14 +55,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _preMaintenanceWindowEndOn;
             }
-            set
-            {
-                Initialize();
-                _preMaintenanceWindowEndOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the MaintenanceWindowStartOn. </summary>
+        /// <summary> Gets the MaintenanceWindowStartOn. </summary>
         public BicepValue<DateTimeOffset> MaintenanceWindowStartOn
         {
             get
@@ -80,14 +65,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _maintenanceWindowStartOn;
             }
-            set
-            {
-                Initialize();
-                _maintenanceWindowStartOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the MaintenanceWindowEndOn. </summary>
+        /// <summary> Gets the MaintenanceWindowEndOn. </summary>
         public BicepValue<DateTimeOffset> MaintenanceWindowEndOn
         {
             get
@@ -95,14 +75,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _maintenanceWindowEndOn;
             }
-            set
-            {
-                Initialize();
-                _maintenanceWindowEndOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the LastOperationResultCode. </summary>
+        /// <summary> Gets the LastOperationResultCode. </summary>
         public BicepValue<MaintenanceOperationResultCodeType> LastOperationResultCode
         {
             get
@@ -110,25 +85,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _lastOperationResultCode;
             }
-            set
-            {
-                Initialize();
-                _lastOperationResultCode.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the LastOperationMessage. </summary>
+        /// <summary> Gets the LastOperationMessage. </summary>
         public BicepValue<string> LastOperationMessage
         {
             get
             {
                 Initialize();
                 return _lastOperationMessage;
-            }
-            set
-            {
-                Initialize();
-                _lastOperationMessage.Assign(value);
             }
         }
 

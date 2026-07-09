@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         public InstanceViewStatus Status
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _status;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _status, value);
-            }
         }
 
-        /// <summary> Gets or sets the CompletionPercent. </summary>
+        /// <summary> Gets the CompletionPercent. </summary>
         public BicepValue<int> CompletionPercent
         {
             get
             {
                 Initialize();
                 return _completionPercent;
-            }
-            set
-            {
-                Initialize();
-                _completionPercent.Assign(value);
             }
         }
 

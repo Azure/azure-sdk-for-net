@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the VmSize. </summary>
+        /// <summary> Gets the VmSize. </summary>
         public BicepValue<string> VmSize
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _vmSize;
             }
-            set
-            {
-                Initialize();
-                _vmSize.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Count. </summary>
+        /// <summary> Gets the Count. </summary>
         public BicepValue<double> Count
         {
             get
             {
                 Initialize();
                 return _count;
-            }
-            set
-            {
-                Initialize();
-                _count.Assign(value);
             }
         }
 

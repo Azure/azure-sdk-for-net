@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the Code. </summary>
+        /// <summary> Gets the Code. </summary>
         public BicepValue<string> Code
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _code;
             }
-            set
-            {
-                Initialize();
-                _code.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Target. </summary>
+        /// <summary> Gets the Target. </summary>
         public BicepValue<string> Target
         {
             get
@@ -45,25 +40,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _target;
             }
-            set
-            {
-                Initialize();
-                _target.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Message. </summary>
+        /// <summary> Gets the Message. </summary>
         public BicepValue<string> Message
         {
             get
             {
                 Initialize();
                 return _message;
-            }
-            set
-            {
-                Initialize();
-                _message.Assign(value);
             }
         }
 

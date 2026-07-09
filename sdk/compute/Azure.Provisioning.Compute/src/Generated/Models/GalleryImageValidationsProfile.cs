@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the ValidationETag. </summary>
+        /// <summary> Gets the ValidationETag. </summary>
         public BicepValue<string> ValidationETag
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _validationETag;
             }
-            set
-            {
-                Initialize();
-                _validationETag.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ExecutedValidations. </summary>
+        /// <summary> Gets the ExecutedValidations. </summary>
         public BicepList<GalleryImageExecutedValidation> ExecutedValidations
         {
             get
@@ -45,25 +40,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _executedValidations;
             }
-            set
-            {
-                Initialize();
-                _executedValidations.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the PlatformAttributes. </summary>
+        /// <summary> Gets the PlatformAttributes. </summary>
         public BicepList<ComputeGalleryPlatformAttribute> PlatformAttributes
         {
             get
             {
                 Initialize();
                 return _platformAttributes;
-            }
-            set
-            {
-                Initialize();
-                _platformAttributes.Assign(value);
             }
         }
 

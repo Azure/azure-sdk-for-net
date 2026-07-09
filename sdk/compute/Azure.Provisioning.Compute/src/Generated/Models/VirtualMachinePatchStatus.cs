@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the AvailablePatchSummary. </summary>
+        /// <summary> Gets the AvailablePatchSummary. </summary>
         public AvailablePatchSummary AvailablePatchSummary
         {
             get
@@ -30,25 +30,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _availablePatchSummary;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _availablePatchSummary, value);
-            }
         }
 
-        /// <summary> Gets or sets the LastPatchInstallationSummary. </summary>
+        /// <summary> Gets the LastPatchInstallationSummary. </summary>
         public LastPatchInstallationSummary LastPatchInstallationSummary
         {
             get
             {
                 Initialize();
                 return _lastPatchInstallationSummary;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _lastPatchInstallationSummary, value);
             }
         }
 

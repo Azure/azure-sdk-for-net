@@ -43,7 +43,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the AvailableCapacity. </summary>
+        /// <summary> Gets the AvailableCapacity. </summary>
         internal DedicatedHostAvailableCapacity AvailableCapacity
         {
             get
@@ -51,14 +51,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _availableCapacity;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _availableCapacity, value);
-            }
         }
 
-        /// <summary> Gets or sets the Statuses. </summary>
+        /// <summary> Gets the Statuses. </summary>
         public BicepList<InstanceViewStatus> Statuses
         {
             get
@@ -66,27 +61,14 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _statuses;
             }
-            set
-            {
-                Initialize();
-                _statuses.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AllocatableVMs. </summary>
+        /// <summary> Gets the AllocatableVMs. </summary>
         public BicepList<DedicatedHostAllocatableVm> AvailableCapacityAllocatableVMs
         {
             get
             {
-                return AvailableCapacity is null ? default : AvailableCapacity.AllocatableVMs;
-            }
-            set
-            {
-                if (AvailableCapacity is null)
-                {
-                    AvailableCapacity = new DedicatedHostAvailableCapacity();
-                }
-                AvailableCapacity.AllocatableVMs = value;
+                return AvailableCapacity.AllocatableVMs;
             }
         }
 

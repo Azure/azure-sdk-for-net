@@ -37,7 +37,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the PlatformUpdateDomain. </summary>
+        /// <summary> Gets the PlatformUpdateDomain. </summary>
         public BicepValue<int> PlatformUpdateDomain
         {
             get
@@ -45,14 +45,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _platformUpdateDomain;
             }
-            set
-            {
-                Initialize();
-                _platformUpdateDomain.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the PlatformFaultDomain. </summary>
+        /// <summary> Gets the PlatformFaultDomain. </summary>
         public BicepValue<int> PlatformFaultDomain
         {
             get
@@ -60,14 +55,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _platformFaultDomain;
             }
-            set
-            {
-                Initialize();
-                _platformFaultDomain.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ComputerName. </summary>
+        /// <summary> Gets the ComputerName. </summary>
         public BicepValue<string> ComputerName
         {
             get
@@ -75,14 +65,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _computerName;
             }
-            set
-            {
-                Initialize();
-                _computerName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the OSName. </summary>
+        /// <summary> Gets the OSName. </summary>
         public BicepValue<string> OSName
         {
             get
@@ -90,14 +75,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _osName;
             }
-            set
-            {
-                Initialize();
-                _osName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the OSVersion. </summary>
+        /// <summary> Gets the OSVersion. </summary>
         public BicepValue<string> OSVersion
         {
             get
@@ -105,14 +85,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _osVersion;
             }
-            set
-            {
-                Initialize();
-                _osVersion.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the HyperVGeneration. </summary>
+        /// <summary> Gets the HyperVGeneration. </summary>
         public BicepValue<HyperVGeneration> HyperVGeneration
         {
             get
@@ -120,14 +95,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _hyperVGeneration;
             }
-            set
-            {
-                Initialize();
-                _hyperVGeneration.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the RdpThumbPrint. </summary>
+        /// <summary> Gets the RdpThumbPrint. </summary>
         public BicepValue<string> RdpThumbPrint
         {
             get
@@ -135,14 +105,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _rdpThumbPrint;
             }
-            set
-            {
-                Initialize();
-                _rdpThumbPrint.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the VmAgent. </summary>
+        /// <summary> Gets the VmAgent. </summary>
         public VirtualMachineAgentInstanceView VmAgent
         {
             get
@@ -150,14 +115,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _vmAgent;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _vmAgent, value);
-            }
         }
 
-        /// <summary> Gets or sets the MaintenanceRedeployStatus. </summary>
+        /// <summary> Gets the MaintenanceRedeployStatus. </summary>
         public MaintenanceRedeployStatus MaintenanceRedeployStatus
         {
             get
@@ -165,14 +125,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _maintenanceRedeployStatus;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _maintenanceRedeployStatus, value);
-            }
         }
 
-        /// <summary> Gets or sets the Disks. </summary>
+        /// <summary> Gets the Disks. </summary>
         public BicepList<DiskInstanceView> Disks
         {
             get
@@ -180,25 +135,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _disks;
             }
-            set
-            {
-                Initialize();
-                _disks.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Extensions. </summary>
+        /// <summary> Gets the Extensions. </summary>
         public BicepList<VirtualMachineExtensionInstanceView> Extensions
         {
             get
             {
                 Initialize();
                 return _extensions;
-            }
-            set
-            {
-                Initialize();
-                _extensions.Assign(value);
             }
         }
 
@@ -212,18 +157,13 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the BootDiagnostics. </summary>
+        /// <summary> Gets the BootDiagnostics. </summary>
         public BootDiagnosticsInstanceView BootDiagnostics
         {
             get
             {
                 Initialize();
                 return _bootDiagnostics;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _bootDiagnostics, value);
             }
         }
 
@@ -237,7 +177,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Statuses. </summary>
+        /// <summary> Gets the Statuses. </summary>
         public BicepList<InstanceViewStatus> Statuses
         {
             get
@@ -245,25 +185,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _statuses;
             }
-            set
-            {
-                Initialize();
-                _statuses.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the PatchStatus. </summary>
+        /// <summary> Gets the PatchStatus. </summary>
         public VirtualMachinePatchStatus PatchStatus
         {
             get
             {
                 Initialize();
                 return _patchStatus;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _patchStatus, value);
             }
         }
 

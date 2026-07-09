@@ -172,7 +172,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Hosts. </summary>
+        /// <summary> Gets the Hosts. </summary>
         public BicepList<DedicatedHostInstanceViewWithName> InstanceViewHosts
         {
             get

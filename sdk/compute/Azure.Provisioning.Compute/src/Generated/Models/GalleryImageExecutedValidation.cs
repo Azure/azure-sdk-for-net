@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the ExecutedValidationType. </summary>
+        /// <summary> Gets the ExecutedValidationType. </summary>
         public BicepValue<string> ExecutedValidationType
         {
             get
@@ -32,14 +32,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _executedValidationType;
             }
-            set
-            {
-                Initialize();
-                _executedValidationType.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         public BicepValue<ComputeGalleryValidationStatus> Status
         {
             get
@@ -47,14 +42,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _status;
             }
-            set
-            {
-                Initialize();
-                _status.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Version. </summary>
+        /// <summary> Gets the Version. </summary>
         public BicepValue<string> Version
         {
             get
@@ -62,25 +52,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _version;
             }
-            set
-            {
-                Initialize();
-                _version.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ExecutionOn. </summary>
+        /// <summary> Gets the ExecutionOn. </summary>
         public BicepValue<DateTimeOffset> ExecutionOn
         {
             get
             {
                 Initialize();
                 return _executionOn;
-            }
-            set
-            {
-                Initialize();
-                _executionOn.Assign(value);
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the OperatingSystem. </summary>
+        /// <summary> Gets the OperatingSystem. </summary>
         public BicepValue<string> OperatingSystem
         {
             get
@@ -32,14 +32,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _operatingSystem;
             }
-            set
-            {
-                Initialize();
-                _operatingSystem.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ComputeRole. </summary>
+        /// <summary> Gets the ComputeRole. </summary>
         public BicepValue<string> ComputeRole
         {
             get
@@ -47,14 +42,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _computeRole;
             }
-            set
-            {
-                Initialize();
-                _computeRole.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the HandlerSchema. </summary>
+        /// <summary> Gets the HandlerSchema. </summary>
         public BicepValue<string> HandlerSchema
         {
             get
@@ -62,14 +52,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _handlerSchema;
             }
-            set
-            {
-                Initialize();
-                _handlerSchema.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the VirtualMachineScaleSetEnabled. </summary>
+        /// <summary> Gets the VirtualMachineScaleSetEnabled. </summary>
         public BicepValue<bool> VirtualMachineScaleSetEnabled
         {
             get
@@ -77,14 +62,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _virtualMachineScaleSetEnabled;
             }
-            set
-            {
-                Initialize();
-                _virtualMachineScaleSetEnabled.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the SupportsMultipleExtensions. </summary>
+        /// <summary> Gets the SupportsMultipleExtensions. </summary>
         public BicepValue<bool> SupportsMultipleExtensions
         {
             get
@@ -92,20 +72,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _supportsMultipleExtensions;
             }
-            set
-            {
-                Initialize();
-                _supportsMultipleExtensions.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for VirtualMachineExtensionImageProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _operatingSystem = DefineProperty<string>(nameof(OperatingSystem), new string[] { "operatingSystem" }, isRequired: true);
-            _computeRole = DefineProperty<string>(nameof(ComputeRole), new string[] { "computeRole" }, isRequired: true);
-            _handlerSchema = DefineProperty<string>(nameof(HandlerSchema), new string[] { "handlerSchema" }, isRequired: true);
+            _operatingSystem = DefineProperty<string>(nameof(OperatingSystem), new string[] { "operatingSystem" });
+            _computeRole = DefineProperty<string>(nameof(ComputeRole), new string[] { "computeRole" });
+            _handlerSchema = DefineProperty<string>(nameof(HandlerSchema), new string[] { "handlerSchema" });
             _virtualMachineScaleSetEnabled = DefineProperty<bool>(nameof(VirtualMachineScaleSetEnabled), new string[] { "vmScaleSetEnabled" });
             _supportsMultipleExtensions = DefineProperty<bool>(nameof(SupportsMultipleExtensions), new string[] { "supportsMultipleExtensions" });
             DefineAdditionalProperties();

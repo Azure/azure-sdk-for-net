@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the VirtualMachineExtensionHandlerInstanceViewType. </summary>
+        /// <summary> Gets the VirtualMachineExtensionHandlerInstanceViewType. </summary>
         public BicepValue<string> VirtualMachineExtensionHandlerInstanceViewType
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _virtualMachineExtensionHandlerInstanceViewType;
             }
-            set
-            {
-                Initialize();
-                _virtualMachineExtensionHandlerInstanceViewType.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the TypeHandlerVersion. </summary>
+        /// <summary> Gets the TypeHandlerVersion. </summary>
         public BicepValue<string> TypeHandlerVersion
         {
             get
@@ -45,25 +40,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _typeHandlerVersion;
             }
-            set
-            {
-                Initialize();
-                _typeHandlerVersion.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         public InstanceViewStatus Status
         {
             get
             {
                 Initialize();
                 return _status;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _status, value);
             }
         }
 

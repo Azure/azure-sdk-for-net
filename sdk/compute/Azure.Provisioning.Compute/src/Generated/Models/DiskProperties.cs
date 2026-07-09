@@ -504,7 +504,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the TargetTier. </summary>
+        /// <summary> Gets the TargetTier. </summary>
         public BicepValue<string> PropertyUpdatesInProgressTargetTier
         {
             get

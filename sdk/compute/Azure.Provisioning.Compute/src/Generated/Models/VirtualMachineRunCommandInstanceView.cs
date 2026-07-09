@@ -28,7 +28,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the ExecutionState. </summary>
+        /// <summary> Gets the ExecutionState. </summary>
         public BicepValue<ExecutionState> ExecutionState
         {
             get
@@ -36,14 +36,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _executionState;
             }
-            set
-            {
-                Initialize();
-                _executionState.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ExecutionMessage. </summary>
+        /// <summary> Gets the ExecutionMessage. </summary>
         public BicepValue<string> ExecutionMessage
         {
             get
@@ -51,14 +46,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _executionMessage;
             }
-            set
-            {
-                Initialize();
-                _executionMessage.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ExitCode. </summary>
+        /// <summary> Gets the ExitCode. </summary>
         public BicepValue<int> ExitCode
         {
             get
@@ -66,14 +56,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _exitCode;
             }
-            set
-            {
-                Initialize();
-                _exitCode.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Output. </summary>
+        /// <summary> Gets the Output. </summary>
         public BicepValue<string> Output
         {
             get
@@ -81,14 +66,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _output;
             }
-            set
-            {
-                Initialize();
-                _output.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Error. </summary>
+        /// <summary> Gets the Error. </summary>
         public BicepValue<string> Error
         {
             get
@@ -96,14 +76,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _error;
             }
-            set
-            {
-                Initialize();
-                _error.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
+        /// <summary> Gets the StartOn. </summary>
         public BicepValue<DateTimeOffset> StartOn
         {
             get
@@ -111,14 +86,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _startOn;
             }
-            set
-            {
-                Initialize();
-                _startOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the EndOn. </summary>
+        /// <summary> Gets the EndOn. </summary>
         public BicepValue<DateTimeOffset> EndOn
         {
             get
@@ -126,25 +96,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _endOn;
             }
-            set
-            {
-                Initialize();
-                _endOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Statuses. </summary>
+        /// <summary> Gets the Statuses. </summary>
         public BicepList<InstanceViewStatus> Statuses
         {
             get
             {
                 Initialize();
                 return _statuses;
-            }
-            set
-            {
-                Initialize();
-                _statuses.Assign(value);
             }
         }
 

@@ -39,13 +39,18 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -89,7 +94,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the OperatingSystem. </summary>
+        /// <summary> Gets the OperatingSystem. </summary>
         public BicepValue<string> OperatingSystem
         {
             get
@@ -98,7 +103,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the ComputeRole. </summary>
+        /// <summary> Gets the ComputeRole. </summary>
         public BicepValue<string> ComputeRole
         {
             get
@@ -107,7 +112,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the HandlerSchema. </summary>
+        /// <summary> Gets the HandlerSchema. </summary>
         public BicepValue<string> HandlerSchema
         {
             get
@@ -116,7 +121,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the VirtualMachineScaleSetEnabled. </summary>
+        /// <summary> Gets the VirtualMachineScaleSetEnabled. </summary>
         public BicepValue<bool> VirtualMachineScaleSetEnabled
         {
             get
@@ -125,7 +130,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the SupportsMultipleExtensions. </summary>
+        /// <summary> Gets the SupportsMultipleExtensions. </summary>
         public BicepValue<bool> SupportsMultipleExtensions
         {
             get
@@ -142,7 +147,7 @@ namespace Azure.Provisioning.Compute
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _properties = DefineModelProperty<VirtualMachineExtensionImageProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

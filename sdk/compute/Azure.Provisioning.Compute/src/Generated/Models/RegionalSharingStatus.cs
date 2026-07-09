@@ -22,18 +22,13 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the Region. </summary>
+        /// <summary> Gets the Region. </summary>
         public BicepValue<string> Region
         {
             get
             {
                 Initialize();
                 return _region;
-            }
-            set
-            {
-                Initialize();
-                _region.Assign(value);
             }
         }
 
@@ -47,18 +42,13 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Details. </summary>
+        /// <summary> Gets the Details. </summary>
         public BicepValue<string> Details
         {
             get
             {
                 Initialize();
                 return _details;
-            }
-            set
-            {
-                Initialize();
-                _details.Assign(value);
             }
         }
 

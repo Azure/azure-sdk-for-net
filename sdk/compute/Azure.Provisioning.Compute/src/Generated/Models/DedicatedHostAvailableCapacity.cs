@@ -20,18 +20,13 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the AllocatableVMs. </summary>
+        /// <summary> Gets the AllocatableVMs. </summary>
         public BicepList<DedicatedHostAllocatableVm> AllocatableVMs
         {
             get
             {
                 Initialize();
                 return _allocatableVMs;
-            }
-            set
-            {
-                Initialize();
-                _allocatableVMs.Assign(value);
             }
         }
 

@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the GroupType. </summary>
+        /// <summary> Gets the GroupType. </summary>
         public BicepValue<SharingProfileGroupType> GroupType
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _groupType;
             }
-            set
-            {
-                Initialize();
-                _groupType.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Ids. </summary>
+        /// <summary> Gets the Ids. </summary>
         public BicepList<string> Ids
         {
             get
             {
                 Initialize();
                 return _ids;
-            }
-            set
-            {
-                Initialize();
-                _ids.Assign(value);
             }
         }
 

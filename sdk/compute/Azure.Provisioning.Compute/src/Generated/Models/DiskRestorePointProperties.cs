@@ -70,7 +70,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the HyperVGeneration. </summary>
+        /// <summary> Gets the HyperVGeneration. </summary>
         public BicepValue<HyperVGeneration> HyperVGeneration
         {
             get
@@ -78,14 +78,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _hyperVGeneration;
             }
-            set
-            {
-                Initialize();
-                _hyperVGeneration.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the PurchasePlan. </summary>
+        /// <summary> Gets the PurchasePlan. </summary>
         public DiskPurchasePlan PurchasePlan
         {
             get
@@ -93,25 +88,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _purchasePlan;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _purchasePlan, value);
-            }
         }
 
-        /// <summary> Gets or sets the SupportedCapabilities. </summary>
+        /// <summary> Gets the SupportedCapabilities. </summary>
         public SupportedCapabilities SupportedCapabilities
         {
             get
             {
                 Initialize();
                 return _supportedCapabilities;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _supportedCapabilities, value);
             }
         }
 
@@ -145,7 +130,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the SupportsHibernation. </summary>
+        /// <summary> Gets the SupportsHibernation. </summary>
         public BicepValue<bool> SupportsHibernation
         {
             get
@@ -153,14 +138,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _supportsHibernation;
             }
-            set
-            {
-                Initialize();
-                _supportsHibernation.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the NetworkAccessPolicy. </summary>
+        /// <summary> Gets the NetworkAccessPolicy. </summary>
         public BicepValue<NetworkAccessPolicy> NetworkAccessPolicy
         {
             get
@@ -168,14 +148,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _networkAccessPolicy;
             }
-            set
-            {
-                Initialize();
-                _networkAccessPolicy.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        /// <summary> Gets the PublicNetworkAccess. </summary>
         public BicepValue<DiskPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -183,14 +158,9 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _publicNetworkAccess;
             }
-            set
-            {
-                Initialize();
-                _publicNetworkAccess.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the DiskAccessId. </summary>
+        /// <summary> Gets the DiskAccessId. </summary>
         public BicepValue<ResourceIdentifier> DiskAccessId
         {
             get
@@ -198,25 +168,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _diskAccessId;
             }
-            set
-            {
-                Initialize();
-                _diskAccessId.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CompletionPercent. </summary>
+        /// <summary> Gets the CompletionPercent. </summary>
         public BicepValue<float> CompletionPercent
         {
             get
             {
                 Initialize();
                 return _completionPercent;
-            }
-            set
-            {
-                Initialize();
-                _completionPercent.Assign(value);
             }
         }
 
@@ -240,18 +200,13 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the SecurityProfile. </summary>
+        /// <summary> Gets the SecurityProfile. </summary>
         public DiskSecurityProfile SecurityProfile
         {
             get
             {
                 Initialize();
                 return _securityProfile;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _securityProfile, value);
             }
         }
 
