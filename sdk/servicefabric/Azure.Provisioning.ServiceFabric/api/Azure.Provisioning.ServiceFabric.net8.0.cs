@@ -490,7 +490,7 @@ namespace Azure.Provisioning.ServiceFabric
     {
         internal ServiceFabricVmSizeResource() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> VmSize { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
