@@ -373,6 +373,9 @@ namespace Azure.Generator.Management.Providers
             {
                 if (segment.IsConstant)
                 {
+                    // Constant path segments can still contain braces from invalid route fragments like
+                    // "{name}?disambiguation_dummy"; escape them so they are emitted as literals rather
+                    // than C# interpolation holes in the generated resource identifier string.
                     formatBuilder.Append($"/{EscapeFormatLiteral(segment.Value)}");
                 }
                 else
@@ -488,17 +491,20 @@ namespace Azure.Generator.Management.Providers
                         var tagUpdateMethodProvider = new UpdateOperationMethodProvider(this, parameterMappings, updateRestClientInfo, tagUpdateMethod.InputMethod, false, tagUpdateMethod.Kind, isFakeLro);
                         MethodProvider tagUpdateMethodAsMethod = tagUpdateMethodProvider;
 
-                        if (CanPopulateTagUpdateMethodArguments(tagUpdateMethodAsMethod.Signature, parameterMappings))
+                        if (!CanPopulateTagUpdateMethodArguments(tagUpdateMethodAsMethod.Signature, parameterMappings))
                         {
-                            methods.AddRange([
-                                new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                                new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
-                                new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                                new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
-                                new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                                new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false)
-                            ]);
+                            methods.AddRange(BuildGetChildResourceMethods());
+                            return [.. methods];
                         }
+
+                        methods.AddRange([
+                            new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                            new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                            new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                            new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                            new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                            new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false)
+                        ]);
                     }
                 }
             }
