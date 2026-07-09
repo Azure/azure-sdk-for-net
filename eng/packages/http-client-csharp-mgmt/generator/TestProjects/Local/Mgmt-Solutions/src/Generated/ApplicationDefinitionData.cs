@@ -9,44 +9,34 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Generator.MgmtSolutions.Tests.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtSolutions.Tests
 {
     /// <summary> Information about managed application definition. </summary>
-    public partial class ApplicationDefinitionData : ResourceData
+    public partial class ApplicationDefinitionData : GenericResource
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ApplicationDefinitionData"/>. </summary>
         public ApplicationDefinitionData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationDefinitionData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApplicationDefinitionProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
+        /// <param name="properties"> The managed application definition properties. </param>
+        internal ApplicationDefinitionData(ResourceIdentifier id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedBy, ApplicationDefinitionProperties properties) : base(id, name, @type, tags, additionalBinaryDataProperties, managedBy)
         {
             Properties = properties;
-            Tags = tags;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
+        /// <summary> The managed application definition properties. </summary>
         [WirePath("properties")]
         internal ApplicationDefinitionProperties Properties { get; set; }
-
-        /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
 
         /// <summary> The managed application definition display name. </summary>
         [WirePath("properties.displayName")]

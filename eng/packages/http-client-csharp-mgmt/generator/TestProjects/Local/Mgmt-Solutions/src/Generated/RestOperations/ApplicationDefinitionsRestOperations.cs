@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string solutionName, string applicationDefinitionName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string applicationDefinitionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -49,9 +49,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Solutions/solutionNames/", false);
-            uri.AppendPath(solutionName, true);
-            uri.AppendPath("/applicationDefinitions/", false);
+            uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions/", false);
             uri.AppendPath(applicationDefinitionName, true);
             if (_apiVersion != null)
             {
@@ -65,7 +63,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string solutionName, string applicationDefinitionName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string applicationDefinitionName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -73,9 +71,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Solutions/solutionNames/", false);
-            uri.AppendPath(solutionName, true);
-            uri.AppendPath("/applicationDefinitions/", false);
+            uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions/", false);
             uri.AppendPath(applicationDefinitionName, true);
             if (_apiVersion != null)
             {
@@ -91,7 +87,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string solutionName, string applicationDefinitionName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string applicationDefinitionName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -99,9 +95,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Solutions/solutionNames/", false);
-            uri.AppendPath(solutionName, true);
-            uri.AppendPath("/applicationDefinitions/", false);
+            uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions/", false);
             uri.AppendPath(applicationDefinitionName, true);
             if (_apiVersion != null)
             {

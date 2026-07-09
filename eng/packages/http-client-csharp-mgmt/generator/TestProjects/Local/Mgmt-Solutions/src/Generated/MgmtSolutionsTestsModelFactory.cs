@@ -10,32 +10,62 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Generator.MgmtSolutions.Tests;
-using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtSolutions.Tests.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class MgmtSolutionsTestsModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="applicationDefinitionDisplayName"> The managed application definition display name. </param>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
+        /// <param name="applicationDefinitionDisplayName"> The managed application definition display name. </param>
         /// <returns> A new <see cref="Tests.ApplicationDefinitionData"/> instance for mocking. </returns>
-        public static ApplicationDefinitionData ApplicationDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string applicationDefinitionDisplayName = default, IDictionary<string, string> tags = default)
+        public static ApplicationDefinitionData ApplicationDefinitionData(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string managedBy = default, string applicationDefinitionDisplayName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ApplicationDefinitionData(
                 id,
                 name,
-                resourceType,
-                systemData,
-                applicationDefinitionDisplayName is null ? default : new ApplicationDefinitionProperties(applicationDefinitionDisplayName, default),
+                @type,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
+                default,
+                managedBy,
+                applicationDefinitionDisplayName is null ? default : new ApplicationDefinitionProperties(applicationDefinitionDisplayName, default));
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
+        /// <returns> A new <see cref="Models.GenericResource"/> instance for mocking. </returns>
+        public static GenericResource GenericResource(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string managedBy = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new GenericResource(
+                id,
+                name,
+                @type,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                managedBy);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
+        public static Resource Resource(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new Resource(id, name, @type, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="tags"> Application definition tags. </param>

@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.Generator.MgmtSolutions.Tests.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtSolutions.Tests
 {
@@ -20,8 +19,9 @@ namespace Azure.Generator.MgmtSolutions.Tests
     [ModelReaderWriterBuildable(typeof(ApplicationDefinitionPatch))]
     [ModelReaderWriterBuildable(typeof(ApplicationDefinitionProperties))]
     [ModelReaderWriterBuildable(typeof(ApplicationDefinitionResource))]
+    [ModelReaderWriterBuildable(typeof(GenericResource))]
+    [ModelReaderWriterBuildable(typeof(Resource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureGeneratorMgmtSolutionsTestsContext : ModelReaderWriterContext
     {
     }

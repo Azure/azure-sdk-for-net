@@ -5,10 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Generator.MgmtSolutions.Tests;
 using Azure.ResourceManager;
@@ -31,19 +27,12 @@ namespace Azure.Generator.MgmtSolutions.Tests.Mocking
         {
         }
 
-        /// <summary> Gets a collection of ApplicationDefinitions in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of ApplicationDefinitions and their operations over a ApplicationDefinitionResource. </returns>
-        public virtual ApplicationDefinitionCollection GetApplicationDefinitions()
-        {
-            return GetCachedClient(client => new ApplicationDefinitionCollection(client, Id));
-        }
-
         /// <summary>
         /// Gets the managed application definition.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -53,51 +42,16 @@ namespace Azure.Generator.MgmtSolutions.Tests.Mocking
         /// <term> Default Api Version. </term>
         /// <description> 2023-12-01-preview. </description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="solutionName"></param>
-        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> or <paramref name="applicationDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="solutionName"/> or <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApplicationDefinitionResource>> GetApplicationDefinitionAsync(string solutionName, string applicationDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
-            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
-
-            return await GetApplicationDefinitions().GetAsync(solutionName, applicationDefinitionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the managed application definition.
-        /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ApplicationDefinitions_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01-preview. </description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="solutionName"></param>
-        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> or <paramref name="applicationDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="solutionName"/> or <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApplicationDefinitionResource> GetApplicationDefinition(string solutionName, string applicationDefinitionName, CancellationToken cancellationToken = default)
+        /// <returns> Returns a <see cref="ApplicationDefinitionResource"/> object. </returns>
+        public virtual ApplicationDefinitionResource GetApplicationDefinition()
         {
-            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
-            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
-
-            return GetApplicationDefinitions().Get(solutionName, applicationDefinitionName, cancellationToken);
+            return new ApplicationDefinitionResource(Client, Id.AppendProviderResource("Microsoft.Solutions", "applicationDefinitions", "{applicationDefinitionName}?disambiguation_dummy"));
         }
     }
 }

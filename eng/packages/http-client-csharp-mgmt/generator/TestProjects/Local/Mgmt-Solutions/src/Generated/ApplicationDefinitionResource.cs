@@ -22,7 +22,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
     /// <summary>
     /// A class representing a ApplicationDefinition along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApplicationDefinitionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetApplicationDefinitions method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetApplicationDefinition method.
     /// </summary>
     public partial class ApplicationDefinitionResource : ArmResource
     {
@@ -30,7 +30,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
         private readonly ApplicationDefinitions _applicationDefinitionsRestClient;
         private readonly ApplicationDefinitionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Solutions/solutionNames/applicationDefinitions";
+        public static readonly ResourceType ResourceType = "Microsoft.Solutions/applicationDefinitions";
 
         /// <summary> Initializes a new instance of ApplicationDefinitionResource for mocking. </summary>
         protected ApplicationDefinitionResource()
@@ -76,11 +76,10 @@ namespace Azure.Generator.MgmtSolutions.Tests
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="solutionName"> The solutionName. </param>
         /// <param name="applicationDefinitionName"> The applicationDefinitionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string solutionName, string applicationDefinitionName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationDefinitionName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -95,11 +94,129 @@ namespace Azure.Generator.MgmtSolutions.Tests
         }
 
         /// <summary>
+        /// Creates or updates a managed application definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationDefinitions_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationDefinitionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ApplicationDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationDefinitionName, ApplicationDefinitionData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _applicationDefinitionsClientDiagnostics.CreateScope("ApplicationDefinitionResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, ApplicationDefinitionData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                TestsArmOperation<ApplicationDefinitionResource> operation = new TestsArmOperation<ApplicationDefinitionResource>(Response.FromValue(new ApplicationDefinitionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates a managed application definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationDefinitions_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationDefinitionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ApplicationDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string applicationDefinitionName, ApplicationDefinitionData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _applicationDefinitionsClientDiagnostics.CreateScope("ApplicationDefinitionResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, ApplicationDefinitionData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                TestsArmOperation<ApplicationDefinitionResource> operation = new TestsArmOperation<ApplicationDefinitionResource>(Response.FromValue(new ApplicationDefinitionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets the managed application definition.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -115,9 +232,14 @@ namespace Azure.Generator.MgmtSolutions.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplicationDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ApplicationDefinitionResource>> GetAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
+
             using DiagnosticScope scope = _applicationDefinitionsClientDiagnostics.CreateScope("ApplicationDefinitionResource.Get");
             scope.Start();
             try
@@ -126,7 +248,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -147,7 +269,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -163,9 +285,14 @@ namespace Azure.Generator.MgmtSolutions.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplicationDefinitionResource> Get(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ApplicationDefinitionResource> Get(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
+
             using DiagnosticScope scope = _applicationDefinitionsClientDiagnostics.CreateScope("ApplicationDefinitionResource.Get");
             scope.Start();
             try
@@ -174,7 +301,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -195,7 +322,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -211,11 +338,14 @@ namespace Azure.Generator.MgmtSolutions.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="patch"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ApplicationDefinitionResource>> UpdateAsync(ApplicationDefinitionPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ApplicationDefinitionResource>> UpdateAsync(string applicationDefinitionName, ApplicationDefinitionPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
             Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _applicationDefinitionsClientDiagnostics.CreateScope("ApplicationDefinitionResource.Update");
@@ -226,7 +356,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationDefinitionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ApplicationDefinitionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _applicationDefinitionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, ApplicationDefinitionPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +377,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -263,11 +393,14 @@ namespace Azure.Generator.MgmtSolutions.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="patch"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ApplicationDefinitionResource> Update(ApplicationDefinitionPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ApplicationDefinitionResource> Update(string applicationDefinitionName, ApplicationDefinitionPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
             Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _applicationDefinitionsClientDiagnostics.CreateScope("ApplicationDefinitionResource.Update");
@@ -278,7 +411,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationDefinitionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ApplicationDefinitionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _applicationDefinitionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, ApplicationDefinitionPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -317,21 +450,21 @@ namespace Azure.Generator.MgmtSolutions.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                     return Response.FromValue(new ApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ApplicationDefinitionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ApplicationDefinitionData current = (await GetAsync(Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ApplicationDefinitionPatch patch = new ApplicationDefinitionPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ApplicationDefinitionResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<ApplicationDefinitionResource> result = await UpdateAsync(Id.Name, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -365,21 +498,21 @@ namespace Azure.Generator.MgmtSolutions.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                     return Response.FromValue(new ApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ApplicationDefinitionData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ApplicationDefinitionData current = Get(Id.Name, cancellationToken: cancellationToken).Value.Data;
                     ApplicationDefinitionPatch patch = new ApplicationDefinitionPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ApplicationDefinitionResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<ApplicationDefinitionResource> result = Update(Id.Name, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -412,17 +545,17 @@ namespace Azure.Generator.MgmtSolutions.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                     return Response.FromValue(new ApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ApplicationDefinitionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ApplicationDefinitionData current = (await GetAsync(Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ApplicationDefinitionPatch patch = new ApplicationDefinitionPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ApplicationDefinitionResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<ApplicationDefinitionResource> result = await UpdateAsync(Id.Name, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -455,17 +588,17 @@ namespace Azure.Generator.MgmtSolutions.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                     return Response.FromValue(new ApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ApplicationDefinitionData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ApplicationDefinitionData current = Get(Id.Name, cancellationToken: cancellationToken).Value.Data;
                     ApplicationDefinitionPatch patch = new ApplicationDefinitionPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ApplicationDefinitionResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<ApplicationDefinitionResource> result = Update(Id.Name, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -497,21 +630,21 @@ namespace Azure.Generator.MgmtSolutions.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                     return Response.FromValue(new ApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ApplicationDefinitionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ApplicationDefinitionData current = (await GetAsync(Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ApplicationDefinitionPatch patch = new ApplicationDefinitionPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ApplicationDefinitionResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<ApplicationDefinitionResource> result = await UpdateAsync(Id.Name, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -543,21 +676,21 @@ namespace Azure.Generator.MgmtSolutions.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _applicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                     return Response.FromValue(new ApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ApplicationDefinitionData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ApplicationDefinitionData current = Get(Id.Name, cancellationToken: cancellationToken).Value.Data;
                     ApplicationDefinitionPatch patch = new ApplicationDefinitionPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ApplicationDefinitionResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<ApplicationDefinitionResource> result = Update(Id.Name, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

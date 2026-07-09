@@ -7,8 +7,8 @@
     {
       "$id": "1",
       "kind": "enum",
-      "name": "createdByType",
-      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.createdByType",
+      "name": "Versions",
+      "crossLanguageDefinitionId": "Microsoft.Solutions.Versions",
       "valueType": {
         "$id": "2",
         "kind": "string",
@@ -20,95 +20,13 @@
         {
           "$id": "3",
           "kind": "enumvalue",
-          "name": "User",
-          "value": "User",
-          "valueType": {
-            "$ref": "2"
-          },
-          "enumType": {
-            "$ref": "1"
-          },
-          "doc": "The entity was created by a user.",
-          "decorators": [],
-          "isExactName": false
-        },
-        {
-          "$id": "4",
-          "kind": "enumvalue",
-          "name": "Application",
-          "value": "Application",
-          "valueType": {
-            "$ref": "2"
-          },
-          "enumType": {
-            "$ref": "1"
-          },
-          "doc": "The entity was created by an application.",
-          "decorators": [],
-          "isExactName": false
-        },
-        {
-          "$id": "5",
-          "kind": "enumvalue",
-          "name": "ManagedIdentity",
-          "value": "ManagedIdentity",
-          "valueType": {
-            "$ref": "2"
-          },
-          "enumType": {
-            "$ref": "1"
-          },
-          "doc": "The entity was created by a managed identity.",
-          "decorators": [],
-          "isExactName": false
-        },
-        {
-          "$id": "6",
-          "kind": "enumvalue",
-          "name": "Key",
-          "value": "Key",
-          "valueType": {
-            "$ref": "2"
-          },
-          "enumType": {
-            "$ref": "1"
-          },
-          "doc": "The entity was created by a key.",
-          "decorators": [],
-          "isExactName": false
-        }
-      ],
-      "namespace": "Azure.Generator.MgmtSolutions.Tests",
-      "doc": "The kind of entity that created the resource.",
-      "isFixed": false,
-      "isFlags": false,
-      "usage": "Output,Json",
-      "decorators": [],
-      "isExactName": false
-    },
-    {
-      "$id": "7",
-      "kind": "enum",
-      "name": "Versions",
-      "crossLanguageDefinitionId": "Microsoft.Solutions.Versions",
-      "valueType": {
-        "$id": "8",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "values": [
-        {
-          "$id": "9",
-          "kind": "enumvalue",
           "name": "v2023_12_01_preview",
           "value": "2023-12-01-preview",
           "valueType": {
-            "$ref": "8"
+            "$ref": "2"
           },
           "enumType": {
-            "$ref": "7"
+            "$ref": "1"
           },
           "decorators": [],
           "isExactName": false
@@ -124,9 +42,60 @@
   ],
   "constants": [
     {
-      "$id": "10",
+      "$id": "4",
       "kind": "constant",
       "name": "GetAccept",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "5",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "6",
+      "kind": "constant",
+      "name": "GetAccept1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "7",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "8",
+      "kind": "constant",
+      "name": "GetAccept2",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "9",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "10",
+      "kind": "constant",
+      "name": "GetAccept3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -143,7 +112,7 @@
     {
       "$id": "12",
       "kind": "constant",
-      "name": "GetAccept1",
+      "name": "GetAccept4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -156,62 +125,11 @@
       "value": "application/json",
       "decorators": [],
       "isExactName": false
-    },
-    {
-      "$id": "14",
-      "kind": "constant",
-      "name": "GetAccept2",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "15",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "value": "application/json",
-      "decorators": [],
-      "isExactName": false
-    },
-    {
-      "$id": "16",
-      "kind": "constant",
-      "name": "GetAccept3",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "17",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "value": "application/json",
-      "decorators": [],
-      "isExactName": false
-    },
-    {
-      "$id": "18",
-      "kind": "constant",
-      "name": "GetAccept4",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "19",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "value": "application/json",
-      "decorators": [],
-      "isExactName": false
     }
   ],
   "models": [
     {
-      "$id": "20",
+      "$id": "14",
       "kind": "model",
       "name": "ApplicationDefinition",
       "namespace": "Azure.Generator.MgmtSolutions.Tests",
@@ -222,10 +140,6 @@
         {
           "name": "Azure.ResourceManager.@armProviderNamespace",
           "arguments": {}
-        },
-        {
-          "name": "Azure.ResourceManager.Private.@armResourceInternal",
-          "arguments": {}
         }
       ],
       "serializationOptions": {
@@ -235,14 +149,13 @@
       },
       "isExactName": false,
       "baseModel": {
-        "$id": "21",
+        "$id": "15",
         "kind": "model",
-        "name": "ProxyResource",
+        "name": "GenericResource",
         "namespace": "Azure.Generator.MgmtSolutions.Tests",
-        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ProxyResource",
+        "crossLanguageDefinitionId": "Microsoft.Solutions.GenericResource",
         "usage": "Input,Output,Json",
-        "doc": "The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location",
-        "summary": "Proxy Resource",
+        "doc": "Resource information.",
         "decorators": [
           {
             "name": "Azure.ResourceManager.@armProviderNamespace",
@@ -251,23 +164,30 @@
         ],
         "serializationOptions": {
           "json": {
-            "name": "ProxyResource"
+            "name": "GenericResource"
           }
         },
         "isExactName": false,
         "baseModel": {
-          "$id": "22",
+          "$id": "16",
           "kind": "model",
           "name": "Resource",
           "namespace": "Azure.Generator.MgmtSolutions.Tests",
-          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource",
+          "crossLanguageDefinitionId": "Microsoft.Solutions.Resource",
           "usage": "Input,Output,Json",
-          "doc": "Common fields that are returned in the response for all Azure Resource Manager resources",
-          "summary": "Resource",
+          "doc": "Resource information.",
           "decorators": [
             {
               "name": "Azure.ResourceManager.@armProviderNamespace",
               "arguments": {}
+            },
+            {
+              "name": "Azure.ResourceManager.Legacy.@customAzureResource",
+              "arguments": {
+                "options": {
+                  "isAzureResource": true
+                }
+              }
             }
           ],
           "serializationOptions": {
@@ -278,18 +198,18 @@
           "isExactName": false,
           "properties": [
             {
-              "$id": "23",
+              "$id": "17",
               "kind": "property",
               "name": "id",
               "serializedName": "id",
-              "doc": "Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}",
+              "doc": "Resource ID.",
               "type": {
-                "$id": "24",
+                "$id": "18",
                 "kind": "string",
                 "name": "armResourceIdentifier",
                 "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
                 "baseType": {
-                  "$id": "25",
+                  "$id": "19",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -302,7 +222,7 @@
               "discriminator": false,
               "flatten": false,
               "decorators": [],
-              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.id",
+              "crossLanguageDefinitionId": "Microsoft.Solutions.Resource.id",
               "serializationOptions": {
                 "json": {
                   "name": "id"
@@ -312,13 +232,13 @@
               "isExactName": false
             },
             {
-              "$id": "26",
+              "$id": "20",
               "kind": "property",
               "name": "name",
               "serializedName": "name",
-              "doc": "The name of the resource",
+              "doc": "Resource name.",
               "type": {
-                "$id": "27",
+                "$id": "21",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -329,7 +249,7 @@
               "discriminator": false,
               "flatten": false,
               "decorators": [],
-              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.name",
+              "crossLanguageDefinitionId": "Microsoft.Solutions.Resource.name",
               "serializationOptions": {
                 "json": {
                   "name": "name"
@@ -339,23 +259,16 @@
               "isExactName": false
             },
             {
-              "$id": "28",
+              "$id": "22",
               "kind": "property",
               "name": "type",
               "serializedName": "type",
-              "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
+              "doc": "Resource type.",
               "type": {
-                "$id": "29",
+                "$id": "23",
                 "kind": "string",
-                "name": "armResourceType",
-                "crossLanguageDefinitionId": "Azure.Core.armResourceType",
-                "baseType": {
-                  "$id": "30",
-                  "kind": "string",
-                  "name": "string",
-                  "crossLanguageDefinitionId": "TypeSpec.string",
-                  "decorators": []
-                },
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
                 "decorators": []
               },
               "optional": true,
@@ -363,7 +276,7 @@
               "discriminator": false,
               "flatten": false,
               "decorators": [],
-              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.type",
+              "crossLanguageDefinitionId": "Microsoft.Solutions.Resource.type",
               "serializationOptions": {
                 "json": {
                   "name": "type"
@@ -373,213 +286,39 @@
               "isExactName": false
             },
             {
-              "$id": "31",
+              "$id": "24",
               "kind": "property",
-              "name": "systemData",
-              "serializedName": "systemData",
-              "doc": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
+              "name": "tags",
+              "serializedName": "tags",
+              "doc": "Resource tags.",
               "type": {
-                "$id": "32",
-                "kind": "model",
-                "name": "SystemData",
-                "namespace": "Azure.Generator.MgmtSolutions.Tests",
-                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData",
-                "usage": "Output,Json",
-                "doc": "Metadata pertaining to creation and last modification of the resource.",
-                "decorators": [
-                  {
-                    "name": "Azure.ResourceManager.@armProviderNamespace",
-                    "arguments": {}
-                  }
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": "SystemData"
-                  }
+                "$id": "25",
+                "kind": "dict",
+                "keyType": {
+                  "$id": "26",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
                 },
-                "isExactName": false,
-                "properties": [
-                  {
-                    "$id": "33",
-                    "kind": "property",
-                    "name": "createdBy",
-                    "serializedName": "createdBy",
-                    "doc": "The identity that created the resource.",
-                    "type": {
-                      "$id": "34",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "optional": true,
-                    "readOnly": false,
-                    "discriminator": false,
-                    "flatten": false,
-                    "decorators": [],
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdBy",
-                    "serializationOptions": {
-                      "json": {
-                        "name": "createdBy"
-                      }
-                    },
-                    "isHttpMetadata": false,
-                    "isExactName": false
-                  },
-                  {
-                    "$id": "35",
-                    "kind": "property",
-                    "name": "createdByType",
-                    "serializedName": "createdByType",
-                    "doc": "The type of identity that created the resource.",
-                    "type": {
-                      "$ref": "1"
-                    },
-                    "optional": true,
-                    "readOnly": false,
-                    "discriminator": false,
-                    "flatten": false,
-                    "decorators": [],
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdByType",
-                    "serializationOptions": {
-                      "json": {
-                        "name": "createdByType"
-                      }
-                    },
-                    "isHttpMetadata": false,
-                    "isExactName": false
-                  },
-                  {
-                    "$id": "36",
-                    "kind": "property",
-                    "name": "createdAt",
-                    "serializedName": "createdAt",
-                    "doc": "The timestamp of resource creation (UTC).",
-                    "type": {
-                      "$id": "37",
-                      "kind": "utcDateTime",
-                      "name": "utcDateTime",
-                      "encode": "rfc3339",
-                      "wireType": {
-                        "$id": "38",
-                        "kind": "string",
-                        "name": "string",
-                        "crossLanguageDefinitionId": "TypeSpec.string",
-                        "decorators": []
-                      },
-                      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
-                      "decorators": []
-                    },
-                    "optional": true,
-                    "readOnly": false,
-                    "discriminator": false,
-                    "flatten": false,
-                    "decorators": [],
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdAt",
-                    "serializationOptions": {
-                      "json": {
-                        "name": "createdAt"
-                      }
-                    },
-                    "isHttpMetadata": false,
-                    "isExactName": false
-                  },
-                  {
-                    "$id": "39",
-                    "kind": "property",
-                    "name": "lastModifiedBy",
-                    "serializedName": "lastModifiedBy",
-                    "doc": "The identity that last modified the resource.",
-                    "type": {
-                      "$id": "40",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "optional": true,
-                    "readOnly": false,
-                    "discriminator": false,
-                    "flatten": false,
-                    "decorators": [],
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedBy",
-                    "serializationOptions": {
-                      "json": {
-                        "name": "lastModifiedBy"
-                      }
-                    },
-                    "isHttpMetadata": false,
-                    "isExactName": false
-                  },
-                  {
-                    "$id": "41",
-                    "kind": "property",
-                    "name": "lastModifiedByType",
-                    "serializedName": "lastModifiedByType",
-                    "doc": "The type of identity that last modified the resource.",
-                    "type": {
-                      "$ref": "1"
-                    },
-                    "optional": true,
-                    "readOnly": false,
-                    "discriminator": false,
-                    "flatten": false,
-                    "decorators": [],
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedByType",
-                    "serializationOptions": {
-                      "json": {
-                        "name": "lastModifiedByType"
-                      }
-                    },
-                    "isHttpMetadata": false,
-                    "isExactName": false
-                  },
-                  {
-                    "$id": "42",
-                    "kind": "property",
-                    "name": "lastModifiedAt",
-                    "serializedName": "lastModifiedAt",
-                    "doc": "The timestamp of resource last modification (UTC)",
-                    "type": {
-                      "$id": "43",
-                      "kind": "utcDateTime",
-                      "name": "utcDateTime",
-                      "encode": "rfc3339",
-                      "wireType": {
-                        "$id": "44",
-                        "kind": "string",
-                        "name": "string",
-                        "crossLanguageDefinitionId": "TypeSpec.string",
-                        "decorators": []
-                      },
-                      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
-                      "decorators": []
-                    },
-                    "optional": true,
-                    "readOnly": false,
-                    "discriminator": false,
-                    "flatten": false,
-                    "decorators": [],
-                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedAt",
-                    "serializationOptions": {
-                      "json": {
-                        "name": "lastModifiedAt"
-                      }
-                    },
-                    "isHttpMetadata": false,
-                    "isExactName": false
-                  }
-                ]
+                "valueType": {
+                  "$id": "27",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "decorators": []
               },
               "optional": true,
-              "readOnly": true,
+              "readOnly": false,
               "discriminator": false,
               "flatten": false,
               "decorators": [],
-              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.systemData",
+              "crossLanguageDefinitionId": "Microsoft.Solutions.Resource.tags",
               "serializationOptions": {
                 "json": {
-                  "name": "systemData"
+                  "name": "tags"
                 }
               },
               "isHttpMetadata": false,
@@ -587,17 +326,88 @@
             }
           ]
         },
-        "properties": []
+        "properties": [
+          {
+            "$id": "28",
+            "kind": "property",
+            "name": "managedBy",
+            "serializedName": "managedBy",
+            "doc": "ID of the resource that manages this resource.",
+            "type": {
+              "$id": "29",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.Solutions.GenericResource.managedBy",
+            "serializationOptions": {
+              "json": {
+                "name": "managedBy"
+              }
+            },
+            "isHttpMetadata": false,
+            "isExactName": false
+          }
+        ]
       },
       "properties": [
         {
-          "$id": "45",
+          "$id": "30",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "type": {
+            "$id": "31",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [
+            {
+              "name": "TypeSpec.@maxLength",
+              "arguments": {
+                "value": {
+                  "isInteger": true
+                }
+              }
+            },
+            {
+              "name": "TypeSpec.@minLength",
+              "arguments": {
+                "value": {
+                  "isInteger": true
+                }
+              }
+            }
+          ],
+          "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinition.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": true,
+          "isExactName": false
+        },
+        {
+          "$id": "32",
           "kind": "property",
           "name": "properties",
           "serializedName": "properties",
-          "doc": "The resource-specific properties for this resource.",
+          "doc": "The managed application definition properties.",
           "type": {
-            "$id": "46",
+            "$id": "33",
             "kind": "model",
             "name": "ApplicationDefinitionProperties",
             "namespace": "Azure.Generator.MgmtSolutions.Tests",
@@ -617,13 +427,13 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "47",
+                "$id": "34",
                 "kind": "property",
                 "name": "displayName",
                 "serializedName": "displayName",
                 "doc": "The managed application definition display name.",
                 "type": {
-                  "$id": "48",
+                  "$id": "35",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -645,7 +455,7 @@
               }
             ]
           },
-          "optional": true,
+          "optional": false,
           "readOnly": false,
           "discriminator": false,
           "flatten": false,
@@ -658,96 +468,20 @@
           },
           "isHttpMetadata": false,
           "isExactName": false
-        },
-        {
-          "$id": "49",
-          "kind": "property",
-          "name": "name",
-          "serializedName": "name",
-          "doc": "The name of the ApplicationDefinition",
-          "type": {
-            "$id": "50",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-          },
-          "optional": false,
-          "readOnly": true,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [
-            {
-              "name": "TypeSpec.@pattern",
-              "arguments": {
-                "pattern": "^[a-zA-Z0-9-]{3,24}$"
-              }
-            }
-          ],
-          "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinition.name",
-          "serializationOptions": {
-            "json": {
-              "name": "name"
-            }
-          },
-          "isHttpMetadata": true,
-          "isExactName": false
-        },
-        {
-          "$id": "51",
-          "kind": "property",
-          "name": "tags",
-          "serializedName": "tags",
-          "doc": "Resource tags.",
-          "type": {
-            "$id": "52",
-            "kind": "dict",
-            "keyType": {
-              "$id": "53",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-            },
-            "valueType": {
-              "$id": "54",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-            },
-            "decorators": []
-          },
-          "optional": true,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinition.tags",
-          "serializationOptions": {
-            "json": {
-              "name": "tags"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
         }
       ]
     },
     {
-      "$ref": "46"
+      "$ref": "33"
     },
     {
-      "$ref": "21"
+      "$ref": "15"
     },
     {
-      "$ref": "22"
+      "$ref": "16"
     },
     {
-      "$ref": "32"
-    },
-    {
-      "$id": "55",
+      "$id": "36",
       "kind": "model",
       "name": "ErrorResponse",
       "namespace": "Azure.Generator.MgmtSolutions.Tests",
@@ -769,13 +503,13 @@
       "isExactName": false,
       "properties": [
         {
-          "$id": "56",
+          "$id": "37",
           "kind": "property",
           "name": "error",
           "serializedName": "error",
           "doc": "The error object.",
           "type": {
-            "$id": "57",
+            "$id": "38",
             "kind": "model",
             "name": "ErrorDetail",
             "namespace": "Azure.Generator.MgmtSolutions.Tests",
@@ -796,13 +530,13 @@
             "isExactName": false,
             "properties": [
               {
-                "$id": "58",
+                "$id": "39",
                 "kind": "property",
                 "name": "code",
                 "serializedName": "code",
                 "doc": "The error code.",
                 "type": {
-                  "$id": "59",
+                  "$id": "40",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -823,13 +557,13 @@
                 "isExactName": false
               },
               {
-                "$id": "60",
+                "$id": "41",
                 "kind": "property",
                 "name": "message",
                 "serializedName": "message",
                 "doc": "The error message.",
                 "type": {
-                  "$id": "61",
+                  "$id": "42",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -850,13 +584,13 @@
                 "isExactName": false
               },
               {
-                "$id": "62",
+                "$id": "43",
                 "kind": "property",
                 "name": "target",
                 "serializedName": "target",
                 "doc": "The error target.",
                 "type": {
-                  "$id": "63",
+                  "$id": "44",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -877,17 +611,17 @@
                 "isExactName": false
               },
               {
-                "$id": "64",
+                "$id": "45",
                 "kind": "property",
                 "name": "details",
                 "serializedName": "details",
                 "doc": "The error details.",
                 "type": {
-                  "$id": "65",
+                  "$id": "46",
                   "kind": "array",
                   "name": "ArrayErrorDetail",
                   "valueType": {
-                    "$ref": "57"
+                    "$ref": "38"
                   },
                   "crossLanguageDefinitionId": "TypeSpec.Array",
                   "decorators": []
@@ -907,17 +641,17 @@
                 "isExactName": false
               },
               {
-                "$id": "66",
+                "$id": "47",
                 "kind": "property",
                 "name": "additionalInfo",
                 "serializedName": "additionalInfo",
                 "doc": "The error additional info.",
                 "type": {
-                  "$id": "67",
+                  "$id": "48",
                   "kind": "array",
                   "name": "ArrayErrorAdditionalInfo",
                   "valueType": {
-                    "$id": "68",
+                    "$id": "49",
                     "kind": "model",
                     "name": "ErrorAdditionalInfo",
                     "namespace": "Azure.Generator.MgmtSolutions.Tests",
@@ -938,13 +672,13 @@
                     "isExactName": false,
                     "properties": [
                       {
-                        "$id": "69",
+                        "$id": "50",
                         "kind": "property",
                         "name": "type",
                         "serializedName": "type",
                         "doc": "The additional info type.",
                         "type": {
-                          "$id": "70",
+                          "$id": "51",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -965,13 +699,13 @@
                         "isExactName": false
                       },
                       {
-                        "$id": "71",
+                        "$id": "52",
                         "kind": "property",
                         "name": "info",
                         "serializedName": "info",
                         "doc": "The additional info.",
                         "type": {
-                          "$id": "72",
+                          "$id": "53",
                           "kind": "unknown",
                           "name": "unknown",
                           "crossLanguageDefinitionId": "",
@@ -1029,13 +763,13 @@
       ]
     },
     {
-      "$ref": "57"
+      "$ref": "38"
     },
     {
-      "$ref": "68"
+      "$ref": "49"
     },
     {
-      "$id": "73",
+      "$id": "54",
       "kind": "model",
       "name": "ApplicationDefinitionPatchable",
       "namespace": "Azure.Generator.MgmtSolutions.Tests",
@@ -1056,13 +790,13 @@
       "isExactName": false,
       "properties": [
         {
-          "$id": "74",
+          "$id": "55",
           "kind": "property",
           "name": "tags",
           "serializedName": "tags",
           "doc": "Application definition tags.",
           "type": {
-            "$ref": "52"
+            "$ref": "25"
           },
           "optional": true,
           "readOnly": false,
@@ -1083,7 +817,7 @@
   ],
   "clients": [
     {
-      "$id": "75",
+      "$id": "56",
       "kind": "client",
       "name": "SolutionsClient",
       "isExactName": false,
@@ -1091,13 +825,13 @@
       "methods": [],
       "parameters": [
         {
-          "$id": "76",
+          "$id": "57",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "77",
+            "$id": "58",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1108,7 +842,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "78",
+              "$id": "59",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1122,13 +856,13 @@
           "isExactName": false
         },
         {
-          "$id": "79",
+          "$id": "60",
           "kind": "method",
           "name": "apiVersion",
           "serializedName": "apiVersion",
           "doc": "The API version to use for this operation.",
           "type": {
-            "$id": "80",
+            "$id": "61",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1138,7 +872,7 @@
           "isApiVersion": true,
           "defaultValue": {
             "type": {
-              "$id": "81",
+              "$id": "62",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1175,55 +909,57 @@
             "resources": [
               {
                 "resourceModelId": "Microsoft.Solutions.ApplicationDefinition",
-                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}",
-                "resourceType": "Microsoft.Solutions/solutionNames/applicationDefinitions",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy",
+                "resourceType": "Microsoft.Solutions/applicationDefinitions",
                 "methods": [
                   {
-                    "$id": "82",
+                    "$id": "63",
                     "methodId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate",
                     "kind": "Create",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy",
                     "scope": {
-                      "$id": "83",
+                      "$id": "64",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "84",
+                    "$id": "65",
                     "methodId": "Microsoft.Solutions.ApplicationDefinitions.get",
                     "kind": "Read",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy",
                     "scope": {
-                      "$id": "85",
+                      "$id": "66",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   },
                   {
-                    "$id": "86",
+                    "$id": "67",
                     "methodId": "Microsoft.Solutions.ApplicationDefinitions.update",
                     "kind": "Update",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy",
                     "scope": {
-                      "$id": "87",
+                      "$id": "68",
                       "kind": "ResourceGroup",
-                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy",
                       "scopeResourceType": "Microsoft.Resources/resourceGroups"
                     }
                   }
                 ],
                 "scope": {
-                  "$id": "88",
+                  "$id": "69",
                   "kind": "ResourceGroup",
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
+                "singletonResourceName": "{applicationDefinitionName}?disambiguation_dummy",
                 "resourceName": "ApplicationDefinition",
                 "nameConstraints": {
-                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                  "minLength": 2,
+                  "maxLength": 10
                 },
                 "apiVersions": [
                   "2023-12-01-preview"
@@ -1241,14 +977,14 @@
       ],
       "children": [
         {
-          "$id": "89",
+          "$id": "70",
           "kind": "client",
           "name": "ApplicationDefinitions",
           "isExactName": false,
           "namespace": "Azure.Generator.MgmtSolutions.Tests",
           "methods": [
             {
-              "$id": "90",
+              "$id": "71",
               "kind": "basic",
               "name": "get",
               "isExactName": false,
@@ -1258,7 +994,7 @@
               ],
               "doc": "Gets the managed application definition.",
               "operation": {
-                "$id": "91",
+                "$id": "72",
                 "name": "get",
                 "isExactName": false,
                 "resourceName": "ApplicationDefinition",
@@ -1266,13 +1002,13 @@
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "92",
+                    "$id": "73",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "93",
+                      "$id": "74",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1282,7 +1018,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "94",
+                        "$id": "75",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1305,24 +1041,24 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "79"
+                        "$ref": "60"
                       }
                     ],
                     "isExactName": false
                   },
                   {
-                    "$id": "95",
+                    "$id": "76",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "96",
+                      "$id": "77",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "97",
+                        "$id": "78",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1351,18 +1087,18 @@
                     "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$id": "98",
+                        "$id": "79",
                         "kind": "method",
                         "name": "subscriptionId",
                         "serializedName": "subscriptionId",
                         "doc": "The ID of the target subscription. The value must be an UUID.",
                         "type": {
-                          "$id": "99",
+                          "$id": "80",
                           "kind": "string",
                           "name": "uuid",
                           "crossLanguageDefinitionId": "Azure.Core.uuid",
                           "baseType": {
-                            "$id": "100",
+                            "$id": "81",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1388,6 +1124,408 @@
                           }
                         ],
                         "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "82",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "83",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "84",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "85",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "86",
+                    "kind": "path",
+                    "name": "applicationDefinitionName",
+                    "serializedName": "applicationDefinitionName",
+                    "doc": "The name of the managed application definition.",
+                    "type": {
+                      "$id": "87",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.applicationDefinitionName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "88",
+                        "kind": "method",
+                        "name": "applicationDefinitionName",
+                        "serializedName": "applicationDefinitionName",
+                        "doc": "The name of the managed application definition.",
+                        "type": {
+                          "$id": "89",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.applicationDefinitionName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "90",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "4"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "91",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "4"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "14"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  },
+                  {
+                    "statusCodes": [
+                      404
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get",
+                "decorators": [],
+                "namespace": "Azure.Generator.MgmtSolutions.Tests"
+              },
+              "parameters": [
+                {
+                  "$ref": "84"
+                },
+                {
+                  "$ref": "88"
+                },
+                {
+                  "$ref": "91"
+                },
+                {
+                  "$id": "92",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "77"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "14"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get"
+            },
+            {
+              "$id": "93",
+              "kind": "basic",
+              "name": "createOrUpdate",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2023-12-01-preview"
+              ],
+              "doc": "Creates or updates a managed application definition.",
+              "operation": {
+                "$id": "94",
+                "name": "createOrUpdate",
+                "isExactName": false,
+                "resourceName": "ApplicationDefinition",
+                "doc": "Creates or updates a managed application definition.",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "95",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "96",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "97",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2023-12-01-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "60"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "98",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "99",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "100",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "79"
                       }
                     ],
                     "isExactName": false
@@ -1437,7 +1575,7 @@
                       }
                     ],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.resourceGroupName",
+                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.resourceGroupName",
                     "methodParameterSegments": [
                       {
                         "$id": "103",
@@ -1456,7 +1594,7 @@
                         "isApiVersion": false,
                         "optional": false,
                         "scope": "Method",
-                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.resourceGroupName",
+                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.resourceGroupName",
                         "readOnly": false,
                         "access": "public",
                         "decorators": [
@@ -1491,59 +1629,11 @@
                   {
                     "$id": "105",
                     "kind": "path",
-                    "name": "solutionName",
-                    "serializedName": "solutionName",
-                    "type": {
-                      "$id": "106",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "isApiVersion": false,
-                    "explode": false,
-                    "style": "simple",
-                    "allowReserved": false,
-                    "skipUrlEncoding": false,
-                    "optional": false,
-                    "scope": "Method",
-                    "decorators": [],
-                    "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.solutionName",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "107",
-                        "kind": "method",
-                        "name": "solutionName",
-                        "serializedName": "solutionName",
-                        "type": {
-                          "$id": "108",
-                          "kind": "string",
-                          "name": "string",
-                          "crossLanguageDefinitionId": "TypeSpec.string",
-                          "decorators": []
-                        },
-                        "location": "Path",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Method",
-                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.solutionName",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": [],
-                        "isExactName": false
-                      }
-                    ],
-                    "isExactName": false
-                  },
-                  {
-                    "$id": "109",
-                    "kind": "path",
                     "name": "applicationDefinitionName",
                     "serializedName": "applicationDefinitionName",
                     "doc": "The name of the managed application definition.",
                     "type": {
-                      "$id": "110",
+                      "$id": "106",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1575,16 +1665,16 @@
                       }
                     ],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.applicationDefinitionName",
+                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.applicationDefinitionName",
                     "methodParameterSegments": [
                       {
-                        "$id": "111",
+                        "$id": "107",
                         "kind": "method",
                         "name": "applicationDefinitionName",
                         "serializedName": "applicationDefinitionName",
                         "doc": "The name of the managed application definition.",
                         "type": {
-                          "$id": "112",
+                          "$id": "108",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1594,7 +1684,7 @@
                         "isApiVersion": false,
                         "optional": false,
                         "scope": "Method",
-                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.applicationDefinitionName",
+                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.applicationDefinitionName",
                         "readOnly": false,
                         "access": "public",
                         "decorators": [
@@ -1621,34 +1711,36 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "113",
+                    "$id": "109",
                     "kind": "header",
-                    "name": "accept",
-                    "serializedName": "Accept",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
-                      "$ref": "10"
+                      "$ref": "6"
                     },
                     "isApiVersion": false,
                     "optional": false,
-                    "isContentType": false,
+                    "isContentType": true,
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.accept",
+                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "114",
+                        "$id": "110",
                         "kind": "method",
-                        "name": "accept",
-                        "serializedName": "Accept",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
                         "type": {
-                          "$ref": "10"
+                          "$ref": "6"
                         },
                         "location": "Header",
                         "isApiVersion": false,
                         "optional": false,
                         "scope": "Constant",
-                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.accept",
+                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.contentType",
                         "readOnly": false,
                         "access": "public",
                         "decorators": [],
@@ -1656,6 +1748,90 @@
                       }
                     ],
                     "isExactName": false
+                  },
+                  {
+                    "$id": "111",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "8"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "112",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "8"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "113",
+                    "kind": "body",
+                    "name": "parameters",
+                    "serializedName": "parameters",
+                    "doc": "Resource create parameters.",
+                    "type": {
+                      "$ref": "14"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.resource",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "114",
+                        "kind": "method",
+                        "name": "parameters",
+                        "serializedName": "parameters",
+                        "doc": "Resource create parameters.",
+                        "type": {
+                          "$ref": "14"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.resource",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "resource"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -1664,7 +1840,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "20"
+                      "$ref": "14"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -1679,20 +1855,33 @@
                   },
                   {
                     "statusCodes": [
-                      404
+                      201
                     ],
+                    "bodyType": {
+                      "$ref": "14"
+                    },
                     "headers": [],
                     "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
-                "httpMethod": "GET",
+                "httpMethod": "PUT",
                 "uri": "{endpoint}",
-                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
                 "bufferResponse": true,
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
-                "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get",
+                "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate",
                 "decorators": [],
                 "namespace": "Azure.Generator.MgmtSolutions.Tests"
               },
@@ -1704,10 +1893,13 @@
                   "$ref": "107"
                 },
                 {
-                  "$ref": "111"
+                  "$ref": "114"
                 },
                 {
-                  "$ref": "114"
+                  "$ref": "110"
+                },
+                {
+                  "$ref": "112"
                 },
                 {
                   "$id": "115",
@@ -1715,7 +1907,7 @@
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "96"
+                    "$ref": "99"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -1723,35 +1915,35 @@
                   "isApiVersion": false,
                   "scope": "Method",
                   "location": "Path",
-                  "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get.subscriptionId"
+                  "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.subscriptionId"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "20"
+                  "$ref": "14"
                 }
               },
               "isOverride": false,
               "generateConvenient": true,
               "generateProtocol": true,
-              "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.get"
+              "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate"
             },
             {
               "$id": "116",
               "kind": "basic",
-              "name": "createOrUpdate",
+              "name": "update",
               "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2023-12-01-preview"
               ],
-              "doc": "Creates or updates a managed application definition.",
+              "doc": "Updates the managed application definition.",
               "operation": {
                 "$id": "117",
-                "name": "createOrUpdate",
+                "name": "update",
                 "isExactName": false,
                 "resourceName": "ApplicationDefinition",
-                "doc": "Creates or updates a managed application definition.",
+                "doc": "Updates the managed application definition.",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1790,11 +1982,11 @@
                         }
                       }
                     ],
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.apiVersion",
+                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.update.apiVersion",
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$ref": "79"
+                        "$ref": "60"
                       }
                     ],
                     "isExactName": false
@@ -1837,10 +2029,10 @@
                       }
                     ],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.subscriptionId",
+                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.update.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$ref": "98"
+                        "$ref": "79"
                       }
                     ],
                     "isExactName": false
@@ -1890,7 +2082,7 @@
                       }
                     ],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.resourceGroupName",
+                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.update.resourceGroupName",
                     "methodParameterSegments": [
                       {
                         "$id": "126",
@@ -1900,564 +2092,6 @@
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
                           "$id": "127",
-                          "kind": "string",
-                          "name": "string",
-                          "crossLanguageDefinitionId": "TypeSpec.string",
-                          "decorators": []
-                        },
-                        "location": "Path",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Method",
-                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.resourceGroupName",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": [
-                          {
-                            "name": "TypeSpec.@pattern",
-                            "arguments": {
-                              "pattern": "^[-\\w\\._\\(\\)]+$"
-                            }
-                          },
-                          {
-                            "name": "TypeSpec.@maxLength",
-                            "arguments": {
-                              "value": {
-                                "isInteger": true
-                              }
-                            }
-                          },
-                          {
-                            "name": "TypeSpec.@minLength",
-                            "arguments": {
-                              "value": {
-                                "isInteger": true
-                              }
-                            }
-                          }
-                        ],
-                        "isExactName": false
-                      }
-                    ],
-                    "isExactName": false
-                  },
-                  {
-                    "$id": "128",
-                    "kind": "path",
-                    "name": "solutionName",
-                    "serializedName": "solutionName",
-                    "type": {
-                      "$id": "129",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "isApiVersion": false,
-                    "explode": false,
-                    "style": "simple",
-                    "allowReserved": false,
-                    "skipUrlEncoding": false,
-                    "optional": false,
-                    "scope": "Method",
-                    "decorators": [],
-                    "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.solutionName",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "130",
-                        "kind": "method",
-                        "name": "solutionName",
-                        "serializedName": "solutionName",
-                        "type": {
-                          "$id": "131",
-                          "kind": "string",
-                          "name": "string",
-                          "crossLanguageDefinitionId": "TypeSpec.string",
-                          "decorators": []
-                        },
-                        "location": "Path",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Method",
-                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.solutionName",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": [],
-                        "isExactName": false
-                      }
-                    ],
-                    "isExactName": false
-                  },
-                  {
-                    "$id": "132",
-                    "kind": "path",
-                    "name": "applicationDefinitionName",
-                    "serializedName": "applicationDefinitionName",
-                    "doc": "The name of the managed application definition.",
-                    "type": {
-                      "$id": "133",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "isApiVersion": false,
-                    "explode": false,
-                    "style": "simple",
-                    "allowReserved": false,
-                    "skipUrlEncoding": false,
-                    "optional": false,
-                    "scope": "Method",
-                    "decorators": [
-                      {
-                        "name": "TypeSpec.@maxLength",
-                        "arguments": {
-                          "value": {
-                            "isInteger": true
-                          }
-                        }
-                      },
-                      {
-                        "name": "TypeSpec.@minLength",
-                        "arguments": {
-                          "value": {
-                            "isInteger": true
-                          }
-                        }
-                      }
-                    ],
-                    "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.applicationDefinitionName",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "134",
-                        "kind": "method",
-                        "name": "applicationDefinitionName",
-                        "serializedName": "applicationDefinitionName",
-                        "doc": "The name of the managed application definition.",
-                        "type": {
-                          "$id": "135",
-                          "kind": "string",
-                          "name": "string",
-                          "crossLanguageDefinitionId": "TypeSpec.string",
-                          "decorators": []
-                        },
-                        "location": "Path",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Method",
-                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.applicationDefinitionName",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": [
-                          {
-                            "name": "TypeSpec.@maxLength",
-                            "arguments": {
-                              "value": {
-                                "isInteger": true
-                              }
-                            }
-                          },
-                          {
-                            "name": "TypeSpec.@minLength",
-                            "arguments": {
-                              "value": {
-                                "isInteger": true
-                              }
-                            }
-                          }
-                        ],
-                        "isExactName": false
-                      }
-                    ],
-                    "isExactName": false
-                  },
-                  {
-                    "$id": "136",
-                    "kind": "header",
-                    "name": "contentType",
-                    "serializedName": "Content-Type",
-                    "doc": "Body parameter's content type. Known values are application/json",
-                    "type": {
-                      "$ref": "12"
-                    },
-                    "isApiVersion": false,
-                    "optional": false,
-                    "isContentType": true,
-                    "scope": "Constant",
-                    "readOnly": false,
-                    "decorators": [],
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.contentType",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "137",
-                        "kind": "method",
-                        "name": "contentType",
-                        "serializedName": "Content-Type",
-                        "doc": "Body parameter's content type. Known values are application/json",
-                        "type": {
-                          "$ref": "12"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.contentType",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": [],
-                        "isExactName": false
-                      }
-                    ],
-                    "isExactName": false
-                  },
-                  {
-                    "$id": "138",
-                    "kind": "header",
-                    "name": "accept",
-                    "serializedName": "Accept",
-                    "type": {
-                      "$ref": "14"
-                    },
-                    "isApiVersion": false,
-                    "optional": false,
-                    "isContentType": false,
-                    "scope": "Constant",
-                    "readOnly": false,
-                    "decorators": [],
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.accept",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "139",
-                        "kind": "method",
-                        "name": "accept",
-                        "serializedName": "Accept",
-                        "type": {
-                          "$ref": "14"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.accept",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": [],
-                        "isExactName": false
-                      }
-                    ],
-                    "isExactName": false
-                  },
-                  {
-                    "$id": "140",
-                    "kind": "body",
-                    "name": "parameters",
-                    "serializedName": "parameters",
-                    "doc": "Resource create parameters.",
-                    "type": {
-                      "$ref": "20"
-                    },
-                    "isApiVersion": false,
-                    "contentTypes": [
-                      "application/json"
-                    ],
-                    "defaultContentType": "application/json",
-                    "optional": false,
-                    "scope": "Method",
-                    "decorators": [],
-                    "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.resource",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "141",
-                        "kind": "method",
-                        "name": "parameters",
-                        "serializedName": "parameters",
-                        "doc": "Resource create parameters.",
-                        "type": {
-                          "$ref": "20"
-                        },
-                        "location": "Body",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Method",
-                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.resource",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": [],
-                        "isExactName": false
-                      }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "resource"
-                      }
-                    }
-                  }
-                ],
-                "responses": [
-                  {
-                    "statusCodes": [
-                      200
-                    ],
-                    "bodyType": {
-                      "$ref": "20"
-                    },
-                    "headers": [],
-                    "isErrorResponse": false,
-                    "contentTypes": [
-                      "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
-                  },
-                  {
-                    "statusCodes": [
-                      201
-                    ],
-                    "bodyType": {
-                      "$ref": "20"
-                    },
-                    "headers": [],
-                    "isErrorResponse": false,
-                    "contentTypes": [
-                      "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
-                  }
-                ],
-                "httpMethod": "PUT",
-                "uri": "{endpoint}",
-                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}",
-                "requestMediaTypes": [
-                  "application/json"
-                ],
-                "bufferResponse": true,
-                "generateProtocolMethod": true,
-                "generateConvenienceMethod": true,
-                "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate",
-                "decorators": [],
-                "namespace": "Azure.Generator.MgmtSolutions.Tests"
-              },
-              "parameters": [
-                {
-                  "$ref": "126"
-                },
-                {
-                  "$ref": "130"
-                },
-                {
-                  "$ref": "134"
-                },
-                {
-                  "$ref": "141"
-                },
-                {
-                  "$ref": "137"
-                },
-                {
-                  "$ref": "139"
-                },
-                {
-                  "$id": "142",
-                  "kind": "method",
-                  "name": "subscriptionId",
-                  "doc": "The ID of the target subscription. The value must be an UUID.",
-                  "type": {
-                    "$ref": "122"
-                  },
-                  "optional": false,
-                  "readOnly": false,
-                  "serializedName": "subscriptionId",
-                  "isApiVersion": false,
-                  "scope": "Method",
-                  "location": "Path",
-                  "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate.subscriptionId"
-                }
-              ],
-              "response": {
-                "type": {
-                  "$ref": "20"
-                }
-              },
-              "isOverride": false,
-              "generateConvenient": true,
-              "generateProtocol": true,
-              "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.createOrUpdate"
-            },
-            {
-              "$id": "143",
-              "kind": "basic",
-              "name": "update",
-              "isExactName": false,
-              "accessibility": "public",
-              "apiVersions": [
-                "2023-12-01-preview"
-              ],
-              "doc": "Updates the managed application definition.",
-              "operation": {
-                "$id": "144",
-                "name": "update",
-                "isExactName": false,
-                "resourceName": "ApplicationDefinition",
-                "doc": "Updates the managed application definition.",
-                "accessibility": "public",
-                "parameters": [
-                  {
-                    "$id": "145",
-                    "kind": "query",
-                    "name": "apiVersion",
-                    "serializedName": "api-version",
-                    "doc": "The API version to use for this operation.",
-                    "type": {
-                      "$id": "146",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "isApiVersion": true,
-                    "explode": false,
-                    "defaultValue": {
-                      "type": {
-                        "$id": "147",
-                        "kind": "string",
-                        "name": "string",
-                        "crossLanguageDefinitionId": "TypeSpec.string"
-                      },
-                      "value": "2023-12-01-preview"
-                    },
-                    "optional": false,
-                    "scope": "Client",
-                    "decorators": [
-                      {
-                        "name": "TypeSpec.@minLength",
-                        "arguments": {
-                          "value": {
-                            "isInteger": true
-                          }
-                        }
-                      }
-                    ],
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.update.apiVersion",
-                    "readOnly": false,
-                    "methodParameterSegments": [
-                      {
-                        "$ref": "79"
-                      }
-                    ],
-                    "isExactName": false
-                  },
-                  {
-                    "$id": "148",
-                    "kind": "path",
-                    "name": "subscriptionId",
-                    "serializedName": "subscriptionId",
-                    "doc": "The ID of the target subscription. The value must be an UUID.",
-                    "type": {
-                      "$id": "149",
-                      "kind": "string",
-                      "name": "uuid",
-                      "crossLanguageDefinitionId": "Azure.Core.uuid",
-                      "baseType": {
-                        "$id": "150",
-                        "kind": "string",
-                        "name": "string",
-                        "crossLanguageDefinitionId": "TypeSpec.string",
-                        "decorators": []
-                      },
-                      "decorators": []
-                    },
-                    "isApiVersion": false,
-                    "explode": false,
-                    "style": "simple",
-                    "allowReserved": false,
-                    "skipUrlEncoding": false,
-                    "optional": false,
-                    "scope": "Method",
-                    "decorators": [
-                      {
-                        "name": "TypeSpec.@minLength",
-                        "arguments": {
-                          "value": {
-                            "isInteger": true
-                          }
-                        }
-                      }
-                    ],
-                    "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.update.subscriptionId",
-                    "methodParameterSegments": [
-                      {
-                        "$ref": "98"
-                      }
-                    ],
-                    "isExactName": false
-                  },
-                  {
-                    "$id": "151",
-                    "kind": "path",
-                    "name": "resourceGroupName",
-                    "serializedName": "resourceGroupName",
-                    "doc": "The name of the resource group. The name is case insensitive.",
-                    "type": {
-                      "$id": "152",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "isApiVersion": false,
-                    "explode": false,
-                    "style": "simple",
-                    "allowReserved": false,
-                    "skipUrlEncoding": false,
-                    "optional": false,
-                    "scope": "Method",
-                    "decorators": [
-                      {
-                        "name": "TypeSpec.@pattern",
-                        "arguments": {
-                          "pattern": "^[-\\w\\._\\(\\)]+$"
-                        }
-                      },
-                      {
-                        "name": "TypeSpec.@maxLength",
-                        "arguments": {
-                          "value": {
-                            "isInteger": true
-                          }
-                        }
-                      },
-                      {
-                        "name": "TypeSpec.@minLength",
-                        "arguments": {
-                          "value": {
-                            "isInteger": true
-                          }
-                        }
-                      }
-                    ],
-                    "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.update.resourceGroupName",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "153",
-                        "kind": "method",
-                        "name": "resourceGroupName",
-                        "serializedName": "resourceGroupName",
-                        "doc": "The name of the resource group. The name is case insensitive.",
-                        "type": {
-                          "$id": "154",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2500,61 +2134,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "155",
-                    "kind": "path",
-                    "name": "solutionName",
-                    "serializedName": "solutionName",
-                    "type": {
-                      "$id": "156",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "isApiVersion": false,
-                    "explode": false,
-                    "style": "simple",
-                    "allowReserved": false,
-                    "skipUrlEncoding": false,
-                    "optional": false,
-                    "scope": "Method",
-                    "decorators": [],
-                    "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.update.solutionName",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "157",
-                        "kind": "method",
-                        "name": "solutionName",
-                        "serializedName": "solutionName",
-                        "type": {
-                          "$id": "158",
-                          "kind": "string",
-                          "name": "string",
-                          "crossLanguageDefinitionId": "TypeSpec.string",
-                          "decorators": []
-                        },
-                        "location": "Path",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Method",
-                        "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.update.solutionName",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": [],
-                        "isExactName": false
-                      }
-                    ],
-                    "isExactName": false
-                  },
-                  {
-                    "$id": "159",
+                    "$id": "128",
                     "kind": "path",
                     "name": "applicationDefinitionName",
                     "serializedName": "applicationDefinitionName",
                     "doc": "The name of the managed application definition.",
                     "type": {
-                      "$id": "160",
+                      "$id": "129",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2589,13 +2175,13 @@
                     "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.update.applicationDefinitionName",
                     "methodParameterSegments": [
                       {
-                        "$id": "161",
+                        "$id": "130",
                         "kind": "method",
                         "name": "applicationDefinitionName",
                         "serializedName": "applicationDefinitionName",
                         "doc": "The name of the managed application definition.",
                         "type": {
-                          "$id": "162",
+                          "$id": "131",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2632,13 +2218,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "163",
+                    "$id": "132",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
-                      "$ref": "16"
+                      "$ref": "10"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -2649,13 +2235,13 @@
                     "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.update.contentType",
                     "methodParameterSegments": [
                       {
-                        "$id": "164",
+                        "$id": "133",
                         "kind": "method",
                         "name": "contentType",
                         "serializedName": "Content-Type",
                         "doc": "Body parameter's content type. Known values are application/json",
                         "type": {
-                          "$ref": "16"
+                          "$ref": "10"
                         },
                         "location": "Header",
                         "isApiVersion": false,
@@ -2671,12 +2257,12 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "165",
+                    "$id": "134",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
                     "type": {
-                      "$ref": "18"
+                      "$ref": "12"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -2687,12 +2273,12 @@
                     "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.update.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "166",
+                        "$id": "135",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
                         "type": {
-                          "$ref": "18"
+                          "$ref": "12"
                         },
                         "location": "Header",
                         "isApiVersion": false,
@@ -2708,13 +2294,13 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "167",
+                    "$id": "136",
                     "kind": "body",
                     "name": "parameters",
                     "serializedName": "parameters",
                     "doc": "Resource create parameters.",
                     "type": {
-                      "$ref": "73"
+                      "$ref": "54"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -2728,13 +2314,13 @@
                     "crossLanguageDefinitionId": "Microsoft.Solutions.ApplicationDefinitions.update.properties",
                     "methodParameterSegments": [
                       {
-                        "$id": "168",
+                        "$id": "137",
                         "kind": "method",
                         "name": "parameters",
                         "serializedName": "parameters",
                         "doc": "Resource create parameters.",
                         "type": {
-                          "$ref": "73"
+                          "$ref": "54"
                         },
                         "location": "Body",
                         "isApiVersion": false,
@@ -2761,7 +2347,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "20"
+                      "$ref": "14"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -2777,7 +2363,7 @@
                 ],
                 "httpMethod": "PATCH",
                 "uri": "{endpoint}",
-                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/solutionNames/{solutionName}/applicationDefinitions/{applicationDefinitionName}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy",
                 "requestMediaTypes": [
                   "application/json"
                 ],
@@ -2790,30 +2376,27 @@
               },
               "parameters": [
                 {
-                  "$ref": "153"
+                  "$ref": "126"
                 },
                 {
-                  "$ref": "157"
+                  "$ref": "130"
                 },
                 {
-                  "$ref": "161"
+                  "$ref": "137"
                 },
                 {
-                  "$ref": "168"
+                  "$ref": "133"
                 },
                 {
-                  "$ref": "164"
+                  "$ref": "135"
                 },
                 {
-                  "$ref": "166"
-                },
-                {
-                  "$id": "169",
+                  "$id": "138",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "149"
+                    "$ref": "122"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -2826,7 +2409,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "20"
+                  "$ref": "14"
                 }
               },
               "isOverride": false,
@@ -2837,13 +2420,13 @@
           ],
           "parameters": [
             {
-              "$id": "170",
+              "$id": "139",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "171",
+                "$id": "140",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -2854,7 +2437,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "172",
+                  "$id": "141",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2868,7 +2451,7 @@
               "isExactName": false
             },
             {
-              "$ref": "79"
+              "$ref": "60"
             }
           ],
           "initializedBy": 0,
@@ -2887,7 +2470,7 @@
             "2023-12-01-preview"
           ],
           "parent": {
-            "$ref": "75"
+            "$ref": "56"
           },
           "isMultiServiceClient": false
         }
