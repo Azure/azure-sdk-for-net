@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -19,8 +20,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="function"> The definition of azure function and its parameters. </param>
         /// <param name="inputBinding"> Input storage queue. The queue storage trigger runs a function as messages are added to it. </param>
         /// <param name="outputBinding"> Output storage queue. The function writes output to this queue when the input items are processed. </param>
-        internal AzureFunctionDefinition(AzureFunctionDefinitionFunction function, AzureFunctionBinding inputBinding, AzureFunctionBinding outputBinding)
+        /// <exception cref="ArgumentNullException"> <paramref name="function"/>, <paramref name="inputBinding"/> or <paramref name="outputBinding"/> is null. </exception>
+        public AzureFunctionDefinition(AzureFunctionDefinitionFunction function, AzureFunctionBinding inputBinding, AzureFunctionBinding outputBinding)
         {
+            Argument.AssertNotNull(function, nameof(function));
+            Argument.AssertNotNull(inputBinding, nameof(inputBinding));
+            Argument.AssertNotNull(outputBinding, nameof(outputBinding));
+
             Function = function;
             InputBinding = inputBinding;
             OutputBinding = outputBinding;
@@ -40,12 +46,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The definition of azure function and its parameters. </summary>
-        public AzureFunctionDefinitionFunction Function { get; }
+        public AzureFunctionDefinitionFunction Function { get; set; }
 
         /// <summary> Input storage queue. The queue storage trigger runs a function as messages are added to it. </summary>
-        public AzureFunctionBinding InputBinding { get; }
+        public AzureFunctionBinding InputBinding { get; set; }
 
         /// <summary> Output storage queue. The function writes output to this queue when the input items are processed. </summary>
-        public AzureFunctionBinding OutputBinding { get; }
+        public AzureFunctionBinding OutputBinding { get; set; }
     }
 }

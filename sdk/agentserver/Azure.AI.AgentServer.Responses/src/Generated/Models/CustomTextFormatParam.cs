@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class CustomTextFormatParam : CustomToolParamFormat
     {
         /// <summary> Initializes a new instance of <see cref="CustomTextFormatParam"/>. </summary>
-        internal CustomTextFormatParam() : base("text")
+        public CustomTextFormatParam() : base(CustomToolParamFormatType.Text)
         {
         }
 

@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -17,8 +18,11 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="InputTextContentParam"/>. </summary>
         /// <param name="text"> The text input to the model. </param>
-        internal InputTextContentParam(string text)
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        public InputTextContentParam(string text)
         {
+            Argument.AssertNotNull(text, nameof(text));
+
             Text = text;
         }
 
@@ -34,9 +38,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The type of the input item. Always `input_text`. </summary>
-        internal string Type { get; } = "input_text";
+        public string Type { get; } = "input_text";
 
         /// <summary> The text input to the model. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
     }
 }

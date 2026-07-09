@@ -6,27 +6,22 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Apply patch tool. </summary>
-    public partial class ApplyPatchToolParam : ResponseTool
+    public partial class ApplyPatchToolParam : Tool
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ApplyPatchToolParam"/>. </summary>
-        internal ApplyPatchToolParam() : base("apply_patch")
+        public ApplyPatchToolParam() : base(ToolType.ApplyPatch)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplyPatchToolParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplyPatchToolParam(ResponseToolKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ApplyPatchToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -17,8 +18,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="startIndex"> The index of the first character of the URL citation in the message. </param>
         /// <param name="endIndex"> The index of the last character of the URL citation in the message. </param>
         /// <param name="title"> The title of the web resource. </param>
-        internal UrlCitationBody(Uri url, long startIndex, long endIndex, string title) : base(AnnotationType.UrlCitation)
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="title"/> is null. </exception>
+        public UrlCitationBody(Uri url, long startIndex, long endIndex, string title) : base(AnnotationType.UrlCitation)
         {
+            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(title, nameof(title));
+
             Url = url;
             StartIndex = startIndex;
             EndIndex = endIndex;
@@ -41,15 +46,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The URL of the web resource. </summary>
-        public Uri Url { get; }
+        public Uri Url { get; set; }
 
         /// <summary> The index of the first character of the URL citation in the message. </summary>
-        public long StartIndex { get; }
+        public long StartIndex { get; set; }
 
         /// <summary> The index of the last character of the URL citation in the message. </summary>
-        public long EndIndex { get; }
+        public long EndIndex { get; set; }
 
         /// <summary> The title of the web resource. </summary>
-        public string Title { get; }
+        public string Title { get; set; }
     }
 }

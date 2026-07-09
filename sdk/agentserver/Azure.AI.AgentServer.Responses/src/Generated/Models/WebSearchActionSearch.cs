@@ -18,8 +18,11 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="WebSearchActionSearch"/>. </summary>
         /// <param name="query"> [DEPRECATED] The search query. </param>
-        internal WebSearchActionSearch(string query)
+        /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
+        public WebSearchActionSearch(string query)
         {
+            Argument.AssertNotNull(query, nameof(query));
+
             Query = query;
             Queries = new ChangeTrackingList<string>();
             Sources = new ChangeTrackingList<WebSearchActionSearchSources>();
@@ -44,7 +47,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Type { get; } = "search";
 
         /// <summary> [DEPRECATED] The search query. </summary>
-        public string Query { get; }
+        public string Query { get; set; }
 
         /// <summary> The search queries. </summary>
         public IList<string> Queries { get; }

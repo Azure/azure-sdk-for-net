@@ -7,21 +7,21 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Computer tool call output. </summary>
-    public partial class ComputerCallOutputItemParam : ResponseItem
+    public partial class ComputerCallOutputItemParam : Item
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ComputerCallOutputItemParam"/>. </summary>
         /// <param name="callId"> The ID of the computer tool call that produced the output. </param>
         /// <param name="output"></param>
-        internal ComputerCallOutputItemParam(string callId, ComputerScreenshotImage output) : base(ItemType.ComputerCallOutput)
+        /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="output"/> is null. </exception>
+        public ComputerCallOutputItemParam(string callId, ComputerScreenshotImage output) : base(ItemType.ComputerCallOutput)
         {
+            Argument.AssertNotNull(callId, nameof(callId));
+            Argument.AssertNotNull(output, nameof(output));
+
             CallId = callId;
             Output = output;
             AcknowledgedSafetyChecks = new ChangeTrackingList<ComputerCallSafetyCheckParam>();
@@ -29,35 +29,34 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ComputerCallOutputItemParam"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"></param>
         /// <param name="callId"> The ID of the computer tool call that produced the output. </param>
         /// <param name="output"></param>
         /// <param name="acknowledgedSafetyChecks"></param>
         /// <param name="status"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputerCallOutputItemParam(ItemType @type, string id, string callId, ComputerScreenshotImage output, IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks, FunctionCallItemStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ComputerCallOutputItemParam(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ComputerScreenshotImage output, IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks, FunctionCallItemStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
             Output = output;
             AcknowledgedSafetyChecks = acknowledgedSafetyChecks;
             Status = status;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Id. </summary>
-        public string Id { get; }
+        /// <summary> Gets or sets the Id. </summary>
+        public string Id { get; set; }
 
         /// <summary> The ID of the computer tool call that produced the output. </summary>
-        public string CallId { get; }
+        public string CallId { get; set; }
 
-        /// <summary> Gets the Output. </summary>
-        public ComputerScreenshotImage Output { get; }
+        /// <summary> Gets or sets the Output. </summary>
+        public ComputerScreenshotImage Output { get; set; }
 
-        /// <summary> Gets the AcknowledgedSafetyChecks. </summary>
-        public IList<ComputerCallSafetyCheckParam> AcknowledgedSafetyChecks { get; }
+        /// <summary> Gets or sets the AcknowledgedSafetyChecks. </summary>
+        public IList<ComputerCallSafetyCheckParam> AcknowledgedSafetyChecks { get; set; }
 
-        /// <summary> Gets the Status. </summary>
-        public FunctionCallItemStatus? Status { get; }
+        /// <summary> Gets or sets the Status. </summary>
+        public FunctionCallItemStatus? Status { get; set; }
     }
 }

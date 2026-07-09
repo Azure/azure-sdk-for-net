@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class ContainerAutoParam : FunctionShellToolParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="ContainerAutoParam"/>. </summary>
-        internal ContainerAutoParam() : base("container_auto")
+        public ContainerAutoParam() : base(FunctionShellToolParamEnvironmentType.ContainerAuto)
         {
             FileIds = new ChangeTrackingList<string>();
             Skills = new ChangeTrackingList<ContainerSkill>();
@@ -38,13 +38,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> An optional list of uploaded files to make available to your code. </summary>
         public IList<string> FileIds { get; }
 
-        /// <summary> Gets the MemoryLimit. </summary>
-        public ContainerMemoryLimit? MemoryLimit { get; }
+        /// <summary> Gets or sets the MemoryLimit. </summary>
+        public ContainerMemoryLimit? MemoryLimit { get; set; }
 
         /// <summary> An optional list of skills referenced by id or inline data. </summary>
         public IList<ContainerSkill> Skills { get; }
 
-        /// <summary> Gets the NetworkPolicy. </summary>
-        public ContainerNetworkPolicyParam NetworkPolicy { get; }
+        /// <summary> Gets or sets the NetworkPolicy. </summary>
+        public ContainerNetworkPolicyParam NetworkPolicy { get; set; }
     }
 }

@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -15,8 +16,11 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="FilePath"/>. </summary>
         /// <param name="fileId"> The ID of the file. </param>
         /// <param name="index"> The index of the file in the list of files. </param>
-        internal FilePath(string fileId, long index) : base(AnnotationType.FilePath)
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        public FilePath(string fileId, long index) : base(AnnotationType.FilePath)
         {
+            Argument.AssertNotNull(fileId, nameof(fileId));
+
             FileId = fileId;
             Index = index;
         }
@@ -33,9 +37,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The ID of the file. </summary>
-        public string FileId { get; }
+        public string FileId { get; set; }
 
         /// <summary> The index of the file in the list of files. </summary>
-        public long Index { get; }
+        public long Index { get; set; }
     }
 }

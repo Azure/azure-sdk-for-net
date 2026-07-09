@@ -30,15 +30,25 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebSearchConfiguration"/>. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebSearchConfiguration(string projectConnectionId, string instanceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebSearchConfiguration(string name, string description, string projectConnectionId, string instanceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Name = name;
+            Description = description;
             ProjectConnectionId = projectConnectionId;
             InstanceName = instanceName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
 
         /// <summary> Project connection id for grounding with bing custom search. </summary>
         public string ProjectConnectionId { get; set; }

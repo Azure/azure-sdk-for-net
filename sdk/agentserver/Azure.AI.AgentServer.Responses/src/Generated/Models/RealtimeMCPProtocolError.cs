@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -15,8 +16,11 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPProtocolError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
-        internal RealtimeMCPProtocolError(long code, string message) : base(RealtimeMcpErrorType.ProtocolError)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public RealtimeMCPProtocolError(long code, string message) : base(RealtimeMcpErrorType.ProtocolError)
         {
+            Argument.AssertNotNull(message, nameof(message));
+
             Code = code;
             Message = message;
         }
@@ -32,10 +36,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             Message = message;
         }
 
-        /// <summary> Gets the Code. </summary>
-        public long Code { get; }
+        /// <summary> Gets or sets the Code. </summary>
+        public long Code { get; set; }
 
-        /// <summary> Gets the Message. </summary>
-        public string Message { get; }
+        /// <summary> Gets or sets the Message. </summary>
+        public string Message { get; set; }
     }
 }

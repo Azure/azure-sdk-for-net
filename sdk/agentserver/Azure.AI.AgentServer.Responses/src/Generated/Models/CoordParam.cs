@@ -18,7 +18,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="CoordParam"/>. </summary>
         /// <param name="x"> The x-coordinate. </param>
         /// <param name="y"> The y-coordinate. </param>
-        internal CoordParam(long x, long y)
+        public CoordParam(long x, long y)
         {
             X = x;
             Y = y;
@@ -36,9 +36,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The x-coordinate. </summary>
-        public long X { get; }
+        public long X { get; set; }
 
         /// <summary> The y-coordinate. </summary>
-        public long Y { get; }
+        public long Y { get; set; }
     }
 }

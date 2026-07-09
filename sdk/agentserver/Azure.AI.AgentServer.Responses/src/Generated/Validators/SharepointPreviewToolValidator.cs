@@ -31,6 +31,20 @@ internal static partial class SharepointPreviewToolValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
+        }
+
         // Required: sharepoint_grounding_preview
         if (!element.TryGetProperty("sharepoint_grounding_preview", out var sharepointGroundingPreviewProp))
             errors.Add(new ValidationError("$.sharepoint_grounding_preview", "Required property 'sharepoint_grounding_preview' is missing"));

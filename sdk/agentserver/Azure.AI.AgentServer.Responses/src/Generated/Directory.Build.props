@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <NoWarn>$(NoWarn);OPENAI001</NoWarn>
-  </PropertyGroup>
-</Project>

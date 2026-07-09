@@ -9,15 +9,14 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The OutputMessageContent. </summary>
-    public partial class OutputMessageContent
+    internal abstract partial class OutputMessageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OutputMessageContent"/>. </summary>
         /// <param name="type"></param>
-        internal OutputMessageContent(OutputMessageContentType @type)
+        private protected OutputMessageContent(OutputMessageContentType @type)
         {
             Type = @type;
         }

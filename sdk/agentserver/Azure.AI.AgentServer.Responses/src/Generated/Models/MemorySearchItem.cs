@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -17,8 +18,11 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="MemorySearchItem"/>. </summary>
         /// <param name="memoryItem"> Retrieved memory item. </param>
-        internal MemorySearchItem(MemoryItem memoryItem)
+        /// <exception cref="ArgumentNullException"> <paramref name="memoryItem"/> is null. </exception>
+        public MemorySearchItem(MemoryItem memoryItem)
         {
+            Argument.AssertNotNull(memoryItem, nameof(memoryItem));
+
             MemoryItem = memoryItem;
         }
 
@@ -32,6 +36,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Retrieved memory item. </summary>
-        public MemoryItem MemoryItem { get; }
+        public MemoryItem MemoryItem { get; set; }
     }
 }

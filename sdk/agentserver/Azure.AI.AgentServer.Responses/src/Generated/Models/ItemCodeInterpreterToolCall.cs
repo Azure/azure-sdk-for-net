@@ -8,24 +8,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using OpenAI.Responses;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Code interpreter tool call. </summary>
-    public partial class ItemCodeInterpreterToolCall : ResponseItem
+    public partial class ItemCodeInterpreterToolCall : Item
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ItemCodeInterpreterToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the code interpreter tool call. </param>
         /// <param name="status"> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </param>
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        internal ItemCodeInterpreterToolCall(string id, ItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(ItemType.CodeInterpreterCall)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="containerId"/> is null. </exception>
+        public ItemCodeInterpreterToolCall(string id, ItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(ItemType.CodeInterpreterCall)
         {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(containerId, nameof(containerId));
+
             Id = id;
             Status = status;
             ContainerId = containerId;
@@ -35,36 +36,35 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ItemCodeInterpreterToolCall"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The unique ID of the code interpreter tool call. </param>
         /// <param name="status"> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </param>
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ItemCodeInterpreterToolCall(ItemType @type, string id, ItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ItemCodeInterpreterToolCall(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
             ContainerId = containerId;
             Code = code;
             Outputs = outputs;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique ID of the code interpreter tool call. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </summary>
-        public ItemCodeInterpreterToolCallStatus Status { get; }
+        public ItemCodeInterpreterToolCallStatus Status { get; set; }
 
         /// <summary> The ID of the container used to run the code. </summary>
-        public string ContainerId { get; }
+        public string ContainerId { get; set; }
 
-        /// <summary> Gets the Code. </summary>
-        public string Code { get; }
+        /// <summary> Gets or sets the Code. </summary>
+        public string Code { get; set; }
 
         /// <summary>
-        /// Gets the Outputs.
+        /// Gets or sets the Outputs.
         /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -102,6 +102,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IList<BinaryData> Outputs { get; }
+        public IList<BinaryData> Outputs { get; set; }
     }
 }

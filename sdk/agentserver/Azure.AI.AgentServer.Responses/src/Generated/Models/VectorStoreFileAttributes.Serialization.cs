@@ -7,7 +7,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
 
@@ -137,9 +136,9 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            ChangeTrackingDictionary<string, string> additionalProperties = new ChangeTrackingDictionary<string, string>();
-            ChangeTrackingDictionary<string, double> additionalDoubleProperties = new ChangeTrackingDictionary<string, double>();
-            ChangeTrackingDictionary<string, bool> additionalBooleanProperties = new ChangeTrackingDictionary<string, bool>();
+            IDictionary<string, string> additionalProperties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, double> additionalDoubleProperties = new ChangeTrackingDictionary<string, double>();
+            IDictionary<string, bool> additionalBooleanProperties = new ChangeTrackingDictionary<string, bool>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,7 +163,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VectorStoreFileAttributes(new ReadOnlyDictionary<string, string>(additionalProperties), new ReadOnlyDictionary<string, double>(additionalDoubleProperties), new ReadOnlyDictionary<string, bool>(additionalBooleanProperties), additionalBinaryDataProperties);
+            return new VectorStoreFileAttributes(additionalProperties, additionalDoubleProperties, additionalBooleanProperties, additionalBinaryDataProperties);
         }
     }
 }

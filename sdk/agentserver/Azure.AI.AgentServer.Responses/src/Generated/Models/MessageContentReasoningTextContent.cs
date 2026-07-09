@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -14,8 +15,11 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentReasoningTextContent"/>. </summary>
         /// <param name="text"> The reasoning text from the model. </param>
-        internal MessageContentReasoningTextContent(string text) : base(MessageContentType.ReasoningText)
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        public MessageContentReasoningTextContent(string text) : base(MessageContentType.ReasoningText)
         {
+            Argument.AssertNotNull(text, nameof(text));
+
             Text = text;
         }
 
@@ -29,6 +33,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The reasoning text from the model. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
     }
 }

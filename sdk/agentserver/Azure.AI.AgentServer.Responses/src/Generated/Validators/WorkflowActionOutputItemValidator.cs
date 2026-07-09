@@ -40,6 +40,15 @@ internal static partial class WorkflowActionOutputItemValidator
                 errors.Add(new ValidationError("$.action_id", $"Expected string, got {actionIdProp.ValueKind}"));
         }
 
+        // Required: id
+        if (!element.TryGetProperty("id", out var idProp))
+            errors.Add(new ValidationError("$.id", "Required property 'id' is missing"));
+        else
+        {
+            if (idProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));
+        }
+
         // Required: kind
         if (!element.TryGetProperty("kind", out var kindProp))
             errors.Add(new ValidationError("$.kind", "Required property 'kind' is missing"));

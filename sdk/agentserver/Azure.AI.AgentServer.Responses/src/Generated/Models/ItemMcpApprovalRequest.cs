@@ -6,23 +6,26 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI.Responses;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> MCP approval request. </summary>
-    public partial class ItemMcpApprovalRequest : ResponseItem
+    public partial class ItemMcpApprovalRequest : Item
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ItemMcpApprovalRequest"/>. </summary>
         /// <param name="id"> The unique ID of the approval request. </param>
         /// <param name="serverLabel"> The label of the MCP server making the request. </param>
         /// <param name="name"> The name of the tool to run. </param>
         /// <param name="arguments"> A JSON string of arguments for the tool. </param>
-        internal ItemMcpApprovalRequest(string id, string serverLabel, string name, string arguments) : base(ItemType.McpApprovalRequest)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="serverLabel"/>, <paramref name="name"/> or <paramref name="arguments"/> is null. </exception>
+        public ItemMcpApprovalRequest(string id, string serverLabel, string name, string arguments) : base(ItemType.McpApprovalRequest)
         {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(arguments, nameof(arguments));
+
             Id = id;
             ServerLabel = serverLabel;
             Name = name;
@@ -31,30 +34,29 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ItemMcpApprovalRequest"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The unique ID of the approval request. </param>
         /// <param name="serverLabel"> The label of the MCP server making the request. </param>
         /// <param name="name"> The name of the tool to run. </param>
         /// <param name="arguments"> A JSON string of arguments for the tool. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ItemMcpApprovalRequest(ItemType @type, string id, string serverLabel, string name, string arguments, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ItemMcpApprovalRequest(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, string name, string arguments) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             ServerLabel = serverLabel;
             Name = name;
             Arguments = arguments;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique ID of the approval request. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> The label of the MCP server making the request. </summary>
-        public string ServerLabel { get; }
+        public string ServerLabel { get; set; }
 
         /// <summary> The name of the tool to run. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> A JSON string of arguments for the tool. </summary>
-        public string Arguments { get; }
+        public string Arguments { get; set; }
     }
 }

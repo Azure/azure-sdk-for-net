@@ -6,14 +6,13 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The OutputMessageContent. </summary>
-    public partial class OutputMessageContent : IJsonModel<OutputMessageContent>
+    [PersistableModelProxy(typeof(UnknownOutputMessageContent))]
+    internal abstract partial class OutputMessageContent : IJsonModel<OutputMessageContent>
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContent"/> for deserialization. </summary>
         internal OutputMessageContent()
@@ -122,21 +121,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            OutputMessageContentType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
-                if (prop.NameEquals("type"u8))
+                switch (discriminator.GetString())
                 {
-                    @type = new OutputMessageContentType(prop.Value.GetString());
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    case "output_text":
+                        return OutputMessageContentOutputTextContent.DeserializeOutputMessageContentOutputTextContent(element, options);
+                    case "refusal":
+                        return OutputMessageContentRefusalContent.DeserializeOutputMessageContentRefusalContent(element, options);
                 }
             }
-            return new OutputMessageContent(@type, additionalBinaryDataProperties);
+            return UnknownOutputMessageContent.DeserializeUnknownOutputMessageContent(element, options);
         }
     }
 }

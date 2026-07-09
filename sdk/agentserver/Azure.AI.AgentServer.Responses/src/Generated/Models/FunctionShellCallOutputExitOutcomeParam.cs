@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputExitOutcomeParam"/>. </summary>
         /// <param name="exitCode"> The exit code returned by the shell process. </param>
-        internal FunctionShellCallOutputExitOutcomeParam(long exitCode) : base("exit")
+        public FunctionShellCallOutputExitOutcomeParam(long exitCode) : base(FunctionShellCallOutputOutcomeParamType.Exit)
         {
             ExitCode = exitCode;
         }
@@ -29,6 +29,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The exit code returned by the shell process. </summary>
-        public long ExitCode { get; }
+        public long ExitCode { get; set; }
     }
 }

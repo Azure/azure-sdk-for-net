@@ -6,23 +6,22 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> An agent implementing the A2A protocol. </summary>
-    public partial class A2APreviewTool : ResponseTool
+    public partial class A2APreviewTool : Tool
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="A2APreviewTool"/>. </summary>
-        internal A2APreviewTool() : base("a2a_preview")
+        public A2APreviewTool() : base(ToolType.A2aPreview)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="A2APreviewTool"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="baseUrl"> Base URL of the agent. </param>
         /// <param name="agentCardPath">
         /// The path to the agent card relative to the `base_url`.
@@ -32,41 +31,34 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
-        /// <param name="sendCredentialsForAgentCard">
-        /// When `true`, Foundry sends its credentials when fetching the remote
-        /// agent's Agent Card. The service defaults to `false` if a value is not
-        /// specified by the caller (anonymous fetch).
-        /// </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal A2APreviewTool(ResponseToolKind @type, Uri baseUrl, string agentCardPath, string projectConnectionId, bool? sendCredentialsForAgentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal A2APreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, Uri baseUrl, string agentCardPath, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
         {
+            Name = name;
+            Description = description;
             BaseUrl = baseUrl;
             AgentCardPath = agentCardPath;
             ProjectConnectionId = projectConnectionId;
-            SendCredentialsForAgentCard = sendCredentialsForAgentCard;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
+
         /// <summary> Base URL of the agent. </summary>
-        public Uri BaseUrl { get; }
+        public Uri BaseUrl { get; set; }
 
         /// <summary>
         /// The path to the agent card relative to the `base_url`.
         /// If not provided, defaults to  `/.well-known/agent-card.json`
         /// </summary>
-        public string AgentCardPath { get; }
+        public string AgentCardPath { get; set; }
 
         /// <summary>
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </summary>
-        public string ProjectConnectionId { get; }
-
-        /// <summary>
-        /// When `true`, Foundry sends its credentials when fetching the remote
-        /// agent's Agent Card. The service defaults to `false` if a value is not
-        /// specified by the caller (anonymous fetch).
-        /// </summary>
-        public bool? SendCredentialsForAgentCard { get; }
+        public string ProjectConnectionId { get; set; }
     }
 }

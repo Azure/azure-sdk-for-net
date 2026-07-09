@@ -17,7 +17,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="x"> The x-coordinate where the double click occurred. </param>
         /// <param name="y"> The y-coordinate where the double click occurred. </param>
         /// <param name="keys"></param>
-        internal DoubleClickAction(long x, long y, IEnumerable<string> keys) : base(ComputerActionType.DoubleClick)
+        public DoubleClickAction(long x, long y, IEnumerable<string> keys) : base(ComputerActionType.DoubleClick)
         {
             X = x;
             Y = y;
@@ -38,12 +38,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The x-coordinate where the double click occurred. </summary>
-        public long X { get; }
+        public long X { get; set; }
 
         /// <summary> The y-coordinate where the double click occurred. </summary>
-        public long Y { get; }
+        public long Y { get; set; }
 
-        /// <summary> Gets the Keys. </summary>
-        public IList<string> Keys { get; }
+        /// <summary> Gets or sets the Keys. </summary>
+        public IList<string> Keys { get; set; }
     }
 }

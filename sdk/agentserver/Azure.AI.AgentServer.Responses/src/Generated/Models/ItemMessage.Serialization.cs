@@ -9,12 +9,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Message. </summary>
-    public partial class ItemMessage : ResponseItem, IJsonModel<ItemMessage>
+    public partial class ItemMessage : Item, IJsonModel<ItemMessage>
     {
         /// <summary> Initializes a new instance of <see cref="ItemMessage"/> for deserialization. </summary>
         internal ItemMessage()
@@ -23,7 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override Item PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ItemMessage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -82,6 +81,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToSerialString());
+            if (Optional.IsDefined(Phase))
+            {
+                writer.WritePropertyName("phase"u8);
+                writer.WriteStringValue(Phase.Value.ToSerialString());
+            }
             writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(Content);
@@ -91,36 +95,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (Optional.IsDefined(Phase))
-            {
-                writer.WritePropertyName("phase"u8);
-                writer.WriteStringValue(Phase.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -129,7 +103,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override Item JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ItemMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -149,12 +123,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ItemType @type = default;
-            MessageRole role = default;
-            BinaryData content = default;
-            MessagePhase? phase = default;
-            string id = default;
-            MessageStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            MessageRole role = default;
+            MessagePhase? phase = default;
+            BinaryData content = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -167,11 +139,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                     role = prop.Value.GetString().ToMessageRole();
                     continue;
                 }
-                if (prop.NameEquals("content"u8))
-                {
-                    content = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
                 if (prop.NameEquals("phase"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -182,18 +149,9 @@ namespace Azure.AI.AgentServer.Responses.Models
                     phase = prop.Value.GetString().ToMessagePhase();
                     continue;
                 }
-                if (prop.NameEquals("id"u8))
+                if (prop.NameEquals("content"u8))
                 {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("status"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = prop.Value.GetString().ToMessageStatus();
+                    content = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
@@ -201,14 +159,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ItemMessage(
-                @type,
-                role,
-                content,
-                phase,
-                id,
-                status,
-                additionalBinaryDataProperties);
+            return new ItemMessage(@type, additionalBinaryDataProperties, role, phase, content);
         }
     }
 }

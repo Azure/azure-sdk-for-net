@@ -31,15 +31,6 @@ internal static partial class WorkIQPreviewToolValidator
             return ValidationResult.Failure(errors);
         }
 
-        // Required: project_connection_id
-        if (!element.TryGetProperty("project_connection_id", out var projectConnectionIdProp))
-            errors.Add(new ValidationError("$.project_connection_id", "Required property 'project_connection_id' is missing"));
-        else
-        {
-            if (projectConnectionIdProp.ValueKind != JsonValueKind.String)
-                errors.Add(new ValidationError("$.project_connection_id", $"Expected string, got {projectConnectionIdProp.ValueKind}"));
-        }
-
         // Required: type
         if (!element.TryGetProperty("type", out var typeValProp))
             errors.Add(new ValidationError("$.type", "Required property 'type' is missing"));
@@ -49,6 +40,19 @@ internal static partial class WorkIQPreviewToolValidator
                 errors.Add(new ValidationError("$.type", $"Expected string, got {typeValProp.ValueKind}"));
             else if (typeValProp.GetString() is not ("work_iq_preview"))
                 errors.Add(new ValidationError("$.type", $"Value '{typeValProp.GetString()}' is not valid. Allowed: work_iq_preview"));
+        }
+
+        // Required: work_iq_preview
+        if (!element.TryGetProperty("work_iq_preview", out var workIqPreviewProp))
+            errors.Add(new ValidationError("$.work_iq_preview", "Required property 'work_iq_preview' is missing"));
+        else
+        {
+            var workIqPreviewResult = WorkIQPreviewToolParametersValidator.Validate(workIqPreviewProp);
+            if (!workIqPreviewResult.IsValid)
+            {
+                foreach (var e in workIqPreviewResult.Errors)
+                    errors.Add(new ValidationError("$.work_iq_preview" + e.Path.Substring(1), e.Message));
+            }
         }
 
         ValidateCustom(element, errors);

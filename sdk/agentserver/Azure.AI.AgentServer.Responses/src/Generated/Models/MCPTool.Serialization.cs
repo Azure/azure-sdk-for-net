@@ -9,12 +9,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> MCP tool. </summary>
-    public partial class MCPTool : ResponseTool, IJsonModel<MCPTool>
+    public partial class MCPTool : Tool, IJsonModel<MCPTool>
     {
         /// <summary> Initializes a new instance of <see cref="MCPTool"/> for deserialization. </summary>
         internal MCPTool()
@@ -23,7 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override Tool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MCPTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -152,32 +151,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("project_connection_id"u8);
                 writer.WriteStringValue(ProjectConnectionId);
             }
-            if (Optional.IsCollectionDefined(ToolConfigs))
-            {
-                writer.WritePropertyName("tool_configs"u8);
-                writer.WriteStartObject();
-                foreach (var item in ToolConfigs)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -186,7 +159,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override Tool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MCPTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -205,7 +178,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            ResponseToolKind @type = "mcp";
+            ToolType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
             Uri serverUrl = default;
             MCPToolConnectorId? connectorId = default;
@@ -216,13 +190,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             BinaryData requireApproval = default;
             bool? deferLoading = default;
             string projectConnectionId = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = ModelReaderWriter.Read<ResponseToolKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
+                    @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("server_label"u8))
@@ -313,20 +285,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                     projectConnectionId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("tool_configs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
-                    }
-                    toolConfigs = dictionary;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -334,6 +292,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new MCPTool(
                 @type,
+                additionalBinaryDataProperties,
                 serverLabel,
                 serverUrl,
                 connectorId,
@@ -343,9 +302,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 allowedTools,
                 requireApproval,
                 deferLoading,
-                projectConnectionId,
-                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
-                additionalBinaryDataProperties);
+                projectConnectionId);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="y"> The y-coordinate where the scroll occurred. </param>
         /// <param name="scrollX"> The horizontal scroll distance. </param>
         /// <param name="scrollY"> The vertical scroll distance. </param>
-        internal ScrollParam(long x, long y, long scrollX, long scrollY) : base(ComputerActionType.Scroll)
+        public ScrollParam(long x, long y, long scrollX, long scrollY) : base(ComputerActionType.Scroll)
         {
             X = x;
             Y = y;
@@ -45,18 +45,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The x-coordinate where the scroll occurred. </summary>
-        public long X { get; }
+        public long X { get; set; }
 
         /// <summary> The y-coordinate where the scroll occurred. </summary>
-        public long Y { get; }
+        public long Y { get; set; }
 
         /// <summary> The horizontal scroll distance. </summary>
-        public long ScrollX { get; }
+        public long ScrollX { get; set; }
 
         /// <summary> The vertical scroll distance. </summary>
-        public long ScrollY { get; }
+        public long ScrollY { get; set; }
 
-        /// <summary> Gets the Keys. </summary>
-        public IList<string> Keys { get; }
+        /// <summary> Gets or sets the Keys. </summary>
+        public IList<string> Keys { get; set; }
     }
 }

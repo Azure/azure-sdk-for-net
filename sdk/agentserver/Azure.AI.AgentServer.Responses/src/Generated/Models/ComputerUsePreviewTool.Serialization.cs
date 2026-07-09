@@ -9,12 +9,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Computer use preview. </summary>
-    public partial class ComputerUsePreviewTool : ResponseTool, IJsonModel<ComputerUsePreviewTool>
+    public partial class ComputerUsePreviewTool : Tool, IJsonModel<ComputerUsePreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="ComputerUsePreviewTool"/> for deserialization. </summary>
         internal ComputerUsePreviewTool()
@@ -23,7 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override Tool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ComputerUsePreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -86,21 +85,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteNumberValue(DisplayWidth);
             writer.WritePropertyName("display_height"u8);
             writer.WriteNumberValue(DisplayHeight);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -109,7 +93,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override Tool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ComputerUsePreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -128,16 +112,16 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            ResponseToolKind @type = "computer_use_preview";
+            ToolType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ComputerEnvironment environment = default;
             long displayWidth = default;
             long displayHeight = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = ModelReaderWriter.Read<ResponseToolKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
+                    @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("environment"u8))
@@ -160,7 +144,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputerUsePreviewTool(@type, environment, displayWidth, displayHeight, additionalBinaryDataProperties);
+            return new ComputerUsePreviewTool(@type, additionalBinaryDataProperties, environment, displayWidth, displayHeight);
         }
     }
 }

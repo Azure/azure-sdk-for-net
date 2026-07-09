@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
@@ -27,7 +26,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         private IDictionary<string, bool> _additionalBooleanProperties;
 
         /// <summary> Initializes a new instance of <see cref="VectorStoreFileAttributes"/>. </summary>
-        internal VectorStoreFileAttributes()
+        public VectorStoreFileAttributes()
         {
             _additionalStringProperties = new ChangeTrackingDictionary<string, string>();
             _additionalDoubleProperties = new ChangeTrackingDictionary<string, double>();
@@ -39,21 +38,21 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="additionalDoubleProperties"></param>
         /// <param name="additionalBooleanProperties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorStoreFileAttributes(IReadOnlyDictionary<string, string> additionalProperties, IReadOnlyDictionary<string, double> additionalDoubleProperties, IReadOnlyDictionary<string, bool> additionalBooleanProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorStoreFileAttributes(IDictionary<string, string> additionalProperties, IDictionary<string, double> additionalDoubleProperties, IDictionary<string, bool> additionalBooleanProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            _additionalStringProperties = new ChangeTrackingDictionary<string, string>(additionalProperties);
-            _additionalDoubleProperties = new ChangeTrackingDictionary<string, double>(additionalDoubleProperties);
-            _additionalBooleanProperties = new ChangeTrackingDictionary<string, bool>(additionalBooleanProperties);
+            _additionalStringProperties = additionalProperties;
+            _additionalDoubleProperties = additionalDoubleProperties;
+            _additionalBooleanProperties = additionalBooleanProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IReadOnlyDictionary<string, string> AdditionalProperties => new ReadOnlyDictionary<string, string>(_additionalStringProperties);
+        public IDictionary<string, string> AdditionalProperties => _additionalStringProperties;
 
         /// <summary> Gets the AdditionalDoubleProperties. </summary>
-        public IReadOnlyDictionary<string, double> AdditionalDoubleProperties => new ReadOnlyDictionary<string, double>(_additionalDoubleProperties);
+        public IDictionary<string, double> AdditionalDoubleProperties => _additionalDoubleProperties;
 
         /// <summary> Gets the AdditionalBooleanProperties. </summary>
-        public IReadOnlyDictionary<string, bool> AdditionalBooleanProperties => new ReadOnlyDictionary<string, bool>(_additionalBooleanProperties);
+        public IDictionary<string, bool> AdditionalBooleanProperties => _additionalBooleanProperties;
     }
 }

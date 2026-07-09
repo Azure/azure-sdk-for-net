@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -14,8 +15,11 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentRefusalContent"/>. </summary>
         /// <param name="refusal"> The refusal explanation from the model. </param>
-        internal MessageContentRefusalContent(string refusal) : base(MessageContentType.Refusal)
+        /// <exception cref="ArgumentNullException"> <paramref name="refusal"/> is null. </exception>
+        public MessageContentRefusalContent(string refusal) : base(MessageContentType.Refusal)
         {
+            Argument.AssertNotNull(refusal, nameof(refusal));
+
             Refusal = refusal;
         }
 
@@ -29,6 +33,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The refusal explanation from the model. </summary>
-        public string Refusal { get; }
+        public string Refusal { get; set; }
     }
 }

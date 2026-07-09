@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -18,8 +19,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="AzureFunctionStorageQueue"/>. </summary>
         /// <param name="queueServiceEndpoint"> URI to the Azure Storage Queue service allowing you to manipulate a queue. </param>
         /// <param name="queueName"> The name of an Azure function storage queue. </param>
-        internal AzureFunctionStorageQueue(string queueServiceEndpoint, string queueName)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueServiceEndpoint"/> or <paramref name="queueName"/> is null. </exception>
+        public AzureFunctionStorageQueue(string queueServiceEndpoint, string queueName)
         {
+            Argument.AssertNotNull(queueServiceEndpoint, nameof(queueServiceEndpoint));
+            Argument.AssertNotNull(queueName, nameof(queueName));
+
             QueueServiceEndpoint = queueServiceEndpoint;
             QueueName = queueName;
         }
@@ -36,9 +41,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> URI to the Azure Storage Queue service allowing you to manipulate a queue. </summary>
-        public string QueueServiceEndpoint { get; }
+        public string QueueServiceEndpoint { get; set; }
 
         /// <summary> The name of an Azure function storage queue. </summary>
-        public string QueueName { get; }
+        public string QueueName { get; set; }
     }
 }

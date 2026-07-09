@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -14,8 +15,11 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchDeleteFileOperationParam"/>. </summary>
         /// <param name="path"> Path of the file to delete relative to the workspace root. </param>
-        internal ApplyPatchDeleteFileOperationParam(string path) : base("delete_file")
+        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
+        public ApplyPatchDeleteFileOperationParam(string path) : base(ApplyPatchOperationParamType.DeleteFile)
         {
+            Argument.AssertNotNull(path, nameof(path));
+
             Path = path;
         }
 
@@ -29,6 +33,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Path of the file to delete relative to the workspace root. </summary>
-        public string Path { get; }
+        public string Path { get; set; }
     }
 }

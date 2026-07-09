@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class LocalEnvironmentResource : FunctionShellCallEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="LocalEnvironmentResource"/>. </summary>
-        internal LocalEnvironmentResource() : base(FunctionShellCallEnvironmentType.Local)
+        public LocalEnvironmentResource() : base(FunctionShellCallEnvironmentType.Local)
         {
         }
 

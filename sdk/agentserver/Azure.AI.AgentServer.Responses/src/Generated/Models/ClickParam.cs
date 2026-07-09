@@ -17,7 +17,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="button"> Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`. </param>
         /// <param name="x"> The x-coordinate where the click occurred. </param>
         /// <param name="y"> The y-coordinate where the click occurred. </param>
-        internal ClickParam(ClickButtonType button, long x, long y) : base(ComputerActionType.Click)
+        public ClickParam(ClickButtonType button, long x, long y) : base(ComputerActionType.Click)
         {
             Button = button;
             X = x;
@@ -41,15 +41,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`. </summary>
-        public ClickButtonType Button { get; }
+        public ClickButtonType Button { get; set; }
 
         /// <summary> The x-coordinate where the click occurred. </summary>
-        public long X { get; }
+        public long X { get; set; }
 
         /// <summary> The y-coordinate where the click occurred. </summary>
-        public long Y { get; }
+        public long Y { get; set; }
 
-        /// <summary> Gets the Keys. </summary>
-        public IList<string> Keys { get; }
+        /// <summary> Gets or sets the Keys. </summary>
+        public IList<string> Keys { get; set; }
     }
 }

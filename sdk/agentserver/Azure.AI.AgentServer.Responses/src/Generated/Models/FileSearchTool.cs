@@ -9,35 +9,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
-using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> File search. </summary>
-    public partial class FileSearchTool : ResponseTool
+    public partial class FileSearchTool : Tool
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="FileSearchTool"/>. </summary>
         /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
-        internal FileSearchTool(IEnumerable<string> vectorStoreIds) : base("file_search")
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreIds"/> is null. </exception>
+        public FileSearchTool(IEnumerable<string> vectorStoreIds) : base(ToolType.FileSearch)
         {
+            Argument.AssertNotNull(vectorStoreIds, nameof(vectorStoreIds));
+
             VectorStoreIds = vectorStoreIds.ToList();
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FileSearchTool"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
         /// <param name="maxNumResults"> The maximum number of results to return. This number should be between 1 and 50 inclusive. </param>
         /// <param name="rankingOptions"> Ranking options for search. </param>
         /// <param name="filters"></param>
-        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileSearchTool(ResponseToolKind @type, IList<string> vectorStoreIds, long? maxNumResults, RankingOptions rankingOptions, BinaryData filters, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        internal FileSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> vectorStoreIds, long? maxNumResults, RankingOptions rankingOptions, BinaryData filters, string name, string description) : base(@type, additionalBinaryDataProperties)
         {
             VectorStoreIds = vectorStoreIds;
             MaxNumResults = maxNumResults;
@@ -45,21 +42,19 @@ namespace Azure.AI.AgentServer.Responses.Models
             Filters = filters;
             Name = name;
             Description = description;
-            ToolConfigs = toolConfigs;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IDs of the vector stores to search. </summary>
         public IList<string> VectorStoreIds { get; }
 
         /// <summary> The maximum number of results to return. This number should be between 1 and 50 inclusive. </summary>
-        public long? MaxNumResults { get; }
+        public long? MaxNumResults { get; set; }
 
         /// <summary> Ranking options for search. </summary>
-        public RankingOptions RankingOptions { get; }
+        public RankingOptions RankingOptions { get; set; }
 
         /// <summary>
-        /// Gets the Filters.
+        /// Gets or sets the Filters.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -97,15 +92,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Filters { get; }
+        public BinaryData Filters { get; set; }
 
-        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public string Name { get; }
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
 
-        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public string Description { get; }
-
-        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
     }
 }

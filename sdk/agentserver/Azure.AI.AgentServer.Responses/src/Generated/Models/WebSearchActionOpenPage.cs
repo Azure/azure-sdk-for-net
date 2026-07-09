@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebSearchActionOpenPage"/>. </summary>
-        internal WebSearchActionOpenPage()
+        public WebSearchActionOpenPage()
         {
         }
 
@@ -35,6 +35,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Type { get; } = "open_page";
 
         /// <summary> The URL opened by the model. </summary>
-        public Uri Url { get; }
+        public Uri Url { get; set; }
     }
 }

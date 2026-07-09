@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -18,8 +19,11 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="FunctionShellActionParam"/>. </summary>
         /// <param name="commands"> Ordered shell commands for the execution environment to run. </param>
-        internal FunctionShellActionParam(IEnumerable<string> commands)
+        /// <exception cref="ArgumentNullException"> <paramref name="commands"/> is null. </exception>
+        public FunctionShellActionParam(IEnumerable<string> commands)
         {
+            Argument.AssertNotNull(commands, nameof(commands));
+
             Commands = commands.ToList();
         }
 
@@ -39,10 +43,10 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Ordered shell commands for the execution environment to run. </summary>
         public IList<string> Commands { get; }
 
-        /// <summary> Gets the TimeoutMs. </summary>
-        public long? TimeoutMs { get; }
+        /// <summary> Gets or sets the TimeoutMs. </summary>
+        public long? TimeoutMs { get; set; }
 
-        /// <summary> Gets the MaxOutputLength. </summary>
-        public long? MaxOutputLength { get; }
+        /// <summary> Gets or sets the MaxOutputLength. </summary>
+        public long? MaxOutputLength { get; set; }
     }
 }

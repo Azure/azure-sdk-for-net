@@ -31,6 +31,13 @@ internal static partial class MemorySearchToolValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: description
+        if (element.TryGetProperty("description", out var descriptionProp))
+        {
+            if (descriptionProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
+        }
+
         // Required: memory_store_name
         if (!element.TryGetProperty("memory_store_name", out var memoryStoreNameProp))
             errors.Add(new ValidationError("$.memory_store_name", "Required property 'memory_store_name' is missing"));
@@ -38,6 +45,13 @@ internal static partial class MemorySearchToolValidator
         {
             if (memoryStoreNameProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.memory_store_name", $"Expected string, got {memoryStoreNameProp.ValueKind}"));
+        }
+
+        // Optional: name
+        if (element.TryGetProperty("name", out var nameProp))
+        {
+            if (nameProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
         }
 
         // Required: scope

@@ -23,15 +23,19 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="AISearchIndexResource"/>. </summary>
         /// <param name="projectConnectionId"> An index connection ID in an IndexResource attached to this agent. </param>
         /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="queryType"> Type of query in an AIIndexResource attached to this agent. </param>
         /// <param name="topK"> Number of documents to retrieve from search and present to the model. </param>
         /// <param name="filter"> filter string for search resource. [Learn more here](https://learn.microsoft.com/azure/search/search-filters). </param>
         /// <param name="indexAssetId"> Index asset id for search resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AISearchIndexResource(string projectConnectionId, string indexName, AzureAISearchQueryType? queryType, int? topK, string filter, string indexAssetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AISearchIndexResource(string projectConnectionId, string indexName, string name, string description, AzureAISearchQueryType? queryType, int? topK, string filter, string indexAssetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             IndexName = indexName;
+            Name = name;
+            Description = description;
             QueryType = queryType;
             TopK = topK;
             Filter = filter;
@@ -44,6 +48,12 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> The name of an index in an IndexResource attached to this agent. </summary>
         public string IndexName { get; set; }
+
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
 
         /// <summary> Type of query in an AIIndexResource attached to this agent. </summary>
         public AzureAISearchQueryType? QueryType { get; set; }
