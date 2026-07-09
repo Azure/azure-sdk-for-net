@@ -111,6 +111,7 @@ public static class ModelReaderWriter
 
     private static BinaryData WritePersistableOrEnumerable<T>(T model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
     {
+        options.SetProxyResolutionContext(context);
         if (model is IPersistableModel<T> iModel)
         {
             return WritePersistable(iModel, options);
@@ -242,6 +243,20 @@ public static class ModelReaderWriter
 
     private static T? ReadInternal<T>(BinaryData data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
     {
+        // Value-type (struct) models can't be surfaced as IPersistableModel<object> (variance does not
+        // apply to value types), which the non-generic read path requires. Route such models through
+        // the generic, proxy-aware read path using a typed template instance.
+        if (typeof(T).IsValueType && default(T) is IPersistableModel<T> template)
+        {
+            if (data is null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+
+            options.SetProxyResolutionContext(context);
+            return options.ReadWithChain<T>(template, data);
+        }
+
         var obj = ReadInternal(data, typeof(T), options, context);
         return obj is null ? (T?)obj : (T)obj;
     }
@@ -258,6 +273,7 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(returnType));
         }
 
+        options.SetProxyResolutionContext(context);
         var builder = context.GetTypeBuilder(returnType);
         var returnObj = builder.CreateObject();
         if (returnObj is ModelReaderWriterTypeBuilder.CollectionWrapper collectionWrapper)

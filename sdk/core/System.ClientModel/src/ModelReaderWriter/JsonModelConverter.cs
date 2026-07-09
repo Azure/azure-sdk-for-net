@@ -94,6 +94,7 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
         }
 
         var callOptions = _options.HasProxies ? new ModelReaderWriterOptions(_options) : _options;
+        callOptions.SetProxyResolutionContext(_context);
         var result = callOptions.ReadWithChain(typeToConvert, iJsonModel, ref reader);
         return (IJsonModel<object>?)result;
     }
@@ -104,6 +105,7 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         var callOptions = _options.HasProxies ? new ModelReaderWriterOptions(_options) : _options;
+        callOptions.SetProxyResolutionContext(_context);
         callOptions.ResolveProxy(value).Write(writer, callOptions);
     }
 }

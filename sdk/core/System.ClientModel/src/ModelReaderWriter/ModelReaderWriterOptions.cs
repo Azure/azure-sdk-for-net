@@ -12,7 +12,9 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public class ModelReaderWriterOptions
 {
-    private Dictionary<Type, List<object>>? _proxies;
+    private Dictionary<Type, List<ProxyEntry>>? _proxies;
+    private readonly ModelReaderWriterOptions? _userOptions;
+    private ModelReaderWriterContext? _context;
     private bool _isFrozen;
 
     private static ModelReaderWriterOptions? s_jsonOptions;
@@ -41,11 +43,26 @@ public class ModelReaderWriterOptions
         Format = options.Format;
         _proxies = options._proxies;
         IsCoreOwned = true;
+        _userOptions = options;
     }
 
     internal bool HasProxies => _proxies?.Count > 0;
 
+    // The caller-provided options passed to conditional proxies' CanHandle. For a core-owned working
+    // copy this is the original user options (preserving any derived type/config); otherwise this.
+    private ModelReaderWriterOptions ProxyContextOptions => _userOptions ?? this;
+
     internal bool IsCoreOwned { get; }
+
+    // Stashes the ModelReaderWriterContext in effect for the current operation on the core-owned
+    // working copy, so it can be passed to conditional proxies' CanHandle during resolution.
+    internal void SetProxyResolutionContext(ModelReaderWriterContext? context)
+    {
+        if (IsCoreOwned)
+        {
+            _context = context;
+        }
+    }
 
     /// <summary>
     /// Gets the format to read and write the model.
@@ -72,13 +89,7 @@ public class ModelReaderWriterOptions
     {
         Argument.AssertNotNull(proxy, nameof(proxy));
         AssertNotFrozen();
-        _proxies ??= [];
-        if (!_proxies.TryGetValue(typeof(T), out List<object>? list))
-        {
-            list = [];
-            _proxies[typeof(T)] = list;
-        }
-        list.Add(proxy);
+        GetOrAddProxyList(typeof(T)).Add(new DirectProxyEntry<T>(proxy));
     }
 
     /// <summary>
@@ -91,13 +102,7 @@ public class ModelReaderWriterOptions
     {
         Argument.AssertNotNull(proxy, nameof(proxy));
         AssertNotFrozen();
-        _proxies ??= [];
-        if (!_proxies.TryGetValue(typeof(T), out List<object>? list))
-        {
-            list = [];
-            _proxies[typeof(T)] = list;
-        }
-        list.Add(proxy);
+        GetOrAddProxyList(typeof(T)).Add(new DirectProxyEntry<T>(proxy));
     }
 
     /// <summary>
@@ -108,17 +113,22 @@ public class ModelReaderWriterOptions
     /// </summary>
     /// <param name="proxy">The conditional proxy.</param>
     public void AddProxy<T>(ConditionalModelProxy<T> proxy)
-        where T : class
+        where T : IPersistableModel<T>
     {
         Argument.AssertNotNull(proxy, nameof(proxy));
         AssertNotFrozen();
+        GetOrAddProxyList(typeof(T)).Add(new ConditionalProxyEntry<T>(proxy));
+    }
+
+    private List<ProxyEntry> GetOrAddProxyList(Type key)
+    {
         _proxies ??= [];
-        if (!_proxies.TryGetValue(typeof(T), out List<object>? list))
+        if (!_proxies.TryGetValue(key, out List<ProxyEntry>? list))
         {
             list = [];
-            _proxies[typeof(T)] = list;
+            _proxies[key] = list;
         }
-        list.Add(proxy);
+        return list;
     }
 
     /// <summary>
@@ -138,7 +148,7 @@ public class ModelReaderWriterOptions
     public IPersistableModel<T> ResolveProxy<T>(IPersistableModel<T> model)
     {
         Argument.AssertNotNull(model, nameof(model));
-        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? list) || list.Count == 0)
+        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<ProxyEntry>? list) || list.Count == 0)
         {
             ProxiedModel = null;
             return model;
@@ -146,19 +156,19 @@ public class ModelReaderWriterOptions
 
         foreach (var entry in list)
         {
-            if (entry is IConditionalProxy conditional)
+            if (entry.IsConditional)
             {
-                if (conditional.CanHandleModel(model))
+                if (entry.CanHandleModel(model, ProxyContextOptions, _context!) && entry.GetPersistableModel<T>() is IPersistableModel<T> proxyModel)
                 {
                     ProxiedModel = model;
-                    return (IPersistableModel<T>)conditional.GetModel();
+                    return proxyModel;
                 }
             }
-            else
+            else if (entry.GetPersistableModel<T>() is IPersistableModel<T> directModel)
             {
                 // Direct proxy (IJsonModel<T> or IPersistableModel<T>) — first wins
                 ProxiedModel = model;
-                return (IPersistableModel<T>)entry;
+                return directModel;
             }
         }
 
@@ -175,7 +185,7 @@ public class ModelReaderWriterOptions
     public IJsonModel<T> ResolveProxy<T>(IJsonModel<T> model)
     {
         Argument.AssertNotNull(model, nameof(model));
-        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? list) || list.Count == 0)
+        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<ProxyEntry>? list) || list.Count == 0)
         {
             ProxiedModel = null;
             return model;
@@ -183,15 +193,15 @@ public class ModelReaderWriterOptions
 
         foreach (var entry in list)
         {
-            if (entry is IConditionalProxy conditional)
+            if (entry.IsConditional)
             {
-                if (conditional.CanHandleModel(model) && conditional.GetModel() is IJsonModel<T> jsonModel)
+                if (entry.CanHandleModel(model, ProxyContextOptions, _context!) && entry.GetJsonModel<T>() is IJsonModel<T> jsonModel)
                 {
                     ProxiedModel = model;
                     return jsonModel;
                 }
             }
-            else if (entry is IJsonModel<T> directJsonProxy)
+            else if (entry.GetJsonModel<T>() is IJsonModel<T> directJsonProxy)
             {
                 ProxiedModel = model;
                 return directJsonProxy;
@@ -213,25 +223,25 @@ public class ModelReaderWriterOptions
     internal bool TryGetProxy<T>(ReadOnlyMemory<byte> data, out IPersistableModel<T>? proxy)
     {
         proxy = null;
-        if (_proxies is null || !_proxies.TryGetValue(typeof(T), out List<object>? list) || list.Count == 0)
+        if (_proxies is null || !_proxies.TryGetValue(typeof(T), out List<ProxyEntry>? list) || list.Count == 0)
         {
             return false;
         }
 
         foreach (var entry in list)
         {
-            if (entry is IConditionalProxy conditional)
+            if (entry.IsConditional)
             {
-                if (conditional.CanHandleData(data))
+                if (entry.CanHandleData(data, ProxyContextOptions, _context!) && entry.GetPersistableModel<T>() is IPersistableModel<T> proxyModel)
                 {
-                    proxy = (IPersistableModel<T>)conditional.GetModel();
+                    proxy = proxyModel;
                     return true;
                 }
             }
-            else
+            else if (entry.GetPersistableModel<T>() is IPersistableModel<T> directModel)
             {
                 // Direct proxy — always handles
-                proxy = (IPersistableModel<T>)entry;
+                proxy = directModel;
                 return true;
             }
         }
@@ -254,23 +264,23 @@ public class ModelReaderWriterOptions
     internal bool TryGetProxy<T>(ref Utf8JsonReader reader, out IJsonModel<T>? proxy)
     {
         proxy = null;
-        if (_proxies is null || !_proxies.TryGetValue(typeof(T), out List<object>? list) || list.Count == 0)
+        if (_proxies is null || !_proxies.TryGetValue(typeof(T), out List<ProxyEntry>? list) || list.Count == 0)
         {
             return false;
         }
 
         foreach (var entry in list)
         {
-            if (entry is IConditionalProxy conditional)
+            if (entry.IsConditional)
             {
                 Utf8JsonReader snapshot = reader;
-                if (conditional.CanHandleReader(ref snapshot) && conditional.GetModel() is IJsonModel<T> jsonModel)
+                if (entry.CanHandleReader(ref snapshot, ProxyContextOptions, _context!) && entry.GetJsonModel<T>() is IJsonModel<T> jsonModel)
                 {
                     proxy = jsonModel;
                     return true;
                 }
             }
-            else if (entry is IJsonModel<T> directProxy)
+            else if (entry.GetJsonModel<T>() is IJsonModel<T> directProxy)
             {
                 proxy = directProxy;
                 return true;
@@ -321,7 +331,7 @@ public class ModelReaderWriterOptions
     internal object? ReadWithChain(IPersistableModel<object> model, BinaryData data, Type? requestedType = null)
     {
         Type modelType = requestedType ?? model.GetType();
-        if (_proxies is null || !_proxies.TryGetValue(modelType, out List<object>? list) || list.Count == 0)
+        if (_proxies is null || !_proxies.TryGetValue(modelType, out List<ProxyEntry>? list) || list.Count == 0)
         {
             ProxiedModel = null;
             return model.Create(data, this);
@@ -330,19 +340,19 @@ public class ModelReaderWriterOptions
         ReadOnlyMemory<byte> memory = data.ToMemory();
         foreach (var entry in list)
         {
-            if (entry is IConditionalProxy conditional)
+            if (entry.IsConditional)
             {
-                if (conditional.CanHandleData(memory))
+                if (entry.CanHandleData(memory, ProxyContextOptions, _context!))
                 {
                     ProxiedModel = model;
-                    return conditional.CreateFromData(data, this);
+                    return entry.CreateFromData(data, this);
                 }
             }
             else
             {
-                // Direct proxy — use covariance to call Create
+                // Direct proxy — always handles (result is boxed, so struct models work)
                 ProxiedModel = model;
-                return ((IPersistableModel<object>)entry).Create(data, this);
+                return entry.CreateFromData(data, this);
             }
         }
 
@@ -356,7 +366,7 @@ public class ModelReaderWriterOptions
     /// </summary>
     internal object? ReadWithChain(Type modelType, IJsonModel<object> model, ref Utf8JsonReader reader)
     {
-        if (_proxies is null || !_proxies.TryGetValue(modelType, out List<object>? list) || list.Count == 0)
+        if (_proxies is null || !_proxies.TryGetValue(modelType, out List<ProxyEntry>? list) || list.Count == 0)
         {
             ProxiedModel = null;
             return model.Create(ref reader, this);
@@ -366,23 +376,23 @@ public class ModelReaderWriterOptions
 
         foreach (var entry in list)
         {
-            if (entry is IConditionalProxy conditional)
+            if (entry.IsConditional)
             {
                 Utf8JsonReader checkReader = snapshot;
                 // Skip conditional proxies whose held model can't handle the reader path so we
                 // fall through to the next proxy (or the model) instead of throwing mid-read.
-                if (conditional.CanHandleReader(ref checkReader) && conditional.HasJsonModel)
+                if (entry.CanHandleReader(ref checkReader, ProxyContextOptions, _context!) && entry.HasJsonModel)
                 {
                     ProxiedModel = model;
-                    object? result = conditional.CreateFromReader(ref reader, this);
+                    object? result = entry.CreateFromReader(ref reader, this);
                     return result;
                 }
             }
-            else if (entry is IJsonModel<object> directProxy)
+            else if (entry.HasJsonModel)
             {
-                // Direct proxy — covariance lets us cast directly
+                // Direct proxy with JSON support (result is boxed, so struct models work)
                 ProxiedModel = model;
-                object? result = directProxy.Create(ref reader, this);
+                object? result = entry.CreateFromReader(ref reader, this);
                 return result;
             }
         }
@@ -397,7 +407,7 @@ public class ModelReaderWriterOptions
     /// </summary>
     internal IJsonModel<object> ResolveProxy(IJsonModel<object> model)
     {
-        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? list) || list.Count == 0)
+        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<ProxyEntry>? list) || list.Count == 0)
         {
             ProxiedModel = null;
             return model;
@@ -405,21 +415,21 @@ public class ModelReaderWriterOptions
 
         foreach (var entry in list)
         {
-            if (entry is IConditionalProxy conditional)
+            if (entry.IsConditional)
             {
                 // Skip conditional proxies whose held model can't satisfy the JSON write
                 // path so we fall through instead of throwing mid-serialization.
-                if (conditional.CanHandleModel(model) && conditional.GetModel() is IJsonModel<object> jsonModel)
+                if (entry.CanHandleModel(model, ProxyContextOptions, _context!) && entry.AsJsonModelOfObject() is IJsonModel<object> jsonModel)
                 {
                     ProxiedModel = model;
                     return jsonModel;
                 }
             }
-            else if (entry is IJsonModel<object> directProxy)
+            else if (entry.AsJsonModelOfObject() is IJsonModel<object> directJsonModel)
             {
-                // Direct proxy — covariance lets us use it directly
+                // Direct proxy — adapt to IJsonModel<object> (boxes, so struct models work)
                 ProxiedModel = model;
-                return directProxy;
+                return directJsonModel;
             }
         }
 
