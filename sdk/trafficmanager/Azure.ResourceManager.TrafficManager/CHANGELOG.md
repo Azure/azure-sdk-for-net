@@ -4,8 +4,6 @@
 
 ### Other Changes
 
-- Updated the Traffic Manager management APIs to the 2024-04-01-preview service version.
-- Added AOT compatibility support.
 - Deprecated the generic `TrafficManagerEndpointResource` and `TrafficManagerEndpointCollection` APIs. Use the endpoint-specific Azure, External, or Nested Traffic Manager endpoint resource and collection APIs instead.
 
 ## 1.2.0-beta.3 (2026-06-30)
