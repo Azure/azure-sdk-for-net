@@ -28,10 +28,12 @@ namespace Azure.Generator.Provisioning.Providers
     internal class ProvisioningModelProvider : ModelProvider, IProvisioningPropertyInfo
     {
         private readonly InputModelType _inputModel;
+        private readonly bool _hasSettableUsage;
 
         public ProvisioningModelProvider(InputModelType inputModel) : base(inputModel)
         {
             _inputModel = inputModel;
+            _hasSettableUsage = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(inputModel);
         }
 
         protected override string BuildNamespace()
@@ -63,8 +65,8 @@ namespace Azure.Generator.Provisioning.Providers
             return new ProvisioningPropertyInfo(
                 property.Name.ToIdentifierName(),
                 property.IsReadOnly,
-                !property.IsReadOnly,
-                property.IsRequired,
+                !property.IsReadOnly && _hasSettableUsage,
+                property.IsRequired && _hasSettableUsage,
                 [serializedName]);
         }
 
