@@ -297,20 +297,6 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
-        public void Verify_CreateResourceIdentifierMethod_StripsQueryStringFromRoute()
-        {
-            var (client, models) = InputResourceData.ClientWithResource(includeQueryInResourcePath: true);
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
-            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single();
-            var createResourceIdentifierMethod = resourceProvider.Methods.Single(m => m.Signature.Name == "CreateResourceIdentifier");
-
-            var bodyStatements = createResourceIdentifierMethod.BodyStatements?.ToDisplayString();
-            Assert.That(bodyStatements, Is.Not.Null);
-            Assert.That(bodyStatements, Does.Contain("string resourceId = $\"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}\";"));
-            Assert.That(bodyStatements, Does.Not.Contain("disambiguation_dummy"));
-        }
-
-        [TestCase]
         public void Verify_CheckExistenceOperation_IsNotEmitted()
         {
             var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);

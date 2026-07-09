@@ -74,12 +74,6 @@ namespace Azure.Generator.Management.Models
                 .Select(segment => new RequestPathSegment(segment))
                 .ToArray();
 
-        internal static string StripQueryString(string path)
-        {
-            var queryIndex = path.IndexOf('?');
-            return queryIndex < 0 ? path : path[..queryIndex];
-        }
-
         /// <summary> Gets the number of segments in this request path. </summary>
         public int Count => _segments.Count;
 

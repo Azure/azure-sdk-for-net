@@ -23,8 +23,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     {
         private ClientDiagnostics _privateLinksClientDiagnostics;
         private PrivateLinks _privateLinksRestClient;
-        private ClientDiagnostics _solutionsApplicationDefinitionsClientDiagnostics;
-        private SolutionsApplicationDefinitions _solutionsApplicationDefinitionsRestClient;
 
         /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource for mocking. </summary>
         protected MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource()
@@ -41,10 +39,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private ClientDiagnostics PrivateLinksClientDiagnostics => _privateLinksClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
-
-        private ClientDiagnostics SolutionsApplicationDefinitionsClientDiagnostics => _solutionsApplicationDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SolutionsApplicationDefinitions SolutionsApplicationDefinitionsRestClient => _solutionsApplicationDefinitionsRestClient ??= new SolutionsApplicationDefinitions(SolutionsApplicationDefinitionsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         /// <summary> Gets a collection of StorageSyncServices in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of StorageSyncServices and their operations over a StorageSyncServiceResource. </returns>
@@ -1375,98 +1369,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetEventGridDomains().Get(domainName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SolutionsApplicationDefinitions in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of SolutionsApplicationDefinitions and their operations over a SolutionsApplicationDefinitionResource. </returns>
-        public virtual SolutionsApplicationDefinitionCollection GetSolutionsApplicationDefinitions()
-        {
-            return GetCachedClient(client => new SolutionsApplicationDefinitionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the managed application definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SolutionsApplicationDefinitions_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SolutionsApplicationDefinitionResource>> GetSolutionsApplicationDefinitionAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
-
-            return await GetSolutionsApplicationDefinitions().GetAsync(applicationDefinitionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the managed application definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SolutionsApplicationDefinitions_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SolutionsApplicationDefinitionResource> GetSolutionsApplicationDefinition(string applicationDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
-
-            return GetSolutionsApplicationDefinitions().Get(applicationDefinitionName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the managed application definition on a disambiguated route.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/querySuffixApplicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SolutionsQuerySuffixApplicationDefinitions_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="SolutionsQuerySuffixApplicationDefinitionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <returns> Returns a <see cref="SolutionsQuerySuffixApplicationDefinitionResource"/> object. </returns>
-        public virtual SolutionsQuerySuffixApplicationDefinitionResource GetSolutionsQuerySuffixApplicationDefinition()
-        {
-            return new SolutionsQuerySuffixApplicationDefinitionResource(Client, Id.AppendProviderResource("MgmtTypeSpec", "querySuffixApplicationDefinitions", "{applicationDefinitionName}?disambiguation_dummy"));
-        }
-
         /// <summary> Gets a collection of WorkloadNetworkVmGroups in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of WorkloadNetworkVmGroups and their operations over a WorkloadNetworkVmGroupResource. </returns>
         public virtual WorkloadNetworkVmGroupCollection GetWorkloadNetworkVmGroups()
@@ -1655,108 +1557,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 CancellationToken = cancellationToken
             };
             return new PrivateLinksGetAllPrivateLinkResourcesCollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetAllPrivateLinkResources");
-        }
-
-        /// <summary>
-        /// Updates the managed application definition on a disambiguated route.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SolutionsApplicationDefinitionOpsById_UpdateById. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
-        /// <param name="patch"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SolutionsApplicationDefinitionResource>> UpdateByIdAsync(string applicationDefinitionName, SolutionsApplicationDefinitionPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using DiagnosticScope scope = SolutionsApplicationDefinitionsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.UpdateById");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SolutionsApplicationDefinitionsRestClient.CreateUpdateByIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, SolutionsApplicationDefinitionPatch.ToRequestContent(patch), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new SolutionsApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the managed application definition on a disambiguated route.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SolutionsApplicationDefinitionOpsById_UpdateById. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
-        /// <param name="patch"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SolutionsApplicationDefinitionResource> UpdateById(string applicationDefinitionName, SolutionsApplicationDefinitionPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using DiagnosticScope scope = SolutionsApplicationDefinitionsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.UpdateById");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SolutionsApplicationDefinitionsRestClient.CreateUpdateByIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, SolutionsApplicationDefinitionPatch.ToRequestContent(patch), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new SolutionsApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

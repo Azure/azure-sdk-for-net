@@ -55,10 +55,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private readonly ParameterContextRegistry _parameterMappings;
 
-        internal InputServiceMethod ServiceMethod => _serviceMethod;
-
-        internal MethodSignature Signature => _signature;
-
         /// <summary>
         /// Creates a new instance of <see cref="ResourceOperationMethodProvider"/> which represents a method on a client
         /// </summary>

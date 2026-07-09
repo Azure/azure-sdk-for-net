@@ -369,12 +369,11 @@ namespace Azure.Generator.Management.Providers
             var formatBuilder = new StringBuilder();
             var refCount = 0;
 
-            foreach (var rawSegment in _operationContext.ContextualPath)
+            foreach (var segment in _operationContext.ContextualPath)
             {
-                var segment = StripQueryString(rawSegment);
                 if (segment.IsConstant)
                 {
-                    formatBuilder.Append($"/{EscapeFormatLiteral(segment.Value)}");
+                    formatBuilder.Append($"/{segment}");
                 }
                 else
                 {
@@ -404,15 +403,6 @@ namespace Azure.Generator.Management.Providers
             };
 
             return new MethodProvider(signature, bodyStatements, this);
-
-            static RequestPathSegment StripQueryString(RequestPathSegment segment)
-            {
-                var pathWithoutQuery = RequestPathPattern.StripQueryString(segment.Value);
-                return pathWithoutQuery == segment.Value ? segment : new RequestPathSegment(pathWithoutQuery);
-            }
-
-            static string EscapeFormatLiteral(string value)
-                => value.Replace("{", "{{").Replace("}", "}}");
         }
 
         internal ResourceTypePattern ResourceType => _resourceMetadata.ResourceType;
@@ -491,13 +481,11 @@ namespace Azure.Generator.Management.Providers
                         var updateRestClientInfo = _clientInfos[inputUpdateClient];
                         var getRestClientInfo = _clientInfos[inputReadClient];
                         var isFakeLro = ResourceHelpers.ShouldMakeLro(tagUpdateMethod.Kind);
-                        var updatePath = new RequestPathPattern(tagUpdateMethod.InputMethod.Operation.Path);
-                        var parameterMappings = _operationContext
-                            .BuildParameterMapping(updatePath)
-                            .WithContextualParameterOverrides(OperationContext.BuildResourceIdentifierParameterMappings(updatePath));
+                        var parameterMappings = _operationContext.BuildParameterMapping(new RequestPathPattern(tagUpdateMethod.InputMethod.Operation.Path));
                         var tagUpdateMethodProvider = new UpdateOperationMethodProvider(this, parameterMappings, updateRestClientInfo, tagUpdateMethod.InputMethod, false, tagUpdateMethod.Kind, isFakeLro);
+                        MethodProvider tagUpdateMethodAsMethod = tagUpdateMethodProvider;
 
-                        if (CanPopulateTagUpdateMethodArguments(tagUpdateMethodProvider.Signature, parameterMappings))
+                        if (CanPopulateTagUpdateMethodArguments(tagUpdateMethodAsMethod.Signature, parameterMappings))
                         {
                             methods.AddRange([
                                 new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),

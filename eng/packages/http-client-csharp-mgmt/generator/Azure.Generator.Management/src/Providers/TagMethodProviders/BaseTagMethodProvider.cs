@@ -16,7 +16,6 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.TagMethodProviders
@@ -27,7 +26,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected readonly MethodBodyStatement[] _bodyStatements;
         protected readonly TypeProvider _enclosingType;
         protected readonly ResourceClientProvider _resource;
-        protected readonly ResourceOperationMethodProvider _updateMethodProvider;
+        protected readonly MethodProvider _updateMethodProvider;
         protected readonly InputServiceMethod _getMethodProvider;
         protected readonly ClientProvider _updateRestClient;
         protected readonly ClientProvider _getRestClient;
@@ -161,7 +160,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             ));
         }
 
-        protected MethodBodyStatement GetResourceDataStatements(
+        protected static MethodBodyStatement GetResourceDataStatements(
             string variableName,
             ResourceClientProvider resourceClientProvider,
             bool isAsync,
@@ -196,31 +195,24 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected MethodBodyStatement UpdateResourceStatement(
             VariableExpression dataVar,
             ParameterProvider cancellationTokenParam,
+            MethodProvider updateMethod,
             out VariableExpression resultVar)
         {
             var updateMethodName = _isAsync ? "UpdateAsync" : "Update";
-            var parameters = BuildUpdateMethodArguments(dataVar, cancellationTokenParam);
+            var parameters = new List<ValueExpression>();
+            if (_isLongRunningUpdateOperation)
+            {
+                parameters.Add(Static(typeof(WaitUntil)).Property("Completed"));
+            }
+
+            parameters.Add(dataVar);
+            parameters.Add(KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(cancellationTokenParam));
 
             return Declare(
                 "result",
-                _updateMethodProvider.Signature.ReturnType!,
+                updateMethod.Signature.ReturnType!,
                 This.Invoke(updateMethodName, parameters, null, _isAsync),
                 out resultVar);
-        }
-
-        private IReadOnlyList<ValueExpression> BuildUpdateMethodArguments(
-            VariableExpression dataVar,
-            ParameterProvider cancellationTokenParam)
-        {
-            var arguments = new List<ValueExpression>();
-            if (_isLongRunningUpdateOperation)
-            {
-                arguments.Add(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed)));
-            }
-
-            arguments.Add(dataVar);
-            arguments.Add(KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(cancellationTokenParam));
-            return arguments;
         }
 
         protected List<MethodBodyStatement> BuildElseStatements(
@@ -275,12 +267,12 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
                 // Apply the specific tag operation to the patch
                 statements.Add(tagOperation(patchVar.Property("Tags")));
-                statements.Add(UpdateResourceStatement(patchVar, cancellationTokenParam, out resultVar));
+                statements.Add(UpdateResourceStatement(patchVar, cancellationTokenParam, _updateMethodProvider, out resultVar));
             }
             else
             {
                 statements.Add(tagOperation(resourceDataVar.Property("Tags")));
-                statements.Add(UpdateResourceStatement(resourceDataVar, cancellationTokenParam, out resultVar));
+                statements.Add(UpdateResourceStatement(resourceDataVar, cancellationTokenParam, _updateMethodProvider, out resultVar));
             }
 
             statements.Add(CreateSecondaryPathResponseStatement(resultVar.As<Response>()));

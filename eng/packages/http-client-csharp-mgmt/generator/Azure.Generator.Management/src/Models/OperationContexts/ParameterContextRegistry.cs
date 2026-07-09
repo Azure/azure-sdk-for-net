@@ -63,25 +63,6 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
         return _parameters.TryGetValue(key, out value);
     }
 
-    public bool TryPopulateContextualArgument(
-        ScopedApi<ResourceIdentifier> idProperty,
-        ParameterProvider parameter,
-        out ValueExpression argument)
-    {
-        if (TryGetValue(parameter.WireInfo.SerializedName, out var mapping) &&
-            mapping.ContextualParameter is not null)
-        {
-            argument = Convert(
-                mapping.ContextualParameter.BuildValueExpression(idProperty),
-                mapping.ContextualParameter.ValueType,
-                parameter.Type);
-            return true;
-        }
-
-        argument = Default.CastTo(parameter.Type);
-        return false;
-    }
-
     public ParameterContextRegistry WithContextualParameterOverrides(IReadOnlyList<ParameterContextMapping> parameterOverrides)
     {
         if (parameterOverrides.Count == 0)
@@ -105,6 +86,7 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                 changed = true;
             }
         }
+
         return changed ? new ParameterContextRegistry([.. merged.Values]) : this;
     }
 
@@ -242,56 +224,48 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
         return arguments;
 
         static ValueExpression FindParameter(IReadOnlyList<ParameterProvider> parameters, ParameterProvider parameterToFind)
-            => TryFindParameter(parameters, parameterToFind, out var argument) ? argument : Default;
-    }
-
-    public static bool TryFindParameter(
-        IReadOnlyList<ParameterProvider> parameters,
-        ParameterProvider parameterToFind,
-        out ValueExpression argument)
-    {
-        var methodParam = parameters.SingleOrDefault(p => p.WireInfo.SerializedName == parameterToFind.WireInfo.SerializedName);
-        if (methodParam != null)
         {
-            argument = Convert(methodParam, methodParam.Type, parameterToFind.Type);
-            return true;
-        }
-
-        argument = Default;
-        return false;
-    }
-
-    public static ValueExpression Convert(ValueExpression expression, CSharpType fromType, CSharpType toType)
-    {
-        if (fromType.Equals(toType))
-        {
-            return expression; // No conversion needed
-        }
-
-        if (toType.IsFrameworkType && toType.FrameworkType == typeof(Guid))
-        {
-            return Static<Guid>().Invoke(nameof(Guid.Parse), expression);
-        }
-
-        if (fromType.IsEnum && toType.FrameworkType == typeof(string))
-        {
-            if (!fromType.IsStruct)
+            var methodParam = parameters.SingleOrDefault(p => p.WireInfo.SerializedName == parameterToFind.WireInfo.SerializedName);
+            if (methodParam != null)
             {
-                // Fixed enums (IsStruct=false) have a ToSerialString() extension method
-                return fromType.IsNullable ? expression.NullConditional().Invoke("ToSerialString") : expression.Invoke("ToSerialString");
+                return Convert(methodParam, methodParam.Type, parameterToFind.Type);
             }
-            // Extensible enums (IsStruct=true, readonly structs) use ToString()
-            return fromType.IsNullable ? expression.NullConditional().InvokeToString() : expression.InvokeToString();
+
+            return Default;
         }
 
-        // Convert ResourceIdentifier to string by calling ToString()
-        if (fromType.Equals(typeof(ResourceIdentifier)) && toType.IsFrameworkType && toType.FrameworkType == typeof(string))
+        static ValueExpression Convert(ValueExpression expression, CSharpType fromType, CSharpType toType)
         {
-            return fromType.IsNullable ? expression.NullConditional().InvokeToString() : expression.InvokeToString();
-        }
+            if (fromType.Equals(toType))
+            {
+                return expression; // No conversion needed
+            }
 
-        // other unhandled cases, we will add when we need them in the future.
-        return expression;
+            if (toType.IsFrameworkType && toType.FrameworkType == typeof(Guid))
+            {
+                return Static<Guid>().Invoke(nameof(Guid.Parse), expression);
+            }
+
+            if (fromType.IsEnum && toType.FrameworkType == typeof(string))
+            {
+                if (!fromType.IsStruct)
+                {
+                    // Fixed enums (IsStruct=false) have a ToSerialString() extension method
+                    return fromType.IsNullable ? expression.NullConditional().Invoke("ToSerialString") : expression.Invoke("ToSerialString");
+                }
+                // Extensible enums (IsStruct=true, readonly structs) use ToString()
+                return fromType.IsNullable ? expression.NullConditional().InvokeToString() : expression.InvokeToString();
+            }
+
+            // Convert ResourceIdentifier to string by calling ToString()
+            if (fromType.Equals(typeof(ResourceIdentifier)) && toType.IsFrameworkType && toType.FrameworkType == typeof(string))
+            {
+                return fromType.IsNullable ? expression.NullConditional().InvokeToString() : expression.InvokeToString();
+            }
+
+            // other unhandled cases, we will add when we need them in the future.
+            return expression;
+        }
     }
 
     private static bool IsMatchConditionType(CSharpType type)
