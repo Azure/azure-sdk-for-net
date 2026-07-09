@@ -12,7 +12,7 @@ using Azure.ResourceManager.Education;
 namespace Azure.ResourceManager.Education.Models
 {
     /// <summary> Grant status. </summary>
-    public readonly partial struct GrantStatus : IEquatable<GrantStatus>
+    public readonly partial struct EducationGrantStatus : IEquatable<EducationGrantStatus>
     {
         private readonly string _value;
         /// <summary> Active. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Education.Models
         /// <summary> Inactive. </summary>
         private const string InactiveValue = "Inactive";
 
-        /// <summary> Initializes a new instance of <see cref="GrantStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EducationGrantStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public GrantStatus(string value)
+        public EducationGrantStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Education.Models
         }
 
         /// <summary> Active. </summary>
-        public static GrantStatus Active { get; } = new GrantStatus(ActiveValue);
+        public static EducationGrantStatus Active { get; } = new EducationGrantStatus(ActiveValue);
 
         /// <summary> Inactive. </summary>
-        public static GrantStatus Inactive { get; } = new GrantStatus(InactiveValue);
+        public static EducationGrantStatus Inactive { get; } = new EducationGrantStatus(InactiveValue);
 
-        /// <summary> Determines if two <see cref="GrantStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EducationGrantStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(GrantStatus left, GrantStatus right) => left.Equals(right);
+        public static bool operator ==(EducationGrantStatus left, EducationGrantStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="GrantStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EducationGrantStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(GrantStatus left, GrantStatus right) => !left.Equals(right);
+        public static bool operator !=(EducationGrantStatus left, EducationGrantStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="GrantStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EducationGrantStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GrantStatus(string value) => new GrantStatus(value);
+        public static implicit operator EducationGrantStatus(string value) => new EducationGrantStatus(value);
 
-        /// <summary> Converts a string to a <see cref="GrantStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EducationGrantStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GrantStatus?(string value) => value == null ? null : new GrantStatus(value);
+        public static implicit operator EducationGrantStatus?(string value) => value == null ? null : new EducationGrantStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is GrantStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is EducationGrantStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(GrantStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EducationGrantStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

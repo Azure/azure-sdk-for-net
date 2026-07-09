@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="expireOn"> Expiration Date. </param>
         /// <param name="status"> Grant status. </param>
         /// <param name="allocatedBudget"> allocated budget. </param>
-        /// <returns> A new <see cref="Education.EducationGrantDetailsData"/> instance for mocking. </returns>
-        public static EducationGrantDetailsData EducationGrantDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EducationAmount offerCap = default, DateTimeOffset? effectiveOn = default, EducationGrantType? offerType = default, DateTimeOffset? expireOn = default, GrantStatus? status = default, EducationAmount allocatedBudget = default)
+        /// <returns> A new <see cref="Education.GrantDetailsData"/> instance for mocking. </returns>
+        public static GrantDetailsData GrantDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EducationAmount offerCap = default, DateTimeOffset? effectiveOn = default, EducationGrantType? offerType = default, DateTimeOffset? expireOn = default, EducationGrantStatus? status = default, EducationAmount allocatedBudget = default)
         {
-            return new EducationGrantDetailsData(
+            return new GrantDetailsData(
                 id,
                 name,
                 resourceType,

@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Education.Models
             DateTimeOffset? effectiveOn = default;
             EducationGrantType? offerType = default;
             DateTimeOffset? expireOn = default;
-            GrantStatus? status = default;
+            EducationGrantStatus? status = default;
             EducationAmount allocatedBudget = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Education.Models
                     {
                         continue;
                     }
-                    status = new GrantStatus(prop.Value.GetString());
+                    status = new EducationGrantStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("allocatedBudget"u8))

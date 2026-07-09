@@ -14,7 +14,7 @@ using Azure.ResourceManager.Education.Models;
 
 namespace Azure.ResourceManager.Education
 {
-    internal partial class GrantsListAllCollectionResultOfT : Pageable<EducationGrantDetailsData>
+    internal partial class GrantsListAllCollectionResultOfT : Pageable<GrantDetailsData>
     {
         private readonly Grants _client;
         private readonly bool? _includeAllocatedBudget;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Education
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of GrantsListAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<EducationGrantDetailsData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<GrantDetailsData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Education
                 GrantListResponse result = GrantListResponse.FromResponse(response);
                 string nextPageString = result.NextLink;
                 nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
-                yield return Page<EducationGrantDetailsData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<GrantDetailsData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

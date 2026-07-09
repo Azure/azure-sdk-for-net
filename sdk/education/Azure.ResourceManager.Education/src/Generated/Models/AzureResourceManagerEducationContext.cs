@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Education
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(EducationAmount))]
-    [ModelReaderWriterBuildable(typeof(EducationGrantDetailsData))]
-    [ModelReaderWriterBuildable(typeof(EducationGrantDetailsResource))]
     [ModelReaderWriterBuildable(typeof(EducationInviteCodeGenerateContent))]
     [ModelReaderWriterBuildable(typeof(EducationOperationInfo))]
     [ModelReaderWriterBuildable(typeof(EducationRedeemContent))]
     [ModelReaderWriterBuildable(typeof(GrantDetailProperties))]
+    [ModelReaderWriterBuildable(typeof(GrantDetailsData))]
+    [ModelReaderWriterBuildable(typeof(GrantDetailsResource))]
     [ModelReaderWriterBuildable(typeof(GrantListResponse))]
     [ModelReaderWriterBuildable(typeof(JoinRequestDetailsData))]
     [ModelReaderWriterBuildable(typeof(JoinRequestDetailsResource))]

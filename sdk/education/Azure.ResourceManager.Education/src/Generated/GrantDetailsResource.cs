@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Education
 {
     /// <summary>
-    /// A class representing a EducationGrantDetails along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EducationGrantDetailsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetEducationGrantDetails method.
+    /// A class representing a GrantDetails along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GrantDetailsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetGrantDetails method.
     /// </summary>
-    public partial class EducationGrantDetailsResource : ArmResource
+    public partial class GrantDetailsResource : ArmResource
     {
         private readonly ClientDiagnostics _grantsClientDiagnostics;
         private readonly Grants _grantsRestClient;
-        private readonly EducationGrantDetailsData _data;
+        private readonly GrantDetailsData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Education/grants";
 
-        /// <summary> Initializes a new instance of EducationGrantDetailsResource for mocking. </summary>
-        protected EducationGrantDetailsResource()
+        /// <summary> Initializes a new instance of GrantDetailsResource for mocking. </summary>
+        protected GrantDetailsResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EducationGrantDetailsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrantDetailsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EducationGrantDetailsResource(ArmClient client, EducationGrantDetailsData data) : this(client, data.Id)
+        internal GrantDetailsResource(ArmClient client, GrantDetailsData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EducationGrantDetailsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrantDetailsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EducationGrantDetailsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal GrantDetailsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string educationGrantDetailsApiVersion);
+            TryGetApiVersion(ResourceType, out string grantDetailsApiVersion);
             _grantsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Education", ResourceType.Namespace, Diagnostics);
-            _grantsRestClient = new Grants(_grantsClientDiagnostics, Pipeline, Endpoint, educationGrantDetailsApiVersion ?? "2021-12-01-preview");
+            _grantsRestClient = new Grants(_grantsClientDiagnostics, Pipeline, Endpoint, grantDetailsApiVersion ?? "2021-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Education
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual EducationGrantDetailsData Data
+        public virtual GrantDetailsData Data
         {
             get
             {
@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EducationGrantDetailsResource"/>. </description>
+        /// <description> <see cref="GrantDetailsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="includeAllocatedBudget"> May be used to include information about budget that has been allocated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EducationGrantDetailsResource>> GetAsync(bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GrantDetailsResource>> GetAsync(bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _grantsClientDiagnostics.CreateScope("EducationGrantDetailsResource.Get");
+            using DiagnosticScope scope = _grantsClientDiagnostics.CreateScope("GrantDetailsResource.Get");
             scope.Start();
             try
             {
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _grantsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, includeAllocatedBudget, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EducationGrantDetailsData> response = Response.FromValue(EducationGrantDetailsData.FromResponse(result), result);
+                Response<GrantDetailsData> response = Response.FromValue(GrantDetailsData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new EducationGrantDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GrantDetailsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,15 +155,15 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EducationGrantDetailsResource"/>. </description>
+        /// <description> <see cref="GrantDetailsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="includeAllocatedBudget"> May be used to include information about budget that has been allocated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EducationGrantDetailsResource> Get(bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
+        public virtual Response<GrantDetailsResource> Get(bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _grantsClientDiagnostics.CreateScope("EducationGrantDetailsResource.Get");
+            using DiagnosticScope scope = _grantsClientDiagnostics.CreateScope("GrantDetailsResource.Get");
             scope.Start();
             try
             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _grantsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, includeAllocatedBudget, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<EducationGrantDetailsData> response = Response.FromValue(EducationGrantDetailsData.FromResponse(result), result);
+                Response<GrantDetailsData> response = Response.FromValue(GrantDetailsData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new EducationGrantDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GrantDetailsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
