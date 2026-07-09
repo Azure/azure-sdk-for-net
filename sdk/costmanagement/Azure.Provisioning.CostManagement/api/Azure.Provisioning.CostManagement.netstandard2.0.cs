@@ -545,9 +545,9 @@ namespace Azure.Provisioning.CostManagement
     public partial class ExportSuspensionContext : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ExportSuspensionContext() { }
-        public Azure.Provisioning.BicepValue<string> SuspensionCode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SuspensionOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SuspensionReason { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SuspensionCode { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SuspensionOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SuspensionReason { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ExportTimePeriod : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -604,7 +604,7 @@ namespace Azure.Provisioning.CostManagement
         public Azure.Provisioning.BicepValue<System.Uri> DownloadUri { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiryOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ValidTill { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -622,7 +622,7 @@ namespace Azure.Provisioning.CostManagement
         public Azure.Provisioning.CostManagement.ExportRunErrorDetails Error { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiryOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StartTime { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ReportOperationStatusType> StatusValue { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -3035,38 +3036,40 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// List Baz resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetBazsAsync(int?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetBazsAsync(int?, IEnumerable{string}, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="top"></param>
+        /// <param name="filters"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="BazResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BazResource> GetBazsAsync(this SubscriptionResource subscriptionResource, int? top = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<BazResource> GetBazsAsync(this SubscriptionResource subscriptionResource, int? top = default, IEnumerable<string> filters = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetBazsAsync(top, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetBazsAsync(top, filters, cancellationToken);
         }
 
         /// <summary>
         /// List Baz resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetBazs(int?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetBazs(int?, IEnumerable{string}, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="top"></param>
+        /// <param name="filters"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="BazResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BazResource> GetBazs(this SubscriptionResource subscriptionResource, int? top = default, CancellationToken cancellationToken = default)
+        public static Pageable<BazResource> GetBazs(this SubscriptionResource subscriptionResource, int? top = default, IEnumerable<string> filters = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetBazs(top, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetBazs(top, filters, cancellationToken);
         }
 
         /// <summary>
