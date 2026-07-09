@@ -1429,6 +1429,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SolutionsQuerySuffixApplicationDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetSolutionsQuerySuffixApplicationDefinitionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SolutionsQuerySuffixApplicationDefinitionResource"/> object. </returns>
+        public static SolutionsQuerySuffixApplicationDefinitionResource GetSolutionsQuerySuffixApplicationDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSolutionsQuerySuffixApplicationDefinitionResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -2804,6 +2822,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSolutionsApplicationDefinition(applicationDefinitionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SolutionsQuerySuffixApplicationDefinitionResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetSolutionsQuerySuffixApplicationDefinition()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> Returns a <see cref="SolutionsQuerySuffixApplicationDefinitionResource"/> object. </returns>
+        public static SolutionsQuerySuffixApplicationDefinitionResource GetSolutionsQuerySuffixApplicationDefinition(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSolutionsQuerySuffixApplicationDefinition();
         }
 
         /// <summary>
