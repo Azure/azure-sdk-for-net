@@ -793,6 +793,84 @@ namespace Azure.Generator.Management.Tests.Common
             return (parentClient, childClient, [parentModel, childModel, childPageModel]);
         }
 
+        public static (InputClient ParentClient, InputClient ChildClient, IReadOnlyList<InputModelType> InputModels) ClientWithFixedChildResourceType()
+        {
+            const string ParentClientName = "ProfilesClient";
+            const string ChildClientName = "EndpointsClient";
+
+            var parentModel = InputFactory.Model("Profile",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                decorators: []);
+            var childModel = InputFactory.Model("AzureEndpoint",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                decorators: []);
+
+            var parentResponseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: parentModel);
+            var childResponseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: childModel);
+            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
+
+            var subscriptionIdOpParam = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
+            var resourceGroupNameOpParam = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
+            var profileNameOpParam = InputFactory.PathParameter("profileName", InputPrimitiveType.String, isRequired: true);
+            var endpointTypeOpParam = InputFactory.PathParameter("endpointType", InputPrimitiveType.String, isRequired: true);
+            var endpointNameOpParam = InputFactory.PathParameter("endpointName", InputPrimitiveType.String, isRequired: true);
+            var childDataOpParam = InputFactory.BodyParameter("data", childModel, isRequired: true);
+
+            var parentIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}";
+            var childIdPattern = parentIdPattern + "/AzureEndpoints/{endpointName}";
+            var childOperationPath = parentIdPattern + "/{endpointType}/{endpointName}";
+
+            var parentGetOp = InputFactory.Operation(name: "getProfile", responses: [parentResponseType], parameters: [subscriptionIdOpParam, resourceGroupNameOpParam, profileNameOpParam], path: parentIdPattern);
+            var childGetOp = InputFactory.Operation(name: "getEndpoint", responses: [childResponseType], parameters: [subscriptionIdOpParam, resourceGroupNameOpParam, profileNameOpParam, endpointTypeOpParam, endpointNameOpParam], path: childOperationPath);
+            var childCreateOp = InputFactory.Operation(name: "createEndpoint", responses: [childResponseType], parameters: [subscriptionIdOpParam, resourceGroupNameOpParam, profileNameOpParam, endpointTypeOpParam, endpointNameOpParam, childDataOpParam], path: childOperationPath, httpMethod: "PUT");
+
+            var subscriptionIdParam = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
+            var resourceGroupNameParam = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var profileNameParam = InputFactory.MethodParameter("profileName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var endpointTypeParam = InputFactory.MethodParameter("endpointType", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var endpointNameParam = InputFactory.MethodParameter("endpointName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var childDataParam = InputFactory.MethodParameter("data", childModel, location: InputRequestLocation.Body, isRequired: true);
+
+            var parentGetMethod = InputFactory.BasicServiceMethod("getProfile", parentGetOp, parameters: [profileNameParam, subscriptionIdParam, resourceGroupNameParam], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var childGetMethod = InputFactory.BasicServiceMethod("getEndpoint", childGetOp, parameters: [endpointTypeParam, endpointNameParam, profileNameParam, subscriptionIdParam, resourceGroupNameParam], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var childCreateMethod = InputFactory.BasicServiceMethod("createEndpoint", childCreateOp, parameters: [endpointTypeParam, endpointNameParam, profileNameParam, subscriptionIdParam, resourceGroupNameParam, childDataParam], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+
+            var armProviderDecorator = BuildArmProviderSchemaMultiResource([
+                new ResourceSchemaInput(parentModel, [
+                    new ResourceMethod(ResourceOperationKind.Read, parentGetMethod, new RequestPathPattern(parentGetOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(parentIdPattern), null), null!)
+                ], parentIdPattern, "Microsoft.Network/trafficmanagerprofiles", null, ResourceScope.ResourceGroup, "Profile", null, GetDefaultScopeIdPattern(ResourceScope.ResourceGroup)),
+                new ResourceSchemaInput(childModel, [
+                    new ResourceMethod(ResourceOperationKind.Read, childGetMethod, new RequestPathPattern(childGetOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(childIdPattern), null), null!),
+                    new ResourceMethod(ResourceOperationKind.Create, childCreateMethod, new RequestPathPattern(childCreateOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(childIdPattern), null), null!)
+                ], childIdPattern, "Microsoft.Network/trafficmanagerprofiles/AzureEndpoints", null, ResourceScope.ResourceGroup, "AzureEndpoint", parentIdPattern, GetDefaultScopeIdPattern(ResourceScope.ResourceGroup))
+            ]);
+
+            var parentClient = InputFactory.Client(
+                ParentClientName,
+                methods: [parentGetMethod],
+                decorators: [armProviderDecorator],
+                crossLanguageDefinitionId: $"Test.{ParentClientName}");
+            var childClient = InputFactory.Client(
+                ChildClientName,
+                methods: [childGetMethod, childCreateMethod],
+                decorators: [],
+                crossLanguageDefinitionId: $"Test.{ChildClientName}");
+
+            return (parentClient, childClient, [parentModel, childModel]);
+        }
+
         public static (InputClient ParentClient, InputClient ChildClient, IReadOnlyList<InputModelType> InputModels) ClientWithNestedExtensionChildResource()
         {
             const string ParentClientName = "WatchlistsClient";

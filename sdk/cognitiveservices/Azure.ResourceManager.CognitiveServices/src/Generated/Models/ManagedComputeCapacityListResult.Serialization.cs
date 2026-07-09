@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ManagedComputeCapacity item in Value)
+                foreach (CognitiveServicesManagedComputeCapacity item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<ManagedComputeCapacity> value = default;
+            IReadOnlyList<CognitiveServicesManagedComputeCapacity> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<ManagedComputeCapacity> array = new List<ManagedComputeCapacity>();
+                    List<CognitiveServicesManagedComputeCapacity> array = new List<CognitiveServicesManagedComputeCapacity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedComputeCapacity.DeserializeManagedComputeCapacity(item, options));
+                        array.Add(CognitiveServicesManagedComputeCapacity.DeserializeCognitiveServicesManagedComputeCapacity(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedComputeCapacityListResult(nextLink, value ?? new ChangeTrackingList<ManagedComputeCapacity>(), additionalBinaryDataProperties);
+            return new ManagedComputeCapacityListResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesManagedComputeCapacity>(), additionalBinaryDataProperties);
         }
     }
 }
