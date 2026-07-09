@@ -24,10 +24,9 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create a Service Fabric cluster
+### Create an application type in an existing Service Fabric cluster
 
 This example demonstrates how to create an application type in an existing Service Fabric cluster.
-
 ```C# Snippet:ServiceFabricBasic
 Infrastructure infra = new();
 
