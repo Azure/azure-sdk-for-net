@@ -10,6 +10,7 @@
 ### Breaking Changes
 
 - Renamed generated resource types to align with the management SDK naming, for example `CommunicationServiceResource`, `EmailServiceResource`, `CommunicationDomainResource`, and `SenderUsernameResource`.
+- Removed the generated `CommunicationServiceKeys` type and `CommunicationService.GetKeys()` helper.
 
 ### Bugs Fixed
 
