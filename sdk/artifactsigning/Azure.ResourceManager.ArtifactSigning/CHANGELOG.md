@@ -4,11 +4,16 @@
 
 ### Features Added
 
+- Added `ArtifactSigningCertificateProfileResource.RevokeCertificates` to revoke multiple certificates in a single request.
+- Added `ProgramType` property to `CertificateProfileProperties`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Deprecated `ArtifactSigningCertificateProfileResource.RevokeCertificate`. Use `RevokeCertificates` instead.
 
 ## 1.0.1 (2026-06-02)
 
