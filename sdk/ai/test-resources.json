@@ -146,7 +146,7 @@
         },
         "modelName": {
             "type": "string",
-            "defaultValue": "gpt-4.1",
+            "defaultValue": "gpt-5.5",
             "metadata": {
                 "description": "The name of the OpenAI model you want to deploy"
             }
@@ -160,7 +160,7 @@
         },
         "modelVersion": {
             "type": "string",
-            "defaultValue": "2025-04-14",
+            "defaultValue": "2026-04-24",
             "metadata": {
                 "description": "The version of the model you want to deploy. Example: 2024-11-20"
             }
@@ -253,6 +253,8 @@
         "aiServicesName": "[concat(parameters('baseName'), '-ai')]",
         "bingAccountName": "[concat(parameters('baseName'), '-bing')]",
         "bingConnectionName": "[concat(parameters('baseName'), '-bing-connection')]",
+        "aiSearchServiceName": "[concat(parameters('baseName'), '-search')]",
+        "aiSearchConnectionName": "[concat(parameters('baseName'), '-search-connection')]",
         "defaultVNetName": "[concat(parameters('baseName'), '-vnet')]",
         "defaultSubnetName": "default",
         "defaultAddressPrefix": "10.0.0.0/16"
@@ -391,6 +393,49 @@
             "dependsOn": [
                 "[resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName'))]",
                 "[resourceId('Microsoft.Bing/accounts', variables('bingAccountName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Search/searchServices",
+            "apiVersion": "2024-06-01-preview",
+            "name": "[variables('aiSearchServiceName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "basic"
+            },
+            "properties": {
+                "replicaCount": 1,
+                "partitionCount": 1,
+                "hostingMode": "default",
+                "authOptions": {
+                    "aadOrApiKey": {
+                        "aadAuthFailureMode": "http401WithBearerChallenge"
+                    }
+                },
+                "publicNetworkAccess": "[if(equals(parameters('virtualNetworkType'), 'Internal'), 'disabled', 'enabled')]"
+            }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts/connections",
+            "apiVersion": "2025-04-01-preview",
+            "name": "[concat(variables('aiServicesName'), '/', variables('aiSearchConnectionName'))]",
+            "properties": {
+                "category": "CognitiveSearch",
+                "target": "[concat('https://', variables('aiSearchServiceName'), '.search.windows.net')]",
+                "authType": "ApiKey",
+                "isSharedToAll": true,
+                "credentials": {
+                    "key": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', variables('aiSearchServiceName')), '2024-06-01-preview').primaryKey]"
+                },
+                "metadata": {
+                    "ApiType": "Azure",
+                    "type": "azure_ai_search",
+                    "ResourceId": "[resourceId('Microsoft.Search/searchServices', variables('aiSearchServiceName'))]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName'))]",
+                "[resourceId('Microsoft.Search/searchServices', variables('aiSearchServiceName'))]"
             ]
         },
         {
@@ -787,6 +832,14 @@
         "BING_CONNECTION_NAME": {
             "type": "string",
             "value": "[variables('bingConnectionName')]"
+        },
+        "AI_SEARCH_CONNECTION_NAME": {
+            "type": "string",
+            "value": "[variables('aiSearchConnectionName')]"
+        },
+        "AI_SEARCH_SERVICE_NAME": {
+            "type": "string",
+            "value": "[variables('aiSearchServiceName')]"
         },
         "MODEL_DEPLOYMENT_NAME": {
             "type": "string",
