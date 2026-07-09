@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs
     }
     public partial class BlobClientOptions : Azure.Core.ClientOptions
     {
-        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_12_06) { }
+        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_10_06) { }
         public Azure.Storage.Blobs.Models.BlobAudience? Audience { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
@@ -91,7 +91,6 @@ namespace Azure.Storage.Blobs
             V2026_04_06 = 30,
             V2026_06_06 = 31,
             V2026_10_06 = 32,
-            V2026_12_06 = 33,
         }
     }
     public partial class BlobContainerClient
@@ -1835,7 +1834,7 @@ namespace Azure.Storage.Blobs.Specialized
     }
     public partial class SpecializedBlobClientOptions : Azure.Storage.Blobs.BlobClientOptions
     {
-        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_12_06) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
+        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2026_10_06) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public static partial class SpecializedBlobExtensions
