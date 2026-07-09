@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/tools/Azure.SdkAnalyzers/
+    - sdk/tools/Azure.SdkAnalyzers.CodeFixes/
 
 pr:
   branches:
@@ -20,6 +21,14 @@ pr:
   paths:
     include:
     - sdk/tools/Azure.SdkAnalyzers/
+    - sdk/tools/Azure.SdkAnalyzers.CodeFixes/
+
+# The tools ServiceDirectory also contains Azure.GeneratorAgent, which targets only the LTS
+# framework and therefore cannot build on this pipeline's net462/net8.0/net9.0 test legs. Scope
+# service.proj globbing to just the analyzer packages so those legs don't sweep in the generator.
+variables:
+  - name: Project
+    value: Azure.SdkAnalyzers*
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
