@@ -114,14 +114,14 @@ public class DerivedModelProxy : ConditionalModelProxy<BaseModel>
     public DerivedModelProxy() : base(new DerivedModelImpl()) { }
 
     // Only handle if the JSON contains "kind": "derived"
-    public override bool CanHandle(ReadOnlyMemory<byte> data)
+    public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
     {
         using var doc = JsonDocument.Parse(data);
         return doc.RootElement.TryGetProperty("kind", out var kind)
             && kind.GetString() == "derived";
     }
 
-    public override bool CanHandle(BaseModel model) => model is DerivedModel;
+    public override bool CanHandle(BaseModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context) => model is DerivedModel;
 }
 ```
 

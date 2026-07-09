@@ -236,9 +236,9 @@ namespace System.ClientModel.Tests.Internal.Perf
                 _canHandle = canHandle;
             }
 
-            public override bool CanHandle(BenchmarkModel model) => _canHandle;
-            public override bool CanHandle(ReadOnlyMemory<byte> data) => _canHandle;
-            public override bool CanHandle(ref Utf8JsonReader reader) => _canHandle;
+            public override bool CanHandle(BenchmarkModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context) => _canHandle;
+            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context) => _canHandle;
+            public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options, ModelReaderWriterContext context) => _canHandle;
 
             private class BenchmarkProxyModel : IJsonModel<BenchmarkModel>
             {

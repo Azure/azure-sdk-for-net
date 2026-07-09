@@ -17,15 +17,15 @@ namespace System.ClientModel.Tests.Proxy.ThirdPartyA
         {
         }
 
-        public override bool CanHandle(ResponseTool model) => model is AzureSearchTool;
+        public override bool CanHandle(ResponseTool model, ModelReaderWriterOptions options, ModelReaderWriterContext context) => model is AzureSearchTool;
 
-        public override bool CanHandle(ReadOnlyMemory<byte> data)
+        public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
         {
             using JsonDocument doc = JsonDocument.Parse(BinaryData.FromBytes(data).ToString());
             return doc.RootElement.TryGetProperty("type", out var t) && t.GetString() == "azure_search";
         }
 
-        public override bool CanHandle(ref Utf8JsonReader reader)
+        public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options, ModelReaderWriterContext context)
         {
             Utf8JsonReader copy = reader;
             using JsonDocument doc = JsonDocument.ParseValue(ref copy);
