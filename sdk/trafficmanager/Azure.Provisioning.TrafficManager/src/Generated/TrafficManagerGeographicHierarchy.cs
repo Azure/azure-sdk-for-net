@@ -55,7 +55,7 @@ namespace Azure.Provisioning.TrafficManager
             }
         }
 
-        /// <summary> Gets or sets the GeographicHierarchy. </summary>
+        /// <summary> Gets the GeographicHierarchy. </summary>
         public TrafficManagerRegion GeographicHierarchy
         {
             get
@@ -69,7 +69,7 @@ namespace Azure.Provisioning.TrafficManager
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true, isRequired: true, defaultValue: "default");
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _properties = DefineModelProperty<GeographicHierarchyProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

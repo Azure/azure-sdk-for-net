@@ -37,13 +37,18 @@ namespace Azure.Provisioning.TrafficManager
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -72,7 +77,7 @@ namespace Azure.Provisioning.TrafficManager
             }
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
+        /// <summary> Gets the StartOn. </summary>
         public BicepValue<DateTimeOffset> StartOn
         {
             get
@@ -81,7 +86,7 @@ namespace Azure.Provisioning.TrafficManager
             }
         }
 
-        /// <summary> Gets or sets the EndOn. </summary>
+        /// <summary> Gets the EndOn. </summary>
         public BicepValue<DateTimeOffset> EndOn
         {
             get
@@ -90,7 +95,7 @@ namespace Azure.Provisioning.TrafficManager
             }
         }
 
-        /// <summary> Gets or sets the Endpoints. </summary>
+        /// <summary> Gets the Endpoints. </summary>
         public BicepList<TrafficManagerHeatMapEndpoint> Endpoints
         {
             get
@@ -99,7 +104,7 @@ namespace Azure.Provisioning.TrafficManager
             }
         }
 
-        /// <summary> Gets or sets the TrafficFlows. </summary>
+        /// <summary> Gets the TrafficFlows. </summary>
         public BicepList<TrafficManagerHeatMapTrafficFlow> TrafficFlows
         {
             get

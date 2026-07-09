@@ -19,18 +19,13 @@ namespace Azure.Provisioning.TrafficManager
         {
         }
 
-        /// <summary> Gets or sets the GeographicHierarchy. </summary>
+        /// <summary> Gets the GeographicHierarchy. </summary>
         public TrafficManagerRegion GeographicHierarchy
         {
             get
             {
                 Initialize();
                 return _geographicHierarchy;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _geographicHierarchy, value);
             }
         }
 
