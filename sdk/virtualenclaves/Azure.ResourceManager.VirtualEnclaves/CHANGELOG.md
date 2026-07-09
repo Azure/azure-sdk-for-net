@@ -6,12 +6,6 @@
 
 - Regenerated from the Microsoft.Mission spec. Adds support for API versions `2025-11-01-preview` and `2026-03-01-preview`. The default API version is now `2026-03-01-preview`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.2 (2026-06-30)
 
 ### Other Changes
