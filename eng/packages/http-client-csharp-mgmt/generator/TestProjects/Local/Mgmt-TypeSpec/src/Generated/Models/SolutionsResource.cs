@@ -8,30 +8,30 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Generator.MgmtSolutions.Tests;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace Azure.Generator.MgmtSolutions.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> Resource information. </summary>
-    public partial class Resource
+    /// <summary> Reduced Solutions resource information. </summary>
+    public partial class SolutionsResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private protected string _name;
 
-        /// <summary> Initializes a new instance of <see cref="Resource"/>. </summary>
-        public Resource()
+        /// <summary> Initializes a new instance of <see cref="SolutionsResource"/>. </summary>
+        public SolutionsResource()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Resource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionsResource"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Resource(ResourceIdentifier id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SolutionsResource(ResourceIdentifier id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

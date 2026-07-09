@@ -11,73 +11,73 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.Generator.MgmtSolutions.Tests.Models;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 
-namespace Azure.Generator.MgmtSolutions.Tests
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    /// <summary> Information about managed application definition. </summary>
-    public partial class ApplicationDefinitionData : GenericResource, IJsonModel<ApplicationDefinitionData>
+    /// <summary> Reduced managed application definition. </summary>
+    public partial class SolutionsApplicationDefinitionData : SolutionsGenericResource, IJsonModel<SolutionsApplicationDefinitionData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Resource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SolutionsResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsApplicationDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApplicationDefinitionData(document.RootElement, options);
+                        return DeserializeSolutionsApplicationDefinitionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationDefinitionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionsApplicationDefinitionData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsApplicationDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtSolutionsTestsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationDefinitionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionsApplicationDefinitionData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApplicationDefinitionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SolutionsApplicationDefinitionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationDefinitionData IPersistableModel<ApplicationDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApplicationDefinitionData)PersistableModelCreateCore(data, options);
+        SolutionsApplicationDefinitionData IPersistableModel<SolutionsApplicationDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SolutionsApplicationDefinitionData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApplicationDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SolutionsApplicationDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="applicationDefinitionData"> The <see cref="ApplicationDefinitionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ApplicationDefinitionData applicationDefinitionData)
+        /// <param name="solutionsApplicationDefinitionData"> The <see cref="SolutionsApplicationDefinitionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SolutionsApplicationDefinitionData solutionsApplicationDefinitionData)
         {
-            if (applicationDefinitionData == null)
+            if (solutionsApplicationDefinitionData == null)
             {
                 return null;
             }
-            return RequestContent.Create(applicationDefinitionData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(solutionsApplicationDefinitionData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApplicationDefinitionData"/> from. </param>
-        internal static ApplicationDefinitionData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SolutionsApplicationDefinitionData"/> from. </param>
+        internal static SolutionsApplicationDefinitionData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeApplicationDefinitionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSolutionsApplicationDefinitionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApplicationDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SolutionsApplicationDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -88,10 +88,10 @@ namespace Azure.Generator.MgmtSolutions.Tests
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsApplicationDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationDefinitionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionsApplicationDefinitionData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -100,24 +100,24 @@ namespace Azure.Generator.MgmtSolutions.Tests
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationDefinitionData IJsonModel<ApplicationDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApplicationDefinitionData)JsonModelCreateCore(ref reader, options);
+        SolutionsApplicationDefinitionData IJsonModel<SolutionsApplicationDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SolutionsApplicationDefinitionData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Resource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SolutionsResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsApplicationDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationDefinitionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionsApplicationDefinitionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplicationDefinitionData(document.RootElement, options);
+            return DeserializeSolutionsApplicationDefinitionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApplicationDefinitionData DeserializeApplicationDefinitionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static SolutionsApplicationDefinitionData DeserializeSolutionsApplicationDefinitionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,7 +129,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string managedBy = default;
-            ApplicationDefinitionProperties properties = default;
+            SolutionsApplicationDefinitionProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -179,7 +179,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = ApplicationDefinitionProperties.DeserializeApplicationDefinitionProperties(prop.Value, options);
+                    properties = SolutionsApplicationDefinitionProperties.DeserializeSolutionsApplicationDefinitionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -187,7 +187,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationDefinitionData(
+            return new SolutionsApplicationDefinitionData(
                 id,
                 name,
                 @type,

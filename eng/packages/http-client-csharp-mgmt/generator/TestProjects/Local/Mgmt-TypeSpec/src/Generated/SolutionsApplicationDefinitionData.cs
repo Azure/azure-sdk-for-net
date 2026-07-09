@@ -8,20 +8,20 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Generator.MgmtSolutions.Tests.Models;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 
-namespace Azure.Generator.MgmtSolutions.Tests
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    /// <summary> Information about managed application definition. </summary>
-    public partial class ApplicationDefinitionData : GenericResource
+    /// <summary> Reduced managed application definition. </summary>
+    public partial class SolutionsApplicationDefinitionData : SolutionsGenericResource
     {
-        /// <summary> Initializes a new instance of <see cref="ApplicationDefinitionData"/>. </summary>
-        public ApplicationDefinitionData()
+        /// <summary> Initializes a new instance of <see cref="SolutionsApplicationDefinitionData"/>. </summary>
+        public SolutionsApplicationDefinitionData()
         {
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationDefinitionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionsApplicationDefinitionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -29,18 +29,18 @@ namespace Azure.Generator.MgmtSolutions.Tests
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
         /// <param name="properties"> The managed application definition properties. </param>
-        internal ApplicationDefinitionData(ResourceIdentifier id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedBy, ApplicationDefinitionProperties properties) : base(id, name, @type, tags, additionalBinaryDataProperties, managedBy)
+        internal SolutionsApplicationDefinitionData(ResourceIdentifier id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedBy, SolutionsApplicationDefinitionProperties properties) : base(id, name, @type, tags, additionalBinaryDataProperties, managedBy)
         {
             Properties = properties;
         }
 
         /// <summary> The managed application definition properties. </summary>
         [WirePath("properties")]
-        internal ApplicationDefinitionProperties Properties { get; set; }
+        internal SolutionsApplicationDefinitionProperties Properties { get; set; }
 
         /// <summary> The managed application definition display name. </summary>
         [WirePath("properties.displayName")]
-        public string ApplicationDefinitionDisplayName
+        public string SolutionsApplicationDefinitionDisplayName
         {
             get
             {
@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
             {
                 if (Properties is null)
                 {
-                    Properties = new ApplicationDefinitionProperties();
+                    Properties = new SolutionsApplicationDefinitionProperties();
                 }
                 Properties.DisplayName = value;
             }

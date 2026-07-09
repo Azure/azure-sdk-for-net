@@ -10,56 +10,56 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Generator.MgmtSolutions.Tests;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace Azure.Generator.MgmtSolutions.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> Resource information. </summary>
-    public partial class Resource : IJsonModel<Resource>
+    /// <summary> Reduced Solutions generic resource. </summary>
+    public partial class SolutionsGenericResource : SolutionsResource, IJsonModel<SolutionsGenericResource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Resource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SolutionsResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Resource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsGenericResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResource(document.RootElement, options);
+                        return DeserializeSolutionsGenericResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Resource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionsGenericResource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Resource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsGenericResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtSolutionsTestsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Resource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionsGenericResource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Resource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SolutionsGenericResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Resource IPersistableModel<Resource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SolutionsGenericResource IPersistableModel<SolutionsGenericResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (SolutionsGenericResource)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Resource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SolutionsGenericResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Resource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SolutionsGenericResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,81 +68,41 @@ namespace Azure.Generator.MgmtSolutions.Tests.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Resource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsGenericResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Resource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionsGenericResource)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(ManagedBy))
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("managedBy"u8);
+                writer.WriteStringValue(ManagedBy);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Resource IJsonModel<Resource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SolutionsGenericResource IJsonModel<SolutionsGenericResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SolutionsGenericResource)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Resource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SolutionsResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Resource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsGenericResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Resource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionsGenericResource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResource(document.RootElement, options);
+            return DeserializeSolutionsGenericResource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Resource DeserializeResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static SolutionsGenericResource DeserializeSolutionsGenericResource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,6 +113,7 @@ namespace Azure.Generator.MgmtSolutions.Tests.Models
             string @type = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string managedBy = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -195,12 +156,23 @@ namespace Azure.Generator.MgmtSolutions.Tests.Models
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("managedBy"u8))
+                {
+                    managedBy = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Resource(id, name, @type, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new SolutionsGenericResource(
+                id,
+                name,
+                @type,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties,
+                managedBy);
         }
     }
 }

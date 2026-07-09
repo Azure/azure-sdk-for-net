@@ -8,26 +8,26 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Generator.MgmtSolutions.Tests;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace Azure.Generator.MgmtSolutions.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> Resource information. </summary>
-    public partial class GenericResource : Resource
+    /// <summary> Reduced Solutions generic resource. </summary>
+    public partial class SolutionsGenericResource : SolutionsResource
     {
-        /// <summary> Initializes a new instance of <see cref="GenericResource"/>. </summary>
-        public GenericResource()
+        /// <summary> Initializes a new instance of <see cref="SolutionsGenericResource"/>. </summary>
+        public SolutionsGenericResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GenericResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionsGenericResource"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
-        internal GenericResource(ResourceIdentifier id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedBy) : base(id, name, @type, tags, additionalBinaryDataProperties)
+        internal SolutionsGenericResource(ResourceIdentifier id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedBy) : base(id, name, @type, tags, additionalBinaryDataProperties)
         {
             ManagedBy = managedBy;
         }

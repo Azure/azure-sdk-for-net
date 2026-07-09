@@ -41,7 +41,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected static readonly ParameterProvider _valueParameter = new ParameterProvider("value", $"The value for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
 
         private readonly ParameterContextRegistry _parameterMappings;
-        private readonly ParameterContextRegistry _getMethodParameterMappings;
         private readonly ParameterContextRegistry _updateParameterMappings;
 
         // TODO: make a struct to group the input parameters
@@ -61,9 +60,11 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _updateMethodProvider = updateMethodProvider;
             _getMethodProvider = getMethod;
             _operationContext = operationContext;
-            _parameterMappings = BuildTagOperationParameterMappings(operationContext, getMethod.Operation.Path);
-            _getMethodParameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(getMethod.Operation.Path));
-            _updateParameterMappings = BuildTagOperationParameterMappings(operationContext, updateMethodProvider.ServiceMethod.Operation.Path);
+            _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(getMethod.Operation.Path));
+            var updatePath = new RequestPathPattern(updateMethodProvider.ServiceMethod.Operation.Path);
+            _updateParameterMappings = operationContext
+                .BuildParameterMapping(updatePath)
+                .WithContextualParameterOverrides(OperationContext.BuildResourceIdentifierParameterMappings(updatePath));
             _enclosingType = resource;
             _updateRestClient = updateRestClientInfo.RestClientProvider;
             _getRestClient = getRestClientInfo.RestClientProvider;
@@ -75,16 +76,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             _signature = CreateMethodSignature(methodName, methodDescription);
             _bodyStatements = BuildBodyStatements();
-        }
-
-        private static ParameterContextRegistry BuildTagOperationParameterMappings(OperationContext operationContext, string operationPath)
-        {
-            var strippedOperationPath = new RequestPathPattern(RequestPathPattern.StripQueryString(operationPath));
-            var strippedContextualPath = new RequestPathPattern(RequestPathPattern.StripQueryString(operationContext.ContextualPath.SerializedPath));
-            var strippedOperationContext = OperationContext.Create(strippedContextualPath);
-            return strippedOperationContext
-                .BuildParameterMapping(strippedOperationPath)
-                .WithContextualParameterOverrides(OperationContext.BuildResourceIdentifierParameterMappings(strippedOperationPath));
         }
 
         protected abstract ParameterProvider[] BuildParameters();
@@ -183,43 +174,14 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             out VariableExpression currentVar)
         {
             var getMethod = isAsync ? "GetAsync" : "Get";
-            var arguments = BuildGetMethodArguments(cancellationTokenParam);
             // TupleExpression wrapper is a workaround to ensure correct async syntax: (await GetAsync(...).ConfigureAwait(false)).Value.Data
             // Without this workaround, async case would generate invalid syntax: await GetAsync(...).ConfigureAwait(false).Value.Data
             return Declare(
                 variableName,
                 resourceClientProvider.ResourceData.Type,
-                new TupleExpression(This.Invoke(getMethod, arguments, null, isAsync))
+                new TupleExpression(This.Invoke(getMethod, [KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(cancellationTokenParam)], null, isAsync))
                     .Property("Value").Property("Data"),
                 out currentVar);
-        }
-
-        private IReadOnlyList<ValueExpression> BuildGetMethodArguments(ParameterProvider cancellationTokenParam)
-        {
-            var convenienceMethod = _getRestClient.GetConvenienceMethodByOperation(_getMethodProvider.Operation, _isAsync);
-            var parameters = OperationMethodParameterHelper.GetOperationMethodParameters(_getMethodProvider, convenienceMethod, _getMethodParameterMappings, _resource);
-            var arguments = new List<ValueExpression>();
-            foreach (var parameter in parameters)
-            {
-                if (parameter.Type.Equals(typeof(CancellationToken)))
-                {
-                    arguments.Add(KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(cancellationTokenParam));
-                }
-                else if (_parameterMappings.TryPopulateContextualArgument(This.As<ArmResource>().Id(), parameter, out var contextualArgument))
-                {
-                    arguments.Add(contextualArgument);
-                }
-                else if (parameter.DefaultValue is not null)
-                {
-                    continue;
-                }
-                else
-                {
-                    arguments.Add(Default.CastTo(parameter.Type));
-                }
-            }
-
-            return arguments;
         }
 
         protected static MethodBodyStatement GetOriginalTagsStatement(

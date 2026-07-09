@@ -7,26 +7,26 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Generator.MgmtSolutions.Tests;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace Azure.Generator.MgmtSolutions.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> Information about an application definition request. </summary>
-    public partial class ApplicationDefinitionPatch
+    public partial class SolutionsApplicationDefinitionPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationDefinitionPatch"/>. </summary>
-        public ApplicationDefinitionPatch()
+        /// <summary> Initializes a new instance of <see cref="SolutionsApplicationDefinitionPatch"/>. </summary>
+        public SolutionsApplicationDefinitionPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationDefinitionPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionsApplicationDefinitionPatch"/>. </summary>
         /// <param name="tags"> Application definition tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationDefinitionPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SolutionsApplicationDefinitionPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

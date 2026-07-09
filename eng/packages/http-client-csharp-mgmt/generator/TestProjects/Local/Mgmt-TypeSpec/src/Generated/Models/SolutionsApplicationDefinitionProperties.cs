@@ -7,25 +7,25 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Generator.MgmtSolutions.Tests;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace Azure.Generator.MgmtSolutions.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The ApplicationDefinitionProperties. </summary>
-    internal partial class ApplicationDefinitionProperties
+    /// <summary> The SolutionsApplicationDefinitionProperties. </summary>
+    internal partial class SolutionsApplicationDefinitionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationDefinitionProperties"/>. </summary>
-        public ApplicationDefinitionProperties()
+        /// <summary> Initializes a new instance of <see cref="SolutionsApplicationDefinitionProperties"/>. </summary>
+        public SolutionsApplicationDefinitionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationDefinitionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionsApplicationDefinitionProperties"/>. </summary>
         /// <param name="displayName"> The managed application definition display name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationDefinitionProperties(string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SolutionsApplicationDefinitionProperties(string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

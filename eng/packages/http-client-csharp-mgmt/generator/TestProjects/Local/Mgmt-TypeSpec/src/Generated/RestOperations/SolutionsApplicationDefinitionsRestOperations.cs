@@ -10,24 +10,24 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Generator.MgmtSolutions.Tests
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class ApplicationDefinitions
+    internal partial class SolutionsApplicationDefinitions
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ApplicationDefinitions for mocking. </summary>
-        protected ApplicationDefinitions()
+        /// <summary> Initializes a new instance of SolutionsApplicationDefinitions for mocking. </summary>
+        protected SolutionsApplicationDefinitions()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationDefinitions. </summary>
+        /// <summary> Initializes a new instance of SolutionsApplicationDefinitions. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ApplicationDefinitions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal SolutionsApplicationDefinitions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -49,7 +49,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions/", false);
+            uri.AppendPath("/providers/MgmtTypeSpec/applicationDefinitions/", false);
             uri.AppendPath(applicationDefinitionName, true);
             if (_apiVersion != null)
             {
@@ -71,7 +71,7 @@ namespace Azure.Generator.MgmtSolutions.Tests
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions/", false);
+            uri.AppendPath("/providers/MgmtTypeSpec/applicationDefinitions/", false);
             uri.AppendPath(applicationDefinitionName, true);
             if (_apiVersion != null)
             {
@@ -95,7 +95,31 @@ namespace Azure.Generator.MgmtSolutions.Tests
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Solutions/applicationDefinitions/", false);
+            uri.AppendPath("/providers/MgmtTypeSpec/applicationDefinitions/", false);
+            uri.AppendPath(applicationDefinitionName, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Patch;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateByIdRequest(Guid subscriptionId, string resourceGroupName, string applicationDefinitionName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/MgmtTypeSpec/applicationDefinitions/", false);
             uri.AppendPath(applicationDefinitionName, true);
             if (_apiVersion != null)
             {

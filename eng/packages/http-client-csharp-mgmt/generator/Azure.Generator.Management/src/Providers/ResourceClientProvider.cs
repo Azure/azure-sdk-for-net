@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
@@ -490,17 +491,23 @@ namespace Azure.Generator.Management.Providers
                         var updateRestClientInfo = _clientInfos[inputUpdateClient];
                         var getRestClientInfo = _clientInfos[inputReadClient];
                         var isFakeLro = ResourceHelpers.ShouldMakeLro(tagUpdateMethod.Kind);
-                        var parameterMappings = _operationContext.BuildParameterMapping(new RequestPathPattern(tagUpdateMethod.InputMethod.Operation.Path));
+                        var updatePath = new RequestPathPattern(tagUpdateMethod.InputMethod.Operation.Path);
+                        var parameterMappings = _operationContext
+                            .BuildParameterMapping(updatePath)
+                            .WithContextualParameterOverrides(OperationContext.BuildResourceIdentifierParameterMappings(updatePath));
                         var tagUpdateMethodProvider = new UpdateOperationMethodProvider(this, parameterMappings, updateRestClientInfo, tagUpdateMethod.InputMethod, false, tagUpdateMethod.Kind, isFakeLro);
 
-                        methods.AddRange([
-                            new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                            new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
-                            new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                            new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
-                            new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                            new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false)
-                        ]);
+                        if (CanPopulateTagUpdateMethodArguments(tagUpdateMethodProvider.Signature, parameterMappings))
+                        {
+                            methods.AddRange([
+                                new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                                new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                                new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                                new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                                new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                                new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false)
+                            ]);
+                        }
                     }
                 }
             }
@@ -523,6 +530,32 @@ namespace Azure.Generator.Management.Providers
             }
 
             return new ResourceOperationMethodProvider(this, _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path)), restClientInfo, method, isAsync, methodName, forceLro: isFakeLro);
+        }
+
+        private static bool CanPopulateTagUpdateMethodArguments(MethodSignature updateSignature, ParameterContextRegistry parameterMappings)
+        {
+            foreach (var parameter in updateSignature.Parameters)
+            {
+                if (parameter.Type.Equals(typeof(WaitUntil)) ||
+                    parameter.Type.Equals(typeof(CancellationToken)) ||
+                    parameter.Location == ParameterLocation.Body ||
+                    parameter.DefaultValue is not null)
+                {
+                    continue;
+                }
+
+                var serializedName = parameter.WireInfo?.SerializedName;
+                if (serializedName is not null &&
+                    parameterMappings.TryGetValue(serializedName, out var mapping) &&
+                    mapping.ContextualParameter is not null)
+                {
+                    continue;
+                }
+
+                return false;
+            }
+
+            return true;
         }
 
         private (bool IsPatch, ResourceMethod? UpdateMethod) PopulateUpdateMethod()

@@ -305,22 +305,23 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(bodyStatements, Is.Not.Null);
             Assert.That(bodyStatements, Does.Contain("global::Samples.Models.ResponseTypePatch patch = new global::Samples.Models.ResponseTypePatch();"));
             Assert.That(bodyStatements, Does.Not.Contain("global::System.String patch"));
-            Assert.That(bodyStatements, Does.Contain("this.Update(this.Id.Name, patch, this.Id.ResourceGroupName, cancellationToken: cancellationToken);"));
+            Assert.That(bodyStatements, Does.Contain("this.Update(patch, cancellationToken: cancellationToken);"));
         }
 
         [TestCase]
-        public void Verify_TagMethodsUseResourceName_WhenUpdatePathHasQuerySuffix()
+        public void Verify_NoTagMethods_WhenUpdatePathHasQuerySuffix()
         {
             var (client, models) = InputResourceData.ClientWithResourcePatchBodyAfterNonContextualPathParameters(includeQueryInUpdatePath: true);
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
             Assert.That(resourceClientProvider, Is.Not.Null);
 
-            var addTagMethod = resourceClientProvider.Methods.Single(m => m.Signature.Name == "AddTag");
-            var bodyStatements = addTagMethod.BodyStatements?.ToDisplayString();
-            Assert.That(bodyStatements, Is.Not.Null);
-            Assert.That(bodyStatements, Does.Contain("this.Update(this.Id.Name, patch, this.Id.ResourceGroupName, cancellationToken: cancellationToken);"));
-            Assert.That(bodyStatements, Does.Not.Contain("((string)default)"));
+            var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
+            foreach (var tagMethodName in tagMethodNames)
+            {
+                var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
+                Assert.That(method, Is.Null, $"Tag method '{tagMethodName}' should not be generated when the update path has unresolved query-suffixed parameters.");
+            }
         }
 
         private static MethodProvider GetTagMethodByName(string methodName, bool isAsync, string[]? customizationSources = null)

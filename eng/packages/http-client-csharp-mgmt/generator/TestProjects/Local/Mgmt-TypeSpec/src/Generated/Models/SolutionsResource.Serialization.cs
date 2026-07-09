@@ -10,66 +10,56 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Generator.MgmtSolutions.Tests;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace Azure.Generator.MgmtSolutions.Tests.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> Information about an application definition request. </summary>
-    public partial class ApplicationDefinitionPatch : IJsonModel<ApplicationDefinitionPatch>
+    /// <summary> Reduced Solutions resource information. </summary>
+    public partial class SolutionsResource : IJsonModel<SolutionsResource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApplicationDefinitionPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SolutionsResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationDefinitionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApplicationDefinitionPatch(document.RootElement, options);
+                        return DeserializeSolutionsResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationDefinitionPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionsResource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationDefinitionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtSolutionsTestsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationDefinitionPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SolutionsResource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApplicationDefinitionPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SolutionsResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationDefinitionPatch IPersistableModel<ApplicationDefinitionPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SolutionsResource IPersistableModel<SolutionsResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApplicationDefinitionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="applicationDefinitionPatch"> The <see cref="ApplicationDefinitionPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ApplicationDefinitionPatch applicationDefinitionPatch)
-        {
-            if (applicationDefinitionPatch == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(applicationDefinitionPatch, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<SolutionsResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApplicationDefinitionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SolutionsResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +70,25 @@ namespace Azure.Generator.MgmtSolutions.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationDefinitionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationDefinitionPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionsResource)} does not support writing '{format}' format.");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -120,33 +125,55 @@ namespace Azure.Generator.MgmtSolutions.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApplicationDefinitionPatch IJsonModel<ApplicationDefinitionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SolutionsResource IJsonModel<SolutionsResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApplicationDefinitionPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SolutionsResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplicationDefinitionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SolutionsResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationDefinitionPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SolutionsResource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplicationDefinitionPatch(document.RootElement, options);
+            return DeserializeSolutionsResource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApplicationDefinitionPatch DeserializeApplicationDefinitionPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static SolutionsResource DeserializeSolutionsResource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ResourceIdentifier id = default;
+            string name = default;
+            string @type = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("id"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -173,7 +200,7 @@ namespace Azure.Generator.MgmtSolutions.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationDefinitionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new SolutionsResource(id, name, @type, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }
