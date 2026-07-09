@@ -1,4 +1,4 @@
-# Sample on getting the responses from hosted Agent in Azure.AI.Extensions.OpenAI.
+# Sample on disabling and enabling hosted Agents in Azure.AI.Projects.Agents.
 
 ## Hosted Agent Deployment prerequisites
 
@@ -53,17 +53,15 @@ docker push <DOCKER_USERNAME>.azurecr.io/<DOCKER_USERNAME>/workflow-agent:latest
 
 1. Read the environment variables, which will be used in the next steps.
 
-```C# Snippet:Sample_CreateAgentClient_HostedAgent
+```C# Snippet:Sample_CreateAgentClient_HostedAgentSessionsAgents
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
-Uri uriEndpoint = new(projectEndpoint);
-DefaultAzureCredential credential = new();
-AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: credential);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. For brevity we will create the method, returning the `HostedAgentDefinition` object.
 
-```C# Snippet:Sample_HostedAgentDefinition_HostedAgent
+```C# Snippet:Sample_HostedAgentSessionsAgentsDefinition_HostedAgentSessionsAgents
 private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
 {
     HostedAgentDefinition agentDefinition = new(
@@ -81,37 +79,37 @@ private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
 3. Create the hosted agent object.
 
 Synchronous sample:
-```C# Snippet:Sample_CreateAgent_HostedAgent_Sync
+```C# Snippet:Sample_CreateAgent_HostedAgentSessionsAgents_Sync
 HostedAgentDefinition agentDefinition = GetAgentDefinition(
     dockerImage: dockerImage
 );
 ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
 creationOptions.Metadata["enableVnextExperience"] = "true";
-ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = agentsClient.CreateAgentVersion(
     agentName: "myHostedAgent",
     options: creationOptions);
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_CreateAgent_HostedAgent_Async
+```C# Snippet:Sample_CreateAgent_HostedAgentSessionsAgents_Async
 HostedAgentDefinition agentDefinition = GetAgentDefinition(
     dockerImage: dockerImage
 );
 ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
 creationOptions.Metadata["enableVnextExperience"] = "true";
-ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
-    agentName: "myHostedAgent1",
+ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
+    agentName: "myHostedAgent",
     options: creationOptions);
 ```
 
 4. Wait while Agent will get to the active state; throw error if the deployment fails.
 
 Synchronous sample:
-```C# Snippet:Sample_WaitForDeployment_HostedAgent_Sync
+```C# Snippet:Sample_WaitForDeployment_HostedAgentSessionsAgents_Sync
 while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
 {
     Thread.Sleep(500);
-    agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+    agentVersion = agentsClient.GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 }
 if (agentVersion.Status != AgentVersionStatus.Active)
 {
@@ -120,11 +118,11 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_WaitForDeployment_HostedAgent_Async
+```C# Snippet:Sample_WaitForDeployment_HostedAgentSessionsAgents_Async
 while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
 {
     await Task.Delay(500);
-    agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+    agentVersion = await agentsClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 }
 if (agentVersion.Status != AgentVersionStatus.Active)
 {
@@ -135,7 +133,7 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 5. Configure an Agent endpoint for Responses protocol.
 
 Synchronous sample:
-```C# Snippet:Sample_CreateTheEndpoint_HostedAgent_Sync
+```C# Snippet:Sample_CreateTheEndpoint_HostedAgentSessionsAgents_Sync
 AgentEndpointConfiguration config = new()
 {
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
@@ -148,14 +146,14 @@ PatchAgentOptions patchOptions = new()
 {
     AgentEndpoint = config,
 };
-ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.PatchAgent(
+ProjectsAgentRecord patchedRecord = agentsClient.PatchAgent(
     agentName: agentVersion.Name,
     patchAgentOptions: patchOptions);
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_CreateTheEndpoint_HostedAgent_Async
+```C# Snippet:Sample_CreateTheEndpoint_HostedAgentSessionsAgents_Async
 AgentEndpointConfiguration config = new()
 {
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
@@ -168,36 +166,90 @@ PatchAgentOptions patchOptions = new()
 {
     AgentEndpoint = config,
 };
-ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentAsync(
+ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentAsync(
     agentName: agentVersion.Name,
     patchAgentOptions: patchOptions);
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 ```
 
-6. Create the response client to communicate with an Agent and get the response. In this case we will use `GetProjectResponsesClientForAgentEndpoint` method.
+6. Create the session.
 
 Synchronous sample:
-```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Sync
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
-ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
-Console.WriteLine(response.GetOutputText());
+```C# Snippet:Sample_CreateSession_HostedAgentSessionsAgents_Sync
+ProjectAgentSession session1 = agentsClient.CreateSession(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+Console.WriteLine($"The session {session1.AgentSessionId} was created.");
 ```
 
 Asynchronous sample:
-```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Async
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
-ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
-Console.WriteLine(response.GetOutputText());
+```C# Snippet:Sample_CreateSession_HostedAgentSessionsAgents_Async
+ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+Console.WriteLine($"The session {session1.AgentSessionId} was created.");
 ```
 
-7. Delete the Agent we have created.
+7. Disable Agent and try to create a new session; this operation should fail.
 
 Synchronous sample:
-```C# Snippet:DeleteHostedAgent_HostedAgent_Sync
-projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
+```C# Snippet:Sample_DisableTheAgent_HostedAgentSessionsAgents_Sync
+agentsClient.DisableAgent(agentVersion.Name);
+// The new session cannot be created.
+try
+{
+    agentsClient.CreateSession(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+    throw new InvalidOperationException("Stopped Agent was unexpectedly able to create session.");
+}
+catch (ClientResultException ex)
+{
+    if (ex.Status != 403)
+    {
+        throw;
+    }
+    Console.WriteLine(ex.Message);
+}
 ```
 
 Asynchronous sample:
-```C# Snippet:DeleteHostedAgent_HostedAgent_Async
-await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
+```C# Snippet:Sample_DisableTheAgent_HostedAgentSessionsAgents_Async
+await agentsClient.DisableAgentAsync(agentVersion.Name);
+// The new session cannot be created.
+try
+{
+    await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+    throw new InvalidOperationException("Stopped Agent was unexpectedly able to create session.");
+}
+catch (ClientResultException ex)
+{
+    if (ex.Status != 403)
+    {
+        throw;
+    }
+    Console.WriteLine(ex.Message);
+}
+```
+
+8. Enable the Agent Again. Now we can create another session.
+
+Synchronous sample:
+```C# Snippet:Sample_EnableTheAgent_HostedAgentSessionsAgents_Sync
+agentsClient.EnableAgent(agentVersion.Name);
+ProjectAgentSession session2 = agentsClient.CreateSession(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+Console.WriteLine($"The session {session2.AgentSessionId} was created.");
+```
+
+Asynchronous sample:
+```C# Snippet:Sample_EnableTheAgent_HostedAgentSessionsAgents_Async
+await agentsClient.EnableAgentAsync(agentVersion.Name);
+ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+Console.WriteLine($"The session {session2.AgentSessionId} was created.");
+```
+
+9. Delete the Agent we have created.
+
+Synchronous sample:
+```C# Snippet:DeleteHostedAgentSessionsAgents_HostedAgentSessionsAgents_Sync
+agentsClient.DeleteAgent(agentVersion.Name, force: true);
+```
+
+Asynchronous sample:
+```C# Snippet:DeleteHostedAgentSessionsAgents_HostedAgentSessionsAgents_Async
+await agentsClient.DeleteAgentAsync(agentVersion.Name, force: true);
 ```
