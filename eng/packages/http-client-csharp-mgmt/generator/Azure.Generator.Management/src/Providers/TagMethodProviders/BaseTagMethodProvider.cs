@@ -42,7 +42,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
         private readonly ParameterContextRegistry _parameterMappings;
         private readonly ParameterContextRegistry _updateParameterMappings;
-        private readonly RequestPathPattern _updatePath;
 
         // TODO: make a struct to group the input parameters
         protected BaseTagMethodProvider(
@@ -62,8 +61,10 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _getMethodProvider = getMethod;
             _operationContext = operationContext;
             _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(getMethod.Operation.Path));
-            _updatePath = new RequestPathPattern(RequestPathPattern.StripQueryString(updateMethodProvider.ServiceMethod.Operation.Path));
-            _updateParameterMappings = operationContext.BuildParameterMapping(_updatePath);
+            var updatePath = new RequestPathPattern(RequestPathPattern.StripQueryString(updateMethodProvider.ServiceMethod.Operation.Path));
+            _updateParameterMappings = operationContext
+                .BuildParameterMapping(updatePath)
+                .WithContextualParameterOverrides(OperationContext.BuildResourceIdentifierParameterMappings(updatePath));
             _enclosingType = resource;
             _updateRestClient = updateRestClientInfo.RestClientProvider;
             _getRestClient = getRestClientInfo.RestClientProvider;
@@ -235,10 +236,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 {
                     arguments.Add(contextualArgument);
                 }
-                else if (TryBuildResourceIdUpdateArgument(parameter, out var resourceIdArgument))
-                {
-                    arguments.Add(resourceIdArgument);
-                }
                 else if (parameter.DefaultValue is not null)
                 {
                     continue;
@@ -250,42 +247,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             }
 
             return arguments;
-        }
-
-        private bool TryBuildResourceIdUpdateArgument(ParameterProvider parameter, out ValueExpression argument)
-        {
-            var serializedName = parameter.WireInfo.SerializedName;
-            var id = This.As<ArmResource>().Id();
-            ValueExpression? value = serializedName switch
-            {
-                "subscriptionId" => id.SubscriptionId(),
-                "resourceGroupName" => id.ResourceGroupName(),
-                _ when IsUpdateResourceNameParameter(serializedName) => id.Name(),
-                _ => null
-            };
-
-            if (value is not null)
-            {
-                argument = ParameterContextRegistry.Convert(value, typeof(string), parameter.Type);
-                return true;
-            }
-
-            argument = Default.CastTo(parameter.Type);
-            return false;
-        }
-
-        private bool IsUpdateResourceNameParameter(string serializedName)
-        {
-            for (int i = _updatePath.Count - 1; i >= 0; i--)
-            {
-                var segment = _updatePath[i];
-                if (!segment.IsConstant)
-                {
-                    return segment.VariableName == serializedName;
-                }
-            }
-
-            return false;
         }
 
         protected List<MethodBodyStatement> BuildElseStatements(

@@ -332,6 +332,12 @@ internal class OperationContext
         return new ParameterContextRegistry([.. mappings, .. constantMappings]);
     }
 
+    internal static IReadOnlyList<ParameterContextMapping> BuildResourceIdentifierParameterMappings(RequestPathPattern operationPath)
+    {
+        var contextualParameters = BuildContextualParameters(operationPath);
+        return BuildParameterMappingCore(contextualParameters, [], operationPath, operationPath.Count, 0);
+    }
+
     /// <summary>
     /// Walks the operation path against the contextual path. Whenever the operation path has
     /// a variable segment at the same index where the contextual path has a constant segment,
