@@ -20,18 +20,13 @@ namespace Azure.Provisioning.FrontDoor
         {
         }
 
-        /// <summary> Gets or sets the CertificateType. </summary>
+        /// <summary> Gets the CertificateType. </summary>
         public BicepValue<FrontDoorEndpointConnectionCertificateType> CertificateType
         {
             get
             {
                 Initialize();
                 return _certificateType;
-            }
-            set
-            {
-                Initialize();
-                _certificateType.Assign(value);
             }
         }
 

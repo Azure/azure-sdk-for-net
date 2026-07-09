@@ -37,13 +37,18 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -108,7 +113,7 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets or sets the HostName. </summary>
+        /// <summary> Gets the HostName. </summary>
         public BicepValue<string> HostName
         {
             get
@@ -117,7 +122,7 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets or sets the SessionAffinityEnabledState. </summary>
+        /// <summary> Gets the SessionAffinityEnabledState. </summary>
         public BicepValue<SessionAffinityEnabledState> SessionAffinityEnabledState
         {
             get
@@ -126,7 +131,7 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets or sets the SessionAffinityTtlInSeconds. </summary>
+        /// <summary> Gets the SessionAffinityTtlInSeconds. </summary>
         public BicepValue<int> SessionAffinityTtlInSeconds
         {
             get
@@ -135,7 +140,7 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> WebApplicationFirewallPolicyLinkId
         {
             get

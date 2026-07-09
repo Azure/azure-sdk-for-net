@@ -68,7 +68,7 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets or sets the HostName. </summary>
+        /// <summary> Gets the HostName. </summary>
         public BicepValue<string> HostName
         {
             get
@@ -76,14 +76,9 @@ namespace Azure.Provisioning.FrontDoor
                 Initialize();
                 return _hostName;
             }
-            set
-            {
-                Initialize();
-                _hostName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the SessionAffinityEnabledState. </summary>
+        /// <summary> Gets the SessionAffinityEnabledState. </summary>
         public BicepValue<SessionAffinityEnabledState> SessionAffinityEnabledState
         {
             get
@@ -91,14 +86,9 @@ namespace Azure.Provisioning.FrontDoor
                 Initialize();
                 return _sessionAffinityEnabledState;
             }
-            set
-            {
-                Initialize();
-                _sessionAffinityEnabledState.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the SessionAffinityTtlInSeconds. </summary>
+        /// <summary> Gets the SessionAffinityTtlInSeconds. </summary>
         public BicepValue<int> SessionAffinityTtlInSeconds
         {
             get
@@ -106,14 +96,9 @@ namespace Azure.Provisioning.FrontDoor
                 Initialize();
                 return _sessionAffinityTtlInSeconds;
             }
-            set
-            {
-                Initialize();
-                _sessionAffinityTtlInSeconds.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the WebApplicationFirewallPolicyLink. </summary>
+        /// <summary> Gets the WebApplicationFirewallPolicyLink. </summary>
         internal FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink WebApplicationFirewallPolicyLink
         {
             get
@@ -121,27 +106,14 @@ namespace Azure.Provisioning.FrontDoor
                 Initialize();
                 return _webApplicationFirewallPolicyLink;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _webApplicationFirewallPolicyLink, value);
-            }
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> WebApplicationFirewallPolicyLinkId
         {
             get
             {
-                return WebApplicationFirewallPolicyLink is null ? default : WebApplicationFirewallPolicyLink.Id;
-            }
-            set
-            {
-                if (WebApplicationFirewallPolicyLink is null)
-                {
-                    WebApplicationFirewallPolicyLink = new FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink();
-                }
-                WebApplicationFirewallPolicyLink.Id = value;
+                return WebApplicationFirewallPolicyLink.Id;
             }
         }
 

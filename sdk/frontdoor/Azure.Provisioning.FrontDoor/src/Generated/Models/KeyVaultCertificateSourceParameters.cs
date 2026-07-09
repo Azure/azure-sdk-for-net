@@ -23,7 +23,7 @@ namespace Azure.Provisioning.FrontDoor
         {
         }
 
-        /// <summary> Gets or sets the Vault. </summary>
+        /// <summary> Gets the Vault. </summary>
         internal KeyVaultCertificateSourceParametersVault Vault
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.FrontDoor
                 Initialize();
                 return _vault;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _vault, value);
-            }
         }
 
-        /// <summary> Gets or sets the SecretName. </summary>
+        /// <summary> Gets the SecretName. </summary>
         public BicepValue<string> SecretName
         {
             get
@@ -46,14 +41,9 @@ namespace Azure.Provisioning.FrontDoor
                 Initialize();
                 return _secretName;
             }
-            set
-            {
-                Initialize();
-                _secretName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the SecretVersion. </summary>
+        /// <summary> Gets the SecretVersion. </summary>
         public BicepValue<string> SecretVersion
         {
             get
@@ -61,27 +51,14 @@ namespace Azure.Provisioning.FrontDoor
                 Initialize();
                 return _secretVersion;
             }
-            set
-            {
-                Initialize();
-                _secretVersion.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> VaultId
         {
             get
             {
-                return Vault is null ? default : Vault.Id;
-            }
-            set
-            {
-                if (Vault is null)
-                {
-                    Vault = new KeyVaultCertificateSourceParametersVault();
-                }
-                Vault.Id = value;
+                return Vault.Id;
             }
         }
 

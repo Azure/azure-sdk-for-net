@@ -25,7 +25,7 @@ namespace Azure.Provisioning.FrontDoor
         {
         }
 
-        /// <summary> Gets or sets the CertificateSource. </summary>
+        /// <summary> Gets the CertificateSource. </summary>
         public BicepValue<FrontDoorCertificateSource> CertificateSource
         {
             get
@@ -33,14 +33,9 @@ namespace Azure.Provisioning.FrontDoor
                 Initialize();
                 return _certificateSource;
             }
-            set
-            {
-                Initialize();
-                _certificateSource.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ProtocolType. </summary>
+        /// <summary> Gets the ProtocolType. </summary>
         public BicepValue<FrontDoorTlsProtocolType> ProtocolType
         {
             get
@@ -48,14 +43,9 @@ namespace Azure.Provisioning.FrontDoor
                 Initialize();
                 return _protocolType;
             }
-            set
-            {
-                Initialize();
-                _protocolType.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the MinimumTlsVersion. </summary>
+        /// <summary> Gets the MinimumTlsVersion. </summary>
         public BicepValue<FrontDoorRequiredMinimumTlsVersion> MinimumTlsVersion
         {
             get
@@ -63,14 +53,9 @@ namespace Azure.Provisioning.FrontDoor
                 Initialize();
                 return _minimumTlsVersion;
             }
-            set
-            {
-                Initialize();
-                _minimumTlsVersion.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the KeyVaultCertificateSourceParameters. </summary>
+        /// <summary> Gets the KeyVaultCertificateSourceParameters. </summary>
         internal KeyVaultCertificateSourceParameters KeyVaultCertificateSourceParameters
         {
             get
@@ -78,14 +63,9 @@ namespace Azure.Provisioning.FrontDoor
                 Initialize();
                 return _keyVaultCertificateSourceParameters;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _keyVaultCertificateSourceParameters, value);
-            }
         }
 
-        /// <summary> Gets or sets the FrontDoorCertificateSourceParameters. </summary>
+        /// <summary> Gets the FrontDoorCertificateSourceParameters. </summary>
         internal FrontDoorCertificateSourceParameters FrontDoorCertificateSourceParameters
         {
             get
@@ -93,78 +73,41 @@ namespace Azure.Provisioning.FrontDoor
                 Initialize();
                 return _frontDoorCertificateSourceParameters;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _frontDoorCertificateSourceParameters, value);
-            }
         }
 
-        /// <summary> Gets or sets the SecretName. </summary>
+        /// <summary> Gets the SecretName. </summary>
         public BicepValue<string> SecretName
         {
             get
             {
-                return KeyVaultCertificateSourceParameters is null ? default : KeyVaultCertificateSourceParameters.SecretName;
-            }
-            set
-            {
-                if (KeyVaultCertificateSourceParameters is null)
-                {
-                    KeyVaultCertificateSourceParameters = new KeyVaultCertificateSourceParameters();
-                }
-                KeyVaultCertificateSourceParameters.SecretName = value;
+                return KeyVaultCertificateSourceParameters.SecretName;
             }
         }
 
-        /// <summary> Gets or sets the SecretVersion. </summary>
+        /// <summary> Gets the SecretVersion. </summary>
         public BicepValue<string> SecretVersion
         {
             get
             {
-                return KeyVaultCertificateSourceParameters is null ? default : KeyVaultCertificateSourceParameters.SecretVersion;
-            }
-            set
-            {
-                if (KeyVaultCertificateSourceParameters is null)
-                {
-                    KeyVaultCertificateSourceParameters = new KeyVaultCertificateSourceParameters();
-                }
-                KeyVaultCertificateSourceParameters.SecretVersion = value;
+                return KeyVaultCertificateSourceParameters.SecretVersion;
             }
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> VaultId
         {
             get
             {
-                return KeyVaultCertificateSourceParameters is null ? default : KeyVaultCertificateSourceParameters.VaultId;
-            }
-            set
-            {
-                if (KeyVaultCertificateSourceParameters is null)
-                {
-                    KeyVaultCertificateSourceParameters = new KeyVaultCertificateSourceParameters();
-                }
-                KeyVaultCertificateSourceParameters.VaultId = value;
+                return KeyVaultCertificateSourceParameters.VaultId;
             }
         }
 
-        /// <summary> Gets or sets the CertificateType. </summary>
+        /// <summary> Gets the CertificateType. </summary>
         public BicepValue<FrontDoorEndpointConnectionCertificateType> CertificateType
         {
             get
             {
-                return FrontDoorCertificateSourceParameters is null ? default : FrontDoorCertificateSourceParameters.CertificateType;
-            }
-            set
-            {
-                if (FrontDoorCertificateSourceParameters is null)
-                {
-                    FrontDoorCertificateSourceParameters = new FrontDoorCertificateSourceParameters();
-                }
-                FrontDoorCertificateSourceParameters.CertificateType = value;
+                return FrontDoorCertificateSourceParameters.CertificateType;
             }
         }
 
@@ -172,9 +115,9 @@ namespace Azure.Provisioning.FrontDoor
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _certificateSource = DefineProperty<FrontDoorCertificateSource>(nameof(CertificateSource), new string[] { "certificateSource" }, isRequired: true);
-            _protocolType = DefineProperty<FrontDoorTlsProtocolType>(nameof(ProtocolType), new string[] { "protocolType" }, isRequired: true);
-            _minimumTlsVersion = DefineProperty<FrontDoorRequiredMinimumTlsVersion>(nameof(MinimumTlsVersion), new string[] { "minimumTlsVersion" }, isRequired: true);
+            _certificateSource = DefineProperty<FrontDoorCertificateSource>(nameof(CertificateSource), new string[] { "certificateSource" });
+            _protocolType = DefineProperty<FrontDoorTlsProtocolType>(nameof(ProtocolType), new string[] { "protocolType" });
+            _minimumTlsVersion = DefineProperty<FrontDoorRequiredMinimumTlsVersion>(nameof(MinimumTlsVersion), new string[] { "minimumTlsVersion" });
             _keyVaultCertificateSourceParameters = DefineModelProperty<KeyVaultCertificateSourceParameters>(nameof(KeyVaultCertificateSourceParameters), new string[] { "keyVaultCertificateSourceParameters" });
             _frontDoorCertificateSourceParameters = DefineModelProperty<FrontDoorCertificateSourceParameters>(nameof(FrontDoorCertificateSourceParameters), new string[] { "frontDoorCertificateSourceParameters" });
             DefineAdditionalProperties();

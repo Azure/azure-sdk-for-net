@@ -23,13 +23,13 @@ namespace Azure.Provisioning.FrontDoor
     public partial class CustomHttpsConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CustomHttpsConfiguration() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorCertificateSource> CertificateSource { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorEndpointConnectionCertificateType> CertificateType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorRequiredMinimumTlsVersion> MinimumTlsVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorTlsProtocolType> ProtocolType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SecretName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SecretVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VaultId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorCertificateSource> CertificateSource { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorEndpointConnectionCertificateType> CertificateType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorRequiredMinimumTlsVersion> MinimumTlsVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorTlsProtocolType> ProtocolType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SecretName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SecretVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VaultId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum CustomRuleEnabledState
@@ -440,7 +440,7 @@ namespace Azure.Provisioning.FrontDoor
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontendEndpointCustomHttpsProvisioningSubstate> CustomHttpsProvisioningSubstate { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.FrontDoor.FrontDoorResource Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorResourceState> ResourceState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.SessionAffinityEnabledState> SessionAffinityEnabledState { get { throw null; } }
