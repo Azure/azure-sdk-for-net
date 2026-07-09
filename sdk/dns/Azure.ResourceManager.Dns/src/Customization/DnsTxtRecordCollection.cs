@@ -25,35 +25,6 @@ namespace Azure.ResourceManager.Dns
     /// </summary>
     public partial class DnsTxtRecordCollection : ArmCollection, IEnumerable<DnsTxtRecordResource>, IAsyncEnumerable<DnsTxtRecordResource>
     {
-        private readonly ClientDiagnostics _recordSetsClientDiagnostics;
-        private readonly RecordSets _recordSetsRestClient;
-
-        /// <summary> Initializes a new instance of DnsTxtRecordCollection for mocking. </summary>
-        protected DnsTxtRecordCollection()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DnsTxtRecordCollection"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DnsTxtRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-            TryGetApiVersion(DnsTxtRecordResource.ResourceType, out string dnsTxtRecordApiVersion);
-            _recordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", DnsTxtRecordResource.ResourceType.Namespace, Diagnostics);
-            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Endpoint, dnsTxtRecordApiVersion ?? "2023-07-01-preview");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != DnsZoneResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DnsZoneResource.ResourceType), nameof(id));
-            }
-        }
-
         /// <summary> Creates or updates a DNS TXT record set. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="txtRecordName"> The name of the TXT record set. </param>

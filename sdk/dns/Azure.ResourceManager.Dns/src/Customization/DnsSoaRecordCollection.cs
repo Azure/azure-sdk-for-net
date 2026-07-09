@@ -25,35 +25,6 @@ namespace Azure.ResourceManager.Dns
     /// </summary>
     public partial class DnsSoaRecordCollection : ArmCollection, IEnumerable<DnsSoaRecordResource>, IAsyncEnumerable<DnsSoaRecordResource>
     {
-        private readonly ClientDiagnostics _recordSetsClientDiagnostics;
-        private readonly RecordSets _recordSetsRestClient;
-
-        /// <summary> Initializes a new instance of DnsSoaRecordCollection for mocking. </summary>
-        protected DnsSoaRecordCollection()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DnsSoaRecordCollection"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DnsSoaRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-            TryGetApiVersion(DnsSoaRecordResource.ResourceType, out string dnsSoaRecordApiVersion);
-            _recordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", DnsSoaRecordResource.ResourceType.Namespace, Diagnostics);
-            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Endpoint, dnsSoaRecordApiVersion ?? "2023-07-01-preview");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != DnsZoneResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DnsZoneResource.ResourceType), nameof(id));
-            }
-        }
-
         /// <summary> Creates or updates a DNS SOA record set. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="soaRecordName"> The name of the SOA record set. </param>

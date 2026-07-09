@@ -27,35 +27,6 @@ namespace Azure.ResourceManager.PrivateDns
     /// </summary>
     public partial class PrivateDnsMXRecordCollection : ArmCollection, IEnumerable<PrivateDnsMXRecordResource>, IAsyncEnumerable<PrivateDnsMXRecordResource>
     {
-        private readonly ClientDiagnostics _recordSetsClientDiagnostics;
-        private readonly RecordSets _recordSetsRestClient;
-
-        /// <summary> Initializes a new instance of PrivateDnsMXRecordCollection for mocking. </summary>
-        protected PrivateDnsMXRecordCollection()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PrivateDnsMXRecordCollection"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateDnsMXRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-            TryGetApiVersion(PrivateDnsMXRecordResource.ResourceType, out string dnsMXRecordApiVersion);
-            _recordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", PrivateDnsMXRecordResource.ResourceType.Namespace, Diagnostics);
-            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Endpoint, dnsMXRecordApiVersion ?? "2024-06-01");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != PrivateDnsZoneResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PrivateDnsZoneResource.ResourceType), nameof(id));
-            }
-        }
-
         /// <summary> Creates or updates a DNS MX record set. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="mxRecordName"> The name of the MX record set. </param>

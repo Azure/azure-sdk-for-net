@@ -25,35 +25,6 @@ namespace Azure.ResourceManager.Dns
     /// </summary>
     public partial class DnsSrvRecordCollection : ArmCollection, IEnumerable<DnsSrvRecordResource>, IAsyncEnumerable<DnsSrvRecordResource>
     {
-        private readonly ClientDiagnostics _recordSetsClientDiagnostics;
-        private readonly RecordSets _recordSetsRestClient;
-
-        /// <summary> Initializes a new instance of DnsSrvRecordCollection for mocking. </summary>
-        protected DnsSrvRecordCollection()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DnsSrvRecordCollection"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DnsSrvRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-            TryGetApiVersion(DnsSrvRecordResource.ResourceType, out string dnsSrvRecordApiVersion);
-            _recordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", DnsSrvRecordResource.ResourceType.Namespace, Diagnostics);
-            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Endpoint, dnsSrvRecordApiVersion ?? "2023-07-01-preview");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != DnsZoneResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DnsZoneResource.ResourceType), nameof(id));
-            }
-        }
-
         /// <summary> Creates or updates a DNS SRV record set. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="srvRecordName"> The name of the SRV record set. </param>

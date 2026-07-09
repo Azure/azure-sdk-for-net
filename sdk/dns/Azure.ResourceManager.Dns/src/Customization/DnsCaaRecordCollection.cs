@@ -25,35 +25,6 @@ namespace Azure.ResourceManager.Dns
     /// </summary>
     public partial class DnsCaaRecordCollection : ArmCollection, IEnumerable<DnsCaaRecordResource>, IAsyncEnumerable<DnsCaaRecordResource>
     {
-        private readonly ClientDiagnostics _recordSetsClientDiagnostics;
-        private readonly RecordSets _recordSetsRestClient;
-
-        /// <summary> Initializes a new instance of DnsCaaRecordCollection for mocking. </summary>
-        protected DnsCaaRecordCollection()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DnsCaaRecordCollection"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DnsCaaRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-            TryGetApiVersion(DnsCaaRecordResource.ResourceType, out string dnsCaaRecordApiVersion);
-            _recordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", DnsCaaRecordResource.ResourceType.Namespace, Diagnostics);
-            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Endpoint, dnsCaaRecordApiVersion ?? "2023-07-01-preview");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != DnsZoneResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DnsZoneResource.ResourceType), nameof(id));
-            }
-        }
-
         /// <summary> Creates or updates a DNS CAA record set. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="caaRecordName"> The name of the CAA record set. </param>

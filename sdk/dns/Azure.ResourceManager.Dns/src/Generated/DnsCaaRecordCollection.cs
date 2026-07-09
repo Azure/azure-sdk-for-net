@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -22,6 +23,35 @@ namespace Azure.ResourceManager.Dns
     /// </summary>
     public partial class DnsCaaRecordCollection : ArmCollection
     {
+        private readonly ClientDiagnostics _recordSetsClientDiagnostics;
+        private readonly RecordSets _recordSetsRestClient;
+
+        /// <summary> Initializes a new instance of DnsCaaRecordCollection for mocking. </summary>
+        protected DnsCaaRecordCollection()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsCaaRecordCollection"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal DnsCaaRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+            TryGetApiVersion(DnsCaaRecordResource.ResourceType, out string dnsCaaRecordApiVersion);
+            _recordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", DnsCaaRecordResource.ResourceType.Namespace, Diagnostics);
+            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Endpoint, dnsCaaRecordApiVersion ?? "2023-07-01-preview");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != DnsZoneResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DnsZoneResource.ResourceType), nameof(id));
+            }
+        }
+
         /// <summary>
         /// Creates or updates a record set within a DNS zone. Record sets of type SOA can be updated but not created (they are created when the DNS zone is created).
         /// <list type="bullet">
