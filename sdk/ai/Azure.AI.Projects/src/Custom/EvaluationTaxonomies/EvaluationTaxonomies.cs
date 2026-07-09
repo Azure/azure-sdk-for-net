@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Evaluation;
 
+[Experimental("AAIP001")]
 public partial class EvaluationTaxonomies
 {
     /// <summary> Creates or replaces the specified evaluation taxonomy with the provided definition. </summary>

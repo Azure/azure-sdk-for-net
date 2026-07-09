@@ -64,9 +64,9 @@ namespace Azure.Security.KeyVault.Secrets
             uri.Reset(_endpoint);
             uri.AppendPath("/secrets/", false);
             uri.AppendPath(secretName, true);
-            uri.AppendPath("/", false);
             if (secretVersion != null)
             {
+                uri.AppendPath("/", false);
                 uri.AppendPath(secretVersion, true);
             }
             if (_apiVersion != null)
@@ -89,9 +89,9 @@ namespace Azure.Security.KeyVault.Secrets
             uri.Reset(_endpoint);
             uri.AppendPath("/secrets/", false);
             uri.AppendPath(secretName, true);
-            uri.AppendPath("/", false);
             if (secretVersion != null)
             {
+                uri.AppendPath("/", false);
                 uri.AppendPath(secretVersion, true);
             }
             if (_apiVersion != null)

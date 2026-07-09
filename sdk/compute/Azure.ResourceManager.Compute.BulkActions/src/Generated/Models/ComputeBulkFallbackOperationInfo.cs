@@ -17,29 +17,29 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkFallbackOperationInfo"/>. </summary>
-        /// <param name="lastOperationType"> The last operation type that was performed as a fallback. </param>
+        /// <param name="lastOperationKind"> The last operation type that was performed as a fallback. </param>
         /// <param name="status"> The status of the fallback operation. </param>
-        internal ComputeBulkFallbackOperationInfo(ComputeBulkOperationType lastOperationType, string status)
+        internal ComputeBulkFallbackOperationInfo(ComputeBulkOperationKind lastOperationKind, string status)
         {
-            LastOperationType = lastOperationType;
+            LastOperationKind = lastOperationKind;
             Status = status;
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkFallbackOperationInfo"/>. </summary>
-        /// <param name="lastOperationType"> The last operation type that was performed as a fallback. </param>
+        /// <param name="lastOperationKind"> The last operation type that was performed as a fallback. </param>
         /// <param name="status"> The status of the fallback operation. </param>
         /// <param name="error"> The error code if the fallback operation failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkFallbackOperationInfo(ComputeBulkOperationType lastOperationType, string status, ComputeBulkOperationError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkFallbackOperationInfo(ComputeBulkOperationKind lastOperationKind, string status, ComputeBulkOperationError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LastOperationType = lastOperationType;
+            LastOperationKind = lastOperationKind;
             Status = status;
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The last operation type that was performed as a fallback. </summary>
-        public ComputeBulkOperationType LastOperationType { get; }
+        public ComputeBulkOperationKind LastOperationKind { get; }
 
         /// <summary> The status of the fallback operation. </summary>
         public string Status { get; }
