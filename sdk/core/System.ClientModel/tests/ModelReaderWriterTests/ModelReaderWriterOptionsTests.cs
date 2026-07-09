@@ -466,6 +466,176 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreSame(proxy1.Model, resolved);
         }
 
+        [Test]
+        public void Read_StructModel_ConditionalProxy_Handles()
+        {
+            // Regression: a conditional proxy over a value-type (struct) model used to throw
+            // InvalidCastException because variance does not apply to value types. After removing
+            // IConditionalProxy / the where T : class constraint, it must route through the proxy.
+            var options = new ModelReaderWriterOptions("J");
+            options.AddProxy<StructModel>(new StructConditionalProxy(handle: true));
+
+            StructModel? result = ModelReaderWriter.Read<StructModel>(BinaryData.FromString("{\"number\":1}"), options);
+
+            Assert.IsTrue(result.HasValue);
+            Assert.AreEqual(999, result!.Value.Number); // proxy sentinel proves it handled the read
+        }
+
+        [Test]
+        public void Read_StructModel_ConditionalProxy_Declines_FallsToModel()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            options.AddProxy<StructModel>(new StructConditionalProxy(handle: false));
+
+            StructModel? result = ModelReaderWriter.Read<StructModel>(BinaryData.FromString("{\"number\":42}"), options);
+
+            Assert.IsTrue(result.HasValue);
+            Assert.AreEqual(42, result!.Value.Number); // declined; the struct model read itself
+        }
+
+        [Test]
+        public void Read_StructModel_DirectProxy_Handles()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            options.AddProxy<StructModel>((IJsonModel<StructModel>)new StructModelProxy());
+
+            StructModel? result = ModelReaderWriter.Read<StructModel>(BinaryData.FromString("{\"number\":1}"), options);
+
+            Assert.IsTrue(result.HasValue);
+            Assert.AreEqual(999, result!.Value.Number);
+        }
+
+        [Test]
+        public void Write_StructModel_ConditionalProxy_Handles()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            options.AddProxy<StructModel>(new StructConditionalProxy(handle: true));
+
+            var model = new StructModel { Number = 1 };
+            var data = ModelReaderWriter.Write(model, options);
+
+            Assert.AreEqual("{\"number\":999}", data.ToString());
+        }
+
+        [Test]
+        public void ConditionalProxy_CanHandle_ReceivesOptions()
+        {
+            // Proves the proxy condition can depend on the caller-provided options (the derived
+            // options type is preserved across the internal core copy).
+            var enabled = new FlaggedOptions(useProxy: true);
+            var proxyEnabled = new OptionsAwareProxy();
+            enabled.AddProxy<SimpleModel>(proxyEnabled);
+            Assert.IsNotNull(ModelReaderWriter.Read<SimpleModel>(BinaryData.FromString("{}"), enabled));
+            Assert.IsTrue(proxyEnabled.CreateWasCalled, "Proxy should handle when the options flag is on.");
+
+            var disabled = new FlaggedOptions(useProxy: false);
+            var proxyDisabled = new OptionsAwareProxy();
+            disabled.AddProxy<SimpleModel>(proxyDisabled);
+            Assert.IsNotNull(ModelReaderWriter.Read<SimpleModel>(BinaryData.FromString("{}"), disabled));
+            Assert.IsFalse(proxyDisabled.CreateWasCalled, "Proxy should decline when the options flag is off.");
+        }
+
+        /// <summary>
+        /// A derived options type carrying a custom flag the proxy conditions on.
+        /// </summary>
+        private class FlaggedOptions : ModelReaderWriterOptions
+        {
+            public bool UseProxy { get; }
+            public FlaggedOptions(bool useProxy) : base("J") => UseProxy = useProxy;
+        }
+
+        /// <summary>
+        /// A conditional proxy whose decision depends on the active options.
+        /// </summary>
+        private class OptionsAwareProxy : ConditionalModelProxy<SimpleModel>
+        {
+            public OptionsAwareProxy() : base(new TrackingModel()) { }
+
+            public bool CreateWasCalled => ((TrackingModel)Model).CreateWasCalled;
+
+            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+                => options is FlaggedOptions flagged && flagged.UseProxy;
+
+            public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+                => options is FlaggedOptions flagged && flagged.UseProxy;
+        }
+
+        /// <summary>
+        /// A value-type (struct) model used to verify proxies work for structs (no where T : class).
+        /// </summary>
+        private struct StructModel : IJsonModel<StructModel>
+        {
+            public int Number { get; set; }
+
+            StructModel IJsonModel<StructModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            {
+                using var doc = JsonDocument.ParseValue(ref reader);
+                return new StructModel { Number = doc.RootElement.TryGetProperty("number", out var n) ? n.GetInt32() : 0 };
+            }
+
+            StructModel IPersistableModel<StructModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                using var doc = JsonDocument.Parse(data);
+                return new StructModel { Number = doc.RootElement.TryGetProperty("number", out var n) ? n.GetInt32() : 0 };
+            }
+
+            string IPersistableModel<StructModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+            void IJsonModel<StructModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                writer.WriteStartObject();
+                writer.WriteNumber("number"u8, Number);
+                writer.WriteEndObject();
+            }
+
+            BinaryData IPersistableModel<StructModel>.Write(ModelReaderWriterOptions options)
+                => BinaryData.FromString($"{{\"number\":{Number}}}");
+        }
+
+        /// <summary>
+        /// A proxy model for <see cref="StructModel"/> that always produces a sentinel value.
+        /// </summary>
+        private class StructModelProxy : IJsonModel<StructModel>
+        {
+            StructModel IJsonModel<StructModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            {
+                using var doc = JsonDocument.ParseValue(ref reader);
+                return new StructModel { Number = 999 };
+            }
+
+            StructModel IPersistableModel<StructModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+                => new StructModel { Number = 999 };
+
+            string IPersistableModel<StructModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+            void IJsonModel<StructModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                writer.WriteStartObject();
+                writer.WriteNumber("number"u8, 999);
+                writer.WriteEndObject();
+            }
+
+            BinaryData IPersistableModel<StructModel>.Write(ModelReaderWriterOptions options)
+                => BinaryData.FromString("{\"number\":999}");
+        }
+
+        /// <summary>
+        /// A conditional proxy over the value-type <see cref="StructModel"/>.
+        /// </summary>
+        private class StructConditionalProxy : ConditionalModelProxy<StructModel>
+        {
+            private readonly bool _handle;
+
+            public StructConditionalProxy(bool handle) : base(new StructModelProxy())
+            {
+                _handle = handle;
+            }
+
+            public override bool CanHandle(StructModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context) => _handle;
+            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context) => _handle;
+            public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options, ModelReaderWriterContext context) => _handle;
+        }
+
         /// <summary>
         /// Simple model without AssertOptions logic, used for chain tests.
         /// </summary>
@@ -558,11 +728,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 _handleRead = handleRead;
             }
 
-            public override bool CanHandle(SimpleModel model) => true;
+            public override bool CanHandle(SimpleModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context) => true;
 
-            public override bool CanHandle(ReadOnlyMemory<byte> data) => _handleRead;
+            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context) => _handleRead;
 
-            public override bool CanHandle(ref Utf8JsonReader reader) => _handleRead;
+            public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options, ModelReaderWriterContext context) => _handleRead;
 
             public void Reset() => ((TrackingModel)Model).Reset();
         }
@@ -581,12 +751,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 _discriminatorValue = discriminatorValue;
             }
 
-            public override bool CanHandle(ReadOnlyMemory<byte> data)
+            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
             {
                 return BinaryData.FromBytes(data).ToString().Contains($"\"type\":\"{_discriminatorValue}\"");
             }
 
-            public override bool CanHandle(ref Utf8JsonReader reader)
+            public override bool CanHandle(ref Utf8JsonReader reader, ModelReaderWriterOptions options, ModelReaderWriterContext context)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
                 return document.RootElement.TryGetProperty("type", out var type) && type.GetString() == _discriminatorValue;
@@ -1115,7 +1285,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             public PersistableOnlyConditionalProxy() : base(new PersistableOnlyModel()) { }
 
-            public override bool CanHandle(SimpleModel model) => true;
+            public override bool CanHandle(SimpleModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context) => true;
         }
 
         #endregion
@@ -1135,7 +1305,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 _canWrite = canWrite;
             }
 
-            public override bool CanHandle(SimpleModel model) => _canWrite;
+            public override bool CanHandle(SimpleModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context) => _canWrite;
         }
 
         #endregion
