@@ -45,6 +45,7 @@ Param (
 )
 
 . (Join-Path $PSScriptRoot ".." common scripts common.ps1)
+. (Join-Path $PSScriptRoot "Remove-ObsoleteApiCompatBaselines.ps1")
 
 $pkgProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
 $csprojPath = Join-Path $pkgProperties.DirectoryPath src "${PackageName}.csproj"
@@ -106,6 +107,19 @@ if (!$packageOldSemVer.IsPrerelease -and ($packageVersion -ne $NewVersionString)
 
 $propertyGroup.Version = $packageSemVer.ToString()
 $csproj.Save($csprojPath)
+
+# After a GA (non-preview) release the ApiCompatVersion above is bumped to the just-released version,
+# so any ApiCompat baseline suppressions / opt-out entries for this project are now obsolete. Wrapped
+# in its own try/catch so a cleanup failure never blocks the version bump PR.
+if (!$packageOldSemVer.IsPrerelease) {
+  try {
+    Remove-ObsoleteApiCompatBaselines -RepoRoot $RepoRoot -PackageName $PackageName | Out-Null
+  }
+  catch {
+    Write-Warning "ApiCompat baseline cleanup failed — baselines under eng/apicompatbaselines may need a manual cleanup: $($_.Exception.Message)"
+    Write-Host "##vso[task.logissue type=warning]ApiCompat baseline cleanup failed for $PackageName. Baselines under eng/apicompatbaselines may need a manual cleanup."
+  }
+}
 
 # Update Central Package Management files with the released version so
 # other packages that depend on this one pick up the latest release.
