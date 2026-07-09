@@ -14,7 +14,7 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACKAGE_ROOT="$(cd "$SCRIPT_DIR/../../../.." && pwd)"
 SAMPLES_DIR="$PACKAGE_ROOT/samples"
-RUNNER_BASE="$PACKAGE_ROOT/.sample_runner"
+RUNNER_BASE="$PACKAGE_ROOT/.local_only/.sample_runner"
 APPSETTINGS="$PACKAGE_ROOT/appsettings.json"
 LOCAL_SRC_DIR="$PACKAGE_ROOT/src"
 

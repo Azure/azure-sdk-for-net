@@ -15,11 +15,11 @@ Build (and optionally run) a specific sample from the Azure AI Content Understan
 2. Lists or locates the specified sample markdown file in `samples/`
 3. Extracts all C# code blocks from the markdown into a runnable console application
 4. **Installs the SDK from public NuGet** (`Azure.AI.ContentUnderstanding 1.0.0-*`); falls back to building from local source (`src/`) if the NuGet package is not available
-5. Creates a sample-specific .NET console project in `.sample_runner/<SampleName>/` with all required scaffolding created at runtime
+5. Creates a sample-specific .NET console project in `.local_only/.sample_runner/<SampleName>/` with all required scaffolding created at runtime
 6. Reads credentials from `appsettings.json` in the package root (or environment variables)
 7. **Builds the project** and directs the user to run the sample via `dotnet run`
 8. Optionally runs the sample directly if `--run` flag is provided
-9. **After a successful run**, shows the terminal command to re-run this sample directly (e.g., `cd .sample_runner/Sample02_AnalyzeUrl && dotnet run --project Sample02_AnalyzeUrl.csproj`)
+9. **After a successful run**, shows the terminal command to re-run this sample directly (e.g., `cd .local_only/.sample_runner/Sample02_AnalyzeUrl && dotnet run --project Sample02_AnalyzeUrl.csproj`)
 10. **Briefly explains the key code concepts** demonstrated in the sample (e.g., client creation, analyzer selection, result processing, content type casting)
 
 ## Prerequisites
@@ -389,14 +389,14 @@ export CONTENTUNDERSTANDING_ENDPOINT="https://your-foundry.services.ai.azure.com
 After the script builds successfully, it prints the project location and the command to run. Execute the sample using `dotnet run`:
 
 ```bash
-cd .sample_runner/<SampleName>
+cd .local_only/.sample_runner/<SampleName>
 dotnet run --project <SampleName>.csproj
 ```
 
 For example:
 
 ```bash
-cd .sample_runner/Sample01_AnalyzeBinary
+cd .local_only/.sample_runner/Sample01_AnalyzeBinary
 dotnet run --project Sample01_AnalyzeBinary.csproj
 ```
 
@@ -412,7 +412,7 @@ After the sample completes, the skill **must** do the following for the user (do
 
 1. **Show the terminal command to re-run this sample directly**, so the user can iterate without the skill. For example:
    ```bash
-   cd .sample_runner/Sample02_AnalyzeUrl && dotnet run --project Sample02_AnalyzeUrl.csproj
+   cd .local_only/.sample_runner/Sample02_AnalyzeUrl && dotnet run --project Sample02_AnalyzeUrl.csproj
    ```
    Substitute `<SampleName>` with the sample the user just ran.
 
@@ -441,7 +441,7 @@ After the sample completes, the skill **must** do the following for the user (do
    # Build
    .github/skills/cu-sdk-sample-run/scripts/run_sample.sh Sample00_UpdateDefaults
    # Run
-   cd .sample_runner/Sample00_UpdateDefaults && dotnet run --project Sample00_UpdateDefaults.csproj
+   cd .local_only/.sample_runner/Sample00_UpdateDefaults && dotnet run --project Sample00_UpdateDefaults.csproj
    ```
 
 2. **Analyze a document from binary data:**
@@ -449,7 +449,7 @@ After the sample completes, the skill **must** do the following for the user (do
    # Build
    .github/skills/cu-sdk-sample-run/scripts/run_sample.sh Sample01_AnalyzeBinary
    # Run
-   cd .sample_runner/Sample01_AnalyzeBinary && dotnet run --project Sample01_AnalyzeBinary.csproj
+   cd .local_only/.sample_runner/Sample01_AnalyzeBinary && dotnet run --project Sample01_AnalyzeBinary.csproj
    ```
 
 3. **Analyze content from URL:**
@@ -457,7 +457,7 @@ After the sample completes, the skill **must** do the following for the user (do
    # Build
    .github/skills/cu-sdk-sample-run/scripts/run_sample.sh Sample02_AnalyzeUrl
    # Run
-   cd .sample_runner/Sample02_AnalyzeUrl && dotnet run --project Sample02_AnalyzeUrl.csproj
+   cd .local_only/.sample_runner/Sample02_AnalyzeUrl && dotnet run --project Sample02_AnalyzeUrl.csproj
    ```
 
 4. **Extract invoice fields:**
@@ -465,7 +465,7 @@ After the sample completes, the skill **must** do the following for the user (do
    # Build
    .github/skills/cu-sdk-sample-run/scripts/run_sample.sh Sample03_AnalyzeInvoice
    # Run
-   cd .sample_runner/Sample03_AnalyzeInvoice && dotnet run --project Sample03_AnalyzeInvoice.csproj
+   cd .local_only/.sample_runner/Sample03_AnalyzeInvoice && dotnet run --project Sample03_AnalyzeInvoice.csproj
    ```
 
 ### List Available Samples
@@ -478,11 +478,11 @@ After the sample completes, the skill **must** do the following for the user (do
 
 The script:
 1. **Ensures .NET SDK availability** — checks for `dotnet`, installs .NET 10.0 (or whatever the repo's `global.json` requires) automatically via the official install script
-2. **Creates `.sample_runner/` scaffolding at runtime** — generates `global.json`, `Directory.Build.props`, `Directory.Build.targets`, `Directory.Packages.props`, and `NuGet.Config` to isolate the sample project from the mono-repo's MSBuild/NuGet infrastructure
+2. **Creates `.local_only/.sample_runner/` scaffolding at runtime** — generates `global.json`, `Directory.Build.props`, `Directory.Build.targets`, `Directory.Packages.props`, and `NuGet.Config` to isolate the sample project from the mono-repo's MSBuild/NuGet infrastructure
 3. **Installs the SDK from public NuGet** — uses the `Azure.AI.ContentUnderstanding 1.0.0-*` package from nuget.org. If the NuGet package is not available, falls back to building from local source (`src/Azure.AI.ContentUnderstanding.csproj`) and referencing the output DLL from `artifacts/bin/`
 4. Reads the sample markdown file (e.g., `samples/Sample01_AnalyzeBinary.md`)
 5. Extracts all `C# Snippet:*` code blocks from the markdown
-6. Creates a temporary .NET 10.0 console project in `.sample_runner/<SampleName>/`
+6. Creates a temporary .NET 10.0 console project in `.local_only/.sample_runner/<SampleName>/`
 7. Generates a `Program.cs` that:
    - Loads settings from `appsettings.json` (copied from package root) or environment variables
    - Replaces all sample-specific placeholders (`<endpoint>`, `<apiKey>`, `<your-gpt-4.1-deployment-name>`, `<localDocumentFilePath>`, `<file_path>`, cross-resource endpoints/regions, etc.) with actual config values
@@ -492,7 +492,7 @@ The script:
 9. Prints the project path and `dotnet run` command for the user to execute
 10. Optionally runs the project directly if `--run` flag is provided
 
-> **The `.sample_runner/` directory is assumed to start clean** — all scaffolding files are created at runtime. You can safely delete it to reset the environment.
+> **The `.local_only/.sample_runner/` directory is assumed to start clean** — all scaffolding files are created at runtime. You can safely delete it to reset the environment.
 
 ## Scripts
 
@@ -533,8 +533,8 @@ Extracts C# code snippets from a sample markdown file, scaffolds a standalone co
 | Sample16 — `Forbidden` from `GetUserDelegationKey` (Option B) | Your credential lacks **Storage Blob Data Contributor** on the account. Assign the role and wait ~1–2 min for propagation. |
 | Sample16 — analyzer created but extracts no fields | Files uploaded but the prefix or layout doesn't match. Verify `CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX` matches your folder layout (root → empty prefix; `receipt_labels/` sub-folder → prefix `receipt_labels`) and that each `.labels.json` is valid JSON. |
 | NuGet package not found | The script falls back to building from local source automatically. Check `dotnet --list-sdks` for installed versions |
-| NuGet restore errors | The `.sample_runner/` isolation files should prevent repo NuGet feed issues. Delete `.sample_runner/` and re-run |
-| `.sample_runner/` issues | Delete the entire `.sample_runner/` directory — it will be recreated from scratch on next run |
+| NuGet restore errors | The `.local_only/.sample_runner/` isolation files should prevent repo NuGet feed issues. Delete `.local_only/.sample_runner/` and re-run |
+| `.local_only/.sample_runner/` issues | Delete the entire `.local_only/.sample_runner/` directory — it will be recreated from scratch on next run |
 
 ## Related Skills
 
