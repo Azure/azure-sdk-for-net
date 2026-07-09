@@ -1369,6 +1369,33 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetEventGridDomains().Get(domainName, cancellationToken);
         }
 
+        /// <summary>
+        /// Gets the managed application definition on a disambiguated route.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionsApplicationDefinitions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SolutionsApplicationDefinitionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="SolutionsApplicationDefinitionResource"/> object. </returns>
+        public virtual SolutionsApplicationDefinitionResource GetSolutionsApplicationDefinition()
+        {
+            return new SolutionsApplicationDefinitionResource(Client, Id.AppendProviderResource("MgmtTypeSpec", "applicationDefinitions", "{applicationDefinitionName}?disambiguation_dummy"));
+        }
+
         /// <summary> Gets a collection of WorkloadNetworkVmGroups in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of WorkloadNetworkVmGroups and their operations over a WorkloadNetworkVmGroupResource. </returns>
         public virtual WorkloadNetworkVmGroupCollection GetWorkloadNetworkVmGroups()

@@ -5,11 +5,11 @@ using System;
 using System.Reflection;
 using Azure.Generator.Management;
 using Azure.Generator.Management.Models;
-using Azure.Generator.Provisioning.Primitives;
 using Azure.Generator.Provisioning.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Provisioning
 {
@@ -27,53 +27,49 @@ namespace Azure.Generator.Provisioning
         /// <summary>
         /// Gets the BuiltInRole type provider if any resources define RBAC roles.
         /// </summary>
-        internal BuiltInRoleProvider? BuiltInRole => GetNullableValue(ref _builtInRole);
-
-        private T GetValue<T>(ref T? field) where T : class
+        internal BuiltInRoleProvider? BuiltInRole
         {
-            InitializeResources(ref _resources, ref _resourcesByIdPattern, ref _resourcesByModel, ref _builtInRole);
-            return field!;
-        }
-
-        private T? GetNullableValue<T>(ref T? field) where T : class
-        {
-            InitializeResources(ref _resources, ref _resourcesByIdPattern, ref _resourcesByModel, ref _builtInRole);
-            return field;
+            get
+            {
+                InitializeResources();
+                return _builtInRole;
+            }
         }
 
         /// <summary>
         /// Gets all provisioning resource providers.
         /// </summary>
-        internal IReadOnlyList<ProvisioningResourceProvider> Resources => GetValue(ref _resources);
-
-        private void InitializeResources(
-            ref IReadOnlyList<ProvisioningResourceProvider>? resources,
-            ref Dictionary<string, ProvisioningResourceProvider>? resourcesByIdPattern,
-            ref Dictionary<InputModelType, List<ProvisioningResourceProvider>>? resourcesByModel,
-            ref BuiltInRoleProvider? builtInRole)
+        internal IReadOnlyList<ProvisioningResourceProvider> Resources
         {
-            if (resources != null)
+            get
+            {
+                InitializeResources();
+                return _resources!;
+            }
+        }
+
+        private void InitializeResources()
+        {
+            if (_resources != null)
                 return;
 
-            var list = new List<ProvisioningResourceProvider>();
-            var byIdPattern = new Dictionary<string, ProvisioningResourceProvider>();
-            var byModel = new Dictionary<InputModelType, List<ProvisioningResourceProvider>>();
-
-            var allMetadata = ProvisioningGenerator.Instance.InputLibrary.ArmProviderSchema.Resources;
-            var projections = ProvisioningResourceProjection.Create(allMetadata);
-            foreach (var projection in projections)
+            var inputLibrary = ProvisioningGenerator.Instance.InputLibrary;
+            var resources = new List<ProvisioningResourceProvider>();
+            var resourcesByIdPattern = new Dictionary<string, ProvisioningResourceProvider>();
+            var resourcesByModel = new Dictionary<InputModelType, List<ProvisioningResourceProvider>>();
+            foreach (var projection in inputLibrary.ResourceProjections)
             {
-                var resource = new ProvisioningResourceProvider(projection);
-                list.Add(resource);
+                var resource = new ProvisioningResourceProvider(projection, projection.IsSettable);
+                resources.Add(resource);
                 foreach (var resourceIdPattern in projection.ResourceIdPatterns)
                 {
-                    byIdPattern[resourceIdPattern.SerializedPath] = resource;
+                    resourcesByIdPattern[resourceIdPattern.SerializedPath] = resource;
                 }
 
-                if (!byModel.TryGetValue(projection.ResourceModel, out var modelList))
+                if (!resourcesByModel.TryGetValue(projection.ResourceModel, out var modelList))
                 {
                     modelList = new List<ProvisioningResourceProvider>();
-                    byModel[projection.ResourceModel] = modelList;
+                    resourcesByModel[projection.ResourceModel] = modelList;
                 }
                 modelList.Add(resource);
             }
@@ -82,11 +78,11 @@ namespace Azure.Generator.Provisioning
             // it's constructed purely from input values, and must be available before any
             // resource provider's methods are materialized.
             var serviceName = ProvisioningGenerator.Instance.TypeFactory.ResourceProviderName;
-            builtInRole = BuiltInRoleProvider.TryCreate(serviceName, allMetadata);
+            _builtInRole = BuiltInRoleProvider.TryCreate(serviceName, inputLibrary.ArmProviderSchema.Resources);
 
-            resources = list;
-            resourcesByIdPattern = byIdPattern;
-            resourcesByModel = byModel;
+            _resources = resources;
+            _resourcesByIdPattern = resourcesByIdPattern;
+            _resourcesByModel = resourcesByModel;
         }
 
         /// <summary>
@@ -95,7 +91,8 @@ namespace Azure.Generator.Provisioning
         /// </summary>
         internal bool TryGetResourcesByModel(InputModelType model, out IReadOnlyList<ProvisioningResourceProvider> resources)
         {
-            if (GetValue(ref _resourcesByModel).TryGetValue(model, out var list))
+            InitializeResources();
+            if (_resourcesByModel!.TryGetValue(model, out var list))
             {
                 resources = list;
                 return true;
@@ -110,16 +107,22 @@ namespace Azure.Generator.Provisioning
         /// </summary>
         internal ProvisioningResourceProvider? GetResourceByIdPattern(RequestPathPattern resourceIdPattern)
         {
-            GetValue(ref _resourcesByIdPattern).TryGetValue(resourceIdPattern.SerializedPath, out var resource);
+            InitializeResources();
+            _resourcesByIdPattern!.TryGetValue(resourceIdPattern.SerializedPath, out var resource);
             return resource;
         }
 
         /// <inheritdoc/>
         protected override IReadOnlyList<ModelProvider> ResolveFlattenTargetModels(InputModelType inputModel)
         {
-            return TryGetResourcesByModel(inputModel, out var resources)
-                ? resources
-                : base.ResolveFlattenTargetModels(inputModel);
+            if (TryGetResourcesByModel(inputModel, out var resources))
+            {
+                return resources;
+            }
+
+            return ProvisioningGenerator.Instance.InputLibrary.IsModelReachable(inputModel)
+                ? base.ResolveFlattenTargetModels(inputModel)
+                : [];
         }
 
         /// <inheritdoc/>
@@ -153,9 +156,7 @@ namespace Azure.Generator.Provisioning
             // Only emit models/enums reachable from resource models' property graphs. This
             // avoids emitting dead types like list-result envelopes, patch/request wrappers,
             // and error models that have no place in a Provisioning library.
-            var (reachableModels, reachableEnums) = CollectReachableTypes();
-
-            foreach (var inputModel in reachableModels)
+            foreach (var inputModel in ProvisioningGenerator.Instance.InputLibrary.ReachableModels)
             {
                 var model = ProvisioningGenerator.Instance.TypeFactory.CreateModel(inputModel);
                 if (model is not null)
@@ -172,7 +173,7 @@ namespace Azure.Generator.Provisioning
                 }
             }
 
-            foreach (var inputEnum in reachableEnums)
+            foreach (var inputEnum in ProvisioningGenerator.Instance.InputLibrary.ReachableEnums)
             {
                 var enumProvider = ProvisioningGenerator.Instance.TypeFactory.CreateEnum(inputEnum);
                 if (enumProvider != null)
@@ -212,83 +213,6 @@ namespace Azure.Generator.Provisioning
             }
 
             return [.. providers];
-        }
-
-        /// <summary>
-        /// Collects the input models and enums reachable from the resource models'
-        /// property graphs (including base models, discriminator subtypes, and elements of
-        /// arrays/dictionaries/nullable/union types). Resource models themselves are
-        /// excluded — they are emitted separately as ProvisioningResourceProvider.
-        ///
-        /// Visited types are tracked in a HashSet (for O(1) dedup) but returned in
-        /// traversal/insertion order via parallel lists, so the emitted output is
-        /// deterministic across runs without relying on HashSet enumeration order.
-        /// </summary>
-        private (IReadOnlyList<InputModelType> Models, IReadOnlyList<InputEnumType> Enums) CollectReachableTypes()
-        {
-            var visited = new HashSet<InputType>();
-            var models = new List<InputModelType>();
-            var enums = new List<InputEnumType>();
-            var queue = new Queue<InputType>();
-
-            foreach (var resource in Resources)
-            {
-                queue.Enqueue(resource.ResourceProjection!.ResourceModel);
-            }
-
-            while (queue.Count > 0)
-            {
-                Visit(queue.Dequeue(), visited, models, enums, queue);
-            }
-
-            return (models, enums);
-        }
-
-        private void Visit(InputType type, HashSet<InputType> visited, List<InputModelType> models, List<InputEnumType> enums, Queue<InputType> queue)
-        {
-            if (!visited.Add(type))
-                return;
-
-            switch (type)
-            {
-                case InputModelType model:
-                    // Resource models are emitted separately as ProvisioningResourceProvider,
-                    // so don't include them in the plain-model output list. We still walk
-                    // their base/derived/property graphs to reach nested types.
-                    if (!TryGetResourcesByModel(model, out _))
-                    {
-                        models.Add(model);
-                    }
-                    if (model.BaseModel != null)
-                        queue.Enqueue(model.BaseModel);
-                    foreach (var derived in model.DerivedModels)
-                        queue.Enqueue(derived);
-                    foreach (var property in model.Properties)
-                        queue.Enqueue(property.Type);
-                    if (model.AdditionalProperties != null)
-                        queue.Enqueue(model.AdditionalProperties);
-                    break;
-                case InputEnumType enumType:
-                    enums.Add(enumType);
-                    break;
-                case InputArrayType arrayType:
-                    queue.Enqueue(arrayType.ValueType);
-                    break;
-                case InputDictionaryType dictType:
-                    queue.Enqueue(dictType.KeyType);
-                    queue.Enqueue(dictType.ValueType);
-                    break;
-                case InputNullableType nullableType:
-                    queue.Enqueue(nullableType.Type);
-                    break;
-                case InputLiteralType literalType:
-                    queue.Enqueue(literalType.ValueType);
-                    break;
-                case InputUnionType unionType:
-                    foreach (var variant in unionType.VariantTypes)
-                        queue.Enqueue(variant);
-                    break;
-            }
         }
     }
 }

@@ -11,6 +11,11 @@
     <GenerateAPIListing>true</GenerateAPIListing>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Custom\EvaluationRules\**" />
+    <EmbeddedResource Remove="Custom\EvaluationRules\**" />
+    <None Remove="Custom\EvaluationRules\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
@@ -27,8 +32,5 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartContent.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Multipart\MultipartFormDataContent.cs" LinkBase="Shared" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Custom\EvaluationRules\" />
   </ItemGroup>
 </Project>
