@@ -6,16 +6,11 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Specs.Azure.ClientGenerator.Core.Usage.Models;
-using Specs.Azure.ClientGenerator.Core.Usage.Models.Nested;
 using Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation;
 
 namespace Specs.Azure.ClientGenerator.Core.Usage
 {
     [ModelReaderWriterBuildable(typeof(InputModel))]
-    [ModelReaderWriterBuildable(typeof(NamespaceModel))]
-    [ModelReaderWriterBuildable(typeof(NestedNamespaceModel))]
-    [ModelReaderWriterBuildable(typeof(OrphanModel))]
     [ModelReaderWriterBuildable(typeof(OutputModel))]
     [ModelReaderWriterBuildable(typeof(ResultModel))]
     [ModelReaderWriterBuildable(typeof(RoundTripModel))]
