@@ -310,14 +310,14 @@ namespace Azure.ResourceManager.Education.Mocking
         /// </summary>
         /// <param name="includeAllocatedBudget"> May be used to include information about budget that has been allocated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GrantDetailsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GrantDetailsResource> GetAllAsync(bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EducationGrantDetailsResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EducationGrantDetailsResource> GetAllAsync(bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GrantDetailsData, GrantDetailsResource>(new GrantsListAllAsyncCollectionResultOfT(GrantsRestClient, includeAllocatedBudget, context, "MockableEducationTenantResource.GetAll"), data => new GrantDetailsResource(Client, data));
+            return new AsyncPageableWrapper<EducationGrantDetailsData, EducationGrantDetailsResource>(new GrantsListAllAsyncCollectionResultOfT(GrantsRestClient, includeAllocatedBudget, context, "MockableEducationTenantResource.GetAll"), data => new EducationGrantDetailsResource(Client, data));
         }
 
         /// <summary>
@@ -339,14 +339,14 @@ namespace Azure.ResourceManager.Education.Mocking
         /// </summary>
         /// <param name="includeAllocatedBudget"> May be used to include information about budget that has been allocated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GrantDetailsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GrantDetailsResource> GetAll(bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EducationGrantDetailsResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EducationGrantDetailsResource> GetAll(bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GrantDetailsData, GrantDetailsResource>(new GrantsListAllCollectionResultOfT(GrantsRestClient, includeAllocatedBudget, context, "MockableEducationTenantResource.GetAll"), data => new GrantDetailsResource(Client, data));
+            return new PageableWrapper<EducationGrantDetailsData, EducationGrantDetailsResource>(new GrantsListAllCollectionResultOfT(GrantsRestClient, includeAllocatedBudget, context, "MockableEducationTenantResource.GetAll"), data => new EducationGrantDetailsResource(Client, data));
         }
     }
 }

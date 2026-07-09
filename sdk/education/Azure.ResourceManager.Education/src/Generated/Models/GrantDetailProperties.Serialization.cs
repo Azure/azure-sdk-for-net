@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Education.Models
             }
             EducationAmount offerCap = default;
             DateTimeOffset? effectiveOn = default;
-            GrantType? offerType = default;
+            EducationGrantType? offerType = default;
             DateTimeOffset? expireOn = default;
             GrantStatus? status = default;
             EducationAmount allocatedBudget = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Education.Models
                     {
                         continue;
                     }
-                    offerType = new GrantType(prop.Value.GetString());
+                    offerType = new EducationGrantType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("expirationDate"u8))

@@ -30,21 +30,21 @@ namespace Azure.ResourceManager.Education.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="GrantDetailsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="EducationGrantDetailsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GrantDetailsResource"/> object. </returns>
-        public virtual GrantDetailsResource GetGrantDetailsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EducationGrantDetailsResource"/> object. </returns>
+        public virtual EducationGrantDetailsResource GetEducationGrantDetailsResource(ResourceIdentifier id)
         {
-            GrantDetailsResource.ValidateResourceId(id);
-            return new GrantDetailsResource(Client, id);
+            EducationGrantDetailsResource.ValidateResourceId(id);
+            return new EducationGrantDetailsResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="GrantDetailsResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <summary> Gets an object representing a <see cref="EducationGrantDetailsResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="GrantDetailsResource"/> object. </returns>
-        public virtual GrantDetailsResource GetGrantDetails(ResourceIdentifier scope)
+        /// <returns> Returns a <see cref="EducationGrantDetailsResource"/> object. </returns>
+        public virtual EducationGrantDetailsResource GetEducationGrantDetails(ResourceIdentifier scope)
         {
-            return new GrantDetailsResource(Client, scope.AppendProviderResource("Microsoft.Education", "grants", "default"));
+            return new EducationGrantDetailsResource(Client, scope.AppendProviderResource("Microsoft.Education", "grants", "default"));
         }
 
         /// <summary> Gets an object representing a <see cref="LabDetailsResource"/> along with the instance operations that can be performed on it but with no data. </summary>

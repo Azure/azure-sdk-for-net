@@ -33,39 +33,39 @@ namespace Azure.ResourceManager.Education
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GrantDetailsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="EducationGrantDetailsResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetGrantDetailsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetEducationGrantDetailsResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GrantDetailsResource"/> object. </returns>
-        public static GrantDetailsResource GetGrantDetailsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EducationGrantDetailsResource"/> object. </returns>
+        public static EducationGrantDetailsResource GetEducationGrantDetailsResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableEducationArmClient(client).GetGrantDetailsResource(id);
+            return GetMockableEducationArmClient(client).GetEducationGrantDetailsResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GrantDetailsResource"/> along with the instance operations that can be performed on it in the ArmClient
+        /// Gets an object representing a <see cref="EducationGrantDetailsResource"/> along with the instance operations that can be performed on it in the ArmClient
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetGrantDetails(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableEducationArmClient.GetEducationGrantDetails(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GrantDetailsResource"/> object. </returns>
-        public static GrantDetailsResource GetGrantDetails(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a <see cref="EducationGrantDetailsResource"/> object. </returns>
+        public static EducationGrantDetailsResource GetEducationGrantDetails(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableEducationArmClient(client).GetGrantDetails(scope);
+            return GetMockableEducationArmClient(client).GetEducationGrantDetails(scope);
         }
 
         /// <summary>
@@ -404,8 +404,8 @@ namespace Azure.ResourceManager.Education
         /// <param name="includeAllocatedBudget"> May be used to include information about budget that has been allocated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="GrantDetailsResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GrantDetailsResource> GetAllAsync(this TenantResource tenantResource, bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EducationGrantDetailsResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EducationGrantDetailsResource> GetAllAsync(this TenantResource tenantResource, bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -423,8 +423,8 @@ namespace Azure.ResourceManager.Education
         /// <param name="includeAllocatedBudget"> May be used to include information about budget that has been allocated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="GrantDetailsResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GrantDetailsResource> GetAll(this TenantResource tenantResource, bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EducationGrantDetailsResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EducationGrantDetailsResource> GetAll(this TenantResource tenantResource, bool? includeAllocatedBudget = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

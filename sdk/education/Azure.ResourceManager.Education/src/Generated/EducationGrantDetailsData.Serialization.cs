@@ -18,58 +18,58 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Education
 {
     /// <summary> Grant details. </summary>
-    public partial class GrantDetailsData : ResourceData, IJsonModel<GrantDetailsData>
+    public partial class EducationGrantDetailsData : ResourceData, IJsonModel<EducationGrantDetailsData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GrantDetailsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationGrantDetailsData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGrantDetailsData(document.RootElement, options);
+                        return DeserializeEducationGrantDetailsData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GrantDetailsData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EducationGrantDetailsData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GrantDetailsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationGrantDetailsData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEducationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GrantDetailsData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EducationGrantDetailsData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GrantDetailsData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EducationGrantDetailsData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GrantDetailsData IPersistableModel<GrantDetailsData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GrantDetailsData)PersistableModelCreateCore(data, options);
+        EducationGrantDetailsData IPersistableModel<EducationGrantDetailsData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EducationGrantDetailsData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GrantDetailsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EducationGrantDetailsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GrantDetailsData"/> from. </param>
-        internal static GrantDetailsData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EducationGrantDetailsData"/> from. </param>
+        internal static EducationGrantDetailsData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGrantDetailsData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeEducationGrantDetailsData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GrantDetailsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EducationGrantDetailsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Education
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GrantDetailsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationGrantDetailsData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GrantDetailsData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EducationGrantDetailsData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.Education
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GrantDetailsData IJsonModel<GrantDetailsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GrantDetailsData)JsonModelCreateCore(ref reader, options);
+        EducationGrantDetailsData IJsonModel<EducationGrantDetailsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EducationGrantDetailsData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GrantDetailsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationGrantDetailsData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GrantDetailsData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EducationGrantDetailsData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGrantDetailsData(document.RootElement, options);
+            return DeserializeEducationGrantDetailsData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GrantDetailsData DeserializeGrantDetailsData(JsonElement element, ModelReaderWriterOptions options)
+        internal static EducationGrantDetailsData DeserializeEducationGrantDetailsData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Education
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GrantDetailsData(
+            return new EducationGrantDetailsData(
                 id,
                 name,
                 resourceType,

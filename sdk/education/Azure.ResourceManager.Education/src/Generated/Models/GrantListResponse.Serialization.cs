@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Education.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (GrantDetailsData item in Value)
+                foreach (EducationGrantDetailsData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Education.Models
             {
                 return null;
             }
-            IReadOnlyList<GrantDetailsData> value = default;
+            IReadOnlyList<EducationGrantDetailsData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Education.Models
                     {
                         continue;
                     }
-                    List<GrantDetailsData> array = new List<GrantDetailsData>();
+                    List<EducationGrantDetailsData> array = new List<EducationGrantDetailsData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GrantDetailsData.DeserializeGrantDetailsData(item, options));
+                        array.Add(EducationGrantDetailsData.DeserializeEducationGrantDetailsData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Education.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GrantListResponse(value ?? new ChangeTrackingList<GrantDetailsData>(), nextLink, additionalBinaryDataProperties);
+            return new GrantListResponse(value ?? new ChangeTrackingList<EducationGrantDetailsData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
