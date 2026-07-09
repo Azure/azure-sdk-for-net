@@ -19,6 +19,13 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
+  <!-- Cross-language golden fixtures for byte-compat conformance tests. -->
+  <ItemGroup>
+    <None Include="Tasks\Serialization\fixtures\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>Tasks\Serialization\fixtures\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </None>
+  </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <ProjectReference Include="..\src\Azure.AI.AgentServer.Core.csproj" />
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Invocations\src\Azure.AI.AgentServer.Invocations.csproj"

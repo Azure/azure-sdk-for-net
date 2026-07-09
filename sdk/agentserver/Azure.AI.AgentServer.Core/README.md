@@ -148,6 +148,10 @@ OpenTelemetry is configured automatically via the `Microsoft.OpenTelemetry` dist
 
 A `/readiness` endpoint is registered by default, responding to liveness and readiness probes. It reports healthy as soon as the host finishes starting.
 
+### Resilient tasks and streaming
+
+The library provides durable **task** and resumable **streaming** primitives for long-running agents. Register tasks with `AddResilientTasks()` and event streams with `AddEventStreams()`, then run work through `ITaskInvoker` and emit progress through `IEventStreamRegistry`. Tasks survive process restarts, support multi-turn conversations and steering, and persist idempotent state via `TaskMetadata`. See the [Tasks guide][tasks_guide] and the [Streaming guide][streaming_guide] for full walkthroughs.
+
 ## Examples
 
 You can familiarise yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples).
@@ -165,6 +169,8 @@ The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Responses` 
 
 ## Next steps
 
+- [Tasks guide][tasks_guide] — Build durable, resumable one-shot and multi-turn tasks
+- [Streaming guide][streaming_guide] — Emit resumable event streams to clients
 - [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core/samples) — Getting started, multi-protocol composition
 
 ## Contributing
@@ -182,5 +188,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 [migration]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/MigrationGuide.md
 [responses]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses
 [invocations]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations
+[tasks_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/tasks-guide.md
+[streaming_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/docs/streaming-guide.md
 [responses_tier3]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample9_Tier3SelfHosting.md
 [invocations_tier3]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample7_Tier3SelfHosting.md

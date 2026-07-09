@@ -1,9 +1,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.AI.AgentServer.Core.Streaming;
+using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Invocations.Tests.Snippets;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +21,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using OpenAI;
+using OpenAI.Responses;
+
+#pragma warning disable OPENAI001 // The OpenAI Responses API is experimental.
 
 namespace Azure.AI.AgentServer.Invocations.Tests;
 
@@ -504,6 +518,489 @@ public class SampleEndToEndTests
             System.Net.WebSockets.WebSocketMessageType.Text,
             endOfMessage: true,
             CancellationToken.None);
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  Sample 8: Resilient Research — Task ⇄ Stream bridge
+    // ═══════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task ResilientResearch_StreamsEventsAsSse()
+    {
+        await using var env = await CreateResilientResearchServerAsync();
+
+        var request = new HttpRequestMessage(HttpMethod.Post, "/invocations")
+        {
+            Content = new StringContent(
+                """{"Topic":"quantum computing"}""", Encoding.UTF8, "application/json"),
+        };
+        request.Headers.TryAddWithoutValidation("Accept", "text/event-stream");
+        var response = await env.Client.SendAsync(request);
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(response.Content.Headers.ContentType?.MediaType,
+            Is.EqualTo("text/event-stream"));
+
+        var rawSse = await response.Content.ReadAsStringAsync();
+        var events = ParseSseEvents(rawSse);
+
+        // Real model token deltas are forwarded as `token` events, terminating with `done`.
+        Assert.That(events, Has.Count.GreaterThanOrEqualTo(3));
+        Assert.That(events, Has.Some.Matches<SseEvent>(e => e.Type == "token"),
+            "Stream should include model token events from the real ResponsesClient.");
+        Assert.That(events[^1].Type, Is.EqualTo("done"));
+
+        // The SSE layer appends a protocol `event: done` terminator (Python parity) so a client
+        // can distinguish a clean stream-end from a dropped connection.
+        Assert.That(rawSse, Does.Contain("event: done"),
+            "Clean stream close should emit a protocol `event: done` terminator frame.");
+
+        for (int i = 1; i < events.Count; i++)
+        {
+            Assert.That(events[i].Cursor, Is.GreaterThan(events[i - 1].Cursor));
+        }
+    }
+
+    [Test]
+    public async Task ResilientResearch_PostWithoutSseAccept_Returns202WithInvocationId()
+    {
+        await using var env = await CreateResilientResearchServerAsync();
+
+        // No Accept: text/event-stream → the handler returns 202 + an invocation id to resume.
+        var response = await env.Client.PostAsync("/invocations",
+            new StringContent("""{"Topic":"async start"}""", Encoding.UTF8, "application/json"));
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
+        using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        Assert.That(doc.RootElement.GetProperty("invocation_id").GetString(), Is.Not.Empty);
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("running"));
+    }
+
+    [Test]
+    public async Task ResilientResearch_Get_ResumesFromCursor()
+    {
+        // RESUME is GET /invocations/{id} — it re-attaches to the EXISTING durable stream
+        // after the supplied cursor. It must NOT start a new run (the protocol's read path).
+        await using var env = await CreateResilientResearchServerAsync();
+
+        var invocationId = "research-resume-" + Guid.NewGuid().ToString("N");
+
+        // Start the turn and stream all events live (producer runs to completion).
+        var start = new HttpRequestMessage(HttpMethod.Post, "/invocations")
+        {
+            Content = new StringContent(
+                """{"Topic":"resume test"}""", Encoding.UTF8, "application/json"),
+        };
+        start.Headers.TryAddWithoutValidation("Accept", "text/event-stream");
+        start.Headers.Add("x-agent-invocation-id", invocationId);
+        var startResponse = await env.Client.SendAsync(start);
+        var original = ParseSseEvents(await startResponse.Content.ReadAsStringAsync());
+        Assert.That(original, Has.Count.GreaterThanOrEqualTo(3));
+        for (int i = 0; i < original.Count; i++)
+        {
+            Assert.That(original[i].Cursor, Is.EqualTo(i + 1));
+        }
+
+        // Resume via GET after the 2nd cursor — yields only the remaining tail (replay, not rerun).
+        int resumeAfter = original[1].Cursor;
+        var resume = new HttpRequestMessage(HttpMethod.Get,
+            $"/invocations/{invocationId}?last_event_id={resumeAfter}");
+        resume.Headers.TryAddWithoutValidation("Accept", "text/event-stream");
+        var resumeResponse = await env.Client.SendAsync(resume);
+
+        Assert.That(resumeResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var replayed = ParseSseEvents(await resumeResponse.Content.ReadAsStringAsync());
+
+        Assert.That(replayed, Has.Count.EqualTo(original.Count - 2),
+            "GET resume after the 2nd cursor should yield only the remaining events.");
+        Assert.That(replayed[0].Cursor, Is.EqualTo(resumeAfter + 1));
+        Assert.That(replayed[^1].Type, Is.EqualTo("done"));
+    }
+
+    [Test]
+    public async Task ResilientResearch_Get_UnknownInvocation_Returns404()
+    {
+        await using var env = await CreateResilientResearchServerAsync();
+
+        var request = new HttpRequestMessage(HttpMethod.Get, "/invocations/does-not-exist");
+        request.Headers.TryAddWithoutValidation("Accept", "text/event-stream");
+        var response = await env.Client.SendAsync(request);
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound),
+            "Resuming a stream that was never created should 404.");
+    }
+
+    [Test]
+    public async Task ResilientResearch_SecondTurnSameSession_DoesNotConflict()
+    {
+        // The research task is session-scoped and steerable: a second POST on the SAME
+        // session id must start/steer the next turn, never fault with a conflict (which a
+        // one-shot registration would do once the first turn completes).
+        await using var env = await CreateResilientResearchServerAsync();
+        var sessionId = "research-multi-" + Guid.NewGuid().ToString("N")[..8];
+
+        var first = await env.Client.PostAsync(
+            $"/invocations?agent_session_id={sessionId}",
+            new StringContent("""{"Topic":"first turn"}""", Encoding.UTF8, "application/json"));
+        Assert.That(first.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
+
+        var second = await env.Client.PostAsync(
+            $"/invocations?agent_session_id={sessionId}",
+            new StringContent("""{"Topic":"second turn"}""", Encoding.UTF8, "application/json"));
+        Assert.That(second.StatusCode, Is.EqualTo(HttpStatusCode.Accepted),
+            "A second turn on the same session must be accepted (steered/queued), not conflict.");
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  Sample 9: Resilient Multi-turn — steerable durable conversation
+    // ═══════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task ResilientMultiturn_SingleTurn_ReturnsReply()
+    {
+        await using var env = await CreateResilientMultiturnServerAsync();
+        var sessionId = "conv-single-" + Guid.NewGuid().ToString("N")[..8];
+
+        var json = """{"Message":"What is Rust?"}""";
+        var response = await env.Client.PostAsync(
+            $"/invocations?agent_session_id={sessionId}",
+            new StringContent(json, Encoding.UTF8, "application/json"));
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var body = await response.Content.ReadAsStringAsync();
+        using var doc = JsonDocument.Parse(body);
+
+        Assert.That(doc.RootElement.GetProperty("turn").GetInt32(), Is.EqualTo(1));
+        Assert.That(doc.RootElement.GetProperty("reply").GetString(), Does.Contain("What is Rust?"));
+    }
+
+    [Test]
+    public async Task ResilientMultiturn_MultipleRurns_AccumulatesContext()
+    {
+        await using var env = await CreateResilientMultiturnServerAsync();
+        var sessionId = "conv-test-multi-" + Guid.NewGuid().ToString("N")[..8];
+
+        // Turn 1
+        var response1 = await env.Client.PostAsync(
+            $"/invocations?agent_session_id={sessionId}",
+            new StringContent("""{"Message":"Hello"}""", Encoding.UTF8, "application/json"));
+        var body1 = await response1.Content.ReadAsStringAsync();
+        using var doc1 = JsonDocument.Parse(body1);
+        Assert.That(doc1.RootElement.GetProperty("turn").GetInt32(), Is.EqualTo(1));
+
+        // Turn 2
+        var response2 = await env.Client.PostAsync(
+            $"/invocations?agent_session_id={sessionId}",
+            new StringContent("""{"Message":"Tell me more"}""", Encoding.UTF8, "application/json"));
+        var body2 = await response2.Content.ReadAsStringAsync();
+        using var doc2 = JsonDocument.Parse(body2);
+        Assert.That(doc2.RootElement.GetProperty("turn").GetInt32(), Is.EqualTo(2));
+
+        // Turn 3
+        var response3 = await env.Client.PostAsync(
+            $"/invocations?agent_session_id={sessionId}",
+            new StringContent("""{"Message":"Wrap up"}""", Encoding.UTF8, "application/json"));
+        var body3 = await response3.Content.ReadAsStringAsync();
+        using var doc3 = JsonDocument.Parse(body3);
+        Assert.That(doc3.RootElement.GetProperty("turn").GetInt32(), Is.EqualTo(3));
+    }
+
+    [Test]
+    public async Task ResilientMultiturn_Steering_ConcurrentInputQueuesAsSteering()
+    {
+        // Genuinely exercise steering: fire a second input on the same session WHILE the
+        // first turn is still running. The durable engine queues the second input as a
+        // steering message (run.IsQueued == true on at least one response), and the
+        // producer observes ctx.PendingInputCount > 0 and wraps up the in-flight turn.
+        await using var env = await CreateResilientMultiturnServerAsync();
+        var sessionId = "conv-test-steer-" + Guid.NewGuid().ToString("N")[..8];
+
+        // Warm up the host (JIT, routing, task-engine lease/store paths) with a throwaway
+        // turn on a separate session so the timed concurrency window below is not skewed by
+        // first-request cold-start jitter (which would otherwise let the second input land
+        // after the first turn already finished).
+        using (var warmup = await env.Client.PostAsync(
+            $"/invocations?agent_session_id=warmup-{Guid.NewGuid():N}",
+            new StringContent("""{"Message":"warm up"}""", Encoding.UTF8, "application/json")))
+        {
+            Assert.That(warmup.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        }
+
+        var content1 = new StringContent(
+            """{"Message":"Write a long essay"}""", Encoding.UTF8, "application/json");
+        var content2 = new StringContent(
+            """{"Message":"Actually just one sentence"}""", Encoding.UTF8, "application/json");
+
+        // Start turn 1 (the producer loops ~100ms so it stays in-flight), then fire the
+        // second input concurrently to land while turn 1 is still running.
+        var task1 = env.Client.PostAsync($"/invocations?agent_session_id={sessionId}", content1);
+        await Task.Delay(20);
+        var task2 = env.Client.PostAsync($"/invocations?agent_session_id={sessionId}", content2);
+
+        var responses = await Task.WhenAll(task1, task2);
+        Assert.That(responses[0].StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(responses[1].StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        var bodies = new List<JsonElement>();
+        bool anyQueued = false;
+        bool anyInterrupted = false;
+        foreach (var resp in responses)
+        {
+            using var doc = JsonDocument.Parse(await resp.Content.ReadAsStringAsync());
+            var root = doc.RootElement.Clone();
+            bodies.Add(root);
+            if (root.TryGetProperty("is_queued", out var q) && q.GetBoolean())
+            {
+                anyQueued = true;
+            }
+            if (root.GetProperty("reply").GetString()!.Contains("interrupted"))
+            {
+                anyInterrupted = true;
+            }
+        }
+
+        // The concurrent input was steered: it was queued and/or it caused the in-flight
+        // turn to wrap up early (observed PendingInputCount > 0).
+        Assert.That(anyQueued || anyInterrupted, Is.True,
+            "A concurrent same-session input should be queued as steering or interrupt the in-flight turn.");
+
+        // The two turns are distinct and ordered.
+        var turns = bodies.Select(b => b.GetProperty("turn").GetInt32()).OrderBy(t => t).ToArray();
+        Assert.That(turns, Is.EqualTo(new[] { 1, 2 }),
+            "Steered conversation should produce two sequential turns.");
+    }
+
+    [Test]
+    public async Task ResilientMultiturn_DoneMessage_TerminatesAndClearsSessionHistory()
+    {
+        // Python parity: tests/e2e/test_resilient_multiturn.py::test_session_workflow_done_clears_history.
+        // A "done" message returns a terminal (finished) result whose summary reports the messages
+        // exchanged so far, and clears the named-namespace session history + turn_count so a
+        // subsequent turn on the same session starts fresh (turn == 1 again).
+        await using var env = await CreateResilientMultiturnServerAsync();
+        var sessionId = "conv-done-" + Guid.NewGuid().ToString("N")[..8];
+
+        // Two real turns accumulate session state (turn_count → 2).
+        await env.Client.PostAsync($"/invocations?agent_session_id={sessionId}",
+            new StringContent("""{"Message":"Tokyo trip"}""", Encoding.UTF8, "application/json"));
+        var t2 = await env.Client.PostAsync($"/invocations?agent_session_id={sessionId}",
+            new StringContent("""{"Message":"Budget please"}""", Encoding.UTF8, "application/json"));
+        using (var d2 = JsonDocument.Parse(await t2.Content.ReadAsStringAsync()))
+        {
+            Assert.That(d2.RootElement.GetProperty("turn").GetInt32(), Is.EqualTo(2));
+        }
+
+        // "done" terminates the session: finished == true and a summary reply.
+        var done = await env.Client.PostAsync($"/invocations?agent_session_id={sessionId}",
+            new StringContent("""{"Message":"done"}""", Encoding.UTF8, "application/json"));
+        Assert.That(done.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        using (var dDone = JsonDocument.Parse(await done.Content.ReadAsStringAsync()))
+        {
+            Assert.That(dDone.RootElement.GetProperty("finished").GetBoolean(), Is.True,
+                "a 'done' message must return a terminal (finished) result");
+            Assert.That(dDone.RootElement.GetProperty("reply").GetString(),
+                Does.Contain("Session complete"),
+                "the terminal result should summarize the completed session");
+        }
+
+        // The next turn on the same session starts fresh — history + turn_count were cleared.
+        var reopened = await env.Client.PostAsync($"/invocations?agent_session_id={sessionId}",
+            new StringContent("""{"Message":"new topic"}""", Encoding.UTF8, "application/json"));
+        using (var dNew = JsonDocument.Parse(await reopened.Content.ReadAsStringAsync()))
+        {
+            Assert.That(dNew.RootElement.GetProperty("turn").GetInt32(), Is.EqualTo(1),
+                "after 'done' cleared the session, a new turn must restart the turn counter at 1");
+            Assert.That(dNew.RootElement.GetProperty("finished").GetBoolean(), Is.False);
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    //  Resilient Sample Helpers — SSE parsing + server factories
+    // ═══════════════════════════════════════════════════════════════════
+
+    private record SseEvent(int Cursor, string Type, string Content);
+
+    private static List<SseEvent> ParseSseEvents(string sseBody)
+    {
+        var events = new List<SseEvent>();
+        string? currentId = null;
+        string? currentEvent = null;
+
+        foreach (var line in sseBody.Split('\n'))
+        {
+            if (line.StartsWith("id: "))
+            {
+                currentId = line["id: ".Length..];
+            }
+            else if (line.StartsWith("event: "))
+            {
+                currentEvent = line["event: ".Length..];
+            }
+            else if (line.StartsWith("data: "))
+            {
+                // Protocol terminator frames (`event: done` / `event: superseded`) carry an SSE
+                // `event:` field and no domain cursor — they mark clean stream-end vs. a dropped
+                // connection and are not domain events, so skip them from the domain-event list.
+                if (currentEvent is not null)
+                {
+                    currentEvent = null;
+                    currentId = null;
+                    continue;
+                }
+
+                var data = line["data: ".Length..];
+                using var doc = JsonDocument.Parse(data);
+                var root = doc.RootElement;
+
+                int cursor = currentId != null && int.TryParse(currentId, out var c) ? c : 0;
+                string type = root.TryGetProperty("Type", out var t) ? t.GetString() ?? ""
+                    : root.TryGetProperty("type", out var t2) ? t2.GetString() ?? ""
+                    : "";
+                string content = root.TryGetProperty("Content", out var ct) ? ct.GetString() ?? ""
+                    : root.TryGetProperty("content", out var ct2) ? ct2.GetString() ?? ""
+                    : "";
+
+                events.Add(new SseEvent(cursor, type, content));
+                currentId = null;
+            }
+        }
+
+        return events;
+    }
+
+    /// <summary>
+    /// Creates a test server for the Resilient Research sample. The producer is the
+    /// documented snippet method (<c>RunResearchAsync</c>) driven by a REAL OpenAI
+    /// <see cref="ResponsesClient"/> whose transport is redirected to an in-process mock
+    /// backend that returns canned OpenAI Responses SSE — so the snippet code runs exactly
+    /// as in production while staying deterministic and offline.
+    /// </summary>
+    private static async Task<TestEnv> CreateResilientResearchServerAsync()
+    {
+        var checkpointStore = new Snippets.SampleResilientResearchSnippets.CheckpointStore(
+            Path.Combine(Path.GetTempPath(), "research-checkpoints-" + Guid.NewGuid().ToString("N")[..8]));
+        var model = CreateMockResponsesClient();
+
+        var env = await CreateTestServerAsync<Snippets.SampleResilientResearchSnippets.ResilientResearchHandler>(
+            services =>
+            {
+                // In-memory replay with a TTL so retained streams are reclaimed.
+                services.AddEventStreams(o => o.UseInMemoryReplay(
+                    cursor: payload => ((Snippets.SampleResilientResearchSnippets.ResearchEvent)payload).Cursor,
+                    ttl: TimeSpan.FromMinutes(5)));
+
+                services.AddResilientTasks()
+                    .AddMultiTurnTask<Snippets.SampleResilientResearchSnippets.ResearchRequest,
+                             Snippets.SampleResilientResearchSnippets.ResearchResult>(
+                        "research",
+                        (provider, ctx, ct) => Snippets.SampleResilientResearchSnippets.RunResearchAsync(
+                            provider.GetRequiredService<IEventStreamRegistry>(), model, "test-model", ctx, checkpointStore,
+                            numPhases: 2, callsPerPhase: 2,
+                            interPhaseCooldown: TimeSpan.Zero,
+                            intraPhaseCooldown: TimeSpan.Zero,
+                            ct: ct),
+                        steerable: true);
+            });
+
+        return env;
+    }
+
+    /// <summary>
+    /// A real OpenAI <see cref="ResponsesClient"/> whose HTTP transport is redirected to an
+    /// in-process mock that emits canned OpenAI Responses SSE. The SDK genuinely parses the
+    /// streaming protocol — only the network hop is replaced.
+    /// </summary>
+    private static ResponsesClient CreateMockResponsesClient() =>
+        new ResponsesClient(
+            new ApiKeyCredential("unused-key"),
+            new OpenAIClientOptions
+            {
+                Endpoint = new Uri("http://mock-openai-backend"),
+                Transport = new HttpClientPipelineTransport(
+                    new HttpClient(new MockStreamingBackendHandler())),
+            });
+
+    /// <summary>
+    /// Mock backend returning a canned OpenAI Responses SSE stream with a short text delta,
+    /// matching the streaming format the SDK expects.
+    /// </summary>
+    private sealed class MockStreamingBackendHandler : HttpMessageHandler
+    {
+        // Canned SSE modeled on a real Azure Foundry OpenAI Responses stream captured from
+        // gpt-5.4-nano. Field shapes — sequence_number on every event, multiple
+        // output_text.delta frames, phase/annotations/logprobs members — mirror the live wire
+        // format so the deterministic test exercises the same multi-token streaming path the
+        // live test does.
+        private const string ItemId = "msg_mock0001";
+        private const string ResponseId = "resp_mock0001";
+        private static readonly string[] s_deltas = { "Findings:", " deterministic", " mock", " output." };
+
+        protected override Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            int seq = 0;
+            var sb = new StringBuilder();
+            string fullText = string.Concat(s_deltas);
+            string textJson = JsonSerializer.Serialize(fullText);
+
+            AppendSseEvent(sb, "response.created",
+                "{\"type\":\"response.created\",\"sequence_number\":" + seq++ + ",\"response\":{\"id\":\"" + ResponseId + "\",\"object\":\"response\",\"created_at\":1782863171,\"status\":\"in_progress\",\"model\":\"test-model\",\"output\":[],\"parallel_tool_calls\":true,\"metadata\":{}}}");
+            AppendSseEvent(sb, "response.in_progress",
+                "{\"type\":\"response.in_progress\",\"sequence_number\":" + seq++ + ",\"response\":{\"id\":\"" + ResponseId + "\",\"object\":\"response\",\"status\":\"in_progress\",\"model\":\"test-model\",\"output\":[]}}");
+            AppendSseEvent(sb, "response.output_item.added",
+                "{\"type\":\"response.output_item.added\",\"sequence_number\":" + seq++ + ",\"output_index\":0,\"item\":{\"id\":\"" + ItemId + "\",\"type\":\"message\",\"status\":\"in_progress\",\"content\":[],\"phase\":\"final_answer\",\"role\":\"assistant\"}}");
+            AppendSseEvent(sb, "response.content_part.added",
+                "{\"type\":\"response.content_part.added\",\"sequence_number\":" + seq++ + ",\"item_id\":\"" + ItemId + "\",\"output_index\":0,\"content_index\":0,\"part\":{\"type\":\"output_text\",\"annotations\":[],\"logprobs\":[],\"text\":\"\"}}");
+
+            foreach (var delta in s_deltas)
+            {
+                AppendSseEvent(sb, "response.output_text.delta",
+                    "{\"type\":\"response.output_text.delta\",\"sequence_number\":" + seq++ + ",\"item_id\":\"" + ItemId + "\",\"output_index\":0,\"content_index\":0,\"logprobs\":[],\"delta\":" + JsonSerializer.Serialize(delta) + "}");
+            }
+
+            AppendSseEvent(sb, "response.output_text.done",
+                "{\"type\":\"response.output_text.done\",\"sequence_number\":" + seq++ + ",\"item_id\":\"" + ItemId + "\",\"output_index\":0,\"content_index\":0,\"logprobs\":[],\"text\":" + textJson + "}");
+            AppendSseEvent(sb, "response.content_part.done",
+                "{\"type\":\"response.content_part.done\",\"sequence_number\":" + seq++ + ",\"item_id\":\"" + ItemId + "\",\"output_index\":0,\"content_index\":0,\"part\":{\"type\":\"output_text\",\"annotations\":[],\"logprobs\":[],\"text\":" + textJson + "}}");
+            AppendSseEvent(sb, "response.output_item.done",
+                "{\"type\":\"response.output_item.done\",\"sequence_number\":" + seq++ + ",\"output_index\":0,\"item\":{\"id\":\"" + ItemId + "\",\"type\":\"message\",\"status\":\"completed\",\"phase\":\"final_answer\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"annotations\":[],\"logprobs\":[],\"text\":" + textJson + "}]}}");
+            AppendSseEvent(sb, "response.completed",
+                "{\"type\":\"response.completed\",\"sequence_number\":" + seq++ + ",\"response\":{\"id\":\"" + ResponseId + "\",\"object\":\"response\",\"status\":\"completed\",\"model\":\"test-model\",\"output\":[{\"id\":\"" + ItemId + "\",\"type\":\"message\",\"status\":\"completed\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":" + textJson + "}]}],\"usage\":{\"input_tokens\":12,\"output_tokens\":8,\"total_tokens\":20}}}");
+
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(sb.ToString(), Encoding.UTF8, "text/event-stream"),
+            });
+        }
+
+        private static void AppendSseEvent(StringBuilder sb, string eventType, string data)
+        {
+            sb.Append("event: ").AppendLine(eventType);
+            sb.Append("data: ").AppendLine(data.Trim());
+            sb.AppendLine();
+        }
+    }
+
+    /// <summary>
+    /// Creates a test server for the Resilient Multiturn sample using the documented
+    /// steerable producer snippet method (<c>RunConversationTurnAsync</c>) with a
+    /// deterministic stubbed reply.
+    /// </summary>
+    private static async Task<TestEnv> CreateResilientMultiturnServerAsync()
+    {
+        return await CreateTestServerAsync<Snippets.SampleResilientMultiturnSnippets.ResilientMultiturnHandler>(
+            services =>
+            {
+                services.AddResilientTasks()
+                    .AddMultiTurnTask<Snippets.SampleResilientMultiturnSnippets.ConversationInput,
+                                      Snippets.SampleResilientMultiturnSnippets.ConversationOutput>(
+                        "conversation",
+                        (ctx, ct) => Snippets.SampleResilientMultiturnSnippets.RunConversationTurnAsync(
+                            ctx,
+                            (history, msg, c) => Task.FromResult($"Turn reply: You said \"{msg}\""),
+                            ct),
+                        steerable: true);
+            });
     }
 
     // ═══════════════════════════════════════════════════════════════════
