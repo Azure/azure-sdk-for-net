@@ -12,7 +12,7 @@ using Azure.Generator.MgmtTypeSpec.Tests.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    /// <summary> Reduced managed application definition. </summary>
+    /// <summary> Reduced managed application definition for the invalid query-suffixed route repro. </summary>
     public partial class SolutionsApplicationDefinitionData : SolutionsGenericResource
     {
         /// <summary> Initializes a new instance of <see cref="SolutionsApplicationDefinitionData"/>. </summary>

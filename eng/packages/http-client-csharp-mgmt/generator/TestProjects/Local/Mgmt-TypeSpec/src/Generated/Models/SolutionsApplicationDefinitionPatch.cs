@@ -11,7 +11,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> Information about an application definition request. </summary>
+    /// <summary> Information about a query-suffixed application definition request. </summary>
     public partial class SolutionsApplicationDefinitionPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

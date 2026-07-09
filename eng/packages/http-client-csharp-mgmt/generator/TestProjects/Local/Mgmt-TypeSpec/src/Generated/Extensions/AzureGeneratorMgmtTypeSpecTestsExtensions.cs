@@ -1429,24 +1429,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SolutionsQuerySuffixApplicationDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetSolutionsQuerySuffixApplicationDefinitionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SolutionsQuerySuffixApplicationDefinitionResource"/> object. </returns>
-        public static SolutionsQuerySuffixApplicationDefinitionResource GetSolutionsQuerySuffixApplicationDefinitionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSolutionsQuerySuffixApplicationDefinitionResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -2770,75 +2752,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets a collection of SolutionsApplicationDefinitions in the <see cref="ResourceGroupResource"/>
+        /// Gets an object representing a <see cref="SolutionsApplicationDefinitionResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetSolutionsApplicationDefinitions()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetSolutionsApplicationDefinition()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of SolutionsApplicationDefinitions and their operations over a SolutionsApplicationDefinitionResource. </returns>
-        public static SolutionsApplicationDefinitionCollection GetSolutionsApplicationDefinitions(this ResourceGroupResource resourceGroupResource)
+        /// <returns> Returns a <see cref="SolutionsApplicationDefinitionResource"/> object. </returns>
+        public static SolutionsApplicationDefinitionResource GetSolutionsApplicationDefinition(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSolutionsApplicationDefinitions();
-        }
-
-        /// <summary>
-        /// Gets the managed application definition.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetSolutionsApplicationDefinitionAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SolutionsApplicationDefinitionResource>> GetSolutionsApplicationDefinitionAsync(this ResourceGroupResource resourceGroupResource, string applicationDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSolutionsApplicationDefinitionAsync(applicationDefinitionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the managed application definition.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetSolutionsApplicationDefinition(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SolutionsApplicationDefinitionResource> GetSolutionsApplicationDefinition(this ResourceGroupResource resourceGroupResource, string applicationDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSolutionsApplicationDefinition(applicationDefinitionName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SolutionsQuerySuffixApplicationDefinitionResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetSolutionsQuerySuffixApplicationDefinition()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> Returns a <see cref="SolutionsQuerySuffixApplicationDefinitionResource"/> object. </returns>
-        public static SolutionsQuerySuffixApplicationDefinitionResource GetSolutionsQuerySuffixApplicationDefinition(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSolutionsQuerySuffixApplicationDefinition();
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSolutionsApplicationDefinition();
         }
 
         /// <summary>
@@ -2989,44 +2916,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetAllPrivateLinkResources(cancellationToken);
-        }
-
-        /// <summary>
-        /// Updates the managed application definition on a disambiguated route.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.UpdateByIdAsync(string, SolutionsApplicationDefinitionPatch, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
-        /// <param name="patch"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<SolutionsApplicationDefinitionResource>> UpdateByIdAsync(this ResourceGroupResource resourceGroupResource, string applicationDefinitionName, SolutionsApplicationDefinitionPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).UpdateByIdAsync(applicationDefinitionName, patch, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Updates the managed application definition on a disambiguated route.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.UpdateById(string, SolutionsApplicationDefinitionPatch, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
-        /// <param name="patch"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<SolutionsApplicationDefinitionResource> UpdateById(this ResourceGroupResource resourceGroupResource, string applicationDefinitionName, SolutionsApplicationDefinitionPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).UpdateById(applicationDefinitionName, patch, cancellationToken);
         }
 
         /// <summary>

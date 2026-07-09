@@ -2014,35 +2014,5 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
             return new SolutionsApplicationDefinitionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
-        /// <param name="solutionsApplicationDefinitionDisplayName"> The managed application definition display name. </param>
-        /// <returns> A new <see cref="Tests.SolutionsQuerySuffixApplicationDefinitionData"/> instance for mocking. </returns>
-        public static SolutionsQuerySuffixApplicationDefinitionData SolutionsQuerySuffixApplicationDefinitionData(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string managedBy = default, string solutionsApplicationDefinitionDisplayName = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SolutionsQuerySuffixApplicationDefinitionData(
-                id,
-                name,
-                @type,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                managedBy,
-                solutionsApplicationDefinitionDisplayName is null ? default : new SolutionsApplicationDefinitionProperties(solutionsApplicationDefinitionDisplayName, default));
-        }
-
-        /// <param name="tags"> Application definition tags. </param>
-        /// <returns> A new <see cref="Models.SolutionsQuerySuffixApplicationDefinitionPatch"/> instance for mocking. </returns>
-        public static SolutionsQuerySuffixApplicationDefinitionPatch SolutionsQuerySuffixApplicationDefinitionPatch(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SolutionsQuerySuffixApplicationDefinitionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
     }
 }

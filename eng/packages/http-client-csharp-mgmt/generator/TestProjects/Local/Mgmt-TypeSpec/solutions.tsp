@@ -41,7 +41,7 @@ model SolutionsGenericResource extends SolutionsResource {
   managedBy?: string;
 }
 
-/** Reduced managed application definition. */
+/** Reduced managed application definition for the invalid query-suffixed route repro. */
 #suppress "@azure-tools/typespec-azure-core/no-private-usage" "Reduced Solutions conversion regression test"
 #suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Reduced Solutions conversion regression test"
 #suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Reduced Solutions conversion regression test"
@@ -64,35 +64,9 @@ model SolutionsApplicationDefinitionProperties {
   displayName?: string;
 }
 
-/** Reduced managed application definition for the invalid query-suffixed route repro. */
-#suppress "@azure-tools/typespec-azure-core/no-private-usage" "Reduced Solutions conversion regression test"
-#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Reduced Solutions conversion regression test"
-#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Reduced Solutions conversion regression test"
-@Http.Private.includeInapplicableMetadataInPayload(false)
-model SolutionsQuerySuffixApplicationDefinition extends SolutionsGenericResource {
-  @visibility(Lifecycle.Read)
-  @path
-  @key("applicationDefinitionName")
-  @minLength(2)
-  @maxLength(10)
-  @segment("querySuffixApplicationDefinitions")
-  name: string;
-
-  /** The managed application definition properties. */
-  properties: SolutionsApplicationDefinitionProperties;
-}
-
-/** Information about an application definition request. */
-#suppress "@azure-tools/typespec-azure-resource-manager/patch-envelope" "Reduced Solutions conversion regression test"
-model SolutionsApplicationDefinitionPatchable {
-  /** Application definition tags. */
-  #suppress "@azure-tools/typespec-azure-resource-manager/arm-no-record" "Reduced Solutions conversion regression test"
-  tags?: Record<string>;
-}
-
 /** Information about a query-suffixed application definition request. */
 #suppress "@azure-tools/typespec-azure-resource-manager/patch-envelope" "Reduced Solutions conversion regression test"
-model SolutionsQuerySuffixApplicationDefinitionPatchable {
+model SolutionsApplicationDefinitionPatchable {
   /** Application definition tags. */
   #suppress "@azure-tools/typespec-azure-resource-manager/arm-no-record" "Reduced Solutions conversion regression test"
   tags?: Record<string>;
@@ -117,21 +91,21 @@ alias SolutionsApplicationDefinitionOps = Azure.ResourceManager.Legacy.RoutedOpe
   ResourceRoute = #{ useStaticRoute: true }
 >;
 
-@route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}")
+@route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy")
 @armResourceOperations(#{ allowStaticRoutes: true })
 interface SolutionsApplicationDefinitions {
-  /** Gets the managed application definition. */
+  /** Gets the managed application definition on a disambiguated route. */
   @sharedRoute
   get is SolutionsApplicationDefinitionOps.Read<
     SolutionsApplicationDefinition,
     Response = ArmResponse<SolutionsApplicationDefinition> | NotFoundResponse
   >;
 
-  /** Creates or updates a managed application definition. */
+  /** Creates or updates a managed application definition on a disambiguated route. */
   @sharedRoute
   createOrUpdate is SolutionsApplicationDefinitionOps.CreateOrUpdateSync<SolutionsApplicationDefinition>;
 
-  /** Updates the managed application definition. */
+  /** Updates the managed application definition on a disambiguated route. */
   @sharedRoute
   @patch(#{ implicitOptionality: false })
   update is SolutionsApplicationDefinitionOps.CustomPatchSync<
@@ -139,47 +113,6 @@ interface SolutionsApplicationDefinitions {
     PatchModel = SolutionsApplicationDefinitionPatchable
   >;
 }
-
-@tag("SolutionsApplicationDefinitions")
-@route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy")
-@armResourceOperations(#{ allowStaticRoutes: true, omitTags: true })
-interface SolutionsApplicationDefinitionOpsById {
-  /** Updates the managed application definition on a disambiguated route. */
-  @sharedRoute
-  @patch(#{ implicitOptionality: false })
-  updateById is SolutionsApplicationDefinitionOps.CustomPatchSync<
-    SolutionsApplicationDefinition,
-    PatchModel = SolutionsApplicationDefinitionPatchable
-  >;
-}
-
-@route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/querySuffixApplicationDefinitions/{applicationDefinitionName}?disambiguation_dummy")
-@armResourceOperations(#{ allowStaticRoutes: true })
-interface SolutionsQuerySuffixApplicationDefinitions {
-  /** Gets the managed application definition on a disambiguated route. */
-  @sharedRoute
-  get is SolutionsApplicationDefinitionOps.Read<
-    SolutionsQuerySuffixApplicationDefinition,
-    Response = ArmResponse<SolutionsQuerySuffixApplicationDefinition> | NotFoundResponse
-  >;
-
-  /** Creates or updates a managed application definition on a disambiguated route. */
-  @sharedRoute
-  createOrUpdate is SolutionsApplicationDefinitionOps.CreateOrUpdateSync<SolutionsQuerySuffixApplicationDefinition>;
-
-  /** Updates the managed application definition on a disambiguated route. */
-  @sharedRoute
-  @patch(#{ implicitOptionality: false })
-  update is SolutionsApplicationDefinitionOps.CustomPatchSync<
-    SolutionsQuerySuffixApplicationDefinition,
-    PatchModel = SolutionsQuerySuffixApplicationDefinitionPatchable
-  >;
-}
-
-@@clientLocation(
-  SolutionsApplicationDefinitionOpsById.updateById,
-  "SolutionsApplicationDefinitions"
-);
 
 @@clientName(
   SolutionsApplicationDefinitions.createOrUpdate::parameters.resource,
@@ -187,17 +120,5 @@ interface SolutionsQuerySuffixApplicationDefinitions {
 );
 @@clientName(
   SolutionsApplicationDefinitions.update::parameters.properties,
-  "parameters"
-);
-@@clientName(
-  SolutionsApplicationDefinitionOpsById.updateById::parameters.properties,
-  "parameters"
-);
-@@clientName(
-  SolutionsQuerySuffixApplicationDefinitions.createOrUpdate::parameters.resource,
-  "parameters"
-);
-@@clientName(
-  SolutionsQuerySuffixApplicationDefinitions.update::parameters.properties,
   "parameters"
 );

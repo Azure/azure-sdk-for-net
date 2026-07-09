@@ -14,7 +14,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> Information about an application definition request. </summary>
+    /// <summary> Information about a query-suffixed application definition request. </summary>
     public partial class SolutionsApplicationDefinitionPatch : IJsonModel<SolutionsApplicationDefinitionPatch>
     {
         /// <param name="data"> The data to parse. </param>

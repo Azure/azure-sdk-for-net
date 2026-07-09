@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +21,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// <summary>
     /// A class representing a SolutionsApplicationDefinition along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SolutionsApplicationDefinitionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSolutionsApplicationDefinitions method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSolutionsApplicationDefinition method.
     /// </summary>
     public partial class SolutionsApplicationDefinitionResource : ArmResource
     {
@@ -76,10 +75,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="applicationDefinitionName"> The applicationDefinitionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationDefinitionName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{{applicationDefinitionName}}?disambiguation_dummy";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -94,11 +92,129 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets the managed application definition.
+        /// Creates or updates a managed application definition on a disambiguated route.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionsApplicationDefinitions_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SolutionsApplicationDefinitionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<SolutionsApplicationDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationDefinitionName, SolutionsApplicationDefinitionData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _solutionsApplicationDefinitionsClientDiagnostics.CreateScope("SolutionsApplicationDefinitionResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, SolutionsApplicationDefinitionData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                TestsArmOperation<SolutionsApplicationDefinitionResource> operation = new TestsArmOperation<SolutionsApplicationDefinitionResource>(Response.FromValue(new SolutionsApplicationDefinitionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates a managed application definition on a disambiguated route.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionsApplicationDefinitions_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SolutionsApplicationDefinitionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<SolutionsApplicationDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string applicationDefinitionName, SolutionsApplicationDefinitionData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _solutionsApplicationDefinitionsClientDiagnostics.CreateScope("SolutionsApplicationDefinitionResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, SolutionsApplicationDefinitionData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                TestsArmOperation<SolutionsApplicationDefinitionResource> operation = new TestsArmOperation<SolutionsApplicationDefinitionResource>(Response.FromValue(new SolutionsApplicationDefinitionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the managed application definition on a disambiguated route.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -114,9 +230,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SolutionsApplicationDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SolutionsApplicationDefinitionResource>> GetAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
+
             using DiagnosticScope scope = _solutionsApplicationDefinitionsClientDiagnostics.CreateScope("SolutionsApplicationDefinitionResource.Get");
             scope.Start();
             try
@@ -125,7 +246,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -142,11 +263,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets the managed application definition.
+        /// Gets the managed application definition on a disambiguated route.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -162,9 +283,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SolutionsApplicationDefinitionResource> Get(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SolutionsApplicationDefinitionResource> Get(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
+
             using DiagnosticScope scope = _solutionsApplicationDefinitionsClientDiagnostics.CreateScope("SolutionsApplicationDefinitionResource.Get");
             scope.Start();
             try
@@ -173,7 +299,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -190,11 +316,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Updates the managed application definition.
+        /// Updates the managed application definition on a disambiguated route.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -210,11 +336,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="patch"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<SolutionsApplicationDefinitionResource>> UpdateAsync(SolutionsApplicationDefinitionPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SolutionsApplicationDefinitionResource>> UpdateAsync(string applicationDefinitionName, SolutionsApplicationDefinitionPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
             Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _solutionsApplicationDefinitionsClientDiagnostics.CreateScope("SolutionsApplicationDefinitionResource.Update");
@@ -225,7 +354,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SolutionsApplicationDefinitionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, SolutionsApplicationDefinitionPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,11 +371,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Updates the managed application definition.
+        /// Updates the managed application definition on a disambiguated route.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/applicationDefinitions/{applicationDefinitionName}?disambiguation_dummy. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -262,11 +391,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="patch"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<SolutionsApplicationDefinitionResource> Update(SolutionsApplicationDefinitionPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SolutionsApplicationDefinitionResource> Update(string applicationDefinitionName, SolutionsApplicationDefinitionPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
             Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _solutionsApplicationDefinitionsClientDiagnostics.CreateScope("SolutionsApplicationDefinitionResource.Update");
@@ -277,7 +409,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SolutionsApplicationDefinitionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, SolutionsApplicationDefinitionPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -285,280 +417,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     throw new RequestFailedException(response.GetRawResponse());
                 }
                 return Response.FromValue(new SolutionsApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<SolutionsApplicationDefinitionResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
-            using DiagnosticScope scope = _solutionsApplicationDefinitionsClientDiagnostics.CreateScope("SolutionsApplicationDefinitionResource.AddTag");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
-                    return Response.FromValue(new SolutionsApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    SolutionsApplicationDefinitionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SolutionsApplicationDefinitionPatch patch = new SolutionsApplicationDefinitionPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    Response<SolutionsApplicationDefinitionResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<SolutionsApplicationDefinitionResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
-            using DiagnosticScope scope = _solutionsApplicationDefinitionsClientDiagnostics.CreateScope("SolutionsApplicationDefinitionResource.AddTag");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken))
-                {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
-                    return Response.FromValue(new SolutionsApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    SolutionsApplicationDefinitionData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SolutionsApplicationDefinitionPatch patch = new SolutionsApplicationDefinitionPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    Response<SolutionsApplicationDefinitionResource> result = Update(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<SolutionsApplicationDefinitionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            using DiagnosticScope scope = _solutionsApplicationDefinitionsClientDiagnostics.CreateScope("SolutionsApplicationDefinitionResource.SetTags");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
-                    return Response.FromValue(new SolutionsApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    SolutionsApplicationDefinitionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SolutionsApplicationDefinitionPatch patch = new SolutionsApplicationDefinitionPatch();
-                    patch.Tags.ReplaceWith(tags);
-                    Response<SolutionsApplicationDefinitionResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<SolutionsApplicationDefinitionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            using DiagnosticScope scope = _solutionsApplicationDefinitionsClientDiagnostics.CreateScope("SolutionsApplicationDefinitionResource.SetTags");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken))
-                {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
-                    return Response.FromValue(new SolutionsApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    SolutionsApplicationDefinitionData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SolutionsApplicationDefinitionPatch patch = new SolutionsApplicationDefinitionPatch();
-                    patch.Tags.ReplaceWith(tags);
-                    Response<SolutionsApplicationDefinitionResource> result = Update(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<SolutionsApplicationDefinitionResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-
-            using DiagnosticScope scope = _solutionsApplicationDefinitionsClientDiagnostics.CreateScope("SolutionsApplicationDefinitionResource.RemoveTag");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
-                    return Response.FromValue(new SolutionsApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    SolutionsApplicationDefinitionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SolutionsApplicationDefinitionPatch patch = new SolutionsApplicationDefinitionPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    Response<SolutionsApplicationDefinitionResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<SolutionsApplicationDefinitionResource> RemoveTag(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-
-            using DiagnosticScope scope = _solutionsApplicationDefinitionsClientDiagnostics.CreateScope("SolutionsApplicationDefinitionResource.RemoveTag");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken))
-                {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
-                    return Response.FromValue(new SolutionsApplicationDefinitionResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    SolutionsApplicationDefinitionData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SolutionsApplicationDefinitionPatch patch = new SolutionsApplicationDefinitionPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    Response<SolutionsApplicationDefinitionResource> result = Update(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
             }
             catch (Exception e)
             {
