@@ -24,9 +24,10 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create an application type in an existing Service Fabric cluster
+### Create a Service Fabric application type
 
 This example demonstrates how to create an application type in an existing Service Fabric cluster.
+
 ```C# Snippet:ServiceFabricBasic
 Infrastructure infra = new();
 
@@ -45,8 +46,8 @@ infra.Add(applicationType);
 
 ## Troubleshooting
 
--   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
--   Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
+- File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
+- Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
 
 ## Next steps
 
