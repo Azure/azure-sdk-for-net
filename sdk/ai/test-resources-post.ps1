@@ -18,9 +18,6 @@ Objects created (Wave 1 - core self-provisionable):
   - A vector store            -> OPENAI_VECTOR_STORE_ID
   - A conversation            -> KNOWN_CONVERSATION_ID
   - A declarative agent       -> FOUNDRY_AGENT_NAME / FOUNDRY_AGENT_ID
-  - An AI Search index        -> AI_SEARCH_INDEX_NAME (against the ARM-provisioned
-                                 search service; AI_SEARCH_CONNECTION_NAME comes
-                                 from the ARM deployment output)
 
 The ARM template already exports FOUNDRY_PROJECT_ENDPOINT and the model deployment
 names; this script depends on those deployment outputs.
@@ -32,6 +29,9 @@ require that object are skipped, rather than failing the whole deployment.
 Out of scope (Wave 1) - these require external/manual resources and are expected
 to be supplied out-of-band via the pipeline variable group or a local .env; the
 tests that need them read them as optional variables and skip when absent:
+  - AI Search: AI_SEARCH_CONNECTION_NAME, AI_SEARCH_SERVICE_NAME,
+    AI_SEARCH_INDEX_NAME (the search service is no longer provisioned by the
+    default test resources; supply a pre-existing service/connection out-of-band).
   - Grounding/search connections: BING_CONNECTION_(NAME|ID),
     CUSTOM_BING_CONNECTION_(NAME|ID), BING_CUSTOM_SEARCH_INSTANCE_NAME.
   - Data connections: FABRIC_CONNECTION_ID, FABRIC_IQ_CONNECTION_ID,
@@ -213,68 +213,6 @@ else {
     }
     catch {
         Write-Warning "Failed to create bootstrap agent: $($_.Exception.Message)"
-    }
-}
-
-# --- AI Search index -> AI_SEARCH_INDEX_NAME ---------------------------------
-$searchServiceName = Get-DeploymentOutput -Name 'AI_SEARCH_SERVICE_NAME'
-$searchIndexName = 'sample_index'
-if ([string]::IsNullOrEmpty($searchServiceName)) {
-    Write-Warning "AI_SEARCH_SERVICE_NAME deployment output is missing; skipping AI Search bootstrap."
-}
-else {
-    try {
-        $mgmtToken = (Get-AzAccessToken -ResourceUrl 'https://management.azure.com').Token
-        if ($mgmtToken -is [System.Security.SecureString]) {
-            $mgmtToken = [System.Net.NetworkCredential]::new('', $mgmtToken).Password
-        }
-        $subId = (Get-AzContext).Subscription.Id
-        $keysUri = "https://management.azure.com/subscriptions/$subId/resourceGroups/$ResourceGroupName" +
-                   "/providers/Microsoft.Search/searchServices/$searchServiceName/listAdminKeys?api-version=2024-06-01-preview"
-        $adminKey = (Invoke-RestMethod -Method Post -Uri $keysUri -Headers @{ Authorization = "Bearer $mgmtToken" }).primaryKey
-
-        $searchBase = "https://$searchServiceName.search.windows.net"
-        $searchHeaders = @{ 'api-key' = $adminKey }
-        $searchApi = '2024-07-01'
-
-        # Index schema (QueryType.Simple: keyword only, no vectors required).
-        $indexSchema = @{
-            name   = $searchIndexName
-            fields = @(
-                @{ name = 'id'; type = 'Edm.String'; key = $true; filterable = $true },
-                @{ name = 'content'; type = 'Edm.String'; searchable = $true },
-                @{ name = 'title'; type = 'Edm.String'; searchable = $true; retrievable = $true },
-                @{ name = 'url'; type = 'Edm.String'; retrievable = $true },
-                @{ name = 'category'; type = 'Edm.String'; filterable = $true; facetable = $true }
-            )
-        }
-        Invoke-RestMethod -Method Put -Uri "$searchBase/indexes/$searchIndexName`?api-version=$searchApi" `
-            -Headers $searchHeaders -ContentType 'application/json' `
-            -Body ($indexSchema | ConvertTo-Json -Depth 6) | Out-Null
-
-        # Documents that satisfy the sample query + "category eq 'sleeping bag'" filter.
-        $docs = @{ value = @(
-            @{ '@search.action' = 'mergeOrUpload'; id = '1'; category = 'sleeping bag';
-               title = 'CozyNights Sleeping Bag';
-               url = 'https://example.com/products/cozynights-sleeping-bag';
-               content = 'The CozyNights sleeping bag is a lightweight 3-season bag rated for a temperature of 15 degrees Fahrenheit (-9 Celsius). It weighs 2.5 pounds and packs down small for backpacking.' },
-            @{ '@search.action' = 'mergeOrUpload'; id = '2'; category = 'sleeping bag';
-               title = 'MountainDream Sleeping Bag';
-               url = 'https://example.com/products/mountaindream-sleeping-bag';
-               content = 'The MountainDream sleeping bag is a winter bag rated to 0 degrees Fahrenheit (-18 Celsius).' },
-            @{ '@search.action' = 'mergeOrUpload'; id = '3'; category = 'tent';
-               title = 'TrailBlaze 2-Person Tent';
-               url = 'https://example.com/products/trailblaze-tent';
-               content = 'The TrailBlaze tent is a two-person, three-season backpacking tent.' }
-        ) }
-        Invoke-RestMethod -Method Post -Uri "$searchBase/indexes/$searchIndexName/docs/index`?api-version=$searchApi" `
-            -Headers $searchHeaders -ContentType 'application/json' `
-            -Body ($docs | ConvertTo-Json -Depth 6) | Out-Null
-
-        Set-BootstrapVariable -Name 'AI_SEARCH_INDEX_NAME' -Value $searchIndexName
-    }
-    catch {
-        Write-Warning "Failed to bootstrap AI Search index: $($_.Exception.Message)"
     }
 }
 
