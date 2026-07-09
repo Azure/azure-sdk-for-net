@@ -4,6 +4,12 @@
 
 ### Features Added
 
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 - Added GitHub Copilot skills under `.github/skills/` to help users
   iteratively author custom analyzers in VS Code with Copilot:
   - **`cu-sdk-author-analyzer`** — author and refine a custom analyzer
@@ -21,12 +27,6 @@
   and a pure-C# `SchemaValidator` that catches structural mistakes
   (unknown `baseAnalyzerId`, missing `fieldSchema`, malformed
   `contentCategories` routes) before a service round-trip.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.0-beta.2 (2026-06-11)
 
