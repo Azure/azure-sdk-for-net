@@ -38,8 +38,13 @@ It intentionally does **not** alternate AgentServer models directly to `OpenAI.*
 - Updated AgentServer `tsp-location.yaml` to point at the renamed TypeSpec package from the draft spec PR.
 - Added `Azure.AI.Extensions.OpenAI` as the AgentServer Responses dependency target.
 - Removed the stale direct OpenAI package-version override from `Azure.AI.AgentServer.Responses`.
+- Verified production `Azure.AI.AgentServer.Responses/src` has no direct `OpenAI` namespace or package references after cleanup.
 - Added Extensions custom constructor suppressions so Extensions can continue to own/adapt OpenAI response item leaves while building successfully.
 - Reproduced the strict architecture generation blocker.
+
+## Test-only OpenAI usage
+
+`Azure.AI.AgentServer.Responses/tests` still contains pre-existing OpenAI SDK interop/proxy tests and samples. That is test-only validation code, not a shipping package dependency. If the architecture rule is later interpreted to include tests as well, those tests should be migrated to validate through `Azure.AI.Extensions.OpenAI` instead of referencing OpenAI directly.
 
 ## Blocking emitter issue
 
