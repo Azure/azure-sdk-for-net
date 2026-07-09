@@ -111,21 +111,21 @@ namespace Azure.Provisioning.Communication
     public partial class DomainPropertiesVerificationRecords : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DomainPropertiesVerificationRecords() { }
-        public Azure.Provisioning.Communication.VerificationDnsRecord Dkim { get { throw null; } set { } }
-        public Azure.Provisioning.Communication.VerificationDnsRecord Dkim2 { get { throw null; } set { } }
-        public Azure.Provisioning.Communication.VerificationDnsRecord Dmarc { get { throw null; } set { } }
-        public Azure.Provisioning.Communication.VerificationDnsRecord Domain { get { throw null; } set { } }
-        public Azure.Provisioning.Communication.VerificationDnsRecord Spf { get { throw null; } set { } }
+        public Azure.Provisioning.Communication.VerificationDnsRecord Dkim { get { throw null; } }
+        public Azure.Provisioning.Communication.VerificationDnsRecord Dkim2 { get { throw null; } }
+        public Azure.Provisioning.Communication.VerificationDnsRecord Dmarc { get { throw null; } }
+        public Azure.Provisioning.Communication.VerificationDnsRecord Domain { get { throw null; } }
+        public Azure.Provisioning.Communication.VerificationDnsRecord Spf { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DomainPropertiesVerificationStates : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DomainPropertiesVerificationStates() { }
-        public Azure.Provisioning.Communication.DomainVerificationStatusRecord Dkim { get { throw null; } set { } }
-        public Azure.Provisioning.Communication.DomainVerificationStatusRecord Dkim2 { get { throw null; } set { } }
-        public Azure.Provisioning.Communication.DomainVerificationStatusRecord Dmarc { get { throw null; } set { } }
-        public Azure.Provisioning.Communication.DomainVerificationStatusRecord Domain { get { throw null; } set { } }
-        public Azure.Provisioning.Communication.DomainVerificationStatusRecord Spf { get { throw null; } set { } }
+        public Azure.Provisioning.Communication.DomainVerificationStatusRecord Dkim { get { throw null; } }
+        public Azure.Provisioning.Communication.DomainVerificationStatusRecord Dkim2 { get { throw null; } }
+        public Azure.Provisioning.Communication.DomainVerificationStatusRecord Dmarc { get { throw null; } }
+        public Azure.Provisioning.Communication.DomainVerificationStatusRecord Domain { get { throw null; } }
+        public Azure.Provisioning.Communication.DomainVerificationStatusRecord Spf { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum DomainProvisioningState

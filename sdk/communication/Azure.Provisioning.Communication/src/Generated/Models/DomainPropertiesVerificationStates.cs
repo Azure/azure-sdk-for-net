@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Communication
         {
         }
 
-        /// <summary> Gets or sets the Domain. </summary>
+        /// <summary> Gets the Domain. </summary>
         public DomainVerificationStatusRecord Domain
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.Communication
                 Initialize();
                 return _domain;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _domain, value);
-            }
         }
 
-        /// <summary> Gets or sets the Spf. </summary>
+        /// <summary> Gets the Spf. </summary>
         public DomainVerificationStatusRecord Spf
         {
             get
@@ -46,14 +41,9 @@ namespace Azure.Provisioning.Communication
                 Initialize();
                 return _spf;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _spf, value);
-            }
         }
 
-        /// <summary> Gets or sets the Dkim. </summary>
+        /// <summary> Gets the Dkim. </summary>
         public DomainVerificationStatusRecord Dkim
         {
             get
@@ -61,14 +51,9 @@ namespace Azure.Provisioning.Communication
                 Initialize();
                 return _dkim;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _dkim, value);
-            }
         }
 
-        /// <summary> Gets or sets the Dkim2. </summary>
+        /// <summary> Gets the Dkim2. </summary>
         public DomainVerificationStatusRecord Dkim2
         {
             get
@@ -76,25 +61,15 @@ namespace Azure.Provisioning.Communication
                 Initialize();
                 return _dkim2;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _dkim2, value);
-            }
         }
 
-        /// <summary> Gets or sets the Dmarc. </summary>
+        /// <summary> Gets the Dmarc. </summary>
         public DomainVerificationStatusRecord Dmarc
         {
             get
             {
                 Initialize();
                 return _dmarc;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _dmarc, value);
             }
         }
 
