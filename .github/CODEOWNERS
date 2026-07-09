@@ -423,6 +423,12 @@
 # ServiceLabel: %PostgreSQL Auth
 # ServiceOwners: @alxhghs @carlovi81 @mattboentoro @nasc17 @nehrao1 @rmendiza
 
+# PRLabel: %Provisioning
+/sdk/provisioning/    @ArcturusZhang @ArthurMa1978 @m-nash
+
+# AzureSdkOwners: @ArthurMa1978
+# ServiceLabel: %Provisioning
+
 # PRLabel: %Schema Registry
 /sdk/schemaregistry/    @axisc @hmlam @sjkwak
 
