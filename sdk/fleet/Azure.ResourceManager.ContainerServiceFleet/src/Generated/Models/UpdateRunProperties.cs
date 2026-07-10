@@ -96,13 +96,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 if (Strategy is null)
                 {
-                    Strategy = new ContainerServiceFleetUpdateRunStrategy(new List<ContainerServiceFleetUpdateStage>());
+                    Strategy = new ContainerServiceFleetUpdateRunStrategy();
                 }
                 return Strategy.Stages;
-            }
-            set
-            {
-                Strategy = new ContainerServiceFleetUpdateRunStrategy(value);
             }
         }
     }
