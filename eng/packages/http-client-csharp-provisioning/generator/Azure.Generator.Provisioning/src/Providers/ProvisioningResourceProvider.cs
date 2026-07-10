@@ -689,16 +689,7 @@ namespace Azure.Generator.Provisioning.Providers
             int minLength = constraints.MinLength ?? 1;
             int maxLength = constraints.MaxLength ?? 24;
 
-            // Parse valid characters from pattern, or use conservative default
-            var validCharacters = constraints.Pattern != null
-                ? constraints.Pattern.ParsePatternToResourceNameCharacters()
-                : ResourceNameCharacters.LowercaseLetters;
-
-            // If parsing produced no characters, fall back to conservative default
-            if (validCharacters == (ResourceNameCharacters)0)
-            {
-                validCharacters = ResourceNameCharacters.LowercaseLetters;
-            }
+            var validCharacters = constraints.ToResourceNameCharacters();
 
             // Build the flags expression by OR-ing the individual flag values
             ValueExpression flagsExpression = BuildResourceNameCharactersExpression(validCharacters);

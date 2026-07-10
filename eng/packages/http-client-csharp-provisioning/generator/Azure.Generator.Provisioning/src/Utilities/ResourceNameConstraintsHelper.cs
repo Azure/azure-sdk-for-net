@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Models;
 using Azure.Provisioning.Primitives;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -12,6 +13,15 @@ namespace Azure.Generator.Provisioning.Utilities;
 /// </summary>
 internal static class ResourceNameConstraintsHelper
 {
+    private const ResourceNameCharacters AllKnownCharacters =
+        ResourceNameCharacters.LowercaseLetters |
+        ResourceNameCharacters.UppercaseLetters |
+        ResourceNameCharacters.Numbers |
+        ResourceNameCharacters.Hyphen |
+        ResourceNameCharacters.Underscore |
+        ResourceNameCharacters.Period |
+        ResourceNameCharacters.Parentheses;
+
     /// <summary>
     /// Representative test strings for each <see cref="ResourceNameCharacters"/> flag.
     /// If any character in the test string matches the pattern, the flag is included.
@@ -26,6 +36,20 @@ internal static class ResourceNameConstraintsHelper
         (".", ResourceNameCharacters.Period),
         ("()", ResourceNameCharacters.Parentheses),
     ];
+
+    extension(ArmResourceNameConstraints constraints)
+    {
+        internal ResourceNameCharacters ToResourceNameCharacters()
+        {
+            if (constraints.Pattern is null)
+            {
+                return AllKnownCharacters;
+            }
+
+            var parsed = constraints.Pattern.ParsePatternToResourceNameCharacters();
+            return parsed == 0 ? AllKnownCharacters : parsed;
+        }
+    }
 
     extension(string pattern)
     {
@@ -59,6 +83,24 @@ internal static class ResourceNameConstraintsHelper
                         break;
                     }
                 }
+            }
+
+            var patternWithoutCharacterClasses = Regex.Replace(pattern, @"\[(?:[^\]]|\\.)+\]", "");
+            if (Regex.IsMatch(patternWithoutCharacterClasses, @"(?<!\\)-|\\-"))
+            {
+                result |= ResourceNameCharacters.Hyphen;
+            }
+            if (patternWithoutCharacterClasses.Contains('_'))
+            {
+                result |= ResourceNameCharacters.Underscore;
+            }
+            if (Regex.IsMatch(patternWithoutCharacterClasses, @"\\\."))
+            {
+                result |= ResourceNameCharacters.Period;
+            }
+            if (Regex.IsMatch(patternWithoutCharacterClasses, @"\\[()]"))
+            {
+                result |= ResourceNameCharacters.Parentheses;
             }
 
             return result;
