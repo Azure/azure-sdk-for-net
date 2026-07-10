@@ -52,9 +52,9 @@ internal static class ResourceNameConstraintsHelper
     }
 
     /// <summary>
-    /// Converts a regex pattern string into <see cref="ResourceNameCharacters"/> flags
-    /// by extracting all character classes from the pattern and testing representative
-    /// characters against them.
+    /// Converts a regex pattern string into <see cref="ResourceNameCharacters"/> flags by extracting
+    /// bracketed character classes (e.g. <c>[a-z]</c>) and testing representative characters against them,
+    /// then scanning the remaining pattern for literal hyphen/underscore and escaped period/parentheses.
     /// </summary>
     private static ResourceNameCharacters ParsePatternToResourceNameCharacters(string pattern)
     {
