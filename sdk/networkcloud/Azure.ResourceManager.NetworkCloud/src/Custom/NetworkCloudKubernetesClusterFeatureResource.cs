@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
+            => new CustomNetworkCloudArmOperationOfTWrapper<NetworkCloudOperationStatusResult>(await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false));
 
         /// <summary>
         /// Delete the provided Kubernetes cluster feature.
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => Delete(waitUntil, null, cancellationToken);
+            => new CustomNetworkCloudArmOperationOfTWrapper<NetworkCloudOperationStatusResult>(Delete(waitUntil, null, cancellationToken));
 
         /// <summary>
         /// Patch properties of the provided Kubernetes cluster feature.
@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-            => Delete(waitUntil, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken);
+            => new CustomNetworkCloudArmOperationOfTWrapper<NetworkCloudOperationStatusResult>(Delete(waitUntil, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken));
 
         /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-            => await DeleteAsync(waitUntil, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken).ConfigureAwait(false);
+            => new CustomNetworkCloudArmOperationOfTWrapper<NetworkCloudOperationStatusResult>(await DeleteAsync(waitUntil, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken).ConfigureAwait(false));
     }
 }
