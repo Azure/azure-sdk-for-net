@@ -228,6 +228,9 @@
 # PRLabel: %Communication - Common
 /sdk/communication/Azure.Communication.Common/    @alvinjiang-msft @anjulgarg @Joeleniqs @jorge-beauregard
 
+# ServiceLabel: %Communication - Common
+# ServiceOwners: @alvinjiang-msft @anjulgarg
+
 # PRLabel: %Communication - Identity
 /sdk/communication/Azure.Communication.Identity/    @alvinjiang-msft @anjulgarg @Joeleniqs @jorge-beauregard
 
