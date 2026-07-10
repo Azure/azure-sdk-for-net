@@ -39,6 +39,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Required collection used by the optional flattened model scenario. </summary>
         [WirePath("randomCollectionProp")]
-        public IList<string> RandomCollectionProp { get; }
+        public IList<string> RandomCollectionProp { get; } = new ChangeTrackingList<string>();
     }
 }

@@ -97,7 +97,7 @@ namespace Azure.Generator.Management.Utilities
                 return new List<MethodBodyStatement> {
                     new IfStatement(checkNullExpression)
                     {
-                        internalProperty.Assign(CreateInnerModelInstance(innerModel, innerProperty)).Terminate()
+                        internalProperty.Assign(New.Instance(innerModel.Type)).Terminate()
                     },
                     Return(new MemberExpression(internalProperty, innerProperty.Name))
                 };
@@ -108,7 +108,7 @@ namespace Azure.Generator.Management.Utilities
                 return new List<MethodBodyStatement> {
                     new IfStatement(checkNullExpression)
                     {
-                        internalProperty.Assign(CreateInnerModelInstance(innerModel, innerProperty)).Terminate()
+                        internalProperty.Assign(New.Instance(innerModel.Type)).Terminate()
                     },
                     Return(new MemberExpression(internalProperty, innerProperty.Name))
                 };
@@ -122,7 +122,7 @@ namespace Azure.Generator.Management.Utilities
                     return new List<MethodBodyStatement> {
                         new IfStatement(checkNullExpression)
                         {
-                            internalProperty.Assign(CreateInnerModelInstance(innerModel, innerProperty)).Terminate()
+                            internalProperty.Assign(New.Instance(innerModel.Type)).Terminate()
                         },
                         Return(new MemberExpression(internalProperty, innerProperty.Name))
                     };
@@ -137,52 +137,6 @@ namespace Azure.Generator.Management.Utilities
                 }
                 return Return(new MemberExpression(internalProperty, innerProperty.Name));
             }
-        }
-
-        private static ValueExpression CreateInnerModelInstance(TypeProvider innerModel, PropertyProvider innerProperty)
-        {
-            if (innerProperty.Type.IsCollection && TryCreateCollectionConstructorArguments(innerModel, innerProperty.Type, out var arguments))
-            {
-                return New.Instance(innerModel.Type, arguments);
-            }
-
-            return New.Instance(innerModel.Type);
-        }
-
-        private static bool TryCreateCollectionConstructorArguments(TypeProvider innerModel, CSharpType propertyType, out IReadOnlyList<ValueExpression> arguments)
-        {
-            foreach (var ctor in innerModel.Constructors)
-            {
-                if (ctor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
-                    && ctor.Signature.Parameters.Count > 0
-                    && ctor.Signature.Parameters.All(parameter => IsCollectionType(parameter.Type))
-                    && ctor.Signature.Parameters.Any(parameter => IsCompatibleCollectionParameter(parameter.Type, propertyType)))
-                {
-                    arguments = ctor.Signature.Parameters
-                        .Select(parameter => New.Instance(new CSharpType(typeof(List<>), parameter.Type.Arguments[0])))
-                        .ToArray();
-                    return true;
-                }
-            }
-
-            arguments = [];
-            return false;
-        }
-
-        private static bool IsCollectionType(CSharpType type) => type.IsCollection && type.Arguments.Count == 1;
-
-        private static bool IsCompatibleCollectionParameter(CSharpType ctorParameterType, CSharpType propertyType)
-        {
-            if (ctorParameterType.Equals(propertyType))
-            {
-                return true;
-            }
-
-            return propertyType.IsCollection
-                && ctorParameterType.IsCollection
-                && propertyType.Arguments.Count == 1
-                && ctorParameterType.Arguments.Count == 1
-                && ctorParameterType.Arguments[0].Equals(propertyType.Arguments[0]);
         }
 
         public static MethodBodyStatement? BuildSetterForPropertyFlatten(ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty, bool isPropertyLiftedToNullable, bool allowCollectionSetter = false)
