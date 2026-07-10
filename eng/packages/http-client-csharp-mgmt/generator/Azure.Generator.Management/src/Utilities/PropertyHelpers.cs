@@ -141,28 +141,35 @@ namespace Azure.Generator.Management.Utilities
 
         private static ValueExpression CreateInnerModelInstance(TypeProvider innerModel, PropertyProvider innerProperty)
         {
-            if (innerProperty.Type.IsCollection && innerProperty.Type.Arguments.Count == 1 && HasSingleParameterPublicCtor(innerModel, innerProperty.Type))
+            if (innerProperty.Type.IsCollection && TryCreateCollectionConstructorArguments(innerModel, innerProperty.Type, out var arguments))
             {
-                return New.Instance(innerModel.Type, New.Instance(new CSharpType(typeof(List<>), innerProperty.Type.Arguments[0])));
+                return New.Instance(innerModel.Type, arguments);
             }
 
             return New.Instance(innerModel.Type);
         }
 
-        private static bool HasSingleParameterPublicCtor(TypeProvider innerModel, CSharpType parameterType)
+        private static bool TryCreateCollectionConstructorArguments(TypeProvider innerModel, CSharpType propertyType, out IReadOnlyList<ValueExpression> arguments)
         {
             foreach (var ctor in innerModel.Constructors)
             {
                 if (ctor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
-                    && ctor.Signature.Parameters.Count == 1
-                    && IsCompatibleCollectionParameter(ctor.Signature.Parameters[0].Type, parameterType))
+                    && ctor.Signature.Parameters.Count > 0
+                    && ctor.Signature.Parameters.All(parameter => IsCollectionType(parameter.Type))
+                    && ctor.Signature.Parameters.Any(parameter => IsCompatibleCollectionParameter(parameter.Type, propertyType)))
                 {
+                    arguments = ctor.Signature.Parameters
+                        .Select(parameter => New.Instance(new CSharpType(typeof(List<>), parameter.Type.Arguments[0])))
+                        .ToArray();
                     return true;
                 }
             }
 
+            arguments = [];
             return false;
         }
+
+        private static bool IsCollectionType(CSharpType type) => type.IsCollection && type.Arguments.Count == 1;
 
         private static bool IsCompatibleCollectionParameter(CSharpType ctorParameterType, CSharpType propertyType)
         {

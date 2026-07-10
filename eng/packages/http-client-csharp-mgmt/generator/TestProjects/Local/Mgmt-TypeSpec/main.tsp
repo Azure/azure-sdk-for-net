@@ -77,6 +77,8 @@ namespace MgmtTypeSpec {
 
   #suppress "deprecated"
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.flattenedNestedProperty);
+  #suppress "deprecated"
+  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(BarSettingsResource.optionalFlattenProperty);
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
   #suppress "deprecated"
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(MultiFlattenTest.properties);
