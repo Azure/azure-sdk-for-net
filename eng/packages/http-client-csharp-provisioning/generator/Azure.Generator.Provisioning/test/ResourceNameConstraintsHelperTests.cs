@@ -32,7 +32,9 @@ namespace Azure.Generator.Provisioning.Tests
         [Test]
         public void PatternParsesLiteralHyphenOutsideCharacterClass()
         {
-            var characters = "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$".ParsePatternToResourceNameCharacters();
+            var constraints = new ArmResourceNameConstraints("^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$", 1, 255);
+
+            var characters = constraints.ToResourceNameCharacters();
 
             Assert.That(characters.HasFlag(ResourceNameCharacters.LowercaseLetters), Is.True);
             Assert.That(characters.HasFlag(ResourceNameCharacters.UppercaseLetters), Is.True);

@@ -46,64 +46,61 @@ internal static class ResourceNameConstraintsHelper
                 return AllKnownCharacters;
             }
 
-            var parsed = constraints.Pattern.ParsePatternToResourceNameCharacters();
+            var parsed = ParsePatternToResourceNameCharacters(constraints.Pattern);
             return parsed == 0 ? AllKnownCharacters : parsed;
         }
     }
 
-    extension(string pattern)
+    /// <summary>
+    /// Converts a regex pattern string into <see cref="ResourceNameCharacters"/> flags
+    /// by extracting all character classes from the pattern and testing representative
+    /// characters against them.
+    /// </summary>
+    private static ResourceNameCharacters ParsePatternToResourceNameCharacters(string pattern)
     {
-        /// <summary>
-        /// Converts a regex pattern string into <see cref="ResourceNameCharacters"/> flags
-        /// by extracting all character classes from the pattern and testing representative
-        /// characters against them.
-        /// </summary>
-        internal ResourceNameCharacters ParsePatternToResourceNameCharacters()
+        // Extract all [...] character class groups from the pattern and combine them
+        // so we can test if any position in the pattern accepts each character.
+        var charClasses = Regex.Matches(pattern, @"\[(?:[^\]]|\\.)+\]");
+        if (charClasses.Count == 0)
         {
-            // Extract all [...] character class groups from the pattern and combine them
-            // so we can test if any position in the pattern accepts each character.
-            var charClasses = Regex.Matches(pattern, @"\[(?:[^\]]|\\.)+\]");
-            if (charClasses.Count == 0)
+            return (ResourceNameCharacters)0;
+        }
+
+        var combined = string.Join("|", charClasses.Cast<Match>().Select(m => m.Value));
+        var regex = new Regex("^(?:" + combined + ")$");
+
+        var result = (ResourceNameCharacters)0;
+
+        foreach (var (testChars, flag) in CharacterTests)
+        {
+            foreach (char c in testChars)
             {
-                return (ResourceNameCharacters)0;
-            }
-
-            var combined = string.Join("|", charClasses.Cast<Match>().Select(m => m.Value));
-            var regex = new Regex("^(?:" + combined + ")$");
-
-            var result = (ResourceNameCharacters)0;
-
-            foreach (var (testChars, flag) in CharacterTests)
-            {
-                foreach (char c in testChars)
+                if (regex.IsMatch(c.ToString()))
                 {
-                    if (regex.IsMatch(c.ToString()))
-                    {
-                        result |= flag;
-                        break;
-                    }
+                    result |= flag;
+                    break;
                 }
             }
-
-            var patternWithoutCharacterClasses = Regex.Replace(pattern, @"\[(?:[^\]]|\\.)+\]", "");
-            if (Regex.IsMatch(patternWithoutCharacterClasses, @"(?<!\\)-|\\-"))
-            {
-                result |= ResourceNameCharacters.Hyphen;
-            }
-            if (patternWithoutCharacterClasses.Contains('_'))
-            {
-                result |= ResourceNameCharacters.Underscore;
-            }
-            if (Regex.IsMatch(patternWithoutCharacterClasses, @"\\\."))
-            {
-                result |= ResourceNameCharacters.Period;
-            }
-            if (Regex.IsMatch(patternWithoutCharacterClasses, @"\\[()]"))
-            {
-                result |= ResourceNameCharacters.Parentheses;
-            }
-
-            return result;
         }
+
+        var patternWithoutCharacterClasses = Regex.Replace(pattern, @"\[(?:[^\]]|\\.)+\]", "");
+        if (Regex.IsMatch(patternWithoutCharacterClasses, @"(?<!\\)-|\\-"))
+        {
+            result |= ResourceNameCharacters.Hyphen;
+        }
+        if (patternWithoutCharacterClasses.Contains('_'))
+        {
+            result |= ResourceNameCharacters.Underscore;
+        }
+        if (Regex.IsMatch(patternWithoutCharacterClasses, @"\\\."))
+        {
+            result |= ResourceNameCharacters.Period;
+        }
+        if (Regex.IsMatch(patternWithoutCharacterClasses, @"\\[()]"))
+        {
+            result |= ResourceNameCharacters.Parentheses;
+        }
+
+        return result;
     }
 }
