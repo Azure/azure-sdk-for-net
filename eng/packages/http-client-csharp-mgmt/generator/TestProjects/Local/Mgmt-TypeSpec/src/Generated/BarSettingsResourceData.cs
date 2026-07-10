@@ -56,7 +56,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="anotherProperty"></param>
         /// <param name="flattenedNestedProperty"></param>
         /// <param name="optionalFlattenProperty">
-        /// Optional model with multiple required collections used to verify generated flattened collection
+        /// Optional single-property model used to verify generated flattened collection
         /// getters initialize the nested collection wrapper instead of returning null.
         /// </param>
         /// <param name="discriminatorProperty"></param>
@@ -94,7 +94,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal BarNestedQuotaProperties FlattenedNestedProperty { get; set; }
 
         /// <summary>
-        /// Optional model with multiple required collections used to verify generated flattened collection
+        /// Optional single-property model used to verify generated flattened collection
         /// getters initialize the nested collection wrapper instead of returning null.
         /// </summary>
         [WirePath("optionalFlattenProperty")]
@@ -242,31 +242,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> First required collection used by the optional flattened model scenario. </summary>
+        /// <summary> Required collection used by the optional flattened model scenario. </summary>
         [WirePath("optionalFlattenProperty.randomCollectionProp")]
-        public IList<string> RandomCollectionProp
+        public IList<string> OptionalFlattenPropertyRandomCollectionProp
         {
             get
             {
                 if (OptionalFlattenProperty is null)
                 {
-                    OptionalFlattenProperty = new OptionalFlattenPropertyType(new List<string>(), new List<int>());
+                    OptionalFlattenProperty = new OptionalFlattenPropertyType(new List<string>());
                 }
                 return OptionalFlattenProperty.RandomCollectionProp;
-            }
-        }
-
-        /// <summary> Second required collection used by the optional flattened model scenario. </summary>
-        [WirePath("optionalFlattenProperty.additionalCollectionProp")]
-        public IList<int> AdditionalCollectionProp
-        {
-            get
-            {
-                if (OptionalFlattenProperty is null)
-                {
-                    OptionalFlattenProperty = new OptionalFlattenPropertyType(new List<string>(), new List<int>());
-                }
-                return OptionalFlattenProperty.AdditionalCollectionProp;
             }
         }
     }

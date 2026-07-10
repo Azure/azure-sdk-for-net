@@ -21,11 +21,9 @@ namespace Azure.Generator.Mgmt.Tests
                 2,
                 global::Azure.Generator.MgmtTypeSpec.Tests.Models.MgmtTypeSpecTestsModelFactory.LimitJsonObject());
 
-            data.RandomCollectionProp.Add("item");
-            data.AdditionalCollectionProp.Add(1);
+            data.OptionalFlattenPropertyRandomCollectionProp.Add("item");
 
-            Assert.That(data.RandomCollectionProp, Is.EqualTo(new[] { "item" }));
-            Assert.That(data.AdditionalCollectionProp, Is.EqualTo(new[] { 1 }));
+            Assert.That(data.OptionalFlattenPropertyRandomCollectionProp, Is.EqualTo(new[] { "item" }));
         }
     }
 }

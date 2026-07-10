@@ -91,13 +91,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("additionalCollectionProp"u8);
-            writer.WriteStartArray();
-            foreach (int item in AdditionalCollectionProp)
-            {
-                writer.WriteNumberValue(item);
-            }
-            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -141,7 +134,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 return null;
             }
             IList<string> randomCollectionProp = default;
-            IList<int> additionalCollectionProp = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,22 +154,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     randomCollectionProp = array;
                     continue;
                 }
-                if (prop.NameEquals("additionalCollectionProp"u8))
-                {
-                    List<int> array = new List<int>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetInt32());
-                    }
-                    additionalCollectionProp = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OptionalFlattenPropertyType(randomCollectionProp, additionalCollectionProp, additionalBinaryDataProperties);
+            return new OptionalFlattenPropertyType(randomCollectionProp, additionalBinaryDataProperties);
         }
     }
 }
