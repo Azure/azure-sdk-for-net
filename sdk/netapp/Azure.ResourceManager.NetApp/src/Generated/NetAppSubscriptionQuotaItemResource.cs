@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string netAppSubscriptionQuotaItemApiVersion);
             _netAppSubscriptionQuotaItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _netAppSubscriptionQuotaItemsRestClient = new NetAppSubscriptionQuotaItems(_netAppSubscriptionQuotaItemsClientDiagnostics, Pipeline, Endpoint, netAppSubscriptionQuotaItemApiVersion ?? "2026-04-01");
+            _netAppSubscriptionQuotaItemsRestClient = new NetAppSubscriptionQuotaItems(_netAppSubscriptionQuotaItemsClientDiagnostics, Pipeline, Endpoint, netAppSubscriptionQuotaItemApiVersion ?? "2026-04-15-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

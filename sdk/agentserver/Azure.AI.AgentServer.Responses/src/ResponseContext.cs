@@ -36,11 +36,12 @@ public class ResponseContext
     /// Every response in the same logical conversation shares this value, so handlers can use it
     /// as a key into their own application-side conversation state (e.g., upstream SDK session IDs,
     /// per-conversation rate limits, conversation indexes). When derived from the request's
-    /// conversation context, it is the first 32 characters of the lowercase hex SHA-256 digest of
-    /// <c>{agentName}:{sessionId}:{discriminator}:{partition}</c>, where the partition is extracted
-    /// from the request's conversation ID, the <c>previous_response_id</c> chain, or this response's
-    /// own ID, and the discriminator namespaces the partition by source type. Including the agent
-    /// name and session ID scopes the value so it does not collide across agents or sessions.
+    /// conversation context, it is a native identifier that embeds the chain's partition key and
+    /// carries a deterministic <c>(agent, session)</c> scope: <c>cchain_{partition}{scope}</c> for a
+    /// conversation-scoped chain, or <c>rchain_{partition}{scope}</c> for a response-linkage chain.
+    /// The partition is extracted from the request's conversation ID, the <c>previous_response_id</c>
+    /// chain, or this response's own ID, and the prefix namespaces the chain kinds. Including the
+    /// agent name and session ID in the scope makes the value distinct across agents and sessions.
     /// </para>
     /// <para>
     /// The base implementation returns <see cref="ResponseId"/>; enhanced contexts override this to

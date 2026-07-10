@@ -862,7 +862,6 @@ namespace Azure.Storage.Blobs.Specialized
         {
             UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
 
-            content = content?.WithNoDispose().WithProgress(progressHandler);
             operationName ??= $"{nameof(BlockBlobClient)}.{nameof(Upload)}";
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
@@ -886,37 +885,18 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
                     Errors.VerifyStreamPosition(content, nameof(content));
 
-                    ContentHasher.GetHashResult hashResult = null;
-                    // length of the raw stream
-                    long contentLength = (content?.Length - content?.Position) ?? 0;
-                    // length of content within a structured message wrapper
-                    long? structuredContentLength = default;
-                    string structuredBodyType = null;
-                    if (contentLength > 0 &&
-                        validationOptions != null &&
-                        validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
-                        ClientSideEncryption == null) // don't allow feature combination
-                    {
-                        // report progress in terms of caller bytes, not encoded bytes
-                        structuredContentLength = contentLength;
-                        structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
-                        content = content.WithNoDispose().WithProgress(progressHandler);
-                        content = new StructuredMessageEncodingStream(
-                            content,
-                            Constants.StructuredMessage.DefaultSegmentContentLength,
-                            StructuredMessage.Flags.StorageCrc64);
-                        contentLength = content.Length - content.Position;
-                    }
-                    else
-                    {
-                        // compute hash BEFORE attaching progress handler
-                        hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                            content,
-                            validationOptions,
-                            async,
-                            cancellationToken).ConfigureAwait(false);
-                        content = content.WithNoDispose().WithProgress(progressHandler);
-                    }
+                    // allowStructuredMessage: only when content is non-empty and client-side encryption is not active
+                    bool allowStructuredMessage = (content?.Length - content?.Position) > 0 && ClientSideEncryption == null;
+                    ContentHasher.GetHashResult hashResult;
+                    string structuredBodyType;
+                    long? structuredContentLength;
+                    (content, hashResult, structuredBodyType, structuredContentLength) = await ContentHasher.ApplyUploadEncodingInternal(
+                        content,
+                        validationOptions,
+                        allowStructuredMessage,
+                        progressHandler,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
 
                     ResponseWithHeaders<BlockBlobUploadHeaders> response;
 
@@ -1360,39 +1340,18 @@ namespace Azure.Storage.Blobs.Specialized
 
                     Errors.VerifyStreamPosition(content, nameof(content));
 
-                    ContentHasher.GetHashResult hashResult = null;
+                    ContentHasher.GetHashResult hashResult;
+                    string structuredBodyType;
+                    long? structuredContentLength;
+                    (content, hashResult, structuredBodyType, structuredContentLength) = await ContentHasher.ApplyUploadEncodingInternal(
+                        content,
+                        validationOptions,
+                        allowStructuredMessage: ClientSideEncryption == null,
+                        progressHandler,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+
                     long contentLength = (content?.Length - content?.Position) ?? 0;
-                    long? structuredContentLength = default;
-                    string structuredBodyType = null;
-                    if (validationOptions != null &&
-                        validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
-                        ClientSideEncryption == null) // don't allow feature combination
-                    {
-                        // report progress in terms of caller bytes, not encoded bytes
-                        structuredContentLength = contentLength;
-                        contentLength = (content?.Length - content?.Position) ?? 0;
-                        structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
-                        content = content.WithNoDispose().WithProgress(progressHandler);
-                        content = validationOptions.PrecalculatedChecksum.IsEmpty
-                            ? new StructuredMessageEncodingStream(
-                                content,
-                                Constants.StructuredMessage.DefaultSegmentContentLength,
-                                StructuredMessage.Flags.StorageCrc64)
-                            : new StructuredMessagePrecalculatedCrcWrapperStream(
-                                content,
-                                validationOptions.PrecalculatedChecksum.Span);
-                        contentLength = (content?.Length - content?.Position) ?? 0;
-                    }
-                    else
-                    {
-                        // compute hash BEFORE attaching progress handler
-                        hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                            content,
-                            validationOptions,
-                            async,
-                            cancellationToken).ConfigureAwait(false);
-                        content = content.WithNoDispose().WithProgress(progressHandler);
-                    }
 
                     ResponseWithHeaders<BlockBlobStageBlockHeaders> response;
 
