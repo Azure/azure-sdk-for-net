@@ -117,7 +117,7 @@ namespace Azure.Generator.Provisioning
 
             foreach (var resource in resourceProjections)
             {
-                queue.Enqueue((resource.ResourceModel, resource.IsSettable));
+                queue.Enqueue((resource.ResourceModel, resource.WritableScopes.Count > 0));
             }
 
             while (queue.Count > 0)
@@ -154,7 +154,7 @@ namespace Azure.Generator.Provisioning
                 case InputModelType model:
                     if (resourceProjectionInfosByModel.TryGetValue(model, out var resources))
                     {
-                        var isResourceSettable = resources.Any(r => r.IsSettable);
+                        var isResourceSettable = resources.Any(r => r.WritableScopes.Count > 0);
                         var isSettable = item.IsSettable || isResourceSettable;
                         modelSettableUsage[model] = isSettable || (modelSettableUsage.TryGetValue(model, out var existingResourceUsage) && existingResourceUsage);
                         foreach (var resource in resources)

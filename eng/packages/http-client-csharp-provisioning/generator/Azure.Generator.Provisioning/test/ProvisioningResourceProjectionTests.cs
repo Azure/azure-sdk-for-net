@@ -381,9 +381,9 @@ namespace Azure.Generator.Provisioning.Tests
                     CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
                 ]);
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, childModel]);
-            var parentProvider = CreateResourceProvider(writableParentResource);
-            var childProvider = CreateResourceProvider(readOnlyChildResource, isSettableOverride: true);
-            RegisterResourceProviders(parentProvider, childProvider);
+            var providers = CreateAndRegisterResourceProviders(writableParentResource, readOnlyChildResource);
+            var parentProvider = providers[0];
+            var childProvider = providers[1];
 
             var childNameInfo = ((IProvisioningPropertyInfo)childProvider).GetProvisioningPropertyInfo(childNameProperty);
             var childValueInfo = ((IProvisioningPropertyInfo)childProvider).GetProvisioningPropertyInfo(childValueProperty);
@@ -424,9 +424,9 @@ namespace Azure.Generator.Provisioning.Tests
                 methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)],
                 parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/profiles/{profileName}");
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [sharedModel]);
-            var writableProvider = CreateResourceProvider(writableResource);
-            var readOnlySiblingProvider = CreateResourceProvider(readOnlySiblingResource, isSettableOverride: true);
-            RegisterResourceProviders(writableProvider, readOnlySiblingProvider);
+            var providers = CreateAndRegisterResourceProviders(writableResource, readOnlySiblingResource);
+            var writableProvider = providers[0];
+            var readOnlySiblingProvider = providers[1];
 
             var writablePropertyInfo = ((IProvisioningPropertyInfo)writableProvider).GetProvisioningPropertyInfo(valueProperty);
             var readOnlySiblingPropertyInfo = ((IProvisioningPropertyInfo)readOnlySiblingProvider).GetProvisioningPropertyInfo(valueProperty);
@@ -718,11 +718,6 @@ namespace Azure.Generator.Provisioning.Tests
                 .Where(provider => provider.ResourceProjection is not null)
                 .Select(provider => provider.ResourceProjection!)
                 .ToList();
-            var resourceProjectionsByModel = resourceProjections
-                .GroupBy(projection => projection.ResourceModel)
-                .ToDictionary(
-                    group => group.Key,
-                    group => group.ToList());
             var resourcesByModel = providers
                 .Where(provider => provider.ResourceProjection is not null)
                 .GroupBy(provider => provider.ResourceProjection!.ResourceModel)
@@ -739,6 +734,17 @@ namespace Azure.Generator.Provisioning.Tests
             typeof(ProvisioningOutputLibrary)
                 .GetField("_resourcesByModel", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(outputLibrary, resourcesByModel);
+            RegisterResourceProjections(resourceProjections);
+        }
+
+        private static void RegisterResourceProjections(IReadOnlyList<ProvisioningResourceProjection> resourceProjections)
+        {
+            var resourceProjectionsByModel = resourceProjections
+                .GroupBy(projection => projection.ResourceModel)
+                .ToDictionary(
+                    group => group.Key,
+                    group => group.ToList());
+
             typeof(ProvisioningInputLibrary)
                 .GetField("_resourceProjections", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(ProvisioningGenerator.Instance.InputLibrary, resourceProjections);
@@ -761,10 +767,18 @@ namespace Azure.Generator.Provisioning.Tests
                 .Invoke(baseModel, [derivedModel]);
         }
 
-        private static ProvisioningResourceProvider CreateResourceProvider(ArmResourceMetadata metadata, bool? isSettableOverride = null)
+        private static ProvisioningResourceProvider CreateResourceProvider(ArmResourceMetadata metadata)
         {
-            var projection = ProvisioningResourceProjection.Create([metadata])[0];
-            return new ProvisioningResourceProvider(projection, isSettableOverride ?? projection.IsSettable);
+            return CreateAndRegisterResourceProviders(metadata)[0];
+        }
+
+        private static ProvisioningResourceProvider[] CreateAndRegisterResourceProviders(params ArmResourceMetadata[] metadata)
+        {
+            var projections = ProvisioningResourceProjection.Create(metadata);
+            RegisterResourceProjections(projections);
+            var providers = projections.Select(projection => new ProvisioningResourceProvider(projection)).ToArray();
+            RegisterResourceProviders(providers);
+            return providers;
         }
 
         private static InputModelProperty CreateProperty(string name, bool isRequired = false, bool isReadOnly = false, bool isDiscriminator = false, InputType? type = null, string? serializedName = null)

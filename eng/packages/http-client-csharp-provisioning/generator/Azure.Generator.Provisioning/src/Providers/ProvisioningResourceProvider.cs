@@ -108,7 +108,7 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>
         /// Constructor for base resource types (with metadata from ARM provider schema).
         /// </summary>
-        public ProvisioningResourceProvider(ProvisioningResourceProjection projection, bool isSettableResource)
+        public ProvisioningResourceProvider(ProvisioningResourceProjection projection)
             : base(projection.ResourceModel)
         {
             _inputModel = projection.ResourceModel;
@@ -116,7 +116,7 @@ namespace Azure.Generator.Provisioning.Providers
             _defaultApiVersion = projection.ApiVersions.Count > 0
                 ? projection.ApiVersions.Last()
                 : null;
-            _isSettableResource = isSettableResource;
+            _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(projection.ResourceModel);
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _allProperties = CollectAllProperties();
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);
