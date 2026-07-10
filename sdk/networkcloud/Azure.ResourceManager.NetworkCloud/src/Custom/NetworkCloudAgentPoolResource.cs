@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
+            => new CustomNetworkCloudArmOperationOfTWrapper<NetworkCloudOperationStatusResult>(await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false));
 
         /// <summary>
         /// Delete the provided Kubernetes cluster agent pool.
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudOperationStatusResult> DeleteWithResponse(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => Delete(waitUntil, null, cancellationToken);
+            => new CustomNetworkCloudArmOperationOfTWrapper<NetworkCloudOperationStatusResult>(Delete(waitUntil, null, cancellationToken));
 
         /// <summary>
         /// Delete the provided Kubernetes cluster agent pool.
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
             var operation = await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
-            return new CustomNetworkCloudArmOperationWrapper<NetworkCloudOperationStatusResult>(operation);
+            return operation;
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
             var operation = Delete(waitUntil, null, cancellationToken);
-            return new CustomNetworkCloudArmOperationWrapper<NetworkCloudOperationStatusResult>(operation);
+            return operation;
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-            => Delete(waitUntil, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken);
+            => new CustomNetworkCloudArmOperationOfTWrapper<NetworkCloudOperationStatusResult>(Delete(waitUntil, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken));
 
         /// <summary>
         /// Delete the provided Kubernetes cluster agent pool.
@@ -265,6 +265,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-            => await DeleteAsync(waitUntil, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken).ConfigureAwait(false);
+            => new CustomNetworkCloudArmOperationOfTWrapper<NetworkCloudOperationStatusResult>(await DeleteAsync(waitUntil, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken).ConfigureAwait(false));
     }
 }

@@ -1,12 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.IotHub
 {
@@ -21,8 +24,65 @@ namespace Azure.ResourceManager.IotHub
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IotHubDescriptionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetIotHubDescriptions method.
     /// </summary>
+    [CodeGenSuppress("DeleteAsync", typeof(WaitUntil), typeof(CancellationToken))]
+    [CodeGenSuppress("Delete", typeof(WaitUntil), typeof(CancellationToken))]
     public partial class IotHubDescriptionResource
     {
+        // The generator now models this delete as non-generic ArmOperation, but the shipped SDK returned ArmOperation<IotHubDescriptionResource>.
+        /// <summary> Deletes an existing IotHub. </summary>
+        public virtual async Task<ArmOperation<IotHubDescriptionResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _iotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotHubResourceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                IotHubArmOperation<IotHubDescriptionResource> operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionResourceOperationSource(Client), _iotHubResourceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes an existing IotHub. </summary>
+        public virtual ArmOperation<IotHubDescriptionResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _iotHubResourceClientDiagnostics.CreateScope("IotHubDescriptionResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _iotHubResourceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                IotHubArmOperation<IotHubDescriptionResource> operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionResourceOperationSource(Client), _iotHubResourceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         // The lower-case "iotHubs" route segment is required to keep the generated swagger identical to
         // the checked-in OpenAPI. With that segment casing, the generator no longer treats these private
         // endpoint operations as normal child-resource collection methods on the parent resource. These

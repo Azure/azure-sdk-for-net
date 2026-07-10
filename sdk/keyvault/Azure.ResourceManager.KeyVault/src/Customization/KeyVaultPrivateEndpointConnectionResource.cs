@@ -6,11 +6,91 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.KeyVault
 {
+    [CodeGenSuppress("DeleteAsync", typeof(WaitUntil), typeof(CancellationToken))]
+    [CodeGenSuppress("Delete", typeof(WaitUntil), typeof(CancellationToken))]
     public partial class KeyVaultPrivateEndpointConnectionResource
     {
+        // The generator now models this delete as non-generic ArmOperation, but the shipped SDK returned ArmOperation<KeyVaultPrivateEndpointConnectionResource>.
+        /// <summary> Deletes private endpoint connection. </summary>
+        public virtual async Task<ArmOperation<KeyVaultPrivateEndpointConnectionResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource> operation = new KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource>(new DeleteOperationSource(Client, Id), _privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes private endpoint connection. </summary>
+        public virtual ArmOperation<KeyVaultPrivateEndpointConnectionResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("KeyVaultPrivateEndpointConnectionResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource> operation = new KeyVaultArmOperation<KeyVaultPrivateEndpointConnectionResource>(new DeleteOperationSource(Client, Id), _privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private sealed class DeleteOperationSource : IOperationSource<KeyVaultPrivateEndpointConnectionResource>
+        {
+            private readonly ArmClient _client;
+            private readonly ResourceIdentifier _id;
+
+            internal DeleteOperationSource(ArmClient client, ResourceIdentifier id)
+            {
+                _client = client;
+                _id = id;
+            }
+
+            KeyVaultPrivateEndpointConnectionResource IOperationSource<KeyVaultPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+                => new KeyVaultPrivateEndpointConnectionResource(_client, _id);
+
+            ValueTask<KeyVaultPrivateEndpointConnectionResource> IOperationSource<KeyVaultPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+                => new ValueTask<KeyVaultPrivateEndpointConnectionResource>(new KeyVaultPrivateEndpointConnectionResource(_client, _id));
+        }
+
         /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
