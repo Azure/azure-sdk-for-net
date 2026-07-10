@@ -66,7 +66,7 @@ public class Sample_HostedAgentIdentityIsolation : ProjectsOpenAITestBase
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
         Uri uriEndpoint = new(projectEndpoint);
-        AzureCliCredential credential = new();
+        DefaultAzureCredential credential = new();
         AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: credential);
         #endregion
 
@@ -109,6 +109,7 @@ public class Sample_HostedAgentIdentityIsolation : ProjectsOpenAITestBase
             patchAgentOptions: patchOptions);
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
         #endregion
+
         #region Snippet:Sample_GetResponseFromAgentEndpointUser1_HostedAgentIdentityIsolation_Async
         string userID1 = Guid.NewGuid().ToString();
         string userID2 = Guid.NewGuid().ToString();
@@ -164,7 +165,7 @@ public class Sample_HostedAgentIdentityIsolation : ProjectsOpenAITestBase
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
         Uri uriEndpoint = new(projectEndpoint);
-        AzureCliCredential credential = new();
+        DefaultAzureCredential credential = new();
         AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: credential);
 
         #region Snippet:Sample_CreateAgent_HostedAgentIdentityIsolation_Sync

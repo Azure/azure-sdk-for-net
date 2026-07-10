@@ -49,6 +49,9 @@ docker login <DOCKER_USERNAME>.azurecr.io
 docker push <DOCKER_USERNAME>.azurecr.io/<DOCKER_USERNAME>/workflow-agent:latest
 ```
 
+This example requires allowing permission for User to perform the identity impersonation. Please refer to the [documentation](https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agent-permissions#delegate-the-end-user-identity).
+
+
 ## Run the sample.
 
 1. Read the environment variables, which will be used in the next steps.
@@ -57,7 +60,7 @@ docker push <DOCKER_USERNAME>.azurecr.io/<DOCKER_USERNAME>/workflow-agent:latest
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
 Uri uriEndpoint = new(projectEndpoint);
-AzureCliCredential credential = new();
+DefaultAzureCredential credential = new();
 AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: credential);
 ```
 

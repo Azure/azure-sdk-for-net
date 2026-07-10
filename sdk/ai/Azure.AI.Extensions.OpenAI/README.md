@@ -559,8 +559,7 @@ ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell 
 Console.WriteLine(response.GetOutputText());
 ```
 
-The responses from hosted agents can be separated by using `x-ms-user-identity` header. To attribute responses to a specific identity, response client
-needs to be supplied by the policy, providing the header.
+Hosted agent responses can be isolated per delegated user by sending the `x-ms-user-identity` header. To attribute responses to a specific identity, configure the response client with a policy that adds this header to each request.
 
 Create the policy, adding headers:
 
