@@ -51,38 +51,16 @@ namespace Azure.Security.CodeTransparency.Tests
         [Test]
         public async Task Snippet_Readme_CodeTransparencySubmission_Test()
         {
-            // Create a CBOR writer
-            var createCborWriter = new CborWriter();
-
-            // Write a CBOR map with sample content
-            createCborWriter.WriteStartMap(1);
-            createCborWriter.WriteTextString("OperationId");
-            createCborWriter.WriteTextString("123.45");
-            createCborWriter.WriteEndMap();
-
+            // With waitForCommit the create call returns the committed entry; the entry id is
+            // taken from the Location header and the returned operation is already completed.
             var createResponse = new MockResponse(201);
-            createResponse.SetContent(createCborWriter.Encode());
+            createResponse.AddHeader("Location", "https://foo.bar.com/entries/123.23");
 
-            var succeededCborWriter = new CborWriter();
+            var statementResponse = new MockResponse(200);
+            statementResponse.AddHeader("Content-Type", "application/cose");
+            statementResponse.SetContent(new byte[] { 0x01, 0x02, 0x03 });
 
-            // Write a CBOR map with sample content
-            succeededCborWriter.WriteStartMap(3);
-            succeededCborWriter.WriteTextString("OperationId");
-            succeededCborWriter.WriteTextString("1.345");
-            succeededCborWriter.WriteTextString("EntryId");
-            succeededCborWriter.WriteTextString("123.23");
-            succeededCborWriter.WriteTextString("Status");
-            succeededCborWriter.WriteTextString("Succeeded");
-            succeededCborWriter.WriteEndMap();
-
-            var succeededResponse = new MockResponse(202);
-            succeededResponse.SetContent(succeededCborWriter.Encode());
-
-            var entryResponse = new MockResponse(200);
-            entryResponse.AddHeader("Content-Type", "application/cose");
-            entryResponse.SetContent(new byte[] { 0x01, 0x02, 0x03 });
-
-            var mockTransport = new MockTransport(createResponse, succeededResponse, entryResponse, entryResponse);
+            var mockTransport = new MockTransport(createResponse, statementResponse);
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,

@@ -239,16 +239,42 @@ namespace Azure.Security.CodeTransparency
 
         private static CreateEntryOperation CreateCompletedEntryOperation(Response rawResponse)
         {
-            string entryId = GetEntryIdFromLocation(rawResponse);
+            // Prefer the Location header when the service committed the entry inline; otherwise the
+            // redirect policy followed the 303 See Other to the entry resource (consuming the
+            // Location header) and the entry id is recovered from the returned receipt.
+            string entryId = TryGetEntryIdFromLocation(rawResponse)
+                ?? CcfReceipt.GetRegistrationTransactionId(rawResponse.Content?.ToArray());
+
+            if (string.IsNullOrEmpty(entryId))
+            {
+                throw new RequestFailedException(rawResponse);
+            }
+
             BinaryData value = CreateEntryIdCborValue(entryId);
             return new CreateEntryOperation(entryId, rawResponse, value);
         }
 
-        private static string GetEntryIdFromLocation(Response response)
+        /// <summary>
+        /// Extracts the entry id from the Location header of a response.
+        /// </summary>
+        /// <param name="response">The response to extract the entry id from.</param>
+        /// <returns>The entry id.</returns>
+        public static string GetEntryIdFromLocation(Response response)
+        {
+            string entryId = TryGetEntryIdFromLocation(response);
+            if (string.IsNullOrEmpty(entryId))
+            {
+                throw new RequestFailedException(response);
+            }
+
+            return entryId;
+        }
+
+        private static string TryGetEntryIdFromLocation(Response response)
         {
             if (!response.Headers.TryGetValue("Location", out string location) || string.IsNullOrEmpty(location))
             {
-                throw new RequestFailedException(response);
+                return null;
             }
 
             const string entriesSegment = "/entries/";
@@ -262,12 +288,7 @@ namespace Azure.Security.CodeTransparency
             }
 
             entryId = entryId.Trim('/');
-            if (string.IsNullOrEmpty(entryId))
-            {
-                throw new RequestFailedException(response);
-            }
-
-            return entryId;
+            return string.IsNullOrEmpty(entryId) ? null : entryId;
         }
 
         private static BinaryData CreateEntryIdCborValue(string entryId)

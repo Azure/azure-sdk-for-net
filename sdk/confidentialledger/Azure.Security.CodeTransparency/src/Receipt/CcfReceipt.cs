@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Formats.Cbor;
+using System.Security.Cryptography.Cose;
 
 // cspell:ignore bstr
 namespace Azure.Security.CodeTransparency.Receipt
@@ -76,6 +77,67 @@ namespace Azure.Security.CodeTransparency.Receipt
         /// Protected header key for the tree algorithm
         /// </summary>
         public static readonly int CcfTreeAlgLabel = 2;
+
+        /// <summary>
+        /// Extracts the registration transaction id (the entry id) from a raw CCF SCITT receipt.
+        /// The id is encoded in the internal-evidence field of the inclusion proof leaf as the
+        /// second ':'-separated field (for example, <c>ce:2.15:...</c> yields <c>2.15</c>).
+        /// </summary>
+        /// <param name="receiptCoseSign1Bytes">The receipt as COSE_Sign1 cbor bytes.</param>
+        /// <returns>The registration transaction id, or <c>null</c> if it cannot be found.</returns>
+        public static string GetRegistrationTransactionId(byte[] receiptCoseSign1Bytes)
+        {
+            if (receiptCoseSign1Bytes == null || receiptCoseSign1Bytes.Length == 0)
+            {
+                return null;
+            }
+
+            CoseSign1Message receipt;
+            try
+            {
+                receipt = CoseMessage.DecodeSign1(receiptCoseSign1Bytes);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            // The verifiable data proof (inclusion proof) lives in the unprotected headers.
+            if (!receipt.UnprotectedHeaders.TryGetValue(new CoseHeaderLabel(CosePhdrVdpLabel), out CoseHeaderValue vdp))
+            {
+                return null;
+            }
+
+            Dictionary<int, byte[]> proof = ReadCborMap(new CborReader(vdp.EncodedValue.ToArray()));
+            if (!proof.TryGetValue(CoseReceiptInclusionProofLabel, out byte[] proofs) || proofs == null || proofs.Length == 0)
+            {
+                return null;
+            }
+
+            // The inclusion proofs are a cbor array of bstr; use the first one.
+            CborReader proofsReader = new CborReader(proofs);
+            proofsReader.ReadStartArray();
+            if (proofsReader.PeekState() == CborReaderState.EndArray)
+            {
+                return null;
+            }
+            byte[] inclusionProofBytes = proofsReader.ReadByteString();
+
+            Dictionary<int, byte[]> inclusionProof = ReadCborMap(new CborReader(inclusionProofBytes));
+            if (!inclusionProof.TryGetValue(CcfProofLeafLabel, out byte[] leafBytes))
+            {
+                return null;
+            }
+
+            Leaf leaf = GetLeaf(leafBytes);
+            if (string.IsNullOrEmpty(leaf.InternalEvidence))
+            {
+                return null;
+            }
+
+            string[] parts = leaf.InternalEvidence.Split(':');
+            return parts.Length >= 2 ? parts[1] : null;
+        }
 
         internal static Dictionary<int, byte[]> ReadCborMap(CborReader reader)
         {
