@@ -171,6 +171,12 @@ namespace Azure.Generator.Provisioning
 
         /// <inheritdoc/>
         protected override PropertyProvider? CreatePropertyCore(InputProperty inputProperty, TypeProvider enclosingType)
+            => CreateProvisioningProperty(inputProperty, enclosingType);
+
+        // Provisioning property metadata can depend on the enclosing provider (for example,
+        // singleton resource names). Call this directly from provisioning providers instead of
+        // the cached CreateProperty wrapper so each provider can supply its own metadata.
+        internal PropertyProvider? CreateProvisioningProperty(InputProperty inputProperty, TypeProvider enclosingType)
         {
             // Run base chain which creates property and applies visitor renames (e.g., etag → ETag).
             var baseProperty = base.CreatePropertyCore(inputProperty, enclosingType);

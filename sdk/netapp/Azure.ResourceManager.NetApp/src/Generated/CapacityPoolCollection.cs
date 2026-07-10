@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(CapacityPoolResource.ResourceType, out string capacityPoolApiVersion);
             _poolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", CapacityPoolResource.ResourceType.Namespace, Diagnostics);
-            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Endpoint, capacityPoolApiVersion ?? "2026-04-01");
+            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Endpoint, capacityPoolApiVersion ?? "2026-04-15-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

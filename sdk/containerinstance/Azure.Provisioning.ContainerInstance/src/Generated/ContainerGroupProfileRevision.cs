@@ -29,7 +29,7 @@ namespace Azure.Provisioning.ContainerInstance
         /// <summary> Creates a new ContainerGroupProfileRevision. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerGroupProfileRevision(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerInstance/containerGroupProfiles/revisions", resourceVersion ?? "2025-09-01")
+        internal ContainerGroupProfileRevision(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerInstance/containerGroupProfiles/revisions", resourceVersion ?? "2025-09-01")
         {
         }
 
@@ -68,7 +68,7 @@ namespace Azure.Provisioning.ContainerInstance
             }
         }
 
-        /// <summary> Gets or sets the Tags. </summary>
+        /// <summary> Gets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
             get
@@ -76,25 +76,15 @@ namespace Azure.Provisioning.ContainerInstance
                 Initialize();
                 return _tags;
             }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
+        /// <summary> Gets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
             {
                 Initialize();
                 return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
             }
         }
 
@@ -312,7 +302,7 @@ namespace Azure.Provisioning.ContainerInstance
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _properties = DefineModelProperty<ContainerGroupProfileProperties>(nameof(Properties), new string[] { "properties" });
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
             _parent = DefineResource<ContainerGroupProfile>("Parent", new string[] { "parent" }, isRequired: true);
