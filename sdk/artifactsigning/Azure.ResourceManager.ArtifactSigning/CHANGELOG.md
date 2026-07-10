@@ -1,7 +1,7 @@
 # Release History
 
 ## 1.1.0-beta.1 (Unreleased)
-
+2026-07-15
 ### Features Added
 
 - Added `ArtifactSigningCertificateProfileResource.RevokeCertificates` to revoke multiple certificates in a single request.
