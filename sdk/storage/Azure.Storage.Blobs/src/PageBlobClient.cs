@@ -1415,41 +1415,18 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
                     Errors.VerifyStreamPosition(content, nameof(content));
 
-                    ContentHasher.GetHashResult hashResult = null;
-                    long contentLength = (content?.Length - content?.Position) ?? 0;
-                    long? structuredContentLength = default;
-                    string structuredBodyType = null;
-                    HttpRange range;
-                    if (validationOptions != null &&
-                        validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
-                        ClientSideEncryption == null) // don't allow feature combination
-                    {
-                        // report progress in terms of caller bytes, not encoded bytes
-                        structuredContentLength = contentLength;
-                        range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
-                        structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
-                        content = content?.WithNoDispose().WithProgress(progressHandler);
-                        content = validationOptions.PrecalculatedChecksum.IsEmpty
-                            ? new StructuredMessageEncodingStream(
-                                content,
-                                Constants.StructuredMessage.DefaultSegmentContentLength,
-                                StructuredMessage.Flags.StorageCrc64)
-                            : new StructuredMessagePrecalculatedCrcWrapperStream(
-                                content,
-                                validationOptions.PrecalculatedChecksum.Span);
-                        contentLength = (content?.Length - content?.Position) ?? 0;
-                    }
-                    else
-                    {
-                        // compute hash BEFORE attaching progress handler
-                        hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                            content,
-                            validationOptions,
-                            async,
-                            cancellationToken).ConfigureAwait(false);
-                        content = content?.WithNoDispose().WithProgress(progressHandler);
-                        range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
-                    }
+                    // Compute range from original content length before encoding modifies the stream.
+                    HttpRange range = new HttpRange(offset, (content?.Length - content?.Position) ?? null);
+                    ContentHasher.GetHashResult hashResult;
+                    string structuredBodyType;
+                    long? structuredContentLength;
+                    (content, hashResult, structuredBodyType, structuredContentLength) = await ContentHasher.ApplyUploadEncodingInternal(
+                        content,
+                        validationOptions,
+                        allowStructuredMessage: ClientSideEncryption == null,
+                        progressHandler,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
 
                     ResponseWithHeaders<PageBlobUploadPagesHeaders> response;
 

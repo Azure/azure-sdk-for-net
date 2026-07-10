@@ -3,7 +3,7 @@
 ## 1.0.0-beta.7 (2026-07-07)
 
 ### Features Added
-- Added `ResponseContext.ConversationChainId`, a deterministic, agent- and session-scoped correlation key that identifies the logical conversation a response belongs to. Handlers can use it as a stable key into their own per-conversation state.
+- Added `ResponseContext.ConversationChainId`, a deterministic, agent- and session-scoped correlation key that identifies the logical conversation a response belongs to. Handlers can use it as a stable key into their own per-conversation state. The value follows the native id convention: `cchain_<partition><scope>` for a conversation-scoped chain, or `rchain_<partition><scope>` for a response-linkage chain. It embeds the chain's partition key for co-location and carries a deterministic `(agent, session)` scope. When no explicit session ID is supplied, the derived agent session scope now falls back to the response's own partition key instead of a random value, so the chain id is stable from the first turn of a conversation onward.
 
 ## 1.0.0-beta.6 (2026-06-28)
 
