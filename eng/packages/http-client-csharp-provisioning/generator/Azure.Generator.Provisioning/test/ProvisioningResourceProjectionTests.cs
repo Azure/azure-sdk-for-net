@@ -389,7 +389,6 @@ namespace Azure.Generator.Provisioning.Tests
             var childValueInfo = ((IProvisioningPropertyInfo)childProvider).GetProvisioningPropertyInfo(childValueProperty);
 
             Assert.That(ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(childModel), Is.True);
-            Assert.That(ProvisioningGenerator.Instance.InputLibrary.IsResourceSettable(childProvider.ResourceProjection!), Is.True);
             Assert.That(childProvider.Constructors.Single().Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
             Assert.That(childNameInfo, Is.Not.Null);
             Assert.That(childNameInfo!.IsSettable, Is.True);
@@ -400,7 +399,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void SharedModelReadOnlyResourceSiblingDoesNotInheritSettableResourceUsage()
+        public void SharedResourceModelUsesModelSettableUsage()
         {
             var valueProperty = CreateProperty("Value", isRequired: true);
             var sharedModel = CreateModel("Profile", [valueProperty]);
@@ -426,19 +425,18 @@ namespace Azure.Generator.Provisioning.Tests
                 parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/profiles/{profileName}");
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [sharedModel]);
             var writableProvider = CreateResourceProvider(writableResource);
-            var readOnlySiblingProvider = CreateResourceProvider(readOnlySiblingResource);
+            var readOnlySiblingProvider = CreateResourceProvider(readOnlySiblingResource, isSettableOverride: true);
             RegisterResourceProviders(writableProvider, readOnlySiblingProvider);
 
             var writablePropertyInfo = ((IProvisioningPropertyInfo)writableProvider).GetProvisioningPropertyInfo(valueProperty);
             var readOnlySiblingPropertyInfo = ((IProvisioningPropertyInfo)readOnlySiblingProvider).GetProvisioningPropertyInfo(valueProperty);
 
-            Assert.That(ProvisioningGenerator.Instance.InputLibrary.IsResourceSettable(writableProvider.ResourceProjection!), Is.True);
-            Assert.That(ProvisioningGenerator.Instance.InputLibrary.IsResourceSettable(readOnlySiblingProvider.ResourceProjection!), Is.False);
+            Assert.That(ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(sharedModel), Is.True);
             Assert.That(writablePropertyInfo, Is.Not.Null);
             Assert.That(writablePropertyInfo!.IsSettable, Is.True);
             Assert.That(readOnlySiblingPropertyInfo, Is.Not.Null);
-            Assert.That(readOnlySiblingPropertyInfo!.IsSettable, Is.False);
-            Assert.That(readOnlySiblingProvider.Constructors.Single().Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.True);
+            Assert.That(readOnlySiblingPropertyInfo!.IsSettable, Is.True);
+            Assert.That(readOnlySiblingProvider.Constructors.Single().Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
         }
 
         [Test]
@@ -749,9 +747,6 @@ namespace Azure.Generator.Provisioning.Tests
                 .SetValue(ProvisioningGenerator.Instance.InputLibrary, resourceProjectionsByModel);
             typeof(ProvisioningInputLibrary)
                 .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(ProvisioningGenerator.Instance.InputLibrary, null);
-            typeof(ProvisioningInputLibrary)
-                .GetField("_resourceSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(ProvisioningGenerator.Instance.InputLibrary, null);
         }
 
