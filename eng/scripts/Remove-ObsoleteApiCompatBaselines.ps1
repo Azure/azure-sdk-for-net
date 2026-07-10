@@ -38,12 +38,14 @@ function Remove-ObsoleteApiCompatBaselines {
     $removedCount++
   }
 
-  # The remaining .txt files are common list files (one project name per line, '#' comments) such as
-  # ApiCompatVersionOptOut.txt. Remove a line only when it is the project name and nothing else
-  # (surrounding whitespace is ignored); any line with additional content is left untouched. Files under
+  # Common list files are named ApiCompat*.txt (e.g. ApiCompatVersionOptOut.txt) and contain one project
+  # name per line ('#' comments allowed). Only these are scanned - per-package baseline suppression files
+  # (named <Project>.txt) are deliberately excluded so a suppression line that happens to equal a package
+  # name is never touched. Remove a line only when it is the project name and nothing else (surrounding
+  # whitespace is ignored); any line with additional content is left untouched. Files under
   # eng/apicompatbaselines are LF-only (enforced by .gitattributes eol=lf), so always normalize to LF
   # while preserving each file's trailing-newline state, keeping the diff minimal.
-  $commonFiles = Get-ChildItem -LiteralPath $baselineDir -File -Filter "*.txt" |
+  $commonFiles = Get-ChildItem -LiteralPath $baselineDir -File -Filter "ApiCompat*.txt" |
     Where-Object { $_.Name -ne "${PackageName}.txt" }
   foreach ($file in $commonFiles) {
     $content = [System.IO.File]::ReadAllText($file.FullName)

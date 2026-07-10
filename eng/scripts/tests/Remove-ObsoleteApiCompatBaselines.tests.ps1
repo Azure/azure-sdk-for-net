@@ -129,6 +129,18 @@ Describe "Remove-ObsoleteApiCompatBaselines" -Tag "UnitTest" {
             $result | Should -Be "Azure.Storage.Blobs # keep`nAzure.Storage.Blobs extra`nAzure.Core"
         }
 
+        It "does not touch a per-package suppression file that contains a standalone package-name line" {
+            $root = Join-Path $TestDrive "suppression-collision"
+            $suppressionContent = "MembersMustExist : Member 'public void Foo()' does not exist`nAzure.Storage.Blobs"
+            $suppressionPath = New-BaselineFile -RepoRoot $root -Name "Azure.Core.txt" -Content $suppressionContent
+            New-BaselineFile -RepoRoot $root -Name "ApiCompatVersionOptOut.txt" -Content "Azure.Storage.Blobs" | Out-Null
+
+            $removed = Remove-ObsoleteApiCompatBaselines -RepoRoot $root -PackageName "Azure.Storage.Blobs"
+
+            $removed | Should -Be 1
+            [System.IO.File]::ReadAllText($suppressionPath) | Should -Be $suppressionContent
+        }
+
         It "removes both the project file and a common-file entry when both exist" {
             $root = Join-Path $TestDrive "both"
             $projPath = New-BaselineFile -RepoRoot $root -Name "Azure.Storage.Blobs.txt" -Content "suppression"
