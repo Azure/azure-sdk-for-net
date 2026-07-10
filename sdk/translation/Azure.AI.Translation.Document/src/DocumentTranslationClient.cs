@@ -284,6 +284,50 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
+        /// Get the list of formats supported by the Document Translation service.
+        /// </summary>
+        /// <param name="type">The type of format to retrieve. This value is required; specify
+        /// <see cref="FileFormatType.Document"/> or <see cref="FileFormatType.Glossary"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// This overload is retained for backwards compatibility. The service requires <paramref name="type"/>,
+        /// so calling it without a type (or with <c>null</c>) throws <see cref="NotSupportedException"/>.
+        /// Use <see cref="GetSupportedFormats(FileFormatType, CancellationToken)"/> instead.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<SupportedFileFormats> GetSupportedFormats(FileFormatType? type = default, CancellationToken cancellationToken = default)
+        {
+            if (type is null)
+            {
+                throw new NotSupportedException("The 'type' parameter is required. Specify FileFormatType.Document or FileFormatType.Glossary.");
+            }
+
+            return GetSupportedFormats(type.Value, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the list of formats supported by the Document Translation service.
+        /// </summary>
+        /// <param name="type">The type of format to retrieve. This value is required; specify
+        /// <see cref="FileFormatType.Document"/> or <see cref="FileFormatType.Glossary"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <remarks>
+        /// This overload is retained for backwards compatibility. The service requires <paramref name="type"/>,
+        /// so calling it without a type (or with <c>null</c>) throws <see cref="NotSupportedException"/>.
+        /// Use <see cref="GetSupportedFormatsAsync(FileFormatType, CancellationToken)"/> instead.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<SupportedFileFormats>> GetSupportedFormatsAsync(FileFormatType? type = default, CancellationToken cancellationToken = default)
+        {
+            if (type is null)
+            {
+                throw new NotSupportedException("The 'type' parameter is required. Specify FileFormatType.Document or FileFormatType.Glossary.");
+            }
+
+            return await GetSupportedFormatsAsync(type.Value, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Get the status results for submitted translation operations.
         /// </summary>
         /// <param name="options">Options to use when filtering result.</param>

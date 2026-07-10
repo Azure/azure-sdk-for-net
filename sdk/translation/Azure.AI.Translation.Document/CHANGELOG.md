@@ -18,7 +18,7 @@
 - Changed the default `DocumentTranslationClientOptions.ServiceVersion` from `V2024_05_01` to `V2026_03_01`, and removed the interim `V2024_11_01_Preview` and `V2025_12_01_Preview` preview service versions. Use the stable `V2026_03_01` version instead.
 - Added `deploymentName` and `translateTextWithinImage` parameters (positioned after `category`) to the `SingleDocumentTranslationClient.Translate` and `TranslateAsync` overloads. This is a binary-breaking change for existing callers.
 - Renamed the `DocumentTranslateContent` single-argument constructor parameter from `document` to `multipartDocument`. This is a source-breaking change for callers using named arguments.
-- Made the `type` parameter required (`FileFormatType` instead of `FileFormatType?`) on `DocumentTranslationClient.GetSupportedFormats` and `GetSupportedFormatsAsync`, since the `2026-03-01` service version requires it. Specify `FileFormatType.Document` or `FileFormatType.Glossary`.
+- Made the `type` parameter required (`FileFormatType` instead of `FileFormatType?`) on `DocumentTranslationClient.GetSupportedFormats` and `GetSupportedFormatsAsync`, since the `2026-03-01` service version requires it. Specify `FileFormatType.Document` or `FileFormatType.Glossary`. The previous nullable overload is retained for binary compatibility but now throws `NotSupportedException` when called without a `type`.
 
 ### Other Changes
 

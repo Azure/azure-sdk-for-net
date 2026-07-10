@@ -34,6 +34,15 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [Test]
+        public void GetSupportedFormatsThrowsWhenTypeIsNull()
+        {
+            var client = new DocumentTranslationClient(new Uri(s_endpoint), new AzureKeyCredential(s_apiKey));
+
+            Assert.Throws<NotSupportedException>(() => client.GetSupportedFormats((FileFormatType?)null));
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.GetSupportedFormatsAsync((FileFormatType?)null));
+        }
+
+        [Test]
         public void StartTranslationWithCategoryId()
         {
             var mockResponse = new MockResponse(202);
