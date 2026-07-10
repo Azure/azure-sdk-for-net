@@ -1644,7 +1644,6 @@ public class AgentsTests : AgentsTestBase
     public async Task TestHostedAgentIdentity()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        Uri uriEndpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         HostedAgentDefinition agentDefinition = new(
             versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
             cpu: "0.5",
@@ -1658,7 +1657,7 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: HOSTED_AGENT,
             options: creationOptions);
-        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Active)
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
             await Delay();
             agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
@@ -1694,7 +1693,7 @@ public class AgentsTests : AgentsTestBase
         responsesOptions.AgentName = agentVersion.Name;
         responsesOptions.AddPolicy(new UserIdentityHeaderPolicy("id2"), PipelinePosition.PerCall);
         ProjectResponsesClient responseClient2 = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
-        ClientResultException error = Assert.Throws<ClientResultException>(async () => await responseClient2.CreateResponseAsync("Then add 10 to the previous result", previousResponseId: response.Id));
+        ClientResultException error = Assert.ThrowsAsync<ClientResultException>(async () => await responseClient2.CreateResponseAsync("Then add 10 to the previous result", previousResponseId: response.Id));
         Assert.That(error.Status, Is.EqualTo(404));
         response = await responseClient1.CreateResponseAsync("Then add 10 to the previous result", previousResponseId: response.Id);
         Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);

@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Tests;
 
-internal class UserIdentityHeaderPolicy(string user_identity) : PipelinePolicy
+internal class UserIdentityHeaderPolicy(string userIdentity) : PipelinePolicy
 {
-    private const string image_deployment_header = "x-ms-user-identity";
+    private const string _imageDeploymentHeader = "x-ms-user-identity";
 
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        message.Request.Headers.Add(image_deployment_header, user_identity);
+        message.Request.Headers.Add(_imageDeploymentHeader, userIdentity);
         ProcessNext(message, pipeline, currentIndex);
     }
 
     public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         // Add your desired header name and value
-        message.Request.Headers.Add(image_deployment_header, user_identity);
+        message.Request.Headers.Add(_imageDeploymentHeader, userIdentity);
         await ProcessNextAsync(message, pipeline, currentIndex);
     }
 }

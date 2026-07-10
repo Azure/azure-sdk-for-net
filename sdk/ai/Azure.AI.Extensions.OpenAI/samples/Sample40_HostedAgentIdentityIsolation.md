@@ -2,10 +2,10 @@
 
 ## Hosted Agent Deployment prerequisites
 
-In this example we will build the docker image for hosted Agent based of the simple [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py). The service defined in this file just gets the request, adds "Echo: " to it and sends it back using the responses protocol.
+In this example we will build the Docker image for hosted Agent based on the simple [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py). The service defined in this file just gets the request, adds "Echo: " to it and sends it back using the responses protocol.
 
 ## Hosted agent deployment
-`Azure.AI.Projects` can be used only to create an `ProjectsAgentVersion` object, however hosted object represents the running container, which exposes the OpenAI-compatible API.
+`Azure.AI.Projects` can be used only to create a `ProjectsAgentVersion` object; however the hosted Agent represents the running container that exposes the OpenAI-compatible API.
 1. Create Azure Container registry in the same resource group and region as Microsoft Foundry project. Find the docker login at Settings>Access keys section at the left panel of created container registry in the Azure portal. Check the box "Admin user" to generate the password for the default user account marked as `<DOCKER_USERNAME>` below.
 2. Assign the `AcrPull` role to the project's Managed Identity for the Azure Container Registry.
 3. Assign the `Azure AI User` role to the project's Managed Identity for resource group (This operation only may be performed by the group owner).
@@ -40,7 +40,7 @@ EXPOSE 8088
 CMD ["python", "main.py"]
 ```
 
-5. Build the docker image and push it to the Azure Container registry you have created.
+7. Build the docker image and push it to the Azure Container registry you have created.
 
 ```bash
 docker build -t <DOCKER_USERNAME>/workflow-agent .
@@ -177,20 +177,20 @@ Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 6. Create a policy, adding the `x-ms-user-identity` header with the user identity to http request.
 
 ```C# Snippet:Sample_IdentityHeader_HostedAgentIdentityIsolation
-internal class UserIdentityHeaderPolicy(string user_identity) : PipelinePolicy
+internal class UserIdentityHeaderPolicy(string userIdentity) : PipelinePolicy
 {
-    private const string image_deployment_header = "x-ms-user-identity";
+    private const string _imageDeploymentHeader = "x-ms-user-identity";
 
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        message.Request.Headers.Add(image_deployment_header, user_identity);
+        message.Request.Headers.Add(_imageDeploymentHeader, userIdentity);
         ProcessNext(message, pipeline, currentIndex);
     }
 
     public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         // Add your desired header name and value
-        message.Request.Headers.Add(image_deployment_header, user_identity);
+        message.Request.Headers.Add(_imageDeploymentHeader, userIdentity);
         await ProcessNextAsync(message, pipeline, currentIndex);
     }
 }
