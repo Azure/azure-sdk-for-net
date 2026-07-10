@@ -3378,7 +3378,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Base type for activity records. Tracks execution details, timing, and errors for knowledge base operations.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/> and <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseWebActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/>, and <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/>.
         /// </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
@@ -3420,6 +3420,153 @@ namespace Azure.Search.Documents.Models
             info ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new KnowledgeBaseErrorAdditionalInfo(@type, info, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a search index retrieval activity record. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
+        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
+        /// <param name="searchIndexArguments"> The search index arguments for the retrieval activity. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseSearchIndexActivityRecord KnowledgeBaseSearchIndexActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, KnowledgeBaseSearchIndexActivityArguments searchIndexArguments = default)
+        {
+            return new KnowledgeBaseSearchIndexActivityRecord(
+                id,
+                KnowledgeBaseActivityRecordType.SearchIndex,
+                elapsedMs,
+                error,
+                additionalBinaryDataProperties: null,
+                knowledgeSourceName,
+                queryTime,
+                count,
+                searchIndexArguments);
+        }
+
+        /// <summary> Represents the arguments the search index retrieval activity was run with. </summary>
+        /// <param name="search"> The search string used to query the search index. </param>
+        /// <param name="filter"> The filter string. </param>
+        /// <param name="sourceDataFields"> What fields were selected for search. </param>
+        /// <param name="searchFields"> What fields were searched against. </param>
+        /// <param name="semanticConfigurationName"> What semantic configuration was used from the search index. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityArguments"/> instance for mocking. </returns>
+        public static KnowledgeBaseSearchIndexActivityArguments KnowledgeBaseSearchIndexActivityArguments(string search = default, string filter = default, IEnumerable<SearchIndexFieldReference> sourceDataFields = default, IEnumerable<SearchIndexFieldReference> searchFields = default, string semanticConfigurationName = default)
+        {
+            sourceDataFields ??= new ChangeTrackingList<SearchIndexFieldReference>();
+            searchFields ??= new ChangeTrackingList<SearchIndexFieldReference>();
+
+            return new KnowledgeBaseSearchIndexActivityArguments(
+                search,
+                filter,
+                sourceDataFields.ToList(),
+                searchFields.ToList(),
+                semanticConfigurationName,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a azure blob retrieval activity record. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
+        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
+        /// <param name="azureBlobArguments"> The azure blob arguments for the retrieval activity. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseAzureBlobActivityRecord KnowledgeBaseAzureBlobActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, KnowledgeBaseAzureBlobActivityArguments azureBlobArguments = default)
+        {
+            return new KnowledgeBaseAzureBlobActivityRecord(
+                id,
+                KnowledgeBaseActivityRecordType.AzureBlob,
+                elapsedMs,
+                error,
+                additionalBinaryDataProperties: null,
+                knowledgeSourceName,
+                queryTime,
+                count,
+                azureBlobArguments);
+        }
+
+        /// <summary> Represents the arguments the azure blob retrieval activity was run with. </summary>
+        /// <param name="search"> The search string used to query blob contents. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobActivityArguments"/> instance for mocking. </returns>
+        public static KnowledgeBaseAzureBlobActivityArguments KnowledgeBaseAzureBlobActivityArguments(string search = default)
+        {
+            return new KnowledgeBaseAzureBlobActivityArguments(search, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a indexed OneLake retrieval activity record. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
+        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
+        /// <param name="indexedOneLakeArguments"> The indexed OneLake arguments for the retrieval activity. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseIndexedOneLakeActivityRecord KnowledgeBaseIndexedOneLakeActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments = default)
+        {
+            return new KnowledgeBaseIndexedOneLakeActivityRecord(
+                id,
+                KnowledgeBaseActivityRecordType.IndexedOneLake,
+                elapsedMs,
+                error,
+                additionalBinaryDataProperties: null,
+                knowledgeSourceName,
+                queryTime,
+                count,
+                indexedOneLakeArguments);
+        }
+
+        /// <summary> Represents the arguments the indexed OneLake retrieval activity was run with. </summary>
+        /// <param name="search"> The search string used to query indexed OneLake contents. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeActivityArguments"/> instance for mocking. </returns>
+        public static KnowledgeBaseIndexedOneLakeActivityArguments KnowledgeBaseIndexedOneLakeActivityArguments(string search = default)
+        {
+            return new KnowledgeBaseIndexedOneLakeActivityArguments(search, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a web retrieval activity record. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
+        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
+        /// <param name="webArguments"> The web arguments for the retrieval activity. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseWebActivityRecord"/> instance for mocking. </returns>
+        public static KnowledgeBaseWebActivityRecord KnowledgeBaseWebActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, KnowledgeBaseWebActivityArguments webArguments = default)
+        {
+            return new KnowledgeBaseWebActivityRecord(
+                id,
+                KnowledgeBaseActivityRecordType.Web,
+                elapsedMs,
+                error,
+                additionalBinaryDataProperties: null,
+                knowledgeSourceName,
+                queryTime,
+                count,
+                webArguments);
+        }
+
+        /// <summary> Represents the arguments the web retrieval activity was run with. </summary>
+        /// <param name="search"> The search string used to query the web. </param>
+        /// <param name="language"> The language for the retrieval activity. </param>
+        /// <param name="market"> The market for the retrieval activity. </param>
+        /// <param name="count"> The number of web results returned. </param>
+        /// <param name="freshness"> The freshness for the retrieval activity. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseWebActivityArguments"/> instance for mocking. </returns>
+        public static KnowledgeBaseWebActivityArguments KnowledgeBaseWebActivityArguments(string search = default, string language = default, string market = default, int? count = default, string freshness = default)
+        {
+            return new KnowledgeBaseWebActivityArguments(
+                search,
+                language,
+                market,
+                count,
+                freshness,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents an LLM web summarization activity record. </summary>

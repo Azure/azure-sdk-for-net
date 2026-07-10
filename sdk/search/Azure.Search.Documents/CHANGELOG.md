@@ -1,5 +1,15 @@
 # Release History
 
+## 12.1.0 (Unreleased)
+
+### Features Added
+
+- Added per-source knowledge base activity records surfaced by agentic retrieval: `KnowledgeBaseSearchIndexActivityRecord`, `KnowledgeBaseAzureBlobActivityRecord`, `KnowledgeBaseIndexedOneLakeActivityRecord`, and `KnowledgeBaseWebActivityRecord`, along with their associated `KnowledgeBaseSearchIndexActivityArguments`, `KnowledgeBaseAzureBlobActivityArguments`, `KnowledgeBaseIndexedOneLakeActivityArguments`, and `KnowledgeBaseWebActivityArguments` models.
+
+### Bugs Fixed
+
+- Fixed ambiguous overload resolution on the `Delete*` convenience methods of `SearchIndexClient` and `SearchIndexerClient` (`DeleteIndex`, `DeleteSynonymMap`, `DeleteIndexer`, `DeleteDataSourceConnection`, and `DeleteSkillset`). Calling one of these methods with only a name (for example `client.DeleteIndex("my-index")`) previously failed to compile with `CS0121` because the name-only overload was ambiguous with the `(string, MatchConditions, CancellationToken)` overload. The `matchConditions` parameter on the `(string, MatchConditions, CancellationToken)` overloads is now required, which removes the ambiguity while preserving all existing call patterns.
+
 ## 12.0.0 (2026-05-01)
 
 ### Features Added

@@ -15,6 +15,11 @@ namespace Azure.Search.Documents.Indexes
     /// <summary>
     /// Customizations for the generated <see cref="SearchIndexerClient"/> - Skillset operations.
     /// </summary>
+    // Suppress the generated convenience overload that accepts an optional MatchConditions.
+    // It is ambiguous with the hand-authored name-only DeleteSkillset(string, CancellationToken) overload.
+    // The replacement overloads below make matchConditions required so the overloads are no longer ambiguous.
+    [Typespec.CodeGenSuppress(nameof(DeleteSkillset), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
+    [Typespec.CodeGenSuppress(nameof(DeleteSkillsetAsync), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
     public partial class SearchIndexerClient
     {
         #region Skillset operations - Convenience overloads
@@ -113,6 +118,44 @@ namespace Azure.Search.Documents.Indexes
             Argument.AssertNotNull(skillsetName, nameof(skillsetName));
 
             return await DeleteSkillsetAsync(skillsetName, matchConditions: null, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes a skillset.
+        /// </summary>
+        /// <param name="skillsetName">The name of the <see cref="SearchIndexerSkillset"/> to delete.</param>
+        /// <param name="matchConditions">Required. The <see cref="MatchConditions"/> to apply to the request, or <c>null</c> to delete unconditionally.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response"/> from the server.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        public virtual Response DeleteSkillset(
+            string skillsetName,
+            MatchConditions matchConditions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(skillsetName, nameof(skillsetName));
+
+            return DeleteSkillset(skillsetName, matchConditions, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary>
+        /// Deletes a skillset.
+        /// </summary>
+        /// <param name="skillsetName">The name of the <see cref="SearchIndexerSkillset"/> to delete.</param>
+        /// <param name="matchConditions">Required. The <see cref="MatchConditions"/> to apply to the request, or <c>null</c> to delete unconditionally.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response"/> from the server.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        public virtual async Task<Response> DeleteSkillsetAsync(
+            string skillsetName,
+            MatchConditions matchConditions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(skillsetName, nameof(skillsetName));
+
+            return await DeleteSkillsetAsync(skillsetName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>

@@ -9,12 +9,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
+using Typespec = Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes
 {
     /// <summary>
     /// Customizations for the generated <see cref="SearchIndexerClient"/> - DataSource operations.
     /// </summary>
+    // Suppress the generated convenience overload that accepts an optional MatchConditions.
+    // It is ambiguous with the hand-authored name-only DeleteDataSourceConnection(string, CancellationToken) overload.
+    // The replacement overloads below make matchConditions required so the overloads are no longer ambiguous.
+    [Typespec.CodeGenSuppress(nameof(DeleteDataSourceConnection), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
+    [Typespec.CodeGenSuppress(nameof(DeleteDataSourceConnectionAsync), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
     public partial class SearchIndexerClient
     {
         #region DataSource operations - Convenience overloads
@@ -104,6 +110,42 @@ namespace Azure.Search.Documents.Indexes
         {
             Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
             return await DeleteDataSourceConnectionAsync(dataSourceConnectionName, matchConditions: null, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes a data source connection.
+        /// </summary>
+        /// <param name="dataSourceConnectionName">The name of the <see cref="SearchIndexerDataSourceConnection"/> to delete.</param>
+        /// <param name="matchConditions">Required. The <see cref="MatchConditions"/> to apply to the request, or <c>null</c> to delete unconditionally.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response"/> from the server.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        public virtual Response DeleteDataSourceConnection(
+            string dataSourceConnectionName,
+            MatchConditions matchConditions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
+            return DeleteDataSourceConnection(dataSourceConnectionName, matchConditions, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary>
+        /// Deletes a data source connection.
+        /// </summary>
+        /// <param name="dataSourceConnectionName">The name of the <see cref="SearchIndexerDataSourceConnection"/> to delete.</param>
+        /// <param name="matchConditions">Required. The <see cref="MatchConditions"/> to apply to the request, or <c>null</c> to delete unconditionally.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response"/> from the server.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        public virtual async Task<Response> DeleteDataSourceConnectionAsync(
+            string dataSourceConnectionName,
+            MatchConditions matchConditions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
+            return await DeleteDataSourceConnectionAsync(dataSourceConnectionName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>

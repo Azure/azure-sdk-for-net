@@ -180,6 +180,37 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [SyncOnly]
+        public void DeleteOverloadsAreUnambiguous()
+        {
+            // Regression test for the ambiguous overload bug: calling the name-only Delete
+            // overloads with a single argument (no CancellationToken) previously failed to
+            // compile (CS0121) because it was ambiguous with the generated
+            // (string, MatchConditions, CancellationToken) convenience overload. These calls
+            // must now compile and resolve to the name-only overload.
+            var endpoint = new Uri($"https://my-svc-name.search.windows.net");
+            var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
+
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndexer((string)null));
+            Assert.AreEqual("indexerName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexerAsync((string)null));
+            Assert.AreEqual("indexerName", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => service.DeleteDataSourceConnection((string)null));
+            Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteDataSourceConnectionAsync((string)null));
+            Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSkillset((string)null));
+            Assert.AreEqual("skillsetName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSkillsetAsync((string)null));
+            Assert.AreEqual("skillsetName", ex.ParamName);
+        }
+
+        [Test]
         public async Task CrudDataSourceConnection()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this);

@@ -14,6 +14,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Utilities;
+using Typespec = Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -21,6 +22,13 @@ namespace Azure.Search.Documents.Indexes
     /// Customizations for the generated <see cref="SearchIndexClient"/>.
     /// Azure Cognitive Search client that can be used to manage indexes on a Search service.
     /// </summary>
+    // Suppress the generated convenience overloads that accept an optional MatchConditions.
+    // They are ambiguous with the hand-authored name-only Delete overloads (e.g. DeleteIndex(string, CancellationToken)).
+    // The replacement overloads below make matchConditions required so the overloads are no longer ambiguous.
+    [Typespec.CodeGenSuppress(nameof(DeleteIndex), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
+    [Typespec.CodeGenSuppress(nameof(DeleteIndexAsync), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
+    [Typespec.CodeGenSuppress(nameof(DeleteSynonymMap), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
+    [Typespec.CodeGenSuppress(nameof(DeleteSynonymMapAsync), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
     public partial class SearchIndexClient
     {
         private ObjectSerializer _serializer;
@@ -315,6 +323,44 @@ namespace Azure.Search.Documents.Indexes
         /// <summary>
         /// Deletes a search index and all the documents it contains.
         /// </summary>
+        /// <param name="indexName">Required. The name of the <see cref="SearchIndex"/> to delete.</param>
+        /// <param name="matchConditions">Required. The <see cref="MatchConditions"/> to apply to the request, or <c>null</c> to delete unconditionally.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response"/> from the server.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        public virtual Response DeleteIndex(
+            string indexName,
+            MatchConditions matchConditions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+
+            return DeleteIndex(indexName, matchConditions, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary>
+        /// Deletes a search index and all the documents it contains.
+        /// </summary>
+        /// <param name="indexName">Required. The name of the <see cref="SearchIndex"/> to delete.</param>
+        /// <param name="matchConditions">Required. The <see cref="MatchConditions"/> to apply to the request, or <c>null</c> to delete unconditionally.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response"/> from the server.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        public virtual async Task<Response> DeleteIndexAsync(
+            string indexName,
+            MatchConditions matchConditions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+
+            return await DeleteIndexAsync(indexName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes a search index and all the documents it contains.
+        /// </summary>
         /// <param name="index">Required. The <see cref="SearchIndex"/> to delete.</param>
         /// <param name="onlyIfUnchanged">
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndex.ETag"/> does not match the current service version;
@@ -533,6 +579,44 @@ namespace Azure.Search.Documents.Indexes
             string synonymMapName,
             CancellationToken cancellationToken = default) =>
             await DeleteSynonymMapAsync(synonymMapName, matchConditions: null, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Deletes a synonym map.
+        /// </summary>
+        /// <param name="synonymMapName">The name of a <see cref="SynonymMap"/> to delete.</param>
+        /// <param name="matchConditions">Required. The <see cref="MatchConditions"/> to apply to the request, or <c>null</c> to delete unconditionally.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response"/> from the server.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> or <see cref="SynonymMap.Name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        public virtual Response DeleteSynonymMap(
+            string synonymMapName,
+            MatchConditions matchConditions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
+
+            return DeleteSynonymMap(synonymMapName, matchConditions, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary>
+        /// Deletes a synonym map.
+        /// </summary>
+        /// <param name="synonymMapName">The name of a <see cref="SynonymMap"/> to delete.</param>
+        /// <param name="matchConditions">Required. The <see cref="MatchConditions"/> to apply to the request, or <c>null</c> to delete unconditionally.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response"/> from the server.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> or <see cref="SynonymMap.Name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        public virtual async Task<Response> DeleteSynonymMapAsync(
+            string synonymMapName,
+            MatchConditions matchConditions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
+
+            return await DeleteSynonymMapAsync(synonymMapName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Deletes a synonym map.

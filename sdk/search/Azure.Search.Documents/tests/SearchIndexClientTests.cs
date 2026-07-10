@@ -359,6 +359,35 @@ namespace Azure.Search.Documents.Tests
 
         [Test]
         [SyncOnly]
+        public void DeleteOverloadsAreUnambiguous()
+        {
+            // Regression test for the ambiguous overload bug: calling the name-only Delete
+            // overloads with a single argument (no CancellationToken) previously failed to
+            // compile (CS0121) because it was ambiguous with the generated
+            // (string, MatchConditions, CancellationToken) convenience overload. These calls
+            // must now compile and resolve to the name-only overload.
+            var endpoint = new Uri($"https://my-svc-name.search.windows.net");
+            var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
+
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndex((string)null));
+            Assert.AreEqual("indexName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexAsync((string)null));
+            Assert.AreEqual("indexName", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSynonymMap((string)null));
+            Assert.AreEqual("synonymMapName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSynonymMapAsync((string)null));
+            Assert.AreEqual("synonymMapName", ex.ParamName);
+
+            // The required-MatchConditions overload remains callable.
+            ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndex((string)null, matchConditions: null));
+            Assert.AreEqual("indexName", ex.ParamName);
+        }
+
+        [Test]
+        [SyncOnly]
         public void CreateSynonymMapParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");

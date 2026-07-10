@@ -9,9 +9,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents.Indexes.Models;
+using Typespec = Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes
 {
+    // Suppress the generated convenience overload that accepts an optional MatchConditions.
+    // It is ambiguous with the hand-authored name-only DeleteIndexer(string, CancellationToken) overload.
+    // The replacement overloads below make matchConditions required so the overloads are no longer ambiguous.
+    [Typespec.CodeGenSuppress(nameof(DeleteIndexer), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
+    [Typespec.CodeGenSuppress(nameof(DeleteIndexerAsync), typeof(string), typeof(MatchConditions), typeof(CancellationToken))]
     public partial class SearchIndexerClient
     {
         private string _serviceName;
@@ -227,6 +233,44 @@ namespace Azure.Search.Documents.Indexes
             Argument.AssertNotNull(indexerName, nameof(indexerName));
 
             return await DeleteIndexerAsync(indexerName, matchConditions: null, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes an indexer.
+        /// </summary>
+        /// <param name="indexerName">The name of the <see cref="SearchIndexer"/> to delete.</param>
+        /// <param name="matchConditions">Required. The <see cref="MatchConditions"/> to apply to the request, or <c>null</c> to delete unconditionally.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response"/> from the server.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        public virtual Response DeleteIndexer(
+            string indexerName,
+            MatchConditions matchConditions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(indexerName, nameof(indexerName));
+
+            return DeleteIndexer(indexerName, matchConditions, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary>
+        /// Deletes an indexer.
+        /// </summary>
+        /// <param name="indexerName">The name of the <see cref="SearchIndexer"/> to delete.</param>
+        /// <param name="matchConditions">Required. The <see cref="MatchConditions"/> to apply to the request, or <c>null</c> to delete unconditionally.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>The <see cref="Response"/> from the server.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        public virtual async Task<Response> DeleteIndexerAsync(
+            string indexerName,
+            MatchConditions matchConditions,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(indexerName, nameof(indexerName));
+
+            return await DeleteIndexerAsync(indexerName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
