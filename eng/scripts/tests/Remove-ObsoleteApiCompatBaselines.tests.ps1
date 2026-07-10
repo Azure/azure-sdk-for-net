@@ -21,6 +21,7 @@ Set-StrictMode -Version 3
 
 BeforeAll {
     . (Join-Path $PSScriptRoot ".." "Remove-ObsoleteApiCompatBaselines.ps1")
+    . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "SemVer.ps1")
 
     function New-BaselineFile {
         param (
@@ -162,3 +163,30 @@ Describe "Remove-ObsoleteApiCompatBaselines" -Tag "UnitTest" {
         }
     }
 }
+
+Describe "Test-ApiCompatVersionBumped" -Tag "UnitTest" {
+    Context "GA (non-preview) current version" {
+        It "returns true on the normal auto-increment path (no explicit new version)" {
+            Test-ApiCompatVersionBumped -CurrentVersion "2.0.0" -NewVersionString "" | Should -BeTrue
+        }
+
+        It "returns true when an explicit new version differs from the current version" {
+            Test-ApiCompatVersionBumped -CurrentVersion "2.0.0" -NewVersionString "2.0.1" | Should -BeTrue
+        }
+
+        It "returns false when the explicit new version equals the current version (no-op bump)" {
+            Test-ApiCompatVersionBumped -CurrentVersion "2.0.0" -NewVersionString "2.0.0" | Should -BeFalse
+        }
+    }
+
+    Context "prerelease current version" {
+        It "returns false on the auto-increment path" {
+            Test-ApiCompatVersionBumped -CurrentVersion "2.0.0-beta.1" -NewVersionString "" | Should -BeFalse
+        }
+
+        It "returns false even when an explicit new version is provided" {
+            Test-ApiCompatVersionBumped -CurrentVersion "2.0.0-beta.1" -NewVersionString "2.0.0" | Should -BeFalse
+        }
+    }
+}
+

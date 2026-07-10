@@ -90,7 +90,12 @@ if ($packageSemVer.HasValidPrereleaseLabel() -ne $true){
   exit 1
 }
 
-if (!$packageOldSemVer.IsPrerelease -and ($packageVersion -ne $NewVersionString)) {
+# True when this release advances <ApiCompatVersion> (a GA version was released and the version is
+# actually changing). Both the ApiCompatVersion bump and the baseline cleanup below gate on this so they
+# stay in lock-step - baselines are only removed when the baseline was actually advanced.
+$apiCompatVersionBumped = Test-ApiCompatVersionBumped -CurrentVersion $packageVersion -NewVersionString $NewVersionString
+
+if ($apiCompatVersionBumped) {
   $whitespace = $propertyGroup["Version"].PreviousSibling
   if (!$propertyGroup.ApiCompatVersion) {
     $propertyGroup.InsertAfter($csproj.CreateElement("ApiCompatVersion"), $propertyGroup["Version"]) | Out-Null
@@ -108,10 +113,10 @@ if (!$packageOldSemVer.IsPrerelease -and ($packageVersion -ne $NewVersionString)
 $propertyGroup.Version = $packageSemVer.ToString()
 $csproj.Save($csprojPath)
 
-# After a GA (non-preview) release the ApiCompatVersion above is bumped to the just-released version,
-# so any ApiCompat baseline suppressions / opt-out entries for this project are now obsolete. Wrapped
-# in its own try/catch so a cleanup failure never blocks the version bump PR.
-if (!$packageOldSemVer.IsPrerelease) {
+# When the release advanced <ApiCompatVersion> above (GA release), any ApiCompat baseline suppressions /
+# opt-out entries for this project are now obsolete. Wrapped in its own try/catch so a cleanup failure
+# never blocks the version bump PR.
+if ($apiCompatVersionBumped) {
   try {
     Remove-ObsoleteApiCompatBaselines -RepoRoot $RepoRoot -PackageName $PackageName | Out-Null
   }

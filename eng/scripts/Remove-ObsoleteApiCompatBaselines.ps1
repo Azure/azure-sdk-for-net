@@ -67,3 +67,30 @@ function Remove-ObsoleteApiCompatBaselines {
 
   return $removedCount
 }
+
+<#
+.SYNOPSIS
+Returns true when a post-release version bump advances <ApiCompatVersion> (and therefore should trigger
+ApiCompat baseline cleanup).
+
+.DESCRIPTION
+Baseline cleanup must run on exactly the same condition that advances <ApiCompatVersion>: the version
+currently in the project (the version just released) is a GA (non-preview) version AND the version is
+actually changing. Gating on this prevents deleting baselines when the bump is a no-op (for example when
+-NewVersionString equals the current version), which would advance nothing.
+
+.PARAMETER CurrentVersion
+The version currently in the project's .csproj (i.e. the version that was just released).
+
+.PARAMETER NewVersionString
+The optional explicit target version passed to Update-PkgVersion.ps1. Empty in the normal
+auto-increment path.
+#>
+function Test-ApiCompatVersionBumped {
+  param (
+    [Parameter(Mandatory = $true)] [string] $CurrentVersion,
+    [string] $NewVersionString
+  )
+  $current = [AzureEngSemanticVersion]::new($CurrentVersion)
+  return (-not $current.IsPrerelease) -and ($CurrentVersion -ne $NewVersionString)
+}
