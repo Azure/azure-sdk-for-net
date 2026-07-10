@@ -124,6 +124,19 @@ namespace Azure.Generator.Tests.TestHelpers
                 .SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
         }
 
+        // PropertyProvider.OriginalName has an internal init accessor and the custom-code parser
+        // (NamedTypeSymbolProvider) is internal to Microsoft.TypeSpec.Generator with no InternalsVisibleTo
+        // for this test assembly, so there is currently no way to load a real [CodeGenMember] rename here.
+        // Set the backing field via reflection to simulate a property renamed through custom code.
+        // Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60907.
+        public static void SetOriginalName(PropertyProvider property, string originalName)
+        {
+            typeof(PropertyProvider)
+                .GetField($"<{nameof(PropertyProvider.OriginalName)}>k__BackingField",
+                    BindingFlags.NonPublic | BindingFlags.Instance)!
+                .SetValue(property, originalName);
+        }
+
         private static Compilation? BuildLastContractCompilation(IEnumerable<string>? sources)
         {
             if (sources is null)

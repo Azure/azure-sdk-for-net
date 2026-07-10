@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Reflection;
 using Azure.Generator.Extensions;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
@@ -85,7 +84,7 @@ namespace Azure.Generator.Tests.Extensions
                 "RenamedDiagnostics",
                 new AutoPropertyBody(false),
                 clientProvider);
-            SetOriginalName(renamedClientDiagnostics, ClientDiagnosticsPropertyName);
+            MockHelpers.SetOriginalName(renamedClientDiagnostics, ClientDiagnosticsPropertyName);
             // NOTE: OriginalName is set via reflection because this test project lacks custom-code test
             // infra to load a real [CodeGenMember] rename. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60907.
             clientProvider.Update(properties: [renamedClientDiagnostics]);
@@ -111,19 +110,6 @@ namespace Azure.Generator.Tests.Extensions
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
             return clientProvider!;
-        }
-
-        // OriginalName has an internal init accessor and the custom-code parser (NamedTypeSymbolProvider)
-        // is internal to Microsoft.TypeSpec.Generator with no InternalsVisibleTo for this test assembly,
-        // so there is currently no way to load a real [CodeGenMember] rename here. Set the backing field
-        // via reflection to simulate a property renamed from "ClientDiagnostics" through custom code.
-        // Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60907.
-        private static void SetOriginalName(PropertyProvider property, string originalName)
-        {
-            typeof(PropertyProvider)
-                .GetField($"<{nameof(PropertyProvider.OriginalName)}>k__BackingField",
-                    BindingFlags.NonPublic | BindingFlags.Instance)!
-                .SetValue(property, originalName);
         }
     }
 }

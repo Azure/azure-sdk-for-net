@@ -14,7 +14,6 @@ using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Tests.Visitors
@@ -265,7 +264,7 @@ namespace Azure.Generator.Tests.Visitors
                 "RenamedDiagnostics",
                 new AutoPropertyBody(false),
                 clientProvider!);
-            SetOriginalName(renamedClientDiagnostics, ClientDiagnosticsPropertyName);
+            MockHelpers.SetOriginalName(renamedClientDiagnostics, ClientDiagnosticsPropertyName);
             // NOTE: OriginalName is set via reflection because this test project lacks custom-code test
             // infra to load a real [CodeGenMember] rename. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60907.
             clientProvider!.Update(properties: [renamedClientDiagnostics]);
@@ -290,19 +289,6 @@ namespace Azure.Generator.Tests.Visitors
             var result = updatedMethod!.BodyStatements!.ToDisplayString();
             Assert.IsTrue(result.Contains("RenamedDiagnostics.CreateScope(\"TestClient.Foo\")"),
                 $"Protocol method should be wrapped with a diagnostic scope using the renamed property. Actual: {result}");
-        }
-
-        // OriginalName has an internal init accessor and the custom-code parser (NamedTypeSymbolProvider)
-        // is internal to Microsoft.TypeSpec.Generator with no InternalsVisibleTo for this test assembly,
-        // so there is currently no way to load a real [CodeGenMember] rename here. Set the backing field
-        // via reflection to simulate a property renamed from "ClientDiagnostics" through custom code.
-        // Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60907.
-        private static void SetOriginalName(PropertyProvider property, string originalName)
-        {
-            typeof(PropertyProvider)
-                .GetField($"<{nameof(PropertyProvider.OriginalName)}>k__BackingField",
-                    BindingFlags.NonPublic | BindingFlags.Instance)!
-                .SetValue(property, originalName);
         }
 
         // This test validates that the "Async" suffix is stripped from the scope name for a protocol
