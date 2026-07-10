@@ -21,7 +21,7 @@ namespace Azure.Provisioning.StandbyPool
         {
         }
 
-        /// <summary> Gets or sets the Zone. </summary>
+        /// <summary> Gets the Zone. </summary>
         public BicepValue<long> Zone
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.StandbyPool
                 Initialize();
                 return _zone;
             }
-            set
-            {
-                Initialize();
-                _zone.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the StandbyVirtualMachineInstanceCountsByState. </summary>
+        /// <summary> Gets the StandbyVirtualMachineInstanceCountsByState. </summary>
         public BicepList<PoolVirtualMachineStateCount> StandbyVirtualMachineInstanceCountsByState
         {
             get
             {
                 Initialize();
                 return _standbyVirtualMachineInstanceCountsByState;
-            }
-            set
-            {
-                Initialize();
-                _standbyVirtualMachineInstanceCountsByState.Assign(value);
             }
         }
 
@@ -56,7 +46,7 @@ namespace Azure.Provisioning.StandbyPool
         {
             base.DefineProvisionableProperties();
             _zone = DefineProperty<long>(nameof(Zone), new string[] { "zone" });
-            _standbyVirtualMachineInstanceCountsByState = DefineListProperty<PoolVirtualMachineStateCount>(nameof(StandbyVirtualMachineInstanceCountsByState), new string[] { "instanceCountsByState" }, isRequired: true);
+            _standbyVirtualMachineInstanceCountsByState = DefineListProperty<PoolVirtualMachineStateCount>(nameof(StandbyVirtualMachineInstanceCountsByState), new string[] { "instanceCountsByState" });
             DefineAdditionalProperties();
         }
 

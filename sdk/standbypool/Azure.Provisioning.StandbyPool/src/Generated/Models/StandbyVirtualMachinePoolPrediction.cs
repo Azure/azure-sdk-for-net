@@ -66,9 +66,9 @@ namespace Azure.Provisioning.StandbyPool
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _forecastValues = DefineModelProperty<StandbyVirtualMachinePoolForecastValues>(nameof(ForecastValues), new string[] { "forecastValues" }, isOutput: true, isRequired: true);
-            _forecastStartOn = DefineProperty<DateTimeOffset>(nameof(ForecastStartOn), new string[] { "forecastStartTime" }, isOutput: true, isRequired: true);
-            _forecastInfo = DefineProperty<string>(nameof(ForecastInfo), new string[] { "forecastInfo" }, isOutput: true, isRequired: true);
+            _forecastValues = DefineModelProperty<StandbyVirtualMachinePoolForecastValues>(nameof(ForecastValues), new string[] { "forecastValues" }, isOutput: true);
+            _forecastStartOn = DefineProperty<DateTimeOffset>(nameof(ForecastStartOn), new string[] { "forecastStartTime" }, isOutput: true);
+            _forecastInfo = DefineProperty<string>(nameof(ForecastInfo), new string[] { "forecastInfo" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

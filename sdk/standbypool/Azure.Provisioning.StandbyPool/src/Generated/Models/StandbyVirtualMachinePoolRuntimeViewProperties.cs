@@ -67,7 +67,7 @@ namespace Azure.Provisioning.StandbyPool
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _instanceCountSummary = DefineListProperty<StandbyVirtualMachineInstanceCountSummary>(nameof(InstanceCountSummary), new string[] { "instanceCountSummary" }, isOutput: true, isRequired: true);
+            _instanceCountSummary = DefineListProperty<StandbyVirtualMachineInstanceCountSummary>(nameof(InstanceCountSummary), new string[] { "instanceCountSummary" }, isOutput: true);
             _status = DefineModelProperty<StandbyPoolStatus>(nameof(Status), new string[] { "status" }, isOutput: true);
             _provisioningState = DefineProperty<StandbyProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _prediction = DefineModelProperty<StandbyVirtualMachinePoolPrediction>(nameof(Prediction), new string[] { "prediction" }, isOutput: true);

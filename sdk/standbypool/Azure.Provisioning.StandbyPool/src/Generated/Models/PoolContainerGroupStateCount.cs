@@ -21,7 +21,7 @@ namespace Azure.Provisioning.StandbyPool
         {
         }
 
-        /// <summary> Gets or sets the State. </summary>
+        /// <summary> Gets the State. </summary>
         public BicepValue<PoolContainerGroupState> State
         {
             get
@@ -29,14 +29,9 @@ namespace Azure.Provisioning.StandbyPool
                 Initialize();
                 return _state;
             }
-            set
-            {
-                Initialize();
-                _state.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Count. </summary>
+        /// <summary> Gets the Count. </summary>
         public BicepValue<long> Count
         {
             get
@@ -44,19 +39,14 @@ namespace Azure.Provisioning.StandbyPool
                 Initialize();
                 return _count;
             }
-            set
-            {
-                Initialize();
-                _count.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for PoolContainerGroupStateCount. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _state = DefineProperty<PoolContainerGroupState>(nameof(State), new string[] { "state" }, isRequired: true);
-            _count = DefineProperty<long>(nameof(Count), new string[] { "count" }, isRequired: true);
+            _state = DefineProperty<PoolContainerGroupState>(nameof(State), new string[] { "state" });
+            _count = DefineProperty<long>(nameof(Count), new string[] { "count" });
             DefineAdditionalProperties();
         }
 

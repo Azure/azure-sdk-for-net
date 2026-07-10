@@ -34,7 +34,7 @@ namespace Azure.Provisioning.StandbyPool
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _instancesRequestedCount = DefineListProperty<long>(nameof(InstancesRequestedCount), new string[] { "instancesRequestedCount" }, isOutput: true, isRequired: true);
+            _instancesRequestedCount = DefineListProperty<long>(nameof(InstancesRequestedCount), new string[] { "instancesRequestedCount" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

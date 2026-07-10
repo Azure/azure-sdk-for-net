@@ -21,7 +21,7 @@ namespace Azure.Provisioning.StandbyPool
         {
         }
 
-        /// <summary> Gets or sets the Zone. </summary>
+        /// <summary> Gets the Zone. </summary>
         public BicepValue<long> Zone
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.StandbyPool
                 Initialize();
                 return _zone;
             }
-            set
-            {
-                Initialize();
-                _zone.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the StandbyContainerGroupInstanceCountsByState. </summary>
+        /// <summary> Gets the StandbyContainerGroupInstanceCountsByState. </summary>
         public BicepList<PoolContainerGroupStateCount> StandbyContainerGroupInstanceCountsByState
         {
             get
             {
                 Initialize();
                 return _standbyContainerGroupInstanceCountsByState;
-            }
-            set
-            {
-                Initialize();
-                _standbyContainerGroupInstanceCountsByState.Assign(value);
             }
         }
 
@@ -56,7 +46,7 @@ namespace Azure.Provisioning.StandbyPool
         {
             base.DefineProvisionableProperties();
             _zone = DefineProperty<long>(nameof(Zone), new string[] { "zone" });
-            _standbyContainerGroupInstanceCountsByState = DefineListProperty<PoolContainerGroupStateCount>(nameof(StandbyContainerGroupInstanceCountsByState), new string[] { "instanceCountsByState" }, isRequired: true);
+            _standbyContainerGroupInstanceCountsByState = DefineListProperty<PoolContainerGroupStateCount>(nameof(StandbyContainerGroupInstanceCountsByState), new string[] { "instanceCountsByState" });
             DefineAdditionalProperties();
         }
 

@@ -45,7 +45,7 @@ namespace Azure.Provisioning.StandbyPool
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _code = DefineProperty<StandbyPoolHealthStateCode>(nameof(Code), new string[] { "code" }, isOutput: true, isRequired: true);
+            _code = DefineProperty<StandbyPoolHealthStateCode>(nameof(Code), new string[] { "code" }, isOutput: true);
             _message = DefineProperty<string>(nameof(Message), new string[] { "message" }, isOutput: true);
             DefineAdditionalProperties();
         }

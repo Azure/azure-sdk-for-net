@@ -3,8 +3,8 @@ namespace Azure.Provisioning.StandbyPool
     public partial class ContainerGroupInstanceCountSummary : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerGroupInstanceCountSummary() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.StandbyPool.PoolContainerGroupStateCount> StandbyContainerGroupInstanceCountsByState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<long> Zone { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.StandbyPool.PoolContainerGroupStateCount> StandbyContainerGroupInstanceCountsByState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<long> Zone { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum PoolContainerGroupState
@@ -16,8 +16,8 @@ namespace Azure.Provisioning.StandbyPool
     public partial class PoolContainerGroupStateCount : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PoolContainerGroupStateCount() { }
-        public Azure.Provisioning.BicepValue<long> Count { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.StandbyPool.PoolContainerGroupState> State { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> Count { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.StandbyPool.PoolContainerGroupState> State { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum PoolVirtualMachineState
@@ -34,8 +34,8 @@ namespace Azure.Provisioning.StandbyPool
     public partial class PoolVirtualMachineStateCount : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PoolVirtualMachineStateCount() { }
-        public Azure.Provisioning.BicepValue<long> Count { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.StandbyPool.PoolVirtualMachineState> State { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> Count { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.StandbyPool.PoolVirtualMachineState> State { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class StandbyContainerGroupPool : Azure.Provisioning.Primitives.ProvisionableResource
@@ -86,7 +86,7 @@ namespace Azure.Provisioning.StandbyPool
     {
         internal StandbyContainerGroupPoolRuntimeView() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.StandbyPool.StandbyContainerGroupPool Parent { get { throw null; } set { } }
         public Azure.Provisioning.StandbyPool.StandbyContainerGroupPoolRuntimeViewProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -153,7 +153,7 @@ namespace Azure.Provisioning.StandbyPool
     {
         internal StandbyVirtualMachine() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.StandbyPool.StandbyVirtualMachinePool Parent { get { throw null; } set { } }
         public Azure.Provisioning.StandbyPool.StandbyVirtualMachineProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -170,8 +170,8 @@ namespace Azure.Provisioning.StandbyPool
     public partial class StandbyVirtualMachineInstanceCountSummary : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public StandbyVirtualMachineInstanceCountSummary() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.StandbyPool.PoolVirtualMachineStateCount> StandbyVirtualMachineInstanceCountsByState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<long> Zone { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.StandbyPool.PoolVirtualMachineStateCount> StandbyVirtualMachineInstanceCountsByState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<long> Zone { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class StandbyVirtualMachinePool : Azure.Provisioning.Primitives.ProvisionableResource
@@ -223,7 +223,7 @@ namespace Azure.Provisioning.StandbyPool
     {
         internal StandbyVirtualMachinePoolRuntimeView() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.StandbyPool.StandbyVirtualMachinePool Parent { get { throw null; } set { } }
         public Azure.Provisioning.StandbyPool.StandbyVirtualMachinePoolRuntimeViewProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -250,7 +250,7 @@ namespace Azure.Provisioning.StandbyPool
     {
         public StandbyVirtualMachineProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.StandbyPool.StandbyProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VirtualMachineResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VirtualMachineResourceId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum StandbyVirtualMachineState

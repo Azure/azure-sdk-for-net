@@ -22,18 +22,13 @@ namespace Azure.Provisioning.StandbyPool
         {
         }
 
-        /// <summary> Gets or sets the VirtualMachineResourceId. </summary>
+        /// <summary> Gets the VirtualMachineResourceId. </summary>
         public BicepValue<ResourceIdentifier> VirtualMachineResourceId
         {
             get
             {
                 Initialize();
                 return _virtualMachineResourceId;
-            }
-            set
-            {
-                Initialize();
-                _virtualMachineResourceId.Assign(value);
             }
         }
 
@@ -51,7 +46,7 @@ namespace Azure.Provisioning.StandbyPool
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _virtualMachineResourceId = DefineProperty<ResourceIdentifier>(nameof(VirtualMachineResourceId), new string[] { "virtualMachineResourceId" }, isRequired: true);
+            _virtualMachineResourceId = DefineProperty<ResourceIdentifier>(nameof(VirtualMachineResourceId), new string[] { "virtualMachineResourceId" });
             _provisioningState = DefineProperty<StandbyProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }
