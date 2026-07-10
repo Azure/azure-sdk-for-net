@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Omnichannel channel definition. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This class is obsolete and will be removed in a future version. Please use the Dynamics365OmnichannelChannel instead.")]
     public partial class Omnichannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of <see cref="Omnichannel"/>. </summary>
