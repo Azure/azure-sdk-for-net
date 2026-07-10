@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.Monitor.Query.Logs.Models;
 
 namespace Azure.Monitor.Query.Logs
@@ -23,6 +24,7 @@ namespace Azure.Monitor.Query.Logs
     [ModelReaderWriterBuildable(typeof(LogsTable))]
     [ModelReaderWriterBuildable(typeof(LogsTableColumn))]
     [ModelReaderWriterBuildable(typeof(QueryBody))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     public partial class AzureMonitorQueryLogsContext : ModelReaderWriterContext
     {
     }

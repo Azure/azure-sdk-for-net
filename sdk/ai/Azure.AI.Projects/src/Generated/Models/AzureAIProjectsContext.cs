@@ -41,10 +41,10 @@ namespace Azure.AI.Projects
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentResponsesApiDispatchPayload is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentResponsesApiRoutineAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentResponsesApiRoutineAction))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentsPagedResultEvaluatorGenerationJob is experimental and may change in future versions.
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentResponsesApiRoutineAction is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentsPagedResultMemoryItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultMemoryItem))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentsPagedResultRoutineRun is experimental and may change in future versions.
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentsPagedResultMemoryItem is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentTaxonomyInput))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput is experimental and may change in future versions.
@@ -198,6 +198,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(EmbeddingConfiguration))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EndpointBasedEvaluatorDefinition))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EvalResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvalResult))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EvalResult is experimental and may change in future versions.
