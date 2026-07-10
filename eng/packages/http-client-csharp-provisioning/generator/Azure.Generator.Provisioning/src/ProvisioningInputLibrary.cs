@@ -21,6 +21,7 @@ namespace Azure.Generator.Provisioning
         private IReadOnlyList<InputModelType>? _reachableModels;
         private IReadOnlyList<InputEnumType>? _reachableEnums;
         private Dictionary<InputModelType, bool>? _modelSettableUsage;
+        private Dictionary<ProvisioningResourceProjection, bool>? _resourceSettableUsage;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProvisioningInputLibrary"/> class.
@@ -68,6 +69,12 @@ namespace Azure.Generator.Provisioning
             throw new KeyNotFoundException($"Model '{model.Namespace}.{model.Name}' ('{model.CrossLanguageDefinitionId}') was not present in provisioning settable analysis.");
         }
 
+        internal bool IsResourceSettable(ProvisioningResourceProjection resource)
+        {
+            EnsureProvisioningInput();
+            return _resourceSettableUsage![resource];
+        }
+
         internal bool IsModelReachable(InputModelType model)
         {
             EnsureProvisioningInput();
@@ -76,7 +83,7 @@ namespace Azure.Generator.Provisioning
 
         private void EnsureProvisioningInput()
         {
-            if (_resourceProjections != null && _modelSettableUsage != null)
+            if (_resourceProjections != null && _modelSettableUsage != null && _resourceSettableUsage != null)
                 return;
 
             var resourceProjections = _resourceProjections
@@ -84,13 +91,14 @@ namespace Azure.Generator.Provisioning
             var resourceProjectionsByModel = _resourceProjectionsByModel ?? resourceProjections
                 .GroupBy(projection => projection.ResourceModel)
                 .ToDictionary(group => group.Key, group => group.ToList());
-            var (reachableModels, reachableEnums, modelSettableUsage) = CollectReachableTypes(resourceProjections, resourceProjectionsByModel);
+            var (reachableModels, reachableEnums, modelSettableUsage, resourceSettableUsage) = CollectReachableTypes(resourceProjections, resourceProjectionsByModel);
 
             _resourceProjections = resourceProjections;
             _resourceProjectionsByModel = resourceProjectionsByModel;
             _reachableModels = reachableModels;
             _reachableEnums = reachableEnums;
             _modelSettableUsage = modelSettableUsage;
+            _resourceSettableUsage = resourceSettableUsage;
         }
 
         /// <summary>
@@ -101,7 +109,7 @@ namespace Azure.Generator.Provisioning
         /// provisioning emits only a subset of operations, so TCGC usage cannot be
         /// used directly here.
         /// </summary>
-        private static (IReadOnlyList<InputModelType> Models, IReadOnlyList<InputEnumType> Enums, Dictionary<InputModelType, bool> ModelSettableUsage) CollectReachableTypes(
+        private static (IReadOnlyList<InputModelType> Models, IReadOnlyList<InputEnumType> Enums, Dictionary<InputModelType, bool> ModelSettableUsage, Dictionary<ProvisioningResourceProjection, bool> ResourceSettableUsage) CollectReachableTypes(
             IReadOnlyList<ProvisioningResourceProjection> resourceProjections,
             Dictionary<InputModelType, List<ProvisioningResourceProjection>> resourceProjectionsByModel)
         {
@@ -110,33 +118,67 @@ namespace Azure.Generator.Provisioning
             // by a read-only resource first and by a writable resource later; the writable
             // path must still propagate so the final modelSettableUsage value can be dyed true.
             var traversalVisited = new HashSet<(InputType Type, bool IsSettable)>();
+            var resourceVisited = new HashSet<(ProvisioningResourceProjection Resource, bool IsSettable)>();
             var models = new List<InputModelType>();
             var enums = new List<InputEnumType>();
             var modelSettableUsage = new Dictionary<InputModelType, bool>();
-            var queue = new Queue<(InputType Type, bool IsSettable)>();
+            var resourceSettableUsage = resourceProjections.ToDictionary(resource => resource, resource => resource.IsSettable);
+            var queue = new Queue<(InputType? Type, ProvisioningResourceProjection? Resource, bool IsSettable)>();
 
             foreach (var resource in resourceProjections)
             {
-                queue.Enqueue((resource.ResourceModel, false));
+                queue.Enqueue((null, resource, resource.IsSettable));
             }
 
             while (queue.Count > 0)
             {
-                Visit(queue.Dequeue(), resourceProjectionsByModel, outputVisited, traversalVisited, models, enums, modelSettableUsage, queue);
+                var item = queue.Dequeue();
+                if (item.Resource is not null)
+                {
+                    VisitResource(item.Resource, item.IsSettable, resourceVisited, modelSettableUsage, resourceSettableUsage, queue);
+                }
+                else
+                {
+                    VisitType((item.Type!, item.IsSettable), resourceProjectionsByModel, outputVisited, traversalVisited, models, enums, modelSettableUsage, queue);
+                }
             }
 
-            return (models, enums, modelSettableUsage);
+            return (models, enums, modelSettableUsage, resourceSettableUsage);
         }
 
-        private static void EnqueueResourceProperties(ProvisioningResourceProjection resource, bool isSettable, Queue<(InputType Type, bool IsSettable)> queue)
+        private static void VisitResource(
+            ProvisioningResourceProjection resource,
+            bool isSettable,
+            HashSet<(ProvisioningResourceProjection Resource, bool IsSettable)> resourceVisited,
+            Dictionary<InputModelType, bool> modelSettableUsage,
+            Dictionary<ProvisioningResourceProjection, bool> resourceSettableUsage,
+            Queue<(InputType? Type, ProvisioningResourceProjection? Resource, bool IsSettable)> queue)
+        {
+            if (!resourceVisited.Add((resource, isSettable)))
+                return;
+
+            resourceSettableUsage[resource] = isSettable || resourceSettableUsage[resource];
+            modelSettableUsage[resource.ResourceModel] = isSettable || (modelSettableUsage.TryGetValue(resource.ResourceModel, out var existing) && existing);
+            EnqueueResourceProperties(resource, isSettable, queue);
+            if (resource.ResourceModel.BaseModel != null)
+            {
+                queue.Enqueue((resource.ResourceModel.BaseModel, null, isSettable));
+            }
+            foreach (var derived in resource.ResourceModel.DerivedModels)
+            {
+                queue.Enqueue((derived, null, isSettable));
+            }
+        }
+
+        private static void EnqueueResourceProperties(ProvisioningResourceProjection resource, bool isSettable, Queue<(InputType? Type, ProvisioningResourceProjection? Resource, bool IsSettable)> queue)
         {
             foreach (var property in GetResourceProperties(resource))
             {
-                queue.Enqueue((property.Type, isSettable && !property.IsReadOnly));
+                queue.Enqueue((property.Type, null, isSettable && !property.IsReadOnly));
             }
         }
 
-        private static void Visit(
+        private static void VisitType(
             (InputType Type, bool IsSettable) item,
             Dictionary<InputModelType, List<ProvisioningResourceProjection>> resourceProjectionInfosByModel,
             HashSet<InputType> outputVisited,
@@ -144,7 +186,7 @@ namespace Azure.Generator.Provisioning
             List<InputModelType> models,
             List<InputEnumType> enums,
             Dictionary<InputModelType, bool> modelSettableUsage,
-            Queue<(InputType Type, bool IsSettable)> queue)
+            Queue<(InputType? Type, ProvisioningResourceProjection? Resource, bool IsSettable)> queue)
         {
             if (!traversalVisited.Add(item))
                 return;
@@ -154,17 +196,10 @@ namespace Azure.Generator.Provisioning
                 case InputModelType model:
                     if (resourceProjectionInfosByModel.TryGetValue(model, out var resources))
                     {
-                        var isResourceSettable = resources.Any(r => r.IsSettable);
-                        var isSettable = item.IsSettable || isResourceSettable;
-                        modelSettableUsage[model] = isSettable || (modelSettableUsage.TryGetValue(model, out var existingResourceUsage) && existingResourceUsage);
                         foreach (var resource in resources)
                         {
-                            EnqueueResourceProperties(resource, isSettable, queue);
+                            queue.Enqueue((null, resource, item.IsSettable || resource.IsSettable));
                         }
-                        if (model.BaseModel != null)
-                            queue.Enqueue((model.BaseModel, isSettable));
-                        foreach (var derived in model.DerivedModels)
-                            queue.Enqueue((derived, isSettable));
                         break;
                     }
 
@@ -174,30 +209,30 @@ namespace Azure.Generator.Provisioning
                     }
                     modelSettableUsage[model] = item.IsSettable || (modelSettableUsage.TryGetValue(model, out var existing) && existing);
                     if (model.BaseModel != null)
-                        queue.Enqueue((model.BaseModel, item.IsSettable));
+                        queue.Enqueue((model.BaseModel, null, item.IsSettable));
                     foreach (var derived in model.DerivedModels)
-                        queue.Enqueue((derived, item.IsSettable));
+                        queue.Enqueue((derived, null, item.IsSettable));
                     foreach (var property in model.Properties)
-                        queue.Enqueue((property.Type, item.IsSettable && !property.IsReadOnly));
+                        queue.Enqueue((property.Type, null, item.IsSettable && !property.IsReadOnly));
                     if (model.AdditionalProperties != null)
-                        queue.Enqueue((model.AdditionalProperties, item.IsSettable));
+                        queue.Enqueue((model.AdditionalProperties, null, item.IsSettable));
                     break;
                 case InputArrayType arrayType:
-                    queue.Enqueue((arrayType.ValueType, item.IsSettable));
+                    queue.Enqueue((arrayType.ValueType, null, item.IsSettable));
                     break;
                 case InputDictionaryType dictType:
-                    queue.Enqueue((dictType.KeyType, item.IsSettable));
-                    queue.Enqueue((dictType.ValueType, item.IsSettable));
+                    queue.Enqueue((dictType.KeyType, null, item.IsSettable));
+                    queue.Enqueue((dictType.ValueType, null, item.IsSettable));
                     break;
                 case InputNullableType nullableType:
-                    queue.Enqueue((nullableType.Type, item.IsSettable));
+                    queue.Enqueue((nullableType.Type, null, item.IsSettable));
                     break;
                 case InputLiteralType literalType:
-                    queue.Enqueue((literalType.ValueType, item.IsSettable));
+                    queue.Enqueue((literalType.ValueType, null, item.IsSettable));
                     break;
                 case InputUnionType unionType:
                     foreach (var variant in unionType.VariantTypes)
-                        queue.Enqueue((variant, item.IsSettable));
+                        queue.Enqueue((variant, null, item.IsSettable));
                     break;
                 case InputEnumType enumType:
                     if (outputVisited.Add(enumType))

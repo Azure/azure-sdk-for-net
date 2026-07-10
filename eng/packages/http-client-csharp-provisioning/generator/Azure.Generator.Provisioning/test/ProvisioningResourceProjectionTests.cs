@@ -389,6 +389,7 @@ namespace Azure.Generator.Provisioning.Tests
             var childValueInfo = ((IProvisioningPropertyInfo)childProvider).GetProvisioningPropertyInfo(childValueProperty);
 
             Assert.That(ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(childModel), Is.True);
+            Assert.That(ProvisioningGenerator.Instance.InputLibrary.IsResourceSettable(childProvider.ResourceProjection!), Is.True);
             Assert.That(childProvider.Constructors.Single().Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
             Assert.That(childNameInfo, Is.Not.Null);
             Assert.That(childNameInfo!.IsSettable, Is.True);
@@ -396,6 +397,48 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(childValueInfo!.IsOutput, Is.False);
             Assert.That(childValueInfo.IsRequired, Is.True);
             Assert.That(childValueInfo.IsSettable, Is.True);
+        }
+
+        [Test]
+        public void SharedModelReadOnlyResourceSiblingDoesNotInheritSettableResourceUsage()
+        {
+            var valueProperty = CreateProperty("Value", isRequired: true);
+            var sharedModel = CreateModel("Profile", [valueProperty]);
+            var writableResource = CreateMetadata(
+                sharedModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/profiles/{profileName}",
+                "Microsoft.Test/profiles",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
+                ]);
+            var readOnlySiblingResource = CreateMetadata(
+                sharedModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/profiles/{profileName}/revisions/{revisionName}",
+                "Microsoft.Test/profiles/revisions",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                resourceName: "ProfileRevision",
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)],
+                parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/profiles/{profileName}");
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [sharedModel]);
+            var writableProvider = CreateResourceProvider(writableResource);
+            var readOnlySiblingProvider = CreateResourceProvider(readOnlySiblingResource);
+            RegisterResourceProviders(writableProvider, readOnlySiblingProvider);
+
+            var writablePropertyInfo = ((IProvisioningPropertyInfo)writableProvider).GetProvisioningPropertyInfo(valueProperty);
+            var readOnlySiblingPropertyInfo = ((IProvisioningPropertyInfo)readOnlySiblingProvider).GetProvisioningPropertyInfo(valueProperty);
+
+            Assert.That(ProvisioningGenerator.Instance.InputLibrary.IsResourceSettable(writableProvider.ResourceProjection!), Is.True);
+            Assert.That(ProvisioningGenerator.Instance.InputLibrary.IsResourceSettable(readOnlySiblingProvider.ResourceProjection!), Is.False);
+            Assert.That(writablePropertyInfo, Is.Not.Null);
+            Assert.That(writablePropertyInfo!.IsSettable, Is.True);
+            Assert.That(readOnlySiblingPropertyInfo, Is.Not.Null);
+            Assert.That(readOnlySiblingPropertyInfo!.IsSettable, Is.False);
+            Assert.That(readOnlySiblingProvider.Constructors.Single().Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.True);
         }
 
         [Test]
@@ -706,6 +749,9 @@ namespace Azure.Generator.Provisioning.Tests
                 .SetValue(ProvisioningGenerator.Instance.InputLibrary, resourceProjectionsByModel);
             typeof(ProvisioningInputLibrary)
                 .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(ProvisioningGenerator.Instance.InputLibrary, null);
+            typeof(ProvisioningInputLibrary)
+                .GetField("_resourceSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(ProvisioningGenerator.Instance.InputLibrary, null);
         }
 
