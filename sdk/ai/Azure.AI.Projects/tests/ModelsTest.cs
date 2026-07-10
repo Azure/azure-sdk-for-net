@@ -91,6 +91,8 @@ public class ModelsTest : ProjectsClientTestBase
         ModelCredentialRequest credentialRequest = new(blob);
         DatasetCredential modelCredential = await projectClient.Models.GetModelCredentialsAsync(name: retrievedModel.Name, version: retrievedModel.Version, credentialRequest: credentialRequest);
         Assert.That(modelCredential.BlobReference.Credential.SasUri, Is.Not.Null);
+        // Delete (temporary workaround for 5317570)
+        await projectClient.Models.DeleteModelVersionAsync($"{MODEL_NAME}1", MODEL_VERSION);
         // List
         // The rest is commented, because of issue 5317570.
         // Create two more models
@@ -185,6 +187,15 @@ public class ModelsTest : ProjectsClientTestBase
             {
                 await projectClient.Models.DeleteModelVersionAsync(modelName, modelVersion);
             }
+        }
+        // Temporary workaround for 5317570
+        try
+        {
+            await projectClient.Models.DeleteModelVersionAsync($"{MODEL_NAME}1", MODEL_VERSION);
+        }
+        catch
+        {
+            // Nothing here.
         }
     }
     #endregion

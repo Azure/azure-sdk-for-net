@@ -12,7 +12,6 @@ In this example we will demonstrate how to create, update, list and delete model
 
 ```C# Snippet:Sample_Createclient_Models
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-var connectionName = Environment.GetEnvironmentVariable("STORAGE_CONNECTION_NAME");
 AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
 string modelName = "sample-model";
 string modelVersion = "1";
@@ -179,7 +178,6 @@ foreach (KeyValuePair<string, string> keyValyePair in updatedModel.Tags)
 Synchronous sample:
 ```C# Snippet:Sample_ListModelVersions_Models_Sync
 CollectionResult<ModelVersion> modelVersions = projectClient.Models.GetModelVersions(name: updatedModel.Name);
-List<ModelVersion> versions = [.. modelVersions];
 Console.WriteLine($"For model {updatedModel.Name} there are next versions available:");
 foreach (ModelVersion oneModelVersion in modelVersions)
 {

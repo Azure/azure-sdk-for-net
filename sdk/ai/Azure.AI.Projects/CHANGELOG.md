@@ -3,6 +3,7 @@
 ## 3.0.0-beta.1 (Unreleased)
 
 ### Features Added
+- Enabled the Model weights subclient.
 - Added the convenience methods `UploadModelAsync` and `UploadModel` to upload model weights.
 - Added distributed tracing support.
 
