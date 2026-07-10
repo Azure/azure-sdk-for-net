@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ManagedInstanceLongTermRetentionPolicyResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _managedInstanceLongTermRetentionPoliciesClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyResource.Delete");
             scope.Start();
@@ -224,16 +224,10 @@ namespace Azure.ResourceManager.Sql
                 };
                 HttpMessage message = _managedInstanceLongTermRetentionPoliciesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                SqlArmOperation<ManagedInstanceLongTermRetentionPolicyResource> operation = new SqlArmOperation<ManagedInstanceLongTermRetentionPolicyResource>(
-                    new ManagedInstanceLongTermRetentionPolicyResourceOperationSource(Client),
-                    _managedInstanceLongTermRetentionPoliciesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                SqlArmOperation operation = new SqlArmOperation(_managedInstanceLongTermRetentionPoliciesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -267,7 +261,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ManagedInstanceLongTermRetentionPolicyResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _managedInstanceLongTermRetentionPoliciesClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyResource.Delete");
             scope.Start();
@@ -279,16 +273,10 @@ namespace Azure.ResourceManager.Sql
                 };
                 HttpMessage message = _managedInstanceLongTermRetentionPoliciesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                SqlArmOperation<ManagedInstanceLongTermRetentionPolicyResource> operation = new SqlArmOperation<ManagedInstanceLongTermRetentionPolicyResource>(
-                    new ManagedInstanceLongTermRetentionPolicyResourceOperationSource(Client),
-                    _managedInstanceLongTermRetentionPoliciesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                SqlArmOperation operation = new SqlArmOperation(_managedInstanceLongTermRetentionPoliciesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
             }

@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Optional force delete boolean. If this is provided as true, migration will be deleted even if active. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DatabaseMigrationSqlVmResource>> DeleteAsync(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _databaseMigrationsSqlVmClientDiagnostics.CreateScope("DatabaseMigrationSqlVmResource.Delete");
             scope.Start();
@@ -228,16 +228,10 @@ namespace Azure.ResourceManager.DataMigration
                 };
                 HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DataMigrationArmOperation<DatabaseMigrationSqlVmResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlVmResource>(
-                    new DatabaseMigrationSqlVmResourceOperationSource(Client),
-                    _databaseMigrationsSqlVmClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                DataMigrationArmOperation operation = new DataMigrationArmOperation(_databaseMigrationsSqlVmClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -272,7 +266,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Optional force delete boolean. If this is provided as true, migration will be deleted even if active. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DatabaseMigrationSqlVmResource> Delete(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _databaseMigrationsSqlVmClientDiagnostics.CreateScope("DatabaseMigrationSqlVmResource.Delete");
             scope.Start();
@@ -284,16 +278,10 @@ namespace Azure.ResourceManager.DataMigration
                 };
                 HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                DataMigrationArmOperation<DatabaseMigrationSqlVmResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlVmResource>(
-                    new DatabaseMigrationSqlVmResourceOperationSource(Client),
-                    _databaseMigrationsSqlVmClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                DataMigrationArmOperation operation = new DataMigrationArmOperation(_databaseMigrationsSqlVmClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
             }
