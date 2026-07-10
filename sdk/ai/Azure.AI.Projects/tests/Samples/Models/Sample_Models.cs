@@ -45,7 +45,7 @@ public class Sample_Models : SamplesBase
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
-        AIProjectClient projectClient = new(new Uri(projectEndpoint), new AzureCliCredential());
+        AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
         string modelName = "sample-model";
         string modelVersion = "1";
         #endregion
@@ -146,7 +146,7 @@ public class Sample_Models : SamplesBase
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
-        AIProjectClient projectClient = new(new Uri(projectEndpoint), new AzureCliCredential());
+        AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
         string modelName = "sample-model";
         string modelVersion = "1";
         Cleanup(projectClient, modelName, modelVersion);

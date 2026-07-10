@@ -27,6 +27,8 @@ public class ModelsTest : ProjectsClientTestBase
         DirectoryInfo dataFolder = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "sample-model"));
         File.WriteAllBytes(Path.Combine(dataFolder.FullName, "weights.bin"), BinaryData.FromString("hello-foundry-model").ToArray());
         File.WriteAllText(Path.Combine(dataFolder.FullName, "config.json"), "{\"sample\": true}");
+        Directory.CreateDirectory(Path.Combine(dataFolder.FullName, "sample_dir"));
+        File.WriteAllText(Path.Combine(dataFolder.FullName, "sample_dir", "test.txt"), "extra data");
         Uri dataUri;
         try
         {

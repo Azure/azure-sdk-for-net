@@ -107,7 +107,7 @@ public partial class AIProjectModels
         BlobClient blobClient;
         foreach (var filePath in Directory.EnumerateFiles(path, "*", SearchOption.AllDirectories))
         {
-            string fileName = Path.GetFileName(filePath);
+            string fileName = GetRelativePath(path, filePath);
             using (FileStream fileStream = File.OpenRead(filePath))
             {
                 blobClient = client.GetBlobClient(fileName);
@@ -152,7 +152,7 @@ public partial class AIProjectModels
         BlobClient blobClient;
         foreach (var filePath in Directory.EnumerateFiles(path, "*", SearchOption.AllDirectories))
         {
-            string fileName = Path.GetFileName(filePath);
+            string fileName = GetRelativePath(path, filePath);
             using (FileStream fileStream = File.OpenRead(filePath))
             {
                 blobClient = client.GetBlobClient(fileName);
@@ -166,6 +166,22 @@ public partial class AIProjectModels
             throw new ArgumentException("The provided folder is empty.");
         }
         return uploadResponse.BlobReference.BlobUri;
+    }
+
+    /// <summary>
+    /// Get the file path relative to root and replace system-specific directory separators by "/".
+    /// </summary>
+    /// <param name="root">The local path to directory.</param>
+    /// <param name="filePath">The path to the file within directory.</param>
+    /// <returns></returns>
+    private static string GetRelativePath(string root, string filePath)
+    {
+        string relPath = filePath.Substring(root.Length);
+        if (relPath[0] == Path.DirectorySeparatorChar)
+        {
+            relPath = relPath.Substring(1);
+        }
+        return relPath.Replace(Path.DirectorySeparatorChar, '/');
     }
 
     /// <summary>
