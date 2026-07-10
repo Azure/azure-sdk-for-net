@@ -292,7 +292,7 @@ namespace Azure.AI.Translation.Document
         /// <remarks>
         /// This overload is retained for backwards compatibility. The service requires <paramref name="type"/>,
         /// so calling it without a type (or with <c>null</c>) throws <see cref="NotSupportedException"/>.
-        /// Use <see cref="GetSupportedFormats(FileFormatType, CancellationToken)"/> instead.
+        /// Use the <c>GetSupportedFormats</c> overload that takes a required <see cref="FileFormatType"/> instead.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<SupportedFileFormats> GetSupportedFormats(FileFormatType? type = default, CancellationToken cancellationToken = default)
@@ -314,7 +314,7 @@ namespace Azure.AI.Translation.Document
         /// <remarks>
         /// This overload is retained for backwards compatibility. The service requires <paramref name="type"/>,
         /// so calling it without a type (or with <c>null</c>) throws <see cref="NotSupportedException"/>.
-        /// Use <see cref="GetSupportedFormatsAsync(FileFormatType, CancellationToken)"/> instead.
+        /// Use the <c>GetSupportedFormatsAsync</c> overload that takes a required <see cref="FileFormatType"/> instead.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<SupportedFileFormats>> GetSupportedFormatsAsync(FileFormatType? type = default, CancellationToken cancellationToken = default)
