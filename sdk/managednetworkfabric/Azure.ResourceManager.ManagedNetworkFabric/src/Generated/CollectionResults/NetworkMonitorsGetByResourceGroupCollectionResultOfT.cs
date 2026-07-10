@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     yield break;
                 }
                 NetworkMonitorListResult result = NetworkMonitorListResult.FromResponse(response);
-                yield return Page<NetworkMonitorData>.FromValues((IReadOnlyList<NetworkMonitorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkMonitorData>.FromValues((IReadOnlyList<NetworkMonitorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 CapacityReservationListResult result = CapacityReservationListResult.FromResponse(response);
-                yield return Page<CapacityReservationData>.FromValues((IReadOnlyList<CapacityReservationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CapacityReservationData>.FromValues((IReadOnlyList<CapacityReservationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

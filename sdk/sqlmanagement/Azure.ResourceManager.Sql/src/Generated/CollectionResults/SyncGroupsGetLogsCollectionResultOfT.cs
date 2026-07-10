@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 SyncGroupLogListResult result = SyncGroupLogListResult.FromResponse(response);
-                yield return Page<SyncGroupLogProperties>.FromValues((IReadOnlyList<SyncGroupLogProperties>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SyncGroupLogProperties>.FromValues((IReadOnlyList<SyncGroupLogProperties>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

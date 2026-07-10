@@ -13,9 +13,11 @@ namespace Azure.ResourceManager.MachineLearning
     // grouped query parameters into individual method parameters instead of emitting an options bag.
     public partial class MachineLearningOnlineEndpointCollection
     {
+        /// <summary> List Online Endpoints. <list type="bullet"> <item> <term> Request Path. </term> <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints. </description> </item> <item> <term> Operation Id. </term> <description> OnlineEndpoints_List. </description> </item> <item> <term> Default Api Version. </term> <description> 2026-03-15-preview. </description> </item> </list> </summary>
         public virtual AsyncPageable<MachineLearningOnlineEndpointResource> GetAllAsync(MachineLearningOnlineEndpointCollectionGetAllOptions options, CancellationToken cancellationToken = default)
             => GetAllAsync(options?.Name, options?.Count, options?.ComputeType, options?.Skip, options?.Tags, options?.Properties, options?.OrderBy, cancellationToken);
 
+        /// <summary> List Online Endpoints. <list type="bullet"> <item> <term> Request Path. </term> <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints. </description> </item> <item> <term> Operation Id. </term> <description> OnlineEndpoints_List. </description> </item> <item> <term> Default Api Version. </term> <description> 2026-03-15-preview. </description> </item> </list> </summary>
         public virtual Pageable<MachineLearningOnlineEndpointResource> GetAll(MachineLearningOnlineEndpointCollectionGetAllOptions options, CancellationToken cancellationToken = default)
             => GetAll(options?.Name, options?.Count, options?.ComputeType, options?.Skip, options?.Tags, options?.Properties, options?.OrderBy, cancellationToken);
     }

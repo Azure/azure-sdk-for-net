@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 HuntRelationList result = HuntRelationList.FromResponse(response);
-                yield return Page<SecurityInsightsHuntRelationData>.FromValues((IReadOnlyList<SecurityInsightsHuntRelationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityInsightsHuntRelationData>.FromValues((IReadOnlyList<SecurityInsightsHuntRelationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

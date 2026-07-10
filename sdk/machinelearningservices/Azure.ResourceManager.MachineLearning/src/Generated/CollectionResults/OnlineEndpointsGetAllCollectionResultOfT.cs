@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 OnlineEndpointTrackedResourceArmPaginatedResult result = OnlineEndpointTrackedResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<MachineLearningOnlineEndpointData>.FromValues((IReadOnlyList<MachineLearningOnlineEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MachineLearningOnlineEndpointData>.FromValues((IReadOnlyList<MachineLearningOnlineEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

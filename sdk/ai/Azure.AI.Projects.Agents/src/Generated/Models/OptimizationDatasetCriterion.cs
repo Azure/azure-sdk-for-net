@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Evaluation criterion: a name + instruction pair used for per-item scoring. </summary>
+    [Experimental("AAIP001")]
     public partial class OptimizationDatasetCriterion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

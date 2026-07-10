@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 AzureDevOpsRepositoryListResponse result = AzureDevOpsRepositoryListResponse.FromResponse(response);
-                yield return Page<AzureDevOpsRepositoryData>.FromValues((IReadOnlyList<AzureDevOpsRepositoryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AzureDevOpsRepositoryData>.FromValues((IReadOnlyList<AzureDevOpsRepositoryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

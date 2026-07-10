@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 SafeguardsAvailableVersionsList result = SafeguardsAvailableVersionsList.FromResponse(response);
-                yield return Page<ContainerServiceSafeguardsAvailableVersionData>.FromValues((IReadOnlyList<ContainerServiceSafeguardsAvailableVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerServiceSafeguardsAvailableVersionData>.FromValues((IReadOnlyList<ContainerServiceSafeguardsAvailableVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

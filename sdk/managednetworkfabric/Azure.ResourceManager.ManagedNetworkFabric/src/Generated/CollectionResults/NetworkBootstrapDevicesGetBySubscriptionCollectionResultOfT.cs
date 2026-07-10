@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     yield break;
                 }
                 NetworkBootstrapDeviceListResult result = NetworkBootstrapDeviceListResult.FromResponse(response);
-                yield return Page<NetworkBootstrapDeviceData>.FromValues((IReadOnlyList<NetworkBootstrapDeviceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkBootstrapDeviceData>.FromValues((IReadOnlyList<NetworkBootstrapDeviceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 ClusterJobListResult result = ClusterJobListResult.FromResponse(response);
-                yield return Page<ClusterJobData>.FromValues((IReadOnlyList<ClusterJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ClusterJobData>.FromValues((IReadOnlyList<ClusterJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

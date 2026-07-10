@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.HybridNetwork
                     yield break;
                 }
                 ArtifactManifestListResult result = ArtifactManifestListResult.FromResponse(response);
-                yield return Page<ArtifactManifestData>.FromValues((IReadOnlyList<ArtifactManifestData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ArtifactManifestData>.FromValues((IReadOnlyList<ArtifactManifestData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

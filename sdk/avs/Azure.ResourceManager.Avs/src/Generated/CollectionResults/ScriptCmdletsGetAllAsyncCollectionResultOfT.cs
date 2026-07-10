@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 ScriptCmdletsList result = ScriptCmdletsList.FromResponse(response);
-                yield return Page<ScriptCmdletData>.FromValues((IReadOnlyList<ScriptCmdletData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ScriptCmdletData>.FromValues((IReadOnlyList<ScriptCmdletData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

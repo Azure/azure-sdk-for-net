@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 ServerlessEndpointTrackedResourceArmPaginatedResult result = ServerlessEndpointTrackedResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<MachineLearningServerlessEndpointData>.FromValues((IReadOnlyList<MachineLearningServerlessEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MachineLearningServerlessEndpointData>.FromValues((IReadOnlyList<MachineLearningServerlessEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

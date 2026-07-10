@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 DataCollectionRuleResourceListResult result = DataCollectionRuleResourceListResult.FromResponse(response);
-                yield return Page<DataCollectionRuleData>.FromValues((IReadOnlyList<DataCollectionRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataCollectionRuleData>.FromValues((IReadOnlyList<DataCollectionRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
