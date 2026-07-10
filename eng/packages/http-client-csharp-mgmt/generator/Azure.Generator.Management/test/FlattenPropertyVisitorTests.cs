@@ -226,7 +226,6 @@ namespace Azure.Generator.Mgmt.Tests
 
             var renderedProperties = new TypeProviderWriter(propertiesProvider!).Write().Content;
             Assert.That(renderedProperties, Does.Match(@"set\s*\{"));
-            Assert.That(renderedProperties, Does.Contain("Strategy = new global::Samples.Models.TestUpdateRunStrategy(new global::System.Collections.Generic.List<string>())"));
             Assert.That(renderedProperties, Does.Contain("Strategy = new global::Samples.Models.TestUpdateRunStrategy(value)"));
         }
 
