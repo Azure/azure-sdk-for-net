@@ -24,7 +24,7 @@ namespace Azure.Provisioning.CostManagement
         /// <summary> Creates a new GenerateDetailedCostReportOperationResult. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public GenerateDetailedCostReportOperationResult(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CostManagement/operationResults", resourceVersion ?? "2025-03-01")
+        internal GenerateDetailedCostReportOperationResult(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CostManagement/operationResults", resourceVersion ?? "2025-03-01")
         {
         }
 
@@ -38,13 +38,18 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -77,7 +82,7 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets or sets the ValidTill. </summary>
+        /// <summary> Gets the ValidTill. </summary>
         public BicepValue<DateTimeOffset> ValidTill
         {
             get
@@ -86,7 +91,7 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets or sets the DownloadUri. </summary>
+        /// <summary> Gets the DownloadUri. </summary>
         public BicepValue<Uri> DownloadUri
         {
             get

@@ -114,7 +114,7 @@ namespace Azure.Generator.Tests.Visitors
 
             // find the subclient factory method
             var factoryMethod = clientProvider!.Methods
-                .FirstOrDefault(m =>m.Signature.Name == "GetSubClient");
+                .FirstOrDefault(m => m.Signature.Name == "GetSubClient");
             Assert.IsNotNull(factoryMethod);
 
             var updatedFactoryMethod = visitor.InvokeVisitMethod(factoryMethod!);
@@ -295,7 +295,7 @@ namespace Azure.Generator.Tests.Visitors
             }
         }
 
-        private class TestDistributedTracingVisitor : DistributedTracingVisitor
+        private class TestDistributedTracingVisitor : AzureDistributedTracingVisitor
         {
             public ClientProvider? InvokeVisit(InputClient client, ClientProvider? clientProvider)
             {
