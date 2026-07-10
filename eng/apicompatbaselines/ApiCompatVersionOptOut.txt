@@ -11,4 +11,3 @@
 # core team review.
 #
 # One project name per line. Lines starting with '#' are comments.
-Azure.ResourceManager.Compute.BulkActions

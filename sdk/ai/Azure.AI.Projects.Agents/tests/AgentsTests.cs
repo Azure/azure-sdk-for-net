@@ -956,6 +956,38 @@ public class AgentsTests : AgentsTestBase
         //Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
     }
 
+    [RecordedTest]
+    public async Task TestAgentDisable()
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
+        ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
+        {
+            await Delay();
+            session1 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
+        }
+        Assert.That(session1.Status, Is.EqualTo(AgentSessionStatus.Active));
+        await agentsClient.DisableAgentAsync(agentVersion.Name);
+        try
+        {
+            await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+            Assert.Fail("Stopped Agent was unexpectedly able to create session.");
+        }
+        catch (ClientResultException ex)
+        {
+            Assert.That(ex.Status, Is.EqualTo(403));
+        }
+        await agentsClient.EnableAgentAsync(agentVersion.Name);
+        ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
+        {
+            await Delay();
+            session2 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
+        }
+        Assert.That(session2.Status, Is.EqualTo(AgentSessionStatus.Active));
+    }
+
     #region Helpers
     public static async Task DeleteAllSessionsAsync(AgentAdministrationClient agentsClient, string agentName)
     {
