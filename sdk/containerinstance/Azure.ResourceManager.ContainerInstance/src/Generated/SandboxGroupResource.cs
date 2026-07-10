@@ -20,40 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary>
-    /// A class representing a ContainerGroupProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerGroupProfileResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerGroupProfiles method.
+    /// A class representing a SandboxGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SandboxGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSandboxGroups method.
     /// </summary>
-    public partial class ContainerGroupProfileResource : ArmResource
+    public partial class SandboxGroupResource : ArmResource
     {
-        private readonly ClientDiagnostics _cgProfileClientDiagnostics;
-        private readonly CGProfile _cgProfileRestClient;
-        private readonly ContainerGroupProfileData _data;
+        private readonly ClientDiagnostics _sandboxGroupsClientDiagnostics;
+        private readonly SandboxGroups _sandboxGroupsRestClient;
+        private readonly SandboxGroupData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerInstance/containerGroupProfiles";
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerInstance/sandboxGroups";
 
-        /// <summary> Initializes a new instance of ContainerGroupProfileResource for mocking. </summary>
-        protected ContainerGroupProfileResource()
+        /// <summary> Initializes a new instance of SandboxGroupResource for mocking. </summary>
+        protected SandboxGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SandboxGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ContainerGroupProfileResource(ArmClient client, ContainerGroupProfileData data) : this(client, data.Id)
+        internal SandboxGroupResource(ArmClient client, SandboxGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SandboxGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ContainerGroupProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SandboxGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string containerGroupProfileApiVersion);
-            _cgProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
-            _cgProfileRestClient = new CGProfile(_cgProfileClientDiagnostics, Pipeline, Endpoint, containerGroupProfileApiVersion ?? "2026-07-01");
+            TryGetApiVersion(ResourceType, out string sandboxGroupApiVersion);
+            _sandboxGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
+            _sandboxGroupsRestClient = new SandboxGroups(_sandboxGroupsClientDiagnostics, Pipeline, Endpoint, sandboxGroupApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerInstance
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ContainerGroupProfileData Data
+        public virtual SandboxGroupData Data
         {
             get
             {
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="containerGroupProfileName"> The containerGroupProfileName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerGroupProfileName)
+        /// <param name="sandboxGroupName"> The sandboxGroupName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sandboxGroupName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/sandboxGroups/{sandboxGroupName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get the properties of the specified container group profile.
+        /// Get a SandboxGroup
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/sandboxGroups/{sandboxGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerGroupProfiles_Get. </description>
+        /// <description> SandboxGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
+        /// <description> <see cref="SandboxGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ContainerGroupProfileResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Get");
+            using DiagnosticScope scope = _sandboxGroupsClientDiagnostics.CreateScope("SandboxGroupResource.Get");
             scope.Start();
             try
             {
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
+                Response<SandboxGroupData> response = Response.FromValue(SandboxGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SandboxGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,15 +142,15 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Get the properties of the specified container group profile.
+        /// Get a SandboxGroup
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/sandboxGroups/{sandboxGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerGroupProfiles_Get. </description>
+        /// <description> SandboxGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
+        /// <description> <see cref="SandboxGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ContainerGroupProfileResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SandboxGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Get");
+            using DiagnosticScope scope = _sandboxGroupsClientDiagnostics.CreateScope("SandboxGroupResource.Get");
             scope.Start();
             try
             {
@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
+                Response<SandboxGroupData> response = Response.FromValue(SandboxGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SandboxGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,15 +190,15 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Update a specified container group profile.
+        /// Update a SandboxGroup
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/sandboxGroups/{sandboxGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerGroupProfiles_Update. </description>
+        /// <description> SandboxGroups_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -206,18 +206,19 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
+        /// <description> <see cref="SandboxGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The container group profile properties that need to be updated. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ContainerGroupProfileResource>> UpdateAsync(ContainerGroupProfilePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SandboxGroupResource>> UpdateAsync(WaitUntil waitUntil, SandboxGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Update");
+            using DiagnosticScope scope = _sandboxGroupsClientDiagnostics.CreateScope("SandboxGroupResource.Update");
             scope.Start();
             try
             {
@@ -225,14 +226,20 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupProfilePatch.ToRequestContent(patch), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                if (response.Value == null)
+                HttpMessage message = _sandboxGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SandboxGroupPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerInstanceArmOperation<SandboxGroupResource> operation = new ContainerInstanceArmOperation<SandboxGroupResource>(
+                    new SandboxGroupResourceOperationSource(Client),
+                    _sandboxGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
-                return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                return operation;
             }
             catch (Exception e)
             {
@@ -242,15 +249,15 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Update a specified container group profile.
+        /// Update a SandboxGroup
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/sandboxGroups/{sandboxGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerGroupProfiles_Update. </description>
+        /// <description> SandboxGroups_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -258,18 +265,19 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
+        /// <description> <see cref="SandboxGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The container group profile properties that need to be updated. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ContainerGroupProfileResource> Update(ContainerGroupProfilePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SandboxGroupResource> Update(WaitUntil waitUntil, SandboxGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Update");
+            using DiagnosticScope scope = _sandboxGroupsClientDiagnostics.CreateScope("SandboxGroupResource.Update");
             scope.Start();
             try
             {
@@ -277,14 +285,20 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupProfilePatch.ToRequestContent(patch), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                if (response.Value == null)
+                HttpMessage message = _sandboxGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SandboxGroupPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerInstanceArmOperation<SandboxGroupResource> operation = new ContainerInstanceArmOperation<SandboxGroupResource>(
+                    new SandboxGroupResourceOperationSource(Client),
+                    _sandboxGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    operation.WaitForCompletion(cancellationToken);
                 }
-                return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                return operation;
             }
             catch (Exception e)
             {
@@ -294,15 +308,15 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Deletes a container group profile.
+        /// Delete a SandboxGroup
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/sandboxGroups/{sandboxGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerGroupProfiles_Delete. </description>
+        /// <description> SandboxGroups_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -310,7 +324,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
+        /// <description> <see cref="SandboxGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,7 +332,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Delete");
+            using DiagnosticScope scope = _sandboxGroupsClientDiagnostics.CreateScope("SandboxGroupResource.Delete");
             scope.Start();
             try
             {
@@ -326,11 +340,9 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _sandboxGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(response, rehydrationToken);
+                ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(_sandboxGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -345,15 +357,15 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
-        /// Deletes a container group profile.
+        /// Delete a SandboxGroup
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/sandboxGroups/{sandboxGroupName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerGroupProfiles_Delete. </description>
+        /// <description> SandboxGroups_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -361,7 +373,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ContainerGroupProfileResource"/>. </description>
+        /// <description> <see cref="SandboxGroupResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,7 +381,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.Delete");
+            using DiagnosticScope scope = _sandboxGroupsClientDiagnostics.CreateScope("SandboxGroupResource.Delete");
             scope.Start();
             try
             {
@@ -377,11 +389,9 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _sandboxGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(response, rehydrationToken);
+                ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(_sandboxGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -395,17 +405,113 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
+        /// <summary>
+        /// Get an access token and endpoint for connecting to the SandboxGroup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/sandboxGroups/{sandboxGroupName}/connect. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SandboxGroups_Connect. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SandboxGroupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SandboxGroupAccessToken>> ConnectAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _sandboxGroupsClientDiagnostics.CreateScope("SandboxGroupResource.Connect");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sandboxGroupsRestClient.CreateConnectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SandboxGroupAccessToken> response = Response.FromValue(SandboxGroupAccessToken.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get an access token and endpoint for connecting to the SandboxGroup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/sandboxGroups/{sandboxGroupName}/connect. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SandboxGroups_Connect. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SandboxGroupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SandboxGroupAccessToken> Connect(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _sandboxGroupsClientDiagnostics.CreateScope("SandboxGroupResource.Connect");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sandboxGroupsRestClient.CreateConnectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SandboxGroupAccessToken> response = Response.FromValue(SandboxGroupAccessToken.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<ContainerGroupProfileResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxGroupResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.AddTag");
+            using DiagnosticScope scope = _sandboxGroupsClientDiagnostics.CreateScope("SandboxGroupResource.AddTag");
             scope.Start();
             try
             {
@@ -418,21 +524,21 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                    Response<SandboxGroupData> response = Response.FromValue(SandboxGroupData.FromResponse(result), result);
+                    return Response.FromValue(new SandboxGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ContainerGroupProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
+                    SandboxGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SandboxGroupPatch patch = new SandboxGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ContainerGroupProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<SandboxGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -448,12 +554,12 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ContainerGroupProfileResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<SandboxGroupResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.AddTag");
+            using DiagnosticScope scope = _sandboxGroupsClientDiagnostics.CreateScope("SandboxGroupResource.AddTag");
             scope.Start();
             try
             {
@@ -466,21 +572,21 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                    Response<SandboxGroupData> response = Response.FromValue(SandboxGroupData.FromResponse(result), result);
+                    return Response.FromValue(new SandboxGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ContainerGroupProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
+                    SandboxGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SandboxGroupPatch patch = new SandboxGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ContainerGroupProfileResource> result = Update(patch, cancellationToken: cancellationToken);
+                    ArmOperation<SandboxGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -495,11 +601,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<ContainerGroupProfileResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.SetTags");
+            using DiagnosticScope scope = _sandboxGroupsClientDiagnostics.CreateScope("SandboxGroupResource.SetTags");
             scope.Start();
             try
             {
@@ -513,17 +619,17 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                    Response<SandboxGroupData> response = Response.FromValue(SandboxGroupData.FromResponse(result), result);
+                    return Response.FromValue(new SandboxGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ContainerGroupProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
+                    SandboxGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SandboxGroupPatch patch = new SandboxGroupPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ContainerGroupProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<SandboxGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -538,11 +644,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ContainerGroupProfileResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<SandboxGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.SetTags");
+            using DiagnosticScope scope = _sandboxGroupsClientDiagnostics.CreateScope("SandboxGroupResource.SetTags");
             scope.Start();
             try
             {
@@ -556,17 +662,17 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                    Response<SandboxGroupData> response = Response.FromValue(SandboxGroupData.FromResponse(result), result);
+                    return Response.FromValue(new SandboxGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ContainerGroupProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
+                    SandboxGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SandboxGroupPatch patch = new SandboxGroupPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ContainerGroupProfileResource> result = Update(patch, cancellationToken: cancellationToken);
+                    ArmOperation<SandboxGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -581,11 +687,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<ContainerGroupProfileResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxGroupResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.RemoveTag");
+            using DiagnosticScope scope = _sandboxGroupsClientDiagnostics.CreateScope("SandboxGroupResource.RemoveTag");
             scope.Start();
             try
             {
@@ -598,21 +704,21 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                    Response<SandboxGroupData> response = Response.FromValue(SandboxGroupData.FromResponse(result), result);
+                    return Response.FromValue(new SandboxGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ContainerGroupProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
+                    SandboxGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SandboxGroupPatch patch = new SandboxGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ContainerGroupProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<SandboxGroupResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -627,11 +733,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ContainerGroupProfileResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<SandboxGroupResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileResource.RemoveTag");
+            using DiagnosticScope scope = _sandboxGroupsClientDiagnostics.CreateScope("SandboxGroupResource.RemoveTag");
             scope.Start();
             try
             {
@@ -644,21 +750,21 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
-                    return Response.FromValue(new ContainerGroupProfileResource(Client, response.Value), response.GetRawResponse());
+                    Response<SandboxGroupData> response = Response.FromValue(SandboxGroupData.FromResponse(result), result);
+                    return Response.FromValue(new SandboxGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ContainerGroupProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch();
+                    SandboxGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SandboxGroupPatch patch = new SandboxGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ContainerGroupProfileResource> result = Update(patch, cancellationToken: cancellationToken);
+                    ArmOperation<SandboxGroupResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -667,39 +773,6 @@ namespace Azure.ResourceManager.ContainerInstance
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of ContainerGroupProfileRevisions in the <see cref="ContainerGroupProfileResource"/>. </summary>
-        /// <returns> An object representing collection of ContainerGroupProfileRevisions and their operations over a ContainerGroupProfileRevisionResource. </returns>
-        public virtual ContainerGroupProfileRevisionCollection GetContainerGroupProfileRevisions()
-        {
-            return GetCachedClient(client => new ContainerGroupProfileRevisionCollection(client, Id));
-        }
-
-        /// <summary> Gets the properties of the specified revision of the container group profile in the given subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc. </summary>
-        /// <param name="revisionNumber"> The revision number of the container group profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="revisionNumber"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerGroupProfileRevisionResource>> GetContainerGroupProfileRevisionAsync(string revisionNumber, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(revisionNumber, nameof(revisionNumber));
-
-            return await GetContainerGroupProfileRevisions().GetAsync(revisionNumber, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the properties of the specified revision of the container group profile in the given subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc. </summary>
-        /// <param name="revisionNumber"> The revision number of the container group profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="revisionNumber"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ContainerGroupProfileRevisionResource> GetContainerGroupProfileRevision(string revisionNumber, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(revisionNumber, nameof(revisionNumber));
-
-            return GetContainerGroupProfileRevisions().Get(revisionNumber, cancellationToken);
         }
     }
 }
