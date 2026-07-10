@@ -176,6 +176,7 @@ internal sealed class ResponseEndpointHandler
                 : SessionIdDerivation.Derive(
                     conversationId,
                     request.PreviousResponseId,
+                    responseId,
                     request.AgentReference);
         }
 
@@ -215,7 +216,8 @@ internal sealed class ResponseEndpointHandler
             rawBody,
             clientHeaders,
             queryParameters,
-            platformContext);
+            platformContext,
+            conversationId);
         execution.Context = context;
 
         // Eager history validation: if previous_response_id or conversation.id is present,

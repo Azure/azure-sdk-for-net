@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 DataWarehouseUserActivitiesListResult result = DataWarehouseUserActivitiesListResult.FromResponse(response);
-                yield return Page<DataWarehouseUserActivityData>.FromValues((IReadOnlyList<DataWarehouseUserActivityData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataWarehouseUserActivityData>.FromValues((IReadOnlyList<DataWarehouseUserActivityData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

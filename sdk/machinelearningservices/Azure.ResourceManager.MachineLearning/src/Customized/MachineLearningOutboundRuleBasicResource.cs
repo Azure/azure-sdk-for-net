@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.MachineLearning
     public partial class MachineLearningOutboundRuleBasicResource
     {
         // Customized: preserve legacy outbound rule resource ID shape.
+        /// <summary> Generate the resource identifier for this resource. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/outboundRules/{ruleName}";

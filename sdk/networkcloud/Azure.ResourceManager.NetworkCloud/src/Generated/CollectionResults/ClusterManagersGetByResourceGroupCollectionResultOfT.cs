@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.NetworkCloud
                     yield break;
                 }
                 ClusterManagerList result = ClusterManagerList.FromResponse(response);
-                yield return Page<NetworkCloudClusterManagerData>.FromValues((IReadOnlyList<NetworkCloudClusterManagerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkCloudClusterManagerData>.FromValues((IReadOnlyList<NetworkCloudClusterManagerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

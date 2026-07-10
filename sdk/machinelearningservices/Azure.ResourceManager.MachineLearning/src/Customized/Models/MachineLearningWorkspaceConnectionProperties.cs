@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Value details of the workspace connection. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Value { get; set; }
-        /// <summary> format for the workspace connection value. </summary>
+        /// <summary> The format of the workspace connection value. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MachineLearningValueFormat? ValueFormat { get; set; }
     }

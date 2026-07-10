@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 WorkflowEnvelopeCollection result = WorkflowEnvelopeCollection.FromResponse(response);
-                yield return Page<WorkflowEnvelopeData>.FromValues((IReadOnlyList<WorkflowEnvelopeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WorkflowEnvelopeData>.FromValues((IReadOnlyList<WorkflowEnvelopeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

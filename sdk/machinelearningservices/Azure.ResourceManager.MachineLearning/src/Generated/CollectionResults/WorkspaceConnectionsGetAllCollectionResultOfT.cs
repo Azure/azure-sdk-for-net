@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult result = WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<MachineLearningWorkspaceConnectionData>.FromValues((IReadOnlyList<MachineLearningWorkspaceConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MachineLearningWorkspaceConnectionData>.FromValues((IReadOnlyList<MachineLearningWorkspaceConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

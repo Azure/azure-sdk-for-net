@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 SyncMemberListResult result = SyncMemberListResult.FromResponse(response);
-                yield return Page<SyncMemberData>.FromValues((IReadOnlyList<SyncMemberData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SyncMemberData>.FromValues((IReadOnlyList<SyncMemberData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
