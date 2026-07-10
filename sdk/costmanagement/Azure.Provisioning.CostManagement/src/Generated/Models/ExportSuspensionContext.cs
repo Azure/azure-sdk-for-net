@@ -23,7 +23,7 @@ namespace Azure.Provisioning.CostManagement
         {
         }
 
-        /// <summary> Gets or sets the SuspensionCode. </summary>
+        /// <summary> Gets the SuspensionCode. </summary>
         public BicepValue<string> SuspensionCode
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _suspensionCode;
             }
-            set
-            {
-                Initialize();
-                _suspensionCode.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the SuspensionReason. </summary>
+        /// <summary> Gets the SuspensionReason. </summary>
         public BicepValue<string> SuspensionReason
         {
             get
@@ -46,25 +41,15 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _suspensionReason;
             }
-            set
-            {
-                Initialize();
-                _suspensionReason.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the SuspensionOn. </summary>
+        /// <summary> Gets the SuspensionOn. </summary>
         public BicepValue<DateTimeOffset> SuspensionOn
         {
             get
             {
                 Initialize();
                 return _suspensionOn;
-            }
-            set
-            {
-                Initialize();
-                _suspensionOn.Assign(value);
             }
         }
 

@@ -803,6 +803,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new EventGridDomainResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="SolutionsApplicationDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SolutionsApplicationDefinitionResource"/> object. </returns>
+        public virtual SolutionsApplicationDefinitionResource GetSolutionsApplicationDefinitionResource(ResourceIdentifier id)
+        {
+            SolutionsApplicationDefinitionResource.ValidateResourceId(id);
+            return new SolutionsApplicationDefinitionResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BarResource"/> object. </returns>

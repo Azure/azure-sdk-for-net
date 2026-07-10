@@ -1,0 +1,48 @@
+# Globs the eval files into a fan-out matrix (output var detect.matrix). Runs in Prepare
+# alongside BuildMcp; the Eval stage's RunShard job reads it cross-stage.
+
+parameters:
+  - name: vallyRoot
+    type: string
+  - name: evalGlobs
+    type: object
+    default: []
+
+jobs:
+  # Job/step/output names are fixed: the Eval stage reads the matrix cross-stage at
+  # stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix'].
+  - job: generate_eval_matrix
+    displayName: 'Glob eval files -> matrix'
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+    steps:
+      - checkout: self
+        fetchDepth: 1
+
+      - task: UseNode@1
+        displayName: 'Use Node.js 22.x'
+        inputs:
+          version: 22.x
+
+      # set -f stops the shell expanding the glob `*` before patterns reach the script.
+      - script: |
+          patterns=()
+          if [ -n "$EVAL_PATTERNS" ]; then
+            set -f
+            for p in $EVAL_PATTERNS; do
+              patterns+=(--pattern "$p")
+            done
+            set +f
+          fi
+          base="$(Build.SourcesDirectory)/${{ parameters.vallyRoot }}"
+          node "$(Build.SourcesDirectory)/eng/common/scripts/eval/collect-stimuli.js" \
+            --eval-root "$base" \
+            --path-base "$base" \
+            "${patterns[@]}" \
+            --output-variable matrix
+        name: detect
+        displayName: 'Build fan-out matrix'
+        env:
+          EVAL_PATTERNS: ${{ join(' ', parameters.evalGlobs) }}
