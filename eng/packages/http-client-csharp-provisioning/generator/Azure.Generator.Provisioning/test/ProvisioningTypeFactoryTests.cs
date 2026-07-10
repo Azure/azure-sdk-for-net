@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Provisioning.Tests.TestHelpers;
+using Azure.Generator.Management.Models;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
@@ -16,11 +17,25 @@ namespace Azure.Generator.Provisioning.Tests
     public class ProvisioningTypeFactoryTests
     {
         private ProvisioningTypeFactory _factory = null!;
+        private InputModelType _regularModel = null!;
 
         [SetUp]
         public void SetUp()
         {
-            _factory = ProvisioningMockHelpers.LoadMockPlugin().Object.TypeFactory;
+            _regularModel = CreateRegularModel();
+            var resourceModel = CreateWritableResourceModel(_regularModel);
+            var metadata = CreateMetadata(
+                resourceModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                [CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)]);
+            _factory = ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [resourceModel, _regularModel],
+                clients: () => metadata.Methods.Select(m => m.InputClient).Distinct().ToArray(),
+                armProviderSchema: () => new ArmProviderSchema([metadata], []))
+                .Object.TypeFactory;
         }
 
         [TestCaseSource(nameof(PrimitiveTypeCases))]
@@ -177,7 +192,7 @@ namespace Azure.Generator.Provisioning.Tests
         [Test]
         public void RegularModelTypeIsNotWrappedInBicepValue()
         {
-            var input = CreateRegularModel();
+            var input = _regularModel;
 
             var type = _factory.CreateCSharpType(input);
 
@@ -216,7 +231,7 @@ namespace Azure.Generator.Provisioning.Tests
         [Test]
         public void ArrayOfRegularModelTypeIsConvertedToBicepListOfModel()
         {
-            var input = new InputArrayType("list", "list", CreateRegularModel());
+            var input = new InputArrayType("list", "list", _regularModel);
 
             var type = _factory.CreateCSharpType(input);
 
@@ -231,7 +246,7 @@ namespace Azure.Generator.Provisioning.Tests
         [Test]
         public void DictionaryOfRegularModelTypeIsConvertedToBicepDictionaryOfModel()
         {
-            var input = new InputDictionaryType("dictionary", InputPrimitiveType.String, CreateRegularModel());
+            var input = new InputDictionaryType("dictionary", InputPrimitiveType.String, _regularModel);
 
             var type = _factory.CreateCSharpType(input);
 
@@ -249,7 +264,7 @@ namespace Azure.Generator.Provisioning.Tests
             var input = new InputArrayType(
                 "list",
                 "list",
-                new InputDictionaryType("dictionary", InputPrimitiveType.String, CreateRegularModel()));
+                new InputDictionaryType("dictionary", InputPrimitiveType.String, _regularModel));
 
             var type = _factory.CreateCSharpType(input);
 
@@ -322,6 +337,119 @@ namespace Azure.Generator.Provisioning.Tests
                 false,
                 new InputSerializationOptions(),
                 false);
+
+        private static InputModelType CreateWritableResourceModel(InputModelType model)
+            => new(
+                "TestResource",
+                "Sample.Models",
+                "Sample.Models.TestResource",
+                "public",
+                null,
+                string.Empty,
+                "Test resource.",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+                [CreateProperty("Details", model)],
+                null,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+
+        private static InputModelProperty CreateProperty(string name, InputType type)
+            => new(
+                name: name,
+                summary: null,
+                doc: $"Description for {name}",
+                type: type,
+                isRequired: false,
+                isReadOnly: false,
+                isApiVersion: false,
+                defaultValue: null,
+                isHttpMetadata: false,
+                access: null,
+                isDiscriminator: false,
+                serializedName: name,
+                serializationOptions: new(json: new(name)));
+
+        private static ArmResourceMetadata CreateMetadata(
+            InputModelType model,
+            string resourceIdPattern,
+            string resourceType,
+            ResourceScope scope,
+            IReadOnlyList<string> apiVersions,
+            IReadOnlyList<ResourceMethod> methods)
+        {
+            var path = new RequestPathPattern(resourceIdPattern);
+            return new ArmResourceMetadata(
+                path,
+                model.Name,
+                resourceType,
+                model,
+                new ArmScopeInfo(scope, RequestPathPattern.GetFromScope(scope, path), null),
+                methods,
+                null,
+                null,
+                [],
+                new ArmResourceNameConstraints(null, null, null),
+                apiVersions,
+                []);
+        }
+
+        private static ResourceMethod CreateMethod(ResourceOperationKind kind, ResourceScope scope)
+        {
+            var path = RequestPathPattern.GetFromScope(scope, new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}"));
+            var methodName = $"{kind}Widget";
+            var operation = new InputOperation(
+                methodName,
+                null,
+                string.Empty,
+                $"{methodName} description",
+                null,
+                "public",
+                [],
+                [new InputOperationResponse([200], null, [], false, ["application/json"])],
+                kind == ResourceOperationKind.Read ? "GET" : "PUT",
+                string.Empty,
+                path.SerializedPath,
+                null,
+                null,
+                false,
+                true,
+                true,
+                $"Sample.{methodName}",
+                "Sample");
+            var method = new InputBasicServiceMethod(
+                methodName,
+                "public",
+                [],
+                null,
+                null,
+                operation,
+                [],
+                new InputServiceMethodResponse(null, null),
+                null,
+                false,
+                true,
+                true,
+                operation.CrossLanguageDefinitionId);
+            var client = new InputClient(
+                "Widgets",
+                "Sample",
+                "Sample.Widgets",
+                string.Empty,
+                "Widgets description",
+                isMultiServiceClient: false,
+                [method],
+                [],
+                null,
+                [],
+                ["2024-01-01"]);
+            return new ResourceMethod(kind, method, path, new ArmScopeInfo(scope, path, null), client);
+        }
 
         private static IEnumerable<TestCaseData> PrimitiveTypeCases()
         {

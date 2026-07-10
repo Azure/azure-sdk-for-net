@@ -289,7 +289,7 @@ namespace Azure.Provisioning.ContainerInstance
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.InitContainerDefinitionContent> InitContainers { get { throw null; } }
         public Azure.Provisioning.ContainerInstance.ContainerGroupIPAddress IPAddress { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerInstanceOperatingSystemType> OSType { get { throw null; } }
         public Azure.Provisioning.ContainerInstance.ContainerGroupProfile Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerGroupPriority> Priority { get { throw null; } }

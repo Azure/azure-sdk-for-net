@@ -389,7 +389,7 @@ namespace Azure.Provisioning.MySql
     {
         internal MySqlFlexibleServersCapability() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.MySql.MySqlFlexibleServerFeatureProperty> SupportedFeatures { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.MySql.ServerEditionCapabilityV2> SupportedFlexibleServerEditions { get { throw null; } }
         public Azure.Provisioning.BicepList<string> SupportedGeoBackupRegions { get { throw null; } }
