@@ -30,8 +30,12 @@ Out of scope (Wave 1) - these require external/manual resources and are expected
 to be supplied out-of-band via the pipeline variable group or a local .env; the
 tests that need them read them as optional variables and skip when absent:
   - Grounding/search connections: BING_CONNECTION_(NAME|ID),
-    CUSTOM_BING_CONNECTION_(NAME|ID), BING_CUSTOM_SEARCH_INSTANCE_NAME,
+    BING_CUSTOM_SEARCH_INSTANCE_NAME,
     AI_SEARCH_CONNECTION_NAME / AI_SEARCH_INDEX_NAME.
+    (CUSTOM_BING_CONNECTION_NAME is now provisioned by the ARM template in
+    test-resources.json via a Microsoft.Bing/accounts 'Bing.GroundingCustomSearch'
+    resource and a Foundry ApiKey connection; the paired
+    BING_CUSTOM_SEARCH_INSTANCE_NAME configuration instance is still out-of-band.)
   - Data connections: FABRIC_CONNECTION_ID, FABRIC_IQ_CONNECTION_ID,
     SHAREPOINT_CONNECTION_ID, WORKIQ_CONNECTION_ID, PLAYWRIGHT_CONNECTION_ID,
     MCP_PROJECT_CONNECTION_NAME, OPENAPI_PROJECT_CONNECTION_(NAME|ID),
@@ -74,6 +78,12 @@ $AgentApiVersion = 'v1'
 # Fixed, stable name so repeated deployments reuse the same logical agent.
 $AgentName = 'sdk-test-agent'
 
+# Accumulates every variable set via Set-BootstrapVariable so that, on the local
+# Azure SDK for .NET flow, they can be merged back into the DPAPI-encrypted
+# test-resources.json.env file that New-TestResources.ps1 wrote *before* invoking
+# this post-script (see Update-EnvFileWithBootstrapVariables below).
+$script:BootstrapVariables = [ordered]@{}
+
 function Get-DeploymentOutput {
     param([string] $Name)
     if ($null -eq $DeploymentOutputs) { return $null }
@@ -94,6 +104,9 @@ function Set-BootstrapVariable {
         [bool] $IsSecret = $false
     )
     if ([string]::IsNullOrEmpty($Value)) { return }
+
+    # Record for the local .env merge performed at the end of the script.
+    $script:BootstrapVariables[$Name] = $Value
 
     # Make the value available to any subsequent step in this process/session.
     Set-Item -Path "env:$Name" -Value $Value
@@ -213,5 +226,46 @@ else {
         Write-Warning "Failed to create bootstrap agent: $($_.Exception.Message)"
     }
 }
+
+function Update-EnvFileWithBootstrapVariables {
+    # On the local Azure SDK for .NET flow, New-TestResources.ps1 writes the
+    # DPAPI-encrypted test-resources.json.env *before* invoking this post-script
+    # (SetDeploymentOutputs in eng/common/TestResources), so the data-plane objects
+    # created here are absent from that file. A later 'dotnet test' process reads
+    # settings from the encrypted .env, not from this session's environment, so
+    # merge our variables back in. Under CI the .env file is not written (variables
+    # flow via ##vso[task.setvariable]) and this is a no-op.
+    if (-not $IsWindows) { return }
+    if ($script:BootstrapVariables.Count -eq 0) { return }
+
+    $envFile = Join-Path $PSScriptRoot 'test-resources.json.env'
+    if (-not (Test-Path $envFile)) {
+        Write-Host "No encrypted env file at '$envFile'; skipping .env merge (bootstrap variables were set in-process and, under CI, as pipeline variables)."
+        return
+    }
+
+    try {
+        $protectedBytes = [System.IO.File]::ReadAllBytes($envFile)
+        $bytes = [Security.Cryptography.ProtectedData]::Unprotect($protectedBytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
+        $existing = [System.Text.Encoding]::UTF8.GetString($bytes) | ConvertFrom-Json -AsHashtable
+        if ($null -eq $existing) { $existing = @{} }
+
+        foreach ($entry in $script:BootstrapVariables.GetEnumerator()) {
+            $existing[$entry.Key] = $entry.Value
+        }
+
+        $updatedJson = $existing | ConvertTo-Json
+        $updatedBytes = [System.Text.Encoding]::UTF8.GetBytes($updatedJson)
+        $updatedProtected = [Security.Cryptography.ProtectedData]::Protect($updatedBytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
+        [System.IO.File]::WriteAllBytes($envFile, $updatedProtected)
+
+        Write-Host "Merged $($script:BootstrapVariables.Count) bootstrap variable(s) into encrypted '$envFile'."
+    }
+    catch {
+        Write-Warning "Failed to merge bootstrap variables into '$envFile': $($_.Exception.Message)"
+    }
+}
+
+Update-EnvFileWithBootstrapVariables
 
 Write-Host "Foundry data-plane bootstrap complete."

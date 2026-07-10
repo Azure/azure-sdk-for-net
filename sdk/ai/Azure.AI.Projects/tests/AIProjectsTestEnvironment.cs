@@ -13,11 +13,6 @@ namespace Azure.AI.Projects.Tests
 {
     public class AIProjectsTestEnvironment : TestEnvironment
     {
-        public AIProjectsTestEnvironment()
-        {
-            PathToTestResourceBootstrappingScript = AiTestEnvironmentBootstrap.BootstrappingScriptPath;
-        }
-
         public string FOUNDRY_PROJECT_ENDPOINT => GetRecordedVariable(nameof(FOUNDRY_PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
         public string DATASETNAME => GetRecordedVariable("DATASET_NAME");
         public string DATASETVERSION1 => GetRecordedVariable("DATASET_VERSION_1");
@@ -73,11 +68,34 @@ namespace Azure.AI.Projects.Tests
         public string STORAGE_QUEUE_URI => GetRecordedVariable(nameof(STORAGE_QUEUE_URI));
         public string WORKIQ_CONNECTION_ID => GetRecordedVariable(nameof(WORKIQ_CONNECTION_ID));
         public string HOSTED_AGENT_NAME => GetRecordedVariable(nameof(HOSTED_AGENT_NAME));
-        public override Dictionary<string, string> ParseEnvironmentFile() =>
-            AiTestEnvironmentBootstrap.ReadEnvironmentFile(new Dictionary<string, string>
+        public override Dictionary<string, string> ParseEnvironmentFile()
+        {
+            var values = AiTestEnvironmentBootstrap.ReadEnvironmentFile(
+                new Dictionary<string, string>
+                {
+                    { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }
+                },
+                out bool environmentFileFound);
+
+            ConfigureBootstrapping(environmentFileFound);
+            return values;
+        }
+
+        private void ConfigureBootstrapping(bool environmentFileFound)
+        {
+            if (environmentFileFound)
             {
-                { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }
-            });
+                // A test environment is already provisioned. The AI Foundry suites need far more
+                // settings than the deployment template/scripts pre-create, so don't launch resource
+                // creation for a missing setting; let the test fail with a clear "missing environment
+                // variable" error instead.
+                AiTestEnvironmentBootstrap.DisableResourceBootstrapping();
+            }
+            else
+            {
+                PathToTestResourceBootstrappingScript = AiTestEnvironmentBootstrap.BootstrappingScriptPath;
+            }
+        }
 
         public override Task WaitForEnvironmentAsync()
         {

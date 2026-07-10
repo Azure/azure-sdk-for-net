@@ -253,7 +253,9 @@
         "aiServicesName": "[concat(parameters('baseName'), '-ai')]",
         "defaultVNetName": "[concat(parameters('baseName'), '-vnet')]",
         "defaultSubnetName": "default",
-        "defaultAddressPrefix": "10.0.0.0/16"
+        "defaultAddressPrefix": "10.0.0.0/16",
+        "bingCustomSearchName": "[concat(parameters('baseName'), '-bingcustom')]",
+        "bingCustomSearchConnectionName": "[concat(variables('aiServicesName'), '-bingcustomsearchconnection')]"
     },
     "resources": [
         {
@@ -432,6 +434,40 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('aiServicesName'), parameters('imageModelName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Bing/accounts",
+            "apiVersion": "2020-06-10",
+            "name": "[variables('bingCustomSearchName')]",
+            "location": "global",
+            "sku": {
+                "name": "G2"
+            },
+            "kind": "Bing.GroundingCustomSearch",
+            "tags": "[if(contains(parameters('tagValues'), 'Microsoft.Bing/accounts'), parameters('tagValues')['Microsoft.Bing/accounts'], json('{}'))]"
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts/connections",
+            "apiVersion": "2025-04-01-preview",
+            "name": "[concat(variables('aiServicesName'), '/', variables('bingCustomSearchConnectionName'))]",
+            "properties": {
+                "category": "ApiKey",
+                "target": "https://api.bing.microsoft.com/",
+                "authType": "ApiKey",
+                "credentials": {
+                    "key": "[listKeys(resourceId('Microsoft.Bing/accounts', variables('bingCustomSearchName')), '2020-06-10').key1]"
+                },
+                "isSharedToAll": true,
+                "metadata": {
+                    "ApiType": "Azure",
+                    "Location": "global",
+                    "ResourceId": "[resourceId('Microsoft.Bing/accounts', variables('bingCustomSearchName'))]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName'))]",
+                "[resourceId('Microsoft.Bing/accounts', variables('bingCustomSearchName'))]"
             ]
         },
         {
@@ -772,6 +808,10 @@
         "MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME": {
             "type": "string",
             "value": "[parameters('embeddingModelName')]"
+        },
+        "CUSTOM_BING_CONNECTION_NAME": {
+            "type": "string",
+            "value": "[variables('bingCustomSearchConnectionName')]"
         }
     }
 }
