@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Databricks.Models
             {
                 return null;
             }
-            CustomParameterType? @type = default;
-            Encryption value = default;
+            DatabricksCustomParameterType? @type = default;
+            DatabricksEncryption value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    @type = new CustomParameterType(prop.Value.GetString());
+                    @type = new DatabricksCustomParameterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    value = Encryption.DeserializeEncryption(prop.Value, options);
+                    value = DatabricksEncryption.DeserializeDatabricksEncryption(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Databricks.Models;
 
 namespace Azure.ResourceManager.Databricks
 {
-    internal partial class VNetPeeringGetByWorkspaceAsyncCollectionResultOfT : AsyncPageable<VirtualNetworkPeeringData>
+    internal partial class VNetPeeringGetByWorkspaceAsyncCollectionResultOfT : AsyncPageable<DatabricksVirtualNetworkPeeringData>
     {
         private readonly VNetPeering _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Databricks
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of VNetPeeringGetByWorkspaceAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<VirtualNetworkPeeringData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<DatabricksVirtualNetworkPeeringData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Databricks
                 }
                 VirtualNetworkPeeringList result = VirtualNetworkPeeringList.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<VirtualNetworkPeeringData>.FromValues((IReadOnlyList<VirtualNetworkPeeringData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DatabricksVirtualNetworkPeeringData>.FromValues((IReadOnlyList<DatabricksVirtualNetworkPeeringData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

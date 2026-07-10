@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <summary> Initializes a new instance of <see cref="WorkspacePropertiesEncryption"/>. </summary>
         /// <param name="entities"> Encryption entities definition for the workspace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entities"/> is null. </exception>
-        public WorkspacePropertiesEncryption(EncryptionEntities entities)
+        public WorkspacePropertiesEncryption(DatabricksEncryptionEntities entities)
         {
             Argument.AssertNotNull(entities, nameof(entities));
 
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <summary> Initializes a new instance of <see cref="WorkspacePropertiesEncryption"/>. </summary>
         /// <param name="entities"> Encryption entities definition for the workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspacePropertiesEncryption(EncryptionEntities entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspacePropertiesEncryption(DatabricksEncryptionEntities entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Entities = entities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Encryption entities definition for the workspace. </summary>
-        public EncryptionEntities Entities { get; set; }
+        public DatabricksEncryptionEntities Entities { get; set; }
     }
 }

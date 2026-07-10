@@ -56,39 +56,39 @@ namespace Azure.ResourceManager.Databricks
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DatabricksPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDatabricksArmClient.GetPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDatabricksArmClient.GetDatabricksPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabricksPrivateEndpointConnectionResource"/> object. </returns>
+        public static DatabricksPrivateEndpointConnectionResource GetDatabricksPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDatabricksArmClient(client).GetPrivateEndpointConnectionResource(id);
+            return GetMockableDatabricksArmClient(client).GetDatabricksPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AccessConnectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DatabricksAccessConnectorResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDatabricksArmClient.GetAccessConnectorResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDatabricksArmClient.GetDatabricksAccessConnectorResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AccessConnectorResource"/> object. </returns>
-        public static AccessConnectorResource GetAccessConnectorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabricksAccessConnectorResource"/> object. </returns>
+        public static DatabricksAccessConnectorResource GetDatabricksAccessConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDatabricksArmClient(client).GetAccessConnectorResource(id);
+            return GetMockableDatabricksArmClient(client).GetDatabricksAccessConnectorResource(id);
         }
 
         /// <summary>
@@ -110,21 +110,21 @@ namespace Azure.ResourceManager.Databricks
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualNetworkPeeringResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DatabricksVirtualNetworkPeeringResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDatabricksArmClient.GetVirtualNetworkPeeringResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDatabricksArmClient.GetDatabricksVirtualNetworkPeeringResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VirtualNetworkPeeringResource"/> object. </returns>
-        public static VirtualNetworkPeeringResource GetVirtualNetworkPeeringResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabricksVirtualNetworkPeeringResource"/> object. </returns>
+        public static DatabricksVirtualNetworkPeeringResource GetDatabricksVirtualNetworkPeeringResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDatabricksArmClient(client).GetVirtualNetworkPeeringResource(id);
+            return GetMockableDatabricksArmClient(client).GetDatabricksVirtualNetworkPeeringResource(id);
         }
 
         /// <summary>
@@ -183,27 +183,27 @@ namespace Azure.ResourceManager.Databricks
         }
 
         /// <summary>
-        /// Gets a collection of AccessConnectors in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of DatabricksAccessConnectors in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDatabricksResourceGroupResource.GetAccessConnectors()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDatabricksResourceGroupResource.GetDatabricksAccessConnectors()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of AccessConnectors and their operations over a AccessConnectorResource. </returns>
-        public static AccessConnectorCollection GetAccessConnectors(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DatabricksAccessConnectors and their operations over a DatabricksAccessConnectorResource. </returns>
+        public static DatabricksAccessConnectorCollection GetDatabricksAccessConnectors(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDatabricksResourceGroupResource(resourceGroupResource).GetAccessConnectors();
+            return GetMockableDatabricksResourceGroupResource(resourceGroupResource).GetDatabricksAccessConnectors();
         }
 
         /// <summary>
         /// Gets an Azure Databricks Access Connector.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDatabricksResourceGroupResource.GetAccessConnectorAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDatabricksResourceGroupResource.GetDatabricksAccessConnectorAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -211,18 +211,18 @@ namespace Azure.ResourceManager.Databricks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AccessConnectorResource>> GetAccessConnectorAsync(this ResourceGroupResource resourceGroupResource, string connectorName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatabricksAccessConnectorResource>> GetDatabricksAccessConnectorAsync(this ResourceGroupResource resourceGroupResource, string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDatabricksResourceGroupResource(resourceGroupResource).GetAccessConnectorAsync(connectorName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDatabricksResourceGroupResource(resourceGroupResource).GetDatabricksAccessConnectorAsync(connectorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an Azure Databricks Access Connector.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDatabricksResourceGroupResource.GetAccessConnector(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDatabricksResourceGroupResource.GetDatabricksAccessConnector(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -230,11 +230,11 @@ namespace Azure.ResourceManager.Databricks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AccessConnectorResource> GetAccessConnector(this ResourceGroupResource resourceGroupResource, string connectorName, CancellationToken cancellationToken = default)
+        public static Response<DatabricksAccessConnectorResource> GetDatabricksAccessConnector(this ResourceGroupResource resourceGroupResource, string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDatabricksResourceGroupResource(resourceGroupResource).GetAccessConnector(connectorName, cancellationToken);
+            return GetMockableDatabricksResourceGroupResource(resourceGroupResource).GetDatabricksAccessConnector(connectorName, cancellationToken);
         }
 
         /// <summary>
@@ -277,36 +277,36 @@ namespace Azure.ResourceManager.Databricks
         /// Gets all the Azure Databricks Access Connectors within a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDatabricksSubscriptionResource.GetAccessConnectorsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDatabricksSubscriptionResource.GetDatabricksAccessConnectorsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AccessConnectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AccessConnectorResource> GetAccessConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabricksAccessConnectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DatabricksAccessConnectorResource> GetDatabricksAccessConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDatabricksSubscriptionResource(subscriptionResource).GetAccessConnectorsAsync(cancellationToken);
+            return GetMockableDatabricksSubscriptionResource(subscriptionResource).GetDatabricksAccessConnectorsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets all the Azure Databricks Access Connectors within a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDatabricksSubscriptionResource.GetAccessConnectors(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDatabricksSubscriptionResource.GetDatabricksAccessConnectors(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AccessConnectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AccessConnectorResource> GetAccessConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabricksAccessConnectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DatabricksAccessConnectorResource> GetDatabricksAccessConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDatabricksSubscriptionResource(subscriptionResource).GetAccessConnectors(cancellationToken);
+            return GetMockableDatabricksSubscriptionResource(subscriptionResource).GetDatabricksAccessConnectors(cancellationToken);
         }
     }
 }

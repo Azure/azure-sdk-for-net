@@ -433,8 +433,8 @@ namespace Azure.ResourceManager.Databricks
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabricksOutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatabricksOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -471,8 +471,8 @@ namespace Azure.ResourceManager.Databricks
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabricksOutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatabricksOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -761,11 +761,11 @@ namespace Azure.ResourceManager.Databricks
             }
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnections in the <see cref="DatabricksWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        /// <summary> Gets a collection of DatabricksPrivateEndpointConnections in the <see cref="DatabricksWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of DatabricksPrivateEndpointConnections and their operations over a DatabricksPrivateEndpointConnectionResource. </returns>
+        public virtual DatabricksPrivateEndpointConnectionCollection GetDatabricksPrivateEndpointConnections()
         {
-            return GetCachedClient(client => new PrivateEndpointConnectionCollection(client, Id));
+            return GetCachedClient(client => new DatabricksPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Get a private endpoint connection properties for a workspace. </summary>
@@ -774,11 +774,11 @@ namespace Azure.ResourceManager.Databricks
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabricksPrivateEndpointConnectionResource>> GetDatabricksPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetDatabricksPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a private endpoint connection properties for a workspace. </summary>
@@ -787,11 +787,11 @@ namespace Azure.ResourceManager.Databricks
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<DatabricksPrivateEndpointConnectionResource> GetDatabricksPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetDatabricksPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DatabricksPrivateLinkResources in the <see cref="DatabricksWorkspaceResource"/>. </summary>
@@ -827,11 +827,11 @@ namespace Azure.ResourceManager.Databricks
             return GetDatabricksPrivateLinkResources().Get(groupId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworkPeerings in the <see cref="DatabricksWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of VirtualNetworkPeerings and their operations over a VirtualNetworkPeeringResource. </returns>
-        public virtual VirtualNetworkPeeringCollection GetVirtualNetworkPeerings()
+        /// <summary> Gets a collection of DatabricksVirtualNetworkPeerings in the <see cref="DatabricksWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of DatabricksVirtualNetworkPeerings and their operations over a DatabricksVirtualNetworkPeeringResource. </returns>
+        public virtual DatabricksVirtualNetworkPeeringCollection GetDatabricksVirtualNetworkPeerings()
         {
-            return GetCachedClient(client => new VirtualNetworkPeeringCollection(client, Id));
+            return GetCachedClient(client => new DatabricksVirtualNetworkPeeringCollection(client, Id));
         }
 
         /// <summary> Gets the workspace vNet Peering. </summary>
@@ -840,11 +840,11 @@ namespace Azure.ResourceManager.Databricks
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualNetworkPeeringResource>> GetVirtualNetworkPeeringAsync(string peeringName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabricksVirtualNetworkPeeringResource>> GetDatabricksVirtualNetworkPeeringAsync(string peeringName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
-            return await GetVirtualNetworkPeerings().GetAsync(peeringName, cancellationToken).ConfigureAwait(false);
+            return await GetDatabricksVirtualNetworkPeerings().GetAsync(peeringName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the workspace vNet Peering. </summary>
@@ -853,11 +853,11 @@ namespace Azure.ResourceManager.Databricks
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualNetworkPeeringResource> GetVirtualNetworkPeering(string peeringName, CancellationToken cancellationToken = default)
+        public virtual Response<DatabricksVirtualNetworkPeeringResource> GetDatabricksVirtualNetworkPeering(string peeringName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
-            return GetVirtualNetworkPeerings().Get(peeringName, cancellationToken);
+            return GetDatabricksVirtualNetworkPeerings().Get(peeringName, cancellationToken);
         }
     }
 }

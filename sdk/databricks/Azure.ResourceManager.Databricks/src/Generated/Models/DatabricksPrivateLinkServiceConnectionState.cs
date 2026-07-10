@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Databricks.Models
 
         /// <summary> Initializes a new instance of <see cref="DatabricksPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The status of a private endpoint connection. </param>
-        public DatabricksPrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus status)
+        public DatabricksPrivateLinkServiceConnectionState(DatabricksPrivateLinkServiceConnectionStatus status)
         {
             Status = status;
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="description"> The description for the current state of a private endpoint connection. </param>
         /// <param name="actionsRequired"> Actions required for a private endpoint connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabricksPrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus status, string description, string actionsRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabricksPrivateLinkServiceConnectionState(DatabricksPrivateLinkServiceConnectionStatus status, string description, string actionsRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Description = description;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Databricks.Models
         }
 
         /// <summary> The status of a private endpoint connection. </summary>
-        public PrivateLinkServiceConnectionStatus Status { get; set; }
+        public DatabricksPrivateLinkServiceConnectionStatus Status { get; set; }
 
         /// <summary> The description for the current state of a private endpoint connection. </summary>
         public string Description { get; set; }

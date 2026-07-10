@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Databricks
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            GroupIdInformationProperties properties = default;
+            DatabricksGroupIdInformationProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Databricks
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = GroupIdInformationProperties.DeserializeGroupIdInformationProperties(prop.Value, options);
+                    properties = DatabricksGroupIdInformationProperties.DeserializeDatabricksGroupIdInformationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

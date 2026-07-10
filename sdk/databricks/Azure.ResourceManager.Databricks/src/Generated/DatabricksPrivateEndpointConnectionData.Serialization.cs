@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Databricks
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            PrivateEndpointConnectionProperties properties = default;
+            DatabricksPrivateEndpointConnectionProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Databricks
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(prop.Value, options);
+                    properties = DatabricksPrivateEndpointConnectionProperties.DeserializeDatabricksPrivateEndpointConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

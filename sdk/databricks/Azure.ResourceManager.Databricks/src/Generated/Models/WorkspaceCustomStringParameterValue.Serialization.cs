@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Databricks.Models
             {
                 return null;
             }
-            CustomParameterType? @type = default;
+            DatabricksCustomParameterType? @type = default;
             string value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    @type = new CustomParameterType(prop.Value.GetString());
+                    @type = new DatabricksCustomParameterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))

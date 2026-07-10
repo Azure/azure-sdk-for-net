@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Databricks.Models
             AddressSpace databricksAddressSpace = default;
             VirtualNetworkPeeringPropertiesFormatRemoteVirtualNetwork remoteVirtualNetwork = default;
             AddressSpace remoteAddressSpace = default;
-            PeeringState? peeringState = default;
-            PeeringProvisioningState? provisioningState = default;
+            DatabricksVirtualNetworkPeeringState? peeringState = default;
+            DatabricksVirtualNetworkPeeringProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    peeringState = new PeeringState(prop.Value.GetString());
+                    peeringState = new DatabricksVirtualNetworkPeeringState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    provisioningState = new PeeringProvisioningState(prop.Value.GetString());
+                    provisioningState = new DatabricksVirtualNetworkPeeringProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

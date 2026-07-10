@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Databricks
 
         /// <summary> Initializes a new instance of <see cref="DatabricksPrivateLinkResourceData"/>. </summary>
         /// <param name="properties"> The group id properties. </param>
-        internal DatabricksPrivateLinkResourceData(GroupIdInformationProperties properties)
+        internal DatabricksPrivateLinkResourceData(DatabricksGroupIdInformationProperties properties)
         {
             Properties = properties;
         }
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.Databricks
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The group id properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabricksPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GroupIdInformationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal DatabricksPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatabricksGroupIdInformationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The group id properties. </summary>
-        public GroupIdInformationProperties Properties { get; }
+        public DatabricksGroupIdInformationProperties Properties { get; }
     }
 }

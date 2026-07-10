@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="type"> The type of variable that this is. </param>
         /// <param name="isEnabled"> The value which should be used for this field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceNoPublicIPBooleanParameterValue(CustomParameterType? @type, bool isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceNoPublicIPBooleanParameterValue(DatabricksCustomParameterType? @type, bool isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             IsEnabled = isEnabled;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Databricks.Models
         }
 
         /// <summary> The type of variable that this is. </summary>
-        public CustomParameterType? Type { get; set; }
+        public DatabricksCustomParameterType? Type { get; set; }
 
         /// <summary> The value which should be used for this field. </summary>
         public bool IsEnabled { get; set; }

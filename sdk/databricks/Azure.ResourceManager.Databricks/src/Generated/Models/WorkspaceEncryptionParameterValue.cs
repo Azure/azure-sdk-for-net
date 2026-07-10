@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="type"> The type of variable that this is. </param>
         /// <param name="value"> The value which should be used for this field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceEncryptionParameterValue(CustomParameterType? @type, Encryption value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceEncryptionParameterValue(DatabricksCustomParameterType? @type, DatabricksEncryption value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Value = value;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Databricks.Models
         }
 
         /// <summary> The type of variable that this is. </summary>
-        public CustomParameterType? Type { get; set; }
+        public DatabricksCustomParameterType? Type { get; set; }
 
         /// <summary> The value which should be used for this field. </summary>
-        public Encryption Value { get; set; }
+        public DatabricksEncryption Value { get; set; }
     }
 }
