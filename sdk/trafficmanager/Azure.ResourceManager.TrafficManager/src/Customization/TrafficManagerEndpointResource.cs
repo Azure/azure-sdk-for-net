@@ -18,6 +18,8 @@ namespace Azure.ResourceManager.TrafficManager
     /// <summary>
     /// A class representing a TrafficManagerEndpoint along with the instance operations that can be performed on it.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This class is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointResource, ExternalEndpointTrafficManagerEndpointResource, or NestedEndpointTrafficManagerEndpointResource instead.", false)]
     public partial class TrafficManagerEndpointResource : ArmResource, IJsonModel<TrafficManagerEndpointData>, IPersistableModel<TrafficManagerEndpointData>
     {
         private static IJsonModel<TrafficManagerEndpointData> s_dataDeserializationInstance;
@@ -96,6 +98,8 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary> Gets a Traffic Manager endpoint. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointResource, ExternalEndpointTrafficManagerEndpointResource, or NestedEndpointTrafficManagerEndpointResource instead.", false)]
         public virtual async Task<Response<TrafficManagerEndpointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("TrafficManagerEndpointResource.Get");
@@ -124,6 +128,8 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary> Gets a Traffic Manager endpoint. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointResource, ExternalEndpointTrafficManagerEndpointResource, or NestedEndpointTrafficManagerEndpointResource instead.", false)]
         public virtual Response<TrafficManagerEndpointResource> Get(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("TrafficManagerEndpointResource.Get");
@@ -153,6 +159,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <summary> Update a Traffic Manager endpoint. </summary>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointResource, ExternalEndpointTrafficManagerEndpointResource, or NestedEndpointTrafficManagerEndpointResource instead.", false)]
         public virtual async Task<Response<TrafficManagerEndpointResource>> UpdateAsync(TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -184,6 +192,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <summary> Update a Traffic Manager endpoint. </summary>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointResource, ExternalEndpointTrafficManagerEndpointResource, or NestedEndpointTrafficManagerEndpointResource instead.", false)]
         public virtual Response<TrafficManagerEndpointResource> Update(TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

@@ -1953,5 +1953,66 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         {
             return new EventGridPrivateEndpointConnectionProperties(status, description, default);
         }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
+        /// <param name="solutionsApplicationDefinitionDisplayName"> The managed application definition display name. </param>
+        /// <returns> A new <see cref="Tests.SolutionsApplicationDefinitionData"/> instance for mocking. </returns>
+        public static SolutionsApplicationDefinitionData SolutionsApplicationDefinitionData(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string managedBy = default, string solutionsApplicationDefinitionDisplayName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SolutionsApplicationDefinitionData(
+                id,
+                name,
+                @type,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                managedBy,
+                solutionsApplicationDefinitionDisplayName is null ? default : new SolutionsApplicationDefinitionProperties(solutionsApplicationDefinitionDisplayName, default));
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
+        /// <returns> A new <see cref="Models.SolutionsGenericResource"/> instance for mocking. </returns>
+        public static SolutionsGenericResource SolutionsGenericResource(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string managedBy = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SolutionsGenericResource(
+                id,
+                name,
+                @type,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                managedBy);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.SolutionsResource"/> instance for mocking. </returns>
+        public static SolutionsResource SolutionsResource(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SolutionsResource(id, name, @type, tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="tags"> Application definition tags. </param>
+        /// <returns> A new <see cref="Models.SolutionsApplicationDefinitionPatch"/> instance for mocking. </returns>
+        public static SolutionsApplicationDefinitionPatch SolutionsApplicationDefinitionPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SolutionsApplicationDefinitionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
     }
 }

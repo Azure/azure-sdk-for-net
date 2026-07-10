@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -275,15 +276,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </list>
         /// </summary>
         /// <param name="top"></param>
+        /// <param name="filters"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BazResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BazResource> GetBazsAsync(int? top = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BazResource> GetBazsAsync(int? top = default, IEnumerable<string> filters = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BazData, BazResource>(new BazsGetBySubscriptionAsyncCollectionResultOfT(BazsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetBazs"), data => new BazResource(Client, data));
+            return new AsyncPageableWrapper<BazData, BazResource>(new BazsGetBySubscriptionAsyncCollectionResultOfT(
+                BazsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                filters,
+                context,
+                "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetBazs"), data => new BazResource(Client, data));
         }
 
         /// <summary>
@@ -304,15 +312,22 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </list>
         /// </summary>
         /// <param name="top"></param>
+        /// <param name="filters"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BazResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BazResource> GetBazs(int? top = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BazResource> GetBazs(int? top = default, IEnumerable<string> filters = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BazData, BazResource>(new BazsGetBySubscriptionCollectionResultOfT(BazsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetBazs"), data => new BazResource(Client, data));
+            return new PageableWrapper<BazData, BazResource>(new BazsGetBySubscriptionCollectionResultOfT(
+                BazsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                filters,
+                context,
+                "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetBazs"), data => new BazResource(Client, data));
         }
 
         /// <summary>

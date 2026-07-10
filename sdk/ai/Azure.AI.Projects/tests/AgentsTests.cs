@@ -5,8 +5,10 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Metrics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -1559,12 +1561,12 @@ public class AgentsTests : AgentsTestBase
                 { "AGENT_PROJECT_RESOURCE_ID", TestEnvironment.FOUNDRY_PROJECT_ENDPOINT },
             }
         };
-        ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion projectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: AGENT_NAME2,
             options: new(ProjectsAgentDefinition));
-        Assert.That(ProjectsAgentVersion.Definition.GetType().ToString(), Does.Contain("Azure.AI.Projects.Agents.HostedAgentDefinition"));
-        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version);
-        Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: ProjectsAgentVersion.Name, agentVersion: ProjectsAgentVersion.Version));
+        Assert.That(projectsAgentVersion.Definition.GetType().ToString(), Does.Contain("Azure.AI.Projects.Agents.HostedAgentDefinition"));
+        await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: projectsAgentVersion.Name, agentVersion: projectsAgentVersion.Version);
+        Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: projectsAgentVersion.Name, agentVersion: projectsAgentVersion.Version));
     }
 
     [RecordedTest]
@@ -1588,7 +1590,7 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: HOSTED_AGENT,
             options: creationOptions);
-        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Active)
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {
             await Delay();
             agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
@@ -1637,6 +1639,106 @@ public class AgentsTests : AgentsTestBase
             responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
         }
         ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
+        Assert.That(response.GetOutputText(), Is.Not.Empty);
+    }
+
+    [RecordedTest]
+    public async Task TestDisableHostedAgent()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        HostedAgentDefinition agentDefinition = new(
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+            cpu: "0.5",
+            memory: "1Gi"
+        )
+        {
+            ContainerConfiguration = new(TestEnvironment.AGENT_DOCKER_IMAGE),
+        };
+        ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
+        creationOptions.Metadata["enableVnextExperience"] = "true";
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName: HOSTED_AGENT,
+            options: creationOptions);
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
+        {
+            await Delay();
+            agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
+        Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
+        AgentEndpointConfiguration config = new()
+        {
+            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
+        };
+        PatchAgentOptions patchOptions = new()
+        {
+            AgentEndpoint = config,
+        };
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentAsync(
+            agentName: agentVersion.Name,
+            patchAgentOptions: patchOptions);
+        // Create a session.
+        ProjectAgentSession session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
+        {
+            await Delay();
+            session = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        }
+        HeaderTestPolicy sessionPolicy = new(new Dictionary<string, string>()
+        {
+            { "x-agent-session-id", session.AgentSessionId }
+        });
+        ProjectOpenAIClientOptions responsesOptions = new()
+        {
+            Endpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
+            ApiVersion = "v1",
+            AgentName = agentVersion.Name
+        };
+        responsesOptions.AddPolicy(sessionPolicy, PipelinePosition.PerCall);
+        responsesOptions = GetConfiguredOptions(
+            responsesOptions,
+            true);
+        ProjectResponsesClient responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+        ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
+        Assert.That(response.GetOutputText(), Is.Not.Empty);
+        // Disable the Agent
+        await projectClient.AgentAdministrationClient.DisableAgentAsync(agentVersion.Name);
+        try
+        {
+            await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+            Assert.Fail("Stopped Agent was unexpectedly able to create session.");
+        }
+        catch (ClientResultException ex)
+        {
+            Assert.That(ex.Status, Is.EqualTo(403));
+        }
+        // Enable Agent Again
+        await projectClient.AgentAdministrationClient.EnableAgentAsync(agentVersion.Name);
+        session = await projectClient.AgentAdministrationClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+        while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
+        {
+            await Delay();
+            session = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+        }
+        sessionPolicy = new(new Dictionary<string, string>()
+        {
+            { "x-agent-session-id", session.AgentSessionId }
+        });
+        responsesOptions = new ProjectOpenAIClientOptions()
+        {
+            Endpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT),
+            ApiVersion = "v1",
+            AgentName = agentVersion.Name
+        };
+        responsesOptions.AddPolicy(sessionPolicy, PipelinePosition.PerCall);
+        responsesOptions = GetConfiguredOptions(
+            responsesOptions,
+            true);
+        responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+        response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
         Assert.That(response.GetOutputText(), Is.Not.Empty);
     }
 
