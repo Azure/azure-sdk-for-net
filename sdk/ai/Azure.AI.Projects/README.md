@@ -1748,6 +1748,29 @@ Console.WriteLine($"Created routine: {created.Name} enabled={created.IsEnabled}.
 Console.WriteLine($"Fire at: {((TimerRoutineTrigger)routineOptions.Triggers["once"]).At.Value.ToString("o")}");
 ```
 
+The routine can be triggered based on GitHub event.
+
+```C# Snippet:Sample_CreateRoutine_RoutinesGithub_Sync
+RoutineAction action = new AgentResponsesApiRoutineAction
+{
+    AgentName = agentVersion.Name,
+};
+ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine used by GitHub trigger sample.", enabled: true);
+routineOptions.Triggers.Add("on-issue",
+    new GitHubIssueRoutineTrigger(
+        connectionId: connectionName,
+        owner: owner,
+        repository: repository,
+        issueEvent: GitHubIssueEvent.Opened
+    )
+);
+ProjectsRoutine created = routinesClient.CreateOrUpdate(
+    name: routineName,
+    options: routineOptions
+);
+Console.WriteLine($"Created routine: {created.Name} enabled={created.IsEnabled}.");
+```
+
 Routines runs can be manually dispatched by calling `DispatchAsyncRoutineAsync` or `DispatchAsyncRoutine` methods.
 
 ```C# Snippet:Sample_DispatchTask_RoutinesManualDispatch_Async
