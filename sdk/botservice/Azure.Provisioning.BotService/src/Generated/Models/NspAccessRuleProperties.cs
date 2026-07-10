@@ -26,7 +26,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets or sets the Direction. </summary>
+        /// <summary> Gets the Direction. </summary>
         public BicepValue<NspAccessRuleDirection> Direction
         {
             get
@@ -34,14 +34,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _direction;
             }
-            set
-            {
-                Initialize();
-                _direction.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AddressPrefixes. </summary>
+        /// <summary> Gets the AddressPrefixes. </summary>
         public BicepList<string> AddressPrefixes
         {
             get
@@ -49,25 +44,15 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _addressPrefixes;
             }
-            set
-            {
-                Initialize();
-                _addressPrefixes.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Subscriptions. </summary>
+        /// <summary> Gets the Subscriptions. </summary>
         public BicepList<BotServiceNspAccessRuleSubscription> Subscriptions
         {
             get
             {
                 Initialize();
                 return _subscriptions;
-            }
-            set
-            {
-                Initialize();
-                _subscriptions.Assign(value);
             }
         }
 

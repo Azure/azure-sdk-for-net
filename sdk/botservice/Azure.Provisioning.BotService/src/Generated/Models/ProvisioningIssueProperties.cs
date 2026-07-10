@@ -25,7 +25,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets or sets the IssueType. </summary>
+        /// <summary> Gets the IssueType. </summary>
         public BicepValue<string> IssueType
         {
             get
@@ -33,14 +33,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _issueType;
             }
-            set
-            {
-                Initialize();
-                _issueType.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Severity. </summary>
+        /// <summary> Gets the Severity. </summary>
         public BicepValue<BotServiceSeverity> Severity
         {
             get
@@ -48,25 +43,15 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _severity;
             }
-            set
-            {
-                Initialize();
-                _severity.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Description. </summary>
+        /// <summary> Gets the Description. </summary>
         public BicepValue<string> Description
         {
             get
             {
                 Initialize();
                 return _description;
-            }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
             }
         }
 
@@ -80,18 +65,13 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets or sets the SuggestedAccessRules. </summary>
+        /// <summary> Gets the SuggestedAccessRules. </summary>
         public BicepList<NspAccessRule> SuggestedAccessRules
         {
             get
             {
                 Initialize();
                 return _suggestedAccessRules;
-            }
-            set
-            {
-                Initialize();
-                _suggestedAccessRules.Assign(value);
             }
         }
 

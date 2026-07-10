@@ -3,7 +3,6 @@
   <PropertyGroup>
     <Description>Azure.Provisioning.BotService simplifies declarative resource provisioning for Azure Bot Service in .NET.</Description>
     <Version>1.0.0-beta.1</Version>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>

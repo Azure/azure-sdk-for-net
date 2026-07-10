@@ -188,7 +188,7 @@ namespace Azure.Provisioning.BotService
     {
         internal BotServiceNetworkSecurityPerimeterConfiguration() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BotService.BotResource Parent { get { throw null; } set { } }
         public Azure.Provisioning.BotService.NetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -204,17 +204,17 @@ namespace Azure.Provisioning.BotService
     public partial class BotServiceNetworkSecurityPerimeterProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BotServiceNetworkSecurityPerimeterProfile() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.NspAccessRule> AccessRules { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<long> AccessRulesVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<long> DiagnosticSettingsVersion { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.NspAccessRule> AccessRules { get { throw null; } }
+        public Azure.Provisioning.BicepValue<long> AccessRulesVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<long> DiagnosticSettingsVersion { get { throw null; } }
         public Azure.Provisioning.BicepList<string> EnabledLogCategories { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class BotServiceNspAccessRuleSubscription : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BotServiceNspAccessRuleSubscription() { }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class BotServicePrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
@@ -275,8 +275,8 @@ namespace Azure.Provisioning.BotService
     public partial class BotServiceResourceAssociation : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BotServiceResourceAssociation() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.BotServiceAccessMode> AccessMode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.BotServiceAccessMode> AccessMode { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum BotServiceSeverity
@@ -468,8 +468,8 @@ namespace Azure.Provisioning.BotService
     {
         public NetworkSecurityPerimeter() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> PerimeterGuid { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PerimeterGuid { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class NetworkSecurityPerimeterConfigurationProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -477,15 +477,15 @@ namespace Azure.Provisioning.BotService
         public NetworkSecurityPerimeterConfigurationProperties() { }
         public Azure.Provisioning.BotService.NetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } }
         public Azure.Provisioning.BotService.BotServiceNetworkSecurityPerimeterProfile Profile { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.ProvisioningIssue> ProvisioningIssues { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.BotServiceProvisioningState> ProvisioningState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.ProvisioningIssue> ProvisioningIssues { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.BotServiceProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BotService.BotServiceResourceAssociation ResourceAssociation { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class NspAccessRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public NspAccessRule() { }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BotService.NspAccessRuleProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -497,13 +497,13 @@ namespace Azure.Provisioning.BotService
     public partial class NspAccessRuleProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public NspAccessRuleProperties() { }
-        public Azure.Provisioning.BicepList<string> AddressPrefixes { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.NspAccessRuleDirection> Direction { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> AddressPrefixes { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.NspAccessRuleDirection> Direction { get { throw null; } }
         public Azure.Provisioning.BicepList<string> EmailAddresses { get { throw null; } }
         public Azure.Provisioning.BicepList<string> FullyQualifiedDomainNames { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.NetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
         public Azure.Provisioning.BicepList<string> PhoneNumbers { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.BotServiceNspAccessRuleSubscription> Subscriptions { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.BotServiceNspAccessRuleSubscription> Subscriptions { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class OmniChannel : Azure.Provisioning.BotService.BotChannelProperties
@@ -519,17 +519,17 @@ namespace Azure.Provisioning.BotService
     public partial class ProvisioningIssue : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ProvisioningIssue() { }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BotService.ProvisioningIssueProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ProvisioningIssueProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ProvisioningIssueProperties() { }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> IssueType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.BotServiceSeverity> Severity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.NspAccessRule> SuggestedAccessRules { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> IssueType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.BotService.BotServiceSeverity> Severity { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.NspAccessRule> SuggestedAccessRules { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Core.ResourceIdentifier> SuggestedResourceIds { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }

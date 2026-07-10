@@ -24,7 +24,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
@@ -32,14 +32,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _name;
             }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AccessRulesVersion. </summary>
+        /// <summary> Gets the AccessRulesVersion. </summary>
         public BicepValue<long> AccessRulesVersion
         {
             get
@@ -47,14 +42,9 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _accessRulesVersion;
             }
-            set
-            {
-                Initialize();
-                _accessRulesVersion.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AccessRules. </summary>
+        /// <summary> Gets the AccessRules. </summary>
         public BicepList<NspAccessRule> AccessRules
         {
             get
@@ -62,25 +52,15 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _accessRules;
             }
-            set
-            {
-                Initialize();
-                _accessRules.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the DiagnosticSettingsVersion. </summary>
+        /// <summary> Gets the DiagnosticSettingsVersion. </summary>
         public BicepValue<long> DiagnosticSettingsVersion
         {
             get
             {
                 Initialize();
                 return _diagnosticSettingsVersion;
-            }
-            set
-            {
-                Initialize();
-                _diagnosticSettingsVersion.Assign(value);
             }
         }
 

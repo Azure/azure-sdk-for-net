@@ -33,7 +33,7 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets or sets the PerimeterGuid. </summary>
+        /// <summary> Gets the PerimeterGuid. </summary>
         public BicepValue<string> PerimeterGuid
         {
             get
@@ -41,25 +41,15 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _perimeterGuid;
             }
-            set
-            {
-                Initialize();
-                _perimeterGuid.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
+        /// <summary> Gets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
             {
                 Initialize();
                 return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets or sets the ProvisioningState. </summary>
+        /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<BotServiceProvisioningState> ProvisioningState
         {
             get
@@ -32,25 +32,15 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _provisioningState;
             }
-            set
-            {
-                Initialize();
-                _provisioningState.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ProvisioningIssues. </summary>
+        /// <summary> Gets the ProvisioningIssues. </summary>
         public BicepList<ProvisioningIssue> ProvisioningIssues
         {
             get
             {
                 Initialize();
                 return _provisioningIssues;
-            }
-            set
-            {
-                Initialize();
-                _provisioningIssues.Assign(value);
             }
         }
 
