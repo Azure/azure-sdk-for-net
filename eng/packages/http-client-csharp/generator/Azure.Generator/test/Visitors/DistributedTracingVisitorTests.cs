@@ -14,6 +14,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Tests.Visitors
@@ -225,6 +226,81 @@ namespace Azure.Generator.Tests.Visitors
             var result = updatedMethod!.BodyStatements!.ToDisplayString();
             Assert.IsTrue(result.Contains("ClientDiagnostics.CreateScope(\"TestClient.Foo\")"),
                 $"Protocol method should be wrapped with a diagnostic scope. Actual: {result}");
+        }
+
+        // Regression test for https://github.com/Azure/azure-sdk-for-net/pull/58979.
+        // Custom code can rename the ClientDiagnostics property via [CodeGenMember("ClientDiagnostics")],
+        // in which case the property's Name differs but its OriginalName is still "ClientDiagnostics".
+        // The visitor must locate the property by its OriginalName so the renamed property is still found
+        // (and it must be located by name, not by CSharpType, to keep the previous regression fixed).
+        [Test]
+        public void TestProtocolMethodWithRenamedClientDiagnosticsProperty()
+        {
+            var visitor = new TestDistributedTracingVisitor();
+
+            // load the input
+            List<InputMethodParameter> parameters =
+            [
+                InputFactory.MethodParameter(
+                "p1",
+                InputPrimitiveType.String)
+            ];
+            var basicOperation = InputFactory.Operation(
+                "foo",
+                parameters: parameters);
+            var basicServiceMethod = InputFactory.BasicServiceMethod("foo", basicOperation, parameters: parameters);
+            var inputClient = InputFactory.Client("TestClient", methods: [basicServiceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            // create the client provider
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            // Replace the generated ClientDiagnostics property with one that has been renamed via custom
+            // code: its Name is different, but its OriginalName is still "ClientDiagnostics". The type is
+            // also non-framework, matching how a custom-declared property is modeled.
+            var renamedClientDiagnostics = new PropertyProvider(
+                $"The ClientDiagnostics is used to provide tracing support for the client library.",
+                MethodSignatureModifiers.Internal,
+                new CSharpType(typeof(object)),
+                "RenamedDiagnostics",
+                new AutoPropertyBody(false),
+                clientProvider!);
+            SetOriginalName(renamedClientDiagnostics, ClientDiagnosticsPropertyName);
+            clientProvider!.Update(properties: [renamedClientDiagnostics]);
+
+            // create a protocol method to test the visitor
+            var methodSignature = new MethodSignature(
+                "Foo",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async,
+                AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.ClientResponseType,
+                $"The response returned from the service.",
+                [new ParameterProvider("p1", $"p1", AzureClientGenerator.Instance.TypeFactory.RequestContentApi.RequestContentType)]);
+            var bodyStatements = InvokeConsoleWriteLine(Literal("Hello World"));
+            var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, ScmMethodKind.Protocol);
+
+            // The visitor must not throw and must still wrap the body in a diagnostic scope, using the
+            // renamed property to create the scope.
+            ScmMethodProvider? updatedMethod = null;
+            Assert.DoesNotThrow(() => updatedMethod = visitor.InvokeVisitMethod(method));
+            Assert.IsNotNull(updatedMethod?.BodyStatements);
+
+            var result = updatedMethod!.BodyStatements!.ToDisplayString();
+            Assert.IsTrue(result.Contains("RenamedDiagnostics.CreateScope(\"TestClient.Foo\")"),
+                $"Protocol method should be wrapped with a diagnostic scope using the renamed property. Actual: {result}");
+        }
+
+        // OriginalName has an internal init accessor and the custom-code parser (NamedTypeSymbolProvider)
+        // is internal to Microsoft.TypeSpec.Generator with no InternalsVisibleTo for this test assembly,
+        // so there is currently no way to load a real [CodeGenMember] rename here. Set the backing field
+        // via reflection to simulate a property renamed from "ClientDiagnostics" through custom code.
+        // Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60907.
+        private static void SetOriginalName(PropertyProvider property, string originalName)
+        {
+            typeof(PropertyProvider)
+                .GetField($"<{nameof(PropertyProvider.OriginalName)}>k__BackingField",
+                    BindingFlags.NonPublic | BindingFlags.Instance)!
+                .SetValue(property, originalName);
         }
 
         // This test validates that the "Async" suffix is stripped from the scope name for a protocol
