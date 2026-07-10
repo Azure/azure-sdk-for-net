@@ -13,15 +13,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Omnichannel channel definition. </summary>
-    public partial class Omnichannel : BotChannelProperties
+    public partial class Dynamics365OmnichannelChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of <see cref="Omnichannel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Dynamics365OmnichannelChannel"/>. </summary>
+        public Dynamics365OmnichannelChannel() : base("Omnichannel")
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Dynamics365OmnichannelChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="eTag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Omnichannel(string channelName, ETag? eTag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(channelName, eTag, provisioningState, location, additionalBinaryDataProperties)
+        internal Dynamics365OmnichannelChannel(string channelName, ETag? eTag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(channelName, eTag, provisioningState, location, additionalBinaryDataProperties)
         {
         }
     }

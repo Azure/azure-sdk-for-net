@@ -1,15 +1,31 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.TypeSpec.Generator.Customizations;
+#nullable disable
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    [CodeGenType("OmniChannel")]
-    public partial class Omnichannel
+    /// <summary> Omnichannel channel definition. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public partial class Omnichannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of <see cref="Omnichannel"/>. </summary>
         public Omnichannel() : base("Omnichannel")
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Omnichannel"/>. </summary>
+        /// <param name="channelName"> The channel name. </param>
+        /// <param name="eTag"> Entity Tag of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="location"> Specifies the location of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal Omnichannel(string channelName, ETag? eTag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(channelName, eTag, provisioningState, location, additionalBinaryDataProperties)
         {
         }
     }
