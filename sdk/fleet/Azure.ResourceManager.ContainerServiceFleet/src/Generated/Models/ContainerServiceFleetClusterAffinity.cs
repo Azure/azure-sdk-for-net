@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 if (RequiredDuringSchedulingIgnoredDuringExecution is null)
                 {
-                    RequiredDuringSchedulingIgnoredDuringExecution = new ClusterSelector();
+                    RequiredDuringSchedulingIgnoredDuringExecution = new ClusterSelector(new List<ContainerServiceFleetClusterSelectorTerm>());
                 }
                 return RequiredDuringSchedulingIgnoredDuringExecution.ClusterSelectorTerms;
             }

@@ -97,7 +97,7 @@ namespace Azure.Generator.Management.Utilities
                 return new List<MethodBodyStatement> {
                     new IfStatement(checkNullExpression)
                     {
-                        internalProperty.Assign(New.Instance(innerModel.Type)).Terminate()
+                        internalProperty.Assign(CreateInnerModelInstance(innerModel, innerProperty)).Terminate()
                     },
                     Return(new MemberExpression(internalProperty, innerProperty.Name))
                 };
@@ -108,7 +108,7 @@ namespace Azure.Generator.Management.Utilities
                 return new List<MethodBodyStatement> {
                     new IfStatement(checkNullExpression)
                     {
-                        internalProperty.Assign(New.Instance(innerModel.Type)).Terminate()
+                        internalProperty.Assign(CreateInnerModelInstance(innerModel, innerProperty)).Terminate()
                     },
                     Return(new MemberExpression(internalProperty, innerProperty.Name))
                 };
@@ -122,7 +122,7 @@ namespace Azure.Generator.Management.Utilities
                     return new List<MethodBodyStatement> {
                         new IfStatement(checkNullExpression)
                         {
-                            internalProperty.Assign(New.Instance(innerModel.Type)).Terminate()
+                            internalProperty.Assign(CreateInnerModelInstance(innerModel, innerProperty)).Terminate()
                         },
                         Return(new MemberExpression(internalProperty, innerProperty.Name))
                     };
@@ -137,6 +137,45 @@ namespace Azure.Generator.Management.Utilities
                 }
                 return Return(new MemberExpression(internalProperty, innerProperty.Name));
             }
+        }
+
+        private static ValueExpression CreateInnerModelInstance(TypeProvider innerModel, PropertyProvider innerProperty)
+        {
+            if (innerProperty.Type.IsCollection && innerProperty.Type.Arguments.Count == 1 && HasSingleParameterPublicCtor(innerModel, innerProperty.Type))
+            {
+                return New.Instance(innerModel.Type, New.Instance(new CSharpType(typeof(List<>), innerProperty.Type.Arguments[0])));
+            }
+
+            return New.Instance(innerModel.Type);
+        }
+
+        private static bool HasSingleParameterPublicCtor(TypeProvider innerModel, CSharpType parameterType)
+        {
+            foreach (var ctor in innerModel.Constructors)
+            {
+                if (ctor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                    && ctor.Signature.Parameters.Count == 1
+                    && IsCompatibleCollectionParameter(ctor.Signature.Parameters[0].Type, parameterType))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool IsCompatibleCollectionParameter(CSharpType ctorParameterType, CSharpType propertyType)
+        {
+            if (ctorParameterType.Equals(propertyType))
+            {
+                return true;
+            }
+
+            return propertyType.IsCollection
+                && ctorParameterType.IsCollection
+                && propertyType.Arguments.Count == 1
+                && ctorParameterType.Arguments.Count == 1
+                && ctorParameterType.Arguments[0].Equals(propertyType.Arguments[0]);
         }
 
         public static MethodBodyStatement? BuildSetterForPropertyFlatten(ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty, bool isPropertyLiftedToNullable, bool allowCollectionSetter = false)

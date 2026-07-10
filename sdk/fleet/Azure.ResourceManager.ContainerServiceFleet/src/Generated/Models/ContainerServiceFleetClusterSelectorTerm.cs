@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 if (PropertySelector is null)
                 {
-                    PropertySelector = new PropertySelector();
+                    PropertySelector = new PropertySelector(new List<ContainerServiceFleetPropertySelectorRequirement>());
                 }
                 return PropertySelector.MatchExpressions;
             }
