@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Databricks.Models
         public static Azure.ResourceManager.Databricks.Models.DatabricksAccessConnectorProperties DatabricksAccessConnectorProperties(Azure.ResourceManager.Databricks.Models.DatabricksProvisioningState? provisioningState = default(Azure.ResourceManager.Databricks.Models.DatabricksProvisioningState?), System.Collections.Generic.IEnumerable<string> referredBy = null) { throw null; }
         public static Azure.ResourceManager.Databricks.Models.DatabricksComplianceSecurityProfile DatabricksComplianceSecurityProfile(System.Collections.Generic.IEnumerable<string> complianceStandards = null, Azure.ResourceManager.Databricks.Models.DatabricksComplianceSecurityProfileValue? value = default(Azure.ResourceManager.Databricks.Models.DatabricksComplianceSecurityProfileValue?)) { throw null; }
         public static Azure.ResourceManager.Databricks.Models.DatabricksCreatedBy DatabricksCreatedBy(System.Guid? oid = default(System.Guid?), string puid = null, System.Guid? applicationId = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.Databricks.Models.DatabricksDefaultCatalogProperties DatabricksDefaultCatalogProperties(Azure.ResourceManager.Databricks.Models.DatabricksInitialType? initialType = default(Azure.ResourceManager.Databricks.Models.DatabricksInitialType?), string initialName = null) { throw null; }
+        public static Azure.ResourceManager.Databricks.Models.DatabricksDefaultCatalogProperties DatabricksDefaultCatalogProperties(Azure.ResourceManager.Databricks.Models.DatabricksInitialCatalogType? initialType = default(Azure.ResourceManager.Databricks.Models.DatabricksInitialCatalogType?), string initialName = null) { throw null; }
         public static Azure.ResourceManager.Databricks.Models.DatabricksEncryption DatabricksEncryption(Azure.ResourceManager.Databricks.Models.DatabricksKeySource? keySource = default(Azure.ResourceManager.Databricks.Models.DatabricksKeySource?), string keyName = null, string keyVersion = null, string keyVaultUri = null) { throw null; }
         public static Azure.ResourceManager.Databricks.Models.DatabricksEncryptionEntities DatabricksEncryptionEntities(Azure.ResourceManager.Databricks.Models.DatabricksEncryptionV2 managedServices = null, Azure.ResourceManager.Databricks.Models.DatabricksManagedDiskEncryption managedDisk = null) { throw null; }
         public static Azure.ResourceManager.Databricks.Models.DatabricksEncryptionV2 DatabricksEncryptionV2(Azure.ResourceManager.Databricks.Models.DatabricksEncryptionKeySource keySource = default(Azure.ResourceManager.Databricks.Models.DatabricksEncryptionKeySource), Azure.ResourceManager.Databricks.Models.DatabricksEncryptionV2KeyVaultProperties keyVaultProperties = null) { throw null; }
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Databricks.Models
     {
         public DatabricksDefaultCatalogProperties() { }
         public string InitialName { get { throw null; } set { } }
-        public Azure.ResourceManager.Databricks.Models.DatabricksInitialType? InitialType { get { throw null; } set { } }
+        public Azure.ResourceManager.Databricks.Models.DatabricksInitialCatalogType? InitialType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Databricks.Models.DatabricksDefaultCatalogProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Databricks.Models.DatabricksDefaultCatalogProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -734,20 +734,20 @@ namespace Azure.ResourceManager.Databricks.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DatabricksInitialType : System.IEquatable<Azure.ResourceManager.Databricks.Models.DatabricksInitialType>
+    public readonly partial struct DatabricksInitialCatalogType : System.IEquatable<Azure.ResourceManager.Databricks.Models.DatabricksInitialCatalogType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DatabricksInitialType(string value) { throw null; }
-        public static Azure.ResourceManager.Databricks.Models.DatabricksInitialType HiveMetastore { get { throw null; } }
-        public static Azure.ResourceManager.Databricks.Models.DatabricksInitialType UnityCatalog { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Databricks.Models.DatabricksInitialType other) { throw null; }
+        public DatabricksInitialCatalogType(string value) { throw null; }
+        public static Azure.ResourceManager.Databricks.Models.DatabricksInitialCatalogType HiveMetastore { get { throw null; } }
+        public static Azure.ResourceManager.Databricks.Models.DatabricksInitialCatalogType UnityCatalog { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Databricks.Models.DatabricksInitialCatalogType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Databricks.Models.DatabricksInitialType left, Azure.ResourceManager.Databricks.Models.DatabricksInitialType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Databricks.Models.DatabricksInitialType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Databricks.Models.DatabricksInitialType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Databricks.Models.DatabricksInitialType left, Azure.ResourceManager.Databricks.Models.DatabricksInitialType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Databricks.Models.DatabricksInitialCatalogType left, Azure.ResourceManager.Databricks.Models.DatabricksInitialCatalogType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Databricks.Models.DatabricksInitialCatalogType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Databricks.Models.DatabricksInitialCatalogType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Databricks.Models.DatabricksInitialCatalogType left, Azure.ResourceManager.Databricks.Models.DatabricksInitialCatalogType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <param name="initialType"> Defines the initial type of the default catalog. Possible values (case-insensitive):  HiveMetastore, UnityCatalog. </param>
         /// <param name="initialName"> Specifies the initial Name of default catalog. If not specified, the name of the workspace will be used. </param>
         /// <returns> A new <see cref="Models.DatabricksDefaultCatalogProperties"/> instance for mocking. </returns>
-        public static DatabricksDefaultCatalogProperties DatabricksDefaultCatalogProperties(DatabricksInitialType? initialType = default, string initialName = default)
+        public static DatabricksDefaultCatalogProperties DatabricksDefaultCatalogProperties(DatabricksInitialCatalogType? initialType = default, string initialName = default)
         {
             return new DatabricksDefaultCatalogProperties(initialType, initialName, default);
         }

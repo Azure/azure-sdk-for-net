@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Databricks.Models
             {
                 return null;
             }
-            DatabricksInitialType? initialType = default;
+            DatabricksInitialCatalogType? initialType = default;
             string initialName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     {
                         continue;
                     }
-                    initialType = new DatabricksInitialType(prop.Value.GetString());
+                    initialType = new DatabricksInitialCatalogType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("initialName"u8))

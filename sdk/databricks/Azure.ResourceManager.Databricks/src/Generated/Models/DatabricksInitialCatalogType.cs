@@ -12,7 +12,7 @@ using Azure.ResourceManager.Databricks;
 namespace Azure.ResourceManager.Databricks.Models
 {
     /// <summary> Defines the initial type of the default catalog. Possible values (case-insensitive):  HiveMetastore, UnityCatalog. </summary>
-    public readonly partial struct DatabricksInitialType : IEquatable<DatabricksInitialType>
+    public readonly partial struct DatabricksInitialCatalogType : IEquatable<DatabricksInitialCatalogType>
     {
         private readonly string _value;
         /// <summary> HiveMetastore. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <summary> UnityCatalog. </summary>
         private const string UnityCatalogValue = "UnityCatalog";
 
-        /// <summary> Initializes a new instance of <see cref="DatabricksInitialType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksInitialCatalogType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DatabricksInitialType(string value)
+        public DatabricksInitialCatalogType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Databricks.Models
         }
 
         /// <summary> HiveMetastore. </summary>
-        public static DatabricksInitialType HiveMetastore { get; } = new DatabricksInitialType(HiveMetastoreValue);
+        public static DatabricksInitialCatalogType HiveMetastore { get; } = new DatabricksInitialCatalogType(HiveMetastoreValue);
 
         /// <summary> UnityCatalog. </summary>
-        public static DatabricksInitialType UnityCatalog { get; } = new DatabricksInitialType(UnityCatalogValue);
+        public static DatabricksInitialCatalogType UnityCatalog { get; } = new DatabricksInitialCatalogType(UnityCatalogValue);
 
-        /// <summary> Determines if two <see cref="DatabricksInitialType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DatabricksInitialCatalogType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DatabricksInitialType left, DatabricksInitialType right) => left.Equals(right);
+        public static bool operator ==(DatabricksInitialCatalogType left, DatabricksInitialCatalogType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DatabricksInitialType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DatabricksInitialCatalogType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DatabricksInitialType left, DatabricksInitialType right) => !left.Equals(right);
+        public static bool operator !=(DatabricksInitialCatalogType left, DatabricksInitialCatalogType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DatabricksInitialType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DatabricksInitialCatalogType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksInitialType(string value) => new DatabricksInitialType(value);
+        public static implicit operator DatabricksInitialCatalogType(string value) => new DatabricksInitialCatalogType(value);
 
-        /// <summary> Converts a string to a <see cref="DatabricksInitialType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DatabricksInitialCatalogType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DatabricksInitialType?(string value) => value == null ? null : new DatabricksInitialType(value);
+        public static implicit operator DatabricksInitialCatalogType?(string value) => value == null ? null : new DatabricksInitialCatalogType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DatabricksInitialType other && Equals(other);
+        public override bool Equals(object obj) => obj is DatabricksInitialCatalogType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DatabricksInitialType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DatabricksInitialCatalogType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
