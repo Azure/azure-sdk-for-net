@@ -15,7 +15,7 @@
 
 - Deprecated `ArtifactSigningCertificateProfileResource.RevokeCertificate`. Use `RevokeCertificates` instead.
 
-## 1.0.1 (2026-06-02)
+## 1.0.1 (2026-05-15-preview)
 
 ### Other Changes
 
