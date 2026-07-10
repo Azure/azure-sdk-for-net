@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 AutoscaleSettingResourceCollection result = AutoscaleSettingResourceCollection.FromResponse(response);
-                yield return Page<AutoscaleSettingData>.FromValues((IReadOnlyList<AutoscaleSettingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AutoscaleSettingData>.FromValues((IReadOnlyList<AutoscaleSettingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

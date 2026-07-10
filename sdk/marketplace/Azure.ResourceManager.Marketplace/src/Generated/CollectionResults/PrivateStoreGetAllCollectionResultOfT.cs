@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Marketplace
                     yield break;
                 }
                 PrivateStoreList result = PrivateStoreList.FromResponse(response);
-                yield return Page<PrivateStoreData>.FromValues((IReadOnlyList<PrivateStoreData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PrivateStoreData>.FromValues((IReadOnlyList<PrivateStoreData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

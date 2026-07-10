@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Datadog
                     yield break;
                 }
                 MonitoredSubscriptionPropertiesList result = MonitoredSubscriptionPropertiesList.FromResponse(response);
-                yield return Page<DatadogMonitoredSubscriptionData>.FromValues((IReadOnlyList<DatadogMonitoredSubscriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DatadogMonitoredSubscriptionData>.FromValues((IReadOnlyList<DatadogMonitoredSubscriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

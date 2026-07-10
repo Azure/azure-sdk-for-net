@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 RunCommandListResult result = RunCommandListResult.FromResponse(response);
-                yield return Page<RunCommandDocumentBase>.FromValues((IReadOnlyList<RunCommandDocumentBase>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RunCommandDocumentBase>.FromValues((IReadOnlyList<RunCommandDocumentBase>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

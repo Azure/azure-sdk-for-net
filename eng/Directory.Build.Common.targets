@@ -18,6 +18,30 @@
            Text="Api Compat cannot be disabled."/>
   </Target>
 
+  <!--
+    ApiCompat is entirely gated on a non-empty ApiCompatVersion (see the '$(ApiCompatVersion)' != '' conditions below),
+    so simply deleting the auto-managed <ApiCompatVersion> element from a project's .csproj would silently disable all
+    ApiCompat enforcement without touching the CODEOWNERS-protected eng/apicompatbaselines files. This target requires
+    the version to be present for GA (non-preview) shipping client libraries so that removal fails the build.
+
+    A first GA (1.0.0) has no prior stable release to compare against, so ApiCompatVersion is legitimately absent there.
+    In the rare case the core team approves running without ApiCompat for an already-GA'd package, add the project name
+    to eng/apicompatbaselines/ApiCompatVersionOptOut.txt, which is CODEOWNERS-protected and therefore requires core team review.
+  -->
+  <Target Name="ValidateApiCompatVersionPresent" BeforeTargets="Build"
+          Condition="'$(ValidateRunApiCompat)' == 'true' and '$(ApiCompatVersion)' == '' and '$(IsShippingClientLibrary)' == 'true' and '$(HasReleaseVersion)' != 'false' and '$(IncludeBuildOutput)' != 'false' and '$(_VersionInProject)' != '1.0.0'">
+    <ReadLinesFromFile File="$(MSBuildThisFileDirectory)apicompatbaselines\ApiCompatVersionOptOut.txt"
+                       Condition="Exists('$(MSBuildThisFileDirectory)apicompatbaselines\ApiCompatVersionOptOut.txt')">
+      <Output TaskParameter="Lines" ItemName="_ApiCompatVersionOptOutLine" />
+    </ReadLinesFromFile>
+    <ItemGroup>
+      <_ApiCompatVersionOptOutMatch Include="@(_ApiCompatVersionOptOutLine)"
+                                    Condition="'%(Identity)' == '$(MSBuildProjectName)'" />
+    </ItemGroup>
+    <Error Condition="'@(_ApiCompatVersionOptOutMatch)' == ''"
+           Text="ApiCompatVersion is missing from $(MSBuildProjectName). It is required for GA (non-preview) libraries and is managed automatically by eng/scripts/Update-PkgVersion.ps1 - do not delete it. If the core team has approved shipping this package without ApiCompat, add '$(MSBuildProjectName)' to eng/apicompatbaselines/ApiCompatVersionOptOut.txt (CODEOWNERS-protected)." />
+  </Target>
+
   <PropertyGroup>
     <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
 

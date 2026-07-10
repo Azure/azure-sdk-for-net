@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning;
@@ -28,7 +29,7 @@ namespace Azure.Provisioning.ContainerInstance
         /// <summary> Creates a new ContainerGroupProfileRevision. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerGroupProfileRevision(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerInstance/containerGroupProfiles/revisions", resourceVersion ?? "2025-09-01")
+        internal ContainerGroupProfileRevision(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerInstance/containerGroupProfiles/revisions", resourceVersion ?? "2025-09-01")
         {
         }
 
@@ -67,7 +68,7 @@ namespace Azure.Provisioning.ContainerInstance
             }
         }
 
-        /// <summary> Gets or sets the Tags. </summary>
+        /// <summary> Gets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
             get
@@ -75,14 +76,9 @@ namespace Azure.Provisioning.ContainerInstance
                 Initialize();
                 return _tags;
             }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
+        /// <summary> Gets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
@@ -90,14 +86,9 @@ namespace Azure.Provisioning.ContainerInstance
                 Initialize();
                 return _location;
             }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal ContainerGroupProfileProperties Properties
         {
             get
@@ -105,25 +96,15 @@ namespace Azure.Provisioning.ContainerInstance
                 Initialize();
                 return _properties;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
-            }
         }
 
-        /// <summary> Gets or sets the Zones. </summary>
+        /// <summary> Gets the Zones. </summary>
         public BicepList<string> Zones
         {
             get
             {
                 Initialize();
                 return _zones;
-            }
-            set
-            {
-                Initialize();
-                _zones.Assign(value);
             }
         }
 
@@ -142,6 +123,177 @@ namespace Azure.Provisioning.ContainerInstance
             }
         }
 
+        /// <summary> Gets or sets the Sku. </summary>
+        public BicepValue<ContainerGroupSku> Sku
+        {
+            get
+            {
+                return Properties.Sku;
+            }
+        }
+
+        /// <summary> Gets or sets the EncryptionProperties. </summary>
+        public ContainerGroupEncryptionProperties EncryptionProperties
+        {
+            get
+            {
+                return Properties.EncryptionProperties;
+            }
+        }
+
+        /// <summary> Gets or sets the Containers. </summary>
+        public BicepList<ContainerInstanceContainer> Containers
+        {
+            get
+            {
+                return Properties.Containers;
+            }
+        }
+
+        /// <summary> Gets or sets the InitContainers. </summary>
+        public BicepList<InitContainerDefinitionContent> InitContainers
+        {
+            get
+            {
+                return Properties.InitContainers;
+            }
+        }
+
+        /// <summary> Gets or sets the Extensions. </summary>
+        public BicepList<DeploymentExtensionSpec> Extensions
+        {
+            get
+            {
+                return Properties.Extensions;
+            }
+        }
+
+        /// <summary> Gets or sets the ImageRegistryCredentials. </summary>
+        public BicepList<ContainerGroupImageRegistryCredential> ImageRegistryCredentials
+        {
+            get
+            {
+                return Properties.ImageRegistryCredentials;
+            }
+        }
+
+        /// <summary> Gets or sets the RestartPolicy. </summary>
+        public BicepValue<ContainerGroupRestartPolicy> RestartPolicy
+        {
+            get
+            {
+                return Properties.RestartPolicy;
+            }
+        }
+
+        /// <summary> Gets or sets the ShutdownGracePeriod. </summary>
+        public BicepValue<DateTimeOffset> ShutdownGracePeriod
+        {
+            get
+            {
+                return Properties.ShutdownGracePeriod;
+            }
+        }
+
+        /// <summary> Gets or sets the IPAddress. </summary>
+        public ContainerGroupIPAddress IPAddress
+        {
+            get
+            {
+                return Properties.IPAddress;
+            }
+        }
+
+        /// <summary> Gets or sets the TimeToLive. </summary>
+        public BicepValue<DateTimeOffset> TimeToLive
+        {
+            get
+            {
+                return Properties.TimeToLive;
+            }
+        }
+
+        /// <summary> Gets or sets the OSType. </summary>
+        public BicepValue<ContainerInstanceOperatingSystemType> OSType
+        {
+            get
+            {
+                return Properties.OSType;
+            }
+        }
+
+        /// <summary> Gets or sets the Volumes. </summary>
+        public BicepList<ContainerVolume> Volumes
+        {
+            get
+            {
+                return Properties.Volumes;
+            }
+        }
+
+        /// <summary> Gets or sets the Priority. </summary>
+        public BicepValue<ContainerGroupPriority> Priority
+        {
+            get
+            {
+                return Properties.Priority;
+            }
+        }
+
+        /// <summary> Gets or sets the SecurityContext. </summary>
+        public ContainerSecurityContextDefinition SecurityContext
+        {
+            get
+            {
+                return Properties.SecurityContext;
+            }
+        }
+
+        /// <summary> Gets the Revision. </summary>
+        public BicepValue<int> Revision
+        {
+            get
+            {
+                return Properties.Revision;
+            }
+        }
+
+        /// <summary> Gets the RegisteredRevisions. </summary>
+        public BicepList<int> RegisteredRevisions
+        {
+            get
+            {
+                return Properties.RegisteredRevisions;
+            }
+        }
+
+        /// <summary> Gets or sets the UseKrypton. </summary>
+        public BicepValue<bool> UseKrypton
+        {
+            get
+            {
+                return Properties.UseKrypton;
+            }
+        }
+
+        /// <summary> Gets or sets the LogAnalytics. </summary>
+        public ContainerGroupLogAnalytics DiagnosticsLogAnalytics
+        {
+            get
+            {
+                return Properties.DiagnosticsLogAnalytics;
+            }
+        }
+
+        /// <summary> Gets or sets the CcePolicy. </summary>
+        public BicepValue<string> ConfidentialComputeCcePolicy
+        {
+            get
+            {
+                return Properties.ConfidentialComputeCcePolicy;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ContainerGroupProfileRevision. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -150,7 +302,7 @@ namespace Azure.Provisioning.ContainerInstance
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _properties = DefineModelProperty<ContainerGroupProfileProperties>(nameof(Properties), new string[] { "properties" });
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
             _parent = DefineResource<ContainerGroupProfile>("Parent", new string[] { "parent" }, isRequired: true);

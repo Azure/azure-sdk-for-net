@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ImpactReporting
                     yield break;
                 }
                 WorkloadImpactListResult result = WorkloadImpactListResult.FromResponse(response);
-                yield return Page<WorkloadImpactData>.FromValues((IReadOnlyList<WorkloadImpactData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WorkloadImpactData>.FromValues((IReadOnlyList<WorkloadImpactData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

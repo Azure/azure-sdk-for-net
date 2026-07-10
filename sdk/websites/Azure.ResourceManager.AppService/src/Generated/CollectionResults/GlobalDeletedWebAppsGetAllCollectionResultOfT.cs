@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 DeletedWebAppListResult result = DeletedWebAppListResult.FromResponse(response);
-                yield return Page<DeletedSiteData>.FromValues((IReadOnlyList<DeletedSiteData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DeletedSiteData>.FromValues((IReadOnlyList<DeletedSiteData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 AppServiceSiteContainerListResult result = AppServiceSiteContainerListResult.FromResponse(response);
-                yield return Page<SiteContainerData>.FromValues((IReadOnlyList<SiteContainerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SiteContainerData>.FromValues((IReadOnlyList<SiteContainerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 SqlPrivateLinkResourceListResult result = SqlPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<SqlPrivateLinkResourceData>.FromValues((IReadOnlyList<SqlPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SqlPrivateLinkResourceData>.FromValues((IReadOnlyList<SqlPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
