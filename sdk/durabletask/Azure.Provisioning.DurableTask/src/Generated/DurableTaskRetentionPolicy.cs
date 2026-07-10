@@ -94,7 +94,7 @@ namespace Azure.Provisioning.DurableTask
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true, isRequired: true, defaultValue: "default");
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DurableTaskRetentionPolicyProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<DurableTaskScheduler>("Parent", new string[] { "parent" }, isRequired: true);

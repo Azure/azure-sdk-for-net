@@ -66,7 +66,7 @@ namespace Azure.Provisioning.DurableTask
         public DurableTaskPrivateLinkResourceProperties() { }
         public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } }
         public Azure.Provisioning.BicepList<string> RequiredMembers { get { throw null; } }
-        public Azure.Provisioning.BicepList<string> RequiredZoneNames { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> RequiredZoneNames { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DurableTaskPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -157,7 +157,7 @@ namespace Azure.Provisioning.DurableTask
     {
         internal DurableTaskSchedulerPrivateLinkResource() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.DurableTask.DurableTaskScheduler Parent { get { throw null; } set { } }
         public Azure.Provisioning.DurableTask.DurableTaskPrivateLinkResourceProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }

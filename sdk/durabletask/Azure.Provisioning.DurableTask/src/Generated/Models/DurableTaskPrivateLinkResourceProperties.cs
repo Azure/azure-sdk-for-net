@@ -42,18 +42,13 @@ namespace Azure.Provisioning.DurableTask
             }
         }
 
-        /// <summary> Gets or sets the RequiredZoneNames. </summary>
+        /// <summary> Gets the RequiredZoneNames. </summary>
         public BicepList<string> RequiredZoneNames
         {
             get
             {
                 Initialize();
                 return _requiredZoneNames;
-            }
-            set
-            {
-                Initialize();
-                _requiredZoneNames.Assign(value);
             }
         }
 
