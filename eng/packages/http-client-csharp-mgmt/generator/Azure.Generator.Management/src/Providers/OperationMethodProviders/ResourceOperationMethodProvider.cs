@@ -49,7 +49,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private readonly string _methodName;
         private readonly ResourceOperationKind _resourceOperationKind;
-        private readonly bool _hasTypedLroResultForPublicSurface;
+        private readonly bool _hasTypedResultForPublicSurface;
         private protected readonly CSharpType? _originalBodyType;
         private protected readonly CSharpType? _returnBodyType;
         private protected readonly ResourceClientProvider? _returnBodyResourceClient;
@@ -104,7 +104,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             bool isLongRunningOperation = false;
             bool isFakeLongRunningOperation = false;
-            bool hasTypedLroResultForPublicSurface = false;
+            bool hasTypedResultForPublicSurface = false;
             InitializeLroFlags(
                 _serviceMethod,
                 _returnBodyType,
@@ -112,10 +112,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 forceLro: forceLro,
                 ref isLongRunningOperation,
                 ref isFakeLongRunningOperation,
-                ref hasTypedLroResultForPublicSurface);
+                ref hasTypedResultForPublicSurface);
             IsLongRunningOperation = isLongRunningOperation;
             IsFakeLongRunningOperation = isFakeLongRunningOperation;
-            _hasTypedLroResultForPublicSurface = hasTypedLroResultForPublicSurface;
+            _hasTypedResultForPublicSurface = hasTypedResultForPublicSurface;
 
             _clientDiagnosticsField = restClientInfo.Diagnostics;
             _restClientField = restClientInfo.RestClient;
@@ -130,17 +130,16 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             in bool forceLro,
             ref bool isLongRunningOperation,
             ref bool isFakeLongRunningOperation,
-            ref bool hasTypedLroResultForPublicSurface)
+            ref bool hasTypedResultForPublicSurface)
         {
             isLongRunningOperation = serviceMethod.IsLongRunningOperation();
             // when the method is not a real LRO, but we have to force it to be an LRO, the fake lro flag is true.
             isFakeLongRunningOperation = forceLro && !isLongRunningOperation;
 
-            var shouldIgnoreLroFinalResultTypeForPublicSurface =
-                resourceOperationKind == ResourceOperationKind.Delete &&
-                (isLongRunningOperation || isFakeLongRunningOperation);
-            hasTypedLroResultForPublicSurface =
-                returnBodyType != null && !shouldIgnoreLroFinalResultTypeForPublicSurface;
+            hasTypedResultForPublicSurface =
+                returnBodyType != null &&
+                !(resourceOperationKind == ResourceOperationKind.Delete &&
+                  (isLongRunningOperation || isFakeLongRunningOperation));
         }
 
         private static void InitializeTypeInfo(
@@ -203,12 +202,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private CSharpType? _returnType;
         public CSharpType ReturnType => _returnType ??= BuildReturnType();
 
-        private bool HasTypedLroResultForPublicSurface =>
-            _hasTypedLroResultForPublicSurface;
+        private bool HasTypedResultForPublicSurface =>
+            _hasTypedResultForPublicSurface;
 
         protected virtual CSharpType BuildReturnType()
         {
-            var effectiveReturnBodyType = HasTypedLroResultForPublicSurface ? _returnBodyType : null;
+            var effectiveReturnBodyType = HasTypedResultForPublicSurface ? _returnBodyType : null;
             return effectiveReturnBodyType.WrapResponse(IsLongRunningOperation || IsFakeLongRunningOperation).WrapAsync(_isAsync);
         }
 
@@ -331,12 +330,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             // For delete LRO operations, the final result is suppressed from the public surface, so we must
             // use non-generic pipeline processing to produce a plain Response that matches the non-generic
             // ArmOperation constructor.
-            if (_originalBodyType != null && !IsLongRunningOperation && HasTypedLroResultForPublicSurface)
+            if (!IsLongRunningOperation && HasTypedResultForPublicSurface)
             {
                 return ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                     messageVariable,
                     contextVariable,
-                    _originalBodyType,
+                    _originalBodyType!,
                     _isAsync,
                     out responseVariable);
             }
@@ -435,7 +434,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         {
             var statements = new List<MethodBodyStatement>();
 
-            var armOperationType = HasTypedLroResultForPublicSurface
+            var armOperationType = HasTypedResultForPublicSurface
                 ? ManagementClientGenerator.Instance.OutputLibrary.ArmOperationOfT.Type
                     .MakeGenericType([_returnBodyType!])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
@@ -447,7 +446,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             ValueExpression responseValueExpression = responseVariable;
             // when the response is wrapped by a resource, we need to construct it from the response value.
-            if (HasTypedLroResultForPublicSurface && _returnBodyResourceClient != null)
+            if (HasTypedResultForPublicSurface && _returnBodyResourceClient != null)
             {
                 responseValueExpression = ResponseSnippets.FromValue(
                     New.Instance(
@@ -478,7 +477,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var finalStateVia = _serviceMethod.GetOperationFinalStateVia();
 
-            var armOperationType = HasTypedLroResultForPublicSurface
+            var armOperationType = HasTypedResultForPublicSurface
                 ? ManagementClientGenerator.Instance.OutputLibrary.ArmOperationOfT.Type
                     .MakeGenericType([_returnBodyType!])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
@@ -499,13 +498,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             }
 
             ValueExpression? operationSourceInstance = null;
-            if (HasTypedLroResultForPublicSurface && _returnBodyResourceClient != null)
+            if (HasTypedResultForPublicSurface && _returnBodyResourceClient != null)
             {
                 // Resource type - pass client to operation source constructor
                 var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.GetOperationSource(_returnBodyResourceClient).Type;
                 operationSourceInstance = New.Instance(operationSourceType, This.As<ArmResource>().Client());
             }
-            else if (HasTypedLroResultForPublicSurface && _originalBodyType != null)
+            else if (HasTypedResultForPublicSurface && _originalBodyType != null)
             {
                 // Non-resource type - use parameterless constructor
                 var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_originalBodyType].Type;
@@ -533,7 +532,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression operationVariable,
             ParameterProvider cancellationTokenParameter)
         {
-            var waitMethod = HasTypedLroResultForPublicSurface
+            var waitMethod = HasTypedResultForPublicSurface
                 ? (_isAsync ? "WaitForCompletionAsync" : "WaitForCompletion")
                 : (_isAsync ? "WaitForCompletionResponseAsync" : "WaitForCompletionResponse");
 
@@ -570,7 +569,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 : [nullCheckStatement];
 
             // If the return type has been wrapped by a resource client, we need to return the resource client type.
-            if (_returnBodyResourceClient != null && HasTypedLroResultForPublicSurface)
+            if (_returnBodyResourceClient != null && HasTypedResultForPublicSurface)
             {
                 var returnValueExpression = New.Instance(
                         _returnBodyResourceClient.Type,
