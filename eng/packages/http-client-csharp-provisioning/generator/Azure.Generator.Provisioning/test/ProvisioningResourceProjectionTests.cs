@@ -352,6 +352,53 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void ReadOnlyResourceModelReferencedByWritableParentBodyIsSettable()
+        {
+            var childNameProperty = CreateProperty("Name", isRequired: true);
+            var childValueProperty = CreateProperty("HostName", isRequired: true);
+            var childModel = CreateModel("FrontendEndpoint", [childNameProperty, childValueProperty]);
+            var childListProperty = CreateProperty(
+                "FrontendEndpoints",
+                type: new InputArrayType("array", "ArrayFrontendEndpoint", childModel));
+            var parentModel = CreateModel("FrontDoor", [childListProperty]);
+            var readOnlyChildResource = CreateMetadata(
+                childModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/frontDoors/{frontDoorName}/frontendEndpoints/{frontendEndpointName}",
+                "Microsoft.Test/frontDoors/frontendEndpoints",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)],
+                parentResourceId: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/frontDoors/{frontDoorName}");
+            var writableParentResource = CreateMetadata(
+                parentModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/frontDoors/{frontDoorName}",
+                "Microsoft.Test/frontDoors",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, childModel]);
+            var parentProvider = CreateResourceProvider(writableParentResource);
+            var childProvider = CreateResourceProvider(readOnlyChildResource, isSettableOverride: true);
+            RegisterResourceProviders(parentProvider, childProvider);
+
+            var childNameInfo = ((IProvisioningPropertyInfo)childProvider).GetProvisioningPropertyInfo(childNameProperty);
+            var childValueInfo = ((IProvisioningPropertyInfo)childProvider).GetProvisioningPropertyInfo(childValueProperty);
+
+            Assert.That(ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(childModel), Is.True);
+            Assert.That(childProvider.Constructors.Single().Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
+            Assert.That(childNameInfo, Is.Not.Null);
+            Assert.That(childNameInfo!.IsSettable, Is.True);
+            Assert.That(childValueInfo, Is.Not.Null);
+            Assert.That(childValueInfo!.IsOutput, Is.False);
+            Assert.That(childValueInfo.IsRequired, Is.True);
+            Assert.That(childValueInfo.IsSettable, Is.True);
+        }
+
+        [Test]
         public void SingletonResourceNameIsNotSettable()
         {
             var nameProperty = CreateProperty("Name", isRequired: true);
@@ -673,10 +720,10 @@ namespace Azure.Generator.Provisioning.Tests
                 .Invoke(baseModel, [derivedModel]);
         }
 
-        private static ProvisioningResourceProvider CreateResourceProvider(ArmResourceMetadata metadata)
+        private static ProvisioningResourceProvider CreateResourceProvider(ArmResourceMetadata metadata, bool? isSettableOverride = null)
         {
             var projection = ProvisioningResourceProjection.Create([metadata])[0];
-            return new ProvisioningResourceProvider(projection, projection.IsSettable);
+            return new ProvisioningResourceProvider(projection, isSettableOverride ?? projection.IsSettable);
         }
 
         private static InputModelProperty CreateProperty(string name, bool isRequired = false, bool isReadOnly = false, bool isDiscriminator = false, InputType? type = null, string? serializedName = null)

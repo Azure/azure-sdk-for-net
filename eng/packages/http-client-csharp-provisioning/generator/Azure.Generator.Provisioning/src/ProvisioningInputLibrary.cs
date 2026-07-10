@@ -128,11 +128,11 @@ namespace Azure.Generator.Provisioning
             return (models, enums, modelSettableUsage);
         }
 
-        private static void EnqueueResourceProperties(ProvisioningResourceProjection resource, Queue<(InputType Type, bool IsSettable)> queue)
+        private static void EnqueueResourceProperties(ProvisioningResourceProjection resource, bool isSettable, Queue<(InputType Type, bool IsSettable)> queue)
         {
             foreach (var property in GetResourceProperties(resource))
             {
-                queue.Enqueue((property.Type, resource.IsSettable && !property.IsReadOnly));
+                queue.Enqueue((property.Type, isSettable && !property.IsReadOnly));
             }
         }
 
@@ -155,15 +155,16 @@ namespace Azure.Generator.Provisioning
                     if (resourceProjectionInfosByModel.TryGetValue(model, out var resources))
                     {
                         var isResourceSettable = resources.Any(r => r.IsSettable);
-                        modelSettableUsage[model] = isResourceSettable || (modelSettableUsage.TryGetValue(model, out var existingResourceUsage) && existingResourceUsage);
+                        var isSettable = item.IsSettable || isResourceSettable;
+                        modelSettableUsage[model] = isSettable || (modelSettableUsage.TryGetValue(model, out var existingResourceUsage) && existingResourceUsage);
                         foreach (var resource in resources)
                         {
-                            EnqueueResourceProperties(resource, queue);
+                            EnqueueResourceProperties(resource, isSettable, queue);
                         }
                         if (model.BaseModel != null)
-                            queue.Enqueue((model.BaseModel, isResourceSettable));
+                            queue.Enqueue((model.BaseModel, isSettable));
                         foreach (var derived in model.DerivedModels)
-                            queue.Enqueue((derived, isResourceSettable));
+                            queue.Enqueue((derived, isSettable));
                         break;
                     }
 
