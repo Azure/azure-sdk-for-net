@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of <see cref="CostManagementSettings"/>. </summary>
         /// <param name="granularityLevel"> Settings for granularity level. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CostManagementSettings(GranularityLevel? granularityLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CostManagementSettings(RecoveryServicesCostGranularityLevel? granularityLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GranularityLevel = granularityLevel;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Settings for granularity level. </summary>
-        public GranularityLevel? GranularityLevel { get; set; }
+        public RecoveryServicesCostGranularityLevel? GranularityLevel { get; set; }
     }
 }
