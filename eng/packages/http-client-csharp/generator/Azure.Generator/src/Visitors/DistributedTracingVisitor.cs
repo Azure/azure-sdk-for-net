@@ -372,8 +372,8 @@ namespace Azure.Generator.Visitors
             return true;
         }
 
-        private bool IsClientDiagnosticsProperty(PropertyProvider property)
-            => property.Type.Equals(ClientDiagnosticsType);
+        private static bool IsClientDiagnosticsProperty(PropertyProvider property)
+            => property.Name == ClientDiagnosticsPropertyName || property.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true;
 
         private static bool ShouldSkipType(TypeProvider typeProvider)
         {

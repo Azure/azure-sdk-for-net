@@ -166,6 +166,67 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual(Helpers.GetExpectedFromFile(isProtocolMethod.ToString()), result);
         }
 
+        // Regression test for https://github.com/Azure/azure-sdk-for-net/pull/58979.
+        // Libraries such as Azure.AI.Agents.Persistent declare the "ClientDiagnostics" property in
+        // hand-written custom code. The custom property's CSharpType is not equal to the framework
+        // ClientDiagnostics type injected into the visitor, so matching the property by type threw
+        // "Sequence contains no matching element" during regeneration. The property must be matched
+        // by name so that a custom-declared ClientDiagnostics property is still found.
+        [Test]
+        public void TestProtocolMethodWithCustomTypedClientDiagnosticsProperty()
+        {
+            var visitor = new TestDistributedTracingVisitor();
+
+            // load the input
+            List<InputMethodParameter> parameters =
+            [
+                InputFactory.MethodParameter(
+                "p1",
+                InputPrimitiveType.String)
+            ];
+            var basicOperation = InputFactory.Operation(
+                "foo",
+                parameters: parameters);
+            var basicServiceMethod = InputFactory.BasicServiceMethod("foo", basicOperation, parameters: parameters);
+            var inputClient = InputFactory.Client("TestClient", methods: [basicServiceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            // create the client provider
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            // Replace the generated ClientDiagnostics property with one whose CSharpType differs from
+            // the framework ClientDiagnostics type injected into the visitor, simulating a
+            // ClientDiagnostics property declared in custom code.
+            var customTypedClientDiagnostics = new PropertyProvider(
+                $"The ClientDiagnostics is used to provide tracing support for the client library.",
+                MethodSignatureModifiers.Internal,
+                new CSharpType(typeof(object)),
+                ClientDiagnosticsPropertyName,
+                new AutoPropertyBody(false),
+                clientProvider!);
+            clientProvider!.Update(properties: [customTypedClientDiagnostics]);
+
+            // create a protocol method to test the visitor
+            var methodSignature = new MethodSignature(
+                "Foo",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async,
+                AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.ClientResponseType,
+                $"The response returned from the service.",
+                [new ParameterProvider("p1", $"p1", AzureClientGenerator.Instance.TypeFactory.RequestContentApi.RequestContentType)]);
+            var bodyStatements = InvokeConsoleWriteLine(Literal("Hello World"));
+            var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, ScmMethodKind.Protocol);
+
+            // The visitor must not throw and must still wrap the body in a diagnostic scope.
+            ScmMethodProvider? updatedMethod = null;
+            Assert.DoesNotThrow(() => updatedMethod = visitor.InvokeVisitMethod(method));
+            Assert.IsNotNull(updatedMethod?.BodyStatements);
+
+            var result = updatedMethod!.BodyStatements!.ToDisplayString();
+            Assert.IsTrue(result.Contains("ClientDiagnostics.CreateScope(\"TestClient.Foo\")"),
+                $"Protocol method should be wrapped with a diagnostic scope. Actual: {result}");
+        }
+
         // This test validates that the "Async" suffix is stripped from the scope name for a protocol
         // method whose name ends in "Async", since GetScopeName() handles the stripping centrally.
         [Test]
