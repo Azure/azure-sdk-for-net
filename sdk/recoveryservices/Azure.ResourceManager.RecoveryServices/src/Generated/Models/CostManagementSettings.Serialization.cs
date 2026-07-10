@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            RecoveryServicesCostGranularityLevel? granularityLevel = default;
+            GranularityLevel? granularityLevel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    granularityLevel = new RecoveryServicesCostGranularityLevel(prop.Value.GetString());
+                    granularityLevel = new GranularityLevel(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

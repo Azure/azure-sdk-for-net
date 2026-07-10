@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public IList<string> ResourceGuardOperationRequests { get; }
 
         /// <summary> Settings for granularity level. </summary>
-        public RecoveryServicesCostGranularityLevel? CostManagementGranularityLevel
+        public GranularityLevel? CostManagementGranularityLevel
         {
             get
             {
