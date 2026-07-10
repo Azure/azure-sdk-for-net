@@ -32,6 +32,9 @@ public partial class AIProjectModels
     /// <returns> The response returned from the service. </returns>
     public virtual ClientResult<ModelVersion> UpdateModelVersion(string name, string version, UpdateModelVersionOptions updateOptions, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(version, nameof(version));
+        Argument.AssertNotNull(updateOptions, nameof(updateOptions));
         BinaryData data = ModelReaderWriter.Write(updateOptions, ModelReaderWriterOptions.Json, AzureAIProjectsContext.Default);
         using BinaryContent content = BinaryContent.Create(data);
         ClientResult result = UpdateModelVersion(
@@ -61,6 +64,9 @@ public partial class AIProjectModels
     /// <returns> The response returned from the service. </returns>
     public virtual async Task<ClientResult<ModelVersion>> UpdateModelVersionAsync(string name, string version, UpdateModelVersionOptions updateOptions, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(version, nameof(version));
+        Argument.AssertNotNull(updateOptions, nameof(updateOptions));
         BinaryData data = ModelReaderWriter.Write(updateOptions, ModelReaderWriterOptions.Json, AzureAIProjectsContext.Default);
         using BinaryContent content = BinaryContent.Create(data);
         ClientResult result = await UpdateModelVersionAsync(
@@ -79,9 +85,13 @@ public partial class AIProjectModels
     /// <param name="name">Model name. </param>
     /// <param name="version">Model version. </param>
     /// <returns>Uploaded model URI</returns>
-    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or  is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
     public virtual Uri UploadModel(string path, string name, string version)
     {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(version, nameof(version));
+        Argument.AssertNotNullOrEmpty(path, nameof(path));
         if (!Directory.Exists(path))
         {
             throw new ArgumentException($"The provided folder does not exist: {path}");
@@ -120,9 +130,13 @@ public partial class AIProjectModels
     /// <param name="name">Model name. </param>
     /// <param name="version">Model version. </param>
     /// <returns>Uploaded model URI</returns>
-    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or  is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
     public virtual async Task<Uri> UploadModelAsync(string path, string name, string version)
     {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(version, nameof(version));
+        Argument.AssertNotNullOrEmpty(path, nameof(path));
         if (!Directory.Exists(path))
         {
             throw new ArgumentException($"The provided folder does not exist: {path}");

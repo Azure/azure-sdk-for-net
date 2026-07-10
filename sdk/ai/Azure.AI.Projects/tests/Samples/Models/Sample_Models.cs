@@ -45,7 +45,7 @@ public class Sample_Models : SamplesBase
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
-        AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
+        AIProjectClient projectClient = new(new Uri(projectEndpoint), new AzureCliCredential());
         string modelName = "sample-model";
         string modelVersion = "1";
         #endregion
@@ -55,7 +55,7 @@ public class Sample_Models : SamplesBase
         File.WriteAllBytes(Path.Combine(dataFolder.FullName, "weights.bin"), BinaryData.FromString("hello-foundry-model").ToArray());
         File.WriteAllText(Path.Combine(dataFolder.FullName, "config.json"), "{\"sample\": true}");
         Uri dataUri = await projectClient.Models.UploadModelAsync(path: dataFolder.FullName, name: modelName, version: modelVersion);
-        Console.WriteLine($"Created data set. Uri: {dataUri}");
+        Console.WriteLine($"Uploaded model artifacts. Uri: {dataUri}");
         Directory.Delete(dataFolder.FullName, true);
         #endregion
         #region Snippet:Sample_CreateModel_Models_Async
@@ -65,7 +65,7 @@ public class Sample_Models : SamplesBase
             Description = "Sample model registered from Azure.AI.Projects",
         };
         modelVersionObj.Tags["source"] = "Model from sample";
-        CreateAsyncResponse createResponse = await projectClient.Models.CreateModelVersionRequestAsync(
+        await projectClient.Models.CreateModelVersionRequestAsync(
             name: modelName,
             version: modelVersion,
             modelVersion: modelVersionObj);
@@ -92,7 +92,7 @@ public class Sample_Models : SamplesBase
         }
         if (retrievedModel is null)
         {
-            throw new InvalidOperationException($"The model {modelName} v. {modelVersion} did not registered successfully.");
+            throw new InvalidOperationException($"The model {modelName} v. {modelVersion} did not register successfully.");
         }
         Console.WriteLine($"Model {retrievedModel.Name}, v. {retrievedModel.Version}.");
         ModelCredentialRequest credentialRequest = new(dataUri);
@@ -111,9 +111,9 @@ public class Sample_Models : SamplesBase
             updateOptions: updateOptions
         );
         Console.WriteLine($"The model was updated. New description is: {updatedModel.Description}. Tags:");
-        foreach (KeyValuePair<string, string> keyValyePair in updatedModel.Tags)
+        foreach (KeyValuePair<string, string> keyValuePair in updatedModel.Tags)
         {
-            Console.WriteLine($"    Key: {keyValyePair.Key} Value: {keyValyePair.Value}");
+            Console.WriteLine($"    Key: {keyValuePair.Key} Value: {keyValuePair.Value}");
         }
         #endregion
         #region Snippet:Sample_ListModelVersions_Models_Async
@@ -146,7 +146,7 @@ public class Sample_Models : SamplesBase
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
-        AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
+        AIProjectClient projectClient = new(new Uri(projectEndpoint), new AzureCliCredential());
         string modelName = "sample-model";
         string modelVersion = "1";
         Cleanup(projectClient, modelName, modelVersion);
@@ -155,7 +155,7 @@ public class Sample_Models : SamplesBase
         File.WriteAllBytes(Path.Combine(dataFolder.FullName, "weights.bin"), BinaryData.FromString("hello-foundry-model").ToArray());
         File.WriteAllText(Path.Combine(dataFolder.FullName, "config.json"), "{\"sample\": true}");
         Uri dataUri = projectClient.Models.UploadModel(path: dataFolder.FullName, name: modelName, version: modelVersion);
-        Console.WriteLine($"Created data set. Uri: {dataUri}");
+        Console.WriteLine($"Uploaded model artifacts. Uri: {dataUri}");
         Directory.Delete(dataFolder.FullName, true);
         #endregion
         #region Snippet:Sample_CreateModel_Models_Sync
@@ -165,7 +165,7 @@ public class Sample_Models : SamplesBase
             Description = "Sample model registered from Azure.AI.Projects",
         };
         modelVersionObj.Tags["source"] = "Model from sample";
-        CreateAsyncResponse createResponse = projectClient.Models.CreateModelVersionRequest(
+        projectClient.Models.CreateModelVersionRequest(
             name: modelName,
             version: modelVersion,
             modelVersion: modelVersionObj);
@@ -192,7 +192,7 @@ public class Sample_Models : SamplesBase
         }
         if (retrievedModel is null)
         {
-            throw new InvalidOperationException($"The model {modelName} v. {modelVersion} did not registered successfully.");
+            throw new InvalidOperationException($"The model {modelName} v. {modelVersion} did not register successfully.");
         }
         Console.WriteLine($"Model {retrievedModel.Name}, v. {retrievedModel.Version}.");
         ModelCredentialRequest credentialRequest = new(dataUri);
@@ -211,9 +211,9 @@ public class Sample_Models : SamplesBase
             updateOptions: updateOptions
         );
         Console.WriteLine($"The model was updated. New description is: {updatedModel.Description}. Tags:");
-        foreach (KeyValuePair<string, string> keyValyePair in updatedModel.Tags)
+        foreach (KeyValuePair<string, string> keyValuePair in updatedModel.Tags)
         {
-            Console.WriteLine($"    Key: {keyValyePair.Key} Value: {keyValyePair.Value}");
+            Console.WriteLine($"    Key: {keyValuePair.Key} Value: {keyValuePair.Value}");
         }
         #endregion
         #region Snippet:Sample_ListModelVersions_Models_Sync

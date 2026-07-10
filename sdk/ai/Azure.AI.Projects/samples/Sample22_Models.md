@@ -1,6 +1,6 @@
 # Sample of managing model weights in Azure.AI.Projects.
 
-**Note:** Model weights is an experimental feature, to use it, please disable the `AAIP001` warning.
+**Note:** Model weights are an experimental feature. To use them, please disable the `AAIP001` warning.
 
 ```C#
 #pragma warning disable AAIP001
@@ -25,7 +25,7 @@ DirectoryInfo dataFolder = Directory.CreateDirectory(Path.Combine(Path.GetTempPa
 File.WriteAllBytes(Path.Combine(dataFolder.FullName, "weights.bin"), BinaryData.FromString("hello-foundry-model").ToArray());
 File.WriteAllText(Path.Combine(dataFolder.FullName, "config.json"), "{\"sample\": true}");
 Uri dataUri = projectClient.Models.UploadModel(path: dataFolder.FullName, name: modelName, version: modelVersion);
-Console.WriteLine($"Created data set. Uri: {dataUri}");
+Console.WriteLine($"Uploaded model artifacts. Uri: {dataUri}");
 Directory.Delete(dataFolder.FullName, true);
 ```
 
@@ -35,7 +35,7 @@ DirectoryInfo dataFolder = Directory.CreateDirectory(Path.Combine(Path.GetTempPa
 File.WriteAllBytes(Path.Combine(dataFolder.FullName, "weights.bin"), BinaryData.FromString("hello-foundry-model").ToArray());
 File.WriteAllText(Path.Combine(dataFolder.FullName, "config.json"), "{\"sample\": true}");
 Uri dataUri = await projectClient.Models.UploadModelAsync(path: dataFolder.FullName, name: modelName, version: modelVersion);
-Console.WriteLine($"Created data set. Uri: {dataUri}");
+Console.WriteLine($"Uploaded model artifacts. Uri: {dataUri}");
 Directory.Delete(dataFolder.FullName, true);
 ```
 
@@ -49,7 +49,7 @@ ModelVersion modelVersionObj = new(dataUri)
     Description = "Sample model registered from Azure.AI.Projects",
 };
 modelVersionObj.Tags["source"] = "Model from sample";
-CreateAsyncResponse createResponse = projectClient.Models.CreateModelVersionRequest(
+projectClient.Models.CreateModelVersionRequest(
     name: modelName,
     version: modelVersion,
     modelVersion: modelVersionObj);
@@ -63,7 +63,7 @@ ModelVersion modelVersionObj = new(dataUri)
     Description = "Sample model registered from Azure.AI.Projects",
 };
 modelVersionObj.Tags["source"] = "Model from sample";
-CreateAsyncResponse createResponse = await projectClient.Models.CreateModelVersionRequestAsync(
+await projectClient.Models.CreateModelVersionRequestAsync(
     name: modelName,
     version: modelVersion,
     modelVersion: modelVersionObj);
@@ -94,7 +94,7 @@ while (DateTime.UtcNow < deadline)
 }
 if (retrievedModel is null)
 {
-    throw new InvalidOperationException($"The model {modelName} v. {modelVersion} did not registered successfully.");
+    throw new InvalidOperationException($"The model {modelName} v. {modelVersion} did not register successfully.");
 }
 Console.WriteLine($"Model {retrievedModel.Name}, v. {retrievedModel.Version}.");
 ModelCredentialRequest credentialRequest = new(dataUri);
@@ -125,7 +125,7 @@ while (DateTime.UtcNow < deadline)
 }
 if (retrievedModel is null)
 {
-    throw new InvalidOperationException($"The model {modelName} v. {modelVersion} did not registered successfully.");
+    throw new InvalidOperationException($"The model {modelName} v. {modelVersion} did not register successfully.");
 }
 Console.WriteLine($"Model {retrievedModel.Name}, v. {retrievedModel.Version}.");
 ModelCredentialRequest credentialRequest = new(dataUri);
@@ -148,9 +148,9 @@ ModelVersion updatedModel = projectClient.Models.UpdateModelVersion(
     updateOptions: updateOptions
 );
 Console.WriteLine($"The model was updated. New description is: {updatedModel.Description}. Tags:");
-foreach (KeyValuePair<string, string> keyValyePair in updatedModel.Tags)
+foreach (KeyValuePair<string, string> keyValuePair in updatedModel.Tags)
 {
-    Console.WriteLine($"    Key: {keyValyePair.Key} Value: {keyValyePair.Value}");
+    Console.WriteLine($"    Key: {keyValuePair.Key} Value: {keyValuePair.Value}");
 }
 ```
 
@@ -167,9 +167,9 @@ ModelVersion updatedModel = await projectClient.Models.UpdateModelVersionAsync(
     updateOptions: updateOptions
 );
 Console.WriteLine($"The model was updated. New description is: {updatedModel.Description}. Tags:");
-foreach (KeyValuePair<string, string> keyValyePair in updatedModel.Tags)
+foreach (KeyValuePair<string, string> keyValuePair in updatedModel.Tags)
 {
-    Console.WriteLine($"    Key: {keyValyePair.Key} Value: {keyValyePair.Value}");
+    Console.WriteLine($"    Key: {keyValuePair.Key} Value: {keyValuePair.Value}");
 }
 ```
 

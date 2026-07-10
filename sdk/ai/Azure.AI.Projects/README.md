@@ -646,7 +646,7 @@ ModelVersion modelVersionObj = new(dataUri)
     Description = "Sample model registered from Azure.AI.Projects",
 };
 modelVersionObj.Tags["source"] = "Model from sample";
-CreateAsyncResponse createResponse = await projectClient.Models.CreateModelVersionRequestAsync(
+await projectClient.Models.CreateModelVersionRequestAsync(
     name: modelName,
     version: modelVersion,
     modelVersion: modelVersionObj);
@@ -666,9 +666,9 @@ ModelVersion updatedModel = await projectClient.Models.UpdateModelVersionAsync(
     updateOptions: updateOptions
 );
 Console.WriteLine($"The model was updated. New description is: {updatedModel.Description}. Tags:");
-foreach (KeyValuePair<string, string> keyValyePair in updatedModel.Tags)
+foreach (KeyValuePair<string, string> keyValuePair in updatedModel.Tags)
 {
-    Console.WriteLine($"    Key: {keyValyePair.Key} Value: {keyValyePair.Value}");
+    Console.WriteLine($"    Key: {keyValuePair.Key} Value: {keyValuePair.Value}");
 }
 ```
 

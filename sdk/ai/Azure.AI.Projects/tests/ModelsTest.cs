@@ -44,7 +44,6 @@ public class ModelsTest : ProjectsClientTestBase
     [RecordedTest]
     public async Task TestModelDeployment()
     {
-        // Run TestUploadData to get the MODEL_WEIGHTS_URI. set model names a
         AIProjectClient projectClient = GetTestProjectClient();
         Uri blob = await MakeBlob(projectClient, $"{MODEL_NAME}1", MODEL_VERSION);
         ModelVersion modelVersionObj = new(blob)
