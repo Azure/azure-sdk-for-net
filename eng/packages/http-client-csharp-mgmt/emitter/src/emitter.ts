@@ -3,8 +3,6 @@
 
 import { EmitContext } from "@typespec/compiler";
 
-import { CodeModel, CSharpEmitterContext } from "@typespec/http-client-csharp";
-
 import { emitAzureCodeModel } from "@azure-typespec/http-client-csharp";
 import {
   azureSDKContextOptions,
@@ -23,6 +21,10 @@ import {
   fixClientApiVersions
 } from "./api-version-fixer.js";
 
+type CodeModelMutator = NonNullable<Parameters<typeof emitAzureCodeModel>[1]>;
+type AzureCodeModel = Parameters<CodeModelMutator>[0];
+type AzureCSharpEmitterContext = Parameters<CodeModelMutator>[1];
+
 export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   context.options["generator-name"] ??= "ManagementClientGenerator";
   context.options["emitter-extension-path"] ??= import.meta.url;
@@ -32,9 +34,9 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   context.program.reportDiagnostics(filterSuppressedDiagnostics(diagnostics));
 
   function updateCodeModel(
-    codeModel: CodeModel,
-    sdkContext: CSharpEmitterContext
-  ): CodeModel {
+    codeModel: AzureCodeModel,
+    sdkContext: AzureCSharpEmitterContext
+  ): ReturnType<CodeModelMutator> {
     // Transform subscriptionId parameters from client scope to method scope
     // This must happen before other transformations that may depend on method parameters
     transformSubscriptionIdParameters(codeModel);
@@ -57,8 +59,8 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
 }
 
 function setFlattenProperty(
-  codeModel: CodeModel,
-  sdkContext: CSharpEmitterContext
+  codeModel: AzureCodeModel,
+  sdkContext: AzureCSharpEmitterContext
 ): void {
   for (const model of sdkContext.sdkPackage.models) {
     for (const property of model.properties) {
