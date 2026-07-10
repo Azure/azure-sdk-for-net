@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -268,6 +269,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [ModelReaderWriterBuildable(typeof(ResourceWriteCancelEventData))]
     [ModelReaderWriterBuildable(typeof(ResourceWriteFailureEventData))]
     [ModelReaderWriterBuildable(typeof(ResourceWriteSuccessEventData))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData))]
     [ModelReaderWriterBuildable(typeof(ServiceBusActiveMessagesAvailableWithNoListenersEventData))]
     [ModelReaderWriterBuildable(typeof(ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData))]
