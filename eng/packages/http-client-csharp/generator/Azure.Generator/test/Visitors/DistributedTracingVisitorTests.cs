@@ -266,6 +266,8 @@ namespace Azure.Generator.Tests.Visitors
                 new AutoPropertyBody(false),
                 clientProvider!);
             SetOriginalName(renamedClientDiagnostics, ClientDiagnosticsPropertyName);
+            // NOTE: OriginalName is set via reflection because this test project lacks custom-code test
+            // infra to load a real [CodeGenMember] rename. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60907.
             clientProvider!.Update(properties: [renamedClientDiagnostics]);
 
             // create a protocol method to test the visitor
