@@ -59,8 +59,8 @@ namespace Azure.AI.Tests.Shared
                 // The script path and its service argument are passed together as the single pwsh
                 // argument string (see TestEnvironment.BootStrapTestResources), matching the legacy
                 // Azure.Core.TestFramework construction.
-                return Path.Combine(root, "eng", "scripts", $"New-TestResources-Bootstrapper.ps1 {ServiceDirectory}");
-            }
+                var scriptPath = Path.Combine(root, "eng", "scripts", "New-TestResources-Bootstrapper.ps1");
+                return $"-File \"{scriptPath}\" {ServiceDirectory}";
         }
 
         /// <summary>
