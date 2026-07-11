@@ -19,6 +19,7 @@ using OpenAI.VectorStores;
 using RealOpenAI = OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
+#pragma warning disable AAIP001
 
 /// <summary>
 /// Many of these tests are adapted from https://github.com/openai/openai-dotnet/tree/main/tests/Responses.
@@ -565,3 +566,4 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         Assert.That(string.IsNullOrEmpty(response.GetOutputText()), Is.False, "The Agent did not returned a response.");
     }
 }
+#pragma warning restore AAIP001
