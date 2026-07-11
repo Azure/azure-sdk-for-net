@@ -108,9 +108,8 @@ namespace Azure.Generator.Tests.Common
             var newOptionSet = workspace.Options.WithChangedOption(FormattingOptions.NewLine, LanguageNames.CSharp, "\n");
             workspace.TryApplyChanges(workspace.CurrentSolution.WithOptions(newOptionSet));
             Project project = workspace.AddProject("ExistingCode", LanguageNames.CSharp);
-            var generatedDirectoryPrefix = Path.GetFullPath(generatedDirectory)
-                .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
-                + Path.DirectorySeparatorChar;
+            var generatedDirectoryPrefix =
+                $"{Path.GetFullPath(generatedDirectory).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)}{Path.DirectorySeparatorChar}";
 
             foreach (var projectPath in projectPaths)
             {
