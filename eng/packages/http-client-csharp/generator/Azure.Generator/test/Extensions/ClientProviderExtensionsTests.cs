@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Generator.Extensions;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
@@ -58,7 +59,9 @@ namespace Azure.Generator.Tests.Extensions
             Assert.DoesNotThrow(() => property = clientProvider.GetClientDiagnosticProperty());
             Assert.IsNotNull(property);
             Assert.AreEqual(ClientDiagnosticsPropertyName, property!.Name);
-            Assert.IsTrue(property.Type.Equals(typeof(object)));
+            Assert.AreEqual(nameof(ClientDiagnostics), property.Type.Name);
+            Assert.AreEqual(typeof(ClientDiagnostics).Namespace, property.Type.Namespace);
+            Assert.IsFalse(property.Type.Equals(typeof(ClientDiagnostics)));
             Assert.IsNotNull(clientProvider.CustomCodeView);
         }
 

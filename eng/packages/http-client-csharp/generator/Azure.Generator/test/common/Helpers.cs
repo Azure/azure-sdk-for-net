@@ -40,7 +40,13 @@ namespace Azure.Generator.Tests.Common
         {
             var directory = GetAssetFileOrDirectoryPath(false, parameters, method, filePath);
             var generatorDirectory = FindGeneratorDirectory(filePath);
-            var codeGenAttributeFiles = Path.Combine(
+            var commonCustomizationSources = Path.Combine(
+                generatorDirectory,
+                "Azure.Generator",
+                "test",
+                "TestData",
+                "CustomizationSources");
+            var codeGenAttributeDirectory = Path.Combine(
                 generatorDirectory,
                 "TestProjects",
                 "Local",
@@ -48,9 +54,20 @@ namespace Azure.Generator.Tests.Common
                 "src",
                 "Generated",
                 "Internal");
-            var project = CreateExistingCodeProject([directory, codeGenAttributeFiles], Path.Combine(directory, "Generated"));
+            var codeGenAttributeFiles = Directory
+                .EnumerateFiles(codeGenAttributeDirectory, "CodeGen*Attribute.cs", SearchOption.TopDirectoryOnly)
+                .ToArray();
+            var project = CreateExistingCodeProject(
+                [directory, commonCustomizationSources, .. codeGenAttributeFiles],
+                Path.Combine(directory, "Generated"));
             var compilation = await project.GetCompilationAsync();
             Assert.IsNotNull(compilation);
+            var errors = compilation!.GetDiagnostics()
+                .Where(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error)
+                .ToArray();
+            Assert.IsEmpty(
+                errors,
+                $"Customization compilation failed:{Environment.NewLine}{string.Join(Environment.NewLine, errors.Select(error => error.ToString()))}");
             return compilation!;
         }
 
@@ -79,29 +96,36 @@ namespace Azure.Generator.Tests.Common
                 ?? throw new DirectoryNotFoundException($"Could not locate the generator directory from '{filePath}'.");
         }
 
-        private static Project CreateExistingCodeProject(IEnumerable<string> projectDirectories, string generatedDirectory)
+        private static Project CreateExistingCodeProject(IEnumerable<string> projectPaths, string generatedDirectory)
         {
             var workspace = new AdhocWorkspace();
             var newOptionSet = workspace.Options.WithChangedOption(FormattingOptions.NewLine, LanguageNames.CSharp, "\n");
             workspace.TryApplyChanges(workspace.CurrentSolution.WithOptions(newOptionSet));
             Project project = workspace.AddProject("ExistingCode", LanguageNames.CSharp);
+            var generatedDirectoryPrefix = Path.GetFullPath(generatedDirectory)
+                .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+                + Path.DirectorySeparatorChar;
 
-            foreach (var projectDirectory in projectDirectories)
+            foreach (var projectPath in projectPaths)
             {
-                if (Path.IsPathRooted(projectDirectory))
+                if (!Path.IsPathRooted(projectPath))
                 {
-                    foreach (var sourceFile in Directory.EnumerateFiles(
-                        Path.GetFullPath(projectDirectory),
-                        "*.cs",
-                        SearchOption.AllDirectories))
+                    continue;
+                }
+
+                var sourceFiles = Directory.Exists(projectPath)
+                    ? Directory.EnumerateFiles(Path.GetFullPath(projectPath), "*.cs", SearchOption.AllDirectories)
+                    : [projectPath];
+
+                foreach (var sourceFile in sourceFiles)
+                {
+                    var fullSourcePath = Path.GetFullPath(sourceFile);
+                    if (!fullSourcePath.StartsWith(generatedDirectoryPrefix, StringComparison.Ordinal))
                     {
-                        if (!sourceFile.StartsWith(generatedDirectory))
-                        {
-                            project = project.AddDocument(
-                                Path.GetFileName(sourceFile),
-                                File.ReadAllText(sourceFile),
-                                filePath: sourceFile).Project;
-                        }
+                        project = project.AddDocument(
+                            Path.GetFileName(fullSourcePath),
+                            File.ReadAllText(fullSourcePath),
+                            filePath: fullSourcePath).Project;
                     }
                 }
             }

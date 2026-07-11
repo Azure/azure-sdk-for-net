@@ -197,9 +197,12 @@ namespace Azure.Generator.Tests.Visitors
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
             Assert.IsNotNull(clientProvider!.CustomCodeView);
-            Assert.IsTrue(clientProvider.CanonicalView.Properties
+            var customClientDiagnosticsType = clientProvider.CanonicalView.Properties
                 .Single(p => p.Name == ClientDiagnosticsPropertyName)
-                .Type.Equals(typeof(object)));
+                .Type;
+            Assert.AreEqual(nameof(ClientDiagnostics), customClientDiagnosticsType.Name);
+            Assert.AreEqual(typeof(ClientDiagnostics).Namespace, customClientDiagnosticsType.Namespace);
+            Assert.IsFalse(customClientDiagnosticsType.Equals(typeof(ClientDiagnostics)));
 
             // create a protocol method to test the visitor
             var methodSignature = new MethodSignature(
