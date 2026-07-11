@@ -1,8 +1,10 @@
 # Release History
 
-## 2.1.0-beta.5 (Unreleased)
+## 3.0.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Added distributed tracing support.
 
 ### Breaking Changes
 
@@ -10,6 +12,9 @@
 
 ### Other Changes
 - Updated the `OpenAI` package dependency to `2.11.0`.
+
+### Sample Updates
+- Added sample demonstrating disabling and enabling Hosted Agent.
 
 ## 2.1.0-beta.4 (2026-06-30)
 

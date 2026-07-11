@@ -75,7 +75,22 @@ namespace Azure.AI.Extensions.OpenAI.Tests
 
         public override Dictionary<string, string> ParseEnvironmentFile()
         {
-            return AiTestEnvironmentBootstrap.ReadEnvironmentFile(null);
+            var values = AiTestEnvironmentBootstrap.ReadEnvironmentFile(null, out bool environmentFileFound);
+
+            if (environmentFileFound)
+            {
+                // A test environment is already provisioned. The AI Foundry suites need far more
+                // settings than the deployment template/scripts pre-create, so don't launch resource
+                // creation for a missing setting; let the test fail with a clear "missing environment
+                // variable" error instead.
+                AiTestEnvironmentBootstrap.DisableResourceBootstrapping();
+            }
+            else
+            {
+                PathToTestResourceBootstrappingScript = AiTestEnvironmentBootstrap.BootstrappingScriptPath;
+            }
+
+            return values;
         }
 
         public override Task WaitForEnvironmentAsync()

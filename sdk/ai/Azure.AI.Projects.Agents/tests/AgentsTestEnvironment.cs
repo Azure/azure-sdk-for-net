@@ -39,11 +39,34 @@ namespace Azure.AI.Projects.Agents.Tests
         public string FOUNDRY_AGENT_CONTAINER_IMAGE => GetRecordedVariable(nameof(FOUNDRY_AGENT_CONTAINER_IMAGE));
         public string WORKIQ_CONNECTION_ID => GetRecordedVariable(nameof(WORKIQ_CONNECTION_ID));
         public string FABRIC_IQ_CONNECTION_ID => GetRecordedVariable(nameof(FABRIC_IQ_CONNECTION_ID));
-        public override Dictionary<string, string> ParseEnvironmentFile() =>
-            AiTestEnvironmentBootstrap.ReadEnvironmentFile(new Dictionary<string, string>
+        public override Dictionary<string, string> ParseEnvironmentFile()
+        {
+            var values = AiTestEnvironmentBootstrap.ReadEnvironmentFile(
+                new Dictionary<string, string>
+                {
+                    { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }
+                },
+                out bool environmentFileFound);
+
+            ConfigureBootstrapping(environmentFileFound);
+            return values;
+        }
+
+        private void ConfigureBootstrapping(bool environmentFileFound)
+        {
+            if (environmentFileFound)
             {
-                { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }
-            });
+                // A test environment is already provisioned. The AI Foundry suites need far more
+                // settings than the deployment template/scripts pre-create, so don't launch resource
+                // creation for a missing setting; let the test fail with a clear "missing environment
+                // variable" error instead.
+                AiTestEnvironmentBootstrap.DisableResourceBootstrapping();
+            }
+            else
+            {
+                PathToTestResourceBootstrappingScript = AiTestEnvironmentBootstrap.BootstrappingScriptPath;
+            }
+        }
 
         public override Task WaitForEnvironmentAsync()
         {

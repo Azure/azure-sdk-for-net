@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A SharePoint grounding tool call. </summary>
+    [Experimental("AAIP001")]
     public partial class SharepointGroundingToolCall : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

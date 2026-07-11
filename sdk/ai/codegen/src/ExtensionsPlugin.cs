@@ -16,8 +16,8 @@ namespace Extensions.Plugin
         /// <inheritdoc />
         public override void Apply(CodeModelGenerator generator)
         {
-            //generator.AddVisitor(new ExperimentalAttributeVisitor());
             generator.AddVisitor(new SerializationOverrideVisitor());
+            generator.AddVisitor(new ExperimentalAttributeVisitor());
         }
     }
 }

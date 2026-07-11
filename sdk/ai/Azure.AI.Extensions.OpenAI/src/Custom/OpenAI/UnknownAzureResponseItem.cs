@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using OpenAI;
 using OpenAI.Responses;
@@ -25,6 +26,7 @@ namespace Azure.AI.Extensions.OpenAI
         // the concrete subtype and its deserializer. It is used both to dispatch a polymorphic read
         // (DeserializeFromDiscriminator) and to decide whether an already materialized item still needs
         // normalization (TryGetAzureItemType), so the two never drift apart.
+        [Experimental("AAIP001")]
         private static readonly IReadOnlyDictionary<ResponseItemKind, (Type Type, Func<JsonElement, ModelReaderWriterOptions, ResponseItem> Deserialize)> AzureItemDispatch =
             new Dictionary<ResponseItemKind, (Type, Func<JsonElement, ModelReaderWriterOptions, ResponseItem>)>
             {
@@ -62,6 +64,7 @@ namespace Azure.AI.Extensions.OpenAI
         // Returns the concrete Azure subtype this package materializes for the given discriminator, if any. Used by
         // the client-side normalization gate to decide whether an already-materialized item needs re-dispatch,
         // keyed off the known discriminator set rather than any OpenAI-internal opaque type name.
+        [Experimental("AAIP001")]
         internal static bool TryGetAzureItemType(ResponseItemKind kind, out Type type)
         {
             if (AzureItemDispatch.TryGetValue(kind, out (Type Type, Func<JsonElement, ModelReaderWriterOptions, ResponseItem> Deserialize) dispatch))
@@ -74,18 +77,21 @@ namespace Azure.AI.Extensions.OpenAI
             return false;
         }
 
+        [Experimental("AAIP001")]
         protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFromDiscriminator(document.RootElement, options);
         }
 
+        [Experimental("AAIP001")]
         protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFromDiscriminator(document.RootElement, options);
         }
 
+        [Experimental("AAIP001")]
         private static ResponseItem DeserializeFromDiscriminator(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.TryGetProperty("type"u8, out JsonElement typeProperty)

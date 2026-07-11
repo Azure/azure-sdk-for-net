@@ -430,9 +430,9 @@ namespace Azure.Provisioning.Cdn
     public partial class DeepCreatedCustomDomain : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DeepCreatedCustomDomain() { }
-        public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ValidationData { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ValidationData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DeepCreatedOrigin : Azure.Provisioning.Primitives.ProvisionableConstruct

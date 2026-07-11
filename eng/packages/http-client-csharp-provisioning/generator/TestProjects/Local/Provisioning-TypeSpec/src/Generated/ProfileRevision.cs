@@ -25,7 +25,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         /// <summary> Creates a new ProfileRevision. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ProfileRevision(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/configurationStores/profiles/revisions", resourceVersion ?? "2024-05-01")
+        internal ProfileRevision(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/configurationStores/profiles/revisions", resourceVersion ?? "2024-05-01")
         {
         }
 
@@ -64,18 +64,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal ProfileProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -99,15 +94,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
             get
             {
-                return Properties is null ? default : Properties.Description;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ProfileProperties();
-                }
-                Properties.Description = value;
+                return Properties.Description;
             }
         }
 
@@ -116,15 +103,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
             get
             {
-                return Properties is null ? default : Properties.SkuName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ProfileProperties();
-                }
-                Properties.SkuName = value;
+                return Properties.SkuName;
             }
         }
 

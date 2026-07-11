@@ -115,7 +115,7 @@
     <PackageVersion Include="Azure.Messaging.EventGrid" Version="4.21.0" />
     <PackageVersion Include="Azure.Messaging.EventGrid.SystemEvents" Version="1.0.0" />
     <PackageVersion Include="Azure.Messaging.EventHubs" Version="5.12.2" />
-    <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.20.1" />
+    <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.20.2" />
     <PackageVersion Include="Azure.Messaging.WebPubSub" Version="1.6.0" />
     <PackageVersion Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.8.2" />
     <PackageVersion Include="Azure.Monitor.Query.Logs" Version="1.0.0" />

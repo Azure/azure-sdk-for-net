@@ -13,9 +13,15 @@ namespace Azure.AI.Extensions.OpenAI
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.A2APreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(A2APreviewTool))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.A2APreviewTool is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.A2AToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(A2AToolCall))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.A2AToolCall is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.A2AToolCallOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(A2AToolCallOutput))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.A2AToolCallOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentReference))]
     [ModelReaderWriterBuildable(typeof(AgentStructuredOutputsResponseItem))]
     [ModelReaderWriterBuildable(typeof(AgentWorkflowPreviewActionResponseItem))]
@@ -30,41 +36,83 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(AzureFunctionDefinitionFunction))]
     [ModelReaderWriterBuildable(typeof(AzureFunctionStorageQueue))]
     [ModelReaderWriterBuildable(typeof(AzureFunctionTool))]
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.AzureFunctionToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AzureFunctionToolCall))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.AzureFunctionToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AzureFunctionToolCallOutput))]
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchConfiguration is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BingCustomSearchConfiguration))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchConfiguration is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BingCustomSearchPreviewTool))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchPreviewTool is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BingCustomSearchToolCall))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCall is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BingCustomSearchToolCallOutput))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolCallOutput is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BingCustomSearchToolOptions))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BingCustomSearchToolOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BingGroundingSearchConfiguration))]
     [ModelReaderWriterBuildable(typeof(BingGroundingSearchToolOptions))]
     [ModelReaderWriterBuildable(typeof(BingGroundingTool))]
     [ModelReaderWriterBuildable(typeof(BingGroundingToolCall))]
     [ModelReaderWriterBuildable(typeof(BingGroundingToolCallOutput))]
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationPreviewTool))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolCall))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolCall is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolCallOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolCallOutput))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolCallOutput is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionParameters is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolConnectionParameters))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionParameters is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolOptions))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CaptureStructuredOutputsTool))]
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.ChatSummaryMemoryItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ChatSummaryMemoryItem))]
     [ModelReaderWriterBuildable(typeof(ComputerCallSafetyCheck))]
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.FabricDataAgentToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FabricDataAgentToolCall))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.FabricDataAgentToolCall is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.FabricDataAgentToolCallOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FabricDataAgentToolCallOutput))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.FabricDataAgentToolCallOutput is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.FabricDataAgentToolOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FabricDataAgentToolOptions))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.FabricDataAgentToolOptions is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.FabricIQPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FabricIQPreviewTool))]
     [ModelReaderWriterBuildable(typeof(FoundryOpenAIError))]
     [ModelReaderWriterBuildable(typeof(InternalImageGenToolInputImageMask))]
     [ModelReaderWriterBuildable(typeof(InternalMetadataContainer))]
     [ModelReaderWriterBuildable(typeof(McpToolDefinition))]
     [ModelReaderWriterBuildable(typeof(MCPToolRequireApproval))]
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemoryCommandToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemoryCommandToolCall))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemoryCommandToolCall is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemoryCommandToolCallOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemoryCommandToolCallOutput))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemoryCommandToolCallOutput is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemoryOutputItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemoryOutputItem))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemoryOutputItem is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemorySearchOptions))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchOptions is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemorySearchPreviewTool))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchPreviewTool is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemorySearchToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemorySearchToolCall))]
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MicrosoftFabricPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MicrosoftFabricPreviewTool))]
     [ModelReaderWriterBuildable(typeof(OAuthConsentRequestResponseItem))]
     [ModelReaderWriterBuildable(typeof(OpenAPIAnonymousAuthenticationDetails))]
@@ -78,7 +126,9 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(OpenAPITool))]
     [ModelReaderWriterBuildable(typeof(OpenApiToolCall))]
     [ModelReaderWriterBuildable(typeof(OpenApiToolCallOutput))]
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.ProceduralMemoryItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ProceduralMemoryItem))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.ProceduralMemoryItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ProjectConversation))]
     [ModelReaderWriterBuildable(typeof(ProjectConversationCreationOptions))]
     [ModelReaderWriterBuildable(typeof(ProjectConversationUpdateOptions))]
@@ -89,18 +139,27 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(ResponseTokenTopLogProbabilityDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseTokenUsage))]
     [ModelReaderWriterBuildable(typeof(ResponseTool))]
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.SharepointGroundingToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SharepointGroundingToolCall))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.SharepointGroundingToolCall is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.SharepointGroundingToolCallOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SharepointGroundingToolCallOutput))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.SharepointGroundingToolCallOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SharePointGroundingToolOptions))]
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.SharepointPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SharepointPreviewTool))]
     [ModelReaderWriterBuildable(typeof(StructuredOutputDefinition))]
     [ModelReaderWriterBuildable(typeof(ToolConfig))]
     [ModelReaderWriterBuildable(typeof(ToolProjectConnection))]
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.UnknownMemoryOutputItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownMemoryOutputItem))]
     [ModelReaderWriterBuildable(typeof(UnknownOpenApiAuthenticationDetails))]
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.UserProfileMemoryItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UserProfileMemoryItem))]
     [ModelReaderWriterBuildable(typeof(WebSearchConfiguration))]
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.WorkIQPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WorkIQPreviewTool))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.WorkIQPreviewTool is experimental and may change in future versions.
     public partial class AzureAIExtensionsOpenAIContext : ModelReaderWriterContext
     {
     }

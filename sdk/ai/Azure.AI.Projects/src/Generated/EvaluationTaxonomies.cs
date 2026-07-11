@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
@@ -23,11 +24,13 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary> Initializes a new instance of EvaluationTaxonomies. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal EvaluationTaxonomies(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal EvaluationTaxonomies(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -35,6 +38,9 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Retrieves the specified evaluation taxonomy.
@@ -52,10 +58,20 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Get(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluationTaxonomies.Get");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -74,10 +90,20 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluationTaxonomies.Get");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the specified evaluation taxonomy. </summary>
@@ -86,6 +112,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual ClientResult<EvaluationTaxonomy> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -100,6 +127,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<EvaluationTaxonomy>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -123,7 +151,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetAll(string inputName, string inputType, RequestOptions options)
         {
-            return new EvaluationTaxonomiesGetAllCollectionResult(this, inputName, inputType, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluationTaxonomies.GetAll");
+            scope.Start();
+            try
+            {
+                return new EvaluationTaxonomiesGetAllCollectionResult(this, inputName, inputType, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -141,7 +179,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetAllAsync(string inputName, string inputType, RequestOptions options)
         {
-            return new EvaluationTaxonomiesGetAllAsyncCollectionResult(this, inputName, inputType, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluationTaxonomies.GetAll");
+            scope.Start();
+            try
+            {
+                return new EvaluationTaxonomiesGetAllAsyncCollectionResult(this, inputName, inputType, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Returns the evaluation taxonomies available in the project, optionally filtered by input name or input type. </summary>
@@ -149,6 +197,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="inputType"> Filter by taxonomy input type. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual CollectionResult<EvaluationTaxonomy> GetAll(string inputName = default, string inputType = default, CancellationToken cancellationToken = default)
         {
             return new EvaluationTaxonomiesGetAllCollectionResultOfT(this, inputName, inputType, cancellationToken.ToRequestOptions());
@@ -159,6 +208,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="inputType"> Filter by taxonomy input type. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual AsyncCollectionResult<EvaluationTaxonomy> GetAllAsync(string inputName = default, string inputType = default, CancellationToken cancellationToken = default)
         {
             return new EvaluationTaxonomiesGetAllAsyncCollectionResultOfT(this, inputName, inputType, cancellationToken.ToRequestOptions());
@@ -180,10 +230,20 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Delete(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluationTaxonomies.Delete");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDeleteRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -202,10 +262,20 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluationTaxonomies.Delete");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDeleteRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Removes the specified evaluation taxonomy from the project. </summary>
@@ -251,11 +321,21 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Create(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluationTaxonomies.Create");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateCreateRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -275,11 +355,21 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluationTaxonomies.Create");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateCreateRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -299,11 +389,21 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Update(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluationTaxonomies.Update");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateUpdateRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -323,11 +423,21 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> UpdateAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EvaluationTaxonomies.Update");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateUpdateRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> An A2A (Agent-to-Agent) tool call. </summary>
+    [Experimental("AAIP001")]
     public partial class A2AToolCall : ResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

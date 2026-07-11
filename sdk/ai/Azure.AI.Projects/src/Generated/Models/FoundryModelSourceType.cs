@@ -4,11 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The source type of the model. </summary>
-    internal readonly partial struct FoundryModelSourceType : IEquatable<FoundryModelSourceType>
+    [Experimental("AAIP001")]
+    public readonly partial struct FoundryModelSourceType : IEquatable<FoundryModelSourceType>
     {
         private readonly string _value;
         /// <summary> Model was uploaded locally. </summary>

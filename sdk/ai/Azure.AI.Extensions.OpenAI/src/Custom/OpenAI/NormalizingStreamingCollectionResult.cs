@@ -3,6 +3,7 @@
 
 using System.ClientModel;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
@@ -33,7 +34,7 @@ internal sealed class NormalizingStreamingCollectionResult : CollectionResult<St
         // comment in TelemetryStreamingCollectionResult.
         yield return null;
     }
-
+    [Experimental("AAIP001")]
     protected override IEnumerable<StreamingResponseUpdate> GetValuesFromPage(ClientResult page)
     {
         // The inner result owns its SSE parsing; the page parameter is intentionally unused.

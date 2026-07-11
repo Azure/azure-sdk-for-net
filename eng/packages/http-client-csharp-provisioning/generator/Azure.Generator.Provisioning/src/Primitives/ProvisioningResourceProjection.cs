@@ -32,6 +32,7 @@ namespace Azure.Generator.Provisioning.Primitives
             RbacRoles = [.. CollectRbacRoles(metadata)];
             ReadableScopes = CollectScopes(metadata, IsReadableOperation);
             WritableScopes = CollectScopes(metadata, IsWritableOperation);
+            IsSettable = WritableScopes.Count > 0;
         }
 
         /// <summary>
@@ -101,6 +102,12 @@ namespace Azure.Generator.Provisioning.Primitives
         /// Gets deployment scopes where the resource can be written.
         /// </summary>
         internal IReadOnlyList<ResourceScope> WritableScopes { get; }
+
+        /// <summary>
+        /// Gets whether this resource can be declared with writable input
+        /// properties. Read-only resources still support existing references.
+        /// </summary>
+        internal bool IsSettable { get; }
 
         /// <summary>
         /// Gets whether this resource should be emitted as a Bicep extension

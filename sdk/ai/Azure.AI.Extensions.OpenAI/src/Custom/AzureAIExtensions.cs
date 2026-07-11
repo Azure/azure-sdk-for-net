@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -37,12 +38,14 @@ public static partial class AzureAIExtensions
     // package can strongly type (per UnknownAzureResponseItem's dispatch table) and it is not already that concrete
     // type. Keying off the known-discriminator set — rather than matching OpenAI's internal opaque type name — means
     // an upstream rename of that fallback cannot silently disable normalization, and it is naturally idempotent.
+    [Experimental("AAIP001")]
     private static bool NeedsAgentItemNormalization(ResponseItem item)
         => item is not null
             && UnknownAzureResponseItem.TryGetAzureItemType(item.Kind, out Type azureType)
             && !azureType.IsInstanceOfType(item);
 
     // Returns the strongly-typed Azure subtype for an item that needs it, or the item unchanged otherwise.
+    [Experimental("AAIP001")]
     private static ResponseItem NormalizeAgentResponseItem(ResponseItem item)
         => NeedsAgentItemNormalization(item) ? item.AsAgentResponseItem() : item;
 
@@ -73,6 +76,7 @@ public static partial class AzureAIExtensions
     /// them. This is a temporary client-side bridge until nested-item deserialization is handled
     /// by the serialization proxy.
     /// </summary>
+    [Experimental("AAIP001")]
     internal static void NormalizeAgentOutputItems(ResponseResult response)
     {
         if (response is null)
@@ -130,6 +134,7 @@ public static partial class AzureAIExtensions
     /// Normalizes both the output items and the echoed tool definitions of a response, so callers
     /// receive strongly-typed Azure subtypes across the whole result. Null-safe.
     /// </summary>
+    [Experimental("AAIP001")]
     internal static void NormalizeAgentResponse(ResponseResult response)
     {
         NormalizeAgentOutputItems(response);
@@ -146,6 +151,7 @@ public static partial class AzureAIExtensions
     /// say, a failed update must still see typed items. Other update kinds pass through unchanged.
     /// Temporary client-side bridge, mirroring <see cref="NormalizeAgentResponse"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     internal static StreamingResponseUpdate NormalizeStreamingUpdate(StreamingResponseUpdate update)
     {
         switch (update)
@@ -196,6 +202,7 @@ public static partial class AzureAIExtensions
     /// <param name="agentRef"> The agent that should create the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
+    [Experimental("AAIP001")]
     public static ClientResult<ResponseResult> CreateResponse(this ResponsesClient responseClient, ProjectConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
     {
         using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
@@ -214,6 +221,7 @@ public static partial class AzureAIExtensions
     /// <param name="agentRef"> The agent that should create the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created response result. </returns>
+    [Experimental("AAIP001")]
     public static async Task<ClientResult<ResponseResult>> CreateResponseAsync(this ResponsesClient responseClient, ProjectConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
     {
         using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
