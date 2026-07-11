@@ -60,7 +60,8 @@ namespace Azure.AI.Tests.Shared
                 // argument string (see TestEnvironment.BootStrapTestResources), matching the legacy
                 // Azure.Core.TestFramework construction.
                 var scriptPath = Path.Combine(root, "eng", "scripts", "New-TestResources-Bootstrapper.ps1");
-                return $"-File \"{scriptPath}\" {ServiceDirectory}";
+                return $"\"{scriptPath}\" {ServiceDirectory}";
+            }
         }
 
         /// <summary>
