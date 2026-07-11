@@ -167,14 +167,11 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual(Helpers.GetExpectedFromFile(isProtocolMethod.ToString()), result);
         }
 
-        // Regression test for https://github.com/Azure/azure-sdk-for-net/pull/58979.
-        // Libraries such as Azure.AI.Agents.Persistent declare the "ClientDiagnostics" property in
-        // hand-written custom code. The custom property's CSharpType is not equal to the framework
-        // ClientDiagnostics type injected into the visitor, so matching the property by type threw
-        // "Sequence contains no matching element" during regeneration. The property must be matched
-        // by name so that a custom-declared ClientDiagnostics property is still found.
+        // Libraries such as Azure.AI.Agents.Persistent declare ClientDiagnostics in custom code.
+        // The custom-code symbol must be normalized to the framework ClientDiagnostics type so the
+        // visitor can locate it by type.
         [Test]
-        public async Task TestProtocolMethodWithCustomTypedClientDiagnosticsProperty()
+        public async Task TestProtocolMethodWithCustomCodeClientDiagnosticsProperty()
         {
             var visitor = new TestDistributedTracingVisitor();
 
@@ -202,7 +199,8 @@ namespace Azure.Generator.Tests.Visitors
                 .Type;
             Assert.AreEqual(nameof(ClientDiagnostics), customClientDiagnosticsType.Name);
             Assert.AreEqual(typeof(ClientDiagnostics).Namespace, customClientDiagnosticsType.Namespace);
-            Assert.IsFalse(customClientDiagnosticsType.Equals(typeof(ClientDiagnostics)));
+            Assert.IsTrue(customClientDiagnosticsType.IsFrameworkType);
+            Assert.IsTrue(customClientDiagnosticsType.Equals(new CSharpType(typeof(ClientDiagnostics))));
 
             // create a protocol method to test the visitor
             var methodSignature = new MethodSignature(
@@ -225,11 +223,8 @@ namespace Azure.Generator.Tests.Visitors
                 $"Protocol method should be wrapped with a diagnostic scope. Actual: {result}");
         }
 
-        // Regression test for https://github.com/Azure/azure-sdk-for-net/pull/58979.
         // Custom code can rename the ClientDiagnostics property via [CodeGenMember("ClientDiagnostics")],
-        // in which case the property's Name differs but its OriginalName is still "ClientDiagnostics".
-        // The visitor must locate the property by its OriginalName so the renamed property is still found
-        // (and it must be located by name, not by CSharpType, to keep the previous regression fixed).
+        // but type-based lookup must still locate the renamed property.
         [Test]
         public async Task TestProtocolMethodWithRenamedClientDiagnosticsProperty()
         {

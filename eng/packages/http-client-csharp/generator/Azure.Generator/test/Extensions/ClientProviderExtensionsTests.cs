@@ -40,14 +40,11 @@ namespace Azure.Generator.Tests.Extensions
             Assert.AreEqual(ClientDiagnosticsPropertyName, property.Name);
         }
 
-        // Regression test for https://github.com/Azure/azure-sdk-for-net/pull/58979 (LroVisitor path).
-        // LroVisitor.BuildConvertCallComponents resolves the ClientDiagnostics property via
-        // GetClientDiagnosticProperty. Libraries such as Azure.AI.Agents.Persistent declare the
-        // "ClientDiagnostics" property in hand-written custom code, whose CSharpType is not equal to the
-        // framework ClientDiagnostics type. Matching by type threw "Sequence contains no matching element"
-        // during regeneration, so the property must be matched by name instead.
+        // Libraries such as Azure.AI.Agents.Persistent declare ClientDiagnostics in custom code.
+        // The custom-code symbol must be normalized to the framework ClientDiagnostics type so
+        // GetClientDiagnosticProperty can locate it by type.
         [Test]
-        public async Task GetClientDiagnosticProperty_FindsCustomTypedProperty()
+        public async Task GetClientDiagnosticProperty_FindsCustomCodeProperty()
         {
             var inputClient = CreateInputClient();
             await MockHelpers.LoadMockGeneratorAsync(
@@ -61,15 +58,13 @@ namespace Azure.Generator.Tests.Extensions
             Assert.AreEqual(ClientDiagnosticsPropertyName, property!.Name);
             Assert.AreEqual(nameof(ClientDiagnostics), property.Type.Name);
             Assert.AreEqual(typeof(ClientDiagnostics).Namespace, property.Type.Namespace);
-            Assert.IsFalse(property.Type.Equals(typeof(ClientDiagnostics)));
+            Assert.IsTrue(property.Type.IsFrameworkType);
+            Assert.IsTrue(property.Type.Equals(typeof(ClientDiagnostics)));
             Assert.IsNotNull(clientProvider.CustomCodeView);
         }
 
-        // Regression test for https://github.com/Azure/azure-sdk-for-net/pull/58979 (LroVisitor path).
         // Custom code can rename the ClientDiagnostics property via [CodeGenMember("ClientDiagnostics")],
-        // in which case the property's Name differs but its OriginalName is still "ClientDiagnostics".
-        // GetClientDiagnosticProperty must locate the property by its OriginalName so the renamed property
-        // is still found by the LroVisitor.
+        // but type-based lookup must still locate the renamed property for the LroVisitor.
         [Test]
         public async Task GetClientDiagnosticProperty_FindsRenamedProperty()
         {
