@@ -12,6 +12,8 @@ namespace Azure.Generator.Extensions
 {
     internal static class ClientProviderExtensions
     {
+        private const string ClientDiagnosticsPropertyName = "ClientDiagnostics";
+
         public static ClientProvider GetClient(this ScmMethodProvider method) => (ClientProvider)method.EnclosingType;
 
         public static string GetScopeName(this ScmMethodProvider method)
@@ -33,8 +35,11 @@ namespace Azure.Generator.Extensions
 
         public static PropertyProvider GetClientDiagnosticProperty(this ClientProvider client)
         {
+            // Match by name/OriginalName rather than by type: the property may be declared or renamed
+            // in custom code (via [CodeGenMember]), in which case its parsed CSharpType is a non-framework
+            // type that does not equal the framework ClientDiagnostics type.
             return client.CanonicalView.Properties
-                .First(p => p.Type.Equals(typeof(ClientDiagnostics)));
+                .First(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
         }
 
         public static PropertyProvider GetPipelineProperty(this ClientProvider client)

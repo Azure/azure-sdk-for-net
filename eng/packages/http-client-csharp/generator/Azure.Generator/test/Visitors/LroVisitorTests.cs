@@ -591,6 +591,13 @@ namespace Azure.Generator.Tests.Visitors
 
         private class TestDistributedTracingVisitor : DistributedTracingVisitor
         {
+            public TestDistributedTracingVisitor()
+                : base(
+                    new CSharpType(typeof(ClientDiagnostics)),
+                    new CSharpType(typeof(DiagnosticScope)))
+            {
+            }
+
             public void InvokeVisitLibrary(OutputLibrary library)
             {
                 base.VisitLibrary(library);
