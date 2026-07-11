@@ -40,12 +40,18 @@ namespace Azure.Generator.Tests.Common
         {
             var directory = GetAssetFileOrDirectoryPath(false, parameters, method, filePath);
             var generatorDirectory = FindGeneratorDirectory(filePath);
-            var commonCustomizationSources = Path.Combine(
-                generatorDirectory,
-                "Azure.Generator",
-                "test",
-                "TestData",
-                "CustomizationSources");
+            var sharedSourceDirectory = Path.Combine(
+                Path.GetDirectoryName(typeof(AzureTypeFactory).Assembly.Location)!,
+                "Shared",
+                "Core");
+            string[] sharedSourceFiles =
+            [
+                Path.Combine(sharedSourceDirectory, "AppContextSwitchHelper.cs"),
+                Path.Combine(sharedSourceDirectory, "ClientDiagnostics.cs"),
+                Path.Combine(sharedSourceDirectory, "DiagnosticScope.cs"),
+                Path.Combine(sharedSourceDirectory, "DiagnosticScopeFactory.cs"),
+                Path.Combine(sharedSourceDirectory, "HttpMessageSanitizer.cs")
+            ];
             var codeGenAttributeDirectory = Path.Combine(
                 generatorDirectory,
                 "TestProjects",
@@ -58,7 +64,7 @@ namespace Azure.Generator.Tests.Common
                 .EnumerateFiles(codeGenAttributeDirectory, "CodeGen*Attribute.cs", SearchOption.TopDirectoryOnly)
                 .ToArray();
             var project = CreateExistingCodeProject(
-                [directory, commonCustomizationSources, .. codeGenAttributeFiles],
+                [directory, .. sharedSourceFiles, .. codeGenAttributeFiles],
                 Path.Combine(directory, "Generated"));
             var compilation = await project.GetCompilationAsync();
             Assert.IsNotNull(compilation);
@@ -130,9 +136,16 @@ namespace Azure.Generator.Tests.Common
                 }
             }
 
+            var trustedPlatformAssemblies = (string?)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES");
+            var platformReferences = trustedPlatformAssemblies is null
+                ? [MetadataReference.CreateFromFile(typeof(object).Assembly.Location)]
+                : trustedPlatformAssemblies
+                    .Split(Path.PathSeparator)
+                    .Select(path => MetadataReference.CreateFromFile(path));
+
             return project
                 .AddMetadataReferences([
-                    MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+                    .. platformReferences,
                     .. CodeModelGenerator.Instance.AdditionalMetadataReferences
                 ])
                 .WithCompilationOptions(new CSharpCompilationOptions(
