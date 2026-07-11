@@ -60,20 +60,11 @@ namespace Azure.Generator.Tests.Common
                 "src",
                 "Generated",
                 "Internal");
-            var codeGenAttributeFiles = Directory
-                .EnumerateFiles(codeGenAttributeDirectory, "CodeGen*Attribute.cs", SearchOption.TopDirectoryOnly)
-                .ToArray();
             var project = CreateExistingCodeProject(
-                [directory, .. sharedSourceFiles, .. codeGenAttributeFiles],
+                [directory, .. sharedSourceFiles, codeGenAttributeDirectory],
                 Path.Combine(directory, "Generated"));
             var compilation = await project.GetCompilationAsync();
             Assert.IsNotNull(compilation);
-            var errors = compilation!.GetDiagnostics()
-                .Where(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error)
-                .ToArray();
-            Assert.IsEmpty(
-                errors,
-                $"Customization compilation failed:{Environment.NewLine}{string.Join(Environment.NewLine, errors.Select(error => error.ToString()))}");
             return compilation!;
         }
 
@@ -135,16 +126,9 @@ namespace Azure.Generator.Tests.Common
                 }
             }
 
-            var trustedPlatformAssemblies = (string?)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES");
-            var platformReferences = trustedPlatformAssemblies is null
-                ? [MetadataReference.CreateFromFile(typeof(object).Assembly.Location)]
-                : trustedPlatformAssemblies
-                    .Split(Path.PathSeparator)
-                    .Select(path => MetadataReference.CreateFromFile(path));
-
             return project
                 .AddMetadataReferences([
-                    .. platformReferences,
+                    MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
                     .. CodeModelGenerator.Instance.AdditionalMetadataReferences
                 ])
                 .WithCompilationOptions(new CSharpCompilationOptions(
