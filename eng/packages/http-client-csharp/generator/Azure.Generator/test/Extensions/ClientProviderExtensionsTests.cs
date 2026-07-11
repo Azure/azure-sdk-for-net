@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Generator.Extensions;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
@@ -28,7 +29,9 @@ namespace Azure.Generator.Tests.Extensions
         [Test]
         public void GetClientDiagnosticProperty_FindsGeneratedProperty()
         {
-            var clientProvider = CreateClientProvider();
+            var inputClient = CreateInputClient();
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            var clientProvider = CreateClientProvider(inputClient);
 
             var property = clientProvider.GetClientDiagnosticProperty();
 
@@ -43,25 +46,20 @@ namespace Azure.Generator.Tests.Extensions
         // framework ClientDiagnostics type. Matching by type threw "Sequence contains no matching element"
         // during regeneration, so the property must be matched by name instead.
         [Test]
-        public void GetClientDiagnosticProperty_FindsCustomTypedProperty()
+        public async Task GetClientDiagnosticProperty_FindsCustomTypedProperty()
         {
-            var clientProvider = CreateClientProvider();
-
-            // Replace the generated ClientDiagnostics property with one whose CSharpType differs from the
-            // framework ClientDiagnostics type, simulating a ClientDiagnostics property declared in custom code.
-            var customTypedClientDiagnostics = new PropertyProvider(
-                $"The ClientDiagnostics is used to provide tracing support for the client library.",
-                MethodSignatureModifiers.Internal,
-                new CSharpType(typeof(object)),
-                ClientDiagnosticsPropertyName,
-                new AutoPropertyBody(false),
-                clientProvider);
-            clientProvider.Update(properties: [customTypedClientDiagnostics]);
+            var inputClient = CreateInputClient();
+            await MockHelpers.LoadMockGeneratorAsync(
+                clients: () => [inputClient],
+                compilation: () => Helpers.GetCompilationFromDirectoryAsync());
+            var clientProvider = CreateClientProvider(inputClient);
 
             PropertyProvider? property = null;
             Assert.DoesNotThrow(() => property = clientProvider.GetClientDiagnosticProperty());
             Assert.IsNotNull(property);
             Assert.AreEqual(ClientDiagnosticsPropertyName, property!.Name);
+            Assert.IsTrue(property.Type.Equals(typeof(object)));
+            Assert.IsNotNull(clientProvider.CustomCodeView);
         }
 
         // Regression test for https://github.com/Azure/azure-sdk-for-net/pull/58979 (LroVisitor path).
@@ -70,24 +68,13 @@ namespace Azure.Generator.Tests.Extensions
         // GetClientDiagnosticProperty must locate the property by its OriginalName so the renamed property
         // is still found by the LroVisitor.
         [Test]
-        public void GetClientDiagnosticProperty_FindsRenamedProperty()
+        public async Task GetClientDiagnosticProperty_FindsRenamedProperty()
         {
-            var clientProvider = CreateClientProvider();
-
-            // Replace the generated ClientDiagnostics property with one that has been renamed via custom
-            // code: its Name is different, but its OriginalName is still "ClientDiagnostics". The type is
-            // also non-framework, matching how a custom-declared property is modeled.
-            var renamedClientDiagnostics = new PropertyProvider(
-                $"The ClientDiagnostics is used to provide tracing support for the client library.",
-                MethodSignatureModifiers.Internal,
-                new CSharpType(typeof(object)),
-                "RenamedDiagnostics",
-                new AutoPropertyBody(false),
-                clientProvider);
-            MockHelpers.SetOriginalName(renamedClientDiagnostics, ClientDiagnosticsPropertyName);
-            // NOTE: OriginalName is set via reflection because this test project lacks custom-code test
-            // infra to load a real [CodeGenMember] rename. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60907.
-            clientProvider.Update(properties: [renamedClientDiagnostics]);
+            var inputClient = CreateInputClient();
+            await MockHelpers.LoadMockGeneratorAsync(
+                clients: () => [inputClient],
+                compilation: () => Helpers.GetCompilationFromDirectoryAsync());
+            var clientProvider = CreateClientProvider(inputClient);
 
             PropertyProvider? property = null;
             Assert.DoesNotThrow(() => property = clientProvider.GetClientDiagnosticProperty());
@@ -96,7 +83,7 @@ namespace Azure.Generator.Tests.Extensions
             Assert.AreEqual(ClientDiagnosticsPropertyName, property.OriginalName);
         }
 
-        private static ClientProvider CreateClientProvider()
+        private static InputClient CreateInputClient()
         {
             List<InputMethodParameter> parameters =
             [
@@ -104,9 +91,11 @@ namespace Azure.Generator.Tests.Extensions
             ];
             var basicOperation = InputFactory.Operation("foo", parameters: parameters);
             var basicServiceMethod = InputFactory.BasicServiceMethod("foo", basicOperation, parameters: parameters);
-            var inputClient = InputFactory.Client("TestClient", methods: [basicServiceMethod]);
-            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            return InputFactory.Client("TestClient", methods: [basicServiceMethod]);
+        }
 
+        private static ClientProvider CreateClientProvider(InputClient inputClient)
+        {
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
             return clientProvider!;

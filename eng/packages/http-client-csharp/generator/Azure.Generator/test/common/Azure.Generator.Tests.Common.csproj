@@ -10,6 +10,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
+    <ProjectReference Include="..\..\src\Azure.Generator.csproj" />
 		<PackageReference Include="Azure.Core" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
