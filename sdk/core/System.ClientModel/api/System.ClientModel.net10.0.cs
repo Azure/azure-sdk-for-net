@@ -116,11 +116,15 @@ namespace System.ClientModel
         public void Add(string name, short content, string? mediaType = "text/plain") { }
         public void Add(string name, int content, string? mediaType = "text/plain") { }
         public void Add(string name, long content, string? mediaType = "text/plain") { }
+        [System.CLSCompliantAttribute(false)]
         public void Add(string name, sbyte content, string? mediaType = "text/plain") { }
         public void Add(string name, float content, string? mediaType = "text/plain") { }
         public void Add(string name, string content, string? mediaType = "text/plain") { }
+        [System.CLSCompliantAttribute(false)]
         public void Add(string name, ushort content, string? mediaType = "text/plain") { }
+        [System.CLSCompliantAttribute(false)]
         public void Add(string name, uint content, string? mediaType = "text/plain") { }
+        [System.CLSCompliantAttribute(false)]
         public void Add(string name, ulong content, string? mediaType = "text/plain") { }
         public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model) { }
         public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions options, string mediaType) { }
@@ -394,12 +398,16 @@ namespace System.ClientModel.Primitives
         public void Append(System.ReadOnlySpan<byte> arrayPath, int value) { }
         public void Append(System.ReadOnlySpan<byte> arrayPath, long value) { }
         public void Append(System.ReadOnlySpan<byte> arrayPath, System.ReadOnlySpan<byte> utf8Json) { }
+        [System.CLSCompliantAttribute(false)]
         public void Append(System.ReadOnlySpan<byte> arrayPath, sbyte value) { }
         public void Append(System.ReadOnlySpan<byte> arrayPath, float value) { }
         public void Append(System.ReadOnlySpan<byte> arrayPath, string value) { }
         public void Append(System.ReadOnlySpan<byte> arrayPath, System.TimeSpan value, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
+        [System.CLSCompliantAttribute(false)]
         public void Append(System.ReadOnlySpan<byte> arrayPath, ushort value) { }
+        [System.CLSCompliantAttribute(false)]
         public void Append(System.ReadOnlySpan<byte> arrayPath, uint value) { }
+        [System.CLSCompliantAttribute(false)]
         public void Append(System.ReadOnlySpan<byte> arrayPath, ulong value) { }
         public void AppendNull(System.ReadOnlySpan<byte> arrayPath) { }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool Contains(System.ReadOnlySpan<byte> jsonPath) { throw null; }
@@ -416,13 +424,17 @@ namespace System.ClientModel.Primitives
         public short GetInt16(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public int GetInt32(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public long GetInt64(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        [System.CLSCompliantAttribute(false)]
         public sbyte GetInt8(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public System.BinaryData GetJson(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public T? GetNullableValue<T>(System.ReadOnlySpan<byte> jsonPath) where T : struct { throw null; }
         public string? GetString(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public System.TimeSpan GetTimeSpan(System.ReadOnlySpan<byte> jsonPath, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { throw null; }
+        [System.CLSCompliantAttribute(false)]
         public ushort GetUInt16(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        [System.CLSCompliantAttribute(false)]
         public uint GetUInt32(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        [System.CLSCompliantAttribute(false)]
         public ulong GetUInt64(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public bool IsRemoved(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public void Remove(System.ReadOnlySpan<byte> jsonPath) { }
@@ -440,12 +452,16 @@ namespace System.ClientModel.Primitives
         public void Set(System.ReadOnlySpan<byte> jsonPath, int value) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, long value) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, System.ReadOnlySpan<byte> utf8Json) { }
+        [System.CLSCompliantAttribute(false)]
         public void Set(System.ReadOnlySpan<byte> jsonPath, sbyte value) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, float value) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, string value) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, System.TimeSpan value, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
+        [System.CLSCompliantAttribute(false)]
         public void Set(System.ReadOnlySpan<byte> jsonPath, ushort value) { }
+        [System.CLSCompliantAttribute(false)]
         public void Set(System.ReadOnlySpan<byte> jsonPath, uint value) { }
+        [System.CLSCompliantAttribute(false)]
         public void Set(System.ReadOnlySpan<byte> jsonPath, ulong value) { }
         public void SetNull(System.ReadOnlySpan<byte> jsonPath) { }
         public void SetPropagators(System.ClientModel.Primitives.JsonPatch.PropagatorSetter setter, System.ClientModel.Primitives.JsonPatch.PropagatorGetter getter) { }
@@ -466,12 +482,16 @@ namespace System.ClientModel.Primitives
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out short value) { throw null; }
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out int value) { throw null; }
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out long value) { throw null; }
+        [System.CLSCompliantAttribute(false)]
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out sbyte value) { throw null; }
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out float value) { throw null; }
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out string? value) { throw null; }
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out System.TimeSpan value, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { throw null; }
+        [System.CLSCompliantAttribute(false)]
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out ushort value) { throw null; }
+        [System.CLSCompliantAttribute(false)]
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out uint value) { throw null; }
+        [System.CLSCompliantAttribute(false)]
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out ulong value) { throw null; }
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer, System.ReadOnlySpan<byte> jsonPath) { }
@@ -591,6 +611,7 @@ namespace System.ClientModel.Primitives
     {
         protected PipelineMessageClassifier() { }
         public static System.ClientModel.Primitives.PipelineMessageClassifier Default { get { throw null; } }
+        [System.CLSCompliantAttribute(false)]
         public static System.ClientModel.Primitives.PipelineMessageClassifier Create(System.ReadOnlySpan<ushort> successStatusCodes) { throw null; }
         public abstract bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, out bool isError);
         public abstract bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception, out bool isRetriable);
