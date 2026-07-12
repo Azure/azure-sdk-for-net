@@ -197,6 +197,15 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new StorageDataShareResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="AdvancedPlatformMetricsRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AdvancedPlatformMetricsRuleResource"/> object. </returns>
+        public virtual AdvancedPlatformMetricsRuleResource GetAdvancedPlatformMetricsRuleResource(ResourceIdentifier id)
+        {
+            AdvancedPlatformMetricsRuleResource.ValidateResourceId(id);
+            return new AdvancedPlatformMetricsRuleResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="StorageQueueResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageQueueResource"/> object. </returns>

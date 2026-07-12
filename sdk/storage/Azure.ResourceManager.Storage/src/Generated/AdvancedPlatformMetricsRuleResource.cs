@@ -13,44 +13,45 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
     /// <summary>
-    /// A class representing a StoragePrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StoragePrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetStoragePrivateEndpointConnections method.
+    /// A class representing a AdvancedPlatformMetricsRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AdvancedPlatformMetricsRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetAdvancedPlatformMetricsRules method.
     /// </summary>
-    public partial class StoragePrivateEndpointConnectionResource : ArmResource
+    public partial class AdvancedPlatformMetricsRuleResource : ArmResource
     {
-        private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
-        private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
-        private readonly StoragePrivateEndpointConnectionData _data;
+        private readonly ClientDiagnostics _advancedPlatformMetricsClientDiagnostics;
+        private readonly AdvancedPlatformMetrics _advancedPlatformMetricsRestClient;
+        private readonly AdvancedPlatformMetricsRuleData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/privateEndpointConnections";
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/advancedPlatformMetrics";
 
-        /// <summary> Initializes a new instance of StoragePrivateEndpointConnectionResource for mocking. </summary>
-        protected StoragePrivateEndpointConnectionResource()
+        /// <summary> Initializes a new instance of AdvancedPlatformMetricsRuleResource for mocking. </summary>
+        protected AdvancedPlatformMetricsRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StoragePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedPlatformMetricsRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StoragePrivateEndpointConnectionResource(ArmClient client, StoragePrivateEndpointConnectionData data) : this(client, data.Id)
+        internal AdvancedPlatformMetricsRuleResource(ArmClient client, AdvancedPlatformMetricsRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StoragePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedPlatformMetricsRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal StoragePrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AdvancedPlatformMetricsRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string storagePrivateEndpointConnectionApiVersion);
-            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, storagePrivateEndpointConnectionApiVersion ?? "2026-04-01");
+            TryGetApiVersion(ResourceType, out string advancedPlatformMetricsRuleApiVersion);
+            _advancedPlatformMetricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
+            _advancedPlatformMetricsRestClient = new AdvancedPlatformMetrics(_advancedPlatformMetricsClientDiagnostics, Pipeline, Endpoint, advancedPlatformMetricsRuleApiVersion ?? "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Storage
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual StoragePrivateEndpointConnectionData Data
+        public virtual AdvancedPlatformMetricsRuleData Data
         {
             get
             {
@@ -74,10 +75,10 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="accountName"> The accountName. </param>
-        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionName)
+        /// <param name="advancedPlatformMetricsRuleType"> The advancedPlatformMetricsRuleType. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, AdvancedPlatformMetricsRuleType advancedPlatformMetricsRuleType)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/advancedPlatformMetrics/{advancedPlatformMetricsRuleType}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -92,15 +93,15 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Gets the specified private endpoint connection associated with the storage account.
+        /// Get the advanced platform metrics rule for the storage account by rule type.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/advancedPlatformMetrics/{advancedPlatformMetricsRuleType}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_Get. </description>
+        /// <description> AdvancedPlatformMetrics_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -108,14 +109,14 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StoragePrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="AdvancedPlatformMetricsRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StoragePrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdvancedPlatformMetricsRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("StoragePrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _advancedPlatformMetricsClientDiagnostics.CreateScope("AdvancedPlatformMetricsRuleResource.Get");
             scope.Start();
             try
             {
@@ -123,14 +124,14 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _advancedPlatformMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StoragePrivateEndpointConnectionData> response = Response.FromValue(StoragePrivateEndpointConnectionData.FromResponse(result), result);
+                Response<AdvancedPlatformMetricsRuleData> response = Response.FromValue(AdvancedPlatformMetricsRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StoragePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AdvancedPlatformMetricsRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,15 +141,15 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Gets the specified private endpoint connection associated with the storage account.
+        /// Get the advanced platform metrics rule for the storage account by rule type.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/advancedPlatformMetrics/{advancedPlatformMetricsRuleType}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_Get. </description>
+        /// <description> AdvancedPlatformMetrics_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -156,14 +157,14 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StoragePrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="AdvancedPlatformMetricsRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StoragePrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AdvancedPlatformMetricsRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("StoragePrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _advancedPlatformMetricsClientDiagnostics.CreateScope("AdvancedPlatformMetricsRuleResource.Get");
             scope.Start();
             try
             {
@@ -171,14 +172,14 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _advancedPlatformMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StoragePrivateEndpointConnectionData> response = Response.FromValue(StoragePrivateEndpointConnectionData.FromResponse(result), result);
+                Response<AdvancedPlatformMetricsRuleData> response = Response.FromValue(AdvancedPlatformMetricsRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StoragePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AdvancedPlatformMetricsRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,15 +189,15 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Deletes the specified private endpoint connection associated with the storage account.
+        /// Delete the advanced platform metrics rule for the storage account by rule type.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/advancedPlatformMetrics/{advancedPlatformMetricsRuleType}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_Delete. </description>
+        /// <description> AdvancedPlatformMetrics_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -204,7 +205,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StoragePrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="AdvancedPlatformMetricsRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("StoragePrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _advancedPlatformMetricsClientDiagnostics.CreateScope("AdvancedPlatformMetricsRuleResource.Delete");
             scope.Start();
             try
             {
@@ -220,7 +221,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _advancedPlatformMetricsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -239,15 +240,15 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Deletes the specified private endpoint connection associated with the storage account.
+        /// Delete the advanced platform metrics rule for the storage account by rule type.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/advancedPlatformMetrics/{advancedPlatformMetricsRuleType}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_Delete. </description>
+        /// <description> AdvancedPlatformMetrics_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StoragePrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="AdvancedPlatformMetricsRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,7 +264,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("StoragePrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _advancedPlatformMetricsClientDiagnostics.CreateScope("AdvancedPlatformMetricsRuleResource.Delete");
             scope.Start();
             try
             {
@@ -271,7 +272,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _advancedPlatformMetricsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -290,15 +291,15 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Update a StoragePrivateEndpointConnection.
+        /// Update a AdvancedPlatformMetricsRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/advancedPlatformMetrics/{advancedPlatformMetricsRuleType}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_Put. </description>
+        /// <description> AdvancedPlatformMetrics_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -306,19 +307,19 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StoragePrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="AdvancedPlatformMetricsRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The private endpoint connection properties. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<StoragePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, StoragePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AdvancedPlatformMetricsRuleResource>> UpdateAsync(WaitUntil waitUntil, AdvancedPlatformMetricsRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("StoragePrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _advancedPlatformMetricsClientDiagnostics.CreateScope("AdvancedPlatformMetricsRuleResource.Update");
             scope.Start();
             try
             {
@@ -326,12 +327,12 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StoragePrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _advancedPlatformMetricsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdvancedPlatformMetricsRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StoragePrivateEndpointConnectionData> response = Response.FromValue(StoragePrivateEndpointConnectionData.FromResponse(result), result);
+                Response<AdvancedPlatformMetricsRuleData> response = Response.FromValue(AdvancedPlatformMetricsRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                StorageArmOperation<StoragePrivateEndpointConnectionResource> operation = new StorageArmOperation<StoragePrivateEndpointConnectionResource>(Response.FromValue(new StoragePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                StorageArmOperation<AdvancedPlatformMetricsRuleResource> operation = new StorageArmOperation<AdvancedPlatformMetricsRuleResource>(Response.FromValue(new AdvancedPlatformMetricsRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -346,15 +347,15 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Update a StoragePrivateEndpointConnection.
+        /// Update a AdvancedPlatformMetricsRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/advancedPlatformMetrics/{advancedPlatformMetricsRuleType}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_Put. </description>
+        /// <description> AdvancedPlatformMetrics_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -362,19 +363,19 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StoragePrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="AdvancedPlatformMetricsRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The private endpoint connection properties. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<StoragePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, StoragePrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AdvancedPlatformMetricsRuleResource> Update(WaitUntil waitUntil, AdvancedPlatformMetricsRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("StoragePrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _advancedPlatformMetricsClientDiagnostics.CreateScope("AdvancedPlatformMetricsRuleResource.Update");
             scope.Start();
             try
             {
@@ -382,12 +383,12 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StoragePrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _advancedPlatformMetricsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdvancedPlatformMetricsRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StoragePrivateEndpointConnectionData> response = Response.FromValue(StoragePrivateEndpointConnectionData.FromResponse(result), result);
+                Response<AdvancedPlatformMetricsRuleData> response = Response.FromValue(AdvancedPlatformMetricsRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                StorageArmOperation<StoragePrivateEndpointConnectionResource> operation = new StorageArmOperation<StoragePrivateEndpointConnectionResource>(Response.FromValue(new StoragePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                StorageArmOperation<AdvancedPlatformMetricsRuleResource> operation = new StorageArmOperation<AdvancedPlatformMetricsRuleResource>(Response.FromValue(new AdvancedPlatformMetricsRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

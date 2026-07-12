@@ -29,8 +29,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="maxProvisionedIops"> The maximum provisioned IOPS limit for a file share in the storage account. </param>
         /// <param name="minProvisionedBandwidthMiBPerSec"> The minimum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </param>
         /// <param name="maxProvisionedBandwidthMiBPerSec"> The maximum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </param>
+        /// <param name="guardrailIOScalar"> The IO scalar used for guardrail calculations for a file share in the storage account. </param>
+        /// <param name="guardrailBandwidthScalar"> The bandwidth scalar used for guardrail calculations for a file share in the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareLimits(int? minProvisionedStorageGiB, int? maxProvisionedStorageGiB, int? minProvisionedIops, int? maxProvisionedIops, int? minProvisionedBandwidthMiBPerSec, int? maxProvisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareLimits(int? minProvisionedStorageGiB, int? maxProvisionedStorageGiB, int? minProvisionedIops, int? maxProvisionedIops, int? minProvisionedBandwidthMiBPerSec, int? maxProvisionedBandwidthMiBPerSec, double? guardrailIOScalar, double? guardrailBandwidthScalar, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MinProvisionedStorageGiB = minProvisionedStorageGiB;
             MaxProvisionedStorageGiB = maxProvisionedStorageGiB;
@@ -38,6 +40,8 @@ namespace Azure.ResourceManager.Storage.Models
             MaxProvisionedIops = maxProvisionedIops;
             MinProvisionedBandwidthMiBPerSec = minProvisionedBandwidthMiBPerSec;
             MaxProvisionedBandwidthMiBPerSec = maxProvisionedBandwidthMiBPerSec;
+            GuardrailIOScalar = guardrailIOScalar;
+            GuardrailBandwidthScalar = guardrailBandwidthScalar;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -64,5 +68,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The maximum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </summary>
         [WirePath("maxProvisionedBandwidthMiBPerSec")]
         public int? MaxProvisionedBandwidthMiBPerSec { get; }
+
+        /// <summary> The IO scalar used for guardrail calculations for a file share in the storage account. </summary>
+        [WirePath("guardrailIOScalar")]
+        public double? GuardrailIOScalar { get; }
+
+        /// <summary> The bandwidth scalar used for guardrail calculations for a file share in the storage account. </summary>
+        [WirePath("guardrailBandwidthScalar")]
+        public double? GuardrailBandwidthScalar { get; }
     }
 }
