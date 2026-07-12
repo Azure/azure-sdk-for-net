@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("storageAccountKeyReference"u8);
                 writer.WriteStringValue(StorageAccountKeyReference);
             }
+            if (Optional.IsDefined(UserAssignedIdentityClientId))
+            {
+                writer.WritePropertyName("userAssignedIdentityClientId"u8);
+                writer.WriteStringValue(UserAssignedIdentityClientId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -145,6 +150,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string storageAccountName = default;
             string storageAccountKey = default;
             string storageAccountKeyReference = default;
+            string userAssignedIdentityClientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,6 +183,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     storageAccountKeyReference = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("userAssignedIdentityClientId"u8))
+                {
+                    userAssignedIdentityClientId = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -188,6 +199,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 storageAccountName,
                 storageAccountKey,
                 storageAccountKeyReference,
+                userAssignedIdentityClientId,
                 additionalBinaryDataProperties);
         }
     }

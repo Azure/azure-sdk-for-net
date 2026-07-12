@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
 
         private ClientDiagnostics SubnetServiceAssociationLinkClientDiagnostics => _subnetServiceAssociationLinkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubnetServiceAssociationLink SubnetServiceAssociationLinkRestClient => _subnetServiceAssociationLinkRestClient ??= new SubnetServiceAssociationLink(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private SubnetServiceAssociationLink SubnetServiceAssociationLinkRestClient => _subnetServiceAssociationLinkRestClient ??= new SubnetServiceAssociationLink(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, Endpoint, "2026-07-01");
 
         /// <summary> Gets an object representing a <see cref="ContainerGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -74,6 +74,15 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             return new ContainerGroupProfileResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="SandboxGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SandboxGroupResource"/> object. </returns>
+        public virtual SandboxGroupResource GetSandboxGroupResource(ResourceIdentifier id)
+        {
+            SandboxGroupResource.ValidateResourceId(id);
+            return new SandboxGroupResource(Client, id);
+        }
+
         /// <summary>
         /// Delete container group virtual network association links. The operation does not delete other resources provided by the user.
         /// <list type="bullet">
@@ -87,7 +96,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,7 +145,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

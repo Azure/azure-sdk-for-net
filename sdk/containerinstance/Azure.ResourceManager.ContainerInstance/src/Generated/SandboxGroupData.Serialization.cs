@@ -10,17 +10,18 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.ContainerInstance;
+using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ContainerInstance.Models
+namespace Azure.ResourceManager.ContainerInstance
 {
-    /// <summary> The Resource model definition. </summary>
-    public partial class ContainerGroupPatch : TrackedResourceData, IJsonModel<ContainerGroupPatch>
+    /// <summary> A SandboxGroup tracked resource. </summary>
+    public partial class SandboxGroupData : TrackedResourceData, IJsonModel<SandboxGroupData>
     {
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupPatch"/> for deserialization. </summary>
-        internal ContainerGroupPatch()
+        /// <summary> Initializes a new instance of <see cref="SandboxGroupData"/> for deserialization. </summary>
+        internal SandboxGroupData()
         {
         }
 
@@ -28,55 +29,62 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SandboxGroupData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeContainerGroupPatch(document.RootElement, options);
+                        return DeserializeSandboxGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerGroupPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SandboxGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SandboxGroupData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerGroupPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SandboxGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerGroupPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SandboxGroupData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerGroupPatch IPersistableModel<ContainerGroupPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerGroupPatch)PersistableModelCreateCore(data, options);
+        SandboxGroupData IPersistableModel<SandboxGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SandboxGroupData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerGroupPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SandboxGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="containerGroupPatch"> The <see cref="ContainerGroupPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ContainerGroupPatch containerGroupPatch)
+        /// <param name="sandboxGroupData"> The <see cref="SandboxGroupData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SandboxGroupData sandboxGroupData)
         {
-            if (containerGroupPatch == null)
+            if (sandboxGroupData == null)
             {
                 return null;
             }
-            return RequestContent.Create(containerGroupPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(sandboxGroupData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SandboxGroupData"/> from. </param>
+        internal static SandboxGroupData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSandboxGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContainerGroupPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SandboxGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -87,26 +95,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SandboxGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerGroupPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SandboxGroupData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Zones))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("zones"u8);
-                writer.WriteStartArray();
-                foreach (string item in Zones)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,24 +130,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerGroupPatch IJsonModel<ContainerGroupPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ContainerGroupPatch)JsonModelCreateCore(ref reader, options);
+        SandboxGroupData IJsonModel<SandboxGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SandboxGroupData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SandboxGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerGroupPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SandboxGroupData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContainerGroupPatch(document.RootElement, options);
+            return DeserializeSandboxGroupData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ContainerGroupPatch DeserializeContainerGroupPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static SandboxGroupData DeserializeSandboxGroupData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -156,7 +159,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            IList<string> zones = default;
+            SandboxGroupProperties properties = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -218,25 +222,22 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("zones"u8))
+                if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    properties = SandboxGroupProperties.DeserializeSandboxGroupProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        continue;
                     }
-                    zones = array;
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerContainerInstanceContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -244,14 +245,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerGroupPatch(
+            return new SandboxGroupData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                zones ?? new ChangeTrackingList<string>(),
+                properties,
+                identity,
                 additionalBinaryDataProperties);
         }
     }
