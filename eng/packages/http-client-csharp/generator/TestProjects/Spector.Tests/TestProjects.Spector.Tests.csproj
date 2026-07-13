@@ -53,8 +53,8 @@
     <ProjectReference Include="..\Spector\http\authentication\union\src\Authentication.Union.csproj" />
     <ProjectReference Include="..\Spector\http\client\namespace\src\Client.ClientNamespace.csproj" />
     <ProjectReference Include="..\Spector\http\client\naming\src\Client.Naming.csproj" />
-		<ProjectReference Include="..\Spector\http\client\naming\enum-conflict\src\Client.Naming.EnumConflict.csproj" />
-		<ProjectReference Include="..\Spector\http\client\overload\src\Client.Overload.csproj" />
+    <ProjectReference Include="..\Spector\http\client\naming\enum-conflict\src\Client.Naming.EnumConflict.csproj" />
+    <ProjectReference Include="..\Spector\http\client\overload\src\Client.Overload.csproj" />
     <ProjectReference Include="..\Spector\http\client\structure\client-operation-group\src\Client.Structure.Service.csproj" Aliases="ClientStructureClientOperationGroup" />
     <ProjectReference Include="..\Spector\http\client\structure\default\src\Client.Structure.Service.Default.csproj" Aliases="ClientStructureDefault" />
     <ProjectReference Include="..\Spector\http\client\structure\multi-client\src\Client.Structure.Service.Multi.Client.csproj" Aliases="ClientStructureMultiClient" />

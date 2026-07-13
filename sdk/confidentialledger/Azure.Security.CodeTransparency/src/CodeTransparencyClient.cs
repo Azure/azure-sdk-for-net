@@ -22,10 +22,6 @@ namespace Azure.Security.CodeTransparency
     [CodeGenSuppress("CreateEntryAsync", typeof(BinaryData), typeof(CancellationToken))]
     [CodeGenSuppress("CreateGetTransparencyConfigCborRequest", typeof(RequestContext))]
     [CodeGenSuppress("CreateGetPublicKeysRequest", typeof(RequestContext))]
-    [CodeGenSuppress("CreateGetOperationRequest", typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("CreateGetEntryRequest", typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("CreateGetEntryStatementRequest", typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("CreateCreateEntryRequest", typeof(RequestContent), typeof(RequestContext))]
     public partial class CodeTransparencyClient
     {
         /// <summary>
@@ -200,42 +196,16 @@ namespace Azure.Security.CodeTransparency
         /// <param name="body"> CoseSign1 signature envelope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        [Obsolete("Use CreateEntry(BinaryData, bool, CancellationToken) instead.")]
         public virtual Operation<BinaryData> CreateEntry(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
-            using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
-            RequestContext context = cancellationToken.ToRequestContext();
+            Argument.AssertNotNull(body, nameof(body));
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateEntryRequest(content, context);
-                Response response = Pipeline.ProcessMessage(message, context, cancellationToken);
-
-                string operationId = string.Empty;
-                try
-                {
-                    operationId = CborUtils.GetStringValueFromCborMapByKey(response.Content.ToArray(), "OperationId");
-                }
-                catch (Exception ex)
-                {
-                    throw new RequestFailedException("Failed to parse the Cbor response.", ex);
-                }
-
-                if (string.IsNullOrEmpty(operationId))
-                {
-                    throw new RequestFailedException(response);
-                }
-                else
-                {
-                    var entryOperation = new CreateEntryOperation(this, operationId);
-
-                    if (waitUntil == WaitUntil.Completed)
-                    {
-                        entryOperation.WaitForCompletionResponse(cancellationToken);
-                    }
-
-                    return entryOperation;
-                }
+                Response<BinaryData> response = CreateEntry(body, waitForCommit: true, cancellationToken);
+                return CreateCompletedEntryOperation(response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -249,48 +219,86 @@ namespace Azure.Security.CodeTransparency
         /// <param name="body"> CoseSign1 signature envelope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        [Obsolete("Use CreateEntryAsync(BinaryData, bool, CancellationToken) instead.")]
         public virtual async Task<Operation<BinaryData>> CreateEntryAsync(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
-            using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
-            RequestContext context = cancellationToken.ToRequestContext();
+            Argument.AssertNotNull(body, nameof(body));
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntryAsync");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateEntryRequest(content, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
-
-                string operationId = string.Empty;
-                try
-                {
-                    operationId = CborUtils.GetStringValueFromCborMapByKey(response.Content.ToArray(), "OperationId");
-                }
-                catch (Exception ex)
-                {
-                    throw new RequestFailedException("Failed to parse the Cbor response.", ex);
-                }
-
-                if (string.IsNullOrEmpty(operationId))
-                {
-                    throw new RequestFailedException(response);
-                }
-                else
-                {
-                    var entryOperation = new CreateEntryOperation(this, operationId);
-
-                    if (waitUntil == WaitUntil.Completed)
-                    {
-                        await entryOperation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                    }
-
-                    return entryOperation;
-                }
+                Response<BinaryData> response = await CreateEntryAsync(body, waitForCommit: true, cancellationToken).ConfigureAwait(false);
+                return CreateCompletedEntryOperation(response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static CreateEntryOperation CreateCompletedEntryOperation(Response rawResponse)
+        {
+            // Prefer the Location header when the service committed the entry inline; otherwise the
+            // redirect policy followed the 303 See Other to the entry resource (consuming the
+            // Location header) and the entry id is recovered from the returned receipt.
+            string entryId = TryGetEntryIdFromLocation(rawResponse)
+                ?? CcfReceipt.GetRegistrationTransactionId(rawResponse.Content?.ToArray());
+
+            if (string.IsNullOrEmpty(entryId))
+            {
+                throw new RequestFailedException(rawResponse);
+            }
+
+            BinaryData value = CreateEntryIdCborValue(entryId);
+            return new CreateEntryOperation(entryId, rawResponse, value);
+        }
+
+        /// <summary>
+        /// Extracts the entry id from the Location header of a response.
+        /// </summary>
+        /// <param name="response">The response to extract the entry id from.</param>
+        /// <returns>The entry id.</returns>
+        public static string GetEntryIdFromLocation(Response response)
+        {
+            string entryId = TryGetEntryIdFromLocation(response);
+            if (string.IsNullOrEmpty(entryId))
+            {
+                throw new RequestFailedException(response);
+            }
+
+            return entryId;
+        }
+
+        private static string TryGetEntryIdFromLocation(Response response)
+        {
+            if (!response.Headers.TryGetValue("Location", out string location) || string.IsNullOrEmpty(location))
+            {
+                return null;
+            }
+
+            const string entriesSegment = "/entries/";
+            int index = location.LastIndexOf(entriesSegment, StringComparison.OrdinalIgnoreCase);
+            string entryId = index >= 0 ? location.Substring(index + entriesSegment.Length) : location;
+
+            int queryIndex = entryId.IndexOf('?');
+            if (queryIndex >= 0)
+            {
+                entryId = entryId.Substring(0, queryIndex);
+            }
+
+            entryId = entryId.Trim('/');
+            return string.IsNullOrEmpty(entryId) ? null : entryId;
+        }
+
+        private static BinaryData CreateEntryIdCborValue(string entryId)
+        {
+            CborWriter writer = new CborWriter();
+            writer.WriteStartMap(1);
+            writer.WriteTextString("EntryId");
+            writer.WriteTextString(entryId);
+            writer.WriteEndMap();
+            return BinaryData.FromBytes(writer.Encode());
         }
 
         /// <summary>
@@ -600,132 +608,58 @@ namespace Azure.Security.CodeTransparency
             return message;
         }
 
-        internal HttpMessage CreateCreateEntryRequest(RequestContent content, RequestContext context)
-        {
-            var message = Pipeline.CreateMessage(context, ResponseClassifier201202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/entries", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/cose; application/cbor");
-            request.Headers.Add("Content-Type", "application/cose");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetOperationRequest(string operationId, RequestContext context)
-        {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200202);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/cbor");
-            return message;
-        }
-
-        internal HttpMessage CreateGetEntryRequest(string entryId, RequestContext context)
-        {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/entries/", false);
-            uri.AppendPath(entryId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/cose");
-            return message;
-        }
-
-        internal HttpMessage CreateGetEntryStatementRequest(string entryId, RequestContext context)
-        {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/entries/", false);
-            uri.AppendPath(entryId, true);
-            uri.AppendPath("/statement", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/cose");
-            return message;
-        }
-
-        // Backward-compatible wrapper methods delegating to the V09 generated methods.
+        // Pretty method names delegating to the V09 generated methods.
 
         /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
-        [Obsolete("Use CreateEntryV09 instead.")]
         public virtual Response CreateEntry(RequestContent content, bool? waitForCommit = default, RequestContext context = null) => CreateEntryV09(content, waitForCommit, context);
 
         /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
-        [Obsolete("Use CreateEntryV09Async instead.")]
         public virtual async Task<Response> CreateEntryAsync(RequestContent content, bool? waitForCommit = default, RequestContext context = null) => await CreateEntryV09Async(content, waitForCommit, context).ConfigureAwait(false);
 
         /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
-        [Obsolete("Use CreateEntryV09 instead.")]
         public virtual Response<BinaryData> CreateEntry(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => CreateEntryV09(body, waitForCommit, cancellationToken);
 
         /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
-        [Obsolete("Use CreateEntryV09Async instead.")]
         public virtual async Task<Response<BinaryData>> CreateEntryAsync(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => await CreateEntryV09Async(body, waitForCommit, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Get receipt. </summary>
-        [Obsolete("Use GetEntryV09 instead.")]
         public virtual Response GetEntry(string entryId, RequestContext context) => GetEntryV09(entryId, context);
 
         /// <summary> Get receipt. </summary>
-        [Obsolete("Use GetEntryV09Async instead.")]
         public virtual async Task<Response> GetEntryAsync(string entryId, RequestContext context) => await GetEntryV09Async(entryId, context).ConfigureAwait(false);
 
         /// <summary> Get receipt. </summary>
-        [Obsolete("Use GetEntryV09 instead.")]
         public virtual Response<BinaryData> GetEntry(string entryId, CancellationToken cancellationToken = default) => GetEntryV09(entryId, cancellationToken);
 
         /// <summary> Get receipt. </summary>
-        [Obsolete("Use GetEntryV09Async instead.")]
         public virtual async Task<Response<BinaryData>> GetEntryAsync(string entryId, CancellationToken cancellationToken = default) => await GetEntryV09Async(entryId, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Get the transparent statement. </summary>
-        [Obsolete("Use GetEntryStatementV09 instead.")]
         public virtual Response GetEntryStatement(string entryId, RequestContext context) => GetEntryStatementV09(entryId, context);
 
         /// <summary> Get the transparent statement. </summary>
-        [Obsolete("Use GetEntryStatementV09Async instead.")]
         public virtual async Task<Response> GetEntryStatementAsync(string entryId, RequestContext context) => await GetEntryStatementV09Async(entryId, context).ConfigureAwait(false);
 
         /// <summary> Get the transparent statement. </summary>
-        [Obsolete("Use GetEntryStatementV09 instead.")]
         public virtual Response<BinaryData> GetEntryStatement(string entryId, CancellationToken cancellationToken = default) => GetEntryStatementV09(entryId, cancellationToken);
 
         /// <summary> Get the transparent statement. </summary>
-        [Obsolete("Use GetEntryStatementV09Async instead.")]
         public virtual async Task<Response<BinaryData>> GetEntryStatementAsync(string entryId, CancellationToken cancellationToken = default) => await GetEntryStatementV09Async(entryId, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Get operation status. </summary>
-        [Obsolete("Use GetOperationV09 instead.")]
+        [Obsolete("GetOperation is deprecated as it was removed from the recent IETF SCITT draft.")]
         public virtual Response GetOperation(string operationId, RequestContext context) => GetOperationV09(operationId, context);
 
         /// <summary> Get operation status. </summary>
-        [Obsolete("Use GetOperationV09Async instead.")]
+        [Obsolete("GetOperationAsync is deprecated as it was removed from the recent IETF SCITT draft.")]
         public virtual async Task<Response> GetOperationAsync(string operationId, RequestContext context) => await GetOperationV09Async(operationId, context).ConfigureAwait(false);
 
         /// <summary> Get operation status. </summary>
-        [Obsolete("Use GetOperationV09 instead.")]
+        [Obsolete("GetOperation is deprecated as it was removed from the recent IETF SCITT draft.")]
         public virtual Response<BinaryData> GetOperation(string operationId, CancellationToken cancellationToken = default) => GetOperationV09(operationId, cancellationToken);
 
         /// <summary> Get operation status. </summary>
-        [Obsolete("Use GetOperationV09Async instead.")]
+        [Obsolete("GetOperationAsync is deprecated as it was removed from the recent IETF SCITT draft.")]
         public virtual async Task<Response<BinaryData>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default) => await GetOperationV09Async(operationId, cancellationToken).ConfigureAwait(false);
 
         private static ResponseClassifier _responseClassifier200;

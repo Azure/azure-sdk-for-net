@@ -486,7 +486,7 @@ namespace Azure.Generator.Management.Providers
             return action.InputMethod switch
             {
                 InputPagingServiceMethod pagingAction => new PageableOperationMethodProvider(this, parameterMappings, restClientInfo, pagingAction, isAsync, methodName: null, explicitResourceClient: _resource),
-                _ => BuildNonPagingResourceMethod(action.InputMethod, parameterMappings, restClientInfo, isAsync, methodName: null, explicitResourceClient: _resource)
+                _ => BuildNonPagingResourceMethod(action.InputMethod, parameterMappings, restClientInfo, ResourceOperationKind.CollectionAction, isAsync, methodName: null, explicitResourceClient: _resource)
             };
         }
 
@@ -553,7 +553,7 @@ namespace Azure.Generator.Management.Providers
             {
                 var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_create.InputMethod.Operation, isAsync);
                 var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync, true);
-                result.Add(new ResourceOperationMethodProvider(this, BuildParameterMapping(new RequestPathPattern(_create.InputMethod.Operation.Path)), restClientInfo, _create.InputMethod, isAsync, methodName: methodName, forceLro: true));
+                result.Add(new ResourceOperationMethodProvider(this, BuildParameterMapping(new RequestPathPattern(_create.InputMethod.Operation.Path)), restClientInfo, _create.InputMethod, ResourceOperationKind.Create, isAsync, methodName: methodName, forceLro: true));
             }
 
             return result;
@@ -567,11 +567,11 @@ namespace Azure.Generator.Management.Providers
             return getAll.InputMethod switch
             {
                 InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, parameterMappings, restClientInfo, pagingGetAll, isAsync, methodName, _resource),
-                _ => BuildNonPagingResourceMethod(getAll.InputMethod, parameterMappings, restClientInfo, isAsync, methodName, explicitResourceClient: _resource)
+                _ => BuildNonPagingResourceMethod(getAll.InputMethod, parameterMappings, restClientInfo, ResourceOperationKind.List, isAsync, methodName, explicitResourceClient: _resource)
             };
         }
 
-        private MethodProvider BuildNonPagingResourceMethod(InputServiceMethod method, ParameterContextRegistry parameterMappings, RestClientInfo clientInfo, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient)
+        private MethodProvider BuildNonPagingResourceMethod(InputServiceMethod method, ParameterContextRegistry parameterMappings, RestClientInfo clientInfo, ResourceOperationKind operationKind, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient)
         {
             // Check if the response body type is a list - if so, wrap it in a single-page pageable.
             // Long-running operations are excluded: an LRO returning an array is surfaced as
@@ -582,7 +582,7 @@ namespace Azure.Generator.Management.Providers
                 return new ArrayResponseOperationMethodProvider(this, parameterMappings, clientInfo, method, isAsync, methodName, explicitResourceClient);
             }
 
-            return new ResourceOperationMethodProvider(this, parameterMappings, clientInfo, method, isAsync, methodName, explicitResourceClient: explicitResourceClient);
+        return new ResourceOperationMethodProvider(this, parameterMappings, clientInfo, method, operationKind, isAsync, methodName, explicitResourceClient: explicitResourceClient);
         }
 
         private MethodProvider? BuildGetMethod(bool isAsync)
@@ -594,7 +594,7 @@ namespace Azure.Generator.Management.Providers
 
             var restClientInfo = _clientInfos[_get.InputClient];
             var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, isAsync, true);
-            return new ResourceOperationMethodProvider(this, BuildParameterMapping(new RequestPathPattern(_get.InputMethod.Operation.Path)), restClientInfo, _get.InputMethod, isAsync, methodName);
+                return new ResourceOperationMethodProvider(this, BuildParameterMapping(new RequestPathPattern(_get.InputMethod.Operation.Path)), restClientInfo, _get.InputMethod, ResourceOperationKind.Read, isAsync, methodName);
         }
 
         private List<MethodProvider> BuildGetMethods()

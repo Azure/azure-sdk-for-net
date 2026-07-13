@@ -107,5 +107,23 @@ namespace Azure.Security.CodeTransparency.Tests
             StringAssert.Contains(expected: "Claim digest mismatch", exception.Message);
 #endif
         }
+
+        [Test]
+        public void GetRegistrationTransactionId_ReturnsEntryIdFromReceipt()
+        {
+            byte[] receiptBytes = readFileBytes("receipt.cose");
+
+            string entryId = CcfReceipt.GetRegistrationTransactionId(receiptBytes);
+
+            Assert.AreEqual("8.198", entryId);
+        }
+
+        [Test]
+        public void GetRegistrationTransactionId_ReturnsNullForInvalidInput()
+        {
+            Assert.IsNull(CcfReceipt.GetRegistrationTransactionId(null));
+            Assert.IsNull(CcfReceipt.GetRegistrationTransactionId(Array.Empty<byte>()));
+            Assert.IsNull(CcfReceipt.GetRegistrationTransactionId(new byte[] { 0x01, 0x02, 0x03 }));
+        }
     }
 }
