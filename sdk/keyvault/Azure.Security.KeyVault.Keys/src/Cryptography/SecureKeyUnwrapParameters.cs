@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     {
         private static readonly JsonEncodedText s_algorithmPropertyNameBytes = JsonEncodedText.Encode("alg");
         private static readonly JsonEncodedText s_encryptedKeyPropertyNameBytes = JsonEncodedText.Encode("value");
-        private static readonly JsonEncodedText s_targetAttestationTokenPropertyNameBytes = JsonEncodedText.Encode("target_attestation_token");
+        private static readonly JsonEncodedText s_targetAttestationTokenPropertyNameBytes = JsonEncodedText.Encode("target");
 
         public string Algorithm { get; set; }
 
