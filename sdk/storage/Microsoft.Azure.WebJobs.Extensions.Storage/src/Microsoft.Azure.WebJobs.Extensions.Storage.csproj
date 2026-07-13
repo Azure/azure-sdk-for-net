@@ -20,8 +20,12 @@
        "_._" placeholder into each target framework's lib folder to avoid NU5128. The shared
        placeholder lives in eng/ so any future metapackage can reuse it. Read more:
        https://learn.microsoft.com/nuget/reference/errors-and-warnings/nu5128 -->
-  <ItemGroup>
-    <_MetapackageTargetFramework Include="$(TargetFrameworks)" />
-    <None Include="$(RepoEngPath)\_._" Pack="true" PackagePath="@(_MetapackageTargetFramework->'lib/%(Identity)/_._')" />
-  </ItemGroup>
+  <PropertyGroup>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_PackMetapackageLibPlaceholder</TargetsForTfmSpecificContentInPackage>
+  </PropertyGroup>
+  <Target Name="_PackMetapackageLibPlaceholder">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(RepoEngPath)/_._" PackagePath="lib/$(TargetFramework)/_._" />
+    </ItemGroup>
+  </Target>
 </Project>
