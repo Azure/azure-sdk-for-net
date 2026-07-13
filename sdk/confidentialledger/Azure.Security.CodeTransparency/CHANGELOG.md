@@ -4,8 +4,8 @@
 
 ### Features Added
 
-- General availability release targetting REST API version `2026-03-26`
-- Added a utility method `CcfReceipt.GetRegistrationTransactionId(receipt)` to extract the entry ID (registration transaction id) from a receipt
+- General availability release targeting REST API version `2026-03-26`
+- Added a utility method `CcfReceipt.GetRegistrationTransactionId(byte[] receiptCoseSign1Bytes)` to extract the entry ID (registration transaction id) from a receipt
 
 ### Other Changes
 
