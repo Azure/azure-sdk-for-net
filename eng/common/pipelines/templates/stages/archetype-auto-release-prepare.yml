@@ -54,6 +54,8 @@ stages:
           # the in-script azure-sdk-tools install resolves from an authenticated, reachable feed).
           - ${{ parameters.PreSteps }}
 
+          - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
+
           - task: PowerShell@2
             name: resolve
             displayName: Determine releasable packages
@@ -68,3 +70,5 @@ stages:
               arguments: >
                 -CommitSha "$(Build.SourceVersion)"
                 -RepoId "$(Build.Repository.Name)"
+                -PipelineUrl "$(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
+                -AzsdkExePath "$(AZSDK)"
