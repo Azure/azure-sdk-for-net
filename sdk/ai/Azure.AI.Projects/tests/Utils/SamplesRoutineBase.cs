@@ -17,6 +17,31 @@ public class SamplesRoutineBase : ProjectsClientTestBase
 {
     protected readonly string SAMPLE_ROUTINE_NAME_PREFIX = "sample-routine";
 
+    #region Snippet:Sample_HandleRunError_Routines
+    protected static void CheckRunResult(RoutineRun completedRun, int minutesWait, bool runCreated)
+    {
+        if (completedRun == null)
+        {
+            if (runCreated)
+            {
+                throw new InvalidOperationException($"The run did not complete within {minutesWait} minutes.");
+            }
+            else
+            {
+                throw new InvalidOperationException("The run was not created.");
+            }
+        }
+        if (string.Equals(completedRun.Status, "killed", StringComparison.InvariantCultureIgnoreCase))
+        {
+            throw new InvalidOperationException("The run was forcefully stopped.");
+        }
+        if (string.Equals(completedRun.Status, "failed", StringComparison.InvariantCultureIgnoreCase))
+        {
+            throw new InvalidOperationException($"The run has failed with the error. Type: {completedRun.ErrorType} Message: {completedRun.ErrorMessage}.");
+        }
+    }
+    #endregion
+
     public SamplesRoutineBase(bool isAsync) : base(isAsync)
     { }
 

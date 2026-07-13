@@ -27,18 +27,52 @@ function Get-RelativePath
     return [System.Uri]::UnescapeDataString($baseUri.MakeRelativeUri($pathUri).ToString()).Replace('/', [System.IO.Path]::DirectorySeparatorChar)
 }
 
-function Get-PropertyTypes
+function Get-PropertyInfo
 {
     param([Parameter(Mandatory)][string] $Source)
 
-    $propertyTypes = @{}
-    $propertyPattern = '(?ms)^\s*public\s+(?<type>[A-Za-z_][A-Za-z0-9_<>,\.\?\s]*)\s+(?<name>[A-Za-z_][A-Za-z0-9_]*)\s*\{'
+    $properties = @{}
+    $propertyPattern = '(?m)^\s*public\s+(?<type>[A-Za-z_][A-Za-z0-9_<>,\.\?\s]*)\s+(?<name>[A-Za-z_][A-Za-z0-9_]*)\s*\{'
     foreach ($match in [regex]::Matches($Source, $propertyPattern))
     {
-        $propertyTypes[$match.Groups['name'].Value] = ($match.Groups['type'].Value -replace '\s+', ' ').Trim()
+        $openBrace = $Source.IndexOf('{', $match.Index)
+        if ($openBrace -lt 0)
+        {
+            continue
+        }
+
+        $depth = 0
+        $closeBrace = -1
+        for ($i = $openBrace; $i -lt $Source.Length; $i++)
+        {
+            if ($Source[$i] -eq '{')
+            {
+                $depth++
+            }
+            elseif ($Source[$i] -eq '}')
+            {
+                $depth--
+                if ($depth -eq 0)
+                {
+                    $closeBrace = $i
+                    break
+                }
+            }
+        }
+
+        if ($closeBrace -le $openBrace)
+        {
+            continue
+        }
+
+        $body = $Source.Substring($openBrace + 1, $closeBrace - $openBrace - 1)
+        $properties[$match.Groups['name'].Value] = [ordered]@{
+            Type = ($match.Groups['type'].Value -replace '\s+', ' ').Trim()
+            Settable = $body -match '(?m)^\s*(public\s+)?(set|init)\s*(\{|=>)'
+        }
     }
 
-    return $propertyTypes
+    return $properties
 }
 
 function Get-SerializedPath
@@ -76,7 +110,7 @@ function Get-ResourceProperties
         [string] $Source,
 
         [Parameter(Mandatory)]
-        [hashtable] $PropertyTypes
+        [hashtable] $PropertyInfo
     )
 
     $properties = [System.Collections.Generic.List[object]]::new()
@@ -86,7 +120,8 @@ function Get-ResourceProperties
         $name = if ($match.Groups['literalName'].Success) { $match.Groups['literalName'].Value } else { $match.Groups['nameofName'].Value }
         $method = $match.Groups['method'].Value
         $genericType = ($match.Groups['generic'].Value -replace '\s+', ' ').Trim()
-        $type = if ($PropertyTypes.ContainsKey($name)) { $PropertyTypes[$name] } else { $genericType }
+        $type = if ($PropertyInfo.ContainsKey($name)) { $PropertyInfo[$name].Type } else { $genericType }
+        $isSettable = $PropertyInfo.ContainsKey($name) -and $PropertyInfo[$name].Settable
         $args = $match.Groups['args'].Value
         $isMetadata = $method -eq 'DefineResource'
         $pathSource = if ($match.Groups['bracketPath'].Success) { $match.Groups['bracketPath'].Value } else { $match.Groups['arrayPath'].Value }
@@ -97,7 +132,7 @@ function Get-ResourceProperties
             Kind = if ($isMetadata) { 'Resource' } else { Get-PropertyKind -DefineMethod $method }
             Type = $type
             IsRequired = $args -match '\bisRequired\s*:\s*true\b'
-            IsOutput = $args -match '\bisOutput\s*:\s*true\b'
+            IsSettable = $isSettable
             IsMetadata = $isMetadata
         })
     }
@@ -150,7 +185,7 @@ function Get-ResourceInfo
         $apiVersions.Add($match.Groups['version'].Value)
     }
 
-    $propertyTypes = Get-PropertyTypes -Source $combinedSource
+    $propertyInfo = Get-PropertyInfo -Source $combinedSource
 
     return [ordered]@{
         ClassName = $className
@@ -160,7 +195,7 @@ function Get-ResourceInfo
         SourcePath = Get-RelativePath -BasePath $PackagePath -Path $File.FullName
         AdditionalSourcePaths = @($sourcePaths.ToArray() | Where-Object { $_ -ne (Get-RelativePath -BasePath $PackagePath -Path $File.FullName) })
         InitializationError = ''
-        Properties = @(Get-ResourceProperties -Source $combinedSource -PropertyTypes $propertyTypes)
+        Properties = @(Get-ResourceProperties -Source $combinedSource -PropertyInfo $propertyInfo)
     }
 }
 
@@ -219,12 +254,12 @@ else
             $lines.Add("- Additional source files: ``$($resource.AdditionalSourcePaths -join '`, ``')``")
         }
         $lines.Add("")
-        $lines.Add("| Property | Path | Kind | Type | Required | Output | Metadata |")
+        $lines.Add("| Property | Path | Kind | Type | Required | Settable | Metadata |")
         $lines.Add("| --- | --- | --- | --- | --- | --- | --- |")
         foreach ($property in $resource.Properties)
         {
             $path = if ($property.SerializedPath.Count -gt 0) { $property.SerializedPath -join '.' } else { '' }
-            $lines.Add("| ``$($property.Name)`` | ``$path`` | $($property.Kind) | ``$($property.Type)`` | $($property.IsRequired) | $($property.IsOutput) | $($property.IsMetadata) |")
+            $lines.Add("| ``$($property.Name)`` | ``$path`` | $($property.Kind) | ``$($property.Type)`` | $($property.IsRequired) | $($property.IsSettable) | $($property.IsMetadata) |")
         }
         $lines.Add("")
     }

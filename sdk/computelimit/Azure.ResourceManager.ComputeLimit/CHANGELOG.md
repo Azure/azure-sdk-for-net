@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.3.0 (2026-07-07)
 
 ### Other Changes
+
+- Updated documentation for `Enable` and `Disable` operations on `ComputeLimitFeatureResource` to note that the Contributor role is required.
 
 ## 1.2.0 (2026-06-17)
 

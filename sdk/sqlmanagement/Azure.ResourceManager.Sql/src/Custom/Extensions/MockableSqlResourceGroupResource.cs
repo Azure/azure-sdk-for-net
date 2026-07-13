@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             return new AsyncPageableWrapper<ManagedInstanceLongTermRetentionBackupData, SubscriptionLongTermRetentionManagedInstanceBackupResource>(
-                GetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken : cancellationToken),
+                GetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken),
                 data => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, data));
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             return new PageableWrapper<ManagedInstanceLongTermRetentionBackupData, SubscriptionLongTermRetentionManagedInstanceBackupResource>(
-                GetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken : cancellationToken),
+                GetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken),
                 data => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, data));
         }
 
