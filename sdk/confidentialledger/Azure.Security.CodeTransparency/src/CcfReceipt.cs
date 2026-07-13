@@ -7,7 +7,7 @@ using System.Formats.Cbor;
 using System.Security.Cryptography.Cose;
 
 // cspell:ignore bstr
-namespace Azure.Security.CodeTransparency.Receipt
+namespace Azure.Security.CodeTransparency
 {
     /// <summary>
     /// CcfReceipt class which enables encoding, decoding and verification of receipts issued from the Signing Transparency Service.

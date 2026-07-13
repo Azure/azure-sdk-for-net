@@ -18,6 +18,31 @@ namespace Azure.Security.CodeTransparency
         public static string GetStringValueFromCborMapByKey(byte[] cborBytes, int key) { throw null; }
         public static string GetStringValueFromCborMapByKey(byte[] cborBytes, string key) { throw null; }
     }
+    public partial class CcfReceipt
+    {
+        public static readonly int CcfProofLeafLabel;
+        public static readonly int CcfProofPathLabel;
+        public static readonly int CcfTreeAlgLabel;
+        public static readonly int CoseHeaderEmbeddedReceipts;
+        public static readonly int CosePhdrVdpLabel;
+        public static readonly int CosePhdrVdsLabel;
+        public static readonly int CoseReceiptCwtIssLabel;
+        public static readonly int CoseReceiptCwtMapLabel;
+        public static readonly int CoseReceiptInclusionProofLabel;
+        public static readonly ulong ReceiptHeaderIssuer;
+        public static readonly ulong ReceiptHeaderKeyId;
+        public static readonly string ReceiptHeaderRegistrationTime;
+        public static readonly string ReceiptHeaderServiceId;
+        public static readonly string ReceiptHeaderTreeAlgorithm;
+        public static readonly string SupportedTreeAlgorithm;
+        public CcfReceipt() { }
+        public static string GetRegistrationTransactionId(byte[] receiptCoseSign1Bytes) { throw null; }
+    }
+    public partial class CcfReceiptVerifier
+    {
+        public CcfReceiptVerifier() { }
+        public static void VerifyTransparentStatementReceipt(Azure.Security.CodeTransparency.JsonWebKey jsonWebKey, byte[] receiptBytes, byte[] signedStatementBytes) { }
+    }
     public partial class CodeTransparencyCertificateClient
     {
         protected CodeTransparencyCertificateClient() { }
@@ -216,33 +241,5 @@ namespace Azure.Security.CodeTransparency
         VerifyAll = 0,
         IgnoreAll = 1,
         FailIfPresent = 2,
-    }
-}
-namespace Azure.Security.CodeTransparency.Receipt
-{
-    public partial class CcfReceipt
-    {
-        public static readonly int CcfProofLeafLabel;
-        public static readonly int CcfProofPathLabel;
-        public static readonly int CcfTreeAlgLabel;
-        public static readonly int CoseHeaderEmbeddedReceipts;
-        public static readonly int CosePhdrVdpLabel;
-        public static readonly int CosePhdrVdsLabel;
-        public static readonly int CoseReceiptCwtIssLabel;
-        public static readonly int CoseReceiptCwtMapLabel;
-        public static readonly int CoseReceiptInclusionProofLabel;
-        public static readonly ulong ReceiptHeaderIssuer;
-        public static readonly ulong ReceiptHeaderKeyId;
-        public static readonly string ReceiptHeaderRegistrationTime;
-        public static readonly string ReceiptHeaderServiceId;
-        public static readonly string ReceiptHeaderTreeAlgorithm;
-        public static readonly string SupportedTreeAlgorithm;
-        public CcfReceipt() { }
-        public static string GetRegistrationTransactionId(byte[] receiptCoseSign1Bytes) { throw null; }
-    }
-    public partial class CcfReceiptVerifier
-    {
-        public CcfReceiptVerifier() { }
-        public static void VerifyTransparentStatementReceipt(Azure.Security.CodeTransparency.JsonWebKey jsonWebKey, byte[] receiptBytes, byte[] signedStatementBytes) { }
     }
 }
