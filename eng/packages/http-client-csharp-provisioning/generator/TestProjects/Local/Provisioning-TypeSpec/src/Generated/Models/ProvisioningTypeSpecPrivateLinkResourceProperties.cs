@@ -58,7 +58,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             base.DefineProvisionableProperties();
             _groupId = DefineProperty<string>(nameof(GroupId), new string[] { "groupId" }, isOutput: true);
             _requiredMembers = DefineListProperty<string>(nameof(RequiredMembers), new string[] { "requiredMembers" }, isOutput: true);
-            _requiredZoneNames = DefineListProperty<string>(nameof(RequiredZoneNames), new string[] { "requiredZoneNames" }, isOutput: true);
+            _requiredZoneNames = DefineListProperty<string>(nameof(RequiredZoneNames), new string[] { "requiredZoneNames" });
             DefineAdditionalProperties();
         }
 
