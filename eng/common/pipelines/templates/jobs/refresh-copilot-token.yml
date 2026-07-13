@@ -1,0 +1,39 @@
+# RefreshCopilotToken job: mints a fresh 8h Copilot access token from the stored GitHub App
+# refresh token and writes it into the access-token Key Vault secret that the eval shards
+# already consume. Runs in the Prepare stage so the Eval stage (dependsOn Prepare) resolves
+# the Key-Vault-backed variable group AFTER the secret has been refreshed — no shard wiring
+# changes. Opt-in: only added when the archetype's refreshCopilotToken parameter is true and
+# the one-time Bootstrap-CopilotToken.ps1 has seeded the refresh token.
+
+parameters:
+  - name: keyVaultServiceConnection
+    # Service connection whose identity has get + set on the Key Vault below.
+    type: string
+  - name: keyVaultName
+    type: string
+    default: AzureSDKEngKeyVault
+  - name: githubAppClientId
+    # The GitHub App client id (not a secret); pass via a pipeline variable if you prefer.
+    type: string
+
+jobs:
+  - job: RefreshCopilotToken
+    displayName: 'Refresh Copilot access token'
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+    steps:
+      - checkout: self
+        fetchDepth: 1
+
+      - task: AzureCLI@2
+        displayName: 'Rotate refresh token + publish access token'
+        inputs:
+          azureSubscription: ${{ parameters.keyVaultServiceConnection }}
+          scriptType: pscore
+          scriptLocation: scriptPath
+          scriptPath: $(Build.SourcesDirectory)/eng/common/scripts/eval/Refresh-CopilotToken.ps1
+          arguments: >-
+            -KeyVaultName ${{ parameters.keyVaultName }}
+            -ClientId ${{ parameters.githubAppClientId }}

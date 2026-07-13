@@ -62,6 +62,24 @@ parameters:
     # Per-shard job timeout, passed to the shard job's timeoutInMinutes. Live tier raises it.
     type: number
     default: 20
+  - name: refreshCopilotToken
+    # Opt-in: when true, a Prepare-stage job rotates the GitHub App refresh token and republishes
+    # a fresh 8h Copilot access token into the access-token Key Vault secret before the shards run.
+    # Requires the one-time Bootstrap-CopilotToken.ps1 to have seeded the refresh token, plus the
+    # keyVault* parameters below. Default false so existing consumers are unaffected.
+    type: boolean
+    default: false
+  - name: keyVaultServiceConnection
+    # Service connection with get + set on the Key Vault; required only when refreshCopilotToken is true.
+    type: string
+    default: ''
+  - name: keyVaultName
+    type: string
+    default: AzureSDKEngKeyVault
+  - name: githubAppClientId
+    # GitHub App client id (not a secret); required only when refreshCopilotToken is true.
+    type: string
+    default: ''
 
 extends:
   # 1es-redirect picks Official (internal) vs Unofficial; its Use1ESOfficial defaults true.
@@ -81,6 +99,13 @@ extends:
             parameters:
               vallyRoot: ${{ parameters.vallyRoot }}
               evalGlobs: ${{ parameters.evalGlobs }}
+
+          - ${{ if parameters.refreshCopilotToken }}:
+            - template: /eng/common/pipelines/templates/jobs/refresh-copilot-token.yml
+              parameters:
+                keyVaultServiceConnection: ${{ parameters.keyVaultServiceConnection }}
+                keyVaultName: ${{ parameters.keyVaultName }}
+                githubAppClientId: ${{ parameters.githubAppClientId }}
 
       - stage: Eval
         displayName: 'Run eval shards'
