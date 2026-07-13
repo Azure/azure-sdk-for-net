@@ -35,26 +35,26 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The Activity Log Alert rule properties of the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        internal TenantActivityLogAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertRuleProperties properties, IDictionary<string, string> tags, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="location"> The location of the resource. Since Azure Activity Log Alerts is a global service, the location of the rules should always be 'global'. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TenantActivityLogAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleProperties properties, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            Tags = tags;
             Location = location;
+            Tags = tags;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Activity Log Alert rule properties of the resource. </summary>
         internal AlertRuleProperties Properties { get; set; }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The geo-location where the resource lives. </summary>
+        /// <summary> The location of the resource. Since Azure Activity Log Alerts is a global service, the location of the rules should always be 'global'. </summary>
         public AzureLocation? Location { get; set; }
+
+        /// <summary> The tags of the resource. </summary>
+        public IDictionary<string, string> Tags { get; }
 
         /// <summary> The tenant GUID. Must be provided for tenant-level and management group events rules. </summary>
         public string TenantScope

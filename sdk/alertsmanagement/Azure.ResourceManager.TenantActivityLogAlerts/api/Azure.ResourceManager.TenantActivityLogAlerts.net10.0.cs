@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
     }
     public static partial class TenantActivityLogAlertsExtensions
     {
+        public static Azure.Pageable<Azure.ResourceManager.TenantActivityLogAlerts.TenantActivityLogAlertResource> GetByTenant(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.TenantActivityLogAlerts.TenantActivityLogAlertResource> GetByTenantAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.TenantActivityLogAlerts.TenantActivityLogAlertResource> GetTenantActivityLogAlert(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, string alertRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TenantActivityLogAlerts.TenantActivityLogAlertResource>> GetTenantActivityLogAlertAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, string alertRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.TenantActivityLogAlerts.TenantActivityLogAlertResource GetTenantActivityLogAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.TenantActivityLogAlerts.TenantActivityLogAlertCollection GetTenantActivityLogAlerts(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.TenantActivityLogAlerts.TenantActivityLogAlertResource> GetTenantActivityLogAlerts(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.TenantActivityLogAlerts.TenantActivityLogAlertResource> GetTenantActivityLogAlertsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.TenantActivityLogAlerts.Mocking
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Mocking
     public partial class MockableTenantActivityLogAlertsTenantResource : Azure.ResourceManager.ArmResource
     {
         protected MockableTenantActivityLogAlertsTenantResource() { }
-        public virtual Azure.Pageable<Azure.ResourceManager.TenantActivityLogAlerts.TenantActivityLogAlertResource> GetTenantActivityLogAlerts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.TenantActivityLogAlerts.TenantActivityLogAlertResource> GetTenantActivityLogAlertsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.TenantActivityLogAlerts.TenantActivityLogAlertResource> GetByTenant(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.TenantActivityLogAlerts.TenantActivityLogAlertResource> GetByTenantAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
@@ -106,7 +106,6 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
     {
         public static Azure.ResourceManager.TenantActivityLogAlerts.Models.TenantActivityLogAlertActionGroup TenantActivityLogAlertActionGroup(Azure.Core.ResourceIdentifier actionGroupId = null, System.Collections.Generic.IDictionary<string, string> webhookProperties = null, System.Collections.Generic.IDictionary<string, string> actionProperties = null) { throw null; }
         public static Azure.ResourceManager.TenantActivityLogAlerts.Models.TenantActivityLogAlertAnyOfOrLeafCondition TenantActivityLogAlertAnyOfOrLeafCondition(string field = null, string equalTo = null, System.Collections.Generic.IEnumerable<string> containsAny = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.TenantActivityLogAlerts.Models.TenantActivityLogAlertLeafCondition> anyOf = null) { throw null; }
-        public static Azure.ResourceManager.TenantActivityLogAlerts.TenantActivityLogAlertData TenantActivityLogAlertData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string tenantScope = null, System.Collections.Generic.IEnumerable<string> scopes = null, bool? isEnabled = default(bool?), string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.TenantActivityLogAlerts.Models.TenantActivityLogAlertAnyOfOrLeafCondition> conditionAllOf = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.TenantActivityLogAlerts.Models.TenantActivityLogAlertActionGroup> actionsActionGroups = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.TenantActivityLogAlerts.Models.TenantActivityLogAlertLeafCondition TenantActivityLogAlertLeafCondition(string field = null, string equalTo = null, System.Collections.Generic.IEnumerable<string> containsAny = null) { throw null; }
         public static Azure.ResourceManager.TenantActivityLogAlerts.Models.TenantActivityLogAlertPatch TenantActivityLogAlertPatch(System.Collections.Generic.IDictionary<string, string> tags = null, bool? isEnabled = default(bool?)) { throw null; }
     }

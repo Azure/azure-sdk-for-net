@@ -103,6 +103,11 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -119,10 +124,20 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
@@ -155,10 +170,10 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AlertRuleProperties properties = default;
-            IDictionary<string, string> tags = default;
             AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -198,6 +213,15 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                     properties = AlertRuleProperties.DeserializeAlertRuleProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -219,15 +243,6 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -238,10 +253,10 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 properties,
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                location);
+                additionalBinaryDataProperties);
         }
     }
 }

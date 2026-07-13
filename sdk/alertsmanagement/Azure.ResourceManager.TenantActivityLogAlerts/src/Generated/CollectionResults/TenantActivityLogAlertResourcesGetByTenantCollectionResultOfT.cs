@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                     yield break;
                 }
                 TenantAlertRuleList result = TenantAlertRuleList.FromResponse(response);
-                yield return Page<TenantActivityLogAlertData>.FromValues((IReadOnlyList<TenantActivityLogAlertData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<TenantActivityLogAlertData>.FromValues((IReadOnlyList<TenantActivityLogAlertData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
