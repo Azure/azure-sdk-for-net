@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <summary> The resource-specific properties for this resource. </summary>
         internal FabricCapacityUpdateProperties Properties { get; set; }
 
-        /// <summary> Gets or sets the AdministrationMembers. </summary>
+        /// <summary> Gets the AdministrationMembers. </summary>
         public IList<string> FabricCapacityUpdateAdministrationMembers
         {
             get
