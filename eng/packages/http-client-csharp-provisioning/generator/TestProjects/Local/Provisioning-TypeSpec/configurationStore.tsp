@@ -143,8 +143,4 @@ interface ConfigurationStores {
   list is ArmResourceListByParent<ConfigurationStore>;
 
   listBySubscription is ArmListBySubscription<ConfigurationStore>;
-
-  getPrivateLink is ConfigurationStorePrivateLinkOperations.Read<ConfigurationStore>;
-
-  listPrivateLinks is ConfigurationStorePrivateLinkOperations.ListByParent<ConfigurationStore>;
 }

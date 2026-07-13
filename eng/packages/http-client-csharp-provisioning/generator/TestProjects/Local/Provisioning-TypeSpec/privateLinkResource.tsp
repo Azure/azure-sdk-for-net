@@ -14,3 +14,9 @@ namespace ProvisioningTypeSpec;
 model ConfigurationStorePrivateLinkResource is PrivateLink;
 
 alias ConfigurationStorePrivateLinkOperations = PrivateLinks<ConfigurationStorePrivateLinkResource>;
+
+@armResourceOperations
+interface ConfigurationStorePrivateLinkResources {
+  get is ConfigurationStorePrivateLinkOperations.Read<ConfigurationStore>;
+  list is ConfigurationStorePrivateLinkOperations.ListByParent<ConfigurationStore>;
+}
