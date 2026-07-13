@@ -447,8 +447,6 @@ namespace Azure.Generator.Provisioning.Tests
             var writableModel = CreateModel("WritableResource", [writableProperty], baseModel);
             var readOnlyProperty = CreateProperty("ReadOnlyValue", isRequired: true);
             var readOnlyModel = CreateModel("DeletedResource", [readOnlyProperty], baseModel);
-            AddDerivedModel(baseModel, writableModel);
-            AddDerivedModel(baseModel, readOnlyModel);
             var writableResource = CreateMetadata(
                 writableModel,
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/resources/{resourceName}",
@@ -590,7 +588,7 @@ namespace Azure.Generator.Provisioning.Tests
                 baseModel,
                 discriminatorValue: "derived",
                 discriminatorProperty: discriminatorProperty);
-            AddDerivedModel(baseModel, derivedModel);
+            AddDiscriminatedSubtype(baseModel, derivedModel);
             var readOnlyResource = CreateMetadata(
                 baseModel,
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
@@ -623,7 +621,7 @@ namespace Azure.Generator.Provisioning.Tests
                 baseModel,
                 discriminatorValue: "derived",
                 discriminatorProperty: discriminatorProperty);
-            AddDerivedModel(baseModel, derivedModel);
+            AddDiscriminatedSubtype(baseModel, derivedModel);
             var writableResource = CreateMetadata(
                 baseModel,
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
@@ -801,20 +799,10 @@ namespace Azure.Generator.Provisioning.Tests
                 .SetValue(ProvisioningGenerator.Instance.InputLibrary, null);
         }
 
-        private static void AddDerivedModel(InputModelType baseModel, InputModelType derivedModel)
+        private static void AddDiscriminatedSubtype(InputModelType baseModel, InputModelType derivedModel)
         {
-            // InputModelType copies constructor-provided derived models by calling
-            // its non-public AddDerivedModel helper, so mutating the original list
-            // or the public DerivedModels collection after construction does not work.
-            // Source: https://github.com/microsoft/typespec/blob/6b421a5cbc59583cc9c52f3e180196816071bc1a/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.Input/src/InputTypes/InputModelType.cs#L31-L34
-            typeof(InputModelType)
-                .GetMethod("AddDerivedModel", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .Invoke(baseModel, [derivedModel]);
-            if (derivedModel.DiscriminatorValue != null
-                && baseModel.DiscriminatedSubtypes is IDictionary<string, InputModelType> discriminatedSubtypes)
-            {
-                discriminatedSubtypes[derivedModel.DiscriminatorValue] = derivedModel;
-            }
+            var discriminatedSubtypes = (IDictionary<string, InputModelType>)baseModel.DiscriminatedSubtypes;
+            discriminatedSubtypes[derivedModel.DiscriminatorValue!] = derivedModel;
         }
 
         private static ProvisioningResourceProvider CreateResourceProvider(ArmResourceMetadata metadata)
