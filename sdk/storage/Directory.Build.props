@@ -25,7 +25,7 @@
       SA1649;
     </NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
+  <PropertyGroup Condition="'$(IsClientLibrary)' == 'true' and '$(IsMgmtLibrary)' != 'true'">
     <!--
     Storage used to point to its main documentation page, but the rest of the
     Azure .NET SDK projects point to the github repo instead.  I'm leaving this
