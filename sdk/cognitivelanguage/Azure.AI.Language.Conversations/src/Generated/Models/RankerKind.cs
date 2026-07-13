@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Type of ranker to be used. </summary>
-    public readonly partial struct RankerKind : IEquatable<RankerKind>
+    internal readonly partial struct RankerKind : IEquatable<RankerKind>
     {
         private readonly string _value;
         /// <summary> Default ranker. </summary>

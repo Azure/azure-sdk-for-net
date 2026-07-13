@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Conversations.Models
     /// This is the base class of an intent prediction
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LuisTargetIntentResult"/>, <see cref="QuestionAnsweringTargetIntentResult"/>, <see cref="NoneLinkedTargetIntentResult"/>, and <see cref="ConversationTargetIntentResult"/>.
     /// </summary>
-    public abstract partial class TargetIntentResult
+    internal abstract partial class TargetIntentResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

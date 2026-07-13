@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> The notification event filter when the event type is TriggerDisabled. </summary>
-    public partial class TriggerDisabledNotificationEventFilter : TestsNotificationEventFilter
+    internal partial class TriggerDisabledNotificationEventFilter : TestsNotificationEventFilter
     {
         /// <summary> Initializes a new instance of <see cref="TriggerDisabledNotificationEventFilter"/>. </summary>
         public TriggerDisabledNotificationEventFilter() : base(NotificationEventType.TriggerDisabled)

@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the Age entity resolution model. </summary>
-    public partial class AgeResolution : ResolutionBase, IJsonModel<AgeResolution>
+    internal partial class AgeResolution : ResolutionBase, IJsonModel<AgeResolution>
     {
         /// <summary> Initializes a new instance of <see cref="AgeResolution"/> for deserialization. </summary>
         internal AgeResolution()

@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The entity extraction result of a Conversation project. </summary>
-    public partial class ConversationEntity : IJsonModel<ConversationEntity>
+    internal partial class ConversationEntity : IJsonModel<ConversationEntity>
     {
         /// <summary> Initializes a new instance of <see cref="ConversationEntity"/> for deserialization. </summary>
         internal ConversationEntity()

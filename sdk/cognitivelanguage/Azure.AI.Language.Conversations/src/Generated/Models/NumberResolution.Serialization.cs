@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> A resolution for numeric entity instances. </summary>
-    public partial class NumberResolution : ResolutionBase, IJsonModel<NumberResolution>
+    internal partial class NumberResolution : ResolutionBase, IJsonModel<NumberResolution>
     {
         /// <summary> Initializes a new instance of <see cref="NumberResolution"/> for deserialization. </summary>
         internal NumberResolution()

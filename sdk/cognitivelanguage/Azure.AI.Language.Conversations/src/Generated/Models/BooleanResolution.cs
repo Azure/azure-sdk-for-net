@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> A resolution for boolean expressions. </summary>
-    public partial class BooleanResolution : ResolutionBase
+    internal partial class BooleanResolution : ResolutionBase
     {
         /// <summary> Initializes a new instance of <see cref="BooleanResolution"/>. </summary>
         /// <param name="value"> A resolution for boolean expressions. </param>

@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the temperature entity resolution model. </summary>
-    public partial class TemperatureResolution : ResolutionBase, IJsonModel<TemperatureResolution>
+    internal partial class TemperatureResolution : ResolutionBase, IJsonModel<TemperatureResolution>
     {
         /// <summary> Initializes a new instance of <see cref="TemperatureResolution"/> for deserialization. </summary>
         internal TemperatureResolution()

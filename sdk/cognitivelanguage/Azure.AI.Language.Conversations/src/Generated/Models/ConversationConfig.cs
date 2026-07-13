@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> This is a set of request parameters for Customized Conversation projects. </summary>
-    public partial class ConversationConfig : AnalysisConfig
+    internal partial class ConversationConfig : AnalysisConfig
     {
         /// <summary> Initializes a new instance of <see cref="ConversationConfig"/>. </summary>
         public ConversationConfig() : base(TargetProjectKind.Conversation)

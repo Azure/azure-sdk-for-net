@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Object to provide the key value pair for each metadata. </summary>
-    public partial class MetadataRecord : IJsonModel<MetadataRecord>
+    internal partial class MetadataRecord : IJsonModel<MetadataRecord>
     {
         /// <summary> Initializes a new instance of <see cref="MetadataRecord"/> for deserialization. </summary>
         internal MetadataRecord()

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the weight entity resolution model. </summary>
-    public partial class WeightResolution : ResolutionBase
+    internal partial class WeightResolution : ResolutionBase
     {
         /// <summary> Initializes a new instance of <see cref="WeightResolution"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>

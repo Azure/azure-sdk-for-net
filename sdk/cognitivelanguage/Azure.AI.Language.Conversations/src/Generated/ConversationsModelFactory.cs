@@ -221,7 +221,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// This is the parameter set of either the Orchestration project itself or one of the target services.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LuisConfig"/>, <see cref="Models.QuestionAnsweringConfig"/>, and <see cref="Models.ConversationConfig"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LuisConfig"/>, <see cref="QuestionAnsweringConfig"/>, and <see cref="ConversationConfig"/>.
         /// </summary>
         /// <param name="targetProjectKind"> The type of a target service. </param>
         /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
@@ -229,143 +229,6 @@ namespace Azure.AI.Language.Conversations
         public static AnalysisConfig AnalysisConfig(string targetProjectKind = default, string apiVersion = default)
         {
             return new UnknownAnalysisConfig(new TargetProjectKind(targetProjectKind), apiVersion, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> This is a set of request parameters for LUIS Generally Available projects. </summary>
-        /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
-        /// <param name="query"> The utterance to predict. </param>
-        /// <param name="callingOptions"> This customizes how the service calls LUIS Generally Available projects. </param>
-        /// <returns> A new <see cref="Models.LuisConfig"/> instance for mocking. </returns>
-        public static LuisConfig LuisConfig(string apiVersion = default, string query = default, LuisCallingConfig callingOptions = default)
-        {
-            return new LuisConfig(TargetProjectKind.Luis, apiVersion, additionalBinaryDataProperties: null, query, callingOptions);
-        }
-
-        /// <summary> This customizes how the service calls LUIS Generally Available projects. </summary>
-        /// <param name="verbose"> Enable verbose response. </param>
-        /// <param name="log"> Save log to add in training utterances later. </param>
-        /// <param name="showAllIntents"> Set true to show all intents. </param>
-        /// <param name="timezoneOffset"> The timezone offset for the location of the request. </param>
-        /// <param name="spellCheck"> Enable spell checking. </param>
-        /// <param name="bingSpellCheckSubscriptionKey"> The subscription key to use when enabling Bing spell check. </param>
-        /// <returns> A new <see cref="Models.LuisCallingConfig"/> instance for mocking. </returns>
-        public static LuisCallingConfig LuisCallingConfig(bool? verbose = default, bool? log = default, bool? showAllIntents = default, int? timezoneOffset = default, bool? spellCheck = default, string bingSpellCheckSubscriptionKey = default)
-        {
-            return new LuisCallingConfig(
-                verbose,
-                log,
-                showAllIntents,
-                timezoneOffset,
-                spellCheck,
-                bingSpellCheckSubscriptionKey,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> This is a set of request parameters for Question Answering knowledge bases. </summary>
-        /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
-        /// <param name="callingOptions"> The options sent to a Question Answering KB. </param>
-        /// <returns> A new <see cref="Models.QuestionAnsweringConfig"/> instance for mocking. </returns>
-        public static QuestionAnsweringConfig QuestionAnsweringConfig(string apiVersion = default, QuestionAnswersConfig callingOptions = default)
-        {
-            return new QuestionAnsweringConfig(TargetProjectKind.QuestionAnswering, apiVersion, additionalBinaryDataProperties: null, callingOptions);
-        }
-
-        /// <summary> Parameters to query a knowledge base. </summary>
-        /// <param name="qnaId"> Exact QnA ID to fetch from the knowledge base, this field takes priority over question. </param>
-        /// <param name="question"> User question to query against the knowledge base. </param>
-        /// <param name="top"> Max number of answers to be returned for the question. </param>
-        /// <param name="userId"> Unique identifier for the user. </param>
-        /// <param name="confidenceThreshold"> Minimum threshold score for answers, value ranges from 0 to 1. </param>
-        /// <param name="answerContext"> Context object with previous QnA's information. </param>
-        /// <param name="rankerKind"> Type of ranker to be used. </param>
-        /// <param name="filters"> Filter QnAs based on given metadata list and knowledge base sources. </param>
-        /// <param name="shortAnswerOptions"> To configure Answer span prediction feature. </param>
-        /// <param name="includeUnstructuredSources"> (Optional) Flag to enable Query over Unstructured Sources. </param>
-        /// <returns> A new <see cref="Models.QuestionAnswersConfig"/> instance for mocking. </returns>
-        public static QuestionAnswersConfig QuestionAnswersConfig(int? qnaId = default, string question = default, int? top = default, string userId = default, double? confidenceThreshold = default, KnowledgeBaseAnswerContext answerContext = default, RankerKind? rankerKind = default, QueryFilters filters = default, ShortAnswerConfig shortAnswerOptions = default, bool? includeUnstructuredSources = default)
-        {
-            return new QuestionAnswersConfig(
-                qnaId,
-                question,
-                top,
-                userId,
-                confidenceThreshold,
-                answerContext,
-                rankerKind,
-                filters,
-                shortAnswerOptions,
-                includeUnstructuredSources,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Context object with previous QnA's information. </summary>
-        /// <param name="previousQnaId"> Previous turn top answer result QnA ID. </param>
-        /// <param name="previousQuestion"> Previous user query. </param>
-        /// <returns> A new <see cref="Models.KnowledgeBaseAnswerContext"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerContext KnowledgeBaseAnswerContext(int previousQnaId = default, string previousQuestion = default)
-        {
-            return new KnowledgeBaseAnswerContext(previousQnaId, previousQuestion, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> filters over knowledge base. </summary>
-        /// <param name="metadataFilter"> filters over knowledge base. </param>
-        /// <param name="sourceFilter"> filters over knowledge base. </param>
-        /// <param name="logicalOperation"> Logical operation used to join metadata filter with source filter. </param>
-        /// <returns> A new <see cref="Models.QueryFilters"/> instance for mocking. </returns>
-        public static QueryFilters QueryFilters(MetadataFilter metadataFilter = default, IEnumerable<string> sourceFilter = default, LogicalOperationKind? logicalOperation = default)
-        {
-            sourceFilter ??= new ChangeTrackingList<string>();
-
-            return new QueryFilters(metadataFilter, sourceFilter.ToList(), logicalOperation, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Find QnAs that are associated with the given list of metadata. </summary>
-        /// <param name="metadata"> List of metadata. </param>
-        /// <param name="logicalOperation"> Operation used to join metadata filters. </param>
-        /// <returns> A new <see cref="Models.MetadataFilter"/> instance for mocking. </returns>
-        public static MetadataFilter MetadataFilter(IEnumerable<MetadataRecord> metadata = default, LogicalOperationKind? logicalOperation = default)
-        {
-            metadata ??= new ChangeTrackingList<MetadataRecord>();
-
-            return new MetadataFilter(metadata.ToList(), logicalOperation, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Object to provide the key value pair for each metadata. </summary>
-        /// <param name="key"> Metadata Key from Metadata dictionary used in the QnA. </param>
-        /// <param name="value"> Metadata Value from Metadata dictionary used in the QnA. </param>
-        /// <returns> A new <see cref="Models.MetadataRecord"/> instance for mocking. </returns>
-        public static MetadataRecord MetadataRecord(string key = default, string value = default)
-        {
-            return new MetadataRecord(key, value, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> To configure Answer span prediction feature. </summary>
-        /// <param name="enable"> Enable or disable Answer Span prediction. </param>
-        /// <param name="confidenceThreshold"> Minimum threshold score required to include an answer span, value ranges from 0 to 1. </param>
-        /// <param name="top"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
-        /// <returns> A new <see cref="Models.ShortAnswerConfig"/> instance for mocking. </returns>
-        public static ShortAnswerConfig ShortAnswerConfig(bool? enable = default, double? confidenceThreshold = default, int? top = default)
-        {
-            return new ShortAnswerConfig(enable, confidenceThreshold, top, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> This is a set of request parameters for Customized Conversation projects. </summary>
-        /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
-        /// <param name="callingOptions"> The option to set to call a Conversation project. </param>
-        /// <returns> A new <see cref="Models.ConversationConfig"/> instance for mocking. </returns>
-        public static ConversationConfig ConversationConfig(string apiVersion = default, ConversationCallingConfig callingOptions = default)
-        {
-            return new ConversationConfig(TargetProjectKind.Conversation, apiVersion, additionalBinaryDataProperties: null, callingOptions);
-        }
-
-        /// <summary> The option to set to call a Conversation project. </summary>
-        /// <param name="language"> The language of the query in BCP 47 language representation. </param>
-        /// <param name="verbose"> If true, the service will return more detailed information. </param>
-        /// <param name="isLoggingEnabled"> If true, the query will be saved for customers to further review in authoring, to improve the model quality. </param>
-        /// <returns> A new <see cref="Models.ConversationCallingConfig"/> instance for mocking. </returns>
-        public static ConversationCallingConfig ConversationCallingConfig(string language = default, bool? verbose = default, bool? isLoggingEnabled = default)
-        {
-            return new ConversationCallingConfig(language, verbose, isLoggingEnabled, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -466,7 +329,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// The abstract base class for entity resolutions.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AgeResolution"/>, <see cref="Models.VolumeResolution"/>, <see cref="Models.SpeedResolution"/>, <see cref="Models.AreaResolution"/>, <see cref="Models.LengthResolution"/>, <see cref="Models.InformationResolution"/>, <see cref="Models.TemperatureResolution"/>, <see cref="Models.WeightResolution"/>, <see cref="Models.CurrencyResolution"/>, <see cref="Models.BooleanResolution"/>, <see cref="Models.DateTimeResolution"/>, <see cref="Models.NumberResolution"/>, <see cref="Models.OrdinalResolution"/>, <see cref="Models.TemporalSpanResolution"/>, and <see cref="Models.NumericRangeResolution"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgeResolution"/>, <see cref="VolumeResolution"/>, <see cref="SpeedResolution"/>, <see cref="AreaResolution"/>, <see cref="LengthResolution"/>, <see cref="InformationResolution"/>, <see cref="TemperatureResolution"/>, <see cref="WeightResolution"/>, <see cref="CurrencyResolution"/>, <see cref="BooleanResolution"/>, <see cref="DateTimeResolution"/>, <see cref="NumberResolution"/>, <see cref="OrdinalResolution"/>, <see cref="TemporalSpanResolution"/>, and <see cref="NumericRangeResolution"/>.
         /// </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
         /// <returns> A new <see cref="Models.ResolutionBase"/> instance for mocking. </returns>
@@ -475,207 +338,15 @@ namespace Azure.AI.Language.Conversations
             return new UnknownResolutionBase(new ResolutionKind(resolutionKind), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Represents the Age entity resolution model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> The Age Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.AgeResolution"/> instance for mocking. </returns>
-        public static AgeResolution AgeResolution(double value = default, AgeUnit unit = default)
-        {
-            return new AgeResolution(ResolutionKind.AgeResolution, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the volume entity resolution model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> The Volume Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.VolumeResolution"/> instance for mocking. </returns>
-        public static VolumeResolution VolumeResolution(double value = default, VolumeUnit unit = default)
-        {
-            return new VolumeResolution(ResolutionKind.VolumeResolution, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the speed entity resolution model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> The speed Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.SpeedResolution"/> instance for mocking. </returns>
-        public static SpeedResolution SpeedResolution(double value = default, SpeedUnit unit = default)
-        {
-            return new SpeedResolution(ResolutionKind.SpeedResolution, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the area entity resolution model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> The area Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.AreaResolution"/> instance for mocking. </returns>
-        public static AreaResolution AreaResolution(double value = default, AreaUnit unit = default)
-        {
-            return new AreaResolution(ResolutionKind.AreaResolution, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the length entity resolution model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> The length Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.LengthResolution"/> instance for mocking. </returns>
-        public static LengthResolution LengthResolution(double value = default, LengthUnit unit = default)
-        {
-            return new LengthResolution(ResolutionKind.LengthResolution, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the information (data) entity resolution model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> The information (data) Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.InformationResolution"/> instance for mocking. </returns>
-        public static InformationResolution InformationResolution(double value = default, InformationUnit unit = default)
-        {
-            return new InformationResolution(ResolutionKind.InformationResolution, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the temperature entity resolution model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> The temperature Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.TemperatureResolution"/> instance for mocking. </returns>
-        public static TemperatureResolution TemperatureResolution(double value = default, TemperatureUnit unit = default)
-        {
-            return new TemperatureResolution(ResolutionKind.TemperatureResolution, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the weight entity resolution model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> The weight Unit of measurement. </param>
-        /// <returns> A new <see cref="Models.WeightResolution"/> instance for mocking. </returns>
-        public static WeightResolution WeightResolution(double value = default, WeightUnit unit = default)
-        {
-            return new WeightResolution(ResolutionKind.WeightResolution, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the currency entity resolution model. </summary>
-        /// <param name="iso4217"> The alphabetic code based on another ISO standard, ISO 3166, which lists the codes for country names. The first two letters of the ISO 4217 three-letter code are the same as the code for the country name, and, where possible, the third letter corresponds to the first letter of the currency name. </param>
-        /// <param name="value"> The money amount captured in the extracted entity. </param>
-        /// <param name="unit"> The unit of the amount captured in the extracted entity. </param>
-        /// <returns> A new <see cref="Models.CurrencyResolution"/> instance for mocking. </returns>
-        public static CurrencyResolution CurrencyResolution(string iso4217 = default, double value = default, string unit = default)
-        {
-            return new CurrencyResolution(ResolutionKind.CurrencyResolution, additionalBinaryDataProperties: null, iso4217, value, unit);
-        }
-
-        /// <summary> A resolution for boolean expressions. </summary>
-        /// <param name="value"> A resolution for boolean expressions. </param>
-        /// <returns> A new <see cref="Models.BooleanResolution"/> instance for mocking. </returns>
-        public static BooleanResolution BooleanResolution(bool value = default)
-        {
-            return new BooleanResolution(ResolutionKind.BooleanResolution, additionalBinaryDataProperties: null, value);
-        }
-
-        /// <summary> A resolution for datetime entity instances. </summary>
-        /// <param name="timex"> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
-        /// <param name="dateTimeSubKind"> The DateTime SubKind. </param>
-        /// <param name="value"> The actual time that the extracted text denote. </param>
-        /// <param name="modifier"> An optional modifier of a date/time instance. </param>
-        /// <returns> A new <see cref="Models.DateTimeResolution"/> instance for mocking. </returns>
-        public static DateTimeResolution DateTimeResolution(string timex = default, DateTimeSubKind dateTimeSubKind = default, string value = default, TemporalModifier? modifier = default)
-        {
-            return new DateTimeResolution(
-                ResolutionKind.DateTimeResolution,
-                additionalBinaryDataProperties: null,
-                timex,
-                dateTimeSubKind,
-                value,
-                modifier);
-        }
-
-        /// <summary> A resolution for numeric entity instances. </summary>
-        /// <param name="numberKind"> The type of the extracted number entity. </param>
-        /// <param name="value"> A numeric representation of what the extracted text denotes. </param>
-        /// <returns> A new <see cref="Models.NumberResolution"/> instance for mocking. </returns>
-        public static NumberResolution NumberResolution(NumberKind numberKind = default, double value = default)
-        {
-            return new NumberResolution(ResolutionKind.NumberResolution, additionalBinaryDataProperties: null, numberKind, value);
-        }
-
-        /// <summary> A resolution for ordinal numbers entity instances. </summary>
-        /// <param name="offset"> The offset with respect to the reference (e.g., offset = -1 indicates the second to last). </param>
-        /// <param name="relativeTo"> The reference point that the ordinal number denotes. </param>
-        /// <param name="value"> A simple arithmetic expression that the ordinal denotes. </param>
-        /// <returns> A new <see cref="Models.OrdinalResolution"/> instance for mocking. </returns>
-        public static OrdinalResolution OrdinalResolution(string offset = default, RelativeTo relativeTo = default, string value = default)
-        {
-            return new OrdinalResolution(ResolutionKind.OrdinalResolution, additionalBinaryDataProperties: null, offset, relativeTo, value);
-        }
-
-        /// <summary> represents the resolution of a date and/or time span. </summary>
-        /// <param name="begin"> represents the resolution of a date and/or time span. An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
-        /// <param name="end"> represents the resolution of a date and/or time span. An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
-        /// <param name="duration"> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
-        /// <param name="modifier"> An optional modifier of a date/time instance. </param>
-        /// <param name="timex"> An optional triplet containing the beginning, the end, and the duration all stated as ISO 8601 formatted strings. </param>
-        /// <returns> A new <see cref="Models.TemporalSpanResolution"/> instance for mocking. </returns>
-        public static TemporalSpanResolution TemporalSpanResolution(string begin = default, string end = default, string duration = default, TemporalModifier? modifier = default, string timex = default)
-        {
-            return new TemporalSpanResolution(
-                ResolutionKind.TemporalSpanResolution,
-                additionalBinaryDataProperties: null,
-                begin,
-                end,
-                duration,
-                modifier,
-                timex);
-        }
-
-        /// <summary> represents the resolution of numeric intervals. </summary>
-        /// <param name="rangeKind"> The kind of range that the resolution object represents. </param>
-        /// <param name="minimum"> The beginning value of  the interval. </param>
-        /// <param name="maximum"> The ending value of the interval. </param>
-        /// <returns> A new <see cref="Models.NumericRangeResolution"/> instance for mocking. </returns>
-        public static NumericRangeResolution NumericRangeResolution(RangeKind rangeKind = default, double minimum = default, double maximum = default)
-        {
-            return new NumericRangeResolution(ResolutionKind.NumericRangeResolution, additionalBinaryDataProperties: null, rangeKind, minimum, maximum);
-        }
-
         /// <summary>
         /// The abstract base object for entity extra information.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EntitySubtype"/>, <see cref="Models.ListKey"/>, and <see cref="Models.RegexKey"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EntitySubtype"/>, <see cref="ListKey"/>, and <see cref="RegexKey"/>.
         /// </summary>
         /// <param name="extraInformationKind"> The extra information object kind. </param>
         /// <returns> A new <see cref="Models.ConversationEntityExtraInformation"/> instance for mocking. </returns>
         public static ConversationEntityExtraInformation ConversationEntityExtraInformation(string extraInformationKind = default)
         {
             return new UnknownConversationEntityExtraInformation(new ExtraInformationKind(extraInformationKind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The concrete entity Subtype model of extra information. </summary>
-        /// <param name="value"> The Subtype of an extracted entity type. </param>
-        /// <param name="tags"> List of entity tags. Tags express similarities between entity categories for the extracted entity type. </param>
-        /// <returns> A new <see cref="Models.EntitySubtype"/> instance for mocking. </returns>
-        public static EntitySubtype EntitySubtype(string value = default, IEnumerable<EntityTag> tags = default)
-        {
-            tags ??= new ChangeTrackingList<EntityTag>();
-
-            return new EntitySubtype(ExtraInformationKind.EntitySubtype, additionalBinaryDataProperties: null, value, tags.ToList());
-        }
-
-        /// <summary> Tags express similarities between entity categories for the extracted entity type. </summary>
-        /// <param name="name"> The name of the tag. </param>
-        /// <param name="confidenceScore"> The confidence score of the tag for the extracted entity between 0.0 and 1.0. </param>
-        /// <returns> A new <see cref="Models.EntityTag"/> instance for mocking. </returns>
-        public static EntityTag EntityTag(string name = default, double? confidenceScore = default)
-        {
-            return new EntityTag(name, confidenceScore, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The list key extra data kind. </summary>
-        /// <param name="key"> The canonical form of the extracted entity. </param>
-        /// <returns> A new <see cref="Models.ListKey"/> instance for mocking. </returns>
-        public static ListKey ListKey(string key = default)
-        {
-            return new ListKey(ExtraInformationKind.ListKey, additionalBinaryDataProperties: null, key);
-        }
-
-        /// <summary> The regex key extra data kind. </summary>
-        /// <param name="key"> The key of the regex pattern used in extracting the entity. </param>
-        /// <param name="regexPattern"> The .NET regex pattern used in extracting the entity. Please visit https://learn.microsoft.com/dotnet/standard/base-types/regular-expressions for more information about .NET regular expressions. </param>
-        /// <returns> A new <see cref="Models.RegexKey"/> instance for mocking. </returns>
-        public static RegexKey RegexKey(string key = default, string regexPattern = default)
-        {
-            return new RegexKey(ExtraInformationKind.RegexKey, additionalBinaryDataProperties: null, key, regexPattern);
         }
 
         /// <summary> The results of a Conversation task. </summary>
@@ -698,7 +369,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// This is the base class of prediction
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationPrediction"/> and <see cref="Models.OrchestrationPrediction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationPrediction"/> and <see cref="OrchestrationPrediction"/>.
         /// </summary>
         /// <param name="projectKind"> The type of the project. </param>
         /// <param name="topIntent"> The intent with the highest score. </param>
@@ -706,206 +377,6 @@ namespace Azure.AI.Language.Conversations
         public static PredictionBase PredictionBase(string projectKind = default, string topIntent = default)
         {
             return new UnknownPredictionBase(new ProjectKind(projectKind), topIntent, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents the prediction section of a Conversation project. </summary>
-        /// <param name="topIntent"> The intent with the highest score. </param>
-        /// <param name="intents"> The intent classification results. </param>
-        /// <param name="entities"> The entity extraction results. </param>
-        /// <returns> A new <see cref="Models.ConversationPrediction"/> instance for mocking. </returns>
-        public static ConversationPrediction ConversationPrediction(string topIntent = default, IEnumerable<ConversationIntent> intents = default, IEnumerable<ConversationEntity> entities = default)
-        {
-            intents ??= new ChangeTrackingList<ConversationIntent>();
-            entities ??= new ChangeTrackingList<ConversationEntity>();
-
-            return new ConversationPrediction(ProjectKind.Conversation, topIntent, additionalBinaryDataProperties: null, intents.ToList(), entities.ToList());
-        }
-
-        /// <summary> The intent classification result of a Conversation project. </summary>
-        /// <param name="category"> A predicted class. </param>
-        /// <param name="confidence"> The confidence score of the class from 0.0 to 1.0. </param>
-        /// <returns> A new <see cref="Models.ConversationIntent"/> instance for mocking. </returns>
-        public static ConversationIntent ConversationIntent(string category = default, float confidence = default)
-        {
-            return new ConversationIntent(category, confidence, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The entity extraction result of a Conversation project. </summary>
-        /// <param name="category"> The entity category. </param>
-        /// <param name="text"> The predicted entity text. </param>
-        /// <param name="offset"> The starting index of this entity in the query. </param>
-        /// <param name="length"> The length of the text. </param>
-        /// <param name="confidence"> The entity confidence score. </param>
-        /// <param name="resolutions"> The collection of entity resolution objects. </param>
-        /// <param name="extraInformation"> The collection of entity extra information objects. </param>
-        /// <returns> A new <see cref="Models.ConversationEntity"/> instance for mocking. </returns>
-        public static ConversationEntity ConversationEntity(string category = default, string text = default, int offset = default, int length = default, float confidence = default, IEnumerable<ResolutionBase> resolutions = default, IEnumerable<ConversationEntityExtraInformation> extraInformation = default)
-        {
-            resolutions ??= new ChangeTrackingList<ResolutionBase>();
-            extraInformation ??= new ChangeTrackingList<ConversationEntityExtraInformation>();
-
-            return new ConversationEntity(
-                category,
-                text,
-                offset,
-                length,
-                confidence,
-                resolutions.ToList(),
-                extraInformation.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> This represents the prediction result of an Orchestration project. </summary>
-        /// <param name="topIntent"> The intent with the highest score. </param>
-        /// <param name="intents"> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent's value also contains the actual response from the target project. </param>
-        /// <returns> A new <see cref="Models.OrchestrationPrediction"/> instance for mocking. </returns>
-        public static OrchestrationPrediction OrchestrationPrediction(string topIntent = default, IDictionary<string, TargetIntentResult> intents = default)
-        {
-            intents ??= new ChangeTrackingDictionary<string, TargetIntentResult>();
-
-            return new OrchestrationPrediction(ProjectKind.Orchestration, topIntent, additionalBinaryDataProperties: null, intents);
-        }
-
-        /// <summary>
-        /// This is the base class of an intent prediction
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LuisTargetIntentResult"/>, <see cref="Models.QuestionAnsweringTargetIntentResult"/>, <see cref="Models.NoneLinkedTargetIntentResult"/>, and <see cref="Models.ConversationTargetIntentResult"/>.
-        /// </summary>
-        /// <param name="targetProjectKind"> This is the base class of an intent prediction. </param>
-        /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        /// <returns> A new <see cref="Models.TargetIntentResult"/> instance for mocking. </returns>
-        public static TargetIntentResult TargetIntentResult(string targetProjectKind = default, string apiVersion = default, double confidence = default)
-        {
-            return new UnknownTargetIntentResult(new TargetProjectKind(targetProjectKind), apiVersion, confidence, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> It is a wrap up of LUIS Generally Available response. </summary>
-        /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        /// <param name="result"> The actual response from a LUIS Generally Available application. </param>
-        /// <returns> A new <see cref="Models.LuisTargetIntentResult"/> instance for mocking. </returns>
-        public static LuisTargetIntentResult LuisTargetIntentResult(string apiVersion = default, double confidence = default, LuisResult result = default)
-        {
-            return new LuisTargetIntentResult(TargetProjectKind.Luis, apiVersion, confidence, additionalBinaryDataProperties: null, result);
-        }
-
-        /// <summary> It is the response from a LUIS Generally Available application. </summary>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.LuisResult"/> instance for mocking. </returns>
-        public static LuisResult LuisResult(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new LuisResult(additionalProperties);
-        }
-
-        /// <summary> It is a wrap up a Question Answering KB response. </summary>
-        /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        /// <param name="result"> The generated answer by a Question Answering KB. </param>
-        /// <returns> A new <see cref="Models.QuestionAnsweringTargetIntentResult"/> instance for mocking. </returns>
-        public static QuestionAnsweringTargetIntentResult QuestionAnsweringTargetIntentResult(string apiVersion = default, double confidence = default, AnswersResult result = default)
-        {
-            return new QuestionAnsweringTargetIntentResult(TargetProjectKind.QuestionAnswering, apiVersion, confidence, additionalBinaryDataProperties: null, result);
-        }
-
-        /// <summary> Represents List of Question Answers. </summary>
-        /// <param name="answers"> Represents Answer Result list. </param>
-        /// <returns> A new <see cref="Models.AnswersResult"/> instance for mocking. </returns>
-        public static AnswersResult AnswersResult(IEnumerable<KnowledgeBaseAnswer> answers = default)
-        {
-            answers ??= new ChangeTrackingList<KnowledgeBaseAnswer>();
-
-            return new AnswersResult(answers.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents knowledge base answer. </summary>
-        /// <param name="questions"> List of questions associated with the answer. </param>
-        /// <param name="answer"> Answer text. </param>
-        /// <param name="confidence"> Answer confidence score, value ranges from 0 to 1. </param>
-        /// <param name="qnaId"> ID of the QnA result. </param>
-        /// <param name="source"> Source of QnA result. </param>
-        /// <param name="metadata"> Metadata associated with the answer, useful to categorize or filter question answers. </param>
-        /// <param name="dialog"> Dialog associated with Answer. </param>
-        /// <param name="shortAnswer"> Answer span object of QnA with respect to user's question. </param>
-        /// <returns> A new <see cref="Models.KnowledgeBaseAnswer"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswer KnowledgeBaseAnswer(IEnumerable<string> questions = default, string answer = default, double? confidence = default, int? qnaId = default, string source = default, IDictionary<string, string> metadata = default, KnowledgeBaseAnswerDialog dialog = default, AnswerSpan shortAnswer = default)
-        {
-            questions ??= new ChangeTrackingList<string>();
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new KnowledgeBaseAnswer(
-                questions.ToList(),
-                answer,
-                confidence,
-                qnaId,
-                source,
-                metadata,
-                dialog,
-                shortAnswer,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Dialog associated with Answer. </summary>
-        /// <param name="isContextOnly"> To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result. </param>
-        /// <param name="prompts"> List of prompts associated with the answer. </param>
-        /// <returns> A new <see cref="Models.KnowledgeBaseAnswerDialog"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerDialog KnowledgeBaseAnswerDialog(bool? isContextOnly = default, IEnumerable<KnowledgeBaseAnswerPrompt> prompts = default)
-        {
-            prompts ??= new ChangeTrackingList<KnowledgeBaseAnswerPrompt>();
-
-            return new KnowledgeBaseAnswerDialog(isContextOnly, prompts.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Prompt for an answer. </summary>
-        /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
-        /// <param name="qnaId"> QnA ID corresponding to the prompt. </param>
-        /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
-        /// <returns> A new <see cref="Models.KnowledgeBaseAnswerPrompt"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = default, int? qnaId = default, string displayText = default)
-        {
-            return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Answer span object of QnA. </summary>
-        /// <param name="text"> Predicted text of answer span. </param>
-        /// <param name="confidenceScore"> Predicted score of answer span, value ranges from 0 to 1. </param>
-        /// <param name="offset"> The answer span offset from the start of answer. </param>
-        /// <param name="length"> The length of the answer span. </param>
-        /// <returns> A new <see cref="Models.AnswerSpan"/> instance for mocking. </returns>
-        public static AnswerSpan AnswerSpan(string text = default, double? confidenceScore = default, int? offset = default, int? length = default)
-        {
-            return new AnswerSpan(text, confidenceScore, offset, length, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A wrap up of non-linked intent response. </summary>
-        /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        /// <param name="result"> The actual response from a Conversation project. </param>
-        /// <returns> A new <see cref="Models.NoneLinkedTargetIntentResult"/> instance for mocking. </returns>
-        public static NoneLinkedTargetIntentResult NoneLinkedTargetIntentResult(string apiVersion = default, double confidence = default, ConversationResult result = default)
-        {
-            return new NoneLinkedTargetIntentResult(TargetProjectKind.NonLinked, apiVersion, confidence, additionalBinaryDataProperties: null, result);
-        }
-
-        /// <summary> The response returned by a Conversation project. </summary>
-        /// <param name="query"> The same query given in request. </param>
-        /// <param name="detectedLanguage"> The detected language from the query in BCP 47 language representation. </param>
-        /// <param name="prediction"> The predicted result for the query. </param>
-        /// <returns> A new <see cref="Models.ConversationResult"/> instance for mocking. </returns>
-        public static ConversationResult ConversationResult(string query = default, string detectedLanguage = default, ConversationPrediction prediction = default)
-        {
-            return new ConversationResult(query, detectedLanguage, prediction, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A wrap up of Conversation project response. </summary>
-        /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        /// <param name="result"> The actual response from a Conversation project. </param>
-        /// <returns> A new <see cref="Models.ConversationTargetIntentResult"/> instance for mocking. </returns>
-        public static ConversationTargetIntentResult ConversationTargetIntentResult(string apiVersion = default, double confidence = default, ConversationResult result = default)
-        {
-            return new ConversationTargetIntentResult(TargetProjectKind.Conversation, apiVersion, confidence, additionalBinaryDataProperties: null, result);
         }
 
         /// <summary> The error object. </summary>
@@ -1428,35 +899,13 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// The abstract base class for RedactionPolicy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CharacterMaskPolicyType"/>, <see cref="Models.NoMaskPolicyType"/>, and <see cref="Models.EntityMaskTypePolicyType"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CharacterMaskPolicyType"/>, <see cref="NoMaskPolicyType"/>, and <see cref="EntityMaskTypePolicyType"/>.
         /// </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <returns> A new <see cref="Models.BaseRedactionPolicy"/> instance for mocking. </returns>
         public static BaseRedactionPolicy BaseRedactionPolicy(string policyKind = default)
         {
             return new UnknownBaseRedactionPolicy(new RedactionPolicyKind(policyKind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents the policy of masking with a redaction character. </summary>
-        /// <param name="redactionCharacter"> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will be * as before. We allow specific ascii characters for redaction. </param>
-        /// <returns> A new <see cref="Models.CharacterMaskPolicyType"/> instance for mocking. </returns>
-        public static CharacterMaskPolicyType CharacterMaskPolicyType(RedactionCharacter? redactionCharacter = default)
-        {
-            return new CharacterMaskPolicyType(RedactionPolicyKind.CharacterMask, additionalBinaryDataProperties: null, redactionCharacter);
-        }
-
-        /// <summary> Represents the policy of not masking found PII. </summary>
-        /// <returns> A new <see cref="Models.NoMaskPolicyType"/> instance for mocking. </returns>
-        public static NoMaskPolicyType NoMaskPolicyType()
-        {
-            return new NoMaskPolicyType(RedactionPolicyKind.NoMask, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents the policy of masking PII with the entity type. </summary>
-        /// <returns> A new <see cref="Models.EntityMaskTypePolicyType"/> instance for mocking. </returns>
-        public static EntityMaskTypePolicyType EntityMaskTypePolicyType()
-        {
-            return new EntityMaskTypePolicyType(RedactionPolicyKind.EntityMask, additionalBinaryDataProperties: null);
         }
     }
 }

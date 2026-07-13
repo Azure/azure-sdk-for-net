@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -107,7 +108,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [ModelReaderWriterBuildable(typeof(ApiCenterApiDefinitionAddedEventData))]
     [ModelReaderWriterBuildable(typeof(ApiCenterApiDefinitionUpdatedEventData))]
     [ModelReaderWriterBuildable(typeof(ApiCenterApiSpecification))]
-    [ModelReaderWriterBuildable(typeof(ApiEntityReference))]
     [ModelReaderWriterBuildable(typeof(ApiManagementApiCreatedEventData))]
     [ModelReaderWriterBuildable(typeof(ApiManagementApiDeletedEventData))]
     [ModelReaderWriterBuildable(typeof(ApiManagementApiReleaseCreatedEventData))]
@@ -226,7 +226,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [ModelReaderWriterBuildable(typeof(KeyVaultSecretExpiredEventData))]
     [ModelReaderWriterBuildable(typeof(KeyVaultSecretNearExpiryEventData))]
     [ModelReaderWriterBuildable(typeof(KeyVaultSecretNewVersionCreatedEventData))]
-    [ModelReaderWriterBuildable(typeof(LifecycleHookEventsEventData))]
     [ModelReaderWriterBuildable(typeof(MachineLearningServicesDatasetDriftDetectedEventData))]
     [ModelReaderWriterBuildable(typeof(MachineLearningServicesModelDeployedEventData))]
     [ModelReaderWriterBuildable(typeof(MachineLearningServicesModelRegisteredEventData))]
@@ -238,7 +237,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [ModelReaderWriterBuildable(typeof(MapsGeofenceGeometry))]
     [ModelReaderWriterBuildable(typeof(MapsGeofenceResultEventData))]
     [ModelReaderWriterBuildable(typeof(MicrosoftTeamsUserIdentifierModel))]
-    [ModelReaderWriterBuildable(typeof(OperationalInfo))]
     [ModelReaderWriterBuildable(typeof(PhoneNumberIdentifierModel))]
     [ModelReaderWriterBuildable(typeof(PolicyInsightsPolicyStateChangedEventData))]
     [ModelReaderWriterBuildable(typeof(PolicyInsightsPolicyStateCreatedEventData))]
@@ -268,6 +266,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [ModelReaderWriterBuildable(typeof(ResourceWriteCancelEventData))]
     [ModelReaderWriterBuildable(typeof(ResourceWriteFailureEventData))]
     [ModelReaderWriterBuildable(typeof(ResourceWriteSuccessEventData))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData))]
     [ModelReaderWriterBuildable(typeof(ServiceBusActiveMessagesAvailableWithNoListenersEventData))]
     [ModelReaderWriterBuildable(typeof(ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData))]
@@ -293,9 +292,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     [ModelReaderWriterBuildable(typeof(SubscriptionDeletedEventData))]
     [ModelReaderWriterBuildable(typeof(SubscriptionValidationEventData))]
     [ModelReaderWriterBuildable(typeof(SubscriptionValidationResponse))]
-    [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetLifecycleHookEventAdditionalContext))]
-    [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetLifecycleHookEventProperties))]
-    [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetLifecycleHookEventTargetResource))]
     [ModelReaderWriterBuildable(typeof(WebAppServicePlanUpdatedEventData))]
     [ModelReaderWriterBuildable(typeof(WebAppServicePlanUpdatedEventDataSku))]
     [ModelReaderWriterBuildable(typeof(WebAppUpdatedEventData))]

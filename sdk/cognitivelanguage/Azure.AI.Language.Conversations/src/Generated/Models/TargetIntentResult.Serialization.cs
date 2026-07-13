@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations.Models
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LuisTargetIntentResult"/>, <see cref="QuestionAnsweringTargetIntentResult"/>, <see cref="NoneLinkedTargetIntentResult"/>, and <see cref="ConversationTargetIntentResult"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTargetIntentResult))]
-    public abstract partial class TargetIntentResult : IJsonModel<TargetIntentResult>
+    internal abstract partial class TargetIntentResult : IJsonModel<TargetIntentResult>
     {
         /// <summary> Initializes a new instance of <see cref="TargetIntentResult"/> for deserialization. </summary>
         internal TargetIntentResult()

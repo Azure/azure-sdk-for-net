@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> This is a set of request parameters for Question Answering knowledge bases. </summary>
-    public partial class QuestionAnsweringConfig : AnalysisConfig
+    internal partial class QuestionAnsweringConfig : AnalysisConfig
     {
         /// <summary> Initializes a new instance of <see cref="QuestionAnsweringConfig"/>. </summary>
         public QuestionAnsweringConfig() : base(TargetProjectKind.QuestionAnswering)

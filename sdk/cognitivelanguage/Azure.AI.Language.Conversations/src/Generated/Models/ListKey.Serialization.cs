@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The list key extra data kind. </summary>
-    public partial class ListKey : ConversationEntityExtraInformation, IJsonModel<ListKey>
+    internal partial class ListKey : ConversationEntityExtraInformation, IJsonModel<ListKey>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

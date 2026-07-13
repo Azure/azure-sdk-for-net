@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> A resolution for ordinal numbers entity instances. </summary>
-    public partial class OrdinalResolution : ResolutionBase, IJsonModel<OrdinalResolution>
+    internal partial class OrdinalResolution : ResolutionBase, IJsonModel<OrdinalResolution>
     {
         /// <summary> Initializes a new instance of <see cref="OrdinalResolution"/> for deserialization. </summary>
         internal OrdinalResolution()

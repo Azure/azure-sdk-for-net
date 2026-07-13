@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> To configure Answer span prediction feature. </summary>
-    public partial class ShortAnswerConfig : IJsonModel<ShortAnswerConfig>
+    internal partial class ShortAnswerConfig : IJsonModel<ShortAnswerConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
