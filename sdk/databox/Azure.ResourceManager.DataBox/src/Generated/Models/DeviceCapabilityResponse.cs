@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> List of device capabilities available for a given region and a given sku. </summary>
-        public IReadOnlyList<DeviceCapabilityDetails> DeviceCapabilityDetails { get; }
+        public IReadOnlyList<DeviceCapabilityDetails> DeviceCapabilityDetails { get; } = new ChangeTrackingList<DeviceCapabilityDetails>();
     }
 }
