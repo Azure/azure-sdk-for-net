@@ -10,9 +10,9 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Weather.Models
 {
-    public partial class Pollutant
+    public partial class WeatherPollutant
     {
-        internal static Pollutant DeserializePollutant(JsonElement element)
+        internal static WeatherPollutant DeserializeWeatherPollutant(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -67,15 +67,15 @@ namespace Azure.Maps.Weather.Models
                     continue;
                 }
             }
-            return new Pollutant(type, name, index, globalIndex, concentration);
+            return new WeatherPollutant(type, name, index, globalIndex, concentration);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Pollutant FromResponse(Response response)
+        internal static WeatherPollutant FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePollutant(document.RootElement);
+            return DeserializeWeatherPollutant(document.RootElement);
         }
     }
 }

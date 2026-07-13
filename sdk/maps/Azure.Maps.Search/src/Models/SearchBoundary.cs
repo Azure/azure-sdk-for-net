@@ -15,12 +15,12 @@ namespace Azure.Maps.Search.Models
     /// Please note, the service typically returns a GeometryCollection with Polygon or MultiPolygon sub-types.
     /// </summary>
     [CodeGenSerialization(nameof(_boundary), "boundingBox")]
-    public class Boundary
+    public class SearchBoundary
     {
         internal BoundaryInternal _boundary;
         internal BoundaryProperties _properties;
 
-        internal Boundary(BoundaryInternal boundaryInternal)
+        internal SearchBoundary(BoundaryInternal boundaryInternal)
         {
             Argument.AssertNotNull(boundaryInternal, nameof(boundaryInternal));
             _boundary = boundaryInternal;
@@ -61,6 +61,15 @@ namespace Azure.Maps.Search.Models
                 geoPolygons.Add(new GeoPolygon(geoLinearRings));
             }
             Geometry = new GeoCollection(geoPolygons);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchBoundary"/> for mocking. </summary>
+        /// <param name="geometry"> A valid <c>GeoJSON</c> geometry collection object. </param>
+        /// <param name="properties"> Properties can contain any additional metadata about the <c>Feature</c>. </param>
+        internal SearchBoundary(GeoCollection geometry, BoundaryProperties properties)
+        {
+            Geometry = geometry;
+            _properties = properties;
         }
 
         /// <summary>

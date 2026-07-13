@@ -10,9 +10,9 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class Intersection
+    public partial class SearchIntersection
     {
-        internal static Intersection DeserializeIntersection(JsonElement element)
+        internal static SearchIntersection DeserializeSearchIntersection(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -51,15 +51,15 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new Intersection(baseStreet, secondaryStreet1, secondaryStreet2, intersectionType, displayName);
+            return new SearchIntersection(baseStreet, secondaryStreet1, secondaryStreet2, intersectionType, displayName);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Intersection FromResponse(Response response)
+        internal static SearchIntersection FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIntersection(document.RootElement);
+            return DeserializeSearchIntersection(document.RootElement);
         }
     }
 }

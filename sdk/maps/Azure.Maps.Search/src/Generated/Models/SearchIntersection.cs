@@ -8,20 +8,20 @@
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The address of the result. </summary>
-    public partial class Intersection
+    public partial class SearchIntersection
     {
-        /// <summary> Initializes a new instance of <see cref="Intersection"/>. </summary>
-        internal Intersection()
+        /// <summary> Initializes a new instance of <see cref="SearchIntersection"/>. </summary>
+        internal SearchIntersection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Intersection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIntersection"/>. </summary>
         /// <param name="baseStreet"> Primary street for the location. </param>
         /// <param name="secondaryStreet1"> The first intersecting street. </param>
         /// <param name="secondaryStreet2"> If any, the second intersecting street. </param>
         /// <param name="intersectionType"> Type of intersection. </param>
         /// <param name="displayName"> Complete name of the intersection. </param>
-        internal Intersection(string baseStreet, string secondaryStreet1, string secondaryStreet2, string intersectionType, string displayName)
+        internal SearchIntersection(string baseStreet, string secondaryStreet1, string secondaryStreet2, string intersectionType, string displayName)
         {
             BaseStreet = baseStreet;
             SecondaryStreet1 = secondaryStreet1;

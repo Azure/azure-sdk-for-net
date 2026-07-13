@@ -27,12 +27,6 @@ Azure.Analytics.Purview.DataMap
 Azure.Analytics.Synapse.Artifacts
 Azure.Core.Experimental
 Azure.Identity
-Azure.Maps.Geolocation
-Azure.Maps.Rendering
-Azure.Maps.Routing
-Azure.Maps.Search
-Azure.Maps.TimeZones
-Azure.Maps.Weather
 Azure.Messaging.EventGrid
 Azure.Messaging.EventGrid.SystemEvents
 Azure.Messaging.ServiceBus

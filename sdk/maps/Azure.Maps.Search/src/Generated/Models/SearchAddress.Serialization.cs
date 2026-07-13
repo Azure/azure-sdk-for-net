@@ -11,9 +11,9 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class Address
+    public partial class SearchAddress
     {
-        internal static Address DeserializeAddress(JsonElement element)
+        internal static SearchAddress DeserializeSearchAddress(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -28,7 +28,7 @@ namespace Azure.Maps.Search.Models
             string formattedAddress = default;
             string streetName = default;
             string streetNumber = default;
-            Intersection intersection = default;
+            SearchIntersection intersection = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressLine"u8))
@@ -95,11 +95,11 @@ namespace Azure.Maps.Search.Models
                     {
                         continue;
                     }
-                    intersection = Intersection.DeserializeIntersection(property.Value);
+                    intersection = SearchIntersection.DeserializeSearchIntersection(property.Value);
                     continue;
                 }
             }
-            return new Address(
+            return new SearchAddress(
                 addressLine,
                 locality,
                 neighborhood,
@@ -114,10 +114,10 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Address FromResponse(Response response)
+        internal static SearchAddress FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAddress(document.RootElement);
+            return DeserializeSearchAddress(document.RootElement);
         }
     }
 }

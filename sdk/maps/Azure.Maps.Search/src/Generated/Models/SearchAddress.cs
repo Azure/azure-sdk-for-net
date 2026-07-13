@@ -11,15 +11,15 @@ using Azure.Maps.Common;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The address of the result. </summary>
-    public partial class Address
+    public partial class SearchAddress
     {
-        /// <summary> Initializes a new instance of <see cref="Address"/>. </summary>
-        internal Address()
+        /// <summary> Initializes a new instance of <see cref="SearchAddress"/>. </summary>
+        internal SearchAddress()
         {
             AdminDistricts = new ChangeTrackingList<AddressAdminDistrictsItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Address"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAddress"/>. </summary>
         /// <param name="addressLine"> AddressLine that includes Street Name and Number. </param>
         /// <param name="locality"> locality property. </param>
         /// <param name="neighborhood"> neighborhood property. </param>
@@ -30,7 +30,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="streetName"> The name of the street from formattedAddress. </param>
         /// <param name="streetNumber"> The number in the street, if available, from formattedAddress. </param>
         /// <param name="intersection"> The address of the result. </param>
-        internal Address(string addressLine, string locality, string neighborhood, IReadOnlyList<AddressAdminDistrictsItem> adminDistricts, string postalCode, AddressCountryRegion countryRegion, string formattedAddress, string streetName, string streetNumber, Intersection intersection)
+        internal SearchAddress(string addressLine, string locality, string neighborhood, IReadOnlyList<AddressAdminDistrictsItem> adminDistricts, string postalCode, AddressCountryRegion countryRegion, string formattedAddress, string streetName, string streetNumber, SearchIntersection intersection)
         {
             AddressLine = addressLine;
             Locality = locality;
@@ -63,6 +63,6 @@ namespace Azure.Maps.Search.Models
         /// <summary> The number in the street, if available, from formattedAddress. </summary>
         public string StreetNumber { get; }
         /// <summary> The address of the result. </summary>
-        public Intersection Intersection { get; }
+        public SearchIntersection Intersection { get; }
     }
 }

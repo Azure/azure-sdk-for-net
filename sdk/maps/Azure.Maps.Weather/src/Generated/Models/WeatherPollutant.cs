@@ -8,20 +8,20 @@
 namespace Azure.Maps.Weather.Models
 {
     /// <summary> Detailed information about an individual pollutant. Not returned if `pollutants`=false. </summary>
-    public partial class Pollutant
+    public partial class WeatherPollutant
     {
-        /// <summary> Initializes a new instance of <see cref="Pollutant"/>. </summary>
-        internal Pollutant()
+        /// <summary> Initializes a new instance of <see cref="WeatherPollutant"/>. </summary>
+        internal WeatherPollutant()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Pollutant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeatherPollutant"/>. </summary>
         /// <param name="type"> Type of pollutant. Please note that more may be added at any time. </param>
         /// <param name="name"> The name of the pollutant in English. </param>
         /// <param name="index"> Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index) for more information. </param>
         /// <param name="globalIndex"> Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality. </param>
         /// <param name="concentration"> An object containing the number of pollutant particles per volume of air. </param>
-        internal Pollutant(PollutantType? type, string name, float? index, float? globalIndex, WeatherValue concentration)
+        internal WeatherPollutant(PollutantType? type, string name, float? index, float? globalIndex, WeatherValue concentration)
         {
             Type = type;
             Name = name;

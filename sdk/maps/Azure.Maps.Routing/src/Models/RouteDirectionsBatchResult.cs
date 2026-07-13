@@ -25,6 +25,13 @@ namespace Azure.Maps.Routing.Models
             Results = results.AsReadOnly();
         }
 
+        /// <summary> Initializes a new instance of <see cref="RouteDirectionsBatchResult"/> for mocking. </summary>
+        /// <param name="results"> Batch result of the query. </param>
+        internal RouteDirectionsBatchResult(IReadOnlyList<RouteDirectionsBatchItemResponse> results)
+        {
+            Results = results;
+        }
+
         /// <summary> Array containing the batch results. </summary>
         [CodeGenMember("BatchItems")]
 
