@@ -200,7 +200,7 @@ function Invoke-AutoReleaseResolution {
     # Pipe (not -InputObject) with -AsArray so a single match still serializes as a JSON array, '[{...}]'.
     $artifactsJson = $matchedArtifacts | ConvertTo-Json -Depth 100 -Compress -AsArray
     Set-PipelineVariable -Name 'AutoReleaseArtifactsJson' -Value $artifactsJson -IsOutput
-    Write-Host "Auto-release packages from PR $prLink`: $((@($matchedArtifacts | ForEach-Object { $_.name })) -join ', ')"
+    Write-Host "Auto-release packages from PR ${prLink}: $((@($matchedArtifacts | ForEach-Object { $_.name })) -join ', ')"
     Set-PipelineVariable -Name 'HasAutoReleaseArtifacts' -Value 'true' -IsOutput
   }
   else {
