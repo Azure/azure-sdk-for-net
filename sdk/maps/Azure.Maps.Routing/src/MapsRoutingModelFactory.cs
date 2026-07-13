@@ -12,11 +12,14 @@ namespace Azure.Maps.Routing.Models
     public static partial class MapsRoutingModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="RouteDirectionsBatchResult"/> for mocking. </summary>
+        /// <param name="successfulRequests"> Number of successful requests in the batch. </param>
+        /// <param name="totalRequests"> Total number of requests in the batch. </param>
         /// <param name="results"> Batch result of the query. </param>
         /// <returns> A new <see cref="RouteDirectionsBatchResult"/> instance for mocking. </returns>
-        public static RouteDirectionsBatchResult RouteDirectionsBatchResult(IEnumerable<RouteDirectionsBatchItemResponse> results = null)
+        public static RouteDirectionsBatchResult RouteDirectionsBatchResult(int? successfulRequests = null, int? totalRequests = null, IEnumerable<RouteDirectionsBatchItemResponse> results = null)
         {
-            return new RouteDirectionsBatchResult(results?.ToList());
+            results ??= new List<RouteDirectionsBatchItemResponse>();
+            return new RouteDirectionsBatchResult(new BatchResultSummary(successfulRequests, totalRequests), results.ToList());
         }
     }
 }

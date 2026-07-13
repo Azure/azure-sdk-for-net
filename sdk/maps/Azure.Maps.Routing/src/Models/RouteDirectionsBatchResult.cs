@@ -26,8 +26,9 @@ namespace Azure.Maps.Routing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteDirectionsBatchResult"/> for mocking. </summary>
+        /// <param name="batchSummary"> Summary of the results for the batch request. </param>
         /// <param name="results"> Batch result of the query. </param>
-        internal RouteDirectionsBatchResult(IReadOnlyList<RouteDirectionsBatchItemResponse> results)
+        internal RouteDirectionsBatchResult(BatchResultSummary batchSummary, IReadOnlyList<RouteDirectionsBatchItemResponse> results) : base(batchSummary)
         {
             Results = results;
         }
