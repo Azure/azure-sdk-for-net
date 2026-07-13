@@ -27,7 +27,7 @@ steps:
         scriptLocation: inlineScript
         workingDirectory: ${{ parameters.vallyRoot }}
         inlineScript: |
-          node --experimental-strip-types --disable-warning=ExperimentalWarning "$(Build.SourcesDirectory)/eng/common/scripts/eval/invoke-eval-shard.ts" \
+          node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/invoke-eval-shard.ts" \
             --eval-args "$(evalArgs)" \
             --shard-name "$(shardName)" \
             --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
@@ -37,7 +37,7 @@ steps:
 
   - ${{ else }}:
     - script: |
-        node --experimental-strip-types --disable-warning=ExperimentalWarning "$(Build.SourcesDirectory)/eng/common/scripts/eval/invoke-eval-shard.ts" \
+        node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/invoke-eval-shard.ts" \
           --eval-args "$(evalArgs)" \
           --shard-name "$(shardName)" \
           --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
