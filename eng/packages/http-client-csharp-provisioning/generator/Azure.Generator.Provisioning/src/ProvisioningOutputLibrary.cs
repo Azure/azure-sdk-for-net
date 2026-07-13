@@ -59,7 +59,7 @@ namespace Azure.Generator.Provisioning
             var resourcesByModel = new Dictionary<InputModelType, List<ProvisioningResourceProvider>>();
             foreach (var projection in inputLibrary.ResourceProjections)
             {
-                var resource = new ProvisioningResourceProvider(projection, projection.IsSettable);
+                var resource = new ProvisioningResourceProvider(projection);
                 resources.Add(resource);
                 foreach (var resourceIdPattern in projection.ResourceIdPatterns)
                 {
