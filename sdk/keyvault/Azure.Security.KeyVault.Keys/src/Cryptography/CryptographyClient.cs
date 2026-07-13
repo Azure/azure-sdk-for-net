@@ -761,33 +761,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_provider is null)
-                {
-                    await InitializeAsync(nameof(SecureWrapKey), cancellationToken).ConfigureAwait(false);
-                }
+                // Secure wrap is a remote-only operation; it cannot be performed by a local provider.
+                ThrowIfLocalOnly(nameof(SecureWrapKey));
 
-                SecureWrapResult result = null;
-                if (_provider.SupportsOperation(KeyOperation.WrapKey))
-                {
-                    try
-                    {
-                        // Secure wrap is remote-only, so local provider will throw NotSupportedException
-                        result = await _provider.SecureWrapKeyAsync(algorithm, cancellationToken).ConfigureAwait(false);
-                    }
-                    catch (CryptographicException ex) when (_provider.CanRemote)
-                    {
-                        KeysEventSource.Singleton.CryptographicException(nameof(SecureWrapKey), ex);
-                    }
-                }
-
-                if (result is null)
-                {
-                    ThrowIfLocalOnly(nameof(SecureWrapKey));
-
-                    result = await _remoteProvider.SecureWrapKeyAsync(algorithm, cancellationToken).ConfigureAwait(false);
-                }
-
-                return result;
+                return await _remoteProvider.SecureWrapKeyAsync(algorithm, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -818,33 +795,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_provider is null)
-                {
-                    Initialize(nameof(SecureWrapKey), cancellationToken);
-                }
+                // Secure wrap is a remote-only operation; it cannot be performed by a local provider.
+                ThrowIfLocalOnly(nameof(SecureWrapKey));
 
-                SecureWrapResult result = null;
-                if (_provider.SupportsOperation(KeyOperation.WrapKey))
-                {
-                    try
-                    {
-                        // Secure wrap is remote-only, so local provider will throw NotSupportedException
-                        result = _provider.SecureWrapKey(algorithm, cancellationToken);
-                    }
-                    catch (CryptographicException ex) when (_provider.CanRemote)
-                    {
-                        KeysEventSource.Singleton.CryptographicException(nameof(SecureWrapKey), ex);
-                    }
-                }
-
-                if (result is null)
-                {
-                    ThrowIfLocalOnly(nameof(SecureWrapKey));
-
-                    result = _remoteProvider.SecureWrapKey(algorithm, cancellationToken);
-                }
-
-                return result;
+                return _remoteProvider.SecureWrapKey(algorithm, cancellationToken);
             }
             catch (Exception e)
             {
@@ -877,33 +831,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_provider is null)
-                {
-                    await InitializeAsync(nameof(SecureUnwrapKey), cancellationToken).ConfigureAwait(false);
-                }
+                // Secure unwrap is a remote-only operation; it cannot be performed by a local provider.
+                ThrowIfLocalOnly(nameof(SecureUnwrapKey));
 
-                SecureUnwrapResult result = null;
-                if (_provider.SupportsOperation(KeyOperation.UnwrapKey))
-                {
-                    try
-                    {
-                        // Secure unwrap is remote-only, so local provider will throw NotSupportedException
-                        result = await _provider.SecureUnwrapKeyAsync(algorithm, encryptedKey, targetAttestationToken, cancellationToken).ConfigureAwait(false);
-                    }
-                    catch (CryptographicException ex) when (_provider.CanRemote)
-                    {
-                        KeysEventSource.Singleton.CryptographicException(nameof(SecureUnwrapKey), ex);
-                    }
-                }
-
-                if (result is null)
-                {
-                    ThrowIfLocalOnly(nameof(SecureUnwrapKey));
-
-                    result = await _remoteProvider.SecureUnwrapKeyAsync(algorithm, encryptedKey, targetAttestationToken, cancellationToken).ConfigureAwait(false);
-                }
-
-                return result;
+                return await _remoteProvider.SecureUnwrapKeyAsync(algorithm, encryptedKey, targetAttestationToken, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -936,33 +867,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             try
             {
-                if (_provider is null)
-                {
-                    Initialize(nameof(SecureUnwrapKey), cancellationToken);
-                }
+                // Secure unwrap is a remote-only operation; it cannot be performed by a local provider.
+                ThrowIfLocalOnly(nameof(SecureUnwrapKey));
 
-                SecureUnwrapResult result = null;
-                if (_provider.SupportsOperation(KeyOperation.UnwrapKey))
-                {
-                    try
-                    {
-                        // Secure unwrap is remote-only, so local provider will throw NotSupportedException
-                        result = _provider.SecureUnwrapKey(algorithm, encryptedKey, targetAttestationToken, cancellationToken);
-                    }
-                    catch (CryptographicException ex) when (_provider.CanRemote)
-                    {
-                        KeysEventSource.Singleton.CryptographicException(nameof(SecureUnwrapKey), ex);
-                    }
-                }
-
-                if (result is null)
-                {
-                    ThrowIfLocalOnly(nameof(SecureUnwrapKey));
-
-                    result = _remoteProvider.SecureUnwrapKey(algorithm, encryptedKey, targetAttestationToken, cancellationToken);
-                }
-
-                return result;
+                return _remoteProvider.SecureUnwrapKey(algorithm, encryptedKey, targetAttestationToken, cancellationToken);
             }
             catch (Exception e)
             {

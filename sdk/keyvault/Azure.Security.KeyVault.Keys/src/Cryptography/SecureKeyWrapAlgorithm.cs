@@ -19,9 +19,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal const string A128KWValue = "A128KW";
         internal const string A192KWValue = "A192KW";
         internal const string A256KWValue = "A256KW";
-        internal const string A128KwpadValue = "A128KWPAD";
-        internal const string A192KwpadValue = "A192KWPAD";
-        internal const string A256KwpadValue = "A256KWPAD";
+        internal const string A128KWPadValue = "A128KWPAD";
+        internal const string A192KWPadValue = "A192KWPAD";
+        internal const string A256KWPadValue = "A256KWPAD";
         internal const string CkmAesKeyWrapValue = "CKM_AES_KEY_WRAP";
         internal const string CkmAesKeyWrapPadValue = "CKM_AES_KEY_WRAP_PAD";
 
@@ -59,17 +59,17 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Gets an AES 128 Key Wrap with padding <see cref="SecureKeyWrapAlgorithm"/>.
         /// </summary>
-        public static SecureKeyWrapAlgorithm A128Kwpad { get; } = new SecureKeyWrapAlgorithm(A128KwpadValue);
+        public static SecureKeyWrapAlgorithm A128KWPad { get; } = new SecureKeyWrapAlgorithm(A128KWPadValue);
 
         /// <summary>
         /// Gets an AES 192 Key Wrap with padding <see cref="SecureKeyWrapAlgorithm"/>.
         /// </summary>
-        public static SecureKeyWrapAlgorithm A192Kwpad { get; } = new SecureKeyWrapAlgorithm(A192KwpadValue);
+        public static SecureKeyWrapAlgorithm A192KWPad { get; } = new SecureKeyWrapAlgorithm(A192KWPadValue);
 
         /// <summary>
         /// Gets an AES 256 Key Wrap with padding <see cref="SecureKeyWrapAlgorithm"/>.
         /// </summary>
-        public static SecureKeyWrapAlgorithm A256Kwpad { get; } = new SecureKeyWrapAlgorithm(A256KwpadValue);
+        public static SecureKeyWrapAlgorithm A256KWPad { get; } = new SecureKeyWrapAlgorithm(A256KWPadValue);
 
         /// <summary>
         /// Gets a CKM AES Key Wrap <see cref="SecureKeyWrapAlgorithm"/>.

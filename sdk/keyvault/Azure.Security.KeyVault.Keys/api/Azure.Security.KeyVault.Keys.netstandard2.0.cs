@@ -611,11 +611,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private readonly int _dummyPrimitive;
         public SecureKeyWrapAlgorithm(string value) { throw null; }
         public static Azure.Security.KeyVault.Keys.Cryptography.SecureKeyWrapAlgorithm A128KW { get { throw null; } }
-        public static Azure.Security.KeyVault.Keys.Cryptography.SecureKeyWrapAlgorithm A128Kwpad { get { throw null; } }
+        public static Azure.Security.KeyVault.Keys.Cryptography.SecureKeyWrapAlgorithm A128KWPad { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SecureKeyWrapAlgorithm A192KW { get { throw null; } }
-        public static Azure.Security.KeyVault.Keys.Cryptography.SecureKeyWrapAlgorithm A192Kwpad { get { throw null; } }
+        public static Azure.Security.KeyVault.Keys.Cryptography.SecureKeyWrapAlgorithm A192KWPad { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SecureKeyWrapAlgorithm A256KW { get { throw null; } }
-        public static Azure.Security.KeyVault.Keys.Cryptography.SecureKeyWrapAlgorithm A256Kwpad { get { throw null; } }
+        public static Azure.Security.KeyVault.Keys.Cryptography.SecureKeyWrapAlgorithm A256KWPad { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SecureKeyWrapAlgorithm CkmAesKeyWrap { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SecureKeyWrapAlgorithm CkmAesKeyWrapPad { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.SecureKeyWrapAlgorithm RsaOaep256 { get { throw null; } }

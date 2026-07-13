@@ -28,9 +28,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             string managedHsmUrl = TestEnvironment.ManagedHsmUrl;
             Uri attestationUrl = TestEnvironment.AttestationUri;
 
-            // Instantiate a key client that will be used to call the service. Notice that the client is using default
-            // Azure credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',
-            // 'AZURE_CLIENT_KEY' and 'AZURE_TENANT_ID' are set with the service principal credentials.
+            // Instantiate a key client that will be used to call the service.
             var keyClient = new KeyClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
 
             // Secure wrap/unwrap keys must be created on a Managed HSM with the SecureWrapKey and SecureUnwrapKey

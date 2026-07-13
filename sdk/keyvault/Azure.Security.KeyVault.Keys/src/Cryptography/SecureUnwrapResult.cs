@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Gets the key identifier of the <see cref="Key"/> used to unwrap.
+        /// Gets the key identifier of the <see cref="KeyVaultKey"/> used to unwrap the key.
         /// </summary>
         public string KeyId { get; internal set; }
 
