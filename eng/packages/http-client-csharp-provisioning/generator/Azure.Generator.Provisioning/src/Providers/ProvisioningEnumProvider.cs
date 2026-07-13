@@ -47,7 +47,7 @@ namespace Azure.Generator.Provisioning.Providers
         {
             var baseEnumValues = _baseEnumProvider.EnumValues;
             var fields = new List<FieldProvider>(baseEnumValues.Count);
-            var usedOrdinals = new HashSet<int>();
+            var usedOrdinals = ProvisioningGenerator.Instance.EnumValueCustomizationResolver.GetReservedOrdinals(Name);
             var existingMemberNames = new HashSet<string>();
             int nextOrdinal = 0;
 
@@ -59,7 +59,6 @@ namespace Azure.Generator.Provisioning.Providers
                 var serializedValue = baseEnumValue.Value?.ToString();
                 var customization = ProvisioningGenerator.Instance.EnumValueCustomizationResolver.GetValue(Name, memberName);
                 var fieldOrdinal = customization?.Value ?? GetNextAvailableOrdinal(usedOrdinals, ref nextOrdinal);
-                usedOrdinals.Add(fieldOrdinal);
                 existingMemberNames.Add(memberName);
                 var description = string.IsNullOrEmpty(baseField.Description?.ToString())
                     ? (FormattableString)$"{memberName}."
@@ -72,11 +71,6 @@ namespace Azure.Generator.Provisioning.Providers
 
             foreach (var customization in ProvisioningGenerator.Instance.EnumValueCustomizationResolver.GetAdditionalValues(Name, existingMemberNames))
             {
-                if (!usedOrdinals.Add(customization.Value))
-                {
-                    continue;
-                }
-
                 fields.Add(CreateEnumField(
                     customization.MemberName,
                     customization.WireName,

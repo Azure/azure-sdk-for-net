@@ -3,7 +3,9 @@
 
 using Azure.Generator.Provisioning.Providers;
 using Microsoft.CodeAnalysis;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Provisioning.Utilities
 {
@@ -29,6 +31,15 @@ namespace Azure.Generator.Provisioning.Utilities
             }
         }
 
+        public HashSet<int> GetReservedOrdinals(string enumName)
+        {
+            var values = _values ??= BuildValues();
+            return values.Values
+                .Where(value => value.EnumName == enumName)
+                .Select(value => value.Value)
+                .ToHashSet();
+        }
+
         private static IReadOnlyDictionary<(string EnumName, string MemberName), EnumValueCustomization> BuildValues()
         {
             var customization = ProvisioningGenerator.Instance.SourceInputModel.Customization;
@@ -47,6 +58,15 @@ namespace Azure.Generator.Provisioning.Utilities
 
                 if (TryGetValue(attributeData, out var value))
                 {
+                    if (values.ContainsKey((value.EnumName, value.MemberName)))
+                    {
+                        throw new InvalidOperationException($"Duplicate CodeGenEnumValue customization for {value.EnumName}.{value.MemberName}.");
+                    }
+                    var duplicate = values.Values.FirstOrDefault(existing => existing.EnumName == value.EnumName && existing.Value == value.Value);
+                    if (duplicate != null)
+                    {
+                        throw new InvalidOperationException($"Duplicate CodeGenEnumValue ordinal {value.Value} for {value.EnumName}.{duplicate.MemberName} and {value.EnumName}.{value.MemberName}.");
+                    }
                     values[(value.EnumName, value.MemberName)] = value;
                 }
             }
@@ -56,8 +76,9 @@ namespace Azure.Generator.Provisioning.Utilities
         private static bool IsCodeGenEnumValueAttribute(AttributeData attributeData)
         {
             var attributeClass = attributeData.AttributeClass;
-            return attributeClass?.Name == CodeGenEnumValueAttributeDefinition.AttributeName
-                || attributeClass?.Name == "CodeGenEnumValue";
+            return attributeClass?.ContainingNamespace.ToDisplayString() == "Microsoft.TypeSpec.Generator.Customizations"
+                && (attributeClass.Name == CodeGenEnumValueAttributeDefinition.AttributeName
+                    || attributeClass.Name == "CodeGenEnumValue");
         }
 
         private static bool TryGetValue(AttributeData attributeData, out EnumValueCustomization value)
