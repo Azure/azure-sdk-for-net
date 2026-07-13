@@ -55,7 +55,7 @@ stimuli:
           required: ["azsdk-common-pipeline-fixer"]
 
   # Should NOT trigger
-  # Analysis-only prompts belong to azsdk-common-pipeline-troubleshooting; this
+  # Analysis-only prompts belong to azsdk-common-pipeline-analysis; this
   # skill applies + verifies fixes and must stay out of pure-diagnosis requests.
   - name: anti-trigger-analyze-only
     prompt: "what went wrong in my pipeline build 12345? just tell me, don't fix anything"

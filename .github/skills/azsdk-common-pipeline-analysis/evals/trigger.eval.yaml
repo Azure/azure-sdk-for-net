@@ -1,11 +1,11 @@
-name: azsdk-common-pipeline-troubleshooting-trigger-eval
-description: Trigger and anti-trigger tests for the azsdk-common-pipeline-troubleshooting skill
+name: azsdk-common-pipeline-analysis-trigger-eval
+description: Trigger and anti-trigger tests for the azsdk-common-pipeline-analysis skill
 type: capability
 
 environment: azsdk-mcp-mock
 
 tags:
-  area: azsdk-common-pipeline-troubleshooting
+  area: azsdk-common-pipeline-analysis
   type: ci-gate
 
 config:
@@ -24,31 +24,31 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          required: ["azsdk-common-pipeline-troubleshooting"]
+          required: ["azsdk-common-pipeline-analysis"]
   - name: trigger-debug-pipeline-build-error
     prompt: "debug the build error in my SDK generation pipeline, build 6447834"
     graders:
       - type: skill-invocation
         config:
-          required: ["azsdk-common-pipeline-troubleshooting"]
-  - name: trigger-pipeline-troubleshooting-help
+          required: ["azsdk-common-pipeline-analysis"]
+  - name: trigger-pipeline-analysis-help
     prompt: "I'm stuck on a failing Azure SDK pipeline — can you help me troubleshoot it?"
     graders:
       - type: skill-invocation
         config:
-          required: ["azsdk-common-pipeline-troubleshooting"]
+          required: ["azsdk-common-pipeline-analysis"]
   - name: trigger-analyze-failing-sdk-pipeline
     prompt: "analyze my failing Azure SDK generation pipeline https://dev.azure.com/azure-sdk/internal/_build/results?buildId=6447834 and tell me what went wrong"
     graders:
       - type: skill-invocation
         config:
-          required: ["azsdk-common-pipeline-troubleshooting"]
+          required: ["azsdk-common-pipeline-analysis"]
   - name: trigger-ci-build-broke-after-my-change
     prompt: "the SDK CI build broke after my change, help me troubleshoot the pipeline"
     graders:
       - type: skill-invocation
         config:
-          required: ["azsdk-common-pipeline-troubleshooting"]
+          required: ["azsdk-common-pipeline-analysis"]
 
   # Should NOT trigger
   # "apply the fix / auto-fix" prompts belong to azsdk-common-pipeline-fixer, not
@@ -58,34 +58,34 @@ stimuli:
     graders:
       - type: skill-invocation
         config:
-          disallowed: ["azsdk-common-pipeline-troubleshooting"]
+          disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-write-a-typespec-definition
     prompt: "write a TypeSpec definition"
     graders:
       - type: skill-invocation
         config:
-          disallowed: ["azsdk-common-pipeline-troubleshooting"]
+          disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-create-a-new-skill
     prompt: "create a new skill"
     graders:
       - type: skill-invocation
         config:
-          disallowed: ["azsdk-common-pipeline-troubleshooting"]
+          disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-optimize-markdown-tokens
     prompt: "optimize markdown tokens"
     graders:
       - type: skill-invocation
         config:
-          disallowed: ["azsdk-common-pipeline-troubleshooting"]
+          disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-how-do-i-release-an-sdk-package
     prompt: "how do I release an SDK package"
     graders:
       - type: skill-invocation
         config:
-          disallowed: ["azsdk-common-pipeline-troubleshooting"]
+          disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-resolve-apiview-feedback
     prompt: "resolve APIView feedback"
     graders:
       - type: skill-invocation
         config:
-          disallowed: ["azsdk-common-pipeline-troubleshooting"]
+          disallowed: ["azsdk-common-pipeline-analysis"]

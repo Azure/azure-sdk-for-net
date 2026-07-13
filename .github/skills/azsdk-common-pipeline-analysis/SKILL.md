@@ -1,5 +1,5 @@
 ---
-name: azsdk-common-pipeline-troubleshooting
+name: azsdk-common-pipeline-analysis
 license: MIT
 metadata:
   version: "1.0.0"
@@ -11,12 +11,6 @@ compatibility: "azure-sdk-mcp server, Azure DevOps pipeline build ID or GitHub P
 # Pipeline Analysis
 
 This skill analyzes Azure SDK CI/CD pipeline failures and provides a structured diagnosis including root cause, affected files, and concrete instructions for how to fix each issue. It does NOT apply fixes - it tells you exactly what's wrong and how to resolve it.
-
-## Triggers
-
-USE FOR: pipeline failed, build failure, CI check failing, tests failing in CI, analyze pipeline, what went wrong, debug SDK pipeline
-WHEN: GitHub PR comment asking Copilot to analyze failed CI; pipeline step after other steps that writes diagnosis to the pipeline summary; "pipeline failed", "build failure", "CI check failing", "tests failing", "analyze pipeline", "what went wrong", "why is CI red", "debug pipeline"
-DO NOT USE FOR: applying code fixes (use azsdk-common-pipeline-fixer), local build issues without pipeline context, API design review, SDK publishing
 
 ## Rules
 
