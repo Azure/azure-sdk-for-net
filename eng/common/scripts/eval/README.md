@@ -15,8 +15,8 @@ templates.
 The `*.ts` sources run directly through Node's native type stripping (erasable syntax only —
 no `enum`/`namespace`/parameter properties, no emit). CI pins Node `22.x`, which strips types
 unflagged on `>=22.18`; the pipeline `node` invocations and the `npm test` script pass
-`--experimental-strip-types --disable-warning=ExperimentalWarning` so the same sources also run
-on older local Node (`>=22.6`). Relative imports use explicit `.ts` specifiers, as Node requires.
+`--experimental-strip-types` so the same sources also run on older local Node (`>=22.6`), which
+prints a harmless `ExperimentalWarning`. Relative imports use explicit `.ts` specifiers, as Node requires.
 
 ## Vendored files
 
