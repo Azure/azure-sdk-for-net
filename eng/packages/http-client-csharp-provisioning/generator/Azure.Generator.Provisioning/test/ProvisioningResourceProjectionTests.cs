@@ -440,6 +440,51 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void ReadOnlyResourceDoesNotInheritSettableUsageThroughNonDiscriminatorBaseModel()
+        {
+            var baseModel = CreateModel("ProxyResource");
+            var writableProperty = CreateProperty("WritableValue", isRequired: true);
+            var writableModel = CreateModel("WritableResource", [writableProperty], baseModel);
+            var readOnlyProperty = CreateProperty("ReadOnlyValue", isRequired: true);
+            var readOnlyModel = CreateModel("DeletedResource", [readOnlyProperty], baseModel);
+            AddDerivedModel(baseModel, writableModel);
+            AddDerivedModel(baseModel, readOnlyModel);
+            var writableResource = CreateMetadata(
+                writableModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/resources/{resourceName}",
+                "Microsoft.Test/resources",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
+                ]);
+            var readOnlyResource = CreateMetadata(
+                readOnlyModel,
+                "/subscriptions/{subscriptionId}/providers/Microsoft.Test/deletedResources/{resourceName}",
+                "Microsoft.Test/deletedResources",
+                ResourceScope.Subscription,
+                ["2024-01-01"],
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.Subscription)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, writableModel, readOnlyModel]);
+            var providers = CreateAndRegisterResourceProviders(writableResource, readOnlyResource);
+            var writableProvider = providers[0];
+            var readOnlyProvider = providers[1];
+
+            var writablePropertyInfo = ((IProvisioningPropertyInfo)writableProvider).GetProvisioningPropertyInfo(writableProperty);
+            var readOnlyPropertyInfo = ((IProvisioningPropertyInfo)readOnlyProvider).GetProvisioningPropertyInfo(readOnlyProperty);
+
+            Assert.That(ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(writableModel), Is.True);
+            Assert.That(ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(readOnlyModel), Is.False);
+            Assert.That(writablePropertyInfo, Is.Not.Null);
+            Assert.That(writablePropertyInfo!.IsSettable, Is.True);
+            Assert.That(readOnlyPropertyInfo, Is.Not.Null);
+            Assert.That(readOnlyPropertyInfo!.IsSettable, Is.False);
+            Assert.That(readOnlyProvider.Constructors.Single().Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.True);
+        }
+
+        [Test]
         public void SingletonResourceNameIsNotSettable()
         {
             var nameProperty = CreateProperty("Name", isRequired: true);

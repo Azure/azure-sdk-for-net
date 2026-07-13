@@ -163,8 +163,7 @@ namespace Azure.Generator.Provisioning
                         }
                         if (model.BaseModel != null)
                             queue.Enqueue((model.BaseModel, isSettable));
-                        foreach (var derived in model.DerivedModels)
-                            queue.Enqueue((derived, isSettable));
+                        EnqueueDiscriminatorDerivedModels(model, isSettable, queue);
                         break;
                     }
 
@@ -175,8 +174,7 @@ namespace Azure.Generator.Provisioning
                     modelSettableUsage[model] = item.IsSettable || (modelSettableUsage.TryGetValue(model, out var existing) && existing);
                     if (model.BaseModel != null)
                         queue.Enqueue((model.BaseModel, item.IsSettable));
-                    foreach (var derived in model.DerivedModels)
-                        queue.Enqueue((derived, item.IsSettable));
+                    EnqueueDiscriminatorDerivedModels(model, item.IsSettable, queue);
                     foreach (var property in model.Properties)
                         queue.Enqueue((property.Type, item.IsSettable && !property.IsReadOnly));
                     if (model.AdditionalProperties != null)
@@ -205,6 +203,14 @@ namespace Azure.Generator.Provisioning
                         enums.Add(enumType);
                     }
                     break;
+            }
+        }
+
+        private static void EnqueueDiscriminatorDerivedModels(InputModelType model, bool isSettable, Queue<(InputType Type, bool IsSettable)> queue)
+        {
+            foreach (var derived in model.DerivedModels.Where(derived => derived.DiscriminatorValue != null))
+            {
+                queue.Enqueue((derived, isSettable));
             }
         }
 
