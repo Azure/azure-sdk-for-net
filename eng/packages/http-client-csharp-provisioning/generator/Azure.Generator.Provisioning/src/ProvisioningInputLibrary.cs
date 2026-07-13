@@ -208,7 +208,7 @@ namespace Azure.Generator.Provisioning
 
         private static void EnqueueDiscriminatorDerivedModels(InputModelType model, bool isSettable, Queue<(InputType Type, bool IsSettable)> queue)
         {
-            foreach (var derived in model.DerivedModels.Where(derived => derived.DiscriminatorValue != null))
+            foreach (var derived in model.DiscriminatedSubtypes.Values)
             {
                 queue.Enqueue((derived, isSettable));
             }

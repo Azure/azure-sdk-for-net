@@ -810,6 +810,11 @@ namespace Azure.Generator.Provisioning.Tests
             typeof(InputModelType)
                 .GetMethod("AddDerivedModel", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .Invoke(baseModel, [derivedModel]);
+            if (derivedModel.DiscriminatorValue != null
+                && baseModel.DiscriminatedSubtypes is IDictionary<string, InputModelType> discriminatedSubtypes)
+            {
+                discriminatedSubtypes[derivedModel.DiscriminatorValue] = derivedModel;
+            }
         }
 
         private static ProvisioningResourceProvider CreateResourceProvider(ArmResourceMetadata metadata)
