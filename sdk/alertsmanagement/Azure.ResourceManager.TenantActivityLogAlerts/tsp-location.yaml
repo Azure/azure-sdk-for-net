@@ -1,4 +1,4 @@
 directory: specification/alertsmanagement/resource-manager/Microsoft.AlertsManagement/TenantActivityLogAlerts
-commit: e03c83e71e0becc372cbf62d07e3635420cf1df5
+commit: cfed9457b57c16a6f80b392936fc4b41d420f6e9
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
