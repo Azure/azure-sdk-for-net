@@ -24,7 +24,7 @@ namespace Azure.Provisioning.CognitiveServices
         {
         }
 
-        /// <summary> Gets or sets the NextTierName. </summary>
+        /// <summary> Gets the NextTierName. </summary>
         public BicepValue<string> NextTierName
         {
             get
@@ -32,14 +32,9 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _nextTierName;
             }
-            set
-            {
-                Initialize();
-                _nextTierName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the UpgradeAvailabilityStatus. </summary>
+        /// <summary> Gets the UpgradeAvailabilityStatus. </summary>
         public BicepValue<QuotaTierUpgradeAvailabilityStatus> UpgradeAvailabilityStatus
         {
             get
@@ -47,14 +42,9 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _upgradeAvailabilityStatus;
             }
-            set
-            {
-                Initialize();
-                _upgradeAvailabilityStatus.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the UpgradeApplicableOn. </summary>
+        /// <summary> Gets the UpgradeApplicableOn. </summary>
         public BicepValue<DateTimeOffset> UpgradeApplicableOn
         {
             get
@@ -62,25 +52,15 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _upgradeApplicableOn;
             }
-            set
-            {
-                Initialize();
-                _upgradeApplicableOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the UpgradeUnavailabilityReason. </summary>
+        /// <summary> Gets the UpgradeUnavailabilityReason. </summary>
         public BicepValue<string> UpgradeUnavailabilityReason
         {
             get
             {
                 Initialize();
                 return _upgradeUnavailabilityReason;
-            }
-            set
-            {
-                Initialize();
-                _upgradeUnavailabilityReason.Assign(value);
             }
         }
 

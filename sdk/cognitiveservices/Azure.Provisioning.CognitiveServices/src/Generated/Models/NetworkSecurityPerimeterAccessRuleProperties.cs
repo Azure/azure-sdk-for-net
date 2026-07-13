@@ -24,7 +24,7 @@ namespace Azure.Provisioning.CognitiveServices
         {
         }
 
-        /// <summary> Gets or sets the Direction. </summary>
+        /// <summary> Gets the Direction. </summary>
         public BicepValue<NspAccessRuleDirection> Direction
         {
             get
@@ -32,14 +32,9 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _direction;
             }
-            set
-            {
-                Initialize();
-                _direction.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AddressPrefixes. </summary>
+        /// <summary> Gets the AddressPrefixes. </summary>
         public BicepList<string> AddressPrefixes
         {
             get
@@ -47,14 +42,9 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _addressPrefixes;
             }
-            set
-            {
-                Initialize();
-                _addressPrefixes.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Subscriptions. </summary>
+        /// <summary> Gets the Subscriptions. </summary>
         public BicepList<NetworkSecurityPerimeterAccessRulePropertiesSubscriptionsItem> Subscriptions
         {
             get
@@ -62,14 +52,9 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _subscriptions;
             }
-            set
-            {
-                Initialize();
-                _subscriptions.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the NetworkSecurityPerimeters. </summary>
+        /// <summary> Gets the NetworkSecurityPerimeters. </summary>
         public BicepList<CognitiveServicesNetworkSecurityPerimeter> NetworkSecurityPerimeters
         {
             get
@@ -77,25 +62,15 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _networkSecurityPerimeters;
             }
-            set
-            {
-                Initialize();
-                _networkSecurityPerimeters.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the FullyQualifiedDomainNames. </summary>
+        /// <summary> Gets the FullyQualifiedDomainNames. </summary>
         public BicepList<string> FullyQualifiedDomainNames
         {
             get
             {
                 Initialize();
                 return _fullyQualifiedDomainNames;
-            }
-            set
-            {
-                Initialize();
-                _fullyQualifiedDomainNames.Assign(value);
             }
         }
 

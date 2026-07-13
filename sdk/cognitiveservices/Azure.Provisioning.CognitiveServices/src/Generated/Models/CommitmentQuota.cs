@@ -21,7 +21,7 @@ namespace Azure.Provisioning.CognitiveServices
         {
         }
 
-        /// <summary> Gets or sets the Quantity. </summary>
+        /// <summary> Gets the Quantity. </summary>
         public BicepValue<long> Quantity
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _quantity;
             }
-            set
-            {
-                Initialize();
-                _quantity.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Unit. </summary>
+        /// <summary> Gets the Unit. </summary>
         public BicepValue<string> Unit
         {
             get
             {
                 Initialize();
                 return _unit;
-            }
-            set
-            {
-                Initialize();
-                _unit.Assign(value);
             }
         }
 

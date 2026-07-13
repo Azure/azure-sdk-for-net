@@ -22,7 +22,7 @@ namespace Azure.Provisioning.CognitiveServices
         {
         }
 
-        /// <summary> Gets or sets the CommitmentPlanId. </summary>
+        /// <summary> Gets the CommitmentPlanId. </summary>
         public BicepValue<ResourceIdentifier> CommitmentPlanId
         {
             get
@@ -30,25 +30,15 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _commitmentPlanId;
             }
-            set
-            {
-                Initialize();
-                _commitmentPlanId.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CommitmentPlanLocation. </summary>
+        /// <summary> Gets the CommitmentPlanLocation. </summary>
         public BicepValue<string> CommitmentPlanLocation
         {
             get
             {
                 Initialize();
                 return _commitmentPlanLocation;
-            }
-            set
-            {
-                Initialize();
-                _commitmentPlanLocation.Assign(value);
             }
         }
 

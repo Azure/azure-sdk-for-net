@@ -22,7 +22,7 @@ namespace Azure.Provisioning.CognitiveServices
         {
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _name;
             }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsMultiLevelFilter. </summary>
+        /// <summary> Gets the IsMultiLevelFilter. </summary>
         public BicepValue<bool> IsMultiLevelFilter
         {
             get
@@ -45,25 +40,15 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _isMultiLevelFilter;
             }
-            set
-            {
-                Initialize();
-                _isMultiLevelFilter.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Source. </summary>
+        /// <summary> Gets the Source. </summary>
         public BicepValue<RaiPolicyContentSource> Source
         {
             get
             {
                 Initialize();
                 return _source;
-            }
-            set
-            {
-                Initialize();
-                _source.Assign(value);
             }
         }
 

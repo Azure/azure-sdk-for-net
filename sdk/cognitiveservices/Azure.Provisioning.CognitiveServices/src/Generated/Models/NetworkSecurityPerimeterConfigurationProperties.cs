@@ -34,7 +34,7 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Gets or sets the ProvisioningIssues. </summary>
+        /// <summary> Gets the ProvisioningIssues. </summary>
         public BicepList<NetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues
         {
             get
@@ -42,14 +42,9 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _provisioningIssues;
             }
-            set
-            {
-                Initialize();
-                _provisioningIssues.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the NetworkSecurityPerimeter. </summary>
+        /// <summary> Gets the NetworkSecurityPerimeter. </summary>
         public CognitiveServicesNetworkSecurityPerimeter NetworkSecurityPerimeter
         {
             get
@@ -57,14 +52,9 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _networkSecurityPerimeter;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _networkSecurityPerimeter, value);
-            }
         }
 
-        /// <summary> Gets or sets the ResourceAssociation. </summary>
+        /// <summary> Gets the ResourceAssociation. </summary>
         public NetworkSecurityPerimeterConfigurationAssociationInfo ResourceAssociation
         {
             get
@@ -72,25 +62,15 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _resourceAssociation;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _resourceAssociation, value);
-            }
         }
 
-        /// <summary> Gets or sets the Profile. </summary>
+        /// <summary> Gets the Profile. </summary>
         public NetworkSecurityPerimeterProfileInfo Profile
         {
             get
             {
                 Initialize();
                 return _profile;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _profile, value);
             }
         }
 

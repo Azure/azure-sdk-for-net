@@ -23,7 +23,7 @@ namespace Azure.Provisioning.CognitiveServices
         {
         }
 
-        /// <summary> Gets or sets the CountOfDowngrades. </summary>
+        /// <summary> Gets the CountOfDowngrades. </summary>
         public BicepValue<float> CountOfDowngrades
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _countOfDowngrades;
             }
-            set
-            {
-                Initialize();
-                _countOfDowngrades.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CountOfUpgradesAfterDowngrades. </summary>
+        /// <summary> Gets the CountOfUpgradesAfterDowngrades. </summary>
         public BicepValue<float> CountOfUpgradesAfterDowngrades
         {
             get
@@ -46,25 +41,15 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _countOfUpgradesAfterDowngrades;
             }
-            set
-            {
-                Initialize();
-                _countOfUpgradesAfterDowngrades.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the LastChangedOn. </summary>
+        /// <summary> Gets the LastChangedOn. </summary>
         public BicepValue<DateTimeOffset> LastChangedOn
         {
             get
             {
                 Initialize();
                 return _lastChangedOn;
-            }
-            set
-            {
-                Initialize();
-                _lastChangedOn.Assign(value);
             }
         }
 

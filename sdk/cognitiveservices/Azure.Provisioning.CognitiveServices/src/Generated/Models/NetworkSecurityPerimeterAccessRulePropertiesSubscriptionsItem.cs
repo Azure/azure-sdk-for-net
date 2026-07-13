@@ -20,18 +20,13 @@ namespace Azure.Provisioning.CognitiveServices
         {
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<string> Id
         {
             get
             {
                 Initialize();
                 return _id;
-            }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
             }
         }
 

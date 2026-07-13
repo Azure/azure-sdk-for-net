@@ -23,7 +23,7 @@ namespace Azure.Provisioning.CognitiveServices
         {
         }
 
-        /// <summary> Gets or sets the Action. </summary>
+        /// <summary> Gets the Action. </summary>
         public BicepValue<AbusePenaltyAction> Action
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _action;
             }
-            set
-            {
-                Initialize();
-                _action.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the RateLimitPercentage. </summary>
+        /// <summary> Gets the RateLimitPercentage. </summary>
         public BicepValue<float> RateLimitPercentage
         {
             get
@@ -46,25 +41,15 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _rateLimitPercentage;
             }
-            set
-            {
-                Initialize();
-                _rateLimitPercentage.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Expiration. </summary>
+        /// <summary> Gets the Expiration. </summary>
         public BicepValue<DateTimeOffset> Expiration
         {
             get
             {
                 Initialize();
                 return _expiration;
-            }
-            set
-            {
-                Initialize();
-                _expiration.Assign(value);
             }
         }
 

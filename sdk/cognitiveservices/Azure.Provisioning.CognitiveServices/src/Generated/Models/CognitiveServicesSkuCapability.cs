@@ -21,7 +21,7 @@ namespace Azure.Provisioning.CognitiveServices
         {
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _name;
             }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Value. </summary>
+        /// <summary> Gets the Value. </summary>
         public BicepValue<string> Value
         {
             get
             {
                 Initialize();
                 return _value;
-            }
-            set
-            {
-                Initialize();
-                _value.Assign(value);
             }
         }
 
