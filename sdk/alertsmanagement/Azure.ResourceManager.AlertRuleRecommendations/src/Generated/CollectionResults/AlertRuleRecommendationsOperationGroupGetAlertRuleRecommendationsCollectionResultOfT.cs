@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
                     yield break;
                 }
                 AlertRuleRecommendationsListResponse result = AlertRuleRecommendationsListResponse.FromResponse(response);
-                yield return Page<AlertRuleRecommendation>.FromValues((IReadOnlyList<AlertRuleRecommendation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AlertRuleRecommendation>.FromValues((IReadOnlyList<AlertRuleRecommendation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
