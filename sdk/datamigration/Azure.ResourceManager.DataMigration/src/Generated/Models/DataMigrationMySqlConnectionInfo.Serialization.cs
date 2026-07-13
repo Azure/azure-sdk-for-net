@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DataMigrationMySqlConnectionInfo : IUtf8JsonSerializable, IJsonModel<DataMigrationMySqlConnectionInfo>
+    /// <summary> Information for connecting to MySQL server. </summary>
+    public partial class DataMigrationMySqlConnectionInfo : ServerConnectionInfo, IJsonModel<DataMigrationMySqlConnectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMigrationMySqlConnectionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataMigrationMySqlConnectionInfo"/> for deserialization. </summary>
+        internal DataMigrationMySqlConnectionInfo()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ServerConnectionInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMySqlConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataMigrationMySqlConnectionInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationMySqlConnectionInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMySqlConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationMySqlConnectionInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataMigrationMySqlConnectionInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMigrationMySqlConnectionInfo IPersistableModel<DataMigrationMySqlConnectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataMigrationMySqlConnectionInfo)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataMigrationMySqlConnectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataMigrationMySqlConnectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMySqlConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMySqlConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMigrationMySqlConnectionInfo)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("serverName"u8);
             writer.WriteStringValue(ServerName);
@@ -61,140 +106,112 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        DataMigrationMySqlConnectionInfo IJsonModel<DataMigrationMySqlConnectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMigrationMySqlConnectionInfo IJsonModel<DataMigrationMySqlConnectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataMigrationMySqlConnectionInfo)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ServerConnectionInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMySqlConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMySqlConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMigrationMySqlConnectionInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataMigrationMySqlConnectionInfo(document.RootElement, options);
         }
 
-        internal static DataMigrationMySqlConnectionInfo DeserializeDataMigrationMySqlConnectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataMigrationMySqlConnectionInfo DeserializeDataMigrationMySqlConnectionInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string @type = "MySqlConnectionInfo";
+            string userName = default;
+            string password = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverName = default;
             string dataSource = default;
             int port = default;
-            bool? encryptConnection = default;
+            bool? shouldEncryptConnection = default;
             DataMigrationAuthenticationType? authentication = default;
             string additionalSettings = default;
-            string type = default;
-            string userName = default;
-            string password = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("serverName"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    serverName = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSource"u8))
+                if (prop.NameEquals("userName"u8))
                 {
-                    dataSource = property.Value.GetString();
+                    userName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"u8))
+                if (prop.NameEquals("password"u8))
                 {
-                    port = property.Value.GetInt32();
+                    password = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptConnection"u8))
+                if (prop.NameEquals("serverName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    serverName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("dataSource"u8))
+                {
+                    dataSource = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("port"u8))
+                {
+                    port = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("encryptConnection"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryptConnection = property.Value.GetBoolean();
+                    shouldEncryptConnection = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("authentication"u8))
+                if (prop.NameEquals("authentication"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    authentication = new DataMigrationAuthenticationType(property.Value.GetString());
+                    authentication = new DataMigrationAuthenticationType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("additionalSettings"u8))
+                if (prop.NameEquals("additionalSettings"u8))
                 {
-                    additionalSettings = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("userName"u8))
-                {
-                    userName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("password"u8))
-                {
-                    password = property.Value.GetString();
+                    additionalSettings = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataMigrationMySqlConnectionInfo(
-                type,
+                @type,
                 userName,
                 password,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 serverName,
                 dataSource,
                 port,
-                encryptConnection,
+                shouldEncryptConnection,
                 authentication,
                 additionalSettings);
         }
-
-        BinaryData IPersistableModel<DataMigrationMySqlConnectionInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMySqlConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataMigrationMySqlConnectionInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataMigrationMySqlConnectionInfo IPersistableModel<DataMigrationMySqlConnectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMySqlConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataMigrationMySqlConnectionInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataMigrationMySqlConnectionInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataMigrationMySqlConnectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

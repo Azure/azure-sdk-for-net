@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class PromQLCriteria : IUtf8JsonSerializable, IJsonModel<PromQLCriteria>
+    /// <summary> Specifies the PromQL criteria for the metric alert resource. </summary>
+    public partial class PromQLCriteria : MetricAlertCriteria, IJsonModel<PromQLCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PromQLCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MetricAlertCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PromQLCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePromQLCriteria(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PromQLCriteria)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PromQLCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PromQLCriteria)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PromQLCriteria>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PromQLCriteria IPersistableModel<PromQLCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => (PromQLCriteria)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PromQLCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PromQLCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PromQLCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PromQLCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PromQLCriteria)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(FailingPeriods))
             {
@@ -44,116 +84,76 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("allOf"u8);
                 writer.WriteStartArray();
-                foreach (var item in AllOf)
+                foreach (MultiPromQLCriteria item in AllOf)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
         }
 
-        PromQLCriteria IJsonModel<PromQLCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PromQLCriteria IJsonModel<PromQLCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PromQLCriteria)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MetricAlertCriteria JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PromQLCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PromQLCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PromQLCriteria)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePromQLCriteria(document.RootElement, options);
         }
 
-        internal static PromQLCriteria DeserializePromQLCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PromQLCriteria DeserializePromQLCriteria(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            Odatatype odataType = default;
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             QueryFailingPeriods failingPeriods = default;
             IList<MultiPromQLCriteria> allOf = default;
-            MonitorOdataType odataType = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("failingPeriods"u8))
+                if (prop.NameEquals("odata.type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    odataType = new Odatatype(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("failingPeriods"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    failingPeriods = QueryFailingPeriods.DeserializeQueryFailingPeriods(property.Value, options);
+                    failingPeriods = QueryFailingPeriods.DeserializeQueryFailingPeriods(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("allOf"u8))
+                if (prop.NameEquals("allOf"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MultiPromQLCriteria> array = new List<MultiPromQLCriteria>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MultiPromQLCriteria.DeserializeMultiPromQLCriteria(item, options));
                     }
                     allOf = array;
                     continue;
                 }
-                if (property.NameEquals("odata.type"u8))
-                {
-                    odataType = new MonitorOdataType(property.Value.GetString());
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new PromQLCriteria(odataType, additionalProperties, failingPeriods, allOf ?? new ChangeTrackingList<MultiPromQLCriteria>());
         }
-
-        BinaryData IPersistableModel<PromQLCriteria>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PromQLCriteria>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PromQLCriteria)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PromQLCriteria IPersistableModel<PromQLCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PromQLCriteria>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePromQLCriteria(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PromQLCriteria)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PromQLCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _azureFile = DefineModelProperty<ContainerInstanceAzureFileVolume>(nameof(AzureFile), new string[] { "azureFile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NGroupContainerGroupPropertyVolume that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties supplied to the Create Or Update Event Hub operation. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, EventhubProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventhubProperties properties, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Location = location;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties supplied to the Create Or Update Event Hub operation. </summary>

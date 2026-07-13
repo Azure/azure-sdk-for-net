@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.NetApp
         ClusterPeerCommandResult IOperationSource<ClusterPeerCommandResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ClusterPeerCommandResult result = ClusterPeerCommandResult.DeserializeClusterPeerCommandResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ClusterPeerCommandResult.DeserializeClusterPeerCommandResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.NetApp
         async ValueTask<ClusterPeerCommandResult> IOperationSource<ClusterPeerCommandResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ClusterPeerCommandResult result = ClusterPeerCommandResult.DeserializeClusterPeerCommandResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ClusterPeerCommandResult.DeserializeClusterPeerCommandResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

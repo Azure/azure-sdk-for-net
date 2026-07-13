@@ -8,19 +8,63 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
+    /// <summary> Describes a reference to Key Vault Secret. </summary>
     [JsonConverter(typeof(KeyVaultSecretReferenceConverter))]
-    public partial class KeyVaultSecretReference : IUtf8JsonSerializable, IJsonModel<KeyVaultSecretReference>
+    public partial class KeyVaultSecretReference : IJsonModel<KeyVaultSecretReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultSecretReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretReference"/> for deserialization. </summary>
+        internal KeyVaultSecretReference()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KeyVaultSecretReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretReference>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKeyVaultSecretReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultSecretReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretReference>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultSecretReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KeyVaultSecretReference>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KeyVaultSecretReference IPersistableModel<KeyVaultSecretReference>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KeyVaultSecretReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KeyVaultSecretReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,25 +76,24 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KeyVaultSecretReference)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("secretUrl"u8);
             writer.WriteStringValue(SecretUri.AbsoluteUri);
             writer.WritePropertyName("sourceVault"u8);
-            ((IJsonModel<WritableSubResource>)SourceVault).Write(writer, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            writer.WriteObjectValue(SourceVault, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -59,93 +102,73 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        KeyVaultSecretReference IJsonModel<KeyVaultSecretReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KeyVaultSecretReference IJsonModel<KeyVaultSecretReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KeyVaultSecretReference JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KeyVaultSecretReference)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKeyVaultSecretReference(document.RootElement, options);
         }
 
-        internal static KeyVaultSecretReference DeserializeKeyVaultSecretReference(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KeyVaultSecretReference DeserializeKeyVaultSecretReference(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri secretUrl = default;
-            WritableSubResource sourceVault = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            Uri secretUri = default;
+            ComputeWriteableSubResourceData sourceVault = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("secretUrl"u8))
+                if (prop.NameEquals("secretUrl"u8))
                 {
-                    secretUrl = new Uri(property.Value.GetString());
+                    secretUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (property.NameEquals("sourceVault"u8))
+                if (prop.NameEquals("sourceVault"u8))
                 {
-                    sourceVault = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
+                    sourceVault = ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new KeyVaultSecretReference(secretUrl, sourceVault, serializedAdditionalRawData);
+            return new KeyVaultSecretReference(secretUri, sourceVault, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<KeyVaultSecretReference>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretReference>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KeyVaultSecretReference)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KeyVaultSecretReference IPersistableModel<KeyVaultSecretReference>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretReference>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKeyVaultSecretReference(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KeyVaultSecretReference)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KeyVaultSecretReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class KeyVaultSecretReferenceConverter : JsonConverter<KeyVaultSecretReference>
         {
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, KeyVaultSecretReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<KeyVaultSecretReference>>(model, ModelSerializationExtensions.WireOptions);
             }
 
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
             public override KeyVaultSecretReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeKeyVaultSecretReference(document.RootElement);
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeKeyVaultSecretReference(document.RootElement, ModelSerializationExtensions.WireOptions);
             }
         }
     }

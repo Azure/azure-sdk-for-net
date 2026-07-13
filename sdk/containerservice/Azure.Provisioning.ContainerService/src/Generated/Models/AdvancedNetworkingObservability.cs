@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _isObservabilityEnabled = DefineProperty<bool>(nameof(IsObservabilityEnabled), new string[] { "enabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AdvancedNetworkingObservability that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

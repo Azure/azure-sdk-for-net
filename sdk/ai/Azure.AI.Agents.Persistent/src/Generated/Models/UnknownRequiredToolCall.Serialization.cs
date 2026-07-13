@@ -54,7 +54,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RequiredToolCall IPersistableModel<RequiredToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownRequiredToolCall)PersistableModelCreateCore(data, options);
+        RequiredToolCall IPersistableModel<RequiredToolCall>.Create(BinaryData data, ModelReaderWriterOptions options) => (RequiredToolCall)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RequiredToolCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -82,7 +82,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RequiredToolCall IJsonModel<RequiredToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownRequiredToolCall)JsonModelCreateCore(ref reader, options);
+        RequiredToolCall IJsonModel<RequiredToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RequiredToolCall)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

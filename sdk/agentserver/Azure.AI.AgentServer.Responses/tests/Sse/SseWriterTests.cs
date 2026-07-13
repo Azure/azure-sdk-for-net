@@ -3,8 +3,10 @@
 
 using System.Text;
 using System.Text.Json;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Sse;
 
@@ -26,11 +28,15 @@ public class SseWriterTests
         return new Models.ResponseObject("resp_test", "gpt-4o");
     }
 
+    private static SseKeepAliveSession CreateInactiveSession(Stream output) =>
+        SseKeepAliveSession.Start(output, Timeout.InfiniteTimeSpan, NullLogger.Instance, "test");
+
     [Test]
     public async Task WriteEventAsync_WritesEventAndDataLines()
     {
         using var stream = new MemoryStream();
-        var writer = new SseWriter(stream, _jsonOptions);
+        await using var session = CreateInactiveSession(stream);
+        var writer = new SseWriter(session, _jsonOptions);
 
         var evt = new ResponseCreatedEvent(response: CreateTestResponse(), sequenceNumber: 0);
         await writer.WriteEventAsync(evt, 0, CancellationToken.None);
@@ -45,7 +51,8 @@ public class SseWriterTests
     public async Task WriteEventAsync_DataLineContainsValidJson()
     {
         using var stream = new MemoryStream();
-        var writer = new SseWriter(stream, _jsonOptions);
+        await using var session = CreateInactiveSession(stream);
+        var writer = new SseWriter(session, _jsonOptions);
 
         var evt = new ResponseTextDeltaEvent(3, "item_1", 0, 0, "Hello", Array.Empty<ResponseLogProb>());
         await writer.WriteEventAsync(evt, 0, CancellationToken.None);
@@ -59,22 +66,11 @@ public class SseWriterTests
     }
 
     [Test]
-    public async Task WriteKeepAliveAsync_WritesComment()
-    {
-        using var stream = new MemoryStream();
-        var writer = new SseWriter(stream, _jsonOptions);
-
-        await writer.WriteKeepAliveAsync(CancellationToken.None);
-
-        var output = Encoding.UTF8.GetString(stream.ToArray());
-        Assert.That(output, Is.EqualTo(": keep-alive\n\n"));
-    }
-
-    [Test]
     public async Task WriteEventAsync_EventTypeMatchesTypeField()
     {
         using var stream = new MemoryStream();
-        var writer = new SseWriter(stream, _jsonOptions);
+        await using var session = CreateInactiveSession(stream);
+        var writer = new SseWriter(session, _jsonOptions);
 
         var evt = new ResponseCompletedEvent(response: CreateTestResponse(), sequenceNumber: 5);
         await writer.WriteEventAsync(evt, 5, CancellationToken.None);
@@ -88,7 +84,8 @@ public class SseWriterTests
     public async Task WriteEventAsync_MultipleEvents_AreProperlyDelimited()
     {
         using var stream = new MemoryStream();
-        var writer = new SseWriter(stream, _jsonOptions);
+        await using var session = CreateInactiveSession(stream);
+        var writer = new SseWriter(session, _jsonOptions);
 
         var response = CreateTestResponse();
         await writer.WriteEventAsync(new ResponseCreatedEvent(response: response, sequenceNumber: 0), 0, CancellationToken.None);
@@ -101,19 +98,19 @@ public class SseWriterTests
     }
 
     [Test]
-    public async Task WriteEventAsync_ThreadSafe_WithKeepAlive()
+    public async Task WriteEventAsync_ThreadSafe_WhenWritingConcurrently()
     {
         using var stream = new MemoryStream();
-        var writer = new SseWriter(stream, _jsonOptions);
+        await using var session = CreateInactiveSession(stream);
+        var writer = new SseWriter(session, _jsonOptions);
 
-        // Simulate concurrent event + keep-alive writes
+        // Simulate concurrent event writes — the session-owned lock must serialize them.
         var tasks = new List<Task>();
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 20; i++)
         {
             var seqNum = i;
             tasks.Add(writer.WriteEventAsync(
                 new ResponseCreatedEvent(response: CreateTestResponse(), sequenceNumber: seqNum), seqNum, CancellationToken.None));
-            tasks.Add(writer.WriteKeepAliveAsync(CancellationToken.None));
         }
 
         await Task.WhenAll(tasks);
@@ -121,6 +118,6 @@ public class SseWriterTests
         var output = Encoding.UTF8.GetString(stream.ToArray());
         // All writes should complete without corruption
         var blocks = output.Split("\n\n", StringSplitOptions.RemoveEmptyEntries);
-        Assert.That(blocks.Length, Is.EqualTo(20)); // 10 events + 10 keep-alives
+        Assert.That(blocks.Length, Is.EqualTo(20));
     }
 }

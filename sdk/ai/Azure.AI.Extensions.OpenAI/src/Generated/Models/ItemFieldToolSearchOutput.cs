@@ -17,7 +17,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="execution"> Whether tool search was executed by the server or by the client. </param>
         /// <param name="tools"> The loaded tool definitions returned by tool search. </param>
         /// <param name="status"> The status of the tool search output item that was recorded. </param>
-        internal ItemFieldToolSearchOutput(string id, string callId, ResponsesToolSearchExecutionType execution, IEnumerable<ResponsesTool> tools, ResponsesFunctionCallOutputStatusEnum status) : base(ItemFieldType.ToolSearchOutput)
+        internal ItemFieldToolSearchOutput(string id, string callId, ResponsesToolSearchExecutionType execution, IEnumerable<ResponsesTool> tools, ResponsesFunctionCallOutputStatus status) : base(ItemFieldType.ToolSearchOutput)
         {
             Id = id;
             CallId = callId;
@@ -35,7 +35,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="tools"> The loaded tool definitions returned by tool search. </param>
         /// <param name="status"> The status of the tool search output item that was recorded. </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
-        internal ItemFieldToolSearchOutput(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ResponsesToolSearchExecutionType execution, IList<ResponsesTool> tools, ResponsesFunctionCallOutputStatusEnum status, string createdBy) : base(@type, additionalBinaryDataProperties)
+        internal ItemFieldToolSearchOutput(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ResponsesToolSearchExecutionType execution, IList<ResponsesTool> tools, ResponsesFunctionCallOutputStatus status, string createdBy) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -58,7 +58,7 @@ namespace Azure.AI.Extensions.OpenAI
         public IList<ResponsesTool> Tools { get; }
 
         /// <summary> The status of the tool search output item that was recorded. </summary>
-        public ResponsesFunctionCallOutputStatusEnum Status { get; }
+        public ResponsesFunctionCallOutputStatus Status { get; }
 
         /// <summary> The identifier of the actor that created the item. </summary>
         public string CreatedBy { get; }

@@ -62,6 +62,9 @@ model ItemProperties {
   /** The content type of the item. */
   contentType?: string;
 
+  /** Nullable value used to verify provisioning primitive wrapping. */
+  nullableValue?: string | null;
+
   /** The attributes of the item. */
   attributes?: ItemAttributes;
 }

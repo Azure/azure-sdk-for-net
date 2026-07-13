@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.CostManagement
         PriceSheetDownloadProperties IOperationSource<PriceSheetDownloadProperties>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            PriceSheetDownloadProperties result = PriceSheetDownloadProperties.DeserializePriceSheetDownloadProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return PriceSheetDownloadProperties.DeserializePriceSheetDownloadProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.CostManagement
         async ValueTask<PriceSheetDownloadProperties> IOperationSource<PriceSheetDownloadProperties>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            PriceSheetDownloadProperties result = PriceSheetDownloadProperties.DeserializePriceSheetDownloadProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return PriceSheetDownloadProperties.DeserializePriceSheetDownloadProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

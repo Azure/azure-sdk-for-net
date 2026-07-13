@@ -6,42 +6,47 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal partial class PartitionKeyRangeIdRegionRestOperations
+    internal partial class PartitionKeyRangeIdRegion
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of PartitionKeyRangeIdRegionRestOperations. </summary>
+        /// <summary> Initializes a new instance of PartitionKeyRangeIdRegion for mocking. </summary>
+        protected PartitionKeyRangeIdRegion()
+        {
+        }
+
+        /// <summary> Initializes a new instance of PartitionKeyRangeIdRegion. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public PartitionKeyRangeIdRegionRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal PartitionKeyRangeIdRegion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-10-15";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListMetricsRequestUri(string subscriptionId, string resourceGroupName, string accountName, string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetMetricsPartitionKeyRangeIdRegionsRequest(Guid subscriptionId, string resourceGroupName, string accountName, string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
@@ -55,117 +60,40 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/partitionKeyRangeId/", false);
             uri.AppendPath(partitionKeyRangeId, true);
             uri.AppendPath("/metrics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("$filter", filter, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListMetricsRequest(string subscriptionId, string resourceGroupName, string accountName, string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/region/", false);
-            uri.AppendPath(region, true);
-            uri.AppendPath("/databases/", false);
-            uri.AppendPath(databaseRid, true);
-            uri.AppendPath("/collections/", false);
-            uri.AppendPath(collectionRid, true);
-            uri.AppendPath("/partitionKeyRangeId/", false);
-            uri.AppendPath(partitionKeyRangeId, true);
-            uri.AppendPath("/metrics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("$filter", filter, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Retrieves the metrics determined by the given filter for the given partition key range id and region. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> Cosmos DB database account name. </param>
-        /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
-        /// <param name="databaseRid"> Cosmos DB database rid. </param>
-        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
-        /// <param name="partitionKeyRangeId"> Partition Key Range Id for which to get data. </param>
-        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="partitionKeyRangeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PartitionMetricListResult>> ListMetricsAsync(string subscriptionId, string resourceGroupName, string accountName, string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetMetricsPartitionKeyRangeIdRegionsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(region, nameof(region));
-            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
-            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
-            Argument.AssertNotNullOrEmpty(partitionKeyRangeId, nameof(partitionKeyRangeId));
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            using var message = CreateListMetricsRequest(subscriptionId, resourceGroupName, accountName, region, databaseRid, collectionRid, partitionKeyRangeId, filter);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        PartitionMetricListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PartitionMetricListResult.DeserializePartitionMetricListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Retrieves the metrics determined by the given filter for the given partition key range id and region. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="accountName"> Cosmos DB database account name. </param>
-        /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
-        /// <param name="databaseRid"> Cosmos DB database rid. </param>
-        /// <param name="collectionRid"> Cosmos DB collection rid. </param>
-        /// <param name="partitionKeyRangeId"> Partition Key Range Id for which to get data. </param>
-        /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/>, <paramref name="partitionKeyRangeId"/> or <paramref name="filter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="region"/>, <paramref name="databaseRid"/>, <paramref name="collectionRid"/> or <paramref name="partitionKeyRangeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PartitionMetricListResult> ListMetrics(string subscriptionId, string resourceGroupName, string accountName, string region, string databaseRid, string collectionRid, string partitionKeyRangeId, string filter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(region, nameof(region));
-            Argument.AssertNotNullOrEmpty(databaseRid, nameof(databaseRid));
-            Argument.AssertNotNullOrEmpty(collectionRid, nameof(collectionRid));
-            Argument.AssertNotNullOrEmpty(partitionKeyRangeId, nameof(partitionKeyRangeId));
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            using var message = CreateListMetricsRequest(subscriptionId, resourceGroupName, accountName, region, databaseRid, collectionRid, partitionKeyRangeId, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        PartitionMetricListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PartitionMetricListResult.DeserializePartitionMetricListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
     }
 }

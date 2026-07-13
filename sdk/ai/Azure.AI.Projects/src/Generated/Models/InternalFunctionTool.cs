@@ -40,13 +40,13 @@ namespace OpenAI
         }
 
         /// <summary> The name of the function to call. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Gets or sets the Description. </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets the Parameters.
+        /// Gets or sets the Parameters.
         /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -71,10 +71,10 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Parameters { get; }
+        public IDictionary<string, BinaryData> Parameters { get; set; }
 
-        /// <summary> Gets the Strict. </summary>
-        public bool? Strict { get; }
+        /// <summary> Gets or sets the Strict. </summary>
+        public bool? Strict { get; set; }
 
         /// <summary> Whether this function is deferred and loaded via tool search. </summary>
         public bool? DeferLoading { get; set; }

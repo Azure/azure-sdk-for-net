@@ -8,15 +8,60 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Consumption;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    [PersistableModelProxy(typeof(UnknownReservationRecommendation))]
-    public partial class ConsumptionReservationRecommendation : IUtf8JsonSerializable, IJsonModel<ConsumptionReservationRecommendation>
+    /// <summary>
+    /// The ConsumptionReservationRecommendation.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConsumptionLegacyReservationRecommendation"/> and <see cref="ConsumptionModernReservationRecommendation"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownConsumptionReservationRecommendation))]
+    public abstract partial class ConsumptionReservationRecommendation : ResourceData, IJsonModel<ConsumptionReservationRecommendation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionReservationRecommendation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeConsumptionReservationRecommendation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConsumptionReservationRecommendation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConsumptionReservationRecommendation IPersistableModel<ConsumptionReservationRecommendation>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConsumptionReservationRecommendation)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConsumptionReservationRecommendation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConsumptionReservationRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,15 +73,12 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -59,72 +101,70 @@ namespace Azure.ResourceManager.Consumption.Models
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        ConsumptionReservationRecommendation IJsonModel<ConsumptionReservationRecommendation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConsumptionReservationRecommendation IJsonModel<ConsumptionReservationRecommendation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConsumptionReservationRecommendation)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationRecommendation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConsumptionReservationRecommendation(document.RootElement, options);
         }
 
-        internal static ConsumptionReservationRecommendation DeserializeConsumptionReservationRecommendation(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConsumptionReservationRecommendation DeserializeConsumptionReservationRecommendation(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "legacy": return ConsumptionLegacyReservationRecommendation.DeserializeConsumptionLegacyReservationRecommendation(element, options);
-                    case "modern": return ConsumptionModernReservationRecommendation.DeserializeConsumptionModernReservationRecommendation(element, options);
+                    case "legacy":
+                        return ConsumptionLegacyReservationRecommendation.DeserializeConsumptionLegacyReservationRecommendation(element, options);
+                    case "modern":
+                        return ConsumptionModernReservationRecommendation.DeserializeConsumptionModernReservationRecommendation(element, options);
                 }
             }
-            return UnknownReservationRecommendation.DeserializeUnknownReservationRecommendation(element, options);
+            return UnknownConsumptionReservationRecommendation.DeserializeUnknownConsumptionReservationRecommendation(element, options);
         }
-
-        BinaryData IPersistableModel<ConsumptionReservationRecommendation>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationRecommendation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ConsumptionReservationRecommendation IPersistableModel<ConsumptionReservationRecommendation>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationRecommendation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConsumptionReservationRecommendation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ConsumptionReservationRecommendation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

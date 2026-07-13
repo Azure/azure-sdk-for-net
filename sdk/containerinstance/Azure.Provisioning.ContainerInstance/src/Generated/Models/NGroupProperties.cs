@@ -120,6 +120,10 @@ namespace Azure.Provisioning.ContainerInstance
             _containerGroupProfiles = DefineListProperty<ContainerGroupProfileStub>(nameof(ContainerGroupProfiles), new string[] { "containerGroupProfiles" });
             _provisioningState = DefineProperty<NGroupProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _updateProfile = DefineModelProperty<NGroupUpdateProfile>(nameof(UpdateProfile), new string[] { "updateProfile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NGroupProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

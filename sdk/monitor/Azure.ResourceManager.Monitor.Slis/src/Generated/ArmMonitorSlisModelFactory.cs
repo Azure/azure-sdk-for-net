@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmMonitorSlisModelFactory
     {
-        /// <summary> Represents an SLI resource within the ProviderHub. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -33,9 +32,9 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
-                identity);
+                identity,
+                default);
         }
 
         /// <param name="provisioningState"> Indicates the provisioning status of the last operation. </param>
@@ -50,6 +49,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="streamingRuleLastUpdatedOn"> The streaming rule last updated timestamp associated with the Sli resource. </param>
         /// <param name="isAlertEnabled"> A flag to determine whether alert is enabled. </param>
         /// <param name="sliProperties"> Defines the SLI properties associated with the SLI. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="baseline"/> is null. </exception>
         /// <returns> A new <see cref="Models.MonitorSliProperties"/> instance for mocking. </returns>
         public static MonitorSliProperties MonitorSliProperties(SliProvisioningState? provisioningState = default, string description = default, SliCategory category = default, SliEvaluationType evaluationType = default, SliExecutionState executionState = default, IEnumerable<SliAmwAccount> destinationAmwAccounts = default, IEnumerable<SliMetric> destinationMetrics = default, SliBaseline baseline = default, string streamingRuleId = default, DateTimeOffset? streamingRuleLastUpdatedOn = default, bool isAlertEnabled = default, SliProperties sliProperties = default)
         {
@@ -62,35 +62,59 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 category,
                 evaluationType,
                 executionState,
-                destinationAmwAccounts.ToList(),
-                destinationMetrics.ToList(),
-                new SliBaselineProperties(baseline, null),
+                (destinationAmwAccounts ?? new ChangeTrackingList<SliAmwAccount>()).ToList(),
+                (destinationMetrics ?? new ChangeTrackingList<SliMetric>()).ToList(),
+                baseline is null ? default : new SliBaselineProperties(baseline, default),
                 streamingRuleId,
                 streamingRuleLastUpdatedOn,
                 isAlertEnabled,
                 sliProperties,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Represents the current execution state of an SLI. </summary>
         /// <param name="state"> The execution state value. </param>
         /// <param name="message"> A descriptive message related to the execution state. </param>
         /// <returns> A new <see cref="Models.SliExecutionState"/> instance for mocking. </returns>
         public static SliExecutionState SliExecutionState(string state = default, string message = default)
         {
-            return new SliExecutionState(state, message, additionalBinaryDataProperties: null);
+            return new SliExecutionState(state, message, default);
         }
 
-        /// <summary> Defines a metric in the destination AMW account. </summary>
+        /// <param name="resourceId"> The ARM resource ID of the account where metrics are emitted. </param>
+        /// <param name="identity"> The ARM resource ID of the managed identity with access to the source account. </param>
+        /// <returns> A new <see cref="Models.SliAmwAccount"/> instance for mocking. </returns>
+        public static SliAmwAccount SliAmwAccount(ResourceIdentifier resourceId = default, ResourceIdentifier identity = default)
+        {
+            return new SliAmwAccount(resourceId, identity, default);
+        }
+
         /// <param name="metricNamespace"> The namespace of the metric. </param>
         /// <param name="metricName"> The name of the metric. </param>
         /// <returns> A new <see cref="Models.SliMetric"/> instance for mocking. </returns>
         public static SliMetric SliMetric(string metricNamespace = default, string metricName = default)
         {
-            return new SliMetric(metricNamespace, metricName, additionalBinaryDataProperties: null);
+            return new SliMetric(metricNamespace, metricName, default);
         }
 
-        /// <summary> Represents a signal model used in SLI calculations. </summary>
+        /// <param name="value"> The user-defined or Azure-defined target value used for comparison against the SLI value. </param>
+        /// <param name="evaluationPeriodDays"> The time frame (in days) used for SLI evaluation. </param>
+        /// <param name="evaluationCalculationType"> Specifies how evaluation is calculated, either based on calendar days or a rolling window. </param>
+        /// <returns> A new <see cref="Models.SliBaseline"/> instance for mocking. </returns>
+        public static SliBaseline SliBaseline(float value = default, int evaluationPeriodDays = default, SliEvaluationCalculationType evaluationCalculationType = default)
+        {
+            return new SliBaseline(value, evaluationPeriodDays, evaluationCalculationType, default);
+        }
+
+        /// <param name="goodSignals"> Represents good signals used in request-based SLI calculations. </param>
+        /// <param name="totalSignals"> Represents total signals used in request-based SLI calculations. </param>
+        /// <param name="signals"> Signals used for window-based SLI calculations. </param>
+        /// <param name="windowUptimeCriteria"> Defines the uptime criteria for window-based SLIs. </param>
+        /// <returns> A new <see cref="Models.SliProperties"/> instance for mocking. </returns>
+        public static SliProperties SliProperties(SliSignal goodSignals = default, SliSignal totalSignals = default, SliSignal signals = default, WindowUptimeCriteria windowUptimeCriteria = default)
+        {
+            return new SliProperties(goodSignals, totalSignals, signals, windowUptimeCriteria, default);
+        }
+
         /// <param name="signalSources"> Sources of metrics used for SLIs. </param>
         /// <param name="signalFormula"> Mathematical formula used to combine multiple metrics. </param>
         /// <returns> A new <see cref="Models.SliSignal"/> instance for mocking. </returns>
@@ -98,10 +122,9 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         {
             signalSources ??= new ChangeTrackingList<SliSignalSource>();
 
-            return new SliSignal(signalSources.ToList(), signalFormula, additionalBinaryDataProperties: null);
+            return new SliSignal((signalSources ?? new ChangeTrackingList<SliSignalSource>()).ToList(), signalFormula, default);
         }
 
-        /// <summary> Represents a signal source used in SLIs. </summary>
         /// <param name="signalSourceId"> Unique identifier for the signal source. </param>
         /// <param name="sourceAmwAccountManagedIdentity"> Managed identity for authenticating the signal source. </param>
         /// <param name="sourceAmwAccountResourceId"> Resource ID of the source AMW account. </param>
@@ -121,13 +144,29 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 sourceAmwAccountResourceId,
                 metricNamespace,
                 metricName,
-                filters.ToList(),
+                (filters ?? new ChangeTrackingList<SliCondition>()).ToList(),
                 spatialAggregation,
                 temporalAggregation,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Represents the spatial aggregation model. </summary>
+        /// <param name="dimensionName"> Dimension name used in filtering. </param>
+        /// <param name="scalarFunction"> Scalar function applied for filtering. </param>
+        /// <param name="samplingType"> Defines the sampling type. </param>
+        /// <param name="operator"> Operator used in the filtering condition. </param>
+        /// <param name="value"> Value used in filtering. For most operators (eq, ne, lt, lte, gt, gte, startswith, notstartswith, contains, notcontains) this is a single value (for example "GetContosoUsers"). For the `in` and `notin` operators, multiple values must be joined by the delimiter `^^` (for example "east^^west^^north"). </param>
+        /// <returns> A new <see cref="Models.SliCondition"/> instance for mocking. </returns>
+        public static SliCondition SliCondition(string dimensionName = default, SliScalarFunction? scalarFunction = default, SliSamplingType? samplingType = default, SliConditionOperator @operator = default, string value = default)
+        {
+            return new SliCondition(
+                dimensionName,
+                scalarFunction,
+                samplingType,
+                @operator,
+                value,
+                default);
+        }
+
         /// <param name="type"> Type of spatial aggregation. </param>
         /// <param name="dimensions"> Dimensions considered for spatial aggregation. </param>
         /// <returns> A new <see cref="Models.SliSpatialAggregation"/> instance for mocking. </returns>
@@ -135,7 +174,23 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         {
             dimensions ??= new ChangeTrackingList<string>();
 
-            return new SliSpatialAggregation(@type, dimensions.ToList(), additionalBinaryDataProperties: null);
+            return new SliSpatialAggregation(@type, (dimensions ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="type"> Type of temporal aggregation. </param>
+        /// <param name="windowSizeMinutes"> Time window size for aggregation, in minutes. </param>
+        /// <returns> A new <see cref="Models.SliTemporalAggregation"/> instance for mocking. </returns>
+        public static SliTemporalAggregation SliTemporalAggregation(SliTemporalAggregationType @type = default, int? windowSizeMinutes = default)
+        {
+            return new SliTemporalAggregation(@type, windowSizeMinutes, default);
+        }
+
+        /// <param name="target"> Threshold value used to determine uptime. </param>
+        /// <param name="comparator"> Comparison operator used for uptime evaluation. </param>
+        /// <returns> A new <see cref="Models.WindowUptimeCriteria"/> instance for mocking. </returns>
+        public static WindowUptimeCriteria WindowUptimeCriteria(float target = default, WindowUptimeCriteriaComparator comparator = default)
+        {
+            return new WindowUptimeCriteria(target, comparator, default);
         }
     }
 }

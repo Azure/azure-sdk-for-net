@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.ContainerInstance
     {
         private readonly ClientDiagnostics _cgProfileClientDiagnostics;
         private readonly CGProfile _cgProfileRestClient;
-        private readonly ClientDiagnostics _cgProfilesClientDiagnostics;
-        private readonly CGProfiles _cgProfilesRestClient;
         private readonly ContainerGroupProfileData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ContainerInstance/containerGroupProfiles";
@@ -56,8 +54,6 @@ namespace Azure.ResourceManager.ContainerInstance
             TryGetApiVersion(ResourceType, out string containerGroupProfileApiVersion);
             _cgProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
             _cgProfileRestClient = new CGProfile(_cgProfileClientDiagnostics, Pipeline, Endpoint, containerGroupProfileApiVersion ?? "2025-09-01");
-            _cgProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ResourceType.Namespace, Diagnostics);
-            _cgProfilesRestClient = new CGProfiles(_cgProfilesClientDiagnostics, Pipeline, Endpoint, containerGroupProfileApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

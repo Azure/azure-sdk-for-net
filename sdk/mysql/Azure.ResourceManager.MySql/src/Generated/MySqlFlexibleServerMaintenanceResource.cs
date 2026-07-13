@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _maintenancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MySqlFlexibleServerMaintenancePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerMaintenanceResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerMaintenanceResource>(
-                    new MySqlFlexibleServerMaintenanceOperationSource(Client),
+                    new MySqlFlexibleServerMaintenanceResourceOperationSource(Client),
                     _maintenancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _maintenancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MySqlFlexibleServerMaintenancePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerMaintenanceResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerMaintenanceResource>(
-                    new MySqlFlexibleServerMaintenanceOperationSource(Client),
+                    new MySqlFlexibleServerMaintenanceResourceOperationSource(Client),
                     _maintenancesClientDiagnostics,
                     Pipeline,
                     message.Request,

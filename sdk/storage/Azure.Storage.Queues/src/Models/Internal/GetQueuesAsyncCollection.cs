@@ -30,7 +30,7 @@ namespace Azure.Storage.Queues.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<ListQueuesSegmentResponse> response = await _client.GetQueuesInternal(
+            Response<ListQueuesResponse> response = await _client.GetQueuesInternal(
                 continuationToken,
                 _traits,
                 _prefix,

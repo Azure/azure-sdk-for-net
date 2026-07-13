@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _loadBalancersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadBalancerName, HciVmLoadBalancerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmLoadBalancerResource> operation = new VmArmOperation<HciVmLoadBalancerResource>(
-                    new HciVmLoadBalancerOperationSource(Client),
+                    new HciVmLoadBalancerResourceOperationSource(Client),
                     _loadBalancersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _loadBalancersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadBalancerName, HciVmLoadBalancerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmLoadBalancerResource> operation = new VmArmOperation<HciVmLoadBalancerResource>(
-                    new HciVmLoadBalancerOperationSource(Client),
+                    new HciVmLoadBalancerResourceOperationSource(Client),
                     _loadBalancersClientDiagnostics,
                     Pipeline,
                     message.Request,

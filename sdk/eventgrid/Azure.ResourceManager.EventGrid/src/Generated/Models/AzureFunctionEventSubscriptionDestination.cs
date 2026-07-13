@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -15,47 +16,89 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class AzureFunctionEventSubscriptionDestination : EventSubscriptionDestination
     {
         /// <summary> Initializes a new instance of <see cref="AzureFunctionEventSubscriptionDestination"/>. </summary>
-        public AzureFunctionEventSubscriptionDestination()
+        public AzureFunctionEventSubscriptionDestination() : base(EndpointType.AzureFunction)
         {
-            DeliveryAttributeMappings = new ChangeTrackingList<DeliveryAttributeMapping>();
-            EndpointType = EndpointType.AzureFunction;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="resourceId"> The Azure Resource Id that represents the endpoint of the Azure Function destination of an event subscription. </param>
-        /// <param name="maxEventsPerBatch"> Maximum number of events per batch. </param>
-        /// <param name="preferredBatchSizeInKilobytes"> Preferred batch size in Kilobytes. </param>
-        /// <param name="deliveryAttributeMappings">
-        /// Delivery attribute details.
-        /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
-        /// </param>
-        internal AzureFunctionEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier resourceId, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, IList<DeliveryAttributeMapping> deliveryAttributeMappings) : base(endpointType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Azure Function Properties of the event subscription destination. </param>
+        internal AzureFunctionEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureFunctionEventSubscriptionDestinationProperties properties) : base(endpointType, additionalBinaryDataProperties)
         {
-            ResourceId = resourceId;
-            MaxEventsPerBatch = maxEventsPerBatch;
-            PreferredBatchSizeInKilobytes = preferredBatchSizeInKilobytes;
-            DeliveryAttributeMappings = deliveryAttributeMappings;
-            EndpointType = endpointType;
+            Properties = properties;
         }
+
+        /// <summary> Azure Function Properties of the event subscription destination. </summary>
+        [WirePath("properties")]
+        internal AzureFunctionEventSubscriptionDestinationProperties Properties { get; set; }
 
         /// <summary> The Azure Resource Id that represents the endpoint of the Azure Function destination of an event subscription. </summary>
         [WirePath("properties.resourceId")]
-        public ResourceIdentifier ResourceId { get; set; }
+        public ResourceIdentifier ResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFunctionEventSubscriptionDestinationProperties();
+                }
+                Properties.ResourceId = value;
+            }
+        }
+
         /// <summary> Maximum number of events per batch. </summary>
         [WirePath("properties.maxEventsPerBatch")]
-        public int? MaxEventsPerBatch { get; set; }
+        public int? MaxEventsPerBatch
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxEventsPerBatch;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFunctionEventSubscriptionDestinationProperties();
+                }
+                Properties.MaxEventsPerBatch = value;
+            }
+        }
+
         /// <summary> Preferred batch size in Kilobytes. </summary>
         [WirePath("properties.preferredBatchSizeInKilobytes")]
-        public int? PreferredBatchSizeInKilobytes { get; set; }
-        /// <summary>
-        /// Delivery attribute details.
-        /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
-        /// </summary>
+        public int? PreferredBatchSizeInKilobytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreferredBatchSizeInKilobytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFunctionEventSubscriptionDestinationProperties();
+                }
+                Properties.PreferredBatchSizeInKilobytes = value;
+            }
+        }
+
+        /// <summary> Delivery attribute details. </summary>
         [WirePath("properties.deliveryAttributeMappings")]
-        public IList<DeliveryAttributeMapping> DeliveryAttributeMappings { get; }
+        public IList<DeliveryAttributeMapping> DeliveryAttributeMappings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFunctionEventSubscriptionDestinationProperties();
+                }
+                return Properties.DeliveryAttributeMappings;
+            }
+        }
     }
 }

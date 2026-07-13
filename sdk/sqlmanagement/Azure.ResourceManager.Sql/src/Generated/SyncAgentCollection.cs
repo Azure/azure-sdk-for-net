@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SyncAgentCollection : ArmCollection, IEnumerable<SyncAgentResource>, IAsyncEnumerable<SyncAgentResource>
     {
-        private readonly ClientDiagnostics _syncAgentClientDiagnostics;
-        private readonly SyncAgentsRestOperations _syncAgentRestClient;
+        private readonly ClientDiagnostics _syncAgentsClientDiagnostics;
+        private readonly SyncAgents _syncAgentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SyncAgentCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SyncAgentCollection for mocking. </summary>
         protected SyncAgentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SyncAgentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncAgentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SyncAgentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _syncAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SyncAgentResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SyncAgentResource.ResourceType, out string syncAgentApiVersion);
-            _syncAgentRestClient = new SyncAgentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, syncAgentApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _syncAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SyncAgentResource.ResourceType.Namespace, Diagnostics);
+            _syncAgentsRestClient = new SyncAgents(_syncAgentsClientDiagnostics, Pipeline, Endpoint, syncAgentApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SqlServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a sync agent.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncAgents_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SyncAgents_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SyncAgentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="data"> The requested sync agent resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SyncAgentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string syncAgentName, SyncAgentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _syncAgentsClientDiagnostics.CreateScope("SyncAgentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _syncAgentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SyncAgentResource>(new SyncAgentOperationSource(Client), _syncAgentClientDiagnostics, Pipeline, _syncAgentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _syncAgentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, syncAgentName, SyncAgentData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SqlArmOperation<SyncAgentResource> operation = new SqlArmOperation<SyncAgentResource>(
+                    new SyncAgentResourceOperationSource(Client),
+                    _syncAgentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.Sql
         /// Creates or updates a sync agent.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncAgents_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SyncAgents_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SyncAgentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.Sql
         /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="data"> The requested sync agent resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SyncAgentResource> CreateOrUpdate(WaitUntil waitUntil, string syncAgentName, SyncAgentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _syncAgentsClientDiagnostics.CreateScope("SyncAgentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _syncAgentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, data, cancellationToken);
-                var operation = new SqlArmOperation<SyncAgentResource>(new SyncAgentOperationSource(Client), _syncAgentClientDiagnostics, Pipeline, _syncAgentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _syncAgentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, syncAgentName, SyncAgentData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SqlArmOperation<SyncAgentResource> operation = new SqlArmOperation<SyncAgentResource>(
+                    new SyncAgentResourceOperationSource(Client),
+                    _syncAgentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.Sql
         /// Gets a sync agent.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncAgents_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SyncAgents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SyncAgentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SyncAgentResource>> GetAsync(string syncAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 
-            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.Get");
+            using DiagnosticScope scope = _syncAgentsClientDiagnostics.CreateScope("SyncAgentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _syncAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _syncAgentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, syncAgentName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SyncAgentData> response = Response.FromValue(SyncAgentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SyncAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.Sql
         /// Gets a sync agent.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncAgents_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SyncAgents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SyncAgentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SyncAgentResource> Get(string syncAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 
-            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.Get");
+            using DiagnosticScope scope = _syncAgentsClientDiagnostics.CreateScope("SyncAgentCollection.Get");
             scope.Start();
             try
             {
-                var response = _syncAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _syncAgentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, syncAgentName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SyncAgentData> response = Response.FromValue(SyncAgentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SyncAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.Sql
         /// Lists sync agents in a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncAgents_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> SyncAgents_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SyncAgentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SyncAgentResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SyncAgentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SyncAgentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _syncAgentRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncAgentRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SyncAgentResource(Client, SyncAgentData.DeserializeSyncAgentData(e)), _syncAgentClientDiagnostics, Pipeline, "SyncAgentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SyncAgentData, SyncAgentResource>(new SyncAgentsGetByServerAsyncCollectionResultOfT(
+                _syncAgentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SyncAgentCollection.GetAll"), data => new SyncAgentResource(Client, data));
         }
 
         /// <summary>
         /// Lists sync agents in a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncAgents_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> SyncAgents_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SyncAgentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SyncAgentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SyncAgentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _syncAgentRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncAgentRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SyncAgentResource(Client, SyncAgentData.DeserializeSyncAgentData(e)), _syncAgentClientDiagnostics, Pipeline, "SyncAgentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SyncAgentData, SyncAgentResource>(new SyncAgentsGetByServerCollectionResultOfT(
+                _syncAgentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SyncAgentCollection.GetAll"), data => new SyncAgentResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncAgents_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SyncAgents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SyncAgentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string syncAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 
-            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.Exists");
+            using DiagnosticScope scope = _syncAgentsClientDiagnostics.CreateScope("SyncAgentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _syncAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _syncAgentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, syncAgentName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SyncAgentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SyncAgentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SyncAgentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncAgents_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SyncAgents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SyncAgentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string syncAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 
-            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.Exists");
+            using DiagnosticScope scope = _syncAgentsClientDiagnostics.CreateScope("SyncAgentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _syncAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _syncAgentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, syncAgentName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SyncAgentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SyncAgentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SyncAgentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncAgents_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SyncAgents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SyncAgentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SyncAgentResource>> GetIfExistsAsync(string syncAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 
-            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetIfExists");
+            using DiagnosticScope scope = _syncAgentsClientDiagnostics.CreateScope("SyncAgentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _syncAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _syncAgentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, syncAgentName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SyncAgentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SyncAgentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SyncAgentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SyncAgentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SyncAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SyncAgents_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SyncAgents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SyncAgentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="syncAgentName"> The name of the sync agent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SyncAgentResource> GetIfExists(string syncAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 
-            using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetIfExists");
+            using DiagnosticScope scope = _syncAgentsClientDiagnostics.CreateScope("SyncAgentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _syncAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, syncAgentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _syncAgentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, syncAgentName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SyncAgentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SyncAgentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SyncAgentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SyncAgentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SyncAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SyncAgentResource> IAsyncEnumerable<SyncAgentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -20,46 +20,6 @@ namespace Azure.ResourceManager.NetApp
     /// <summary> NetApp Elastic Backup under an elastic Backup Vault. </summary>
     public partial class NetAppElasticBackupData : ResourceData, IJsonModel<NetAppElasticBackupData>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppElasticBackupData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNetAppElasticBackupData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetAppElasticBackupData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppElasticBackupData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetAppElasticBackupData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetAppElasticBackupData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppElasticBackupData IPersistableModel<NetAppElasticBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetAppElasticBackupData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetAppElasticBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
         /// <param name="netAppElasticBackupData"> The <see cref="NetAppElasticBackupData"/> to serialize into <see cref="RequestContent"/>. </param>
         internal static RequestContent ToRequestContent(NetAppElasticBackupData netAppElasticBackupData)
         {
@@ -79,15 +39,6 @@ namespace Azure.ResourceManager.NetApp
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetAppElasticBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetAppElasticBackupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,23 +52,21 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-        }
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppElasticBackupData IJsonModel<NetAppElasticBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetAppElasticBackupData)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppElasticBackupData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                throw new FormatException($"The model {nameof(NetAppElasticBackupData)} does not support reading '{format}' format.");
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetAppElasticBackupData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
@@ -132,8 +81,8 @@ namespace Azure.ResourceManager.NetApp
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ElasticBackupProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -187,8 +136,8 @@ namespace Azure.ResourceManager.NetApp
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
-                properties);
+                properties,
+                additionalBinaryDataProperties);
         }
     }
 }

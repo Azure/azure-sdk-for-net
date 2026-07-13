@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ComputeLimit
             return message;
         }
 
-        internal HttpMessage CreateEnableRequest(Guid subscriptionId, AzureLocation location, string featureName, RequestContext context)
+        internal HttpMessage CreateEnableRequest(Guid subscriptionId, AzureLocation location, string featureName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -126,7 +126,12 @@ namespace Azure.ResourceManager.ComputeLimit
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
             request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
 

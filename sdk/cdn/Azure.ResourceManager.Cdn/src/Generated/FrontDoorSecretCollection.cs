@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _secretsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, FrontDoorSecretData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<FrontDoorSecretResource> operation = new CdnArmOperation<FrontDoorSecretResource>(
-                    new FrontDoorSecretOperationSource(Client),
+                    new FrontDoorSecretResourceOperationSource(Client),
                     _secretsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _secretsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, FrontDoorSecretData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<FrontDoorSecretResource> operation = new CdnArmOperation<FrontDoorSecretResource>(
-                    new FrontDoorSecretOperationSource(Client),
+                    new FrontDoorSecretResourceOperationSource(Client),
                     _secretsClientDiagnostics,
                     Pipeline,
                     message.Request,

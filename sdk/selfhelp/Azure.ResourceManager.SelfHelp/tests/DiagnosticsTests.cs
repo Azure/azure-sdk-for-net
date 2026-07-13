@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             globalParameters.Add("startTime", "2020-07-01");
             DiagnosticResourceProperties diagnosticResourceProperties = new DiagnosticResourceProperties(globalParameters, insights, null, null, null, null);
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
-            var data = new SelfHelpDiagnosticData(scope, null, resourceType, null, null, diagnosticResourceProperties);
+            var data = new SelfHelpDiagnosticData(scope, null, resourceType, null, diagnosticResourceProperties, null);
 
             return data;
         }

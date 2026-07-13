@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "linkContentType",
+      "name": "LinkAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,12 +17,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
       "kind": "constant",
-      "name": "linkStringContentType",
+      "name": "LinkAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -33,12 +34,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
       "kind": "constant",
-      "name": "nestedLinkContentType",
+      "name": "LinkAccept2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -49,12 +51,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
       "kind": "constant",
-      "name": "postContentType",
+      "name": "LinkAccept3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -65,12 +68,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
       "kind": "constant",
-      "name": "postContentType1",
+      "name": "LinkAccept4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -81,12 +85,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
       "kind": "constant",
-      "name": "requestQueryResponseBodyContentType",
+      "name": "LinkAccept5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -97,12 +102,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
       "kind": "constant",
-      "name": "requestHeaderResponseBodyContentType",
+      "name": "LinkAccept6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -113,12 +119,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
       "kind": "constant",
-      "name": "requestQueryResponseHeaderContentType",
+      "name": "LinkAccept7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -129,12 +136,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
       "kind": "constant",
-      "name": "requestHeaderResponseHeaderContentType",
+      "name": "LinkAccept8",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -145,12 +153,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "19",
       "kind": "constant",
-      "name": "requestQueryNestedResponseBodyContentType",
+      "name": "LinkAccept9",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -161,12 +170,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "21",
       "kind": "constant",
-      "name": "requestHeaderNestedResponseBodyContentType",
+      "name": "LinkAccept10",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -177,12 +187,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "23",
       "kind": "constant",
-      "name": "listWithoutContinuationContentType",
+      "name": "LinkAccept11",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -193,12 +204,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "25",
       "kind": "constant",
-      "name": "listWithPageSizeContentType",
+      "name": "LinkAccept12",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -209,12 +221,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "27",
       "kind": "constant",
-      "name": "listWithContinuationContentType",
+      "name": "ListWithContinuationResponseContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -225,12 +238,13 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "29",
       "kind": "constant",
-      "name": "ListWithContinuationResponseContentType",
+      "name": "ListWithContinuationResponseContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -241,12 +255,13 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "31",
       "kind": "constant",
-      "name": "listWithNextLinkContentType",
+      "name": "ListWithContinuationResponseContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -257,12 +272,13 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "33",
       "kind": "constant",
-      "name": "ListWithContinuationResponseContentType1",
+      "name": "ListWithContinuationResponseContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -273,7 +289,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -290,6 +307,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "36",
@@ -313,6 +331,7 @@
                   "name": "Pet"
                 }
               },
+              "isExactName": false,
               "properties": [
                 {
                   "$id": "39",
@@ -337,7 +356,8 @@
                       "name": "id"
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 },
                 {
                   "$id": "41",
@@ -362,7 +382,8 @@
                       "name": "name"
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 }
               ]
             },
@@ -380,7 +401,8 @@
               "name": "pets"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "43",
@@ -405,7 +427,8 @@
               "name": "next"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -425,6 +448,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "46",
@@ -445,7 +469,8 @@
               "name": "pets"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "47",
@@ -470,7 +495,8 @@
               "name": "next"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -487,6 +513,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "50",
@@ -506,6 +533,7 @@
                 "name": ""
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "52",
@@ -526,7 +554,8 @@
                     "name": "pets"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -541,7 +570,8 @@
               "name": "nestedItems"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "53",
@@ -561,6 +591,7 @@
                 "name": ""
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "55",
@@ -585,7 +616,8 @@
                     "name": "next"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -600,7 +632,8 @@
               "name": "nestedNext"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -623,6 +656,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "58",
@@ -643,7 +677,8 @@
               "name": "pets"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -660,6 +695,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "60",
@@ -680,7 +716,8 @@
               "name": "pets"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -707,6 +744,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "62",
@@ -740,6 +778,7 @@
                   "unwrapped": false
                 }
               },
+              "isExactName": false,
               "properties": [
                 {
                   "$id": "65",
@@ -773,7 +812,8 @@
                       "unwrapped": false
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 },
                 {
                   "$id": "67",
@@ -807,7 +847,8 @@
                       "unwrapped": false
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 }
               ]
             },
@@ -835,7 +876,8 @@
               "itemsName": "Pet"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "69",
@@ -869,7 +911,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -899,6 +942,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "72",
@@ -929,7 +973,8 @@
               "itemsName": "Pet"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "73",
@@ -963,7 +1008,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -980,6 +1026,7 @@
           "name": "Filter"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "76",
@@ -1004,7 +1051,8 @@
               "name": "filter"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1021,6 +1069,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "79",
@@ -1041,7 +1090,8 @@
               "name": "pets"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "80",
@@ -1066,7 +1116,8 @@
               "name": "next"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1083,6 +1134,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "83",
@@ -1103,7 +1155,8 @@
               "name": "pets"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "84",
@@ -1128,7 +1181,8 @@
               "name": "nextToken"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1145,6 +1199,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "87",
@@ -1165,7 +1220,8 @@
               "name": "pets"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "88",
@@ -1190,7 +1246,8 @@
               "name": "nextToken"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1207,6 +1264,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "91",
@@ -1227,7 +1285,8 @@
               "name": "pets"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1244,6 +1303,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "93",
@@ -1264,7 +1324,8 @@
               "name": "pets"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1281,6 +1342,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "95",
@@ -1300,6 +1362,7 @@
                 "name": ""
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "97",
@@ -1320,7 +1383,8 @@
                     "name": "pets"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -1335,7 +1399,8 @@
               "name": "nestedItems"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "98",
@@ -1355,6 +1420,7 @@
                 "name": ""
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "100",
@@ -1379,7 +1445,8 @@
                     "name": "nextToken"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -1394,7 +1461,8 @@
               "name": "nestedNext"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1417,6 +1485,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "103",
@@ -1436,6 +1505,7 @@
                 "name": ""
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "105",
@@ -1456,7 +1526,8 @@
                     "name": "pets"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -1471,7 +1542,8 @@
               "name": "nestedItems"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "106",
@@ -1491,6 +1563,7 @@
                 "name": ""
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "108",
@@ -1515,7 +1588,8 @@
                     "name": "nextToken"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -1530,7 +1604,8 @@
               "name": "nestedNext"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1546,6 +1621,7 @@
       "$id": "110",
       "kind": "client",
       "name": "PageableClient",
+      "isExactName": false,
       "namespace": "Payload.Pageable",
       "doc": "Test for pageable payload.",
       "methods": [],
@@ -1578,7 +1654,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Payload.Pageable.endpoint"
+          "crossLanguageDefinitionId": "Payload.Pageable.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -1590,17 +1667,20 @@
           "$id": "114",
           "kind": "client",
           "name": "ServerDrivenPagination",
+          "isExactName": false,
           "namespace": "Payload.Pageable.ServerDrivenPagination",
           "methods": [
             {
               "$id": "115",
               "kind": "paging",
               "name": "link",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "116",
                 "name": "link",
+                "isExactName": false,
                 "resourceName": "ServerDrivenPagination",
                 "accessibility": "public",
                 "parameters": [
@@ -1635,9 +1715,11 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.link.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -1652,7 +1734,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -1699,11 +1786,13 @@
               "$id": "119",
               "kind": "paging",
               "name": "linkString",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "120",
                 "name": "linkString",
+                "isExactName": false,
                 "resourceName": "ServerDrivenPagination",
                 "accessibility": "public",
                 "parameters": [
@@ -1738,9 +1827,11 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.linkString.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -1755,7 +1846,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -1802,11 +1898,13 @@
               "$id": "123",
               "kind": "paging",
               "name": "nestedLink",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "124",
                 "name": "nestedLink",
+                "isExactName": false,
                 "resourceName": "ServerDrivenPagination",
                 "accessibility": "public",
                 "parameters": [
@@ -1841,9 +1939,11 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.nestedLink.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -1858,7 +1958,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -1934,7 +2039,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.endpoint"
+              "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -1949,6 +2055,7 @@
               "$id": "130",
               "kind": "client",
               "name": "AlternateInitialVerb",
+              "isExactName": false,
               "namespace": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb",
               "doc": "Scenario where the initial request is not a GET request. However following the next link always result in a GET request.",
               "methods": [
@@ -1956,11 +2063,13 @@
                   "$id": "131",
                   "kind": "paging",
                   "name": "post",
+                  "isExactName": false,
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
                     "$id": "132",
                     "name": "post",
+                    "isExactName": false,
                     "resourceName": "AlternateInitialVerb",
                     "accessibility": "public",
                     "parameters": [
@@ -1997,9 +2106,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.post.contentType",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "135",
@@ -2032,9 +2143,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.post.accept",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "137",
@@ -2070,9 +2183,16 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.post.body",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false,
+                        "serializationOptions": {
+                          "json": {
+                            "name": "body"
+                          }
+                        }
                       }
                     ],
                     "responses": [
@@ -2087,7 +2207,12 @@
                         "isErrorResponse": false,
                         "contentTypes": [
                           "application/json"
-                        ]
+                        ],
+                        "serializationOptions": {
+                          "json": {
+                            "name": ""
+                          }
+                        }
                       }
                     ],
                     "httpMethod": "POST",
@@ -2169,7 +2294,8 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.endpoint"
+                  "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.AlternateInitialVerb.endpoint",
+                  "isExactName": false
                 }
               ],
               "initializedBy": 0,
@@ -2185,17 +2311,20 @@
               "$id": "142",
               "kind": "client",
               "name": "ContinuationToken",
+              "isExactName": false,
               "namespace": "Payload.Pageable.ServerDrivenPagination.ContinuationToken",
               "methods": [
                 {
                   "$id": "143",
                   "kind": "paging",
                   "name": "requestQueryResponseBody",
+                  "isExactName": false,
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
                     "$id": "144",
                     "name": "requestQueryResponseBody",
+                    "isExactName": false,
                     "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
@@ -2238,9 +2367,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseBody.token",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "149",
@@ -2281,9 +2412,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseBody.foo",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "153",
@@ -2324,9 +2457,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseBody.bar",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "157",
@@ -2359,9 +2494,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseBody.accept",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       }
                     ],
                     "responses": [
@@ -2376,7 +2513,12 @@
                         "isErrorResponse": false,
                         "contentTypes": [
                           "application/json"
-                        ]
+                        ],
+                        "serializationOptions": {
+                          "json": {
+                            "name": ""
+                          }
+                        }
                       }
                     ],
                     "httpMethod": "GET",
@@ -2435,11 +2577,13 @@
                   "$id": "159",
                   "kind": "paging",
                   "name": "requestHeaderResponseBody",
+                  "isExactName": false,
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
                     "$id": "160",
                     "name": "requestHeaderResponseBody",
+                    "isExactName": false,
                     "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
@@ -2482,9 +2626,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseBody.token",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "165",
@@ -2525,9 +2671,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseBody.foo",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "169",
@@ -2568,9 +2716,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseBody.bar",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "173",
@@ -2603,9 +2753,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseBody.accept",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       }
                     ],
                     "responses": [
@@ -2620,7 +2772,12 @@
                         "isErrorResponse": false,
                         "contentTypes": [
                           "application/json"
-                        ]
+                        ],
+                        "serializationOptions": {
+                          "json": {
+                            "name": ""
+                          }
+                        }
                       }
                     ],
                     "httpMethod": "GET",
@@ -2679,11 +2836,13 @@
                   "$id": "175",
                   "kind": "paging",
                   "name": "requestQueryResponseHeader",
+                  "isExactName": false,
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
                     "$id": "176",
                     "name": "requestQueryResponseHeader",
+                    "isExactName": false,
                     "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
@@ -2726,9 +2885,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseHeader.token",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "181",
@@ -2769,9 +2930,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseHeader.foo",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "185",
@@ -2812,9 +2975,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseHeader.bar",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "189",
@@ -2847,9 +3012,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryResponseHeader.accept",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       }
                     ],
                     "responses": [
@@ -2876,7 +3043,12 @@
                         "isErrorResponse": false,
                         "contentTypes": [
                           "application/json"
-                        ]
+                        ],
+                        "serializationOptions": {
+                          "json": {
+                            "name": ""
+                          }
+                        }
                       }
                     ],
                     "httpMethod": "GET",
@@ -2935,11 +3107,13 @@
                   "$id": "192",
                   "kind": "paging",
                   "name": "requestHeaderResponseHeader",
+                  "isExactName": false,
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
                     "$id": "193",
                     "name": "requestHeaderResponseHeader",
+                    "isExactName": false,
                     "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
@@ -2982,9 +3156,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseHeader.token",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "198",
@@ -3025,9 +3201,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseHeader.foo",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "202",
@@ -3068,9 +3246,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseHeader.bar",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "206",
@@ -3103,9 +3283,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderResponseHeader.accept",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       }
                     ],
                     "responses": [
@@ -3132,7 +3314,12 @@
                         "isErrorResponse": false,
                         "contentTypes": [
                           "application/json"
-                        ]
+                        ],
+                        "serializationOptions": {
+                          "json": {
+                            "name": ""
+                          }
+                        }
                       }
                     ],
                     "httpMethod": "GET",
@@ -3191,11 +3378,13 @@
                   "$id": "209",
                   "kind": "paging",
                   "name": "requestQueryNestedResponseBody",
+                  "isExactName": false,
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
                     "$id": "210",
                     "name": "requestQueryNestedResponseBody",
+                    "isExactName": false,
                     "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
@@ -3238,9 +3427,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryNestedResponseBody.token",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "215",
@@ -3281,9 +3472,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryNestedResponseBody.foo",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "219",
@@ -3324,9 +3517,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryNestedResponseBody.bar",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "223",
@@ -3359,9 +3554,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestQueryNestedResponseBody.accept",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       }
                     ],
                     "responses": [
@@ -3376,7 +3573,12 @@
                         "isErrorResponse": false,
                         "contentTypes": [
                           "application/json"
-                        ]
+                        ],
+                        "serializationOptions": {
+                          "json": {
+                            "name": ""
+                          }
+                        }
                       }
                     ],
                     "httpMethod": "GET",
@@ -3438,11 +3640,13 @@
                   "$id": "225",
                   "kind": "paging",
                   "name": "requestHeaderNestedResponseBody",
+                  "isExactName": false,
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
                     "$id": "226",
                     "name": "requestHeaderNestedResponseBody",
+                    "isExactName": false,
                     "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
@@ -3485,9 +3689,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderNestedResponseBody.token",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "231",
@@ -3528,9 +3734,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderNestedResponseBody.foo",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "235",
@@ -3571,9 +3779,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderNestedResponseBody.bar",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "239",
@@ -3606,9 +3816,11 @@
                             "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.requestHeaderNestedResponseBody.accept",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       }
                     ],
                     "responses": [
@@ -3623,7 +3835,12 @@
                         "isErrorResponse": false,
                         "contentTypes": [
                           "application/json"
-                        ]
+                        ],
+                        "serializationOptions": {
+                          "json": {
+                            "name": ""
+                          }
+                        }
                       }
                     ],
                     "httpMethod": "GET",
@@ -3711,7 +3928,8 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.endpoint"
+                  "crossLanguageDefinitionId": "Payload.Pageable.ServerDrivenPagination.ContinuationToken.endpoint",
+                  "isExactName": false
                 }
               ],
               "initializedBy": 0,
@@ -3730,17 +3948,20 @@
           "$id": "244",
           "kind": "client",
           "name": "PageSize",
+          "isExactName": false,
           "namespace": "Payload.Pageable.PageSize",
           "methods": [
             {
               "$id": "245",
               "kind": "paging",
               "name": "listWithoutContinuation",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "246",
                 "name": "listWithoutContinuation",
+                "isExactName": false,
                 "resourceName": "PageSize",
                 "accessibility": "public",
                 "parameters": [
@@ -3775,9 +3996,11 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.PageSize.listWithoutContinuation.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3792,7 +4015,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -3833,11 +4061,13 @@
               "$id": "249",
               "kind": "paging",
               "name": "listWithPageSize",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "250",
                 "name": "listWithPageSize",
+                "isExactName": false,
                 "resourceName": "PageSize",
                 "accessibility": "public",
                 "parameters": [
@@ -3880,9 +4110,11 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.PageSize.listWithPageSize.pageSize",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "255",
@@ -3915,9 +4147,11 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.PageSize.listWithPageSize.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3932,7 +4166,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -4004,7 +4243,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Pageable.PageSize.endpoint"
+              "crossLanguageDefinitionId": "Payload.Pageable.PageSize.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -4020,17 +4260,20 @@
           "$id": "260",
           "kind": "client",
           "name": "XmlPagination",
+          "isExactName": false,
           "namespace": "Payload.Pageable.XmlPagination",
           "methods": [
             {
               "$id": "261",
               "kind": "paging",
               "name": "listWithContinuation",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "262",
                 "name": "listWithContinuation",
+                "isExactName": false,
                 "resourceName": "XmlPagination",
                 "accessibility": "public",
                 "parameters": [
@@ -4073,9 +4316,11 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.XmlPagination.listWithContinuation.marker",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "267",
@@ -4108,9 +4353,11 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.XmlPagination.listWithContinuation.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -4133,7 +4380,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -4186,11 +4438,13 @@
               "$id": "269",
               "kind": "paging",
               "name": "listWithNextLink",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "270",
                 "name": "listWithNextLink",
+                "isExactName": false,
                 "resourceName": "XmlPagination",
                 "accessibility": "public",
                 "parameters": [
@@ -4225,9 +4479,11 @@
                         "crossLanguageDefinitionId": "Payload.Pageable.XmlPagination.listWithNextLink.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -4250,7 +4506,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -4323,7 +4584,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Pageable.XmlPagination.endpoint"
+              "crossLanguageDefinitionId": "Payload.Pageable.XmlPagination.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

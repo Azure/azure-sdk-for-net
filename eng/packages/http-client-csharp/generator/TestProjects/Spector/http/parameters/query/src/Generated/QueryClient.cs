@@ -25,5 +25,7 @@ namespace Parameters.Query
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Constant GetConstantClient() => throw null;
+
+        public virtual SpecialChar GetSpecialCharClient() => throw null;
     }
 }

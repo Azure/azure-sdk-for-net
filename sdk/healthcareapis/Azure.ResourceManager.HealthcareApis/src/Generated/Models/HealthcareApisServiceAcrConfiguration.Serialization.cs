@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.HealthcareApis;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisServiceAcrConfiguration : IUtf8JsonSerializable, IJsonModel<HealthcareApisServiceAcrConfiguration>
+    /// <summary> Azure container registry configuration information. </summary>
+    public partial class HealthcareApisServiceAcrConfiguration : IJsonModel<HealthcareApisServiceAcrConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisServiceAcrConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HealthcareApisServiceAcrConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceAcrConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHealthcareApisServiceAcrConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HealthcareApisServiceAcrConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceAcrConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthcareApisContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HealthcareApisServiceAcrConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HealthcareApisServiceAcrConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthcareApisServiceAcrConfiguration IPersistableModel<HealthcareApisServiceAcrConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HealthcareApisServiceAcrConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthcareApisServiceAcrConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,18 +69,22 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceAcrConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceAcrConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HealthcareApisServiceAcrConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(LoginServers))
             {
                 writer.WritePropertyName("loginServers"u8);
                 writer.WriteStartArray();
-                foreach (var item in LoginServers)
+                foreach (string item in LoginServers)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -48,21 +93,21 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 writer.WritePropertyName("ociArtifacts"u8);
                 writer.WriteStartArray();
-                foreach (var item in OciArtifacts)
+                foreach (HealthcareApisServiceOciArtifactEntry item in OciArtifacts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,54 +116,65 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
         }
 
-        HealthcareApisServiceAcrConfiguration IJsonModel<HealthcareApisServiceAcrConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthcareApisServiceAcrConfiguration IJsonModel<HealthcareApisServiceAcrConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HealthcareApisServiceAcrConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceAcrConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceAcrConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HealthcareApisServiceAcrConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHealthcareApisServiceAcrConfiguration(document.RootElement, options);
         }
 
-        internal static HealthcareApisServiceAcrConfiguration DeserializeHealthcareApisServiceAcrConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HealthcareApisServiceAcrConfiguration DeserializeHealthcareApisServiceAcrConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<string> loginServers = default;
             IList<HealthcareApisServiceOciArtifactEntry> ociArtifacts = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("loginServers"u8))
+                if (prop.NameEquals("loginServers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     loginServers = array;
                     continue;
                 }
-                if (property.NameEquals("ociArtifacts"u8))
+                if (prop.NameEquals("ociArtifacts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<HealthcareApisServiceOciArtifactEntry> array = new List<HealthcareApisServiceOciArtifactEntry>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(HealthcareApisServiceOciArtifactEntry.DeserializeHealthcareApisServiceOciArtifactEntry(item, options));
                     }
@@ -127,42 +183,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new HealthcareApisServiceAcrConfiguration(loginServers ?? new ChangeTrackingList<string>(), ociArtifacts ?? new ChangeTrackingList<HealthcareApisServiceOciArtifactEntry>(), serializedAdditionalRawData);
+            return new HealthcareApisServiceAcrConfiguration(loginServers ?? new ChangeTrackingList<string>(), ociArtifacts ?? new ChangeTrackingList<HealthcareApisServiceOciArtifactEntry>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<HealthcareApisServiceAcrConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceAcrConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthcareApisContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HealthcareApisServiceAcrConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HealthcareApisServiceAcrConfiguration IPersistableModel<HealthcareApisServiceAcrConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceAcrConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHealthcareApisServiceAcrConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HealthcareApisServiceAcrConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HealthcareApisServiceAcrConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

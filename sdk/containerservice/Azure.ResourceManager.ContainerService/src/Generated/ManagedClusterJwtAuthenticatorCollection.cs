@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ManagedClusterJwtAuthenticatorResource.ResourceType, out string managedClusterJwtAuthenticatorApiVersion);
             _jwtAuthenticatorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ManagedClusterJwtAuthenticatorResource.ResourceType.Namespace, Diagnostics);
-            _jwtAuthenticatorsRestClient = new JWTAuthenticators(_jwtAuthenticatorsClientDiagnostics, Pipeline, Endpoint, managedClusterJwtAuthenticatorApiVersion ?? "2026-01-02-preview");
+            _jwtAuthenticatorsRestClient = new JWTAuthenticators(_jwtAuthenticatorsClientDiagnostics, Pipeline, Endpoint, managedClusterJwtAuthenticatorApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-04-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _jwtAuthenticatorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jwtAuthenticatorName, ManagedClusterJwtAuthenticatorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation<ManagedClusterJwtAuthenticatorResource> operation = new ContainerServiceArmOperation<ManagedClusterJwtAuthenticatorResource>(
-                    new ManagedClusterJwtAuthenticatorOperationSource(Client),
+                    new ManagedClusterJwtAuthenticatorResourceOperationSource(Client),
                     _jwtAuthenticatorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-04-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _jwtAuthenticatorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jwtAuthenticatorName, ManagedClusterJwtAuthenticatorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation<ManagedClusterJwtAuthenticatorResource> operation = new ContainerServiceArmOperation<ManagedClusterJwtAuthenticatorResource>(
-                    new ManagedClusterJwtAuthenticatorOperationSource(Client),
+                    new ManagedClusterJwtAuthenticatorResourceOperationSource(Client),
                     _jwtAuthenticatorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-04-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-04-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-04-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-04-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-04-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-04-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-04-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-04-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

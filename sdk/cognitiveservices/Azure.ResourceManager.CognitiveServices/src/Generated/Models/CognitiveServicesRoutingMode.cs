@@ -11,16 +11,16 @@ using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> The routing mode that determines how requests are distributed across models. </summary>
+    /// <summary> The model-router routing mode that determines how requests are distributed across models. </summary>
     public readonly partial struct CognitiveServicesRoutingMode : IEquatable<CognitiveServicesRoutingMode>
     {
         private readonly string _value;
         /// <summary> Route requests to minimize cost while meeting performance requirements. </summary>
         private const string CostValue = "cost";
-        /// <summary> Balance cost and accuracy when routing requests across models. </summary>
+        /// <summary> Balance cost and quality when routing requests across models. </summary>
         private const string BalancedValue = "balanced";
-        /// <summary> Route requests to maximize accuracy regardless of cost. </summary>
-        private const string AccuracyValue = "accuracy";
+        /// <summary> Route requests to maximize quality regardless of cost. </summary>
+        private const string QualityValue = "quality";
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesRoutingMode"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Route requests to minimize cost while meeting performance requirements. </summary>
         public static CognitiveServicesRoutingMode Cost { get; } = new CognitiveServicesRoutingMode(CostValue);
 
-        /// <summary> Balance cost and accuracy when routing requests across models. </summary>
+        /// <summary> Balance cost and quality when routing requests across models. </summary>
         public static CognitiveServicesRoutingMode Balanced { get; } = new CognitiveServicesRoutingMode(BalancedValue);
 
-        /// <summary> Route requests to maximize accuracy regardless of cost. </summary>
-        public static CognitiveServicesRoutingMode Accuracy { get; } = new CognitiveServicesRoutingMode(AccuracyValue);
+        /// <summary> Route requests to maximize quality regardless of cost. </summary>
+        public static CognitiveServicesRoutingMode Quality { get; } = new CognitiveServicesRoutingMode(QualityValue);
 
         /// <summary> Determines if two <see cref="CognitiveServicesRoutingMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

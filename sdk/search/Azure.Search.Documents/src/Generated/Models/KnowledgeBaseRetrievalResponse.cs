@@ -29,12 +29,14 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="response"> The response messages. </param>
         /// <param name="activity"> The activity records for tracking progress and billing implications. </param>
         /// <param name="references"> The references for the retrieval data used in the response. </param>
+        /// <param name="responseSensitivityLabelInfo"> The sensitivity label information for the overall response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseRetrievalResponse(IList<KnowledgeBaseMessage> response, IList<KnowledgeBaseActivityRecord> activity, IList<KnowledgeBaseReference> references, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseRetrievalResponse(IList<KnowledgeBaseMessage> response, IList<KnowledgeBaseActivityRecord> activity, IList<KnowledgeBaseReference> references, PurviewSensitivityLabelInfo responseSensitivityLabelInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Response = response;
             Activity = activity;
             References = references;
+            ResponseSensitivityLabelInfo = responseSensitivityLabelInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,5 +48,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> The references for the retrieval data used in the response. </summary>
         public IList<KnowledgeBaseReference> References { get; }
+
+        /// <summary> The sensitivity label information for the overall response. </summary>
+        public PurviewSensitivityLabelInfo ResponseSensitivityLabelInfo { get; }
     }
 }

@@ -7,24 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The workflow state.
-    /// Serialized Name: WorkflowState
-    /// </summary>
+    /// <summary> The workflow state. </summary>
     public readonly partial struct WorkflowState : IEquatable<WorkflowState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WorkflowState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WorkflowState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string CompletedValue = "Completed";
         private const string EnabledValue = "Enabled";
@@ -32,53 +22,64 @@ namespace Azure.ResourceManager.AppService.Models
         private const string DeletedValue = "Deleted";
         private const string SuspendedValue = "Suspended";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: WorkflowState.NotSpecified
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WorkflowState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static WorkflowState NotSpecified { get; } = new WorkflowState(NotSpecifiedValue);
-        /// <summary>
-        /// Completed
-        /// Serialized Name: WorkflowState.Completed
-        /// </summary>
+
+        /// <summary> Gets the Completed. </summary>
         public static WorkflowState Completed { get; } = new WorkflowState(CompletedValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: WorkflowState.Enabled
-        /// </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static WorkflowState Enabled { get; } = new WorkflowState(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: WorkflowState.Disabled
-        /// </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static WorkflowState Disabled { get; } = new WorkflowState(DisabledValue);
-        /// <summary>
-        /// Deleted
-        /// Serialized Name: WorkflowState.Deleted
-        /// </summary>
+
+        /// <summary> Gets the Deleted. </summary>
         public static WorkflowState Deleted { get; } = new WorkflowState(DeletedValue);
-        /// <summary>
-        /// Suspended
-        /// Serialized Name: WorkflowState.Suspended
-        /// </summary>
+
+        /// <summary> Gets the Suspended. </summary>
         public static WorkflowState Suspended { get; } = new WorkflowState(SuspendedValue);
+
         /// <summary> Determines if two <see cref="WorkflowState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkflowState left, WorkflowState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkflowState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkflowState left, WorkflowState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkflowState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkflowState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkflowState(string value) => new WorkflowState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkflowState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkflowState?(string value) => value == null ? null : new WorkflowState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkflowState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkflowState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

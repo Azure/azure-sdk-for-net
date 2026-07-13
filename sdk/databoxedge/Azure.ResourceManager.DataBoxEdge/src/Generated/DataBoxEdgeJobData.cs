@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the job. </param>
         /// <param name="status"> The current status of the job. </param>
         /// <param name="startOn"> The UTC date and time at which the job started. </param>
         /// <param name="endOn"> The UTC date and time at which the job completed. </param>
         /// <param name="percentComplete"> The percentage of the job that is complete. </param>
         /// <param name="error"> The error details. </param>
-        internal DataBoxEdgeJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, JobProperties properties, DataBoxEdgeJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, int? percentComplete, DataBoxEdgeJobErrorDetails error) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobProperties properties, DataBoxEdgeJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, int? percentComplete, DataBoxEdgeJobErrorDetails error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Status = status;
             StartOn = startOn;
             EndOn = endOn;
             PercentComplete = percentComplete;
             Error = error;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the job. </summary>

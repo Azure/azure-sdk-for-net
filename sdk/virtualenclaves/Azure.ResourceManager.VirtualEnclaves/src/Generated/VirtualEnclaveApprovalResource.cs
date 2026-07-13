@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
                 HttpMessage message = _approvalRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, VirtualEnclaveApprovalPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource>(
-                    new VirtualEnclaveApprovalOperationSource(Client),
+                    new VirtualEnclaveApprovalResourceOperationSource(Client),
                     _approvalClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
                 HttpMessage message = _approvalRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, VirtualEnclaveApprovalPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource>(
-                    new VirtualEnclaveApprovalOperationSource(Client),
+                    new VirtualEnclaveApprovalResourceOperationSource(Client),
                     _approvalClientDiagnostics,
                     Pipeline,
                     message.Request,

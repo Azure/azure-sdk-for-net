@@ -6,50 +6,38 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing an AuthorizationContract along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AuthorizationContractResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAuthorizationContractResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AuthorizationProviderContractResource"/> using the GetAuthorizationContract method.
+    /// A class representing a AuthorizationContract along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AuthorizationContractResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AuthorizationProviderContractResource"/> using the GetAuthorizationContracts method.
     /// </summary>
     public partial class AuthorizationContractResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AuthorizationContractResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="serviceName"> The serviceName. </param>
-        /// <param name="authorizationProviderId"> The authorizationProviderId. </param>
-        /// <param name="authorizationId"> The authorizationId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _authorizationContractAuthorizationClientDiagnostics;
-        private readonly AuthorizationRestOperations _authorizationContractAuthorizationRestClient;
+        private readonly ClientDiagnostics _authorizationClientDiagnostics;
+        private readonly Authorization _authorizationRestClient;
         private readonly ClientDiagnostics _authorizationLoginLinksClientDiagnostics;
-        private readonly AuthorizationLoginLinksRestOperations _authorizationLoginLinksRestClient;
+        private readonly AuthorizationLoginLinks _authorizationLoginLinksRestClient;
         private readonly AuthorizationContractData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/authorizationProviders/authorizations";
 
-        /// <summary> Initializes a new instance of the <see cref="AuthorizationContractResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AuthorizationContractResource for mocking. </summary>
         protected AuthorizationContractResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AuthorizationContractResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationContractResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AuthorizationContractResource(ArmClient client, AuthorizationContractData data) : this(client, data.Id)
@@ -58,142 +46,96 @@ namespace Azure.ResourceManager.ApiManagement
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AuthorizationContractResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationContractResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AuthorizationContractResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _authorizationContractAuthorizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string authorizationContractAuthorizationApiVersion);
-            _authorizationContractAuthorizationRestClient = new AuthorizationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, authorizationContractAuthorizationApiVersion);
-            _authorizationLoginLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _authorizationLoginLinksRestClient = new AuthorizationLoginLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string authorizationContractApiVersion);
+            _authorizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _authorizationRestClient = new Authorization(_authorizationClientDiagnostics, Pipeline, Endpoint, authorizationContractApiVersion ?? "2025-09-01-preview");
+            _authorizationLoginLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _authorizationLoginLinksRestClient = new AuthorizationLoginLinks(_authorizationLoginLinksClientDiagnostics, Pipeline, Endpoint, authorizationContractApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AuthorizationContractData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="authorizationProviderId"> The authorizationProviderId. </param>
+        /// <param name="authorizationId"> The authorizationId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string authorizationProviderId, string authorizationId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of AuthorizationAccessPolicyContractResources in the AuthorizationContract. </summary>
-        /// <returns> An object representing collection of AuthorizationAccessPolicyContractResources and their operations over a AuthorizationAccessPolicyContractResource. </returns>
-        public virtual AuthorizationAccessPolicyContractCollection GetAuthorizationAccessPolicyContracts()
-        {
-            return GetCachedClient(client => new AuthorizationAccessPolicyContractCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the authorization access policy specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}/accessPolicies/{authorizationAccessPolicyId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizationAccessPolicy_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AuthorizationAccessPolicyContractResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="authorizationAccessPolicyId"> Identifier of the authorization access policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationAccessPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationAccessPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AuthorizationAccessPolicyContractResource>> GetAuthorizationAccessPolicyContractAsync(string authorizationAccessPolicyId, CancellationToken cancellationToken = default)
-        {
-            return await GetAuthorizationAccessPolicyContracts().GetAsync(authorizationAccessPolicyId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the details of the authorization access policy specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}/accessPolicies/{authorizationAccessPolicyId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizationAccessPolicy_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AuthorizationAccessPolicyContractResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="authorizationAccessPolicyId"> Identifier of the authorization access policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationAccessPolicyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationAccessPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AuthorizationAccessPolicyContractResource> GetAuthorizationAccessPolicyContract(string authorizationAccessPolicyId, CancellationToken cancellationToken = default)
-        {
-            return GetAuthorizationAccessPolicyContracts().Get(authorizationAccessPolicyId, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the details of the authorization specified by its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Authorization_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AuthorizationContractResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AuthorizationContractResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AuthorizationContractResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _authorizationContractAuthorizationClientDiagnostics.CreateScope("AuthorizationContractResource.Get");
+            using DiagnosticScope scope = _authorizationClientDiagnostics.CreateScope("AuthorizationContractResource.Get");
             scope.Start();
             try
             {
-                var response = await _authorizationContractAuthorizationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AuthorizationContractData> response = Response.FromValue(AuthorizationContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AuthorizationContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -207,33 +149,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the details of the authorization specified by its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Authorization_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AuthorizationContractResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AuthorizationContractResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AuthorizationContractResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _authorizationContractAuthorizationClientDiagnostics.CreateScope("AuthorizationContractResource.Get");
+            using DiagnosticScope scope = _authorizationClientDiagnostics.CreateScope("AuthorizationContractResource.Get");
             scope.Start();
             try
             {
-                var response = _authorizationContractAuthorizationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AuthorizationContractData> response = Response.FromValue(AuthorizationContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AuthorizationContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,38 +197,49 @@ namespace Azure.ResourceManager.ApiManagement
         /// Deletes specific Authorization from the Authorization provider.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Authorization_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationContracts_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AuthorizationContractResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AuthorizationContractResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _authorizationContractAuthorizationClientDiagnostics.CreateScope("AuthorizationContractResource.Delete");
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+
+            using DiagnosticScope scope = _authorizationClientDiagnostics.CreateScope("AuthorizationContractResource.Delete");
             scope.Start();
             try
             {
-                var response = await _authorizationContractAuthorizationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _authorizationContractAuthorizationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -292,136 +253,49 @@ namespace Azure.ResourceManager.ApiManagement
         /// Deletes specific Authorization from the Authorization provider.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Authorization_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationContracts_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AuthorizationContractResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AuthorizationContractResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _authorizationContractAuthorizationClientDiagnostics.CreateScope("AuthorizationContractResource.Delete");
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+
+            using DiagnosticScope scope = _authorizationClientDiagnostics.CreateScope("AuthorizationContractResource.Delete");
             scope.Start();
             try
             {
-                var response = _authorizationContractAuthorizationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
-                var uri = _authorizationContractAuthorizationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates or updates authorization.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Authorization_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AuthorizationContractResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Create parameters. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AuthorizationContractResource>> UpdateAsync(WaitUntil waitUntil, AuthorizationContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _authorizationContractAuthorizationClientDiagnostics.CreateScope("AuthorizationContractResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _authorizationContractAuthorizationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _authorizationContractAuthorizationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<AuthorizationContractResource>(Response.FromValue(new AuthorizationContractResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates or updates authorization.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Authorization_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AuthorizationContractResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Create parameters. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AuthorizationContractResource> Update(WaitUntil waitUntil, AuthorizationContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _authorizationContractAuthorizationClientDiagnostics.CreateScope("AuthorizationContractResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _authorizationContractAuthorizationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var uri = _authorizationContractAuthorizationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<AuthorizationContractResource>(Response.FromValue(new AuthorizationContractResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -435,20 +309,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Confirm valid consent code to suppress Authorizations anti-phishing page.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}/confirmConsentCode</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}/confirmConsentCode. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Authorization_ConfirmConsentCode</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationContracts_ConfirmConsentCode. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AuthorizationContractResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AuthorizationContractResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,11 +333,16 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _authorizationContractAuthorizationClientDiagnostics.CreateScope("AuthorizationContractResource.ConfirmConsentCode");
+            using DiagnosticScope scope = _authorizationClientDiagnostics.CreateScope("AuthorizationContractResource.ConfirmConsentCode");
             scope.Start();
             try
             {
-                var response = await _authorizationContractAuthorizationRestClient.ConfirmConsentCodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationRestClient.CreateConfirmConsentCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AuthorizationConfirmConsentCodeContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -477,20 +356,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Confirm valid consent code to suppress Authorizations anti-phishing page.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}/confirmConsentCode</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}/confirmConsentCode. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Authorization_ConfirmConsentCode</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationContracts_ConfirmConsentCode. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AuthorizationContractResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AuthorizationContractResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -501,11 +380,16 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _authorizationContractAuthorizationClientDiagnostics.CreateScope("AuthorizationContractResource.ConfirmConsentCode");
+            using DiagnosticScope scope = _authorizationClientDiagnostics.CreateScope("AuthorizationContractResource.ConfirmConsentCode");
             scope.Start();
             try
             {
-                var response = _authorizationContractAuthorizationRestClient.ConfirmConsentCode(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationRestClient.CreateConfirmConsentCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AuthorizationConfirmConsentCodeContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -519,16 +403,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets authorization login links.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}/getLoginLinks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}/getLoginLinks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizationLoginLinks_Post</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationContracts_Post. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AuthorizationContractResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -539,11 +427,21 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _authorizationLoginLinksClientDiagnostics.CreateScope("AuthorizationContractResource.PostAuthorizationLoginLink");
+            using DiagnosticScope scope = _authorizationLoginLinksClientDiagnostics.CreateScope("AuthorizationContractResource.PostAuthorizationLoginLink");
             scope.Start();
             try
             {
-                var response = await _authorizationLoginLinksRestClient.PostAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationLoginLinksRestClient.CreatePostAuthorizationLoginLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AuthorizationLoginContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AuthorizationLoginResult> response = Response.FromValue(AuthorizationLoginResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -557,16 +455,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets authorization login links.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}/getLoginLinks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}/getLoginLinks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthorizationLoginLinks_Post</description>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationContracts_Post. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AuthorizationContractResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -577,11 +479,21 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _authorizationLoginLinksClientDiagnostics.CreateScope("AuthorizationContractResource.PostAuthorizationLoginLink");
+            using DiagnosticScope scope = _authorizationLoginLinksClientDiagnostics.CreateScope("AuthorizationContractResource.PostAuthorizationLoginLink");
             scope.Start();
             try
             {
-                var response = _authorizationLoginLinksRestClient.Post(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationLoginLinksRestClient.CreatePostAuthorizationLoginLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AuthorizationLoginContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AuthorizationLoginResult> response = Response.FromValue(AuthorizationLoginResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -589,6 +501,153 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Update a AuthorizationContract.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationContracts_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AuthorizationContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Create parameters. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<AuthorizationContractResource>> UpdateAsync(WaitUntil waitUntil, AuthorizationContractData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _authorizationClientDiagnostics.CreateScope("AuthorizationContractResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AuthorizationContractData.ToRequestContent(data), ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AuthorizationContractData> response = Response.FromValue(AuthorizationContractData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<AuthorizationContractResource> operation = new ApiManagementArmOperation<AuthorizationContractResource>(Response.FromValue(new AuthorizationContractResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a AuthorizationContract.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{authorizationProviderId}/authorizations/{authorizationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AuthorizationContracts_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AuthorizationContractResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Create parameters. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<AuthorizationContractResource> Update(WaitUntil waitUntil, AuthorizationContractData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _authorizationClientDiagnostics.CreateScope("AuthorizationContractResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _authorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AuthorizationContractData.ToRequestContent(data), ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AuthorizationContractData> response = Response.FromValue(AuthorizationContractData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<AuthorizationContractResource> operation = new ApiManagementArmOperation<AuthorizationContractResource>(Response.FromValue(new AuthorizationContractResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a collection of AuthorizationAccessPolicyContracts in the <see cref="AuthorizationContractResource"/>. </summary>
+        /// <returns> An object representing collection of AuthorizationAccessPolicyContracts and their operations over a AuthorizationAccessPolicyContractResource. </returns>
+        public virtual AuthorizationAccessPolicyContractCollection GetAuthorizationAccessPolicyContracts()
+        {
+            return GetCachedClient(client => new AuthorizationAccessPolicyContractCollection(client, Id));
+        }
+
+        /// <summary> Gets the details of the authorization access policy specified by its identifier. </summary>
+        /// <param name="authorizationAccessPolicyId"> Identifier of the authorization access policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationAccessPolicyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationAccessPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AuthorizationAccessPolicyContractResource>> GetAuthorizationAccessPolicyContractAsync(string authorizationAccessPolicyId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationAccessPolicyId, nameof(authorizationAccessPolicyId));
+
+            return await GetAuthorizationAccessPolicyContracts().GetAsync(authorizationAccessPolicyId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the details of the authorization access policy specified by its identifier. </summary>
+        /// <param name="authorizationAccessPolicyId"> Identifier of the authorization access policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationAccessPolicyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationAccessPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AuthorizationAccessPolicyContractResource> GetAuthorizationAccessPolicyContract(string authorizationAccessPolicyId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationAccessPolicyId, nameof(authorizationAccessPolicyId));
+
+            return GetAuthorizationAccessPolicyContracts().Get(authorizationAccessPolicyId, cancellationToken);
         }
     }
 }

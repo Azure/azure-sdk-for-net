@@ -84,32 +84,22 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("server_label"u8);
                 writer.WriteStringValue(ServerLabel);
             }
-            if (Optional.IsDefined(ServerUrl))
+            if (Optional.IsDefined(ServerUri))
             {
                 writer.WritePropertyName("server_url"u8);
-                writer.WriteStringValue(ServerUrl.AbsoluteUri);
+                writer.WriteStringValue(ServerUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(RequireApproval))
+            if (Optional.IsDefined(RequireApprovalInternal))
             {
                 writer.WritePropertyName("require_approval"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(RequireApproval);
+                writer.WriteRawValue(RequireApprovalInternal);
 #else
-                using (JsonDocument document = JsonDocument.Parse(RequireApproval))
+                using (JsonDocument document = JsonDocument.Parse(RequireApprovalInternal))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
             }
         }
 
@@ -142,10 +132,8 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string projectConnectionId = default;
             string serverLabel = default;
-            Uri serverUrl = default;
-            BinaryData requireApproval = default;
-            string name = default;
-            string description = default;
+            Uri serverUri = default;
+            BinaryData requireApprovalInternal = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -169,27 +157,17 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    serverUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    serverUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("require_approval"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requireApproval = null;
+                        requireApprovalInternal = null;
                         continue;
                     }
-                    requireApproval = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
+                    requireApprovalInternal = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
@@ -202,10 +180,8 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties,
                 projectConnectionId,
                 serverLabel,
-                serverUrl,
-                requireApproval,
-                name,
-                description);
+                serverUri,
+                requireApprovalInternal);
         }
     }
 }

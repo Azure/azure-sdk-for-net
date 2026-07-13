@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     public readonly partial struct ResourceDiscoveryMode : IEquatable<ResourceDiscoveryMode>
     {
         private readonly string _value;
+        /// <summary> Remediate resources that are already known to be non-compliant. </summary>
+        private const string ExistingNonCompliantValue = "ExistingNonCompliant";
+        /// <summary> Re-evaluate the compliance state of resources and then remediate the resources found to be non-compliant. The resourceIds filter cannot be used in this mode. </summary>
+        private const string ReEvaluateComplianceValue = "ReEvaluateCompliance";
 
         /// <summary> Initializes a new instance of <see cref="ResourceDiscoveryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceDiscoveryMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ExistingNonCompliantValue = "ExistingNonCompliant";
-        private const string ReEvaluateComplianceValue = "ReEvaluateCompliance";
+            _value = value;
+        }
 
         /// <summary> Remediate resources that are already known to be non-compliant. </summary>
         public static ResourceDiscoveryMode ExistingNonCompliant { get; } = new ResourceDiscoveryMode(ExistingNonCompliantValue);
+
         /// <summary> Re-evaluate the compliance state of resources and then remediate the resources found to be non-compliant. The resourceIds filter cannot be used in this mode. </summary>
         public static ResourceDiscoveryMode ReEvaluateCompliance { get; } = new ResourceDiscoveryMode(ReEvaluateComplianceValue);
+
         /// <summary> Determines if two <see cref="ResourceDiscoveryMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceDiscoveryMode left, ResourceDiscoveryMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceDiscoveryMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceDiscoveryMode left, ResourceDiscoveryMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceDiscoveryMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceDiscoveryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceDiscoveryMode(string value) => new ResourceDiscoveryMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceDiscoveryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceDiscoveryMode?(string value) => value == null ? null : new ResourceDiscoveryMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceDiscoveryMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceDiscoveryMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

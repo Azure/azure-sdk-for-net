@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -24,50 +25,49 @@ namespace Azure.ResourceManager.MachineLearning
     /// </summary>
     public partial class MachineLearningWorkspaceConnectionCollection : ArmCollection, IEnumerable<MachineLearningWorkspaceConnectionResource>, IAsyncEnumerable<MachineLearningWorkspaceConnectionResource>
     {
-        private readonly ClientDiagnostics _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics;
-        private readonly WorkspaceConnectionsRestOperations _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient;
+        private readonly ClientDiagnostics _workspaceConnectionsClientDiagnostics;
+        private readonly WorkspaceConnections _workspaceConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningWorkspaceConnectionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionCollection for mocking. </summary>
         protected MachineLearningWorkspaceConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningWorkspaceConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningWorkspaceConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningWorkspaceConnectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MachineLearningWorkspaceConnectionResource.ResourceType, out string machineLearningWorkspaceConnectionWorkspaceConnectionsApiVersion);
-            _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient = new WorkspaceConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningWorkspaceConnectionWorkspaceConnectionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(MachineLearningWorkspaceConnectionResource.ResourceType, out string machineLearningWorkspaceConnectionApiVersion);
+            _workspaceConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningWorkspaceConnectionResource.ResourceType.Namespace, Diagnostics);
+            _workspaceConnectionsRestClient = new WorkspaceConnections(_workspaceConnectionsClientDiagnostics, Pipeline, Endpoint, machineLearningWorkspaceConnectionApiVersion ?? "2026-03-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != MachineLearningWorkspaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MachineLearningWorkspaceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MachineLearningWorkspaceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
+        /// Create or update machine learning workspaces connections under the specified workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceConnections_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceConnectionPropertiesV2BasicResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,23 +75,30 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="connectionName"> Friendly name of the workspace connection. </param>
         /// <param name="data"> The object for creating or updating a new workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningWorkspaceConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionName, MachineLearningWorkspaceConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource>(Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, MachineLearningWorkspaceConnectionData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningWorkspaceConnectionData> response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource> operation = new MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource>(Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -102,22 +109,19 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Create or update machine learning workspaces connections under the specified workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceConnections_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceConnectionPropertiesV2BasicResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,23 +129,30 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="connectionName"> Friendly name of the workspace connection. </param>
         /// <param name="data"> The object for creating or updating a new workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningWorkspaceConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string connectionName, MachineLearningWorkspaceConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data, cancellationToken);
-                var uri = _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource>(Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, MachineLearningWorkspaceConnectionData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningWorkspaceConnectionData> response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource> operation = new MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource>(Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -152,40 +163,45 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Lists machine learning workspaces connections by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceConnectionPropertiesV2BasicResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> Friendly name of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MachineLearningWorkspaceConnectionResource>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.Get");
+            using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningWorkspaceConnectionData> response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -196,40 +212,45 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Lists machine learning workspaces connections by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceConnectionPropertiesV2BasicResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> Friendly name of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MachineLearningWorkspaceConnectionResource> Get(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.Get");
+            using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningWorkspaceConnectionData> response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,101 +261,133 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Lists all the available machine learning workspaces connections under the specified workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceConnections_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceConnectionPropertiesV2BasicResources_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="target"> Target of the workspace connection. </param>
         /// <param name="category"> Category of the workspace connection. </param>
+        /// <param name="includeAll"> query parameter that indicates if get connection call should return both connections and datastores. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningWorkspaceConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningWorkspaceConnectionResource> GetAllAsync(string target = null, string category = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningWorkspaceConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningWorkspaceConnectionResource> GetAllAsync(string target = default, string category = default, bool? includeAll = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningWorkspaceConnectionResource(Client, MachineLearningWorkspaceConnectionData.DeserializeMachineLearningWorkspaceConnectionData(e)), _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics, Pipeline, "MachineLearningWorkspaceConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MachineLearningWorkspaceConnectionData, MachineLearningWorkspaceConnectionResource>(new WorkspaceConnectionsGetAllAsyncCollectionResultOfT(
+                _workspaceConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                target,
+                category,
+                includeAll,
+                context,
+                "MachineLearningWorkspaceConnectionCollection.GetAll"), data => new MachineLearningWorkspaceConnectionResource(Client, data));
         }
 
         /// <summary>
+        /// Lists all the available machine learning workspaces connections under the specified workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceConnections_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceConnectionPropertiesV2BasicResources_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="target"> Target of the workspace connection. </param>
         /// <param name="category"> Category of the workspace connection. </param>
+        /// <param name="includeAll"> query parameter that indicates if get connection call should return both connections and datastores. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningWorkspaceConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningWorkspaceConnectionResource> GetAll(string target = null, string category = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningWorkspaceConnectionResource> GetAll(string target = default, string category = default, bool? includeAll = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningWorkspaceConnectionResource(Client, MachineLearningWorkspaceConnectionData.DeserializeMachineLearningWorkspaceConnectionData(e)), _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics, Pipeline, "MachineLearningWorkspaceConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MachineLearningWorkspaceConnectionData, MachineLearningWorkspaceConnectionResource>(new WorkspaceConnectionsGetAllCollectionResultOfT(
+                _workspaceConnectionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                target,
+                category,
+                includeAll,
+                context,
+                "MachineLearningWorkspaceConnectionCollection.GetAll"), data => new MachineLearningWorkspaceConnectionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceConnectionPropertiesV2BasicResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> Friendly name of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.Exists");
+            using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineLearningWorkspaceConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningWorkspaceConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -348,36 +401,50 @@ namespace Azure.ResourceManager.MachineLearning
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceConnectionPropertiesV2BasicResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> Friendly name of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.Exists");
+            using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineLearningWorkspaceConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningWorkspaceConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,38 +458,54 @@ namespace Azure.ResourceManager.MachineLearning
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceConnectionPropertiesV2BasicResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> Friendly name of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<MachineLearningWorkspaceConnectionResource>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineLearningWorkspaceConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningWorkspaceConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineLearningWorkspaceConnectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -436,38 +519,54 @@ namespace Azure.ResourceManager.MachineLearning
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceConnectionPropertiesV2BasicResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> Friendly name of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<MachineLearningWorkspaceConnectionResource> GetIfExists(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineLearningWorkspaceConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningWorkspaceConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineLearningWorkspaceConnectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -487,6 +586,7 @@ namespace Azure.ResourceManager.MachineLearning
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MachineLearningWorkspaceConnectionResource> IAsyncEnumerable<MachineLearningWorkspaceConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

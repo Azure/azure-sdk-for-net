@@ -86,6 +86,10 @@ namespace Azure.Provisioning.ContainerService
             _state = DefineProperty<LocalDnsState>(nameof(State), new string[] { "state" }, isOutput: true);
             _vnetDnsOverrides = DefineDictionaryProperty<LocalDnsOverride>(nameof(VnetDnsOverrides), new string[] { "vnetDNSOverrides" });
             _kubeDnsOverrides = DefineDictionaryProperty<LocalDnsOverride>(nameof(KubeDnsOverrides), new string[] { "kubeDNSOverrides" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for LocalDnsProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

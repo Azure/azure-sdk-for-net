@@ -1177,7 +1177,7 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         internal PathSystemProperties() { }
         public long? ContentLength { get { throw null; } }
-        public System.DateTimeOffset? CreationTime { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string EncryptionContext { get { throw null; } }
         public string EncryptionKeySha256 { get { throw null; } }
         public string EncryptionScope { get { throw null; } }
@@ -1186,7 +1186,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Group { get { throw null; } }
         public bool? IsDirectory { get { throw null; } }
         public bool? IsServerEncrypted { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedTime { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string Owner { get { throw null; } }
         public Azure.Storage.Files.DataLake.Models.PathPermissions Permissions { get { throw null; } }
     }

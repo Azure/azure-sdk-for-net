@@ -18,10 +18,6 @@ namespace Azure.ResourceManager.Terraform.Models
     public static partial class ArmTerraformModelFactory
     {
 
-        /// <summary>
-        /// The base export parameter
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ExportQueryTerraform"/>, <see cref="Models.ExportResourceTerraform"/>, and <see cref="Models.ExportResourceGroupTerraform"/>.
-        /// </summary>
         /// <param name="type"> The parameter type. </param>
         /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
@@ -37,18 +33,17 @@ namespace Azure.ResourceManager.Terraform.Models
             terraformResourcesToExclude ??= new ChangeTrackingList<string>();
 
             return new UnknownCommonExportProperties(
-                new CommonExportType(@type),
+                default,
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
                 includeRoleAssignment,
                 includeManagedResource,
-                azureResourcesToExclude.ToList(),
-                terraformResourcesToExclude.ToList(),
-                additionalBinaryDataProperties: null);
+                (azureResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                (terraformResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
-        /// <summary> Uses ARG (Azure Resource Graph) query to choose resources to be exported. </summary>
         /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
@@ -69,15 +64,15 @@ namespace Azure.ResourceManager.Terraform.Models
             terraformResourcesToExclude ??= new ChangeTrackingList<string>();
 
             return new ExportQueryTerraform(
-                CommonExportType.ExportQuery,
+                default,
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
                 includeRoleAssignment,
                 includeManagedResource,
-                azureResourcesToExclude.ToList(),
-                terraformResourcesToExclude.ToList(),
-                additionalBinaryDataProperties: null,
+                (azureResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                (terraformResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                default,
                 query,
                 namePattern,
                 isRecursive,
@@ -86,7 +81,6 @@ namespace Azure.ResourceManager.Terraform.Models
                 authorizationScopeFilter);
         }
 
-        /// <summary> Specified resources to be exported by their ids. </summary>
         /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
@@ -108,16 +102,16 @@ namespace Azure.ResourceManager.Terraform.Models
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new ExportResourceTerraform(
-                CommonExportType.ExportResource,
+                default,
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
                 includeRoleAssignment,
                 includeManagedResource,
-                azureResourcesToExclude.ToList(),
-                terraformResourcesToExclude.ToList(),
-                additionalBinaryDataProperties: null,
-                resourceIds.ToList(),
+                (azureResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                (terraformResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                default,
+                (resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 resourceName,
                 resourceType,
                 namePattern,
@@ -125,7 +119,6 @@ namespace Azure.ResourceManager.Terraform.Models
                 includeResourceGroup);
         }
 
-        /// <summary> Export parameter for a resource group. </summary>
         /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
@@ -142,20 +135,19 @@ namespace Azure.ResourceManager.Terraform.Models
             terraformResourcesToExclude ??= new ChangeTrackingList<string>();
 
             return new ExportResourceGroupTerraform(
-                CommonExportType.ExportResourceGroup,
+                default,
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
                 includeRoleAssignment,
                 includeManagedResource,
-                azureResourcesToExclude.ToList(),
-                terraformResourcesToExclude.ToList(),
-                additionalBinaryDataProperties: null,
+                (azureResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                (terraformResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                default,
                 resourceGroupName,
                 namePattern);
         }
 
-        /// <summary> The status of the LRO (Long Running Operation) and the export result. </summary>
         /// <param name="properties"> RP-specific properties for the operationStatus resource, only appears when operation ended with Succeeded status. </param>
         /// <param name="status"> The operation status. </param>
         /// <param name="id"> The unique identifier for the operationStatus resource. </param>
@@ -176,10 +168,9 @@ namespace Azure.ResourceManager.Terraform.Models
                 endOn,
                 percentComplete,
                 error,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The Terraform export result. </summary>
         /// <param name="configuration"> The exported Terraform HCL configuration. </param>
         /// <param name="import"> The Terraform import blocks for the configuration, necessary for managing existing Azure resources in Terraform. </param>
         /// <param name="skippedResourceIds"> A list of Azure resources which could not be exported to Terraform. The most common cause is lack of Terraform provider support. Change the provider type to `azapi` for bigger set of supported resources. </param>
@@ -190,7 +181,7 @@ namespace Azure.ResourceManager.Terraform.Models
             skippedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
             errors ??= new ChangeTrackingList<ResponseError>();
 
-            return new TerraformExportResult(configuration, import, skippedResourceIds.ToList(), errors.ToList(), additionalBinaryDataProperties: null);
+            return new TerraformExportResult(configuration, import, (skippedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), (errors ?? new ChangeTrackingList<ResponseError>()).ToList(), default);
         }
     }
 }

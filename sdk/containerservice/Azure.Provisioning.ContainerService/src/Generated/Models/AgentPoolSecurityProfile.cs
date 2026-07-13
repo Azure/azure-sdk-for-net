@@ -74,6 +74,10 @@ namespace Azure.Provisioning.ContainerService
             _isVtpmEnabled = DefineProperty<bool>(nameof(IsVtpmEnabled), new string[] { "enableVTPM" });
             _isSecureBootEnabled = DefineProperty<bool>(nameof(IsSecureBootEnabled), new string[] { "enableSecureBoot" });
             _sshAccess = DefineProperty<AgentPoolSshAccess>(nameof(SshAccess), new string[] { "sshAccess" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AgentPoolSecurityProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

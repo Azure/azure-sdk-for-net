@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _policiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CdnWebApplicationFirewallPolicyPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CdnWebApplicationFirewallPolicyResource> operation = new CdnArmOperation<CdnWebApplicationFirewallPolicyResource>(
-                    new CdnWebApplicationFirewallPolicyOperationSource(Client),
+                    new CdnWebApplicationFirewallPolicyResourceOperationSource(Client),
                     _policiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _policiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CdnWebApplicationFirewallPolicyPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CdnWebApplicationFirewallPolicyResource> operation = new CdnArmOperation<CdnWebApplicationFirewallPolicyResource>(
-                    new CdnWebApplicationFirewallPolicyOperationSource(Client),
+                    new CdnWebApplicationFirewallPolicyResourceOperationSource(Client),
                     _policiesClientDiagnostics,
                     Pipeline,
                     message.Request,

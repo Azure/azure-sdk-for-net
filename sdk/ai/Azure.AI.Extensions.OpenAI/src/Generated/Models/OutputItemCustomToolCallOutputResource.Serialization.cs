@@ -88,7 +88,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
 #endif
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
+            writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("created_by"u8);
@@ -128,7 +128,7 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
             BinaryData output = default;
-            ResponsesFunctionCallOutputStatusEnum status = default;
+            ResponsesFunctionCallOutputStatus status = default;
             string createdBy = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToResponsesFunctionCallOutputStatusEnum();
+                    status = new ResponsesFunctionCallOutputStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))

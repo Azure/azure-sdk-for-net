@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct SecurityProviderName : IEquatable<SecurityProviderName>
     {
         private readonly string _value;
+        /// <summary> ZScaler. </summary>
+        private const string ZScalerValue = "ZScaler";
+        /// <summary> IBoss. </summary>
+        private const string IBossValue = "IBoss";
+        /// <summary> Checkpoint. </summary>
+        private const string CheckpointValue = "Checkpoint";
 
         /// <summary> Initializes a new instance of <see cref="SecurityProviderName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityProviderName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ZScalerValue = "ZScaler";
-        private const string IBossValue = "IBoss";
-        private const string CheckpointValue = "Checkpoint";
+            _value = value;
+        }
 
         /// <summary> ZScaler. </summary>
         public static SecurityProviderName ZScaler { get; } = new SecurityProviderName(ZScalerValue);
+
         /// <summary> IBoss. </summary>
         public static SecurityProviderName IBoss { get; } = new SecurityProviderName(IBossValue);
+
         /// <summary> Checkpoint. </summary>
         public static SecurityProviderName Checkpoint { get; } = new SecurityProviderName(CheckpointValue);
+
         /// <summary> Determines if two <see cref="SecurityProviderName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityProviderName left, SecurityProviderName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityProviderName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityProviderName left, SecurityProviderName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityProviderName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityProviderName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityProviderName(string value) => new SecurityProviderName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityProviderName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityProviderName?(string value) => value == null ? null : new SecurityProviderName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityProviderName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityProviderName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

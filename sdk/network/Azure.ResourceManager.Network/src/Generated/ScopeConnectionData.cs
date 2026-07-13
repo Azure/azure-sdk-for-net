@@ -7,49 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ScopeConnection data model.
-    /// The Scope Connections resource
-    /// </summary>
+    /// <summary> The Scope Connections resource. </summary>
     public partial class ScopeConnectionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScopeConnectionData"/>. </summary>
         public ScopeConnectionData()
@@ -57,40 +26,72 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of <see cref="ScopeConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tenantId"> Tenant ID. </param>
-        /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="connectionState"> Connection State. </param>
-        /// <param name="description"> A description of the scope connection. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScopeConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, ResourceIdentifier resourceId, ScopeConnectionState? connectionState, string description, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The scope connection properties. </param>
+        /// <param name="name"> Name for the cross-tenant connection. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScopeConnectionData(ScopeConnectionProperties properties, string name, ETag? eTag, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            TenantId = tenantId;
-            ResourceId = resourceId;
-            ConnectionState = connectionState;
-            Description = description;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
+            SystemData = systemData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Tenant ID. </summary>
-        [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
-        /// <summary> Resource ID. </summary>
-        [WirePath("properties.resourceId")]
-        public ResourceIdentifier ResourceId { get; set; }
-        /// <summary> Connection State. </summary>
-        [WirePath("properties.connectionState")]
-        public ScopeConnectionState? ConnectionState { get; }
-        /// <summary> A description of the scope connection. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        /// <summary> The scope connection properties. </summary>
+        [WirePath("properties")]
+        internal ScopeConnectionProperties Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.resourceId")]
+        public ResourceIdentifier ResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScopeConnectionProperties();
+                }
+                Properties.ResourceId = value;
+            }
+        }
+
+        /// <summary> Connection State. </summary>
+        [WirePath("properties.connectionState")]
+        public ScopeConnectionState? ConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionState;
+            }
+        }
+
+        /// <summary> A description of the scope connection. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScopeConnectionProperties();
+                }
+                Properties.Description = value;
+            }
+        }
     }
 }

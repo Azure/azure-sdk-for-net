@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _devCentersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevCenterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<DevCenterResource> operation = new DevCenterArmOperation<DevCenterResource>(
-                    new DevCenterOperationSource(Client),
+                    new DevCenterResourceOperationSource(Client),
                     _devCentersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _devCentersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevCenterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<DevCenterResource> operation = new DevCenterArmOperation<DevCenterResource>(
-                    new DevCenterOperationSource(Client),
+                    new DevCenterResourceOperationSource(Client),
                     _devCentersClientDiagnostics,
                     Pipeline,
                     message.Request,

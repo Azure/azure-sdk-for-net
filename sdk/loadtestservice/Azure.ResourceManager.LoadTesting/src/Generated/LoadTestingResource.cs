@@ -755,27 +755,11 @@ namespace Azure.ResourceManager.LoadTesting
             }
         }
 
-        /// <summary> Gets a collection of MaxMonthlyVirtualUserHours in the <see cref="LoadTestingResource"/>. </summary>
-        /// <returns> An object representing collection of MaxMonthlyVirtualUserHours and their operations over a MaxMonthlyVirtualUserHoursResource. </returns>
-        public virtual MaxMonthlyVirtualUserHoursCollection GetAllMaxMonthlyVirtualUserHours()
+        /// <summary> Gets an object representing a <see cref="MaxMonthlyVirtualUserHoursResource"/> along with the instance operations that can be performed on it in the <see cref="LoadTestingResource"/>. </summary>
+        /// <returns> Returns a <see cref="MaxMonthlyVirtualUserHoursResource"/> object. </returns>
+        public virtual MaxMonthlyVirtualUserHoursResource GetMaxMonthlyVirtualUserHours()
         {
-            return GetCachedClient(client => new MaxMonthlyVirtualUserHoursCollection(client, Id));
-        }
-
-        /// <summary> Get the limit of max monthly virtual user hours for the load testing resource. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MaxMonthlyVirtualUserHoursResource>> GetMaxMonthlyVirtualUserHoursAsync(CancellationToken cancellationToken = default)
-        {
-            return await GetAllMaxMonthlyVirtualUserHours().GetAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get the limit of max monthly virtual user hours for the load testing resource. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<MaxMonthlyVirtualUserHoursResource> GetMaxMonthlyVirtualUserHours(CancellationToken cancellationToken = default)
-        {
-            return GetAllMaxMonthlyVirtualUserHours().Get(cancellationToken);
+            return new MaxMonthlyVirtualUserHoursResource(Client, Id.AppendChildResource("limits", "maxMonthlyVirtualUserHours"));
         }
     }
 }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _tokensRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tokenName, ContainerRegistryTokenData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ContainerRegistryTokenResource> operation = new ContainerRegistryArmOperation<ContainerRegistryTokenResource>(
-                    new ContainerRegistryTokenOperationSource(Client),
+                    new ContainerRegistryTokenResourceOperationSource(Client),
                     _tokensClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _tokensRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tokenName, ContainerRegistryTokenData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ContainerRegistryTokenResource> operation = new ContainerRegistryArmOperation<ContainerRegistryTokenResource>(
-                    new ContainerRegistryTokenOperationSource(Client),
+                    new ContainerRegistryTokenResourceOperationSource(Client),
                     _tokensClientDiagnostics,
                     Pipeline,
                     message.Request,

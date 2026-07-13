@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 VmSkusListResult result = VmSkusListResult.FromResponse(response);
-                yield return Page<ContainerServiceVmSku>.FromValues((IReadOnlyList<ContainerServiceVmSku>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerServiceVmSku>.FromValues((IReadOnlyList<ContainerServiceVmSku>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

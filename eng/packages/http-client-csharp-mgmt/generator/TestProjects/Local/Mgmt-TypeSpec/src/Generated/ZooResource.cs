@@ -233,7 +233,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _zoosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ZooPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<ZooResource> operation = new TestsArmOperation<ZooResource>(
-                    new ZooOperationSource(Client),
+                    new ZooResourceOperationSource(Client),
                     _zoosClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _zoosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ZooPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<ZooResource> operation = new TestsArmOperation<ZooResource>(
-                    new ZooOperationSource(Client),
+                    new ZooResourceOperationSource(Client),
                     _zoosClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -415,6 +415,110 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}/deleteZooItems. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Zoos_DeleteZooItems. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ZooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="zooItemNames"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="zooItemNames"/> is null. </exception>
+        public virtual async Task<Response<Models.ZooRecommendation>> DeleteZooItemsAsync(IEnumerable<string> zooItemNames, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(zooItemNames, nameof(zooItemNames));
+
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.DeleteZooItems");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _zoosRestClient.CreateDeleteZooItemsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BinaryContentHelper.FromEnumerable(zooItemNames), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<Models.ZooRecommendation> response = Response.FromValue(Models.ZooRecommendation.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos/{zooName}/deleteZooItems. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Zoos_DeleteZooItems. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ZooResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="zooItemNames"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="zooItemNames"/> is null. </exception>
+        public virtual Response<Models.ZooRecommendation> DeleteZooItems(IEnumerable<string> zooItemNames, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(zooItemNames, nameof(zooItemNames));
+
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.DeleteZooItems");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _zoosRestClient.CreateDeleteZooItemsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BinaryContentHelper.FromEnumerable(zooItemNames), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<Models.ZooRecommendation> response = Response.FromValue(Models.ZooRecommendation.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {

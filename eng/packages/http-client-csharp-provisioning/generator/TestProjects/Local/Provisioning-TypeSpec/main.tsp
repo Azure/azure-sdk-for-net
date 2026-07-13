@@ -5,6 +5,8 @@ import "./keyValue.tsp";
 import "./backupPolicy.tsp";
 import "./item.tsp";
 import "./profileRevision.tsp";
+import "./extensionAssignment.tsp";
+import "./singletonSetting.tsp";
 
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;

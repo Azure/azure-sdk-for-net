@@ -96,6 +96,9 @@ namespace Azure.Identity
             CloneListItems(AdditionalQueryParameters, clone.AdditionalQueryParameters);
 #pragma warning restore AZID0001
 
+            // copy ISupportsTokenRequestCallback
+            CloneIfImplemented<ISupportsTokenRequestCallback>(this, clone, (o, c) => c.TokenRequestCallback = o.TokenRequestCallback);
+
             // copy TokenCredentialDiagnosticsOptions specific options
             clone.Diagnostics.IsAccountIdentifierLoggingEnabled = Diagnostics.IsAccountIdentifierLoggingEnabled;
 

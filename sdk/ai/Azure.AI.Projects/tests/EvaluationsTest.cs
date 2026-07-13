@@ -21,6 +21,7 @@ using OpenAI.Evals;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests;
+#pragma warning disable AAIP001
 
 public class EvaluationsTest : ProjectsClientTestBase
 {
@@ -640,7 +641,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         {
             Description = "Taxonomy for red teaming evaluation"
         };
-        EvaluationTaxonomy taxonomy = await projectClient.EvaluationTaxonomies.CreateAsync("TestTaxonomy", taxonomy: evalTaxonomyInput);
+        EvaluationTaxonomy taxonomy = await projectClient.EvaluationTaxonomies.CreateAsync("TestTaxonomy", body: evalTaxonomyInput);
         DirectoryInfo dataPath = Directory.CreateDirectory("data_folder");
         string taxonomyPath = Path.Combine(dataPath.FullName, $"taxonomy_{(useAgent ? AGENT_NAME : TestEnvironment.FOUNDRY_MODEL_NAME)}.json");
         RecurrenceTrigger trigger = new(interval: 1, new DailyRecurrenceSchedule(hours: [9]));

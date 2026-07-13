@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _profileAgentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, agentName, CdnProfileAgentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CdnProfileAgentResource> operation = new CdnArmOperation<CdnProfileAgentResource>(
-                    new CdnProfileAgentOperationSource(Client),
+                    new CdnProfileAgentResourceOperationSource(Client),
                     _profileAgentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _profileAgentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, agentName, CdnProfileAgentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CdnProfileAgentResource> operation = new CdnArmOperation<CdnProfileAgentResource>(
-                    new CdnProfileAgentOperationSource(Client),
+                    new CdnProfileAgentResourceOperationSource(Client),
                     _profileAgentsClientDiagnostics,
                     Pipeline,
                     message.Request,

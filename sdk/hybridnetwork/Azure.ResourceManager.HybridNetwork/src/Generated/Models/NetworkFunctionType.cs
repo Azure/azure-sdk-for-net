@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     internal readonly partial struct NetworkFunctionType : IEquatable<NetworkFunctionType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NetworkFunctionType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NetworkFunctionType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string VirtualNetworkFunctionValue = "VirtualNetworkFunction";
         private const string ContainerizedNetworkFunctionValue = "ContainerizedNetworkFunction";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NetworkFunctionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static NetworkFunctionType Unknown { get; } = new NetworkFunctionType(UnknownValue);
-        /// <summary> VirtualNetworkFunction. </summary>
+
+        /// <summary> Gets the VirtualNetworkFunction. </summary>
         public static NetworkFunctionType VirtualNetworkFunction { get; } = new NetworkFunctionType(VirtualNetworkFunctionValue);
-        /// <summary> ContainerizedNetworkFunction. </summary>
+
+        /// <summary> Gets the ContainerizedNetworkFunction. </summary>
         public static NetworkFunctionType ContainerizedNetworkFunction { get; } = new NetworkFunctionType(ContainerizedNetworkFunctionValue);
+
         /// <summary> Determines if two <see cref="NetworkFunctionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFunctionType left, NetworkFunctionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFunctionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFunctionType left, NetworkFunctionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFunctionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFunctionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFunctionType(string value) => new NetworkFunctionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFunctionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFunctionType?(string value) => value == null ? null : new NetworkFunctionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFunctionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFunctionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

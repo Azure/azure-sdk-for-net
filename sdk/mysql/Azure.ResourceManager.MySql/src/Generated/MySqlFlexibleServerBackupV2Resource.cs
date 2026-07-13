@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _longRunningBackupRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MySqlFlexibleServerBackupV2Data.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerBackupV2Resource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerBackupV2Resource>(
-                    new MySqlFlexibleServerBackupV2OperationSource(Client),
+                    new MySqlFlexibleServerBackupV2ResourceOperationSource(Client),
                     _longRunningBackupClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _longRunningBackupRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MySqlFlexibleServerBackupV2Data.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerBackupV2Resource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerBackupV2Resource>(
-                    new MySqlFlexibleServerBackupV2OperationSource(Client),
+                    new MySqlFlexibleServerBackupV2ResourceOperationSource(Client),
                     _longRunningBackupClientDiagnostics,
                     Pipeline,
                     message.Request,

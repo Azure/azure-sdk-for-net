@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _replicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, SignalRReplicaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation<SignalRReplicaResource> operation = new SignalRArmOperation<SignalRReplicaResource>(
-                    new SignalRReplicaOperationSource(Client),
+                    new SignalRReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _replicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, SignalRReplicaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation<SignalRReplicaResource> operation = new SignalRArmOperation<SignalRReplicaResource>(
-                    new SignalRReplicaOperationSource(Client),
+                    new SignalRReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,

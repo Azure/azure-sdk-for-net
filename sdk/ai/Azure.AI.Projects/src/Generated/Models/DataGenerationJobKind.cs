@@ -4,11 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The supported data generation job types. </summary>
-    public readonly partial struct DataGenerationJobKind : IEquatable<DataGenerationJobKind>
+    [Experimental("AAIP001")]
+    internal readonly partial struct DataGenerationJobKind : IEquatable<DataGenerationJobKind>
     {
         private readonly string _value;
         /// <summary> Simple question and answers between user and agent. </summary>

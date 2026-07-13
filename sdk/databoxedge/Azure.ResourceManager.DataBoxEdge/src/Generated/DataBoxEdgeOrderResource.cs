@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _ordersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DataBoxEdgeOrderData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DataBoxEdgeOrderResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeOrderResource>(
-                    new DataBoxEdgeOrderOperationSource(Client),
+                    new DataBoxEdgeOrderResourceOperationSource(Client),
                     _ordersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _ordersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DataBoxEdgeOrderData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DataBoxEdgeOrderResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeOrderResource>(
-                    new DataBoxEdgeOrderOperationSource(Client),
+                    new DataBoxEdgeOrderResourceOperationSource(Client),
                     _ordersClientDiagnostics,
                     Pipeline,
                     message.Request,

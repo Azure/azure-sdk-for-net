@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _afdCustomDomainsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorCustomDomainPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<FrontDoorCustomDomainResource> operation = new CdnArmOperation<FrontDoorCustomDomainResource>(
-                    new FrontDoorCustomDomainOperationSource(Client),
+                    new FrontDoorCustomDomainResourceOperationSource(Client),
                     _afdCustomDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _afdCustomDomainsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorCustomDomainPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<FrontDoorCustomDomainResource> operation = new CdnArmOperation<FrontDoorCustomDomainResource>(
-                    new FrontDoorCustomDomainOperationSource(Client),
+                    new FrontDoorCustomDomainResourceOperationSource(Client),
                     _afdCustomDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,

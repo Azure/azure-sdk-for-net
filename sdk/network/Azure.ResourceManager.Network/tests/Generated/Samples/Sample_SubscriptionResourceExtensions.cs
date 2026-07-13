@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (string item in subscriptionResource.GetAvailableServerVariablesApplicationGatewaysAsync())
+            await foreach (string item in subscriptionResource.GetAvailableServerVariablesApplicationGatewaysAsync(System.Threading.CancellationToken.None))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (string item in subscriptionResource.GetAvailableRequestHeadersApplicationGatewaysAsync())
+            await foreach (string item in subscriptionResource.GetAvailableRequestHeadersApplicationGatewaysAsync(System.Threading.CancellationToken.None))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (string item in subscriptionResource.GetAvailableResponseHeadersApplicationGatewaysAsync())
+            await foreach (string item in subscriptionResource.GetAvailableResponseHeadersApplicationGatewaysAsync(System.Threading.CancellationToken.None))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ApplicationGatewayFirewallRuleSet item in subscriptionResource.GetAppGatewayAvailableWafRuleSetsAsync())
+            await foreach (ApplicationGatewayFirewallRuleSet item in subscriptionResource.GetAppGatewayAvailableWafRuleSetsAsync(System.Threading.CancellationToken.None))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            ApplicationGatewayAvailableSslOptionsInfo result = await subscriptionResource.GetApplicationGatewayAvailableSslOptionsAsync();
+            ApplicationGatewayAvailableSslOptionsInfo result = await subscriptionResource.GetApplicationGatewayAvailableSslOptionsAsync(System.Threading.CancellationToken.None);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ApplicationGatewaySslPredefinedPolicy item in subscriptionResource.GetApplicationGatewayAvailableSslPredefinedPoliciesAsync())
+            await foreach (ApplicationGatewaySslPredefinedPolicy item in subscriptionResource.GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(System.Threading.CancellationToken.None))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string predefinedPolicyName = "AppGwSslPolicy20150501";
-            ApplicationGatewaySslPredefinedPolicy result = await subscriptionResource.GetApplicationGatewaySslPredefinedPolicyAsync(predefinedPolicyName);
+            ApplicationGatewaySslPredefinedPolicy result = await subscriptionResource.GetApplicationGatewaySslPredefinedPolicyAsync(predefinedPolicyName, System.Threading.CancellationToken.None);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -831,7 +831,7 @@ Id = "/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Network/loadBa
 PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pip1"),
 }},
             };
-            await subscriptionResource.SwapPublicIPAddressesLoadBalancerAsync(WaitUntil.Completed, location, content);
+            await subscriptionResource.SwapPublicIPAddressesLoadBalancerAsync(WaitUntil.Completed, location, content, System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -1070,7 +1070,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("westus");
-            await foreach (NetworkSecurityPerimeterServiceTags item in subscriptionResource.GetNetworkSecurityPerimeterServiceTagsAsync(location))
+            await foreach (var item in subscriptionResource.GetNetworkSecurityPerimeterServiceTagsAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -1254,7 +1254,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
             {
                 PrivateLinkServiceAlias = "mypls.00000000-0000-0000-0000-000000000000.azure.privatelinkservice",
             };
-            ArmOperation<PrivateLinkServiceVisibility> lro = await subscriptionResource.CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(WaitUntil.Completed, location, checkPrivateLinkServiceVisibilityRequest);
+            ArmOperation<PrivateLinkServiceVisibility> lro = await subscriptionResource.CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(WaitUntil.Completed, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken: System.Threading.CancellationToken.None);
             PrivateLinkServiceVisibility result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -1280,7 +1280,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("regionName");
-            await foreach (AutoApprovedPrivateLinkService item in subscriptionResource.GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(location))
+            await foreach (AutoApprovedPrivateLinkService item in subscriptionResource.GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(location, System.Threading.CancellationToken.None))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -1489,7 +1489,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ServiceEndpointPolicyResource item in subscriptionResource.GetServiceEndpointPoliciesByServiceEndpointPolicyAsync())
+            await foreach (ServiceEndpointPolicyResource item in subscriptionResource.GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(System.Threading.CancellationToken.None))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -1577,7 +1577,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("westeurope");
-            await foreach (ServiceTagInformation item in subscriptionResource.GetAllServiceTagInformationAsync(location))
+            await foreach (var item in subscriptionResource.GetAllServiceTagInformationAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -1606,7 +1606,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("westeurope");
             bool? noAddressPrefixes = true;
-            await foreach (ServiceTagInformation item in subscriptionResource.GetAllServiceTagInformationAsync(location, noAddressPrefixes: noAddressPrefixes))
+            await foreach (var item in subscriptionResource.GetAllServiceTagInformationAsync(location, noAddressPrefixes: noAddressPrefixes))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -1635,7 +1635,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("westeurope");
             string tagName = "ApiManagement";
-            await foreach (ServiceTagInformation item in subscriptionResource.GetAllServiceTagInformationAsync(location, tagName: tagName))
+            await foreach (var item in subscriptionResource.GetAllServiceTagInformationAsync(location, tagName: tagName))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -2028,7 +2028,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ExpressRouteGatewayResource item in subscriptionResource.GetExpressRouteGatewaysAsync())
+            await foreach (ExpressRouteGatewayResource item in subscriptionResource.GetExpressRouteGatewaysAsync(System.Threading.CancellationToken.None))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

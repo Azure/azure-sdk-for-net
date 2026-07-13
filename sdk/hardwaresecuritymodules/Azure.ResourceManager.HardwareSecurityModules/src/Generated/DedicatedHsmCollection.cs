@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 HttpMessage message = _dedicatedHsmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DedicatedHsmData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
-                    new DedicatedHsmOperationSource(Client),
+                    new DedicatedHsmResourceOperationSource(Client),
                     _dedicatedHsmsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 HttpMessage message = _dedicatedHsmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DedicatedHsmData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
-                    new DedicatedHsmOperationSource(Client),
+                    new DedicatedHsmResourceOperationSource(Client),
                     _dedicatedHsmsClientDiagnostics,
                     Pipeline,
                     message.Request,

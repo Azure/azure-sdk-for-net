@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.EventHubs
                     yield break;
                 }
                 ClusterListResult result = ClusterListResult.FromResponse(response);
-                yield return Page<EventHubsClusterData>.FromValues((IReadOnlyList<EventHubsClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EventHubsClusterData>.FromValues((IReadOnlyList<EventHubsClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

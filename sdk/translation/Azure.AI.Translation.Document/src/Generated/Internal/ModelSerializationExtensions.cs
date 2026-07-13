@@ -6,13 +6,16 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
+#pragma warning disable SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 namespace Azure.AI.Translation.Document
 {
     internal static partial class ModelSerializationExtensions
@@ -246,6 +249,9 @@ namespace Azure.AI.Translation.Document
                 case TimeSpan timeSpan:
                     writer.WriteStringValue(timeSpan, "P");
                     break;
+                case FileBinaryContent fileBinaryContent:
+                    writer.WriteFileBinaryContent(fileBinaryContent);
+                    break;
                 default:
                     throw new NotSupportedException($"Not supported type {value.GetType()}");
             }
@@ -264,5 +270,14 @@ namespace Azure.AI.Translation.Document
             return BinaryData.FromString(element.GetRawText());
 #endif
         }
+
+        public static void WriteFileBinaryContent(this Utf8JsonWriter writer, FileBinaryContent value)
+        {
+            int capacity = value.TryComputeLength(out long length) && length <= int.MaxValue ? (int)length : 0;
+            using MemoryStream stream = new MemoryStream(capacity);
+            value.WriteTo(stream);
+            writer.WriteBase64StringValue(stream.GetBuffer().AsSpan(0, (int)stream.Position));
+        }
     }
 }
+#pragma warning restore SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.

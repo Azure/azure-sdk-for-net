@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DependencyMap
                 HttpMessage message = _discoverySourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DependencyMapDiscoverySourcePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DependencyMapArmOperation<DependencyMapDiscoverySourceResource> operation = new DependencyMapArmOperation<DependencyMapDiscoverySourceResource>(
-                    new DependencyMapDiscoverySourceOperationSource(Client),
+                    new DependencyMapDiscoverySourceResourceOperationSource(Client),
                     _discoverySourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DependencyMap
                 HttpMessage message = _discoverySourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DependencyMapDiscoverySourcePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DependencyMapArmOperation<DependencyMapDiscoverySourceResource> operation = new DependencyMapArmOperation<DependencyMapDiscoverySourceResource>(
-                    new DependencyMapDiscoverySourceOperationSource(Client),
+                    new DependencyMapDiscoverySourceResourceOperationSource(Client),
                     _discoverySourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

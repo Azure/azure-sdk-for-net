@@ -1,7 +1,6 @@
 # Release History
 
-
-## 1.17.0-beta.1 (Unreleased)
+## 1.18.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -11,7 +10,43 @@
 
 ### Other Changes
 
-- Migrated from AutoRest to TypeSpec-based code generation.
+## 1.18.0-beta.1 (2026-06-30)
+
+### Features Added
+
+- Upgraded api-version to `2026-04-15-preview`. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+- Added first-class Active Directory configuration resource support, including `NetAppActiveDirectoryConfigResource`, `NetAppActiveDirectoryConfigCollection`, and related create, update, get, and list operations.
+- Added first-class Elastic resource support, including `NetAppElasticAccountResource`, `NetAppElasticCapacityPoolResource`, `NetAppElasticVolumeResource`, `NetAppElasticSnapshotPolicyResource`, `NetAppElasticSnapshotResource`, `NetAppElasticBackupVaultResource`, `NetAppElasticBackupPolicyResource`, and `NetAppElasticBackupResource`, together with their related models and operations.
+- Added account-level LDAP and Entra ID configuration models, including `LdapConfiguration`, `LdapConfigurationPatch`, `BindPasswordAkvConfig`, `BindPasswordAkvConfigPatch`, `EntraIdConfig`, and `EntraIdConfigPatch`.
+- Added new supporting Elastic and NetApp models and enums, including `CheckElasticResourceAvailabilityResult`, `CheckElasticVolumeFilePathAvailabilityContent`, `BreakthroughMode`, `BindAuthenticationLevel`, `LargeVolumeType`, and related Elastic policy, encryption, protocol, snapshot, and availability types.
+
+### Breaking Changes
+
+- Preview account configuration and patch APIs were reshaped to align with the `2026-04-15-preview` service contract. Code using preview-only `NetAppAccountPatch`, LDAP, Entra ID, Active Directory configuration, or Elastic resource types may need to be updated.
+
+### Other Changes
+
+- Refreshed generated models, resource operations, and samples to align with the latest preview service definitions.
+
+## 1.17.0 (2026-06-23)
+
+### Features Added
+
+- Upgraded api-version to 2026-04-01. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+- Added `FileAccessLogs` property to `CacheProperties`.
+
+### Breaking Changes
+
+- Cache operation return type changes: Method `NetAppCacheResource.PoolChange()` now returns `Operation<NetAppCacheResource>` instead of `Operation`
+- Cache operation return type changes: Method `NetAppCacheResource.ResetSmbPassword()` now returns `Operation<NetAppCacheResource>` instead of `Operation`
+- Some legacy Elastic and Active Directory compatibility APIs are now runtime compatibility stubs. These members are kept for source compatibility but throw `NotSupportedException` when invoked.
+- Impacted compatibility areas include Elastic compatibility APIs, `NetAppActiveDirectoryConfig*`, `EntraId*`, `CheckElastic*`, and `LdapConfiguration` related compatibility types.
+
+## 1.16.1 (2026-06-09)
+
+### Features Added
+
+- Make `Azure.ResourceManager.NetApp` AOT-compatible.
 
 ## 1.16.0 (2026-05-01)
 

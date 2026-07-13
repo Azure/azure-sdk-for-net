@@ -8,13 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Billing.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -25,51 +25,49 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class BillingSubscriptionAliasCollection : ArmCollection, IEnumerable<BillingSubscriptionAliasResource>, IAsyncEnumerable<BillingSubscriptionAliasResource>
     {
-        private readonly ClientDiagnostics _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics;
-        private readonly BillingSubscriptionsAliasesRestOperations _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient;
+        private readonly ClientDiagnostics _billingSubscriptionsAliasesClientDiagnostics;
+        private readonly BillingSubscriptionsAliases _billingSubscriptionsAliasesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BillingSubscriptionAliasCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingSubscriptionAliasCollection for mocking. </summary>
         protected BillingSubscriptionAliasCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingSubscriptionAliasCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionAliasCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingSubscriptionAliasCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingSubscriptionAliasResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BillingSubscriptionAliasResource.ResourceType, out string billingSubscriptionAliasBillingSubscriptionsAliasesApiVersion);
-            _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient = new BillingSubscriptionsAliasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingSubscriptionAliasBillingSubscriptionsAliasesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(BillingSubscriptionAliasResource.ResourceType, out string billingSubscriptionAliasApiVersion);
+            _billingSubscriptionsAliasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingSubscriptionAliasResource.ResourceType.Namespace, Diagnostics);
+            _billingSubscriptionsAliasesRestClient = new BillingSubscriptionsAliases(_billingSubscriptionsAliasesClientDiagnostics, Pipeline, Endpoint, billingSubscriptionAliasApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != BillingAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BillingAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BillingAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a billing subscription by its alias ID.  The operation is supported for seat based billing subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptionsAliases_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingSubscriptionAliases_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +75,34 @@ namespace Azure.ResourceManager.Billing
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
         /// <param name="data"> A billing subscription alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<BillingSubscriptionAliasResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string aliasName, BillingSubscriptionAliasData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _billingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateOrUpdateAsync(Id.Name, aliasName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingSubscriptionAliasResource>(new BillingSubscriptionAliasOperationSource(Client), _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics, Pipeline, _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateCreateOrUpdateRequest(Id.Name, aliasName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingSubscriptionsAliasesRestClient.CreateCreateOrUpdateRequest(Id.Name, aliasName, BillingSubscriptionAliasData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation<BillingSubscriptionAliasResource> operation = new BillingArmOperation<BillingSubscriptionAliasResource>(
+                    new BillingSubscriptionAliasResourceOperationSource(Client),
+                    _billingSubscriptionsAliasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +116,16 @@ namespace Azure.ResourceManager.Billing
         /// Creates or updates a billing subscription by its alias ID.  The operation is supported for seat based billing subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptionsAliases_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingSubscriptionAliases_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +133,34 @@ namespace Azure.ResourceManager.Billing
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
         /// <param name="data"> A billing subscription alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<BillingSubscriptionAliasResource> CreateOrUpdate(WaitUntil waitUntil, string aliasName, BillingSubscriptionAliasData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _billingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateOrUpdate(Id.Name, aliasName, data, cancellationToken);
-                var operation = new BillingArmOperation<BillingSubscriptionAliasResource>(new BillingSubscriptionAliasOperationSource(Client), _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics, Pipeline, _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateCreateOrUpdateRequest(Id.Name, aliasName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingSubscriptionsAliasesRestClient.CreateCreateOrUpdateRequest(Id.Name, aliasName, BillingSubscriptionAliasData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation<BillingSubscriptionAliasResource> operation = new BillingArmOperation<BillingSubscriptionAliasResource>(
+                    new BillingSubscriptionAliasResourceOperationSource(Client),
+                    _billingSubscriptionsAliasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +174,42 @@ namespace Azure.ResourceManager.Billing
         /// Gets a subscription by its alias ID.  The operation is supported for seat based billing subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingSubscriptionAliases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<BillingSubscriptionAliasResource>> GetAsync(string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.Get");
+            using DiagnosticScope scope = _billingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.Get");
             scope.Start();
             try
             {
-                var response = await _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.GetAsync(Id.Name, aliasName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingSubscriptionsAliasesRestClient.CreateGetRequest(Id.Name, aliasName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingSubscriptionAliasData> response = Response.FromValue(BillingSubscriptionAliasData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingSubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +223,42 @@ namespace Azure.ResourceManager.Billing
         /// Gets a subscription by its alias ID.  The operation is supported for seat based billing subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingSubscriptionAliases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<BillingSubscriptionAliasResource> Get(string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.Get");
+            using DiagnosticScope scope = _billingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.Get");
             scope.Start();
             try
             {
-                var response = _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.Get(Id.Name, aliasName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingSubscriptionsAliasesRestClient.CreateGetRequest(Id.Name, aliasName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingSubscriptionAliasData> response = Response.FromValue(BillingSubscriptionAliasData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingSubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,102 +272,142 @@ namespace Azure.ResourceManager.Billing
         /// Lists the subscription aliases for a billing account. The operation is supported for seat based billing subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptionsAliases_ListByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingSubscriptionAliases_ListByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="includeDeleted"> Can be used to get deleted billing subscriptions. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingSubscriptionAliasResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingSubscriptionAliasResource> GetAllAsync(BillingSubscriptionAliasCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingSubscriptionAliasResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingSubscriptionAliasResource> GetAllAsync(bool? includeDeleted = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingSubscriptionAliasCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountRequest(Id.Name, options.IncludeDeleted, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountNextPageRequest(nextLink, Id.Name, options.IncludeDeleted, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionAliasResource(Client, BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(e)), _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics, Pipeline, "BillingSubscriptionAliasCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingSubscriptionAliasData, BillingSubscriptionAliasResource>(new BillingSubscriptionsAliasesGetByBillingAccountAsyncCollectionResultOfT(
+                _billingSubscriptionsAliasesRestClient,
+                Id.Name,
+                includeDeleted,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingSubscriptionAliasCollection.GetAll"), data => new BillingSubscriptionAliasResource(Client, data));
         }
 
         /// <summary>
         /// Lists the subscription aliases for a billing account. The operation is supported for seat based billing subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptionsAliases_ListByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingSubscriptionAliases_ListByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="includeDeleted"> Can be used to get deleted billing subscriptions. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingSubscriptionAliasResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingSubscriptionAliasResource> GetAll(BillingSubscriptionAliasCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingSubscriptionAliasResource> GetAll(bool? includeDeleted = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingSubscriptionAliasCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountRequest(Id.Name, options.IncludeDeleted, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountNextPageRequest(nextLink, Id.Name, options.IncludeDeleted, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionAliasResource(Client, BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(e)), _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics, Pipeline, "BillingSubscriptionAliasCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingSubscriptionAliasData, BillingSubscriptionAliasResource>(new BillingSubscriptionsAliasesGetByBillingAccountCollectionResultOfT(
+                _billingSubscriptionsAliasesRestClient,
+                Id.Name,
+                includeDeleted,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingSubscriptionAliasCollection.GetAll"), data => new BillingSubscriptionAliasResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingSubscriptionAliases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.Exists");
+            using DiagnosticScope scope = _billingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.GetAsync(Id.Name, aliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingSubscriptionsAliasesRestClient.CreateGetRequest(Id.Name, aliasName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingSubscriptionAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingSubscriptionAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingSubscriptionAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -353,36 +421,50 @@ namespace Azure.ResourceManager.Billing
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingSubscriptionAliases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.Exists");
+            using DiagnosticScope scope = _billingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.Exists");
             scope.Start();
             try
             {
-                var response = _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.Get(Id.Name, aliasName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingSubscriptionsAliasesRestClient.CreateGetRequest(Id.Name, aliasName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingSubscriptionAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingSubscriptionAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingSubscriptionAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -396,38 +478,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingSubscriptionAliases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<BillingSubscriptionAliasResource>> GetIfExistsAsync(string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.GetIfExists");
+            using DiagnosticScope scope = _billingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.GetAsync(Id.Name, aliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingSubscriptionsAliasesRestClient.CreateGetRequest(Id.Name, aliasName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingSubscriptionAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingSubscriptionAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingSubscriptionAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingSubscriptionAliasResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingSubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -441,38 +539,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingSubscriptionAliases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<BillingSubscriptionAliasResource> GetIfExists(string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.GetIfExists");
+            using DiagnosticScope scope = _billingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.Get(Id.Name, aliasName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingSubscriptionsAliasesRestClient.CreateGetRequest(Id.Name, aliasName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingSubscriptionAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingSubscriptionAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingSubscriptionAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingSubscriptionAliasResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingSubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -484,17 +598,18 @@ namespace Azure.ResourceManager.Billing
 
         IEnumerator<BillingSubscriptionAliasResource> IEnumerable<BillingSubscriptionAliasResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BillingSubscriptionAliasResource> IAsyncEnumerable<BillingSubscriptionAliasResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

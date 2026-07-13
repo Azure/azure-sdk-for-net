@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string clusterJobApiVersion);
             _clusterJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _clusterJobsRestClient = new ClusterJobs(_clusterJobsClientDiagnostics, Pipeline, Endpoint, clusterJobApiVersion ?? "2026-04-01-preview");
+            _clusterJobsRestClient = new ClusterJobs(_clusterJobsClientDiagnostics, Pipeline, Endpoint, clusterJobApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clusterJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ClusterJobData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<ClusterJobResource> operation = new HciArmOperation<ClusterJobResource>(
-                    new ClusterJobOperationSource(Client),
+                    new ClusterJobResourceOperationSource(Client),
                     _clusterJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clusterJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ClusterJobData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<ClusterJobResource> operation = new HciArmOperation<ClusterJobResource>(
-                    new ClusterJobOperationSource(Client),
+                    new ClusterJobResourceOperationSource(Client),
                     _clusterJobsClientDiagnostics,
                     Pipeline,
                     message.Request,

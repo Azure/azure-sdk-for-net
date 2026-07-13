@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch
                 HttpMessage message = _batchAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, BatchAccountCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BatchArmOperation<BatchAccountResource> operation = new BatchArmOperation<BatchAccountResource>(
-                    new BatchAccountOperationSource(Client),
+                    new BatchAccountResourceOperationSource(Client),
                     _batchAccountClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Batch
                 HttpMessage message = _batchAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, BatchAccountCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BatchArmOperation<BatchAccountResource> operation = new BatchArmOperation<BatchAccountResource>(
-                    new BatchAccountOperationSource(Client),
+                    new BatchAccountResourceOperationSource(Client),
                     _batchAccountClientDiagnostics,
                     Pipeline,
                     message.Request,

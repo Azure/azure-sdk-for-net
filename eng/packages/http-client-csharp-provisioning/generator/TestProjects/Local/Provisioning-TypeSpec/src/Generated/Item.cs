@@ -144,6 +144,23 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets or sets the NullableValue. </summary>
+        public BicepValue<string> NullableValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NullableValue;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ItemProperties();
+                }
+                Properties.NullableValue = value;
+            }
+        }
+
         /// <summary> Gets or sets the Attributes. </summary>
         public ItemAttributes Attributes
         {

@@ -51,8 +51,5 @@ namespace Azure.AI.VoiceLive
         /// Supported: 'latency', 'tool'.
         /// </summary>
         public IList<InterimResponseTrigger> Triggers { get; }
-
-        /// <summary> Latency threshold in milliseconds before triggering interim response. Default is 2000ms. </summary>
-        public int? LatencyThresholdMs { get; set; }
     }
 }

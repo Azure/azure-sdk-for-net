@@ -6,48 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing a ServiceWorkspaceTagOperationLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceWorkspaceTagOperationLinkResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetServiceWorkspaceTagOperationLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceWorkspaceTagResource"/> using the GetServiceWorkspaceTagOperationLink method.
+    /// A class representing a ServiceWorkspaceTagOperationLink along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceWorkspaceTagOperationLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceWorkspaceTagResource"/> using the GetServiceWorkspaceTagOperationLinks method.
     /// </summary>
     public partial class ServiceWorkspaceTagOperationLinkResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ServiceWorkspaceTagOperationLinkResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="serviceName"> The serviceName. </param>
-        /// <param name="workspaceId"> The workspaceId. </param>
-        /// <param name="tagId"> The tagId. </param>
-        /// <param name="operationLinkId"> The operationLinkId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, string operationLinkId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}/operationLinks/{operationLinkId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkClientDiagnostics;
-        private readonly WorkspaceTagOperationLinkRestOperations _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkRestClient;
+        private readonly ClientDiagnostics _workspaceTagOperationLinkClientDiagnostics;
+        private readonly WorkspaceTagOperationLink _workspaceTagOperationLinkRestClient;
         private readonly TagOperationLinkContractData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/workspaces/tags/operationLinks";
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceWorkspaceTagOperationLinkResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ServiceWorkspaceTagOperationLinkResource for mocking. </summary>
         protected ServiceWorkspaceTagOperationLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceWorkspaceTagOperationLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceWorkspaceTagOperationLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceWorkspaceTagOperationLinkResource(ArmClient client, TagOperationLinkContractData data) : this(client, data.Id)
@@ -56,71 +43,95 @@ namespace Azure.ResourceManager.ApiManagement
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceWorkspaceTagOperationLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceWorkspaceTagOperationLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceWorkspaceTagOperationLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkApiVersion);
-            _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkRestClient = new WorkspaceTagOperationLinkRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string serviceWorkspaceTagOperationLinkApiVersion);
+            _workspaceTagOperationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _workspaceTagOperationLinkRestClient = new WorkspaceTagOperationLink(_workspaceTagOperationLinkClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceTagOperationLinkApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual TagOperationLinkContractData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="workspaceId"> The workspaceId. </param>
+        /// <param name="tagId"> The tagId. </param>
+        /// <param name="operationLinkId"> The operationLinkId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string tagId, string operationLinkId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}/operationLinks/{operationLinkId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the operation link for the tag.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}/operationLinks/{operationLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}/operationLinks/{operationLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceTagOperationLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceTagOperationLink_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceTagOperationLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspaceTagOperationLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceWorkspaceTagOperationLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagOperationLinkResource.Get");
+            using DiagnosticScope scope = _workspaceTagOperationLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagOperationLinkResource.Get");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceTagOperationLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TagOperationLinkContractData> response = Response.FromValue(TagOperationLinkContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspaceTagOperationLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +145,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the operation link for the tag.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}/operationLinks/{operationLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}/operationLinks/{operationLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceTagOperationLink_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceTagOperationLink_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceTagOperationLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspaceTagOperationLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceWorkspaceTagOperationLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagOperationLinkResource.Get");
+            using DiagnosticScope scope = _workspaceTagOperationLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagOperationLinkResource.Get");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceTagOperationLinkRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TagOperationLinkContractData> response = Response.FromValue(TagOperationLinkContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspaceTagOperationLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -174,20 +193,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Deletes the specified operation from the specified tag.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}/operationLinks/{operationLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}/operationLinks/{operationLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceTagOperationLink_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceTagOperationLink_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceTagOperationLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspaceTagOperationLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,16 +214,23 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagOperationLinkResource.Delete");
+            using DiagnosticScope scope = _workspaceTagOperationLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagOperationLinkResource.Delete");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceTagOperationLinkRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -218,20 +244,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// Deletes the specified operation from the specified tag.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}/operationLinks/{operationLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}/operationLinks/{operationLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceTagOperationLink_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceTagOperationLink_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceTagOperationLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspaceTagOperationLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,16 +265,23 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagOperationLinkResource.Delete");
+            using DiagnosticScope scope = _workspaceTagOperationLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagOperationLinkResource.Delete");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceTagOperationLinkRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -259,23 +292,23 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Adds an operation to the specified tag via link.
+        /// Update a ServiceWorkspaceTagOperationLink.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}/operationLinks/{operationLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}/operationLinks/{operationLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceTagOperationLink_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceTagOperationLink_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceTagOperationLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspaceTagOperationLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,16 +320,24 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagOperationLinkResource.Update");
+            using DiagnosticScope scope = _workspaceTagOperationLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagOperationLinkResource.Update");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ServiceWorkspaceTagOperationLinkResource>(Response.FromValue(new ServiceWorkspaceTagOperationLinkResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceTagOperationLinkRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TagOperationLinkContractData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TagOperationLinkContractData> response = Response.FromValue(TagOperationLinkContractData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ServiceWorkspaceTagOperationLinkResource> operation = new ApiManagementArmOperation<ServiceWorkspaceTagOperationLinkResource>(Response.FromValue(new ServiceWorkspaceTagOperationLinkResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -307,23 +348,23 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Adds an operation to the specified tag via link.
+        /// Update a ServiceWorkspaceTagOperationLink.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}/operationLinks/{operationLinkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/tags/{tagId}/operationLinks/{operationLinkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceTagOperationLink_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceTagOperationLink_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceTagOperationLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ServiceWorkspaceTagOperationLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,16 +376,24 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagOperationLinkResource.Update");
+            using DiagnosticScope scope = _workspaceTagOperationLinkClientDiagnostics.CreateScope("ServiceWorkspaceTagOperationLinkResource.Update");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _serviceWorkspaceTagOperationLinkWorkspaceTagOperationLinkRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ServiceWorkspaceTagOperationLinkResource>(Response.FromValue(new ServiceWorkspaceTagOperationLinkResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceTagOperationLinkRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TagOperationLinkContractData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TagOperationLinkContractData> response = Response.FromValue(TagOperationLinkContractData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ServiceWorkspaceTagOperationLinkResource> operation = new ApiManagementArmOperation<ServiceWorkspaceTagOperationLinkResource>(Response.FromValue(new ServiceWorkspaceTagOperationLinkResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

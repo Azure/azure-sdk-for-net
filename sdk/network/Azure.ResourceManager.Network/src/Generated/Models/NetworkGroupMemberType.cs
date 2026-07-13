@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct NetworkGroupMemberType : IEquatable<NetworkGroupMemberType>
     {
         private readonly string _value;
+        /// <summary> VirtualNetwork. </summary>
+        private const string VirtualNetworkValue = "VirtualNetwork";
+        /// <summary> Subnet. </summary>
+        private const string SubnetValue = "Subnet";
 
         /// <summary> Initializes a new instance of <see cref="NetworkGroupMemberType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkGroupMemberType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string VirtualNetworkValue = "VirtualNetwork";
-        private const string SubnetValue = "Subnet";
+            _value = value;
+        }
 
         /// <summary> VirtualNetwork. </summary>
         public static NetworkGroupMemberType VirtualNetwork { get; } = new NetworkGroupMemberType(VirtualNetworkValue);
+
         /// <summary> Subnet. </summary>
         public static NetworkGroupMemberType Subnet { get; } = new NetworkGroupMemberType(SubnetValue);
+
         /// <summary> Determines if two <see cref="NetworkGroupMemberType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkGroupMemberType left, NetworkGroupMemberType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkGroupMemberType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkGroupMemberType left, NetworkGroupMemberType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkGroupMemberType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkGroupMemberType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkGroupMemberType(string value) => new NetworkGroupMemberType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkGroupMemberType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkGroupMemberType?(string value) => value == null ? null : new NetworkGroupMemberType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkGroupMemberType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkGroupMemberType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

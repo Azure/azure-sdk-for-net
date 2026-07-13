@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _privateEndpointConnectionResourcesRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<BackupPrivateEndpointConnectionResource> operation = new RecoveryServicesBackupArmOperation<BackupPrivateEndpointConnectionResource>(
-                    new BackupPrivateEndpointConnectionOperationSource(Client),
+                    new BackupPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _privateEndpointConnectionResourcesRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<BackupPrivateEndpointConnectionResource> operation = new RecoveryServicesBackupArmOperation<BackupPrivateEndpointConnectionResource>(
-                    new BackupPrivateEndpointConnectionOperationSource(Client),
+                    new BackupPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

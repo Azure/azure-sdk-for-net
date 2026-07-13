@@ -93,7 +93,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _testCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, certificateName, TestCertificateCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<TestCertificateResource> operation = new TestsArmOperation<TestCertificateResource>(
-                    new TestCertificateOperationSource(Client),
+                    new TestCertificateResourceOperationSource(Client),
                     _testCertificatesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _testCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, certificateName, TestCertificateCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<TestCertificateResource> operation = new TestsArmOperation<TestCertificateResource>(
-                    new TestCertificateOperationSource(Client),
+                    new TestCertificateResourceOperationSource(Client),
                     _testCertificatesClientDiagnostics,
                     Pipeline,
                     message.Request,

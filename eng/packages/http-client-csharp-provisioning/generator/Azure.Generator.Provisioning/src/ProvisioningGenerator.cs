@@ -21,6 +21,7 @@ namespace Azure.Generator.Provisioning
     {
         private static ProvisioningGenerator? _instance;
         private ProvisioningOutputLibrary? _outputLibrary;
+        private ProvisioningInputLibrary? _inputLibrary;
 
         /// <summary>
         /// Gets the singleton instance of the provisioning generator.
@@ -43,7 +44,10 @@ namespace Azure.Generator.Provisioning
         public override ProvisioningOutputLibrary OutputLibrary => _outputLibrary ??= new ProvisioningOutputLibrary();
 
         /// <inheritdoc/>
-        public override ManagementTypeFactory TypeFactory { get; }
+        public override ProvisioningInputLibrary InputLibrary => _inputLibrary ??= new ProvisioningInputLibrary(Configuration.OutputDirectory);
+
+        /// <inheritdoc/>
+        public override ProvisioningTypeFactory TypeFactory { get; }
 
         /// <inheritdoc/>
         protected override void Configure()

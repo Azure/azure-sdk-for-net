@@ -13,12 +13,14 @@ namespace Azure.ResourceManager.Cdn.Models
     // After the TypeSpec migration, the discriminator was changed to the string-typed TypeName property. The old API is preserved here and bridges to TypeName.
     public partial class DeliveryRuleSslProtocolMatchCondition
     {
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DeliveryRuleSslProtocolMatchCondition(SslProtocolMatchConditionType sslProtocolMatchConditionType, SslProtocolOperator sslProtocolOperator) : this(sslProtocolOperator)
         {
             SslProtocolMatchConditionType = sslProtocolMatchConditionType;
         }
 
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public SslProtocolMatchConditionType SslProtocolMatchConditionType
         {

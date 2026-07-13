@@ -33,7 +33,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The type of the input item. Always `input_image`. </summary>
-        internal string Type { get; } = "input_image";
+        public string Type { get; } = "input_image";
 
         /// <summary> Gets or sets the ImageUrl. </summary>
         public Uri ImageUrl { get; set; }

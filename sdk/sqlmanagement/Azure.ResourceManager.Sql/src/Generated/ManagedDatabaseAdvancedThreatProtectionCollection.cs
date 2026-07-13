@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedDatabaseAdvancedThreatProtectionCollection : ArmCollection, IEnumerable<ManagedDatabaseAdvancedThreatProtectionResource>, IAsyncEnumerable<ManagedDatabaseAdvancedThreatProtectionResource>
     {
-        private readonly ClientDiagnostics _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics;
-        private readonly ManagedDatabaseAdvancedThreatProtectionSettingsRestOperations _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient;
+        private readonly ClientDiagnostics _managedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics;
+        private readonly ManagedDatabaseAdvancedThreatProtectionSettings _managedDatabaseAdvancedThreatProtectionSettingsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseAdvancedThreatProtectionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ManagedDatabaseAdvancedThreatProtectionCollection for mocking. </summary>
         protected ManagedDatabaseAdvancedThreatProtectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseAdvancedThreatProtectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseAdvancedThreatProtectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagedDatabaseAdvancedThreatProtectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseAdvancedThreatProtectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ManagedDatabaseAdvancedThreatProtectionResource.ResourceType, out string managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsApiVersion);
-            _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient = new ManagedDatabaseAdvancedThreatProtectionSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ManagedDatabaseAdvancedThreatProtectionResource.ResourceType, out string managedDatabaseAdvancedThreatProtectionApiVersion);
+            _managedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseAdvancedThreatProtectionResource.ResourceType.Namespace, Diagnostics);
+            _managedDatabaseAdvancedThreatProtectionSettingsRestClient = new ManagedDatabaseAdvancedThreatProtectionSettings(_managedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, Endpoint, managedDatabaseAdvancedThreatProtectionApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ManagedDatabaseResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedDatabaseResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagedDatabaseResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a managed database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedDatabaseAdvancedThreatProtections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseAdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,16 +81,24 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _managedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SqlArmOperation<ManagedDatabaseAdvancedThreatProtectionResource>(Response.FromValue(new ManagedDatabaseAdvancedThreatProtectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName.ToString(), ManagedDatabaseAdvancedThreatProtectionData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ManagedDatabaseAdvancedThreatProtectionData> response = Response.FromValue(ManagedDatabaseAdvancedThreatProtectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SqlArmOperation<ManagedDatabaseAdvancedThreatProtectionResource> operation = new SqlArmOperation<ManagedDatabaseAdvancedThreatProtectionResource>(Response.FromValue(new ManagedDatabaseAdvancedThreatProtectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +112,16 @@ namespace Azure.ResourceManager.Sql
         /// Creates or updates a managed database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedDatabaseAdvancedThreatProtections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseAdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,16 +134,24 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _managedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName, data, cancellationToken);
-                var uri = _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SqlArmOperation<ManagedDatabaseAdvancedThreatProtectionResource>(Response.FromValue(new ManagedDatabaseAdvancedThreatProtectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName.ToString(), ManagedDatabaseAdvancedThreatProtectionData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ManagedDatabaseAdvancedThreatProtectionData> response = Response.FromValue(ManagedDatabaseAdvancedThreatProtectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SqlArmOperation<ManagedDatabaseAdvancedThreatProtectionResource> operation = new SqlArmOperation<ManagedDatabaseAdvancedThreatProtectionResource>(Response.FromValue(new ManagedDatabaseAdvancedThreatProtectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,20 +165,16 @@ namespace Azure.ResourceManager.Sql
         /// Gets a managed database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedDatabaseAdvancedThreatProtections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseAdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -175,13 +182,21 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ManagedDatabaseAdvancedThreatProtectionResource>> GetAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.Get");
+            using DiagnosticScope scope = _managedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ManagedDatabaseAdvancedThreatProtectionData> response = Response.FromValue(ManagedDatabaseAdvancedThreatProtectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedDatabaseAdvancedThreatProtectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,20 +210,16 @@ namespace Azure.ResourceManager.Sql
         /// Gets a managed database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedDatabaseAdvancedThreatProtections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseAdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,13 +227,21 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedDatabaseAdvancedThreatProtectionResource> Get(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.Get");
+            using DiagnosticScope scope = _managedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ManagedDatabaseAdvancedThreatProtectionData> response = Response.FromValue(ManagedDatabaseAdvancedThreatProtectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedDatabaseAdvancedThreatProtectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -236,50 +255,51 @@ namespace Azure.ResourceManager.Sql
         /// Gets a list of managed database's Advanced Threat Protection states.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_ListByDatabase</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedDatabaseAdvancedThreatProtections_ListByDatabase. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseAdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedDatabaseAdvancedThreatProtectionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedDatabaseAdvancedThreatProtectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDatabaseAdvancedThreatProtectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseAdvancedThreatProtectionResource(Client, ManagedDatabaseAdvancedThreatProtectionData.DeserializeManagedDatabaseAdvancedThreatProtectionData(e)), _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ManagedDatabaseAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ManagedDatabaseAdvancedThreatProtectionData, ManagedDatabaseAdvancedThreatProtectionResource>(new ManagedDatabaseAdvancedThreatProtectionSettingsGetByDatabaseAsyncCollectionResultOfT(
+                _managedDatabaseAdvancedThreatProtectionSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ManagedDatabaseAdvancedThreatProtectionCollection.GetAll"), data => new ManagedDatabaseAdvancedThreatProtectionResource(Client, data));
         }
 
         /// <summary>
         /// Gets a list of managed database's Advanced Threat Protection states.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_ListByDatabase</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedDatabaseAdvancedThreatProtections_ListByDatabase. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseAdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,29 +307,34 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedDatabaseAdvancedThreatProtectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDatabaseAdvancedThreatProtectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseAdvancedThreatProtectionResource(Client, ManagedDatabaseAdvancedThreatProtectionData.DeserializeManagedDatabaseAdvancedThreatProtectionData(e)), _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ManagedDatabaseAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ManagedDatabaseAdvancedThreatProtectionData, ManagedDatabaseAdvancedThreatProtectionResource>(new ManagedDatabaseAdvancedThreatProtectionSettingsGetByDatabaseCollectionResultOfT(
+                _managedDatabaseAdvancedThreatProtectionSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ManagedDatabaseAdvancedThreatProtectionCollection.GetAll"), data => new ManagedDatabaseAdvancedThreatProtectionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedDatabaseAdvancedThreatProtections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseAdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,11 +342,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.Exists");
+            using DiagnosticScope scope = _managedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ManagedDatabaseAdvancedThreatProtectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedDatabaseAdvancedThreatProtectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedDatabaseAdvancedThreatProtectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -335,20 +378,16 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedDatabaseAdvancedThreatProtections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseAdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,11 +395,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.Exists");
+            using DiagnosticScope scope = _managedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ManagedDatabaseAdvancedThreatProtectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedDatabaseAdvancedThreatProtectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedDatabaseAdvancedThreatProtectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -374,20 +431,16 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedDatabaseAdvancedThreatProtections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseAdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,13 +448,33 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<ManagedDatabaseAdvancedThreatProtectionResource>> GetIfExistsAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.GetIfExists");
+            using DiagnosticScope scope = _managedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ManagedDatabaseAdvancedThreatProtectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedDatabaseAdvancedThreatProtectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedDatabaseAdvancedThreatProtectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ManagedDatabaseAdvancedThreatProtectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedDatabaseAdvancedThreatProtectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -415,20 +488,16 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedDatabaseAdvancedThreatProtectionSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedDatabaseAdvancedThreatProtections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDatabaseAdvancedThreatProtectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -436,13 +505,33 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<ManagedDatabaseAdvancedThreatProtectionResource> GetIfExists(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.GetIfExists");
+            using DiagnosticScope scope = _managedDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ManagedDatabaseAdvancedThreatProtectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _managedDatabaseAdvancedThreatProtectionManagedDatabaseAdvancedThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedDatabaseAdvancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ManagedDatabaseAdvancedThreatProtectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedDatabaseAdvancedThreatProtectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedDatabaseAdvancedThreatProtectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ManagedDatabaseAdvancedThreatProtectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedDatabaseAdvancedThreatProtectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -462,6 +551,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ManagedDatabaseAdvancedThreatProtectionResource> IAsyncEnumerable<ManagedDatabaseAdvancedThreatProtectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

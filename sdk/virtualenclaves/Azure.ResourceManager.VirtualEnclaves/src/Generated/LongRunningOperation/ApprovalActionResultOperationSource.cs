@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         ApprovalActionResult IOperationSource<ApprovalActionResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ApprovalActionResult result = ApprovalActionResult.DeserializeApprovalActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ApprovalActionResult.DeserializeApprovalActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         async ValueTask<ApprovalActionResult> IOperationSource<ApprovalActionResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ApprovalActionResult result = ApprovalActionResult.DeserializeApprovalActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ApprovalActionResult.DeserializeApprovalActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.NetApp
         NetAppKeyVaultStatusResult IOperationSource<NetAppKeyVaultStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetAppKeyVaultStatusResult result = NetAppKeyVaultStatusResult.DeserializeNetAppKeyVaultStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return NetAppKeyVaultStatusResult.DeserializeNetAppKeyVaultStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.NetApp
         async ValueTask<NetAppKeyVaultStatusResult> IOperationSource<NetAppKeyVaultStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetAppKeyVaultStatusResult result = NetAppKeyVaultStatusResult.DeserializeNetAppKeyVaultStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return NetAppKeyVaultStatusResult.DeserializeNetAppKeyVaultStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

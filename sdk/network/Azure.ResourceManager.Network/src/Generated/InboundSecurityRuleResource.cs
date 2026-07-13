@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing an InboundSecurityRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="InboundSecurityRuleResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetInboundSecurityRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkVirtualApplianceResource"/> using the GetInboundSecurityRule method.
+    /// A class representing a InboundSecurityRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="InboundSecurityRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkVirtualApplianceResource"/> using the GetInboundSecurityRules method.
     /// </summary>
     public partial class InboundSecurityRuleResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="InboundSecurityRuleResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="networkVirtualApplianceName"> The networkVirtualApplianceName. </param>
-        /// <param name="ruleCollectionName"> The ruleCollectionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string ruleCollectionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
         private readonly ClientDiagnostics _inboundSecurityRuleClientDiagnostics;
-        private readonly InboundSecurityRuleRestOperations _inboundSecurityRuleRestClient;
+        private readonly InboundSecurityRule _inboundSecurityRuleRestClient;
         private readonly InboundSecurityRuleData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/networkVirtualAppliances/inboundSecurityRules";
 
-        /// <summary> Initializes a new instance of the <see cref="InboundSecurityRuleResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of InboundSecurityRuleResource for mocking. </summary>
         protected InboundSecurityRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="InboundSecurityRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundSecurityRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal InboundSecurityRuleResource(ArmClient client, InboundSecurityRuleData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.Network
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="InboundSecurityRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundSecurityRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal InboundSecurityRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _inboundSecurityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string inboundSecurityRuleApiVersion);
-            _inboundSecurityRuleRestClient = new InboundSecurityRuleRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, inboundSecurityRuleApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _inboundSecurityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _inboundSecurityRuleRestClient = new InboundSecurityRule(_inboundSecurityRuleClientDiagnostics, Pipeline, Endpoint, inboundSecurityRuleApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual InboundSecurityRuleData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkVirtualApplianceName"> The networkVirtualApplianceName. </param>
+        /// <param name="ruleCollectionName"> The ruleCollectionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string ruleCollectionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Retrieves the available specified Network Virtual Appliance Inbound Security Rules Collection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InboundSecurityRule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InboundSecurityRuleOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InboundSecurityRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InboundSecurityRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<InboundSecurityRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleResource.Get");
+            using DiagnosticScope scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleResource.Get");
             scope.Start();
             try
             {
-                var response = await _inboundSecurityRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<InboundSecurityRuleData> response = Response.FromValue(InboundSecurityRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new InboundSecurityRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.Network
         /// Retrieves the available specified Network Virtual Appliance Inbound Security Rules Collection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InboundSecurityRule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InboundSecurityRuleOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InboundSecurityRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InboundSecurityRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<InboundSecurityRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleResource.Get");
+            using DiagnosticScope scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleResource.Get");
             scope.Start();
             try
             {
-                var response = _inboundSecurityRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<InboundSecurityRuleData> response = Response.FromValue(InboundSecurityRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new InboundSecurityRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -169,23 +188,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates the specified Network Virtual Appliance Inbound Security Rules.
+        /// Update a InboundSecurityRule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InboundSecurityRule_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> InboundSecurityRuleOperationGroup_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InboundSecurityRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InboundSecurityRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,14 +216,27 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleResource.Update");
+            using DiagnosticScope scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleResource.Update");
             scope.Start();
             try
             {
-                var response = await _inboundSecurityRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<InboundSecurityRuleResource>(new InboundSecurityRuleOperationSource(Client), _inboundSecurityRuleClientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, InboundSecurityRuleData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<InboundSecurityRuleResource> operation = new NetworkArmOperation<InboundSecurityRuleResource>(
+                    new InboundSecurityRuleResourceOperationSource(Client),
+                    _inboundSecurityRuleClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,23 +247,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates the specified Network Virtual Appliance Inbound Security Rules.
+        /// Update a InboundSecurityRule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InboundSecurityRule_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> InboundSecurityRuleOperationGroup_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InboundSecurityRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="InboundSecurityRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,14 +275,27 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleResource.Update");
+            using DiagnosticScope scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleResource.Update");
             scope.Start();
             try
             {
-                var response = _inboundSecurityRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NetworkArmOperation<InboundSecurityRuleResource>(new InboundSecurityRuleOperationSource(Client), _inboundSecurityRuleClientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, InboundSecurityRuleData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<InboundSecurityRuleResource> operation = new NetworkArmOperation<InboundSecurityRuleResource>(
+                    new InboundSecurityRuleResourceOperationSource(Client),
+                    _inboundSecurityRuleClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

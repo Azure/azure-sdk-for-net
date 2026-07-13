@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Client options for <see cref="VoiceLiveClient"/>. </summary>
-    public partial class VoiceLiveClientOptions
+    public partial class VoiceLiveClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_10_01;
 
@@ -25,16 +25,8 @@ namespace Azure.AI.VoiceLive
                 _ => throw new NotSupportedException()
             };
 
-            InternalOptions = new VoiceLiveClientOptionsInternal();
             Headers = new Dictionary<string, string>();
         }
-
-        internal VoiceLiveClientOptionsInternal InternalOptions { get; }
-
-        /// <summary>
-        /// Gets the client diagnostic options.
-        /// </summary>
-        public DiagnosticsOptions Diagnostics { get => InternalOptions.Diagnostics; }
 
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct NetworkInterfaceNicType : IEquatable<NetworkInterfaceNicType>
     {
         private readonly string _value;
+        /// <summary> Standard. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Elastic. </summary>
+        private const string ElasticValue = "Elastic";
 
         /// <summary> Initializes a new instance of <see cref="NetworkInterfaceNicType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkInterfaceNicType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardValue = "Standard";
-        private const string ElasticValue = "Elastic";
+            _value = value;
+        }
 
         /// <summary> Standard. </summary>
         public static NetworkInterfaceNicType Standard { get; } = new NetworkInterfaceNicType(StandardValue);
+
         /// <summary> Elastic. </summary>
         public static NetworkInterfaceNicType Elastic { get; } = new NetworkInterfaceNicType(ElasticValue);
+
         /// <summary> Determines if two <see cref="NetworkInterfaceNicType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkInterfaceNicType left, NetworkInterfaceNicType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkInterfaceNicType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkInterfaceNicType left, NetworkInterfaceNicType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkInterfaceNicType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkInterfaceNicType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkInterfaceNicType(string value) => new NetworkInterfaceNicType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkInterfaceNicType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkInterfaceNicType?(string value) => value == null ? null : new NetworkInterfaceNicType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkInterfaceNicType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkInterfaceNicType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

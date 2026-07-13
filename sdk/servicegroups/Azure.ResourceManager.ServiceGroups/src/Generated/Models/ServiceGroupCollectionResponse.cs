@@ -12,6 +12,7 @@ using Azure.ResourceManager.ServiceGroups;
 
 namespace Azure.ResourceManager.ServiceGroups.Models
 {
+    /// <summary> Response holding an array of service groups and a nextLink that supports pagination. </summary>
     internal partial class ServiceGroupCollectionResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

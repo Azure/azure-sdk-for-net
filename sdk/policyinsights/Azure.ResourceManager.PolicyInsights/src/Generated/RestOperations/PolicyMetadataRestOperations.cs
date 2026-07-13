@@ -6,258 +6,101 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    internal partial class PolicyMetadataRestOperations
+    internal partial class PolicyMetadata
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of PolicyMetadataRestOperations. </summary>
+        /// <summary> Initializes a new instance of PolicyMetadata for mocking. </summary>
+        protected PolicyMetadata()
+        {
+        }
+
+        /// <summary> Initializes a new instance of PolicyMetadata. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public PolicyMetadataRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal PolicyMetadata(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-10-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetResourceRequestUri(string resourceName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetResourceRequest(string resourceName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyMetadata/", false);
             uri.AppendPath(resourceName, false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetResourceRequest(string resourceName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyMetadata/", false);
-            uri.AppendPath(resourceName, false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get policy metadata resource. </summary>
-        /// <param name="resourceName"> The name of the policy metadata resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public async Task<Response<PolicyMetadataData>> GetResourceAsync(string resourceName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetAllRequest(int? maxCount, RequestContext context)
         {
-            Argument.AssertNotNull(resourceName, nameof(resourceName));
-
-            using var message = CreateGetResourceRequest(resourceName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyMetadataData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyMetadataData.DeserializePolicyMetadataData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((PolicyMetadataData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get policy metadata resource. </summary>
-        /// <param name="resourceName"> The name of the policy metadata resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public Response<PolicyMetadataData> GetResource(string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceName, nameof(resourceName));
-
-            using var message = CreateGetResourceRequest(resourceName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyMetadataData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyMetadataData.DeserializePolicyMetadataData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((PolicyMetadataData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListRequestUri(PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyMetadata", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyMetadata", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get a list of the policy metadata resources. </summary>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<Models.PolicyMetadataCollection>> ListAsync(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, int? maxCount, RequestContext context)
         {
-            using var message = CreateListRequest(policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        Models.PolicyMetadataCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = Models.PolicyMetadataCollection.DeserializePolicyMetadataCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Get a list of the policy metadata resources. </summary>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models.PolicyMetadataCollection> List(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListRequest(policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        Models.PolicyMetadataCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = Models.PolicyMetadataCollection.DeserializePolicyMetadataCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> Get a list of the policy metadata resources. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<Models.PolicyMetadataCollection>> ListNextPageAsync(string nextLink, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListNextPageRequest(nextLink, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        Models.PolicyMetadataCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = Models.PolicyMetadataCollection.DeserializePolicyMetadataCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a list of the policy metadata resources. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<Models.PolicyMetadataCollection> ListNextPage(string nextLink, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListNextPageRequest(nextLink, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        Models.PolicyMetadataCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = Models.PolicyMetadataCollection.DeserializePolicyMetadataCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

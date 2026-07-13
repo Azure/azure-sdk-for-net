@@ -437,8 +437,8 @@ namespace Azure.Storage.Files.DataLake.Models
             PathPermissions permissions)
             => new PathSystemProperties()
             {
-                CreationTime = creationTime,
-                LastModifiedTime = lastModifiedTime,
+                CreatedOn = creationTime,
+                LastModifiedOn = lastModifiedTime,
                 ETag = eTag,
                 ContentLength = contentLength,
                 IsDirectory = isDirectory,

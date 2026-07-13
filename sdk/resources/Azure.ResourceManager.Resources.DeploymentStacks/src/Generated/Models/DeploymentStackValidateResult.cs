@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 
         /// <summary> Initializes a new instance of <see cref="DeploymentStackValidateResult"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Name of this resource. </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="error"> The error detail. </param>
         /// <param name="properties"> The validation result details. </param>
-        internal DeploymentStackValidateResult(ResourceIdentifier id, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, SystemData systemData, ResponseError error, DeploymentStackValidateProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentStackValidateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResponseError error, DeploymentStackValidateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Error = error;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The error detail. </summary>

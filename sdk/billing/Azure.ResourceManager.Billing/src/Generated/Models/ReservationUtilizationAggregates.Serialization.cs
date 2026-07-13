@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class ReservationUtilizationAggregates : IUtf8JsonSerializable, IJsonModel<ReservationUtilizationAggregates>
+    /// <summary> The aggregate values of reservation utilization. </summary>
+    public partial class ReservationUtilizationAggregates : IJsonModel<ReservationUtilizationAggregates>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationUtilizationAggregates>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReservationUtilizationAggregates PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeReservationUtilizationAggregates(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ReservationUtilizationAggregates>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReservationUtilizationAggregates IPersistableModel<ReservationUtilizationAggregates>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ReservationUtilizationAggregates>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReservationUtilizationAggregates>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Grain))
             {
                 writer.WritePropertyName("grain"u8);
@@ -55,15 +94,15 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("valueUnit"u8);
                 writer.WriteStringValue(ValueUnit);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,22 +111,27 @@ namespace Azure.ResourceManager.Billing.Models
             }
         }
 
-        ReservationUtilizationAggregates IJsonModel<ReservationUtilizationAggregates>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReservationUtilizationAggregates IJsonModel<ReservationUtilizationAggregates>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReservationUtilizationAggregates JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeReservationUtilizationAggregates(document.RootElement, options);
         }
 
-        internal static ReservationUtilizationAggregates DeserializeReservationUtilizationAggregates(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ReservationUtilizationAggregates DeserializeReservationUtilizationAggregates(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,169 +140,43 @@ namespace Azure.ResourceManager.Billing.Models
             string grainUnit = default;
             float? value = default;
             string valueUnit = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("grain"u8))
+                if (prop.NameEquals("grain"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    grain = property.Value.GetSingle();
+                    grain = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("grainUnit"u8))
+                if (prop.NameEquals("grainUnit"u8))
                 {
-                    grainUnit = property.Value.GetString();
+                    grainUnit = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    value = property.Value.GetSingle();
+                    value = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("valueUnit"u8))
+                if (prop.NameEquals("valueUnit"u8))
                 {
-                    valueUnit = property.Value.GetString();
+                    valueUnit = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ReservationUtilizationAggregates(grain, grainUnit, value, valueUnit, serializedAdditionalRawData);
+            return new ReservationUtilizationAggregates(grain, grainUnit, value, valueUnit, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Grain), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  grain: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Grain))
-                {
-                    builder.Append("  grain: ");
-                    builder.AppendLine($"'{Grain.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GrainUnit), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  grainUnit: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(GrainUnit))
-                {
-                    builder.Append("  grainUnit: ");
-                    if (GrainUnit.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{GrainUnit}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{GrainUnit}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  value: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Value))
-                {
-                    builder.Append("  value: ");
-                    builder.AppendLine($"'{Value.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValueUnit), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  valueUnit: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ValueUnit))
-                {
-                    builder.Append("  valueUnit: ");
-                    if (ValueUnit.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ValueUnit}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ValueUnit}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ReservationUtilizationAggregates>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ReservationUtilizationAggregates IPersistableModel<ReservationUtilizationAggregates>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeReservationUtilizationAggregates(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ReservationUtilizationAggregates>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

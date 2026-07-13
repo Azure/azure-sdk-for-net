@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 HttpMessage message = _ledgerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialLedgerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConfidentialLedgerArmOperation<ConfidentialLedgerResource> operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(
-                    new ConfidentialLedgerOperationSource(Client),
+                    new ConfidentialLedgerResourceOperationSource(Client),
                     _ledgerClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 HttpMessage message = _ledgerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialLedgerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConfidentialLedgerArmOperation<ConfidentialLedgerResource> operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(
-                    new ConfidentialLedgerOperationSource(Client),
+                    new ConfidentialLedgerResourceOperationSource(Client),
                     _ledgerClientDiagnostics,
                     Pipeline,
                     message.Request,

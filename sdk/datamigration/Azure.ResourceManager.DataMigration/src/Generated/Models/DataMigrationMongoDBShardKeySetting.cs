@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Describes a MongoDB shard key. </summary>
     public partial class DataMigrationMongoDBShardKeySetting
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBShardKeySetting"/>. </summary>
         /// <param name="fields"> The fields within the shard key. </param>
@@ -59,21 +31,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBShardKeySetting"/>. </summary>
         /// <param name="fields"> The fields within the shard key. </param>
         /// <param name="isUnique"> Whether the shard key is unique. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationMongoDBShardKeySetting(IList<DataMigrationMongoDBShardKeyField> fields, bool? isUnique, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationMongoDBShardKeySetting(IList<DataMigrationMongoDBShardKeyField> fields, bool? isUnique, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Fields = fields;
             IsUnique = isUnique;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBShardKeySetting"/> for deserialization. </summary>
-        internal DataMigrationMongoDBShardKeySetting()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The fields within the shard key. </summary>
         public IList<DataMigrationMongoDBShardKeyField> Fields { get; }
+
         /// <summary> Whether the shard key is unique. </summary>
         public bool? IsUnique { get; set; }
     }

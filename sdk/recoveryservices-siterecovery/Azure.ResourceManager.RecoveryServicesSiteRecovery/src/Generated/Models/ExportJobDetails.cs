@@ -14,26 +14,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class ExportJobDetails : SiteRecoveryJobDetails
     {
         /// <summary> Initializes a new instance of <see cref="ExportJobDetails"/>. </summary>
-        internal ExportJobDetails()
+        internal ExportJobDetails() : base("ExportJobDetails")
         {
-            InstanceType = "ExportJobDetails";
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportJobDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="blobUri"> BlobUri of the exported jobs. </param>
         /// <param name="sasToken"> The sas token to access blob. </param>
-        internal ExportJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri blobUri, string sasToken) : base(instanceType, affectedObjectDetails, serializedAdditionalRawData)
+        internal ExportJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri blobUri, string sasToken) : base(instanceType, affectedObjectDetails, additionalBinaryDataProperties)
         {
             BlobUri = blobUri;
             SasToken = sasToken;
-            InstanceType = instanceType ?? "ExportJobDetails";
         }
 
         /// <summary> BlobUri of the exported jobs. </summary>
         public Uri BlobUri { get; }
+
         /// <summary> The sas token to access blob. </summary>
         public string SasToken { get; }
     }

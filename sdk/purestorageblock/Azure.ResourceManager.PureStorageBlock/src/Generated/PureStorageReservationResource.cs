@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _reservationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PureStorageReservationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PureStorageBlockArmOperation<PureStorageReservationResource> operation = new PureStorageBlockArmOperation<PureStorageReservationResource>(
-                    new PureStorageReservationOperationSource(Client),
+                    new PureStorageReservationResourceOperationSource(Client),
                     _reservationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _reservationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PureStorageReservationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PureStorageBlockArmOperation<PureStorageReservationResource> operation = new PureStorageBlockArmOperation<PureStorageReservationResource>(
-                    new PureStorageReservationOperationSource(Client),
+                    new PureStorageReservationResourceOperationSource(Client),
                     _reservationsClientDiagnostics,
                     Pipeline,
                     message.Request,

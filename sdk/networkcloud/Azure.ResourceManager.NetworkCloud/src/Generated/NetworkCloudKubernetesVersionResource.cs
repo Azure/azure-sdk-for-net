@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(ResourceType, out string networkCloudKubernetesVersionApiVersion);
             _kubernetesVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _kubernetesVersionsRestClient = new KubernetesVersions(_kubernetesVersionsClientDiagnostics, Pipeline, Endpoint, networkCloudKubernetesVersionApiVersion ?? "2026-01-01-preview");
+            _kubernetesVersionsRestClient = new KubernetesVersions(_kubernetesVersionsClientDiagnostics, Pipeline, Endpoint, networkCloudKubernetesVersionApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _kubernetesVersionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudKubernetesVersionPatch.ToRequestContent(patch), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudKubernetesVersionResource> operation = new NetworkCloudArmOperation<NetworkCloudKubernetesVersionResource>(
-                    new NetworkCloudKubernetesVersionOperationSource(Client),
+                    new NetworkCloudKubernetesVersionResourceOperationSource(Client),
                     _kubernetesVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _kubernetesVersionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudKubernetesVersionPatch.ToRequestContent(patch), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudKubernetesVersionResource> operation = new NetworkCloudArmOperation<NetworkCloudKubernetesVersionResource>(
-                    new NetworkCloudKubernetesVersionOperationSource(Client),
+                    new NetworkCloudKubernetesVersionResourceOperationSource(Client),
                     _kubernetesVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("NetworkCloudKubernetesVersionResource.Delete");
             scope.Start();
@@ -339,16 +339,10 @@ namespace Azure.ResourceManager.NetworkCloud
                 };
                 HttpMessage message = _kubernetesVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
-                    new NetworkCloudOperationStatusResultOperationSource(),
-                    _kubernetesVersionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                NetworkCloudArmOperation operation = new NetworkCloudArmOperation(_kubernetesVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -372,7 +366,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -383,7 +377,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _kubernetesVersionsClientDiagnostics.CreateScope("NetworkCloudKubernetesVersionResource.Delete");
             scope.Start();
@@ -395,16 +389,10 @@ namespace Azure.ResourceManager.NetworkCloud
                 };
                 HttpMessage message = _kubernetesVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
-                    new NetworkCloudOperationStatusResultOperationSource(),
-                    _kubernetesVersionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                NetworkCloudArmOperation operation = new NetworkCloudArmOperation(_kubernetesVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
             }

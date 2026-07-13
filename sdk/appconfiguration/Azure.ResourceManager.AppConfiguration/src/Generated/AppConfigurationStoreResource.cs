@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 HttpMessage message = _configurationStoresRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppConfigurationStorePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppConfigurationArmOperation<AppConfigurationStoreResource> operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(
-                    new AppConfigurationStoreOperationSource(Client),
+                    new AppConfigurationStoreResourceOperationSource(Client),
                     _configurationStoresClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 HttpMessage message = _configurationStoresRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppConfigurationStorePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppConfigurationArmOperation<AppConfigurationStoreResource> operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(
-                    new AppConfigurationStoreOperationSource(Client),
+                    new AppConfigurationStoreResourceOperationSource(Client),
                     _configurationStoresClientDiagnostics,
                     Pipeline,
                     message.Request,

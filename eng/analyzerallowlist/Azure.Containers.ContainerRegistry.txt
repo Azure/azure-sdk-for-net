@@ -1,0 +1,6 @@
+# Azure.Containers.ContainerRegistry approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# Owns a live Stream (IDisposable) returned from blob downloads; it is a resource
+# handle, not serializable data, so a model-factory method does not apply.
+nowarn:AZC0035 T:Azure.Containers.ContainerRegistry.DownloadRegistryBlobStreamingResult

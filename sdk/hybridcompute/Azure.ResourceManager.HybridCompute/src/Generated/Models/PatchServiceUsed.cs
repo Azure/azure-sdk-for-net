@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct PatchServiceUsed : IEquatable<PatchServiceUsed>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> WU. </summary>
+        private const string WUValue = "WU";
+        /// <summary> WU_WSUS. </summary>
+        private const string WUWsusValue = "WU_WSUS";
+        /// <summary> YUM. </summary>
+        private const string YumValue = "YUM";
+        /// <summary> APT. </summary>
+        private const string AptValue = "APT";
+        /// <summary> Zypper. </summary>
+        private const string ZypperValue = "Zypper";
 
         /// <summary> Initializes a new instance of <see cref="PatchServiceUsed"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PatchServiceUsed(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string WUValue = "WU";
-        private const string WUWsusValue = "WU_WSUS";
-        private const string YumValue = "YUM";
-        private const string AptValue = "APT";
-        private const string ZypperValue = "Zypper";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static PatchServiceUsed Unknown { get; } = new PatchServiceUsed(UnknownValue);
+
         /// <summary> WU. </summary>
         public static PatchServiceUsed WU { get; } = new PatchServiceUsed(WUValue);
+
         /// <summary> WU_WSUS. </summary>
         public static PatchServiceUsed WUWsus { get; } = new PatchServiceUsed(WUWsusValue);
+
         /// <summary> YUM. </summary>
         public static PatchServiceUsed Yum { get; } = new PatchServiceUsed(YumValue);
+
         /// <summary> APT. </summary>
         public static PatchServiceUsed Apt { get; } = new PatchServiceUsed(AptValue);
+
         /// <summary> Zypper. </summary>
         public static PatchServiceUsed Zypper { get; } = new PatchServiceUsed(ZypperValue);
+
         /// <summary> Determines if two <see cref="PatchServiceUsed"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PatchServiceUsed left, PatchServiceUsed right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PatchServiceUsed"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PatchServiceUsed left, PatchServiceUsed right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PatchServiceUsed"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PatchServiceUsed"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PatchServiceUsed(string value) => new PatchServiceUsed(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PatchServiceUsed"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PatchServiceUsed?(string value) => value == null ? null : new PatchServiceUsed(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PatchServiceUsed other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PatchServiceUsed other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

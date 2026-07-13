@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ConnectionMonitorEndpointFilterItemType : IEquatable<ConnectionMonitorEndpointFilterItemType>
     {
         private readonly string _value;
+        /// <summary> AgentAddress. </summary>
+        private const string AgentAddressValue = "AgentAddress";
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointFilterItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionMonitorEndpointFilterItemType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AgentAddressValue = "AgentAddress";
+            _value = value;
+        }
 
         /// <summary> AgentAddress. </summary>
         public static ConnectionMonitorEndpointFilterItemType AgentAddress { get; } = new ConnectionMonitorEndpointFilterItemType(AgentAddressValue);
+
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointFilterItemType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectionMonitorEndpointFilterItemType left, ConnectionMonitorEndpointFilterItemType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectionMonitorEndpointFilterItemType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectionMonitorEndpointFilterItemType left, ConnectionMonitorEndpointFilterItemType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionMonitorEndpointFilterItemType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectionMonitorEndpointFilterItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectionMonitorEndpointFilterItemType(string value) => new ConnectionMonitorEndpointFilterItemType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectionMonitorEndpointFilterItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectionMonitorEndpointFilterItemType?(string value) => value == null ? null : new ConnectionMonitorEndpointFilterItemType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectionMonitorEndpointFilterItemType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectionMonitorEndpointFilterItemType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -225,7 +225,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _polyDevicesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, PolyDeviceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<PolyDeviceResource> operation = new TestsArmOperation<PolyDeviceResource>(
-                    new PolyDeviceOperationSource(Client),
+                    new PolyDeviceResourceOperationSource(Client),
                     _polyDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -285,7 +285,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _polyDevicesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, PolyDeviceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<PolyDeviceResource> operation = new TestsArmOperation<PolyDeviceResource>(
-                    new PolyDeviceOperationSource(Client),
+                    new PolyDeviceResourceOperationSource(Client),
                     _polyDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,

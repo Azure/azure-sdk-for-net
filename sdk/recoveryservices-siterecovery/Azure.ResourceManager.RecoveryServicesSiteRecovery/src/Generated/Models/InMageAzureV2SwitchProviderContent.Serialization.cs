@@ -10,13 +10,60 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageAzureV2SwitchProviderContent : IUtf8JsonSerializable, IJsonModel<InMageAzureV2SwitchProviderContent>
+    /// <summary> Provider specific input for InMageAzureV2 switch provider. </summary>
+    public partial class InMageAzureV2SwitchProviderContent : SwitchProviderSpecificContent, IJsonModel<InMageAzureV2SwitchProviderContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageAzureV2SwitchProviderContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2SwitchProviderContent"/> for deserialization. </summary>
+        internal InMageAzureV2SwitchProviderContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SwitchProviderSpecificContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2SwitchProviderContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInMageAzureV2SwitchProviderContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2SwitchProviderContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InMageAzureV2SwitchProviderContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageAzureV2SwitchProviderContent IPersistableModel<InMageAzureV2SwitchProviderContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (InMageAzureV2SwitchProviderContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InMageAzureV2SwitchProviderContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InMageAzureV2SwitchProviderContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +75,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2SwitchProviderContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2SwitchProviderContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("targetVaultID"u8);
             writer.WriteStringValue(TargetVaultId);
@@ -43,92 +89,64 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(TargetApplianceId);
         }
 
-        InMageAzureV2SwitchProviderContent IJsonModel<InMageAzureV2SwitchProviderContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageAzureV2SwitchProviderContent IJsonModel<InMageAzureV2SwitchProviderContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InMageAzureV2SwitchProviderContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SwitchProviderSpecificContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2SwitchProviderContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2SwitchProviderContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInMageAzureV2SwitchProviderContent(document.RootElement, options);
         }
 
-        internal static InMageAzureV2SwitchProviderContent DeserializeInMageAzureV2SwitchProviderContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InMageAzureV2SwitchProviderContent DeserializeInMageAzureV2SwitchProviderContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string instanceType = "InMageAzureV2";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier targetVaultId = default;
             ResourceIdentifier targetFabricId = default;
             string targetApplianceId = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("targetVaultID"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    targetVaultId = new ResourceIdentifier(property.Value.GetString());
+                    instanceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetFabricID"u8))
+                if (prop.NameEquals("targetVaultID"u8))
                 {
-                    targetFabricId = new ResourceIdentifier(property.Value.GetString());
+                    targetVaultId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetApplianceID"u8))
+                if (prop.NameEquals("targetFabricID"u8))
                 {
-                    targetApplianceId = property.Value.GetString();
+                    targetFabricId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("instanceType"u8))
+                if (prop.NameEquals("targetApplianceID"u8))
                 {
-                    instanceType = property.Value.GetString();
+                    targetApplianceId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new InMageAzureV2SwitchProviderContent(instanceType, serializedAdditionalRawData, targetVaultId, targetFabricId, targetApplianceId);
+            return new InMageAzureV2SwitchProviderContent(instanceType, additionalBinaryDataProperties, targetVaultId, targetFabricId, targetApplianceId);
         }
-
-        BinaryData IPersistableModel<InMageAzureV2SwitchProviderContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2SwitchProviderContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        InMageAzureV2SwitchProviderContent IPersistableModel<InMageAzureV2SwitchProviderContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2SwitchProviderContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInMageAzureV2SwitchProviderContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<InMageAzureV2SwitchProviderContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

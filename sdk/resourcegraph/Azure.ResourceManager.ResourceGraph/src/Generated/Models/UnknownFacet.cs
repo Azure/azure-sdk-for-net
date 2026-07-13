@@ -10,20 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    /// <summary> Unknown version of Facet. </summary>
     internal partial class UnknownFacet : Facet
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFacet"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="resultType"> Result type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownFacet(string expression, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(expression, resultType, serializedAdditionalRawData)
-        {
-            ResultType = resultType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownFacet"/> for deserialization. </summary>
-        internal UnknownFacet()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownFacet(string expression, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(expression, resultType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

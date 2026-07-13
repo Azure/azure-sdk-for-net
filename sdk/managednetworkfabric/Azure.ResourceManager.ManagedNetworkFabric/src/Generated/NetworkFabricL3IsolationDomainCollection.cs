@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricL3IsolationDomainCollection : ArmCollection, IEnumerable<NetworkFabricL3IsolationDomainResource>, IAsyncEnumerable<NetworkFabricL3IsolationDomainResource>
     {
-        private readonly ClientDiagnostics _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics;
-        private readonly L3IsolationDomainsRestOperations _networkFabricL3IsolationDomainL3IsolationDomainsRestClient;
+        private readonly ClientDiagnostics _l3IsolationDomainsClientDiagnostics;
+        private readonly L3IsolationDomains _l3IsolationDomainsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkFabricL3IsolationDomainCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkFabricL3IsolationDomainCollection for mocking. </summary>
         protected NetworkFabricL3IsolationDomainCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkFabricL3IsolationDomainCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFabricL3IsolationDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricL3IsolationDomainResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetworkFabricL3IsolationDomainResource.ResourceType, out string networkFabricL3IsolationDomainL3IsolationDomainsApiVersion);
-            _networkFabricL3IsolationDomainL3IsolationDomainsRestClient = new L3IsolationDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricL3IsolationDomainL3IsolationDomainsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(NetworkFabricL3IsolationDomainResource.ResourceType, out string networkFabricL3IsolationDomainApiVersion);
+            _l3IsolationDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricL3IsolationDomainResource.ResourceType.Namespace, Diagnostics);
+            _l3IsolationDomainsRestClient = new L3IsolationDomains(_l3IsolationDomainsClientDiagnostics, Pipeline, Endpoint, networkFabricL3IsolationDomainApiVersion ?? "2025-07-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create isolation domain resources for layer 3 connectivity between compute nodes and for communication with external services .This configuration is applied on the devices only after the creation of networks is completed and isolation domain is enabled.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> L3IsolationDomains_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<NetworkFabricL3IsolationDomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string l3IsolationDomainName, NetworkFabricL3IsolationDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _l3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkFabricL3IsolationDomainL3IsolationDomainsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, l3IsolationDomainName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricL3IsolationDomainResource>(new NetworkFabricL3IsolationDomainOperationSource(Client), _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics, Pipeline, _networkFabricL3IsolationDomainL3IsolationDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, l3IsolationDomainName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _l3IsolationDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, l3IsolationDomainName, NetworkFabricL3IsolationDomainData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkFabricL3IsolationDomainResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricL3IsolationDomainResource>(
+                    new NetworkFabricL3IsolationDomainResourceOperationSource(Client),
+                    _l3IsolationDomainsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Create isolation domain resources for layer 3 connectivity between compute nodes and for communication with external services .This configuration is applied on the devices only after the creation of networks is completed and isolation domain is enabled.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> L3IsolationDomains_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<NetworkFabricL3IsolationDomainResource> CreateOrUpdate(WaitUntil waitUntil, string l3IsolationDomainName, NetworkFabricL3IsolationDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _l3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkFabricL3IsolationDomainL3IsolationDomainsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, l3IsolationDomainName, data, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricL3IsolationDomainResource>(new NetworkFabricL3IsolationDomainOperationSource(Client), _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics, Pipeline, _networkFabricL3IsolationDomainL3IsolationDomainsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, l3IsolationDomainName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _l3IsolationDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, l3IsolationDomainName, NetworkFabricL3IsolationDomainData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkFabricL3IsolationDomainResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricL3IsolationDomainResource>(
+                    new NetworkFabricL3IsolationDomainResourceOperationSource(Client),
+                    _l3IsolationDomainsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Retrieves details of this L3 Isolation Domain.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> L3IsolationDomains_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetworkFabricL3IsolationDomainResource>> GetAsync(string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
 
-            using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.Get");
+            using DiagnosticScope scope = _l3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkFabricL3IsolationDomainL3IsolationDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, l3IsolationDomainName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _l3IsolationDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, l3IsolationDomainName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkFabricL3IsolationDomainData> response = Response.FromValue(NetworkFabricL3IsolationDomainData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricL3IsolationDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Retrieves details of this L3 Isolation Domain.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> L3IsolationDomains_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetworkFabricL3IsolationDomainResource> Get(string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
 
-            using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.Get");
+            using DiagnosticScope scope = _l3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkFabricL3IsolationDomainL3IsolationDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, l3IsolationDomainName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _l3IsolationDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, l3IsolationDomainName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkFabricL3IsolationDomainData> response = Response.FromValue(NetworkFabricL3IsolationDomainData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricL3IsolationDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Displays L3IsolationDomains list by resource group GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> L3IsolationDomains_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricL3IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricL3IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricL3IsolationDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricL3IsolationDomainL3IsolationDomainsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricL3IsolationDomainL3IsolationDomainsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricL3IsolationDomainResource(Client, NetworkFabricL3IsolationDomainData.DeserializeNetworkFabricL3IsolationDomainData(e)), _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics, Pipeline, "NetworkFabricL3IsolationDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkFabricL3IsolationDomainData, NetworkFabricL3IsolationDomainResource>(new L3IsolationDomainsGetByResourceGroupAsyncCollectionResultOfT(_l3IsolationDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricL3IsolationDomainCollection.GetAll"), data => new NetworkFabricL3IsolationDomainResource(Client, data));
         }
 
         /// <summary>
         /// Displays L3IsolationDomains list by resource group GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> L3IsolationDomains_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricL3IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricL3IsolationDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricL3IsolationDomainL3IsolationDomainsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricL3IsolationDomainL3IsolationDomainsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricL3IsolationDomainResource(Client, NetworkFabricL3IsolationDomainData.DeserializeNetworkFabricL3IsolationDomainData(e)), _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics, Pipeline, "NetworkFabricL3IsolationDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkFabricL3IsolationDomainData, NetworkFabricL3IsolationDomainResource>(new L3IsolationDomainsGetByResourceGroupCollectionResultOfT(_l3IsolationDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricL3IsolationDomainCollection.GetAll"), data => new NetworkFabricL3IsolationDomainResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> L3IsolationDomains_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
 
-            using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.Exists");
+            using DiagnosticScope scope = _l3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkFabricL3IsolationDomainL3IsolationDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, l3IsolationDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _l3IsolationDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, l3IsolationDomainName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkFabricL3IsolationDomainData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricL3IsolationDomainData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricL3IsolationDomainData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> L3IsolationDomains_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
 
-            using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.Exists");
+            using DiagnosticScope scope = _l3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkFabricL3IsolationDomainL3IsolationDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, l3IsolationDomainName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _l3IsolationDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, l3IsolationDomainName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkFabricL3IsolationDomainData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricL3IsolationDomainData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricL3IsolationDomainData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> L3IsolationDomains_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetworkFabricL3IsolationDomainResource>> GetIfExistsAsync(string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
 
-            using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.GetIfExists");
+            using DiagnosticScope scope = _l3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkFabricL3IsolationDomainL3IsolationDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, l3IsolationDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _l3IsolationDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, l3IsolationDomainName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkFabricL3IsolationDomainData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricL3IsolationDomainData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricL3IsolationDomainData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkFabricL3IsolationDomainResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricL3IsolationDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> L3IsolationDomains_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetworkFabricL3IsolationDomainResource> GetIfExists(string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(l3IsolationDomainName, nameof(l3IsolationDomainName));
 
-            using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.GetIfExists");
+            using DiagnosticScope scope = _l3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkFabricL3IsolationDomainL3IsolationDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, l3IsolationDomainName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _l3IsolationDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, l3IsolationDomainName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkFabricL3IsolationDomainData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricL3IsolationDomainData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricL3IsolationDomainData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkFabricL3IsolationDomainResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricL3IsolationDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkFabricL3IsolationDomainResource> IAsyncEnumerable<NetworkFabricL3IsolationDomainResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

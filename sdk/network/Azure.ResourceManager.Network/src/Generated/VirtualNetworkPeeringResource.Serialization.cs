@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class VirtualNetworkPeeringResource : IJsonModel<VirtualNetworkPeeringData>
     {
-        private static VirtualNetworkPeeringData s_dataDeserializationInstance;
-        private static VirtualNetworkPeeringData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<VirtualNetworkPeeringData> s_dataDeserializationInstance;
 
+        private static IJsonModel<VirtualNetworkPeeringData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VirtualNetworkPeeringData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualNetworkPeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkPeeringData>)Data).Write(writer, options);
 
-        VirtualNetworkPeeringData IJsonModel<VirtualNetworkPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkPeeringData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualNetworkPeeringData IJsonModel<VirtualNetworkPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<VirtualNetworkPeeringData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualNetworkPeeringData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         VirtualNetworkPeeringData IPersistableModel<VirtualNetworkPeeringData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkPeeringData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VirtualNetworkPeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkPeeringData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualNetworkPeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

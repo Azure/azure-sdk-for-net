@@ -31,10 +31,17 @@ namespace Azure.Generator.Management.Visitors
             // add WirePathAttribute
             // first get out its previous attributes
             var attributes = property.Attributes;
+            // skip if a WirePathAttribute has already been added (the same PropertyProvider
+            // instance may be visited more than once when shared across models, e.g. via hierarchyBuilding)
+            var wirePathType = WirePathAttributeType;
+            if (attributes.Any(a => FlattenPropertyVisitor.IsWirePathAttribute(a, wirePathType)))
+            {
+                return base.VisitProperty(property);
+            }
             // get the wire path
             var wirePath = GetWirePath(property);
             // add WirePathAttribute to the list
-            var wirePathAttribute = new AttributeStatement(WirePathAttributeType,
+            var wirePathAttribute = new AttributeStatement(wirePathType,
                 [
                     Literal(wirePath),
                 ]);

@@ -30,6 +30,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [SyncOnly]
+        [PlaybackOnly("This test uses service principal authentication to connect to Key Vault and Search service, so it only runs in playback with recorded credentials.")]
         public async Task CreateDoubleEncryptedIndex()
         {
             string keyVaultUrl = TestEnvironment.KeyVaultUrl;

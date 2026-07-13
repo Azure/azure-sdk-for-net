@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
     internal readonly partial struct NCrossValidationsMode : IEquatable<NCrossValidationsMode>
     {
         private readonly string _value;
+        /// <summary> Determine N-Cross validations value automatically. Supported only for 'Forecasting' AutoML task. </summary>
+        private const string AutoValue = "Auto";
+        /// <summary> Use custom N-Cross validations value. </summary>
+        private const string CustomValue = "Custom";
 
         /// <summary> Initializes a new instance of <see cref="NCrossValidationsMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NCrossValidationsMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AutoValue = "Auto";
-        private const string CustomValue = "Custom";
+            _value = value;
+        }
 
         /// <summary> Determine N-Cross validations value automatically. Supported only for 'Forecasting' AutoML task. </summary>
         public static NCrossValidationsMode Auto { get; } = new NCrossValidationsMode(AutoValue);
+
         /// <summary> Use custom N-Cross validations value. </summary>
         public static NCrossValidationsMode Custom { get; } = new NCrossValidationsMode(CustomValue);
+
         /// <summary> Determines if two <see cref="NCrossValidationsMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NCrossValidationsMode left, NCrossValidationsMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NCrossValidationsMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NCrossValidationsMode left, NCrossValidationsMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NCrossValidationsMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NCrossValidationsMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NCrossValidationsMode(string value) => new NCrossValidationsMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NCrossValidationsMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NCrossValidationsMode?(string value) => value == null ? null : new NCrossValidationsMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NCrossValidationsMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NCrossValidationsMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
