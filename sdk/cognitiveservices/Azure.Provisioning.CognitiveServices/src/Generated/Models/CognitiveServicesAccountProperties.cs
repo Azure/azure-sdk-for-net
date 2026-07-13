@@ -25,7 +25,6 @@ namespace Azure.Provisioning.CognitiveServices
         private ServiceAccountEncryptionProperties _encryption;
         private BicepList<ServiceAccountUserOwnedStorage> _userOwnedStorage;
         private UserOwnedAmlWorkspace _amlWorkspace;
-        private BicepList<CognitiveServicesPrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<ServiceAccountPublicNetworkAccess> _publicNetworkAccess;
         private ServiceAccountApiProperties _apiProperties;
         private BicepValue<DateTimeOffset> _createdOn;
@@ -191,16 +190,6 @@ namespace Azure.Provisioning.CognitiveServices
             {
                 Initialize();
                 AssignOrReplace(ref _amlWorkspace, value);
-            }
-        }
-
-        /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<CognitiveServicesPrivateEndpointConnection> PrivateEndpointConnections
-        {
-            get
-            {
-                Initialize();
-                return _privateEndpointConnections;
             }
         }
 
@@ -509,7 +498,6 @@ namespace Azure.Provisioning.CognitiveServices
             _encryption = DefineModelProperty<ServiceAccountEncryptionProperties>(nameof(Encryption), new string[] { "encryption" });
             _userOwnedStorage = DefineListProperty<ServiceAccountUserOwnedStorage>(nameof(UserOwnedStorage), new string[] { "userOwnedStorage" });
             _amlWorkspace = DefineModelProperty<UserOwnedAmlWorkspace>(nameof(AmlWorkspace), new string[] { "amlWorkspace" });
-            _privateEndpointConnections = DefineListProperty<CognitiveServicesPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<ServiceAccountPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             _apiProperties = DefineModelProperty<ServiceAccountApiProperties>(nameof(ApiProperties), new string[] { "apiProperties" });
             _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "dateCreated" }, isOutput: true);

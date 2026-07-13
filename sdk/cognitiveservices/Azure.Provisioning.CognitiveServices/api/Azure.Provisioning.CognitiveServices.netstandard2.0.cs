@@ -231,7 +231,9 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.CognitiveServices.CognitiveServicesMultiRegionSettings Locations { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MigrationToken { get { throw null; } set { } }
         public Azure.Provisioning.CognitiveServices.CognitiveServicesNetworkRuleSet NetworkAcls { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.CognitiveServicesPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.CognitiveServicesPrivateEndpointConnection> PrivateEndpointConnectionResources { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use PrivateEndpointConnectionResources instead.")]
+        public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.ServiceAccountProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.ServiceAccountPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.CognitiveServices.ServiceAccountQuotaLimit QuotaLimit { get { throw null; } }
@@ -965,6 +967,21 @@ namespace Azure.Provisioning.CognitiveServices
             public static readonly string V2026_03_01;
             public static readonly string V2026_05_01;
         }
+    }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release. Use CognitiveServicesPrivateEndpointConnection instead.")]
+    public partial class CognitiveServicesPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CognitiveServicesPrivateEndpointConnectionData() { }
+        public Azure.Provisioning.CognitiveServices.CognitiveServicesPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum CognitiveServicesPrivateEndpointConnectionProvisioningState
     {
