@@ -83,7 +83,7 @@ export async function execFile(
     logger?.debug(`stdout: '${result.stdout}'`);
     logger?.debug(`stderr: '${result.stderr}'`);
 
-    return { stdout: String(result.stdout), stderr: String(result.stderr) };
+    return result;
   } catch (error) {
     /* v8 ignore next */
     logger?.debug(`error: '${JSON.stringify(error)}'`);

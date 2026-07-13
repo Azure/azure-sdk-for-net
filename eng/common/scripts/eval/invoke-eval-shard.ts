@@ -30,6 +30,9 @@ export function runShard({ evalArgs, shardName, outputDir, threshold = 0.8 }) {
   );
 
   // Do NOT abort on a non-zero exit — the verdict below is authoritative.
+  // Uses spawnSync (not the vendored execFile helper) on purpose: the shard needs vally's output
+  // streamed live to the log (stdio: "inherit") and must keep going on a non-zero exit, whereas
+  // the exec helper captures output and rejects on failure.
   const proc = spawnSync(
     "npm",
     [
