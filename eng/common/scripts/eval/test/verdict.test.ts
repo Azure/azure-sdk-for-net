@@ -1,4 +1,4 @@
-// node:test unit tests for lib/verdict.js (port of Invoke-EvalShard.Tests.ps1, which
+// node:test unit tests for lib/verdict.ts (port of Invoke-EvalShard.Tests.ps1, which
 // exercised the verdict helpers). Run from eng/common/scripts/eval:  npm test
 
 import assert from "node:assert/strict";
@@ -7,7 +7,7 @@ import os from "node:os";
 import path from "node:path";
 import { after, before, describe, it } from "node:test";
 
-import { getVallyShardVerdict } from "../lib/verdict.js";
+import { getVallyShardVerdict } from "../lib/verdict.ts";
 
 describe("getVallyShardVerdict", () => {
   let root;

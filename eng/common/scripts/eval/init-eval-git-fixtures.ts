@@ -5,8 +5,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { globFiles } from "./lib/glob.js";
-import { syncRepo } from "./sync-eval-git-repo.js";
+import { globFiles } from "./lib/glob.ts";
+import { syncRepo } from "./sync-eval-git-repo.ts";
 
 export const DEFAULT_PATTERNS = [
   "evals/tools/*.eval.yaml",

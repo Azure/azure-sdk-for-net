@@ -1,4 +1,4 @@
-// node:test unit tests for collect-stimuli.js (port of Split-EvalSuite.Tests.ps1).
+// node:test unit tests for collect-stimuli.ts (port of Split-EvalSuite.Tests.ps1).
 // Run from eng/common/scripts/eval:  npm test
 //
 // Sharding is always by `area` tag: one shard per area, each carrying every eval of that
@@ -10,7 +10,7 @@ import os from "node:os";
 import path from "node:path";
 import { after, before, describe, it } from "node:test";
 
-import { buildMatrix } from "../collect-stimuli.js";
+import { buildMatrix } from "../collect-stimuli.ts";
 
 // Helper: write a file, creating parent directories as needed.
 function writeFile(filePath, content) {

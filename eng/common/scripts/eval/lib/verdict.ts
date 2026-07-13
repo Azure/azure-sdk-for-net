@@ -5,7 +5,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { globFiles } from "./glob.js";
+import { globFiles } from "./glob.ts";
 
 // Formats a 0..1 ratio as a fixed-1-decimal percentage string (e.g. 97.1).
 function pct(ratio) {

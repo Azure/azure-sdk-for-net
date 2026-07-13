@@ -4,7 +4,7 @@
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { getVallyShardVerdict } from "./lib/verdict.js";
+import { getVallyShardVerdict } from "./lib/verdict.ts";
 
 // The pinned Vally CLI is installed next to this script (package.json + node_modules live here),
 // so the npm --prefix is just this file's own directory.

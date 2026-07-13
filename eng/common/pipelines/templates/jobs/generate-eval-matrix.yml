@@ -37,7 +37,7 @@ jobs:
             set +f
           fi
           base="$(Build.SourcesDirectory)/${{ parameters.vallyRoot }}"
-          node "$(Build.SourcesDirectory)/eng/common/scripts/eval/collect-stimuli.js" \
+          node --experimental-strip-types --disable-warning=ExperimentalWarning "$(Build.SourcesDirectory)/eng/common/scripts/eval/collect-stimuli.ts" \
             --eval-root "$base" \
             --path-base "$base" \
             "${patterns[@]}" \

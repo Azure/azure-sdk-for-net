@@ -1,4 +1,4 @@
-// node:test unit tests for build-eval-summary.js (port of Build-EvalSummary.Tests.ps1).
+// node:test unit tests for build-eval-summary.ts (port of Build-EvalSummary.Tests.ps1).
 // Run from eng/common/scripts/eval:  npm test
 
 import assert from "node:assert/strict";
@@ -7,7 +7,7 @@ import os from "node:os";
 import path from "node:path";
 import { after, before, beforeEach, describe, it } from "node:test";
 
-import { getEvalSummary, formatEvalSummaryMarkdown } from "../build-eval-summary.js";
+import { getEvalSummary, formatEvalSummaryMarkdown } from "../build-eval-summary.ts";
 
 // Convenience: build the summary and also write the markdown, returning both.
 function summarize(resultsRoot, outFile) {
