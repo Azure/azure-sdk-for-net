@@ -966,35 +966,5 @@ namespace Azure.AI.Translation.Document
                 throw;
             }
         }
-
-        /// <summary>
-        /// The list of supported formats supported by the Document Translation
-        /// service.
-        /// The list includes the common file extension, as well as the
-        /// content-type if using the upload API.
-        /// </summary>
-        /// <param name="type"> the type of format like document or glossary . </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SupportedFileFormats> GetSupportedFormats(FileFormatType @type, CancellationToken cancellationToken = default)
-        {
-            Response result = GetSupportedFormats(@type.ToString(), cancellationToken.ToRequestContext());
-            return Response.FromValue((SupportedFileFormats)result, result);
-        }
-
-        /// <summary>
-        /// The list of supported formats supported by the Document Translation
-        /// service.
-        /// The list includes the common file extension, as well as the
-        /// content-type if using the upload API.
-        /// </summary>
-        /// <param name="type"> the type of format like document or glossary . </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SupportedFileFormats>> GetSupportedFormatsAsync(FileFormatType @type, CancellationToken cancellationToken = default)
-        {
-            Response result = await GetSupportedFormatsAsync(@type.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SupportedFileFormats)result, result);
-        }
     }
 }

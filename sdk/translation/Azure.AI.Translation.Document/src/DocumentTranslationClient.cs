@@ -286,6 +286,32 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Get the list of formats supported by the Document Translation service.
         /// </summary>
+        /// <param name="type">The type of format to retrieve. Specify
+        /// <see cref="FileFormatType.Document"/> or <see cref="FileFormatType.Glossary"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        public virtual Response<SupportedFileFormats> GetSupportedFormats(FileFormatType type, CancellationToken cancellationToken = default)
+        {
+            Response result = GetSupportedFormats(type.ToString(), cancellationToken.ToRequestContext());
+            return Response.FromValue((SupportedFileFormats)result, result);
+        }
+
+        /// <summary>
+        /// Get the list of formats supported by the Document Translation service.
+        /// </summary>
+        /// <param name="type">The type of format to retrieve. Specify
+        /// <see cref="FileFormatType.Document"/> or <see cref="FileFormatType.Glossary"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code.</exception>
+        public virtual async Task<Response<SupportedFileFormats>> GetSupportedFormatsAsync(FileFormatType type, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetSupportedFormatsAsync(type.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((SupportedFileFormats)result, result);
+        }
+
+        /// <summary>
+        /// Get the list of formats supported by the Document Translation service.
+        /// </summary>
         /// <param name="type">The type of format to retrieve. This value is required; specify
         /// <see cref="FileFormatType.Document"/> or <see cref="FileFormatType.Glossary"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
