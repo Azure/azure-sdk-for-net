@@ -2038,8 +2038,8 @@ namespace Azure.Provisioning.Compute
         public ResiliencyPolicy() { }
         public Azure.Provisioning.Compute.AutomaticZoneRebalancingPolicy AutomaticZoneRebalancingPolicy { get { throw null; } set { } }
         public Azure.Provisioning.Compute.OperationRecoverySettings OperationRecoverySettings { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> ResilientVmCreationEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> ResilientVmDeletionEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> ResilientVmCreationPolicyEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> ResilientVmDeletionPolicyEnabled { get { throw null; } set { } }
         public Azure.Provisioning.Compute.ZoneAllocationPolicy ZoneAllocationPolicy { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }

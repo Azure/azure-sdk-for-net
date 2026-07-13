@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Compute
@@ -96,40 +95,6 @@ namespace Azure.Provisioning.Compute
             {
                 Initialize();
                 AssignOrReplace(ref _operationRecoverySettings, value);
-            }
-        }
-
-        /// <summary> Gets or sets the Enabled. </summary>
-        public BicepValue<bool> ResilientVmCreationEnabled
-        {
-            get
-            {
-                return ResilientVmCreationPolicy is null ? default : ResilientVmCreationPolicy.Enabled;
-            }
-            set
-            {
-                if (ResilientVmCreationPolicy is null)
-                {
-                    ResilientVmCreationPolicy = new ResilientVMCreationPolicy();
-                }
-                ResilientVmCreationPolicy.Enabled = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Enabled. </summary>
-        public BicepValue<bool> ResilientVmDeletionEnabled
-        {
-            get
-            {
-                return ResilientVmDeletionPolicy is null ? default : ResilientVmDeletionPolicy.Enabled;
-            }
-            set
-            {
-                if (ResilientVmDeletionPolicy is null)
-                {
-                    ResilientVmDeletionPolicy = new ResilientVMDeletionPolicy();
-                }
-                ResilientVmDeletionPolicy.Enabled = value;
             }
         }
 
