@@ -13,15 +13,15 @@ namespace Azure.Provisioning.Cdn
     public enum AfdCipherSuiteSetType
     {
         /// <summary> Customized. </summary>
-        Customized,
+        Customized = 0,
         /// <summary> Tls1_0_2019. </summary>
         [DataMember(Name = "TLS10_2019")]
-        Tls1_0_2019,
+        Tls1_0_2019 = 1,
         /// <summary> Tls1_2_2022. </summary>
         [DataMember(Name = "TLS12_2022")]
-        Tls1_2_2022,
+        Tls1_2_2022 = 2,
         /// <summary> Tls1_2_2023. </summary>
         [DataMember(Name = "TLS12_2023")]
-        Tls1_2_2023
+        Tls1_2_2023 = 3
     }
 }
