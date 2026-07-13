@@ -1,7 +1,8 @@
 # Invokes `vally eval` for one shard. UseAzSdkAuthentication=false (default) runs the hermetic
 # node script directly. UseAzSdkAuthentication=true wraps the same run in AzureCLI@2 so a live
 # MCP's Azure DevOps calls inherit the service-connection identity.
-# copilot-sdk authenticates the model session via GITHUB_TOKEN (from the linked eval variable group).
+# copilot-sdk authenticates the model session via GH_TOKEN, minted by the login-to-github step
+# (Azure SDK Automation GitHub App installation token) — no PAT or variable group required.
 
 parameters:
   - name: vallyRoot
@@ -18,6 +19,10 @@ parameters:
     default: opensource-api-connection
 
 steps:
+  # Mint GH_TOKEN as the Azure SDK Automation GitHub App (Key Vault-signed JWT -> installation
+  # token). copilot-sdk reads GH_TOKEN for the model session, so no PAT / variable group is needed.
+  - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+
   - ${{ if parameters.UseAzSdkAuthentication }}:
     - task: AzureCLI@2
       displayName: 'vally eval $(shardName) (authenticated)'
@@ -33,7 +38,7 @@ steps:
             --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
             --threshold ${{ parameters.threshold }}
       env:
-        GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
+        GH_TOKEN: $(GH_TOKEN)
 
   - ${{ else }}:
     - script: |
@@ -45,4 +50,4 @@ steps:
       displayName: 'vally eval $(shardName)'
       workingDirectory: ${{ parameters.vallyRoot }}
       env:
-        GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
+        GH_TOKEN: $(GH_TOKEN)
