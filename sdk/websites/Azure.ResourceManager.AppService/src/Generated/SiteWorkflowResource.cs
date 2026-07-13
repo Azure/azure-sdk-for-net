@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a SiteWorkflow along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteWorkflowResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSiteWorkflowResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetSiteWorkflow method.
+    /// A class representing a SiteWorkflow along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteWorkflowResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetSiteWorkflows method.
     /// </summary>
     public partial class SiteWorkflowResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SiteWorkflowResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="workflowName"> The workflowName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string workflowName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _siteWorkflowWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _siteWorkflowWebAppsRestClient;
+        private readonly ClientDiagnostics _workflowEnvelopeOperationGroupClientDiagnostics;
+        private readonly WorkflowEnvelopeOperationGroup _workflowEnvelopeOperationGroupRestClient;
         private readonly WorkflowEnvelopeData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/workflows";
 
-        /// <summary> Initializes a new instance of the <see cref="SiteWorkflowResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteWorkflowResource for mocking. </summary>
         protected SiteWorkflowResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteWorkflowResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteWorkflowResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteWorkflowResource(ArmClient client, WorkflowEnvelopeData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteWorkflowResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteWorkflowResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteWorkflowResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteWorkflowWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string siteWorkflowWebAppsApiVersion);
-            _siteWorkflowWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteWorkflowWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string siteWorkflowApiVersion);
+            _workflowEnvelopeOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _workflowEnvelopeOperationGroupRestClient = new WorkflowEnvelopeOperationGroup(_workflowEnvelopeOperationGroupClientDiagnostics, Pipeline, Endpoint, siteWorkflowApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual WorkflowEnvelopeData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="workflowName"> The workflowName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string workflowName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get workflow information by its ID for web site, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetWorkflow</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteWorkflowResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteWorkflowResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SiteWorkflowResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteWorkflowWebAppsClientDiagnostics.CreateScope("SiteWorkflowResource.Get");
+            using DiagnosticScope scope = _workflowEnvelopeOperationGroupClientDiagnostics.CreateScope("SiteWorkflowResource.Get");
             scope.Start();
             try
             {
-                var response = await _siteWorkflowWebAppsRestClient.GetWorkflowAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowEnvelopeOperationGroupRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WorkflowEnvelopeData> response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.AppService
         /// Get workflow information by its ID for web site, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetWorkflow</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteWorkflowResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteWorkflowResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteWorkflowResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteWorkflowWebAppsClientDiagnostics.CreateScope("SiteWorkflowResource.Get");
+            using DiagnosticScope scope = _workflowEnvelopeOperationGroupClientDiagnostics.CreateScope("SiteWorkflowResource.Get");
             scope.Start();
             try
             {
-                var response = _siteWorkflowWebAppsRestClient.GetWorkflow(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workflowEnvelopeOperationGroupRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WorkflowEnvelopeData> response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteWorkflowResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

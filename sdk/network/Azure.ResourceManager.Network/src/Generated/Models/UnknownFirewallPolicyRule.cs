@@ -10,21 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Unknown version of FirewallPolicyRule. </summary>
     internal partial class UnknownFirewallPolicyRule : FirewallPolicyRule
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFirewallPolicyRule"/>. </summary>
         /// <param name="name"> Name of the rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="ruleType"> Rule Type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownFirewallPolicyRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, description, ruleType, serializedAdditionalRawData)
-        {
-            RuleType = ruleType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownFirewallPolicyRule"/> for deserialization. </summary>
-        internal UnknownFirewallPolicyRule()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownFirewallPolicyRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, description, ruleType != default ? ruleType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

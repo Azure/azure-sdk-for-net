@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, MySqlFlexibleServerFirewallRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerFirewallRuleResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerFirewallRuleResource>(
-                    new MySqlFlexibleServerFirewallRuleOperationSource(Client),
+                    new MySqlFlexibleServerFirewallRuleResourceOperationSource(Client),
                     _firewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, MySqlFlexibleServerFirewallRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerFirewallRuleResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerFirewallRuleResource>(
-                    new MySqlFlexibleServerFirewallRuleOperationSource(Client),
+                    new MySqlFlexibleServerFirewallRuleResourceOperationSource(Client),
                     _firewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

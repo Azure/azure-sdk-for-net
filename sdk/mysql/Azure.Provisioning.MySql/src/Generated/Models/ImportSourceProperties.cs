@@ -92,6 +92,10 @@ namespace Azure.Provisioning.MySql
             _storageUri = DefineProperty<Uri>(nameof(StorageUri), new string[] { "storageUrl" });
             _sasToken = DefineProperty<string>(nameof(SasToken), new string[] { "sasToken" });
             _dataDirPath = DefineProperty<string>(nameof(DataDirPath), new string[] { "dataDirPath" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ImportSourceProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _authorizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, ExpressRouteAuthorizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<ExpressRouteAuthorizationResource> operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(
-                    new ExpressRouteAuthorizationOperationSource(Client),
+                    new ExpressRouteAuthorizationResourceOperationSource(Client),
                     _authorizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _authorizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, ExpressRouteAuthorizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<ExpressRouteAuthorizationResource> operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(
-                    new ExpressRouteAuthorizationOperationSource(Client),
+                    new ExpressRouteAuthorizationResourceOperationSource(Client),
                     _authorizationsClientDiagnostics,
                     Pipeline,
                     message.Request,

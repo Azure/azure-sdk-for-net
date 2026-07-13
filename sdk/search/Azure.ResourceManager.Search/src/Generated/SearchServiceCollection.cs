@@ -29,12 +29,6 @@ namespace Azure.ResourceManager.Search
     {
         private readonly ClientDiagnostics _servicesClientDiagnostics;
         private readonly Services _servicesRestClient;
-        private readonly ClientDiagnostics _adminKeysClientDiagnostics;
-        private readonly AdminKeys _adminKeysRestClient;
-        private readonly ClientDiagnostics _queryKeysClientDiagnostics;
-        private readonly QueryKeys _queryKeysRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
 
         /// <summary> Initializes a new instance of SearchServiceCollection for mocking. </summary>
         protected SearchServiceCollection()
@@ -49,12 +43,6 @@ namespace Azure.ResourceManager.Search
             TryGetApiVersion(SearchServiceResource.ResourceType, out string searchServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
             _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
-            _adminKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
-            _adminKeysRestClient = new AdminKeys(_adminKeysClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
-            _queryKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
-            _queryKeysRestClient = new QueryKeys(_queryKeysClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -108,7 +96,7 @@ namespace Azure.ResourceManager.Search
                 HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, searchServiceName, SearchServiceData.ToRequestContent(data), default, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SearchArmOperation<SearchServiceResource> operation = new SearchArmOperation<SearchServiceResource>(
-                    new SearchServiceOperationSource(Client),
+                    new SearchServiceResourceOperationSource(Client),
                     _servicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -167,7 +155,7 @@ namespace Azure.ResourceManager.Search
                 HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, searchServiceName, SearchServiceData.ToRequestContent(data), default, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SearchArmOperation<SearchServiceResource> operation = new SearchArmOperation<SearchServiceResource>(
-                    new SearchServiceOperationSource(Client),
+                    new SearchServiceResourceOperationSource(Client),
                     _servicesClientDiagnostics,
                     Pipeline,
                     message.Request,

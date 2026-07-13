@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Whether this detector is an Analysis Detector or not.
-    /// Serialized Name: DetectorType
-    /// </summary>
+    /// <summary> Whether this detector is an Analysis Detector or not. </summary>
     public enum DetectorType
     {
-        /// <summary>
-        /// Detector
-        /// Serialized Name: DetectorType.Detector
-        /// </summary>
+        /// <summary> Detector. </summary>
         Detector,
-        /// <summary>
-        /// Analysis
-        /// Serialized Name: DetectorType.Analysis
-        /// </summary>
+        /// <summary> Analysis. </summary>
         Analysis,
-        /// <summary>
-        /// CategoryOverview
-        /// Serialized Name: DetectorType.CategoryOverview
-        /// </summary>
+        /// <summary> CategoryOverview. </summary>
         CategoryOverview
     }
 }

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Datadog
                 HttpMessage message = _singleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, DatadogSingleSignOnData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatadogArmOperation<DatadogSingleSignOnResource> operation = new DatadogArmOperation<DatadogSingleSignOnResource>(
-                    new DatadogSingleSignOnOperationSource(Client),
+                    new DatadogSingleSignOnResourceOperationSource(Client),
                     _singleSignOnConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Datadog
                 HttpMessage message = _singleSignOnConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, DatadogSingleSignOnData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatadogArmOperation<DatadogSingleSignOnResource> operation = new DatadogArmOperation<DatadogSingleSignOnResource>(
-                    new DatadogSingleSignOnOperationSource(Client),
+                    new DatadogSingleSignOnResourceOperationSource(Client),
                     _singleSignOnConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,

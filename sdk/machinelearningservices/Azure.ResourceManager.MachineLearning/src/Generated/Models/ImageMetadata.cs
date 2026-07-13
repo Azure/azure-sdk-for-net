@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Returns metadata about the operating system image for this compute instance. </summary>
     public partial class ImageMetadata
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImageMetadata"/>. </summary>
         internal ImageMetadata()
@@ -53,24 +25,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="ImageMetadata"/>. </summary>
         /// <param name="currentImageVersion"> Specifies the current operating system image version this compute instance is running on. </param>
         /// <param name="latestImageVersion"> Specifies the latest available operating system image version. </param>
-        /// <param name="isLatestOSImageVersion"> Specifies whether this compute instance is running on the latest operating system image. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageMetadata(string currentImageVersion, string latestImageVersion, bool? isLatestOSImageVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="isLatestOsImageVersion"> Specifies whether this compute instance is running on the latest operating system image. </param>
+        /// <param name="osPatchingStatus"> Metadata about the os patching. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ImageMetadata(string currentImageVersion, string latestImageVersion, bool? isLatestOsImageVersion, OsPatchingStatus osPatchingStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CurrentImageVersion = currentImageVersion;
             LatestImageVersion = latestImageVersion;
-            IsLatestOSImageVersion = isLatestOSImageVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            IsLatestOsImageVersion = isLatestOsImageVersion;
+            OsPatchingStatus = osPatchingStatus;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the current operating system image version this compute instance is running on. </summary>
         [WirePath("currentImageVersion")]
         public string CurrentImageVersion { get; }
+
         /// <summary> Specifies the latest available operating system image version. </summary>
         [WirePath("latestImageVersion")]
         public string LatestImageVersion { get; }
+
         /// <summary> Specifies whether this compute instance is running on the latest operating system image. </summary>
         [WirePath("isLatestOsImageVersion")]
-        public bool? IsLatestOSImageVersion { get; }
+        public bool? IsLatestOsImageVersion { get; }
+
+        /// <summary> Metadata about the os patching. </summary>
+        [WirePath("osPatchingStatus")]
+        public OsPatchingStatus OsPatchingStatus { get; }
     }
 }

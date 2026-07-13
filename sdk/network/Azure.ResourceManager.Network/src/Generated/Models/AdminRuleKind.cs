@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Whether the rule is custom or default. </summary>
-    internal readonly partial struct AdminRuleKind : IEquatable<AdminRuleKind>
+    public readonly partial struct AdminRuleKind : IEquatable<AdminRuleKind>
     {
         private readonly string _value;
+        /// <summary> Custom. </summary>
+        private const string CustomValue = "Custom";
+        /// <summary> Default. </summary>
+        private const string DefaultValue = "Default";
 
         /// <summary> Initializes a new instance of <see cref="AdminRuleKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AdminRuleKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CustomValue = "Custom";
-        private const string DefaultValue = "Default";
+            _value = value;
+        }
 
         /// <summary> Custom. </summary>
         public static AdminRuleKind Custom { get; } = new AdminRuleKind(CustomValue);
+
         /// <summary> Default. </summary>
         public static AdminRuleKind Default { get; } = new AdminRuleKind(DefaultValue);
+
         /// <summary> Determines if two <see cref="AdminRuleKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AdminRuleKind left, AdminRuleKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AdminRuleKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AdminRuleKind left, AdminRuleKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AdminRuleKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AdminRuleKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AdminRuleKind(string value) => new AdminRuleKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AdminRuleKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AdminRuleKind?(string value) => value == null ? null : new AdminRuleKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AdminRuleKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AdminRuleKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.2.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Migrated `Azure.ResourceManager.Dns` to TypeSpec-based code generation.
+
+## 1.2.0-beta.4 (2026-06-09)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Dns` AOT-compatible.
+- Added correctly-named enum values `Caa`, `Ptr`, `Soa`, `Srv`, and `Txt` to `DnsRecordType` to follow naming conventions for acronyms with more than 2 letters.
+
+### Other Changes
+
+- Marked old enum values `CAA`, `PTR`, `SOA`, `SRV`, and `TXT` in `DnsRecordType` as `EditorBrowsable(Never)` for backward compatibility.
 
 ## 1.2.0-beta.3 (2026-04-16)
 

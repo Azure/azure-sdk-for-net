@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,28 +15,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class RandomSamplingAlgorithm : SamplingAlgorithm
     {
         /// <summary> Initializes a new instance of <see cref="RandomSamplingAlgorithm"/>. </summary>
-        public RandomSamplingAlgorithm()
+        public RandomSamplingAlgorithm() : base(SamplingAlgorithmType.Random)
         {
-            SamplingAlgorithmType = SamplingAlgorithmType.Random;
         }
 
         /// <summary> Initializes a new instance of <see cref="RandomSamplingAlgorithm"/>. </summary>
         /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="seed"> An optional integer to use as the seed for random number generation. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rule"> The specific type of random algorithm. </param>
-        internal RandomSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? seed, RandomSamplingAlgorithmRule? rule) : base(samplingAlgorithmType, serializedAdditionalRawData)
+        /// <param name="seed"> An optional integer to use as the seed for random number generation. </param>
+        internal RandomSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType, IDictionary<string, BinaryData> additionalBinaryDataProperties, RandomSamplingAlgorithmRule? rule, int? seed) : base(samplingAlgorithmType, additionalBinaryDataProperties)
         {
-            Seed = seed;
             Rule = rule;
-            SamplingAlgorithmType = samplingAlgorithmType;
+            Seed = seed;
         }
+
+        /// <summary> The specific type of random algorithm. </summary>
+        [WirePath("rule")]
+        public RandomSamplingAlgorithmRule? Rule { get; set; }
 
         /// <summary> An optional integer to use as the seed for random number generation. </summary>
         [WirePath("seed")]
         public int? Seed { get; set; }
-        /// <summary> The specific type of random algorithm. </summary>
-        [WirePath("rule")]
-        public RandomSamplingAlgorithmRule? Rule { get; set; }
     }
 }

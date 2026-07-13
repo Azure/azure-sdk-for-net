@@ -50,10 +50,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The unique ID of the output message. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> The role of the output message. Always `assistant`. </summary>
-        internal string Role { get; } = "assistant";
+        public string Role { get; } = "assistant";
 
         /// <summary> The content of the output message. </summary>
         public IList<InternalOutputMessageContent> Content { get; }
@@ -65,6 +65,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </summary>
-        public InputItemOutputMessageStatus Status { get; }
+        public InputItemOutputMessageStatus Status { get; set; }
     }
 }

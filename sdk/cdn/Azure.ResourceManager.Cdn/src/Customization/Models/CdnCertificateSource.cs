@@ -14,12 +14,14 @@ namespace Azure.ResourceManager.Cdn.Models
     // The old API is preserved here and bridges to TypeName.
     public partial class CdnCertificateSource
     {
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public CdnCertificateSource(CdnCertificateSourceType sourceType, CdnManagedCertificateType certificateType) : this(certificateType)
         {
             SourceType = sourceType;
         }
 
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public CdnCertificateSourceType SourceType
         {

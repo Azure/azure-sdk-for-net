@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToTargetSqlMISyncTaskProperties : IUtf8JsonSerializable, IJsonModel<ConnectToTargetSqlMISyncTaskProperties>
+    /// <summary> Properties for the task that validates connection to Azure SQL Database Managed Instance. </summary>
+    public partial class ConnectToTargetSqlMISyncTaskProperties : DataMigrationProjectTaskProperties, IJsonModel<ConnectToTargetSqlMISyncTaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToTargetSqlMISyncTaskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataMigrationProjectTaskProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlMISyncTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeConnectToTargetSqlMISyncTaskProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToTargetSqlMISyncTaskProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlMISyncTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToTargetSqlMISyncTaskProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConnectToTargetSqlMISyncTaskProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectToTargetSqlMISyncTaskProperties IPersistableModel<ConnectToTargetSqlMISyncTaskProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConnectToTargetSqlMISyncTaskProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConnectToTargetSqlMISyncTaskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectToTargetSqlMISyncTaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlMISyncTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlMISyncTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectToTargetSqlMISyncTaskProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Input))
             {
@@ -44,7 +84,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStartArray();
-                foreach (var item in Output)
+                foreach (ConnectToTargetSqlMISyncTaskOutput item in Output)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -52,162 +92,141 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        ConnectToTargetSqlMISyncTaskProperties IJsonModel<ConnectToTargetSqlMISyncTaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectToTargetSqlMISyncTaskProperties IJsonModel<ConnectToTargetSqlMISyncTaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConnectToTargetSqlMISyncTaskProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataMigrationProjectTaskProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlMISyncTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlMISyncTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectToTargetSqlMISyncTaskProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConnectToTargetSqlMISyncTaskProperties(document.RootElement, options);
         }
 
-        internal static ConnectToTargetSqlMISyncTaskProperties DeserializeConnectToTargetSqlMISyncTaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConnectToTargetSqlMISyncTaskProperties DeserializeConnectToTargetSqlMISyncTaskProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ConnectToTargetSqlMISyncTaskInput input = default;
-            IReadOnlyList<ConnectToTargetSqlMISyncTaskOutput> output = default;
             DataMigrationTaskType taskType = default;
             IReadOnlyList<DataMigrationODataError> errors = default;
             DataMigrationTaskState? state = default;
             IReadOnlyList<DataMigrationCommandProperties> commands = default;
             IDictionary<string, string> clientData = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ConnectToTargetSqlMISyncTaskInput input = default;
+            IReadOnlyList<ConnectToTargetSqlMISyncTaskOutput> output = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("input"u8))
+                if (prop.NameEquals("taskType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    input = ConnectToTargetSqlMISyncTaskInput.DeserializeConnectToTargetSqlMISyncTaskInput(property.Value, options);
+                    taskType = new DataMigrationTaskType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("output"u8))
+                if (prop.NameEquals("errors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ConnectToTargetSqlMISyncTaskOutput> array = new List<ConnectToTargetSqlMISyncTaskOutput>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ConnectToTargetSqlMISyncTaskOutput.DeserializeConnectToTargetSqlMISyncTaskOutput(item, options));
-                    }
-                    output = array;
-                    continue;
-                }
-                if (property.NameEquals("taskType"u8))
-                {
-                    taskType = new DataMigrationTaskType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("errors"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataMigrationODataError> array = new List<DataMigrationODataError>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataMigrationODataError.DeserializeDataMigrationODataError(item, options));
                     }
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new DataMigrationTaskState(property.Value.GetString());
+                    state = new DataMigrationTaskState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("commands"u8))
+                if (prop.NameEquals("commands"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataMigrationCommandProperties> array = new List<DataMigrationCommandProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataMigrationCommandProperties.DeserializeDataMigrationCommandProperties(item, options));
                     }
                     commands = array;
                     continue;
                 }
-                if (property.NameEquals("clientData"u8))
+                if (prop.NameEquals("clientData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     clientData = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("input"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    input = ConnectToTargetSqlMISyncTaskInput.DeserializeConnectToTargetSqlMISyncTaskInput(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("output"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ConnectToTargetSqlMISyncTaskOutput> array = new List<ConnectToTargetSqlMISyncTaskOutput>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ConnectToTargetSqlMISyncTaskOutput.DeserializeConnectToTargetSqlMISyncTaskOutput(item, options));
+                    }
+                    output = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectToTargetSqlMISyncTaskProperties(
                 taskType,
                 errors ?? new ChangeTrackingList<DataMigrationODataError>(),
                 state,
                 commands ?? new ChangeTrackingList<DataMigrationCommandProperties>(),
                 clientData ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 input,
                 output ?? new ChangeTrackingList<ConnectToTargetSqlMISyncTaskOutput>());
         }
-
-        BinaryData IPersistableModel<ConnectToTargetSqlMISyncTaskProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlMISyncTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConnectToTargetSqlMISyncTaskProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ConnectToTargetSqlMISyncTaskProperties IPersistableModel<ConnectToTargetSqlMISyncTaskProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlMISyncTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConnectToTargetSqlMISyncTaskProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConnectToTargetSqlMISyncTaskProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ConnectToTargetSqlMISyncTaskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

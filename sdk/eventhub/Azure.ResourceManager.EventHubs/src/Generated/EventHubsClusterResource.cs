@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.EventHubs
                 HttpMessage message = _clustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EventHubsArmOperation<EventHubsClusterResource> operation = new EventHubsArmOperation<EventHubsClusterResource>(
-                    new EventHubsClusterOperationSource(Client),
+                    new EventHubsClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.EventHubs
                 HttpMessage message = _clustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EventHubsArmOperation<EventHubsClusterResource> operation = new EventHubsArmOperation<EventHubsClusterResource>(
-                    new EventHubsClusterOperationSource(Client),
+                    new EventHubsClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,

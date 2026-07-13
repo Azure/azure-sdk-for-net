@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SafeguardsAvailableVersionData item in Value)
+            foreach (ContainerServiceSafeguardsAvailableVersionData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            IList<SafeguardsAvailableVersionData> value = default;
+            IList<ContainerServiceSafeguardsAvailableVersionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SafeguardsAvailableVersionData> array = new List<SafeguardsAvailableVersionData>();
+                    List<ContainerServiceSafeguardsAvailableVersionData> array = new List<ContainerServiceSafeguardsAvailableVersionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SafeguardsAvailableVersionData.DeserializeSafeguardsAvailableVersionData(item, options));
+                        array.Add(ContainerServiceSafeguardsAvailableVersionData.DeserializeContainerServiceSafeguardsAvailableVersionData(item, options));
                     }
                     value = array;
                     continue;

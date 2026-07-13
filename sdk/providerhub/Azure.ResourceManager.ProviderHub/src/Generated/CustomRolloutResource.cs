@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _customRolloutsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, CustomRolloutData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation<CustomRolloutResource> operation = new ProviderHubArmOperation<CustomRolloutResource>(
-                    new CustomRolloutOperationSource(Client),
+                    new CustomRolloutResourceOperationSource(Client),
                     _customRolloutsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _customRolloutsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, CustomRolloutData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation<CustomRolloutResource> operation = new ProviderHubArmOperation<CustomRolloutResource>(
-                    new CustomRolloutOperationSource(Client),
+                    new CustomRolloutResourceOperationSource(Client),
                     _customRolloutsClientDiagnostics,
                     Pipeline,
                     message.Request,

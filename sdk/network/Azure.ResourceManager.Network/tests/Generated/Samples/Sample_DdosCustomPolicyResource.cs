@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             DdosCustomPolicyResource ddosCustomPolicy = client.GetDdosCustomPolicyResource(ddosCustomPolicyResourceId);
 
             // invoke the operation
-            await ddosCustomPolicy.DeleteAsync(WaitUntil.Completed);
+            await ddosCustomPolicy.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

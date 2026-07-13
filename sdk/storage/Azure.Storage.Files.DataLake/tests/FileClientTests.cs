@@ -1596,8 +1596,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathSystemProperties systemProperties = await file.GetSystemPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(systemProperties.CreationTime);
-            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.CreatedOn);
+            Assert.IsNotNull(systemProperties.LastModifiedOn);
             Assert.IsNotNull(systemProperties.ETag);
             Assert.IsNotNull(systemProperties.ContentLength);
             Assert.IsNotNull(systemProperties.IsDirectory);
@@ -1629,8 +1629,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathSystemProperties systemProperties = await oauthFile.GetSystemPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(systemProperties.CreationTime);
-            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.CreatedOn);
+            Assert.IsNotNull(systemProperties.LastModifiedOn);
             Assert.IsNotNull(systemProperties.ETag);
             Assert.IsNotNull(systemProperties.ContentLength);
             Assert.IsNotNull(systemProperties.IsDirectory);
@@ -1664,8 +1664,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathSystemProperties systemProperties = await sasFile.GetSystemPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(systemProperties.CreationTime);
-            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.CreatedOn);
+            Assert.IsNotNull(systemProperties.LastModifiedOn);
             Assert.IsNotNull(systemProperties.ETag);
             Assert.IsNotNull(systemProperties.ContentLength);
             Assert.IsNotNull(systemProperties.IsDirectory);
@@ -1705,8 +1705,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathSystemProperties systemProperties = await identitySasFile.GetSystemPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(systemProperties.CreationTime);
-            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.CreatedOn);
+            Assert.IsNotNull(systemProperties.LastModifiedOn);
             Assert.IsNotNull(systemProperties.ETag);
             Assert.IsNotNull(systemProperties.ContentLength);
             Assert.IsNotNull(systemProperties.IsDirectory);
@@ -1742,8 +1742,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathSystemProperties systemProperties = await sasFile.GetSystemPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(systemProperties.CreationTime);
-            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.CreatedOn);
+            Assert.IsNotNull(systemProperties.LastModifiedOn);
             Assert.IsNotNull(systemProperties.ETag);
             Assert.IsNotNull(systemProperties.ContentLength);
             Assert.IsNotNull(systemProperties.IsDirectory);
@@ -1784,8 +1784,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathSystemProperties systemProperties = await identitySasFile.GetSystemPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(systemProperties.CreationTime);
-            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.CreatedOn);
+            Assert.IsNotNull(systemProperties.LastModifiedOn);
             Assert.IsNotNull(systemProperties.ETag);
             Assert.IsNotNull(systemProperties.ContentLength);
             Assert.IsNotNull(systemProperties.IsDirectory);
@@ -1900,8 +1900,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(systemProperties.EncryptionKeySha256);
-            Assert.IsNotNull(systemProperties.CreationTime);
-            Assert.IsNotNull(systemProperties.LastModifiedTime);
+            Assert.IsNotNull(systemProperties.CreatedOn);
+            Assert.IsNotNull(systemProperties.LastModifiedOn);
             Assert.IsNotNull(systemProperties.ETag);
             Assert.IsNotNull(systemProperties.ContentLength);
             Assert.IsNotNull(systemProperties.IsDirectory);

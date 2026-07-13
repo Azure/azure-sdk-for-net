@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Server farm storage mount configuration.
-    /// Serialized Name: StorageMount
-    /// </summary>
+    /// <summary> Server farm storage mount configuration. </summary>
     public partial class StorageMount
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageMount"/>. </summary>
         public StorageMount()
@@ -54,65 +23,39 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMount"/>. </summary>
-        /// <param name="name">
-        /// Name of the storage mount.
-        /// Serialized Name: StorageMount.name
-        /// </param>
-        /// <param name="mountType">
-        /// Type of the storage mount.
-        /// Serialized Name: StorageMount.type
-        /// </param>
-        /// <param name="source">
-        /// Source of the fileshare/storage.
-        /// Serialized Name: StorageMount.source
-        /// </param>
-        /// <param name="destinationPath">
-        /// Path on worker where storage will be mounted.
-        /// Serialized Name: StorageMount.destinationPath
-        /// </param>
-        /// <param name="credentialsKeyVaultReference">
-        /// KV reference to the credentials to connect to the share.
-        /// Serialized Name: StorageMount.credentialsKeyVaultReference
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageMount(string name, StorageMountType? mountType, string source, string destinationPath, KeyVaultReferenceWithStatus credentialsKeyVaultReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="name"> Name of the storage mount. </param>
+        /// <param name="mountType"> Type of the storage mount. </param>
+        /// <param name="source"> Source of the fileshare/storage. </param>
+        /// <param name="destinationPath"> Path on worker where storage will be mounted. </param>
+        /// <param name="credentialsKeyVaultReference"> KV reference to the credentials to connect to the share. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageMount(string name, StorageMountType? mountType, string source, string destinationPath, KeyVaultReferenceWithStatus credentialsKeyVaultReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             MountType = mountType;
             Source = source;
             DestinationPath = destinationPath;
             CredentialsKeyVaultReference = credentialsKeyVaultReference;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Name of the storage mount.
-        /// Serialized Name: StorageMount.name
-        /// </summary>
+        /// <summary> Name of the storage mount. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// Type of the storage mount.
-        /// Serialized Name: StorageMount.type
-        /// </summary>
+
+        /// <summary> Type of the storage mount. </summary>
         [WirePath("type")]
         public StorageMountType? MountType { get; set; }
-        /// <summary>
-        /// Source of the fileshare/storage.
-        /// Serialized Name: StorageMount.source
-        /// </summary>
+
+        /// <summary> Source of the fileshare/storage. </summary>
         [WirePath("source")]
         public string Source { get; set; }
-        /// <summary>
-        /// Path on worker where storage will be mounted.
-        /// Serialized Name: StorageMount.destinationPath
-        /// </summary>
+
+        /// <summary> Path on worker where storage will be mounted. </summary>
         [WirePath("destinationPath")]
         public string DestinationPath { get; set; }
-        /// <summary>
-        /// KV reference to the credentials to connect to the share.
-        /// Serialized Name: StorageMount.credentialsKeyVaultReference
-        /// </summary>
+
+        /// <summary> KV reference to the credentials to connect to the share. </summary>
         [WirePath("credentialsKeyVaultReference")]
         public KeyVaultReferenceWithStatus CredentialsKeyVaultReference { get; set; }
     }

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Nginx
                 HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, NginxDeploymentWafPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NginxArmOperation<NginxDeploymentWafPolicyResource> operation = new NginxArmOperation<NginxDeploymentWafPolicyResource>(
-                    new NginxDeploymentWafPolicyOperationSource(Client),
+                    new NginxDeploymentWafPolicyResourceOperationSource(Client),
                     _nginxDeploymentWafPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Nginx
                 HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, NginxDeploymentWafPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NginxArmOperation<NginxDeploymentWafPolicyResource> operation = new NginxArmOperation<NginxDeploymentWafPolicyResource>(
-                    new NginxDeploymentWafPolicyOperationSource(Client),
+                    new NginxDeploymentWafPolicyResourceOperationSource(Client),
                     _nginxDeploymentWafPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

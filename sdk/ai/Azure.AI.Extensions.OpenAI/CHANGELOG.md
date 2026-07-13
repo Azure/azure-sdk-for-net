@@ -1,10 +1,42 @@
 # Release History
 
-## 2.1.0-beta.2 (Unreleased)
+## 3.0.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Added distributed tracing support.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+### Sample Updates
+- Added sample for running responses in specific sessions.
+
+## 2.1.0-beta.4 (2026-06-30)
+
+### Bugs Fixed
+
+- Fixed issue with stateless encrypted reasoning [issue](https://github.com/Azure/azure-sdk-for-net/issues/59967).
+
+## 2.1.0-beta.3 (2026-05-29)
+
+### Breaking Changes
+- **Breaking changes since version 2.0.0** `MemorySearchToolCallResponseItem` was replaced by `MemorySearchToolCall`, `MemoryCommandToolCall` and `MemoryCommandToolCallOutput`.
+- **Breaking changes since version 2.0.0** `MemoryToolSearchItem` was removed, because it is not used anymore.
+
+### Sample Updates
+- Added a sample for Fabric IQ Tool (preview).
+- Added a sample for Work IQ Tool (preview).
+
+## 2.1.0-beta.2 (2026-05-14)
 
 ### Features Added
 - Added `ResponsesToolboxSearchPreviewTool` for discovering deferred tools via `search_tools` queries at runtime.
 - Added `Name` and `Description` properties to Responses tool classes.
+- Added new method `GetProjectResponsesClientForAgentEndpoint` on the `ProjectOpenAIClient`.
 
 ### Breaking Changes
 - `ComputerScreenshotImage` property `ImageUrl` was renamed to `ImageUri`.
@@ -22,10 +54,6 @@
 - `ResponsesOpenApiTool` property `Openapi` was renamed to `OpenApi`.
 - `ResponsesStructuredOutputDefinition` property `Strict` was renamed to `IsStrict`.
 - `ResponsesWebSearchApproximateLocation` property `Type` was renamed to `Kind`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 2.1.0-beta.1 (2026-04-21)
 

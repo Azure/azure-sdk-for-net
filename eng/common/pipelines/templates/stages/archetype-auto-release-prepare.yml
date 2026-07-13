@@ -1,0 +1,60 @@
+parameters:
+  - name: DependsOn
+    type: object
+    default:
+      - Signing
+  - name: Artifacts
+    type: object
+    default: []
+  - name: Condition
+    type: string
+    default: succeeded()
+
+stages:
+  # Post-merge auto-release preparation, shared across language repos (this file lives in the synced
+  # eng/common tree). Runs after the Signing stage: it resolves the merged PR for Build.SourceVersion,
+  # requires the auto-release label, maps the PR's changed files to releasable packages via the language
+  # repo's own package detection (Get-PrPkgProperties -> Get-AllPackageInfoFromRepo), and emits the
+  # auto-release output variables consumed by each language's release stage.
+  #
+  # The stage/job/step names below (AutoReleasePrepare / ResolveAutoReleasePackages / resolve) are the
+  # fixed cross-language output contract. Downstream release stages read outputs as:
+  #   condition:  dependencies.AutoReleasePrepare.outputs['ResolveAutoReleasePackages.resolve.<var>']
+  #   variables:  stageDependencies.AutoReleasePrepare.ResolveAutoReleasePackages.outputs['resolve.<var>']
+  # Emitted variables: AutoReleasePrNumber, AutoReleaseLabelPresent, HasAutoReleaseArtifacts,
+  # AutoReleaseArtifactsJson, and ReleaseArtifact_<safeName> per declared artifact.
+  - stage: AutoReleasePrepare
+    displayName: Auto-release prepare
+    dependsOn: ${{ parameters.DependsOn }}
+    condition: ${{ parameters.Condition }}
+    variables:
+      - template: /eng/pipelines/templates/variables/globals.yml
+      - template: /eng/pipelines/templates/variables/image.yml
+    jobs:
+      - job: ResolveAutoReleasePackages
+        displayName: Resolve releasable packages from merged PR
+        pool:
+          name: $(LINUXPOOL)
+          image: $(LINUXVMIMAGE)
+          os: linux
+        steps:
+          # Package detection reads package properties from source, so a checkout is required.
+          - checkout: self
+            fetchDepth: 1
+
+          - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+
+          - task: PowerShell@2
+            name: resolve
+            displayName: Determine releasable packages
+            env:
+              # convertToJson emits multi-line JSON, so pass it via env instead of the command line.
+              AUTORELEASE_ARTIFACTS: ${{ convertToJson(parameters.Artifacts) }}
+              # Map the secret token to env so it is not written to the task command line.
+              GH_TOKEN: $(GH_TOKEN)
+            inputs:
+              pwsh: true
+              filePath: $(System.DefaultWorkingDirectory)/eng/common/scripts/Resolve-AutoReleasePackages.ps1
+              arguments: >
+                -CommitSha "$(Build.SourceVersion)"
+                -RepoId "$(Build.Repository.Name)"

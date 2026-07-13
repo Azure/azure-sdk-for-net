@@ -75,7 +75,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(Execution))
             {
                 writer.WritePropertyName("execution"u8);
-                writer.WriteStringValue(Execution.Value.ToSerialString());
+                writer.WriteStringValue(Execution.Value.ToString());
             }
             if (Optional.IsDefined(Description))
             {
@@ -116,7 +116,7 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ToolSearchExecutionType? execution = default;
+            ToolSearchExecutionKind? execution = default;
             string description = default;
             EmptyModelParam parameters = default;
             foreach (var prop in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    execution = prop.Value.GetString().ToToolSearchExecutionType();
+                    execution = new ToolSearchExecutionKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

@@ -57,8 +57,8 @@ namespace Azure.Analytics.Defender.Easm
                     yield break;
                 }
                 PagedTask result = (PagedTask)response;
-                yield return Page<TaskResource>.FromValues((IReadOnlyList<TaskResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<TaskResource>.FromValues((IReadOnlyList<TaskResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

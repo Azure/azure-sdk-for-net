@@ -71,6 +71,10 @@ namespace Azure.Provisioning.MySql
             _supportedFlexibleServerEditions = DefineListProperty<ServerEditionCapabilityV2>(nameof(SupportedFlexibleServerEditions), new string[] { "supportedFlexibleServerEditions" }, isOutput: true);
             _supportedServerVersions = DefineListProperty<ServerVersionCapabilityV2>(nameof(SupportedServerVersions), new string[] { "supportedServerVersions" }, isOutput: true);
             _supportedFeatures = DefineListProperty<MySqlFlexibleServerFeatureProperty>(nameof(SupportedFeatures), new string[] { "supportedFeatures" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CapabilityPropertiesV2 that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class NetworkFunctionDefinitionGroupCollection : ArmCollection, IEnumerable<NetworkFunctionDefinitionGroupResource>, IAsyncEnumerable<NetworkFunctionDefinitionGroupResource>
     {
-        private readonly ClientDiagnostics _networkFunctionDefinitionGroupClientDiagnostics;
-        private readonly NetworkFunctionDefinitionGroupsRestOperations _networkFunctionDefinitionGroupRestClient;
+        private readonly ClientDiagnostics _networkFunctionDefinitionGroupsClientDiagnostics;
+        private readonly NetworkFunctionDefinitionGroups _networkFunctionDefinitionGroupsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkFunctionDefinitionGroupCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkFunctionDefinitionGroupCollection for mocking. </summary>
         protected NetworkFunctionDefinitionGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkFunctionDefinitionGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFunctionDefinitionGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkFunctionDefinitionGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", NetworkFunctionDefinitionGroupResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(NetworkFunctionDefinitionGroupResource.ResourceType, out string networkFunctionDefinitionGroupApiVersion);
-            _networkFunctionDefinitionGroupRestClient = new NetworkFunctionDefinitionGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkFunctionDefinitionGroupApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _networkFunctionDefinitionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", NetworkFunctionDefinitionGroupResource.ResourceType.Namespace, Diagnostics);
+            _networkFunctionDefinitionGroupsRestClient = new NetworkFunctionDefinitionGroups(_networkFunctionDefinitionGroupsClientDiagnostics, Pipeline, Endpoint, networkFunctionDefinitionGroupApiVersion ?? "2025-03-30");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != PublisherResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PublisherResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PublisherResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a network function definition group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctionDefinitionGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkFunctionDefinitionGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionDefinitionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
         /// <param name="data"> Parameters supplied to the create or update publisher network function definition group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<NetworkFunctionDefinitionGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkFunctionDefinitionGroupName, NetworkFunctionDefinitionGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkFunctionDefinitionGroupsClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkFunctionDefinitionGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridNetworkArmOperation<NetworkFunctionDefinitionGroupResource>(new NetworkFunctionDefinitionGroupOperationSource(Client), _networkFunctionDefinitionGroupClientDiagnostics, Pipeline, _networkFunctionDefinitionGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkFunctionDefinitionGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, NetworkFunctionDefinitionGroupData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridNetworkArmOperation<NetworkFunctionDefinitionGroupResource> operation = new HybridNetworkArmOperation<NetworkFunctionDefinitionGroupResource>(
+                    new NetworkFunctionDefinitionGroupResourceOperationSource(Client),
+                    _networkFunctionDefinitionGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Creates or updates a network function definition group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctionDefinitionGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkFunctionDefinitionGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionDefinitionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
         /// <param name="data"> Parameters supplied to the create or update publisher network function definition group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<NetworkFunctionDefinitionGroupResource> CreateOrUpdate(WaitUntil waitUntil, string networkFunctionDefinitionGroupName, NetworkFunctionDefinitionGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkFunctionDefinitionGroupsClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkFunctionDefinitionGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, data, cancellationToken);
-                var operation = new HybridNetworkArmOperation<NetworkFunctionDefinitionGroupResource>(new NetworkFunctionDefinitionGroupOperationSource(Client), _networkFunctionDefinitionGroupClientDiagnostics, Pipeline, _networkFunctionDefinitionGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkFunctionDefinitionGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, NetworkFunctionDefinitionGroupData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridNetworkArmOperation<NetworkFunctionDefinitionGroupResource> operation = new HybridNetworkArmOperation<NetworkFunctionDefinitionGroupResource>(
+                    new NetworkFunctionDefinitionGroupResourceOperationSource(Client),
+                    _networkFunctionDefinitionGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about the specified networkFunctionDefinition group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctionDefinitionGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkFunctionDefinitionGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionDefinitionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetworkFunctionDefinitionGroupResource>> GetAsync(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
 
-            using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.Get");
+            using DiagnosticScope scope = _networkFunctionDefinitionGroupsClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkFunctionDefinitionGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkFunctionDefinitionGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkFunctionDefinitionGroupData> response = Response.FromValue(NetworkFunctionDefinitionGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFunctionDefinitionGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about the specified networkFunctionDefinition group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctionDefinitionGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkFunctionDefinitionGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionDefinitionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetworkFunctionDefinitionGroupResource> Get(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
 
-            using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.Get");
+            using DiagnosticScope scope = _networkFunctionDefinitionGroupsClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkFunctionDefinitionGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkFunctionDefinitionGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkFunctionDefinitionGroupData> response = Response.FromValue(NetworkFunctionDefinitionGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFunctionDefinitionGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information of the network function definition groups under a publisher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctionDefinitionGroups_ListByPublisher</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkFunctionDefinitionGroups_ListByPublisher. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionDefinitionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFunctionDefinitionGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFunctionDefinitionGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFunctionDefinitionGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFunctionDefinitionGroupRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFunctionDefinitionGroupRestClient.CreateListByPublisherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFunctionDefinitionGroupResource(Client, NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(e)), _networkFunctionDefinitionGroupClientDiagnostics, Pipeline, "NetworkFunctionDefinitionGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkFunctionDefinitionGroupData, NetworkFunctionDefinitionGroupResource>(new NetworkFunctionDefinitionGroupsGetByPublisherAsyncCollectionResultOfT(
+                _networkFunctionDefinitionGroupsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetworkFunctionDefinitionGroupCollection.GetAll"), data => new NetworkFunctionDefinitionGroupResource(Client, data));
         }
 
         /// <summary>
         /// Gets information of the network function definition groups under a publisher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctionDefinitionGroups_ListByPublisher</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkFunctionDefinitionGroups_ListByPublisher. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionDefinitionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="NetworkFunctionDefinitionGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFunctionDefinitionGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFunctionDefinitionGroupRestClient.CreateListByPublisherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFunctionDefinitionGroupRestClient.CreateListByPublisherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFunctionDefinitionGroupResource(Client, NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(e)), _networkFunctionDefinitionGroupClientDiagnostics, Pipeline, "NetworkFunctionDefinitionGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkFunctionDefinitionGroupData, NetworkFunctionDefinitionGroupResource>(new NetworkFunctionDefinitionGroupsGetByPublisherCollectionResultOfT(
+                _networkFunctionDefinitionGroupsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetworkFunctionDefinitionGroupCollection.GetAll"), data => new NetworkFunctionDefinitionGroupResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctionDefinitionGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkFunctionDefinitionGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionDefinitionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
 
-            using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.Exists");
+            using DiagnosticScope scope = _networkFunctionDefinitionGroupsClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkFunctionDefinitionGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkFunctionDefinitionGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkFunctionDefinitionGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFunctionDefinitionGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFunctionDefinitionGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctionDefinitionGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkFunctionDefinitionGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionDefinitionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
 
-            using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.Exists");
+            using DiagnosticScope scope = _networkFunctionDefinitionGroupsClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkFunctionDefinitionGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkFunctionDefinitionGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkFunctionDefinitionGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFunctionDefinitionGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFunctionDefinitionGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctionDefinitionGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkFunctionDefinitionGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionDefinitionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetworkFunctionDefinitionGroupResource>> GetIfExistsAsync(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
 
-            using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _networkFunctionDefinitionGroupsClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkFunctionDefinitionGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkFunctionDefinitionGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkFunctionDefinitionGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFunctionDefinitionGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFunctionDefinitionGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkFunctionDefinitionGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFunctionDefinitionGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctionDefinitionGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkFunctionDefinitionGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionDefinitionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetworkFunctionDefinitionGroupResource> GetIfExists(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
 
-            using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _networkFunctionDefinitionGroupsClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkFunctionDefinitionGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkFunctionDefinitionGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkFunctionDefinitionGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFunctionDefinitionGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFunctionDefinitionGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkFunctionDefinitionGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFunctionDefinitionGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.HybridNetwork
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkFunctionDefinitionGroupResource> IAsyncEnumerable<NetworkFunctionDefinitionGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

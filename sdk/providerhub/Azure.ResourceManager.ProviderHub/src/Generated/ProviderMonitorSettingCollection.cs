@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _providerMonitorSettingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerMonitorSettingName, ProviderMonitorSettingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation<ProviderMonitorSettingResource> operation = new ProviderHubArmOperation<ProviderMonitorSettingResource>(
-                    new ProviderMonitorSettingOperationSource(Client),
+                    new ProviderMonitorSettingResourceOperationSource(Client),
                     _providerMonitorSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _providerMonitorSettingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerMonitorSettingName, ProviderMonitorSettingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation<ProviderMonitorSettingResource> operation = new ProviderHubArmOperation<ProviderMonitorSettingResource>(
-                    new ProviderMonitorSettingOperationSource(Client),
+                    new ProviderMonitorSettingResourceOperationSource(Client),
                     _providerMonitorSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,

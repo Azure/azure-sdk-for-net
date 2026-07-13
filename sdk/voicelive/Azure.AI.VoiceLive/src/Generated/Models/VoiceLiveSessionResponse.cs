@@ -23,6 +23,8 @@ namespace Azure.AI.VoiceLive
             Modalities = new ChangeTrackingList<InteractionModality>();
             OutputAudioTimestampTypes = new ChangeTrackingList<AudioTimestampType>();
             Tools = new ChangeTrackingList<VoiceLiveToolDefinition>();
+            Include = new ChangeTrackingList<SessionIncludeOption>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceLiveSessionResponse"/>. </summary>
@@ -45,6 +47,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputAudioTimestampTypes"> Types of timestamps to include in audio response content. </param>
         /// <param name="tools"> Configuration for tools to be used during the session, if applicable. </param>
         /// <param name="toolChoice"> Specifies which tools the model is allowed to call during the session. </param>
+        /// <param name="parallelToolCalls"> Whether the model is allowed to call tools in parallel. </param>
         /// <param name="temperature"> Controls the randomness of the model's output. Range: 0.0 to 1.0. Default is 0.7. </param>
         /// <param name="maxResponseOutputTokens"> Maximum number of tokens to generate in the response. Default is unlimited. </param>
         /// <param name="reasoningEffort">
@@ -52,11 +55,19 @@ namespace Azure.AI.VoiceLive
         /// Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.
         /// </param>
         /// <param name="interimResponse"> Configuration for interim response generation during latency or tool calls. </param>
+        /// <param name="include"> List of include options for the session (e.g., logprobs, phrases, file search results). </param>
+        /// <param name="metadata">
+        /// Set of up to 16 key-value pairs that can be attached to the session. This is useful for
+        /// storing additional information about the session in a structured format, such as tracking IDs,
+        /// user context, or application-specific labels. These key-value pairs are also included in
+        /// Foundry resource logs for tracing and diagnostics. Keys can be a maximum of 64 characters
+        /// long and values can be a maximum of 512 characters long.
+        /// </param>
         /// <param name="agent"> The agent configuration for the session, if applicable. </param>
         /// <param name="id"> The unique identifier for the session. </param>
         /// <param name="turnDetection"> Type of turn detection to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveSessionResponse(string model, IList<InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, ReasoningEffort? reasoningEffort, BinaryData interimResponse, RespondingAgentOptions agent, string id, BinaryData turnDetection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveSessionResponse(string model, IList<InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, bool? parallelToolCalls, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, ReasoningEffort? reasoningEffort, BinaryData interimResponse, IList<SessionIncludeOption> include, IDictionary<string, string> metadata, RespondingAgentOptions agent, string id, BinaryData turnDetection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Modalities = modalities;
@@ -73,10 +84,13 @@ namespace Azure.AI.VoiceLive
             OutputAudioTimestampTypes = outputAudioTimestampTypes;
             Tools = tools;
             ToolChoice = toolChoice;
+            ParallelToolCalls = parallelToolCalls;
             Temperature = temperature;
             MaxResponseOutputTokens = maxResponseOutputTokens;
             ReasoningEffort = reasoningEffort;
             InterimResponse = interimResponse;
+            Include = include;
+            Metadata = metadata;
             Agent = agent;
             Id = id;
             _turnDetection = turnDetection;
@@ -125,6 +139,9 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Configuration for tools to be used during the session, if applicable. </summary>
         public IList<VoiceLiveToolDefinition> Tools { get; }
+
+        /// <summary> Whether the model is allowed to call tools in parallel. </summary>
+        public bool? ParallelToolCalls { get; set; }
 
         /// <summary> Controls the randomness of the model's output. Range: 0.0 to 1.0. Default is 0.7. </summary>
         public float? Temperature { get; set; }
@@ -175,6 +192,18 @@ namespace Azure.AI.VoiceLive
         /// </para>
         /// </summary>
         public BinaryData InterimResponse { get; set; }
+
+        /// <summary> List of include options for the session (e.g., logprobs, phrases, file search results). </summary>
+        public IList<SessionIncludeOption> Include { get; }
+
+        /// <summary>
+        /// Set of up to 16 key-value pairs that can be attached to the session. This is useful for
+        /// storing additional information about the session in a structured format, such as tracking IDs,
+        /// user context, or application-specific labels. These key-value pairs are also included in
+        /// Foundry resource logs for tracing and diagnostics. Keys can be a maximum of 64 characters
+        /// long and values can be a maximum of 512 characters long.
+        /// </summary>
+        public IDictionary<string, string> Metadata { get; }
 
         /// <summary> The unique identifier for the session. </summary>
         public string Id { get; set; }

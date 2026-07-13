@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _virtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabVmData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabVmResource> operation = new DevTestLabsArmOperation<DevTestLabVmResource>(
-                    new DevTestLabVmOperationSource(Client),
+                    new DevTestLabVmResourceOperationSource(Client),
                     _virtualMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _virtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabVmData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabVmResource> operation = new DevTestLabsArmOperation<DevTestLabVmResource>(
-                    new DevTestLabVmOperationSource(Client),
+                    new DevTestLabVmResourceOperationSource(Client),
                     _virtualMachinesClientDiagnostics,
                     Pipeline,
                     message.Request,

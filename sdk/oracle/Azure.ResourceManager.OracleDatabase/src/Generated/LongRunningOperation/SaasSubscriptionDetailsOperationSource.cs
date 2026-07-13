@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.OracleDatabase
         SaasSubscriptionDetails IOperationSource<SaasSubscriptionDetails>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SaasSubscriptionDetails result = SaasSubscriptionDetails.DeserializeSaasSubscriptionDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return SaasSubscriptionDetails.DeserializeSaasSubscriptionDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.OracleDatabase
         async ValueTask<SaasSubscriptionDetails> IOperationSource<SaasSubscriptionDetails>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SaasSubscriptionDetails result = SaasSubscriptionDetails.DeserializeSaasSubscriptionDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return SaasSubscriptionDetails.DeserializeSaasSubscriptionDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A WorkIQ server-side tool. </summary>
+    [Experimental("AAIP001")]
     internal partial class WorkIQPreviewTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="WorkIQPreviewTool"/>. </summary>
@@ -24,22 +26,12 @@ namespace Azure.AI.Projects
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        internal WorkIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId, string name, string description) : base(@type, additionalBinaryDataProperties)
+        internal WorkIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
-            Name = name;
-            Description = description;
         }
 
         /// <summary> The ID of the WorkIQ project connection. </summary>
-        public string ProjectConnectionId { get; }
-
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        public string ProjectConnectionId { get; set; }
     }
 }

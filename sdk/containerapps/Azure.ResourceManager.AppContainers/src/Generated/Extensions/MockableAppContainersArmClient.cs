@@ -5,351 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableAppContainersArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableAppContainersArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAppContainersArmClient for mocking. </summary>
         protected MockableAppContainersArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAppContainersArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAppContainersArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAppContainersArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableAppContainersArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppAuthConfigResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppAuthConfigResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppAuthConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppAuthConfigResource"/> object. </returns>
-        public virtual ContainerAppAuthConfigResource GetContainerAppAuthConfigResource(ResourceIdentifier id)
-        {
-            ContainerAppAuthConfigResource.ValidateResourceId(id);
-            return new ContainerAppAuthConfigResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppConnectedEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppConnectedEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentResource"/> object. </returns>
-        public virtual ContainerAppConnectedEnvironmentResource GetContainerAppConnectedEnvironmentResource(ResourceIdentifier id)
-        {
-            ContainerAppConnectedEnvironmentResource.ValidateResourceId(id);
-            return new ContainerAppConnectedEnvironmentResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppConnectedEnvironmentCertificateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppConnectedEnvironmentCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentCertificateResource"/> object. </returns>
-        public virtual ContainerAppConnectedEnvironmentCertificateResource GetContainerAppConnectedEnvironmentCertificateResource(ResourceIdentifier id)
-        {
-            ContainerAppConnectedEnvironmentCertificateResource.ValidateResourceId(id);
-            return new ContainerAppConnectedEnvironmentCertificateResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentCertificateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppManagedEnvironmentCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentCertificateResource"/> object. </returns>
-        public virtual ContainerAppManagedEnvironmentCertificateResource GetContainerAppManagedEnvironmentCertificateResource(ResourceIdentifier id)
-        {
-            ContainerAppManagedEnvironmentCertificateResource.ValidateResourceId(id);
-            return new ContainerAppManagedEnvironmentCertificateResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppConnectedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> object. </returns>
-        public virtual ContainerAppConnectedEnvironmentDaprComponentResource GetContainerAppConnectedEnvironmentDaprComponentResource(ResourceIdentifier id)
-        {
-            ContainerAppConnectedEnvironmentDaprComponentResource.ValidateResourceId(id);
-            return new ContainerAppConnectedEnvironmentDaprComponentResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppManagedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> object. </returns>
-        public virtual ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(ResourceIdentifier id)
-        {
-            ContainerAppManagedEnvironmentDaprComponentResource.ValidateResourceId(id);
-            return new ContainerAppManagedEnvironmentDaprComponentResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppConnectedEnvironmentStorageResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppConnectedEnvironmentStorageResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentStorageResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentStorageResource"/> object. </returns>
-        public virtual ContainerAppConnectedEnvironmentStorageResource GetContainerAppConnectedEnvironmentStorageResource(ResourceIdentifier id)
-        {
-            ContainerAppConnectedEnvironmentStorageResource.ValidateResourceId(id);
-            return new ContainerAppConnectedEnvironmentStorageResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppResource"/> object. </returns>
-        public virtual ContainerAppResource GetContainerAppResource(ResourceIdentifier id)
-        {
-            ContainerAppResource.ValidateResourceId(id);
-            return new ContainerAppResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppDetectorPropertyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppDetectorPropertyResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppDetectorPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource"/> object. </returns>
-        public virtual ContainerAppDetectorPropertyResource GetContainerAppDetectorPropertyResource(ResourceIdentifier id)
-        {
-            ContainerAppDetectorPropertyResource.ValidateResourceId(id);
-            return new ContainerAppDetectorPropertyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppRevisionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppRevisionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppRevisionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppRevisionResource"/> object. </returns>
-        public virtual ContainerAppRevisionResource GetContainerAppRevisionResource(ResourceIdentifier id)
-        {
-            ContainerAppRevisionResource.ValidateResourceId(id);
-            return new ContainerAppRevisionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppDetectorPropertyRevisionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppDetectorPropertyRevisionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppDetectorPropertyRevisionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppDetectorPropertyRevisionResource"/> object. </returns>
-        public virtual ContainerAppDetectorPropertyRevisionResource GetContainerAppDetectorPropertyRevisionResource(ResourceIdentifier id)
-        {
-            ContainerAppDetectorPropertyRevisionResource.ValidateResourceId(id);
-            return new ContainerAppDetectorPropertyRevisionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppReplicaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppReplicaResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppReplicaResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppReplicaResource"/> object. </returns>
-        public virtual ContainerAppReplicaResource GetContainerAppReplicaResource(ResourceIdentifier id)
-        {
-            ContainerAppReplicaResource.ValidateResourceId(id);
-            return new ContainerAppReplicaResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppDetectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppDetectorResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppDetectorResource"/> object. </returns>
-        public virtual ContainerAppDetectorResource GetContainerAppDetectorResource(ResourceIdentifier id)
-        {
-            ContainerAppDetectorResource.ValidateResourceId(id);
-            return new ContainerAppDetectorResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentDetectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppManagedEnvironmentDetectorResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResource"/> object. </returns>
-        public virtual ContainerAppManagedEnvironmentDetectorResource GetContainerAppManagedEnvironmentDetectorResource(ResourceIdentifier id)
-        {
-            ContainerAppManagedEnvironmentDetectorResource.ValidateResourceId(id);
-            return new ContainerAppManagedEnvironmentDetectorResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppJobDetectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppJobDetectorResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobDetectorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppJobDetectorResource"/> object. </returns>
-        public virtual ContainerAppJobDetectorResource GetContainerAppJobDetectorResource(ResourceIdentifier id)
-        {
-            ContainerAppJobDetectorResource.ValidateResourceId(id);
-            return new ContainerAppJobDetectorResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> object. </returns>
-        public virtual ContainerAppManagedEnvironmentDetectorResourcePropertyResource GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(ResourceIdentifier id)
-        {
-            ContainerAppManagedEnvironmentDetectorResourcePropertyResource.ValidateResourceId(id);
-            return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppManagedEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentResource"/> object. </returns>
-        public virtual ContainerAppManagedEnvironmentResource GetContainerAppManagedEnvironmentResource(ResourceIdentifier id)
-        {
-            ContainerAppManagedEnvironmentResource.ValidateResourceId(id);
-            return new ContainerAppManagedEnvironmentResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppJobDetectorPropertyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppJobDetectorPropertyResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobDetectorPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppJobDetectorPropertyResource"/> object. </returns>
-        public virtual ContainerAppJobDetectorPropertyResource GetContainerAppJobDetectorPropertyResource(ResourceIdentifier id)
-        {
-            ContainerAppJobDetectorPropertyResource.ValidateResourceId(id);
-            return new ContainerAppJobDetectorPropertyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppJobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppJobResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppJobResource"/> object. </returns>
-        public virtual ContainerAppJobResource GetContainerAppJobResource(ResourceIdentifier id)
-        {
-            ContainerAppJobResource.ValidateResourceId(id);
-            return new ContainerAppJobResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="JavaComponentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JavaComponentResource.CreateResourceIdentifier" /> to create a <see cref="JavaComponentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JavaComponentResource"/> object. </returns>
-        public virtual JavaComponentResource GetJavaComponentResource(ResourceIdentifier id)
-        {
-            JavaComponentResource.ValidateResourceId(id);
-            return new JavaComponentResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppJobExecutionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppJobExecutionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobExecutionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppJobExecutionResource"/> object. </returns>
-        public virtual ContainerAppJobExecutionResource GetContainerAppJobExecutionResource(ResourceIdentifier id)
-        {
-            ContainerAppJobExecutionResource.ValidateResourceId(id);
-            return new ContainerAppJobExecutionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppManagedCertificateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppManagedCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppManagedCertificateResource"/> object. </returns>
-        public virtual ContainerAppManagedCertificateResource GetContainerAppManagedCertificateResource(ResourceIdentifier id)
-        {
-            ContainerAppManagedCertificateResource.ValidateResourceId(id);
-            return new ContainerAppManagedCertificateResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual ContainerAppPrivateEndpointConnectionResource GetContainerAppPrivateEndpointConnectionResource(ResourceIdentifier id)
-        {
-            ContainerAppPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new ContainerAppPrivateEndpointConnectionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppHttpRouteConfigResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppHttpRouteConfigResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppHttpRouteConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppHttpRouteConfigResource"/> object. </returns>
-        public virtual ContainerAppHttpRouteConfigResource GetContainerAppHttpRouteConfigResource(ResourceIdentifier id)
-        {
-            ContainerAppHttpRouteConfigResource.ValidateResourceId(id);
-            return new ContainerAppHttpRouteConfigResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppMaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppMaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppMaintenanceConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppMaintenanceConfigurationResource"/> object. </returns>
-        public virtual ContainerAppMaintenanceConfigurationResource GetContainerAppMaintenanceConfigurationResource(ResourceIdentifier id)
-        {
-            ContainerAppMaintenanceConfigurationResource.ValidateResourceId(id);
-            return new ContainerAppMaintenanceConfigurationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppManagedEnvironmentStorageResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppManagedEnvironmentStorageResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentStorageResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentStorageResource"/> object. </returns>
-        public virtual ContainerAppManagedEnvironmentStorageResource GetContainerAppManagedEnvironmentStorageResource(ResourceIdentifier id)
-        {
-            ContainerAppManagedEnvironmentStorageResource.ValidateResourceId(id);
-            return new ContainerAppManagedEnvironmentStorageResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SessionPoolResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SessionPoolResource.CreateResourceIdentifier" /> to create a <see cref="SessionPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="SessionPoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SessionPoolResource"/> object. </returns>
         public virtual SessionPoolResource GetSessionPoolResource(ResourceIdentifier id)
@@ -358,10 +39,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new SessionPoolResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppSourceControlResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerAppSourceControlResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppSourceControlResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerAppSourceControlResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerAppSourceControlResource"/> object. </returns>
         public virtual ContainerAppSourceControlResource GetContainerAppSourceControlResource(ResourceIdentifier id)
@@ -370,10 +48,88 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new ContainerAppSourceControlResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="LogicAppResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicAppResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppResource"/> object. </returns>
+        public virtual ContainerAppResource GetContainerAppResource(ResourceIdentifier id)
+        {
+            ContainerAppResource.ValidateResourceId(id);
+            return new ContainerAppResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppsBuildResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppsBuildResource"/> object. </returns>
+        public virtual ContainerAppsBuildResource GetContainerAppsBuildResource(ResourceIdentifier id)
+        {
+            ContainerAppsBuildResource.ValidateResourceId(id);
+            return new ContainerAppsBuildResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppsFunctionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppsFunctionResource"/> object. </returns>
+        public virtual ContainerAppsFunctionResource GetContainerAppsFunctionResource(ResourceIdentifier id)
+        {
+            ContainerAppsFunctionResource.ValidateResourceId(id);
+            return new ContainerAppsFunctionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppRevisionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppRevisionResource"/> object. </returns>
+        public virtual ContainerAppRevisionResource GetContainerAppRevisionResource(ResourceIdentifier id)
+        {
+            ContainerAppRevisionResource.ValidateResourceId(id);
+            return new ContainerAppRevisionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="LabelHistoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LabelHistoryResource"/> object. </returns>
+        public virtual LabelHistoryResource GetLabelHistoryResource(ResourceIdentifier id)
+        {
+            LabelHistoryResource.ValidateResourceId(id);
+            return new LabelHistoryResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppsPatchResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppsPatchResource"/> object. </returns>
+        public virtual ContainerAppsPatchResource GetContainerAppsPatchResource(ResourceIdentifier id)
+        {
+            ContainerAppsPatchResource.ValidateResourceId(id);
+            return new ContainerAppsPatchResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppReplicaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppReplicaResource"/> object. </returns>
+        public virtual ContainerAppReplicaResource GetContainerAppReplicaResource(ResourceIdentifier id)
+        {
+            ContainerAppReplicaResource.ValidateResourceId(id);
+            return new ContainerAppReplicaResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DotNetComponentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DotNetComponentResource"/> object. </returns>
+        public virtual DotNetComponentResource GetDotNetComponentResource(ResourceIdentifier id)
+        {
+            DotNetComponentResource.ValidateResourceId(id);
+            return new DotNetComponentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="JavaComponentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JavaComponentResource"/> object. </returns>
+        public virtual JavaComponentResource GetJavaComponentResource(ResourceIdentifier id)
+        {
+            JavaComponentResource.ValidateResourceId(id);
+            return new JavaComponentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="LogicAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LogicAppResource"/> object. </returns>
         public virtual LogicAppResource GetLogicAppResource(ResourceIdentifier id)
@@ -382,16 +138,337 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new LogicAppResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="LogicAppWorkflowEnvelopeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicAppWorkflowEnvelopeResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppWorkflowEnvelopeResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="LogicAppCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="LogicAppResource"/> objects. </returns>
+        public virtual LogicAppCollection GetLogicApps(ResourceIdentifier scope)
+        {
+            return new LogicAppCollection(Client, scope);
+        }
+
+        /// <summary> Gets a logic app extension resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="logicAppName"> Name of the Logic App, the extension resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="logicAppName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logicAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LogicAppResource> GetLogicApp(ResourceIdentifier scope, string logicAppName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(logicAppName, nameof(logicAppName));
+
+            return GetLogicApps(scope).Get(logicAppName, cancellationToken);
+        }
+
+        /// <summary> Gets a logic app extension resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="logicAppName"> Name of the Logic App, the extension resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="logicAppName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logicAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LogicAppResource>> GetLogicAppAsync(ResourceIdentifier scope, string logicAppName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(logicAppName, nameof(logicAppName));
+
+            return await GetLogicApps(scope).GetAsync(logicAppName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="LogicAppWorkflowEnvelopeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LogicAppWorkflowEnvelopeResource"/> object. </returns>
         public virtual LogicAppWorkflowEnvelopeResource GetLogicAppWorkflowEnvelopeResource(ResourceIdentifier id)
         {
             LogicAppWorkflowEnvelopeResource.ValidateResourceId(id);
             return new LogicAppWorkflowEnvelopeResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="LogicAppWorkflowEnvelopeCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="LogicAppWorkflowEnvelopeResource"/> objects. </returns>
+        public virtual LogicAppWorkflowEnvelopeCollection GetLogicAppWorkflowEnvelopes(ResourceIdentifier scope)
+        {
+            return new LogicAppWorkflowEnvelopeCollection(Client, scope);
+        }
+
+        /// <summary> Get workflow information by its name. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LogicAppWorkflowEnvelopeResource> GetLogicAppWorkflowEnvelope(ResourceIdentifier scope, string workflowName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+
+            return GetLogicAppWorkflowEnvelopes(scope).Get(workflowName, cancellationToken);
+        }
+
+        /// <summary> Get workflow information by its name. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LogicAppWorkflowEnvelopeResource>> GetLogicAppWorkflowEnvelopeAsync(ResourceIdentifier scope, string workflowName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+
+            return await GetLogicAppWorkflowEnvelopes(scope).GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppAuthConfigResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppAuthConfigResource"/> object. </returns>
+        public virtual ContainerAppAuthConfigResource GetContainerAppAuthConfigResource(ResourceIdentifier id)
+        {
+            ContainerAppAuthConfigResource.ValidateResourceId(id);
+            return new ContainerAppAuthConfigResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BuilderResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BuilderResource"/> object. </returns>
+        public virtual BuilderResource GetBuilderResource(ResourceIdentifier id)
+        {
+            BuilderResource.ValidateResourceId(id);
+            return new BuilderResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BuildResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BuildResource"/> object. </returns>
+        public virtual BuildResource GetBuildResource(ResourceIdentifier id)
+        {
+            BuildResource.ValidateResourceId(id);
+            return new BuildResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppConnectedEnvironmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentResource"/> object. </returns>
+        public virtual ContainerAppConnectedEnvironmentResource GetContainerAppConnectedEnvironmentResource(ResourceIdentifier id)
+        {
+            ContainerAppConnectedEnvironmentResource.ValidateResourceId(id);
+            return new ContainerAppConnectedEnvironmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppManagedEnvironmentCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentCertificateResource"/> object. </returns>
+        public virtual ContainerAppManagedEnvironmentCertificateResource GetContainerAppManagedEnvironmentCertificateResource(ResourceIdentifier id)
+        {
+            ContainerAppManagedEnvironmentCertificateResource.ValidateResourceId(id);
+            return new ContainerAppManagedEnvironmentCertificateResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppManagedEnvironmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentResource"/> object. </returns>
+        public virtual ContainerAppManagedEnvironmentResource GetContainerAppManagedEnvironmentResource(ResourceIdentifier id)
+        {
+            ContainerAppManagedEnvironmentResource.ValidateResourceId(id);
+            return new ContainerAppManagedEnvironmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource"/> object. </returns>
+        public virtual ContainerAppConnectedEnvironmentDaprComponentResource GetContainerAppConnectedEnvironmentDaprComponentResource(ResourceIdentifier id)
+        {
+            ContainerAppConnectedEnvironmentDaprComponentResource.ValidateResourceId(id);
+            return new ContainerAppConnectedEnvironmentDaprComponentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> object. </returns>
+        public virtual ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(ResourceIdentifier id)
+        {
+            ContainerAppManagedEnvironmentDaprComponentResource.ValidateResourceId(id);
+            return new ContainerAppManagedEnvironmentDaprComponentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppConnectedEnvironmentStorageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentStorageResource"/> object. </returns>
+        public virtual ContainerAppConnectedEnvironmentStorageResource GetContainerAppConnectedEnvironmentStorageResource(ResourceIdentifier id)
+        {
+            ContainerAppConnectedEnvironmentStorageResource.ValidateResourceId(id);
+            return new ContainerAppConnectedEnvironmentStorageResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppManagedCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppManagedCertificateResource"/> object. </returns>
+        public virtual ContainerAppManagedCertificateResource GetContainerAppManagedCertificateResource(ResourceIdentifier id)
+        {
+            ContainerAppManagedCertificateResource.ValidateResourceId(id);
+            return new ContainerAppManagedCertificateResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DaprComponentResiliencyPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DaprComponentResiliencyPolicyResource"/> object. </returns>
+        public virtual DaprComponentResiliencyPolicyResource GetDaprComponentResiliencyPolicyResource(ResourceIdentifier id)
+        {
+            DaprComponentResiliencyPolicyResource.ValidateResourceId(id);
+            return new DaprComponentResiliencyPolicyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DaprSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DaprSubscriptionResource"/> object. </returns>
+        public virtual DaprSubscriptionResource GetDaprSubscriptionResource(ResourceIdentifier id)
+        {
+            DaprSubscriptionResource.ValidateResourceId(id);
+            return new DaprSubscriptionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppMaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppMaintenanceConfigurationResource"/> object. </returns>
+        public virtual ContainerAppMaintenanceConfigurationResource GetContainerAppMaintenanceConfigurationResource(ResourceIdentifier id)
+        {
+            ContainerAppMaintenanceConfigurationResource.ValidateResourceId(id);
+            return new ContainerAppMaintenanceConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppManagedEnvironmentStorageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentStorageResource"/> object. </returns>
+        public virtual ContainerAppManagedEnvironmentStorageResource GetContainerAppManagedEnvironmentStorageResource(ResourceIdentifier id)
+        {
+            ContainerAppManagedEnvironmentStorageResource.ValidateResourceId(id);
+            return new ContainerAppManagedEnvironmentStorageResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppJobResource"/> object. </returns>
+        public virtual ContainerAppJobResource GetContainerAppJobResource(ResourceIdentifier id)
+        {
+            ContainerAppJobResource.ValidateResourceId(id);
+            return new ContainerAppJobResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppJobExecutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppJobExecutionResource"/> object. </returns>
+        public virtual ContainerAppJobExecutionResource GetContainerAppJobExecutionResource(ResourceIdentifier id)
+        {
+            ContainerAppJobExecutionResource.ValidateResourceId(id);
+            return new ContainerAppJobExecutionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppJobDetectorPropertyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppJobDetectorPropertyResource"/> object. </returns>
+        public virtual ContainerAppJobDetectorPropertyResource GetContainerAppJobDetectorPropertyResource(ResourceIdentifier id)
+        {
+            ContainerAppJobDetectorPropertyResource.ValidateResourceId(id);
+            return new ContainerAppJobDetectorPropertyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppJobDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppJobDetectorResource"/> object. </returns>
+        public virtual ContainerAppJobDetectorResource GetContainerAppJobDetectorResource(ResourceIdentifier id)
+        {
+            ContainerAppJobDetectorResource.ValidateResourceId(id);
+            return new ContainerAppJobDetectorResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppDetectorPropertyRevisionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppDetectorPropertyRevisionResource"/> object. </returns>
+        public virtual ContainerAppDetectorPropertyRevisionResource GetContainerAppDetectorPropertyRevisionResource(ResourceIdentifier id)
+        {
+            ContainerAppDetectorPropertyRevisionResource.ValidateResourceId(id);
+            return new ContainerAppDetectorPropertyRevisionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppDetectorPropertyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource"/> object. </returns>
+        public virtual ContainerAppDetectorPropertyResource GetContainerAppDetectorPropertyResource(ResourceIdentifier id)
+        {
+            ContainerAppDetectorPropertyResource.ValidateResourceId(id);
+            return new ContainerAppDetectorPropertyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppDetectorResource"/> object. </returns>
+        public virtual ContainerAppDetectorResource GetContainerAppDetectorResource(ResourceIdentifier id)
+        {
+            ContainerAppDetectorResource.ValidateResourceId(id);
+            return new ContainerAppDetectorResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> object. </returns>
+        public virtual ContainerAppManagedEnvironmentDetectorResourcePropertyResource GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(ResourceIdentifier id)
+        {
+            ContainerAppManagedEnvironmentDetectorResourcePropertyResource.ValidateResourceId(id);
+            return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppsRevisionFunctionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppsRevisionFunctionResource"/> object. </returns>
+        public virtual ContainerAppsRevisionFunctionResource GetContainerAppsRevisionFunctionResource(ResourceIdentifier id)
+        {
+            ContainerAppsRevisionFunctionResource.ValidateResourceId(id);
+            return new ContainerAppsRevisionFunctionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AppResiliencyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AppResiliencyResource"/> object. </returns>
+        public virtual AppResiliencyResource GetAppResiliencyResource(ResourceIdentifier id)
+        {
+            AppResiliencyResource.ValidateResourceId(id);
+            return new AppResiliencyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppConnectedEnvironmentCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentCertificateResource"/> object. </returns>
+        public virtual ContainerAppConnectedEnvironmentCertificateResource GetContainerAppConnectedEnvironmentCertificateResource(ResourceIdentifier id)
+        {
+            ContainerAppConnectedEnvironmentCertificateResource.ValidateResourceId(id);
+            return new ContainerAppConnectedEnvironmentCertificateResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual ContainerAppPrivateEndpointConnectionResource GetContainerAppPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            ContainerAppPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new ContainerAppPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppHttpRouteConfigResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppHttpRouteConfigResource"/> object. </returns>
+        public virtual ContainerAppHttpRouteConfigResource GetContainerAppHttpRouteConfigResource(ResourceIdentifier id)
+        {
+            ContainerAppHttpRouteConfigResource.ValidateResourceId(id);
+            return new ContainerAppHttpRouteConfigResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppManagedEnvironmentDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResource"/> object. </returns>
+        public virtual ContainerAppManagedEnvironmentDetectorResource GetContainerAppManagedEnvironmentDetectorResource(ResourceIdentifier id)
+        {
+            ContainerAppManagedEnvironmentDetectorResource.ValidateResourceId(id);
+            return new ContainerAppManagedEnvironmentDetectorResource(Client, id);
         }
     }
 }

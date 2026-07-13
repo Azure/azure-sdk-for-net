@@ -95,7 +95,7 @@ namespace Azure.AI.Extensions.OpenAI
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToItemFieldFunctionToolCallOutputStatus();
+                    status = new ItemFieldFunctionToolCallOutputStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

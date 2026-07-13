@@ -8,33 +8,39 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.PolicyInsights;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PolicyInsights.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockablePolicyInsightsTenantResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockablePolicyInsightsTenantResource"/> class for mocking. </summary>
+        private ClientDiagnostics _policyMetadataClientDiagnostics;
+        private PolicyMetadata _policyMetadataRestClient;
+
+        /// <summary> Initializes a new instance of MockablePolicyInsightsTenantResource for mocking. </summary>
         protected MockablePolicyInsightsTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePolicyInsightsTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePolicyInsightsTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePolicyInsightsTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics PolicyMetadataClientDiagnostics => _policyMetadataClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of PolicyMetadataResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of PolicyMetadataResources and their operations over a PolicyMetadataResource. </returns>
+        private PolicyMetadata PolicyMetadataRestClient => _policyMetadataRestClient ??= new PolicyMetadata(PolicyMetadataClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
+
+        /// <summary> Gets a collection of PolicyMetadata in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of PolicyMetadata and their operations over a PolicyMetadataResource. </returns>
         public virtual PolicyMetadataCollection GetAllPolicyMetadata()
         {
             return GetCachedClient(client => new PolicyMetadataCollection(client, Id));
@@ -44,29 +50,28 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// Get policy metadata resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyMetadata_GetResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyMetadataOperationGroup_GetResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyMetadataResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the policy metadata resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PolicyMetadataResource>> GetPolicyMetadataAsync(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             return await GetAllPolicyMetadata().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -74,29 +79,28 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// Get policy metadata resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyMetadata_GetResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyMetadataOperationGroup_GetResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyMetadataResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the policy metadata resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PolicyMetadataResource> GetPolicyMetadata(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             return GetAllPolicyMetadata().Get(resourceName, cancellationToken);
         }
     }

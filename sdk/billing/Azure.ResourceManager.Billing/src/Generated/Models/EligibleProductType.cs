@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct EligibleProductType : IEquatable<EligibleProductType>
     {
         private readonly string _value;
+        /// <summary> DevTestAzureSubscription. </summary>
+        private const string DevTestAzureSubscriptionValue = "DevTestAzureSubscription";
+        /// <summary> StandardAzureSubscription. </summary>
+        private const string StandardAzureSubscriptionValue = "StandardAzureSubscription";
+        /// <summary> AzureReservation. </summary>
+        private const string AzureReservationValue = "AzureReservation";
 
         /// <summary> Initializes a new instance of <see cref="EligibleProductType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EligibleProductType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DevTestAzureSubscriptionValue = "DevTestAzureSubscription";
-        private const string StandardAzureSubscriptionValue = "StandardAzureSubscription";
-        private const string AzureReservationValue = "AzureReservation";
+            _value = value;
+        }
 
         /// <summary> DevTestAzureSubscription. </summary>
         public static EligibleProductType DevTestAzureSubscription { get; } = new EligibleProductType(DevTestAzureSubscriptionValue);
+
         /// <summary> StandardAzureSubscription. </summary>
         public static EligibleProductType StandardAzureSubscription { get; } = new EligibleProductType(StandardAzureSubscriptionValue);
+
         /// <summary> AzureReservation. </summary>
         public static EligibleProductType AzureReservation { get; } = new EligibleProductType(AzureReservationValue);
+
         /// <summary> Determines if two <see cref="EligibleProductType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EligibleProductType left, EligibleProductType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EligibleProductType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EligibleProductType left, EligibleProductType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EligibleProductType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EligibleProductType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EligibleProductType(string value) => new EligibleProductType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EligibleProductType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EligibleProductType?(string value) => value == null ? null : new EligibleProductType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EligibleProductType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EligibleProductType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

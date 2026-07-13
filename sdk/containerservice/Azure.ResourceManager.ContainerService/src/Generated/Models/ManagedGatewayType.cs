@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         private readonly string _value;
         /// <summary> Gateway API CRDs will not be reconciled on your cluster. </summary>
         private const string DisabledValue = "Disabled";
-        /// <summary> The latest Gateway CRD bundle from the standard channel that is compatible with your Kubernetes version will be reconciled onto your cluster. See https://gateway-api.sigs.k8s.io/concepts/versioning/ for more details. </summary>
+        /// <summary> Gateway API CRDs from the standard release channel will be reconciled onto your cluster. See https://aka.ms/gateway-api-versions to see which bundle will be installed for your Kubernetes version. </summary>
         private const string StandardValue = "Standard";
 
         /// <summary> Initializes a new instance of <see cref="ManagedGatewayType"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Gateway API CRDs will not be reconciled on your cluster. </summary>
         public static ManagedGatewayType Disabled { get; } = new ManagedGatewayType(DisabledValue);
 
-        /// <summary> The latest Gateway CRD bundle from the standard channel that is compatible with your Kubernetes version will be reconciled onto your cluster. See https://gateway-api.sigs.k8s.io/concepts/versioning/ for more details. </summary>
+        /// <summary> Gateway API CRDs from the standard release channel will be reconciled onto your cluster. See https://aka.ms/gateway-api-versions to see which bundle will be installed for your Kubernetes version. </summary>
         public static ManagedGatewayType Standard { get; } = new ManagedGatewayType(StandardValue);
 
         /// <summary> Determines if two <see cref="ManagedGatewayType"/> values are the same. </summary>

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KeyVault
                 HttpMessage message = _vaultsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, KeyVaultCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KeyVaultArmOperation<KeyVaultResource> operation = new KeyVaultArmOperation<KeyVaultResource>(
-                    new KeyVaultOperationSource(Client),
+                    new KeyVaultResourceOperationSource(Client),
                     _vaultsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.KeyVault
                 HttpMessage message = _vaultsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, KeyVaultCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KeyVaultArmOperation<KeyVaultResource> operation = new KeyVaultArmOperation<KeyVaultResource>(
-                    new KeyVaultOperationSource(Client),
+                    new KeyVaultResourceOperationSource(Client),
                     _vaultsClientDiagnostics,
                     Pipeline,
                     message.Request,

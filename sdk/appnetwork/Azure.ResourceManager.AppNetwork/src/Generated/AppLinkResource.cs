@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppNetwork
                 HttpMessage message = _appLinksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppLinkPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppNetworkArmOperation<AppLinkResource> operation = new AppNetworkArmOperation<AppLinkResource>(
-                    new AppLinkOperationSource(Client),
+                    new AppLinkResourceOperationSource(Client),
                     _appLinksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppNetwork
                 HttpMessage message = _appLinksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppLinkPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppNetworkArmOperation<AppLinkResource> operation = new AppNetworkArmOperation<AppLinkResource>(
-                    new AppLinkOperationSource(Client),
+                    new AppLinkResourceOperationSource(Client),
                     _appLinksClientDiagnostics,
                     Pipeline,
                     message.Request,

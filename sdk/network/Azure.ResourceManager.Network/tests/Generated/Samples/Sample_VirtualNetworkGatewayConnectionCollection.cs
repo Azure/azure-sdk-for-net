@@ -50,7 +50,6 @@ PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/GatewaySubnet"),
 PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/gwpip"),
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw/ipConfigurations/gwipconfig1"),
-Name = "gwipconfig1",
 }},
                 GatewayType = VirtualNetworkGatewayType.Vpn,
                 VpnType = VpnType.RouteBased,
@@ -58,7 +57,6 @@ Name = "gwipconfig1",
                 Active = false,
                 Sku = new VirtualNetworkGatewaySku
                 {
-                    Name = VirtualNetworkGatewaySkuName.VpnGw1,
                     Tier = VirtualNetworkGatewaySkuTier.VpnGw1,
                 },
                 BgpSettings = new BgpSettings
@@ -119,7 +117,7 @@ BgpPeeringAddress = "10.78.1.20",
                 },
                 Location = new AzureLocation("centralus"),
             };
-            ArmOperation<VirtualNetworkGatewayConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayConnectionName, data);
+            ArmOperation<VirtualNetworkGatewayConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayConnectionName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkGatewayConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

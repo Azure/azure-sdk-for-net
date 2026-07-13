@@ -56,7 +56,8 @@ namespace Azure.ResourceManager.NetworkCloud
             get
             {
                 var baseLoc = Properties?.ClusterExtendedLocation;
-                if (baseLoc == null) return null;
+                if (baseLoc == null)
+                    return null;
                 return new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(baseLoc.Name, baseLoc.ExtendedLocationType?.ToString());
             }
         }
@@ -67,7 +68,8 @@ namespace Azure.ResourceManager.NetworkCloud
             get
             {
                 var baseLoc = Properties?.HybridAksExtendedLocation;
-                if (baseLoc == null) return null;
+                if (baseLoc == null)
+                    return null;
                 return new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(baseLoc.Name, baseLoc.ExtendedLocationType?.ToString());
             }
         }

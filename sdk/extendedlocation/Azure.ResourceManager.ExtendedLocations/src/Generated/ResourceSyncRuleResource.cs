@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 HttpMessage message = _resourceSyncRulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ResourceSyncRulePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ExtendedLocationsArmOperation<ResourceSyncRuleResource> operation = new ExtendedLocationsArmOperation<ResourceSyncRuleResource>(
-                    new ResourceSyncRuleOperationSource(Client),
+                    new ResourceSyncRuleResourceOperationSource(Client),
                     _resourceSyncRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 HttpMessage message = _resourceSyncRulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ResourceSyncRulePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ExtendedLocationsArmOperation<ResourceSyncRuleResource> operation = new ExtendedLocationsArmOperation<ResourceSyncRuleResource>(
-                    new ResourceSyncRuleOperationSource(Client),
+                    new ResourceSyncRuleResourceOperationSource(Client),
                     _resourceSyncRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

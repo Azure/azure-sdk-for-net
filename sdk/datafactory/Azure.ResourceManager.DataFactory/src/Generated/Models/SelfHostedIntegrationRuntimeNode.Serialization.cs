@@ -8,15 +8,65 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SelfHostedIntegrationRuntimeNode : IUtf8JsonSerializable, IJsonModel<SelfHostedIntegrationRuntimeNode>
+    /// <summary> Properties of Self-hosted integration runtime node. </summary>
+    public partial class SelfHostedIntegrationRuntimeNode : IJsonModel<SelfHostedIntegrationRuntimeNode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHostedIntegrationRuntimeNode>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SelfHostedIntegrationRuntimeNode PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntimeNode>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSelfHostedIntegrationRuntimeNode(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeNode)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntimeNode>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeNode)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SelfHostedIntegrationRuntimeNode>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SelfHostedIntegrationRuntimeNode IPersistableModel<SelfHostedIntegrationRuntimeNode>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SelfHostedIntegrationRuntimeNode>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SelfHostedIntegrationRuntimeNode"/> from. </param>
+        internal static SelfHostedIntegrationRuntimeNode FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSelfHostedIntegrationRuntimeNode(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SelfHostedIntegrationRuntimeNode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +78,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntimeNode>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntimeNode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeNode)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(NodeName))
             {
                 writer.WritePropertyName("nodeName"u8);
@@ -61,6 +110,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Capabilities)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -134,9 +188,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -144,22 +198,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        SelfHostedIntegrationRuntimeNode IJsonModel<SelfHostedIntegrationRuntimeNode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SelfHostedIntegrationRuntimeNode IJsonModel<SelfHostedIntegrationRuntimeNode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SelfHostedIntegrationRuntimeNode JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntimeNode>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntimeNode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeNode)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSelfHostedIntegrationRuntimeNode(document.RootElement, options);
         }
 
-        internal static SelfHostedIntegrationRuntimeNode DeserializeSelfHostedIntegrationRuntimeNode(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SelfHostedIntegrationRuntimeNode DeserializeSelfHostedIntegrationRuntimeNode(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -171,175 +230,180 @@ namespace Azure.ResourceManager.DataFactory.Models
             IReadOnlyDictionary<string, string> capabilities = default;
             string versionStatus = default;
             string version = default;
-            DateTimeOffset? registerTime = default;
-            DateTimeOffset? lastConnectTime = default;
-            DateTimeOffset? expiryTime = default;
-            DateTimeOffset? lastStartTime = default;
-            DateTimeOffset? lastStopTime = default;
+            DateTimeOffset? registerOn = default;
+            DateTimeOffset? lastConnectOn = default;
+            DateTimeOffset? expireOn = default;
+            DateTimeOffset? lastStartOn = default;
+            DateTimeOffset? lastStopOn = default;
             IntegrationRuntimeUpdateResult? lastUpdateResult = default;
-            DateTimeOffset? lastStartUpdateTime = default;
-            DateTimeOffset? lastEndUpdateTime = default;
+            DateTimeOffset? lastStartUpdateOn = default;
+            DateTimeOffset? lastEndUpdateOn = default;
             bool? isActiveDispatcher = default;
             int? concurrentJobsLimit = default;
             int? maxConcurrentJobs = default;
-            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ChangeTrackingDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("nodeName"u8))
+                if (prop.NameEquals("nodeName"u8))
                 {
-                    nodeName = property.Value.GetString();
+                    nodeName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("machineName"u8))
+                if (prop.NameEquals("machineName"u8))
                 {
-                    machineName = property.Value.GetString();
+                    machineName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostServiceUri"u8))
+                if (prop.NameEquals("hostServiceUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hostServiceUri = new Uri(property.Value.GetString());
+                    hostServiceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new SelfHostedIntegrationRuntimeNodeStatus(property.Value.GetString());
+                    status = new SelfHostedIntegrationRuntimeNodeStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("capabilities"u8))
+                if (prop.NameEquals("capabilities"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     capabilities = dictionary;
                     continue;
                 }
-                if (property.NameEquals("versionStatus"u8))
+                if (prop.NameEquals("versionStatus"u8))
                 {
-                    versionStatus = property.Value.GetString();
+                    versionStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString();
+                    version = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registerTime"u8))
+                if (prop.NameEquals("registerTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    registerTime = property.Value.GetDateTimeOffset("O");
+                    registerOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastConnectTime"u8))
+                if (prop.NameEquals("lastConnectTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastConnectTime = property.Value.GetDateTimeOffset("O");
+                    lastConnectOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("expiryTime"u8))
+                if (prop.NameEquals("expiryTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expiryTime = property.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastStartTime"u8))
+                if (prop.NameEquals("lastStartTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastStartTime = property.Value.GetDateTimeOffset("O");
+                    lastStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastStopTime"u8))
+                if (prop.NameEquals("lastStopTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastStopTime = property.Value.GetDateTimeOffset("O");
+                    lastStopOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdateResult"u8))
+                if (prop.NameEquals("lastUpdateResult"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastUpdateResult = new IntegrationRuntimeUpdateResult(property.Value.GetString());
+                    lastUpdateResult = new IntegrationRuntimeUpdateResult(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastStartUpdateTime"u8))
+                if (prop.NameEquals("lastStartUpdateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastStartUpdateTime = property.Value.GetDateTimeOffset("O");
+                    lastStartUpdateOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastEndUpdateTime"u8))
+                if (prop.NameEquals("lastEndUpdateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastEndUpdateTime = property.Value.GetDateTimeOffset("O");
+                    lastEndUpdateOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isActiveDispatcher"u8))
+                if (prop.NameEquals("isActiveDispatcher"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isActiveDispatcher = property.Value.GetBoolean();
+                    isActiveDispatcher = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("concurrentJobsLimit"u8))
+                if (prop.NameEquals("concurrentJobsLimit"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    concurrentJobsLimit = property.Value.GetInt32();
+                    concurrentJobsLimit = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentJobs"u8))
+                if (prop.NameEquals("maxConcurrentJobs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxConcurrentJobs = property.Value.GetInt32();
+                    maxConcurrentJobs = prop.Value.GetInt32();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new SelfHostedIntegrationRuntimeNode(
                 nodeName,
                 machineName,
@@ -348,49 +412,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 capabilities ?? new ChangeTrackingDictionary<string, string>(),
                 versionStatus,
                 version,
-                registerTime,
-                lastConnectTime,
-                expiryTime,
-                lastStartTime,
-                lastStopTime,
+                registerOn,
+                lastConnectOn,
+                expireOn,
+                lastStartOn,
+                lastStopOn,
                 lastUpdateResult,
-                lastStartUpdateTime,
-                lastEndUpdateTime,
+                lastStartUpdateOn,
+                lastEndUpdateOn,
                 isActiveDispatcher,
                 concurrentJobsLimit,
                 maxConcurrentJobs,
-                additionalProperties);
+                new ReadOnlyDictionary<string, BinaryData>(additionalProperties));
         }
-
-        BinaryData IPersistableModel<SelfHostedIntegrationRuntimeNode>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntimeNode>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeNode)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SelfHostedIntegrationRuntimeNode IPersistableModel<SelfHostedIntegrationRuntimeNode>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntimeNode>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSelfHostedIntegrationRuntimeNode(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeNode)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SelfHostedIntegrationRuntimeNode>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

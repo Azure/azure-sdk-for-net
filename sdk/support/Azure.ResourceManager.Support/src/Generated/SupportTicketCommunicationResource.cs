@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Support
                 HttpMessage message = _supportTicketCommunicationRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, SupportTicketCommunicationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SupportArmOperation<SupportTicketCommunicationResource> operation = new SupportArmOperation<SupportTicketCommunicationResource>(
-                    new SupportTicketCommunicationOperationSource(Client),
+                    new SupportTicketCommunicationResourceOperationSource(Client),
                     _supportTicketCommunicationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Support
                 HttpMessage message = _supportTicketCommunicationRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, SupportTicketCommunicationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SupportArmOperation<SupportTicketCommunicationResource> operation = new SupportArmOperation<SupportTicketCommunicationResource>(
-                    new SupportTicketCommunicationOperationSource(Client),
+                    new SupportTicketCommunicationResourceOperationSource(Client),
                     _supportTicketCommunicationClientDiagnostics,
                     Pipeline,
                     message.Request,

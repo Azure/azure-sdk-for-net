@@ -13,11 +13,11 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 /// <summary>
 /// E2E protocol tests verifying that child instrumentation spans (simulating
 /// framework libraries like OpenAI SDK and Microsoft Agent Framework) correctly
-/// appear as children of the AgentServer span.
+/// appear as children of the ASP.NET Core request span.
 /// <para>
-/// These tests validate that <c>Activity.Current</c> is properly set to the
-/// AgentServer span when handler code executes, so any <see cref="ActivitySource"/>
-/// started within the handler automatically inherits the correct trace context.
+/// The <c>invoke_agent</c> span has been removed. <see cref="ResponsesActivitySource"/>
+/// now only propagates baggage. Child spans created inside the handler are parented
+/// directly under the ASP.NET Core request activity.
 /// </para>
 /// </summary>
 [TestFixture]
@@ -51,16 +51,11 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
         _openAiSource = new ActivitySource(_openAiSourceName);
         _agentFrameworkSource = new ActivitySource(_agentFrameworkSourceName);
 
-        var knownSources = new HashSet<string>
-        {
-            _responsesSourceName,
-            _openAiSourceName,
-            _agentFrameworkSourceName
-        };
-
+        // Listen to all sources so ASP.NET Core's request activity is recorded
+        // and Activity.Current is non-null inside the handler.
         _listener = new ActivityListener
         {
-            ShouldListenTo = source => knownSources.Contains(source.Name),
+            ShouldListenTo = _ => true,
             Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
             ActivityStopped = activity => _stoppedActivities.Add(activity)
         };
@@ -83,6 +78,22 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
         public TestableActivitySource(string? name) : base(name) { }
     }
 
+    /// <summary>
+    /// Finds the ASP.NET Core server activity from stopped activities.
+    /// This is the request-level activity that serves as parent for all handler spans.
+    /// </summary>
+    private Activity? FindServerActivity()
+    {
+        // The ASP.NET Core request activity is the one captured inside the handler
+        // (Activity.Current at handler invocation time). Match by SpanId.
+        if (_capturedServerActivity is not null)
+        {
+            return _stoppedActivities.FirstOrDefault(
+                a => a.SpanId == _capturedServerActivity.SpanId);
+        }
+        return null;
+    }
+
     public void Dispose()
     {
         _client.Dispose();
@@ -95,7 +106,7 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
     // --- Test: Single framework child span ---
 
     [Test]
-    public async Task ChildInstrumentationSpan_IsChildOfAgentServerSpan()
+    public async Task ChildInstrumentationSpan_IsChildOfServerSpan()
     {
         _handler.EventFactory = (request, context, ct) =>
             HandlerWithOpenAiSpan(request, context, ct);
@@ -108,18 +119,17 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
 
         Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
 
-        // Find the AgentServer (parent) and OpenAI-like (child) activities
-        var serverSpan = _stoppedActivities.FirstOrDefault(
-            a => a.Source.Name == _responsesSourceName);
+        // The server span is the ASP.NET Core request activity
+        var serverSpan = FindServerActivity();
         var childSpan = _stoppedActivities.FirstOrDefault(
             a => a.Source.Name == _openAiSourceName);
 
-        Assert.That(serverSpan, Is.Not.Null, "AgentServer span should be captured");
+        Assert.That(serverSpan, Is.Not.Null, "Server span should be captured");
         Assert.That(childSpan, Is.Not.Null, "Child instrumentation span should be captured");
 
         // Core assertion: child's ParentSpanId matches the server span's SpanId
         Assert.That(childSpan!.ParentSpanId, Is.EqualTo(serverSpan!.SpanId),
-            "Child span's ParentSpanId should equal the AgentServer span's SpanId");
+            "Child span's ParentSpanId should equal the server span's SpanId");
 
         // All spans share the same TraceId
         Assert.That(childSpan.TraceId, Is.EqualTo(serverSpan.TraceId),
@@ -129,7 +139,7 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
         Assert.That(_capturedServerActivity, Is.Not.Null,
             "Activity.Current should be non-null inside the handler");
         Assert.That(_capturedServerActivity!.SpanId, Is.EqualTo(serverSpan.SpanId),
-            "Activity.Current in handler should be the AgentServer span");
+            "Activity.Current in handler should be the server span");
     }
 
     // --- Test: Multiple framework spans share trace context ---
@@ -148,14 +158,13 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
 
         Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
 
-        var serverSpan = _stoppedActivities.FirstOrDefault(
-            a => a.Source.Name == _responsesSourceName);
+        var serverSpan = FindServerActivity();
         var openAiSpan = _stoppedActivities.FirstOrDefault(
             a => a.Source.Name == _openAiSourceName);
         var agentFrameworkSpan = _stoppedActivities.FirstOrDefault(
             a => a.Source.Name == _agentFrameworkSourceName);
 
-        Assert.That(serverSpan, Is.Not.Null, "AgentServer span should be captured");
+        Assert.That(serverSpan, Is.Not.Null, "Server span should be captured");
         Assert.That(openAiSpan, Is.Not.Null, "OpenAI-like span should be captured");
         Assert.That(agentFrameworkSpan, Is.Not.Null, "AgentFramework-like span should be captured");
 
@@ -165,9 +174,9 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
 
         // Both are direct children of the server span
         Assert.That(openAiSpan.ParentSpanId, Is.EqualTo(serverSpan.SpanId),
-            "OpenAI-like span should be child of AgentServer span");
+            "OpenAI-like span should be child of server span");
         Assert.That(agentFrameworkSpan.ParentSpanId, Is.EqualTo(serverSpan.SpanId),
-            "AgentFramework-like span should be child of AgentServer span");
+            "AgentFramework-like span should be child of server span");
     }
 
     // --- Test: Nested hierarchy (3 levels) ---
@@ -186,14 +195,13 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
 
         Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
 
-        var serverSpan = _stoppedActivities.FirstOrDefault(
-            a => a.Source.Name == _responsesSourceName);
+        var serverSpan = FindServerActivity();
         var agentFrameworkSpan = _stoppedActivities.FirstOrDefault(
             a => a.Source.Name == _agentFrameworkSourceName);
         var openAiSpan = _stoppedActivities.FirstOrDefault(
             a => a.Source.Name == _openAiSourceName);
 
-        Assert.That(serverSpan, Is.Not.Null, "AgentServer span should be captured");
+        Assert.That(serverSpan, Is.Not.Null, "Server span should be captured");
         Assert.That(agentFrameworkSpan, Is.Not.Null, "AgentFramework-like span should be captured");
         Assert.That(openAiSpan, Is.Not.Null, "OpenAI-like span should be captured");
 
@@ -203,7 +211,7 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
 
         // AgentFramework span is child of server span (level 2)
         Assert.That(agentFrameworkSpan.ParentSpanId, Is.EqualTo(serverSpan.SpanId),
-            "AgentFramework span should be child of AgentServer span");
+            "AgentFramework span should be child of server span");
 
         // OpenAI span is child of AgentFramework span (level 3)
         Assert.That(openAiSpan.ParentSpanId, Is.EqualTo(agentFrameworkSpan.SpanId),
@@ -226,16 +234,15 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
 
         Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
 
-        var serverSpan = _stoppedActivities.FirstOrDefault(
-            a => a.Source.Name == _responsesSourceName);
+        var serverSpan = FindServerActivity();
         var childSpan = _stoppedActivities.FirstOrDefault(
             a => a.Source.Name == _openAiSourceName);
 
-        Assert.That(serverSpan, Is.Not.Null, "AgentServer span should be captured");
+        Assert.That(serverSpan, Is.Not.Null, "Server span should be captured");
         Assert.That(childSpan, Is.Not.Null, "Child span should be captured after async boundary");
 
         Assert.That(childSpan!.ParentSpanId, Is.EqualTo(serverSpan!.SpanId),
-            "Child span should be child of AgentServer span even after await Task.Yield()");
+            "Child span should be child of server span even after await Task.Yield()");
         Assert.That(childSpan.TraceId, Is.EqualTo(serverSpan.TraceId));
     }
 
@@ -265,6 +272,8 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken ct)
     {
+        _capturedServerActivity = Activity.Current;
+
         // Simulate Agent Framework creating a span
         using (var frameworkActivity = _agentFrameworkSource.StartActivity(
             "invoke_agent my-agent",
@@ -292,6 +301,8 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken ct)
     {
+        _capturedServerActivity = Activity.Current;
+
         // Level 2: Agent Framework span (child of AgentServer span)
         using var frameworkActivity = _agentFrameworkSource.StartActivity(
             "invoke_agent my-agent",
@@ -313,6 +324,8 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken ct)
     {
+        _capturedServerActivity = Activity.Current;
+
         // Cross an async boundary to verify context propagation
         await Task.Yield();
 

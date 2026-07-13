@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SiteManager
                 HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, EdgeSiteData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SiteManagerArmOperation<ResourceGroupEdgeSiteResource> operation = new SiteManagerArmOperation<ResourceGroupEdgeSiteResource>(
-                    new ResourceGroupEdgeSiteOperationSource(Client),
+                    new ResourceGroupEdgeSiteResourceOperationSource(Client),
                     _resourceGroupEdgeSiteClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SiteManager
                 HttpMessage message = _resourceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, siteName, EdgeSiteData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SiteManagerArmOperation<ResourceGroupEdgeSiteResource> operation = new SiteManagerArmOperation<ResourceGroupEdgeSiteResource>(
-                    new ResourceGroupEdgeSiteOperationSource(Client),
+                    new ResourceGroupEdgeSiteResourceOperationSource(Client),
                     _resourceGroupEdgeSiteClientDiagnostics,
                     Pipeline,
                     message.Request,

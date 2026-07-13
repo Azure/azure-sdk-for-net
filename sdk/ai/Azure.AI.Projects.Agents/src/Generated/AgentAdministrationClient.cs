@@ -33,11 +33,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of AgentAdministrationClient. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AgentAdministrationClient(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AgentAdministrationClient(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -70,6 +72,7 @@ namespace Azure.AI.Projects.Agents
             {
                 Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly) }, Array.Empty<PipelinePolicy>());
             }
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of AgentAdministrationClient from a <see cref="AgentAdministrationClientSettings"/>. </summary>
@@ -82,8 +85,11 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary>
-        /// [Protocol Method] Updates an agent endpoint.
+        /// [Protocol Method] Applies a merge-patch update to the specified agent endpoint configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -92,18 +98,27 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent to retrieve. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult PatchAgentObject(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual ClientResult PatchAgent(string agentName, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreatePatchAgentObjectRequest(agentName, content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.PatchAgent");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreatePatchAgentRequest(agentName, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Updates an agent endpoint.
+        /// [Protocol Method] Applies a merge-patch update to the specified agent endpoint configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -112,18 +127,31 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent to retrieve. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> PatchAgentObjectAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> PatchAgentAsync(string agentName, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreatePatchAgentObjectRequest(agentName, content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.PatchAgent");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreatePatchAgentRequest(agentName, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] CreateAgentVersionFromCode
+        /// [Protocol Method] Creates a new agent version from code. Uploads the code zip and creates a new version
+        /// for an existing agent. The SHA-256 hex digest of the zip is provided in the
+        /// `x-ms-code-zip-sha256` header for integrity and dedup.
+        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
+        /// Maximum upload size is 250 MB.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -137,18 +165,31 @@ namespace Azure.AI.Projects.Agents
         /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult CreateAgentVersionFromCode(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual ClientResult CreateAgentVersionFromCode(string agentName, string codeZipSha256, BinaryContent content, string contentType, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.CreateAgentVersionFromCode");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] CreateAgentVersionFromCode
+        /// [Protocol Method] Creates a new agent version from code. Uploads the code zip and creates a new version
+        /// for an existing agent. The SHA-256 hex digest of the zip is provided in the
+        /// `x-ms-code-zip-sha256` header for integrity and dedup.
+        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
+        /// Maximum upload size is 250 MB.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -162,20 +203,78 @@ namespace Azure.AI.Projects.Agents
         /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, BinaryContent content, string contentType, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.CreateAgentVersionFromCode");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Download the code zip for a specific version of a code-based hosted agent.
+        /// Creates a new agent version from code. Uploads the code zip and creates a new version
+        /// for an existing agent. The SHA-256 hex digest of the zip is provided in the
+        /// `x-ms-code-zip-sha256` header for integrity and dedup.
+        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
+        /// Maximum upload size is 250 MB.
+        /// </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
+        /// <param name="content"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        internal virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromCode(string agentName, string codeZipSha256, CreateAgentVersionFromCodeContent content, CancellationToken cancellationToken = default)
+        {
+            using MultiPartFormContent content0 = content.ToMultipartFormContent();
+            ClientResult result = CreateAgentVersionFromCode(agentName, codeZipSha256, content0, content0.MediaType, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Creates a new agent version from code. Uploads the code zip and creates a new version
+        /// for an existing agent. The SHA-256 hex digest of the zip is provided in the
+        /// `x-ms-code-zip-sha256` header for integrity and dedup.
+        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
+        /// Maximum upload size is 250 MB.
+        /// </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
+        /// <param name="content"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        internal virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, CreateAgentVersionFromCodeContent content, CancellationToken cancellationToken = default)
+        {
+            using MultiPartFormContent content0 = content.ToMultipartFormContent();
+            ClientResult result = await CreateAgentVersionFromCodeAsync(agentName, codeZipSha256, content0, content0.MediaType, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Downloads the code zip for a code-based hosted agent.
         /// Returns the previously-uploaded zip (`application/zip`).
-        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+        /// If `agent_version` is supplied, returns that version's code zip; otherwise
+        /// returns the latest version's code zip.
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the
+        /// resolved version's `code_configuration`.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -183,21 +282,36 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="agentVersion">
+        /// The version of the agent whose code zip should be downloaded.
+        /// If omitted, the latest version's code zip is returned.
+        /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DownloadAgentVersionCode(string agentName, string agentVersion, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult DownloadAgentCode(string agentName, string agentVersion, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadAgentVersionCodeRequest(agentName, agentVersion, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.DownloadAgentCode");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDownloadAgentCodeRequest(agentName, agentVersion, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Download the code zip for a specific version of a code-based hosted agent.
+        /// [Protocol Method] Downloads the code zip for a code-based hosted agent.
         /// Returns the previously-uploaded zip (`application/zip`).
-        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+        /// If `agent_version` is supplied, returns that version's code zip; otherwise
+        /// returns the latest version's code zip.
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the
+        /// resolved version's `code_configuration`.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -205,125 +319,275 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="agentVersion">
+        /// The version of the agent whose code zip should be downloaded.
+        /// If omitted, the latest version's code zip is returned.
+        /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DownloadAgentVersionCodeAsync(string agentName, string agentVersion, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> DownloadAgentCodeAsync(string agentName, string agentVersion, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadAgentVersionCodeRequest(agentName, agentVersion, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.DownloadAgentCode");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDownloadAgentCodeRequest(agentName, agentVersion, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Download the code zip for a specific version of a code-based hosted agent.
+        /// Downloads the code zip for a code-based hosted agent.
         /// Returns the previously-uploaded zip (`application/zip`).
-        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+        /// If `agent_version` is supplied, returns that version's code zip; otherwise
+        /// returns the latest version's code zip.
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the
+        /// resolved version's `code_configuration`.
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="agentVersion">
+        /// The version of the agent whose code zip should be downloaded.
+        /// If omitted, the latest version's code zip is returned.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<BinaryData> DownloadAgentVersionCode(string agentName, string agentVersion, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<BinaryData> DownloadAgentCode(string agentName, string agentVersion = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = DownloadAgentVersionCode(agentName, agentVersion, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = DownloadAgentCode(agentName, agentVersion, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
         /// <summary>
-        /// Download the code zip for a specific version of a code-based hosted agent.
+        /// Downloads the code zip for a code-based hosted agent.
         /// Returns the previously-uploaded zip (`application/zip`).
-        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the agent version's `code_configuration`.
+        /// If `agent_version` is supplied, returns that version's code zip; otherwise
+        /// returns the latest version's code zip.
+        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the
+        /// resolved version's `code_configuration`.
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="agentVersion"> The version of the agent whose code zip should be downloaded. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="agentVersion">
+        /// The version of the agent whose code zip should be downloaded.
+        /// If omitted, the latest version's code zip is returned.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<BinaryData>> DownloadAgentVersionCodeAsync(string agentName, string agentVersion, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<BinaryData>> DownloadAgentCodeAsync(string agentName, string agentVersion = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await DownloadAgentVersionCodeAsync(agentName, agentVersion, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await DownloadAgentCodeAsync(agentName, agentVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
         /// <summary>
-        /// [Protocol Method] Download the code zip for the latest version of a code-based hosted agent.
-        /// Returns the previously-uploaded zip (`application/zip`).
-        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the latest version's `code_configuration`.
+        /// [Protocol Method] Enables the specified agent, allowing it to accept new sessions and process requests.
+        /// This operation is idempotent — enabling an already-enabled agent returns success with no side effects.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agentName"> The name of the agent whose latest-version code zip should be downloaded. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="agentName"> The name of the agent to enable. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DownloadAgentCode(string agentName, string foundryFeatures, RequestOptions options)
+        public virtual ClientResult EnableAgent(string agentName, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadAgentCodeRequest(agentName, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.EnableAgent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+                using PipelineMessage message = CreateEnableAgentRequest(agentName, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Download the code zip for the latest version of a code-based hosted agent.
-        /// Returns the previously-uploaded zip (`application/zip`).
-        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the latest version's `code_configuration`.
+        /// [Protocol Method] Enables the specified agent, allowing it to accept new sessions and process requests.
+        /// This operation is idempotent — enabling an already-enabled agent returns success with no side effects.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agentName"> The name of the agent whose latest-version code zip should be downloaded. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="agentName"> The name of the agent to enable. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DownloadAgentCodeAsync(string agentName, string foundryFeatures, RequestOptions options)
+        public virtual async Task<ClientResult> EnableAgentAsync(string agentName, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadAgentCodeRequest(agentName, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.EnableAgent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+                using PipelineMessage message = CreateEnableAgentRequest(agentName, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Download the code zip for the latest version of a code-based hosted agent.
-        /// Returns the previously-uploaded zip (`application/zip`).
-        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the latest version's `code_configuration`.
+        /// Enables the specified agent, allowing it to accept new sessions and process requests.
+        /// This operation is idempotent — enabling an already-enabled agent returns success with no side effects.
         /// </summary>
-        /// <param name="agentName"> The name of the agent whose latest-version code zip should be downloaded. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="agentName"> The name of the agent to enable. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<BinaryData> DownloadAgentCode(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult EnableAgent(string agentName, CancellationToken cancellationToken = default)
         {
-            ClientResult result = DownloadAgentCode(agentName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+            return EnableAgent(agentName, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
-        /// Download the code zip for the latest version of a code-based hosted agent.
-        /// Returns the previously-uploaded zip (`application/zip`).
-        /// The SHA-256 digest of the returned bytes matches the `content_hash` on the latest version's `code_configuration`.
+        /// Enables the specified agent, allowing it to accept new sessions and process requests.
+        /// This operation is idempotent — enabling an already-enabled agent returns success with no side effects.
         /// </summary>
-        /// <param name="agentName"> The name of the agent whose latest-version code zip should be downloaded. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="agentName"> The name of the agent to enable. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<BinaryData>> DownloadAgentCodeAsync(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> EnableAgentAsync(string agentName, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await DownloadAgentCodeAsync(agentName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+            return await EnableAgentAsync(agentName, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Disables the specified agent, preventing it from accepting new sessions or processing requests.
+        /// Existing active sessions are allowed to drain gracefully but no new sessions can be created.
+        /// This operation is idempotent — disabling an already-disabled agent returns success with no side effects.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to disable. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult DisableAgent(string agentName, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.DisableAgent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+                using PipelineMessage message = CreateDisableAgentRequest(agentName, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Disables the specified agent, preventing it from accepting new sessions or processing requests.
+        /// Existing active sessions are allowed to drain gracefully but no new sessions can be created.
+        /// This operation is idempotent — disabling an already-disabled agent returns success with no side effects.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to disable. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> DisableAgentAsync(string agentName, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.DisableAgent");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+                using PipelineMessage message = CreateDisableAgentRequest(agentName, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disables the specified agent, preventing it from accepting new sessions or processing requests.
+        /// Existing active sessions are allowed to drain gracefully but no new sessions can be created.
+        /// This operation is idempotent — disabling an already-disabled agent returns success with no side effects.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to disable. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult DisableAgent(string agentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+            return DisableAgent(agentName, cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary>
+        /// Disables the specified agent, preventing it from accepting new sessions or processing requests.
+        /// Existing active sessions are allowed to drain gracefully but no new sessions can be created.
+        /// This operation is idempotent — disabling an already-disabled agent returns success with no side effects.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent to disable. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult> DisableAgentAsync(string agentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+            return await DisableAgentAsync(agentName, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
         /// [Protocol Method] Creates a new session for an agent endpoint.
         /// The endpoint resolves the backing agent version from `version_indicator` and
-        /// enforces session ownership using the provided isolation key for session-mutating operations.
+        /// enforces session ownership using the provided user identity for session-mutating operations.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -332,20 +596,29 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent to create a session for. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult CreateSession(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual ClientResult CreateSession(string agentName, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateSessionRequest(agentName, content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.CreateSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateSessionRequest(agentName, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// [Protocol Method] Creates a new session for an agent endpoint.
         /// The endpoint resolves the backing agent version from `version_indicator` and
-        /// enforces session ownership using the provided isolation key for session-mutating operations.
+        /// enforces session ownership using the provided user identity for session-mutating operations.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -354,18 +627,27 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent to create a session for. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CreateSessionAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> CreateSessionAsync(string agentName, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateSessionRequest(agentName, content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.CreateSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateSessionRequest(agentName, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves a session by ID.
+        /// [Protocol Method] Retrieves the details of a hosted agent session by agent name and session identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -374,18 +656,27 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetSession(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult GetSession(string agentName, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.GetSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves a session by ID.
+        /// [Protocol Method] Retrieves the details of a hosted agent session by agent name and session identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -394,14 +685,23 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetSessionAsync(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> GetSessionAsync(string agentName, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.GetSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -415,14 +715,23 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DeleteSession(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult DeleteSession(string agentName, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.DeleteSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -436,14 +745,81 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.DeleteSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Terminates the specified hosted agent session and returns 204 No Content when the request succeeds.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="sessionId"> The session identifier. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult StopSession(string agentName, string sessionId, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.StopSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateStopSessionRequest(agentName, sessionId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Terminates the specified hosted agent session and returns 204 No Content when the request succeeds.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="sessionId"> The session identifier. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> StopSessionAsync(string agentName, string sessionId, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.StopSession");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateStopSessionRequest(agentName, sessionId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -475,14 +851,23 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> The name of the hosted agent. </param>
         /// <param name="agentVersion"> The version of the agent. </param>
         /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetSessionLogStream(string agentName, string agentVersion, string sessionId, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult GetSessionLogStream(string agentName, string agentVersion, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.GetSessionLogStream");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -514,14 +899,23 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> The name of the hosted agent. </param>
         /// <param name="agentVersion"> The version of the agent. </param>
         /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetSessionLogStreamAsync(string agentName, string agentVersion, string sessionId, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> GetSessionLogStreamAsync(string agentName, string agentVersion, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.GetSessionLogStream");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetSessionLogStreamRequest(agentName, agentVersion, sessionId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

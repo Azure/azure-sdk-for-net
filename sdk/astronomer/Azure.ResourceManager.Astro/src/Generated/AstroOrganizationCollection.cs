@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Astro
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, AstroOrganizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AstroArmOperation<AstroOrganizationResource> operation = new AstroArmOperation<AstroOrganizationResource>(
-                    new AstroOrganizationOperationSource(Client),
+                    new AstroOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Astro
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, AstroOrganizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AstroArmOperation<AstroOrganizationResource> operation = new AstroArmOperation<AstroOrganizationResource>(
-                    new AstroOrganizationOperationSource(Client),
+                    new AstroOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,

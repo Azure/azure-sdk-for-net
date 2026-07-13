@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -19,41 +18,35 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LdapConfiguration"/>. </summary>
-        public LdapConfiguration()
-        {
-            LdapServers = new ChangeTrackingList<IPAddress>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LdapConfiguration"/>. </summary>
         /// <param name="domain"> Name of the LDAP configuration domain. </param>
         /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
         /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
         /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
         /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
+        /// <param name="bindAuthenticationLevel"> The authentication level to use when binding to the LDAP server, defaults to Anonymous. </param>
+        /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
+        /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LdapConfiguration(string domain, IList<IPAddress> ldapServers, bool? isLdapOverTlsEnabled, string serverCACertificate, string certificateCNHost, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LdapConfiguration(string domain, IList<IPAddress> ldapServers, bool? isLdapOverTlsEnabled, string serverCACertificate, string certificateCNHost, BindAuthenticationLevel? bindAuthenticationLevel, string bindDN, BindPasswordKeyVaultConfig bindPasswordAkvConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Domain = domain;
             LdapServers = ldapServers;
             IsLdapOverTlsEnabled = isLdapOverTlsEnabled;
             ServerCACertificate = serverCACertificate;
             CertificateCNHost = certificateCNHost;
+            BindAuthenticationLevel = bindAuthenticationLevel;
+            BindDN = bindDN;
+            BindPasswordAkvConfig = bindPasswordAkvConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Name of the LDAP configuration domain. </summary>
-        public string Domain { get; set; }
+        /// <summary> The authentication level to use when binding to the LDAP server, defaults to Anonymous. </summary>
+        public BindAuthenticationLevel? BindAuthenticationLevel { get; set; }
 
-        /// <summary> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </summary>
-        public IList<IPAddress> LdapServers { get; }
+        /// <summary> The distinguished name (DN) to bind as when performing LDAP operations. </summary>
+        public string BindDN { get; set; }
 
-        /// <summary> Specifies whether or not the LDAP traffic needs to be secured via TLS. </summary>
-        public bool? IsLdapOverTlsEnabled { get; set; }
-
-        /// <summary> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </summary>
-        public string ServerCACertificate { get; set; }
-
-        /// <summary> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </summary>
-        public string CertificateCNHost { get; set; }
+        /// <summary> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </summary>
+        public BindPasswordKeyVaultConfig BindPasswordAkvConfig { get; set; }
     }
 }

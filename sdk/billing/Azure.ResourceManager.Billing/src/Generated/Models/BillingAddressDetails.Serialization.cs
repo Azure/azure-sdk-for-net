@@ -8,16 +8,72 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class BillingAddressDetails : IUtf8JsonSerializable, IJsonModel<BillingAddressDetails>
+    /// <summary> Address details. </summary>
+    public partial class BillingAddressDetails : IJsonModel<BillingAddressDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingAddressDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BillingAddressDetails"/> for deserialization. </summary>
+        internal BillingAddressDetails()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BillingAddressDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BillingAddressDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBillingAddressDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BillingAddressDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BillingAddressDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BillingAddressDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BillingAddressDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BillingAddressDetails IPersistableModel<BillingAddressDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BillingAddressDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="billingAddressDetails"> The <see cref="BillingAddressDetails"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BillingAddressDetails billingAddressDetails)
+        {
+            if (billingAddressDetails == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(billingAddressDetails, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BillingAddressDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +85,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingAddressDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingAddressDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BillingAddressDetails)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("addressLine1"u8);
             writer.WriteStringValue(AddressLine1);
             if (Optional.IsDefined(AddressLine2))
@@ -104,15 +159,15 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("isValidAddress"u8);
                 writer.WriteBooleanValue(IsValidAddress.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,22 +176,27 @@ namespace Azure.ResourceManager.Billing.Models
             }
         }
 
-        BillingAddressDetails IJsonModel<BillingAddressDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BillingAddressDetails IJsonModel<BillingAddressDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BillingAddressDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingAddressDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingAddressDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BillingAddressDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBillingAddressDetails(document.RootElement, options);
         }
 
-        internal static BillingAddressDetails DeserializeBillingAddressDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BillingAddressDetails DeserializeBillingAddressDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -156,95 +216,93 @@ namespace Azure.ResourceManager.Billing.Models
             string postalCode = default;
             string region = default;
             bool? isValidAddress = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("addressLine1"u8))
+                if (prop.NameEquals("addressLine1"u8))
                 {
-                    addressLine1 = property.Value.GetString();
+                    addressLine1 = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressLine2"u8))
+                if (prop.NameEquals("addressLine2"u8))
                 {
-                    addressLine2 = property.Value.GetString();
+                    addressLine2 = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressLine3"u8))
+                if (prop.NameEquals("addressLine3"u8))
                 {
-                    addressLine3 = property.Value.GetString();
+                    addressLine3 = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("city"u8))
+                if (prop.NameEquals("city"u8))
                 {
-                    city = property.Value.GetString();
+                    city = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("companyName"u8))
+                if (prop.NameEquals("companyName"u8))
                 {
-                    companyName = property.Value.GetString();
+                    companyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"u8))
+                if (prop.NameEquals("country"u8))
                 {
-                    country = property.Value.GetString();
+                    country = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("district"u8))
+                if (prop.NameEquals("district"u8))
                 {
-                    district = property.Value.GetString();
+                    district = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("email"u8))
+                if (prop.NameEquals("email"u8))
                 {
-                    email = property.Value.GetString();
+                    email = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("firstName"u8))
+                if (prop.NameEquals("firstName"u8))
                 {
-                    firstName = property.Value.GetString();
+                    firstName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastName"u8))
+                if (prop.NameEquals("lastName"u8))
                 {
-                    lastName = property.Value.GetString();
+                    lastName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("middleName"u8))
+                if (prop.NameEquals("middleName"u8))
                 {
-                    middleName = property.Value.GetString();
+                    middleName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phoneNumber"u8))
+                if (prop.NameEquals("phoneNumber"u8))
                 {
-                    phoneNumber = property.Value.GetString();
+                    phoneNumber = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("postalCode"u8))
+                if (prop.NameEquals("postalCode"u8))
                 {
-                    postalCode = property.Value.GetString();
+                    postalCode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("region"u8))
+                if (prop.NameEquals("region"u8))
                 {
-                    region = property.Value.GetString();
+                    region = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isValidAddress"u8))
+                if (prop.NameEquals("isValidAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isValidAddress = property.Value.GetBoolean();
+                    isValidAddress = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BillingAddressDetails(
                 addressLine1,
                 addressLine2,
@@ -261,393 +319,7 @@ namespace Azure.ResourceManager.Billing.Models
                 postalCode,
                 region,
                 isValidAddress,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AddressLine1), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  addressLine1: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AddressLine1))
-                {
-                    builder.Append("  addressLine1: ");
-                    if (AddressLine1.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AddressLine1}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AddressLine1}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AddressLine2), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  addressLine2: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AddressLine2))
-                {
-                    builder.Append("  addressLine2: ");
-                    if (AddressLine2.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AddressLine2}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AddressLine2}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AddressLine3), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  addressLine3: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AddressLine3))
-                {
-                    builder.Append("  addressLine3: ");
-                    if (AddressLine3.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AddressLine3}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AddressLine3}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(City), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  city: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(City))
-                {
-                    builder.Append("  city: ");
-                    if (City.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{City}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{City}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompanyName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  companyName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CompanyName))
-                {
-                    builder.Append("  companyName: ");
-                    if (CompanyName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CompanyName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CompanyName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Country), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  country: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Country))
-                {
-                    builder.Append("  country: ");
-                    if (Country.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Country}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Country}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(District), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  district: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(District))
-                {
-                    builder.Append("  district: ");
-                    if (District.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{District}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{District}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Email), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  email: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Email))
-                {
-                    builder.Append("  email: ");
-                    if (Email.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Email}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Email}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FirstName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  firstName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FirstName))
-                {
-                    builder.Append("  firstName: ");
-                    if (FirstName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FirstName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FirstName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  lastName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastName))
-                {
-                    builder.Append("  lastName: ");
-                    if (LastName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LastName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LastName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MiddleName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  middleName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MiddleName))
-                {
-                    builder.Append("  middleName: ");
-                    if (MiddleName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MiddleName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MiddleName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhoneNumber), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  phoneNumber: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PhoneNumber))
-                {
-                    builder.Append("  phoneNumber: ");
-                    if (PhoneNumber.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PhoneNumber}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PhoneNumber}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PostalCode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  postalCode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PostalCode))
-                {
-                    builder.Append("  postalCode: ");
-                    if (PostalCode.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PostalCode}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PostalCode}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Region), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  region: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Region))
-                {
-                    builder.Append("  region: ");
-                    if (Region.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Region}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Region}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsValidAddress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isValidAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsValidAddress))
-                {
-                    builder.Append("  isValidAddress: ");
-                    var boolValue = IsValidAddress.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<BillingAddressDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingAddressDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(BillingAddressDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BillingAddressDetails IPersistableModel<BillingAddressDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingAddressDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBillingAddressDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BillingAddressDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BillingAddressDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

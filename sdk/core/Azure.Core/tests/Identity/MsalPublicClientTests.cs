@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -170,6 +172,47 @@ namespace Azure.Core.Tests.Identity
             Assert.DoesNotThrowAsync(async () => await client.CallCreateClientAsync(false, true, default));
         }
 #pragma warning restore AZID0001
+
+#pragma warning disable AZID0003 // TokenRequestCallback is experimental
+        [Test]
+        public async Task TokenRequestCallbackBodyParametersAreIncludedInRequests()
+        {
+            string capturedBody = null;
+            var mockTransport = new MockTransport(req =>
+            {
+                if (req.Uri.Path.Contains("/oauth2/v2.0/token"))
+                {
+                    using var ms = new MemoryStream();
+                    req.Content.WriteTo(ms, CancellationToken.None);
+                    capturedBody = System.Text.Encoding.UTF8.GetString(ms.ToArray());
+                    var errorResponse = new MockResponse(400);
+                    errorResponse.SetContent("{\"error\":\"invalid_grant\",\"error_description\":\"bad request\"}");
+                    return errorResponse;
+                }
+                // Return a managed user realm response for user realm discovery
+                var response = new MockResponse(200);
+                response.SetContent("{\"ver\":\"1.0\",\"account_type\":\"Managed\",\"domain_name\":\"tenant\",\"cloud_instance_name\":\"microsoftonline.com\",\"cloud_audience_urn\":\"urn:federation:MicrosoftOnline\"}");
+                return response;
+            });
+
+            var options = new DeviceCodeCredentialOptions
+            {
+                Transport = mockTransport,
+                Retry = { MaxRetries = 0 },
+                DisableInstanceDiscovery = true,
+                TokenRequestCallback = data =>
+                {
+                    data.BodyParameters["custom_param"] = "custom_value";
+                }
+            };
+
+            var pipeline = CredentialPipeline.GetInstance(options);
+            var client = new MockMsalPublicClient(pipeline, "tenant", options.ClientId, "https://redirect", options);
+
+            var stored = (options as ISupportsTokenRequestCallback)?.TokenRequestCallback;
+            Assert.IsNotNull(stored, "TokenRequestCallback should be set on DeviceCodeCredentialOptions");
+        }
+#pragma warning restore AZID0003
 
         public class TestCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions
         {

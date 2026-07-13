@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolverDomainListsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsResolverDomainListPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsResolverDomainListResource> operation = new DnsResolverArmOperation<DnsResolverDomainListResource>(
-                    new DnsResolverDomainListOperationSource(Client),
+                    new DnsResolverDomainListResourceOperationSource(Client),
                     _dnsResolverDomainListsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolverDomainListsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsResolverDomainListPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsResolverDomainListResource> operation = new DnsResolverArmOperation<DnsResolverDomainListResource>(
-                    new DnsResolverDomainListOperationSource(Client),
+                    new DnsResolverDomainListResourceOperationSource(Client),
                     _dnsResolverDomainListsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolverDomainListsRestClient.CreateBulkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsResolverDomainListBulk.ToRequestContent(dnsResolverDomainListBulk), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsResolverDomainListResource> operation = new DnsResolverArmOperation<DnsResolverDomainListResource>(
-                    new DnsResolverDomainListOperationSource(Client),
+                    new DnsResolverDomainListResourceOperationSource(Client),
                     _dnsResolverDomainListsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolverDomainListsRestClient.CreateBulkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsResolverDomainListBulk.ToRequestContent(dnsResolverDomainListBulk), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsResolverDomainListResource> operation = new DnsResolverArmOperation<DnsResolverDomainListResource>(
-                    new DnsResolverDomainListOperationSource(Client),
+                    new DnsResolverDomainListResourceOperationSource(Client),
                     _dnsResolverDomainListsClientDiagnostics,
                     Pipeline,
                     message.Request,

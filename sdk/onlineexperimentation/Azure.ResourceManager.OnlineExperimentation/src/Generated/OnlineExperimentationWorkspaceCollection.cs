@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, OnlineExperimentationWorkspaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource> operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(
-                    new OnlineExperimentationWorkspaceOperationSource(Client),
+                    new OnlineExperimentationWorkspaceResourceOperationSource(Client),
                     _onlineExperimentationWorkspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, OnlineExperimentationWorkspaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource> operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(
-                    new OnlineExperimentationWorkspaceOperationSource(Client),
+                    new OnlineExperimentationWorkspaceResourceOperationSource(Client),
                     _onlineExperimentationWorkspacesClientDiagnostics,
                     Pipeline,
                     message.Request,

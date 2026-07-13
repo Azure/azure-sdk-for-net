@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Maps
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MapsPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MapsArmOperation<MapsPrivateEndpointConnectionResource> operation = new MapsArmOperation<MapsPrivateEndpointConnectionResource>(
-                    new MapsPrivateEndpointConnectionOperationSource(Client),
+                    new MapsPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Maps
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MapsPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MapsArmOperation<MapsPrivateEndpointConnectionResource> operation = new MapsArmOperation<MapsPrivateEndpointConnectionResource>(
-                    new MapsPrivateEndpointConnectionOperationSource(Client),
+                    new MapsPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _routesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, FrontDoorRouteData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<FrontDoorRouteResource> operation = new CdnArmOperation<FrontDoorRouteResource>(
-                    new FrontDoorRouteOperationSource(Client),
+                    new FrontDoorRouteResourceOperationSource(Client),
                     _routesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _routesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, FrontDoorRouteData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<FrontDoorRouteResource> operation = new CdnArmOperation<FrontDoorRouteResource>(
-                    new FrontDoorRouteOperationSource(Client),
+                    new FrontDoorRouteResourceOperationSource(Client),
                     _routesClientDiagnostics,
                     Pipeline,
                     message.Request,

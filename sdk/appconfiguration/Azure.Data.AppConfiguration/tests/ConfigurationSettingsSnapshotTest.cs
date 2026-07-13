@@ -23,6 +23,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 20,
                 20,
                 new Dictionary<string, string>(),
+                "description",
                 new ETag());
 
             var retentionPeriod = settingSnapshot.RetentionPeriod;
@@ -38,6 +39,17 @@ namespace Azure.Data.AppConfiguration.Tests
             settingSnapshot.RetentionPeriod = TimeSpan.FromSeconds(10675199);
 
             Assert.That(TimeSpan.FromSeconds(10675199), Is.EqualTo(settingSnapshot.RetentionPeriod));
+        }
+
+        [Test]
+        public void SetDescriptionUsingSetter()
+        {
+            List<ConfigurationSettingsFilter> filters = new() { new ConfigurationSettingsFilter("key", "val", Array.Empty<string>()) };
+
+            var settingSnapshot = new ConfigurationSnapshot(filters);
+            settingSnapshot.Description = "snapshot_description";
+
+            Assert.That(settingSnapshot.Description, Is.EqualTo("snapshot_description"));
         }
     }
 }

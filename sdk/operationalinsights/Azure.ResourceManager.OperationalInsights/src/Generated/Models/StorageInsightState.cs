@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct StorageInsightState : IEquatable<StorageInsightState>
     {
         private readonly string _value;
+        /// <summary> OK. </summary>
+        private const string OKValue = "OK";
+        /// <summary> ERROR. </summary>
+        private const string ErrorValue = "ERROR";
 
         /// <summary> Initializes a new instance of <see cref="StorageInsightState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageInsightState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OKValue = "OK";
-        private const string ErrorValue = "ERROR";
+            _value = value;
+        }
 
         /// <summary> OK. </summary>
         public static StorageInsightState OK { get; } = new StorageInsightState(OKValue);
+
         /// <summary> ERROR. </summary>
         public static StorageInsightState Error { get; } = new StorageInsightState(ErrorValue);
+
         /// <summary> Determines if two <see cref="StorageInsightState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageInsightState left, StorageInsightState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageInsightState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageInsightState left, StorageInsightState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageInsightState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageInsightState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageInsightState(string value) => new StorageInsightState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageInsightState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageInsightState?(string value) => value == null ? null : new StorageInsightState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageInsightState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageInsightState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

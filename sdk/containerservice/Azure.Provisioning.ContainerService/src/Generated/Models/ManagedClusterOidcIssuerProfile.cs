@@ -52,6 +52,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _issuerUriInfo = DefineProperty<string>(nameof(IssuerUriInfo), new string[] { "issuerURL" }, isOutput: true);
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "enabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterOidcIssuerProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

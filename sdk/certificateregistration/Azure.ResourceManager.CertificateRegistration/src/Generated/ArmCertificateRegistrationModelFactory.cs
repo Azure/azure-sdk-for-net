@@ -19,17 +19,80 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
     public static partial class ArmCertificateRegistrationModelFactory
     {
 
-        /// <summary> Key Vault container for a certificate that is purchased through Azure. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="certificates"> State of the Key Vault secret. </param>
+        /// <param name="distinguishedName"> Certificate distinguished name. </param>
+        /// <param name="domainVerificationToken"> Domain verification token. </param>
+        /// <param name="validityInYears"> Duration in years (must be 1). </param>
+        /// <param name="keySize"> Certificate key size. </param>
+        /// <param name="certificateProductType"> Certificate product type. </param>
+        /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the certificate should be automatically renewed when it expires; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="provisioningState"> Status of certificate order. </param>
+        /// <param name="status"> Current order status. </param>
+        /// <param name="signedCertificate"> Signed certificate. </param>
+        /// <param name="csr"> Last CSR that was created for this order. </param>
+        /// <param name="intermediate"> Intermediate certificate. </param>
+        /// <param name="root"> Root certificate. </param>
+        /// <param name="serialNumber"> Current serial number of the certificate. </param>
+        /// <param name="lastCertificateIssuedOn"> Certificate last issuance time. </param>
+        /// <param name="expireOn"> Certificate expiration time. </param>
+        /// <param name="isPrivateKeyExternal"> &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="appServiceCertificateNotRenewableReasons"> Reasons why App Service Certificate is not renewable at the current moment. </param>
+        /// <param name="nextAutoRenewOn"> Time stamp when the certificate would be auto renewed next. </param>
+        /// <param name="contact"> Contact info. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="CertificateRegistration.AppServiceCertificateOrderData"/> instance for mocking. </returns>
+        public static AppServiceCertificateOrderData AppServiceCertificateOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IDictionary<string, AppServiceCertificateProperties> certificates = default, string distinguishedName = default, string domainVerificationToken = default, int? validityInYears = default, int? keySize = default, CertificateProductType? certificateProductType = default, bool? isAutoRenew = default, CertificateRegistrationProvisioningState? provisioningState = default, CertificateOrderStatus? status = default, AppServiceCertificateDetails signedCertificate = default, string csr = default, AppServiceCertificateDetails intermediate = default, AppServiceCertificateDetails root = default, string serialNumber = default, DateTimeOffset? lastCertificateIssuedOn = default, DateTimeOffset? expireOn = default, bool? isPrivateKeyExternal = default, IEnumerable<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default, DateTimeOffset? nextAutoRenewOn = default, CertificateOrderContact contact = default, string kind = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AppServiceCertificateOrderData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                certificates is null && distinguishedName is null && domainVerificationToken is null && validityInYears is null && keySize is null && certificateProductType is null && isAutoRenew is null && provisioningState is null && status is null && signedCertificate is null && csr is null && intermediate is null && root is null && serialNumber is null && lastCertificateIssuedOn is null && expireOn is null && isPrivateKeyExternal is null && appServiceCertificateNotRenewableReasons is null && nextAutoRenewOn is null && contact is null ? default : new AppServiceCertificateOrderProperties(
+                    certificates ?? new ChangeTrackingDictionary<string, AppServiceCertificateProperties>(),
+                    distinguishedName,
+                    domainVerificationToken,
+                    validityInYears,
+                    keySize,
+                    certificateProductType.GetValueOrDefault(),
+                    isAutoRenew,
+                    provisioningState,
+                    status,
+                    signedCertificate,
+                    csr,
+                    intermediate,
+                    root,
+                    serialNumber,
+                    lastCertificateIssuedOn,
+                    expireOn,
+                    isPrivateKeyExternal,
+                    (appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>()).ToList(),
+                    nextAutoRenewOn,
+                    contact,
+                    default),
+                kind,
+                default);
+        }
+
         /// <param name="keyVaultId"> Key Vault resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
         /// <returns> A new <see cref="Models.AppServiceCertificateProperties"/> instance for mocking. </returns>
         public static AppServiceCertificateProperties AppServiceCertificateProperties(ResourceIdentifier keyVaultId = default, string keyVaultSecretName = default, AppServiceVaultSecretStatus? provisioningState = default)
         {
-            return new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, additionalBinaryDataProperties: null);
+            return new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, default);
         }
 
-        /// <summary> SSL certificate details. </summary>
         /// <param name="version"> Certificate Version. </param>
         /// <param name="serialNumber"> Certificate Serial Number. </param>
         /// <param name="thumbprint"> Certificate Thumbprint. </param>
@@ -52,10 +115,9 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 signatureAlgorithm,
                 issuer,
                 rawData,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The CertificateOrderContact. </summary>
         /// <param name="email"></param>
         /// <param name="nameFirst"></param>
         /// <param name="nameLast"></param>
@@ -63,7 +125,66 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <returns> A new <see cref="Models.CertificateOrderContact"/> instance for mocking. </returns>
         public static CertificateOrderContact CertificateOrderContact(string email = default, string nameFirst = default, string nameLast = default, string phone = default)
         {
-            return new CertificateOrderContact(email, nameFirst, nameLast, phone, additionalBinaryDataProperties: null);
+            return new CertificateOrderContact(email, nameFirst, nameLast, phone, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="certificates"> State of the Key Vault secret. </param>
+        /// <param name="distinguishedName"> Certificate distinguished name. </param>
+        /// <param name="domainVerificationToken"> Domain verification token. </param>
+        /// <param name="validityInYears"> Duration in years (must be 1). </param>
+        /// <param name="keySize"> Certificate key size. </param>
+        /// <param name="certificateProductType"> Certificate product type. </param>
+        /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the certificate should be automatically renewed when it expires; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="provisioningState"> Status of certificate order. </param>
+        /// <param name="status"> Current order status. </param>
+        /// <param name="signedCertificate"> Signed certificate. </param>
+        /// <param name="csr"> Last CSR that was created for this order. </param>
+        /// <param name="intermediate"> Intermediate certificate. </param>
+        /// <param name="root"> Root certificate. </param>
+        /// <param name="serialNumber"> Current serial number of the certificate. </param>
+        /// <param name="lastCertificateIssuedOn"> Certificate last issuance time. </param>
+        /// <param name="expireOn"> Certificate expiration time. </param>
+        /// <param name="isPrivateKeyExternal"> &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="appServiceCertificateNotRenewableReasons"> Reasons why App Service Certificate is not renewable at the current moment. </param>
+        /// <param name="nextAutoRenewOn"> Time stamp when the certificate would be auto renewed next. </param>
+        /// <param name="contact"> Contact info. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="Models.AppServiceCertificateOrderPatch"/> instance for mocking. </returns>
+        public static AppServiceCertificateOrderPatch AppServiceCertificateOrderPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, AppServiceCertificateProperties> certificates = default, string distinguishedName = default, string domainVerificationToken = default, int? validityInYears = default, int? keySize = default, CertificateProductType? certificateProductType = default, bool? isAutoRenew = default, CertificateRegistrationProvisioningState? provisioningState = default, CertificateOrderStatus? status = default, AppServiceCertificateDetails signedCertificate = default, string csr = default, AppServiceCertificateDetails intermediate = default, AppServiceCertificateDetails root = default, string serialNumber = default, DateTimeOffset? lastCertificateIssuedOn = default, DateTimeOffset? expireOn = default, bool? isPrivateKeyExternal = default, IEnumerable<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default, DateTimeOffset? nextAutoRenewOn = default, CertificateOrderContact contact = default, string kind = default)
+        {
+            return new AppServiceCertificateOrderPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                certificates is null && distinguishedName is null && domainVerificationToken is null && validityInYears is null && keySize is null && certificateProductType is null && isAutoRenew is null && provisioningState is null && status is null && signedCertificate is null && csr is null && intermediate is null && root is null && serialNumber is null && lastCertificateIssuedOn is null && expireOn is null && isPrivateKeyExternal is null && appServiceCertificateNotRenewableReasons is null && nextAutoRenewOn is null && contact is null ? default : new AppServiceCertificateOrderPatchResourceProperties(
+                    certificates ?? new ChangeTrackingDictionary<string, AppServiceCertificateProperties>(),
+                    distinguishedName,
+                    domainVerificationToken,
+                    validityInYears,
+                    keySize,
+                    certificateProductType.GetValueOrDefault(),
+                    isAutoRenew,
+                    provisioningState,
+                    status,
+                    signedCertificate,
+                    csr,
+                    intermediate,
+                    root,
+                    serialNumber,
+                    lastCertificateIssuedOn,
+                    expireOn,
+                    isPrivateKeyExternal,
+                    (appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>()).ToList(),
+                    nextAutoRenewOn,
+                    contact,
+                    default),
+                kind,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -74,16 +195,18 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="delayExistingRevokeInHours"> Delay in hours to revoke existing certificate after the new certificate is issued. </param>
         /// <param name="csr"> Csr to be used for re-key operation. </param>
         /// <param name="isPrivateKeyExternal"> Should we change the ASC type (from managed private key to external private key and vice versa). </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.ReissueCertificateOrderContent"/> instance for mocking. </returns>
-        public static ReissueCertificateOrderContent ReissueCertificateOrderContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? keySize = default, int? delayExistingRevokeInHours = default, string csr = default, bool? isPrivateKeyExternal = default)
+        public static ReissueCertificateOrderContent ReissueCertificateOrderContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? keySize = default, int? delayExistingRevokeInHours = default, string csr = default, bool? isPrivateKeyExternal = default, string kind = default)
         {
             return new ReissueCertificateOrderContent(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                keySize is null && delayExistingRevokeInHours is null && csr is null && isPrivateKeyExternal is null ? default : new ReissueCertificateOrderRequestProperties(keySize, delayExistingRevokeInHours, csr, isPrivateKeyExternal, null));
+                keySize is null && delayExistingRevokeInHours is null && csr is null && isPrivateKeyExternal is null ? default : new ReissueCertificateOrderRequestProperties(keySize, delayExistingRevokeInHours, csr, isPrivateKeyExternal, default),
+                kind,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -93,42 +216,56 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="keySize"> Certificate Key Size. </param>
         /// <param name="csr"> Csr to be used for re-key operation. </param>
         /// <param name="isPrivateKeyExternal"> Should we change the ASC type (from managed private key to external private key and vice versa). </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.RenewCertificateOrderContent"/> instance for mocking. </returns>
-        public static RenewCertificateOrderContent RenewCertificateOrderContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? keySize = default, string csr = default, bool? isPrivateKeyExternal = default)
+        public static RenewCertificateOrderContent RenewCertificateOrderContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? keySize = default, string csr = default, bool? isPrivateKeyExternal = default, string kind = default)
         {
             return new RenewCertificateOrderContent(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                keySize is null && csr is null && isPrivateKeyExternal is null ? default : new RenewCertificateOrderRequestProperties(keySize, csr, isPrivateKeyExternal, null));
+                keySize is null && csr is null && isPrivateKeyExternal is null ? default : new RenewCertificateOrderRequestProperties(keySize, csr, isPrivateKeyExternal, default),
+                kind,
+                default);
         }
 
-        /// <summary> Site seal. </summary>
+        /// <param name="name"> Name of the object. </param>
+        /// <returns> A new <see cref="Models.AppServiceDomainNameIdentifier"/> instance for mocking. </returns>
+        public static AppServiceDomainNameIdentifier AppServiceDomainNameIdentifier(string name = default)
+        {
+            return new AppServiceDomainNameIdentifier(name, default);
+        }
+
+        /// <param name="isLightTheme"> If &lt;code&gt;true&lt;/code&gt; use the light color theme for site seal; otherwise, use the default color theme. </param>
+        /// <param name="locale"> Locale of site seal. </param>
+        /// <returns> A new <see cref="Models.SiteSealContent"/> instance for mocking. </returns>
+        public static SiteSealContent SiteSealContent(bool? isLightTheme = default, string locale = default)
+        {
+            return new SiteSealContent(isLightTheme, locale, default);
+        }
+
         /// <param name="html"> HTML snippet. </param>
         /// <returns> A new <see cref="Models.SiteSeal"/> instance for mocking. </returns>
         public static SiteSeal SiteSeal(string html = default)
         {
-            return new SiteSeal(html, additionalBinaryDataProperties: null);
+            return new SiteSeal(html, default);
         }
 
-        /// <summary> Certificate order action. </summary>
         /// <param name="actionType"> Action type. </param>
         /// <param name="createdOn"> Time at which the certificate action was performed. </param>
         /// <returns> A new <see cref="Models.CertificateOrderAction"/> instance for mocking. </returns>
         public static CertificateOrderAction CertificateOrderAction(CertificateOrderActionType? actionType = default, DateTimeOffset? createdOn = default)
         {
-            return new CertificateOrderAction(actionType, createdOn, additionalBinaryDataProperties: null);
+            return new CertificateOrderAction(actionType, createdOn, default);
         }
 
-        /// <summary> SSL certificate email. </summary>
         /// <param name="emailId"> Email id. </param>
         /// <param name="sentOn"> Time stamp. </param>
         /// <returns> A new <see cref="Models.AppServiceCertificateEmail"/> instance for mocking. </returns>
         public static AppServiceCertificateEmail AppServiceCertificateEmail(string emailId = default, DateTimeOffset? sentOn = default)
         {
-            return new AppServiceCertificateEmail(emailId, sentOn, additionalBinaryDataProperties: null);
+            return new AppServiceCertificateEmail(emailId, sentOn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -151,11 +288,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                keyVaultId is null && keyVaultSecretName is null && provisioningState is null ? default : new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, null),
-                kind);
+                keyVaultId is null && keyVaultSecretName is null && provisioningState is null ? default : new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, default),
+                kind,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -165,16 +302,18 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="keyVaultId"> Key Vault resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceCertificatePatch"/> instance for mocking. </returns>
-        public static AppServiceCertificatePatch AppServiceCertificatePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier keyVaultId = default, string keyVaultSecretName = default, AppServiceVaultSecretStatus? provisioningState = default)
+        public static AppServiceCertificatePatch AppServiceCertificatePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier keyVaultId = default, string keyVaultSecretName = default, AppServiceVaultSecretStatus? provisioningState = default, string kind = default)
         {
             return new AppServiceCertificatePatch(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                keyVaultId is null && keyVaultSecretName is null && provisioningState is null ? default : new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, null));
+                keyVaultId is null && keyVaultSecretName is null && provisioningState is null ? default : new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, default),
+                kind,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -195,18 +334,17 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 metadata is null && dataset is null && status is null && dataProvidersMetadata is null && suggestedUtterances is null ? default : new DetectorResponseProperties(
                     metadata,
                     (dataset ?? new ChangeTrackingList<DiagnosticDataset>()).ToList(),
                     status,
                     (dataProvidersMetadata ?? new ChangeTrackingList<DataProviderMetadata>()).ToList(),
                     suggestedUtterances,
-                    null),
-                kind);
+                    default),
+                kind,
+                default);
         }
 
-        /// <summary> Definition of Detector. </summary>
         /// <param name="id"> Id of detector. </param>
         /// <param name="name"> Name of detector. </param>
         /// <param name="description"> Short description of the detector and its purpose. </param>
@@ -228,32 +366,29 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 description,
                 author,
                 category,
-                supportTopicList.ToList(),
-                analysisType.ToList(),
+                (supportTopicList ?? new ChangeTrackingList<DetectorSupportTopic>()).ToList(),
+                (analysisType ?? new ChangeTrackingList<string>()).ToList(),
                 @type,
                 score,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Defines a unique Support Topic. </summary>
         /// <param name="id"> Support Topic Id. </param>
         /// <param name="pesId"> Unique resource Id. </param>
         /// <returns> A new <see cref="Models.DetectorSupportTopic"/> instance for mocking. </returns>
         public static DetectorSupportTopic DetectorSupportTopic(string id = default, ResourceIdentifier pesId = default)
         {
-            return new DetectorSupportTopic(id, pesId, additionalBinaryDataProperties: null);
+            return new DetectorSupportTopic(id, pesId, default);
         }
 
-        /// <summary> Set of data with rendering instructions. </summary>
         /// <param name="table"> Data in table form. </param>
         /// <param name="renderingProperties"> Properties that describe how the table should be rendered. </param>
         /// <returns> A new <see cref="Models.DiagnosticDataset"/> instance for mocking. </returns>
         public static DiagnosticDataset DiagnosticDataset(DiagnosticDataTableObject table = default, DiagnosticDataRendering renderingProperties = default)
         {
-            return new DiagnosticDataset(table, renderingProperties, additionalBinaryDataProperties: null);
+            return new DiagnosticDataset(table, renderingProperties, default);
         }
 
-        /// <summary> Data Table which defines columns and raw row values. </summary>
         /// <param name="tableName"> Name of the table. </param>
         /// <param name="columns"> List of columns with data types. </param>
         /// <param name="rows"> Raw row values. </param>
@@ -263,39 +398,35 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             columns ??= new ChangeTrackingList<DiagnosticDataTableColumn>();
             rows ??= new ChangeTrackingList<IList<string>>();
 
-            return new DiagnosticDataTableObject(tableName, columns.ToList(), rows.ToList(), additionalBinaryDataProperties: null);
+            return new DiagnosticDataTableObject(tableName, (columns ?? new ChangeTrackingList<DiagnosticDataTableColumn>()).ToList(), (rows ?? new ChangeTrackingList<IList<string>>()).ToList(), default);
         }
 
-        /// <summary> Column definition. </summary>
         /// <param name="columnName"> Name of the column. </param>
         /// <param name="dataType"> Data type which looks like 'String' or 'Int32'. </param>
         /// <param name="columnType"> Column Type. </param>
         /// <returns> A new <see cref="Models.DiagnosticDataTableColumn"/> instance for mocking. </returns>
         public static DiagnosticDataTableColumn DiagnosticDataTableColumn(string columnName = default, string dataType = default, string columnType = default)
         {
-            return new DiagnosticDataTableColumn(columnName, dataType, columnType, additionalBinaryDataProperties: null);
+            return new DiagnosticDataTableColumn(columnName, dataType, columnType, default);
         }
 
-        /// <summary> Instructions for rendering the data. </summary>
         /// <param name="type"> Rendering Type. </param>
         /// <param name="title"> Title of data. </param>
         /// <param name="description"> Description of the data that will help it be interpreted. </param>
         /// <returns> A new <see cref="Models.DiagnosticDataRendering"/> instance for mocking. </returns>
         public static DiagnosticDataRendering DiagnosticDataRendering(DiagnosticDataRenderingType? @type = default, string title = default, string description = default)
         {
-            return new DiagnosticDataRendering(@type, title, description, additionalBinaryDataProperties: null);
+            return new DiagnosticDataRendering(@type, title, description, default);
         }
 
-        /// <summary> Identify the status of the most severe insight generated by the detector. </summary>
         /// <param name="message"> Descriptive message. </param>
         /// <param name="statusId"> Level of the most severe insight generated by the detector. </param>
         /// <returns> A new <see cref="Models.DetectorStatusInfo"/> instance for mocking. </returns>
         public static DetectorStatusInfo DetectorStatusInfo(string message = default, DetectorInsightStatus? statusId = default)
         {
-            return new DetectorStatusInfo(message, statusId, additionalBinaryDataProperties: null);
+            return new DetectorStatusInfo(message, statusId, default);
         }
 
-        /// <summary> Additional configuration for a data providers. </summary>
         /// <param name="providerName"></param>
         /// <param name="propertyBag"> Settings for the data provider. </param>
         /// <returns> A new <see cref="Models.DataProviderMetadata"/> instance for mocking. </returns>
@@ -303,10 +434,9 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         {
             propertyBag ??= new ChangeTrackingList<DataProviderKeyValuePair>();
 
-            return new DataProviderMetadata(providerName, propertyBag.ToList(), additionalBinaryDataProperties: null);
+            return new DataProviderMetadata(providerName, (propertyBag ?? new ChangeTrackingList<DataProviderKeyValuePair>()).ToList(), default);
         }
 
-        /// <summary> The DataProviderKeyValuePair. </summary>
         /// <param name="key"></param>
         /// <param name="value"> Any object. </param>
         /// <returns> A new <see cref="Models.DataProviderKeyValuePair"/> instance for mocking. </returns>
@@ -314,10 +444,9 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         {
             value ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DataProviderKeyValuePair(key, value, additionalBinaryDataProperties: null);
+            return new DataProviderKeyValuePair(key, value ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> Suggested utterances where the detector can be applicable. </summary>
         /// <param name="query"> Search Query. </param>
         /// <param name="results"> Array of utterance results for search query. </param>
         /// <returns> A new <see cref="Models.QueryUtterancesResults"/> instance for mocking. </returns>
@@ -325,19 +454,17 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         {
             results ??= new ChangeTrackingList<QueryUtterancesResult>();
 
-            return new QueryUtterancesResults(query, results.ToList(), additionalBinaryDataProperties: null);
+            return new QueryUtterancesResults(query, (results ?? new ChangeTrackingList<QueryUtterancesResult>()).ToList(), default);
         }
 
-        /// <summary> Result for utterances query. </summary>
         /// <param name="sampleUtterance"> A sample utterance. </param>
         /// <param name="score"> Score of a sample utterance. </param>
         /// <returns> A new <see cref="Models.QueryUtterancesResult"/> instance for mocking. </returns>
         public static QueryUtterancesResult QueryUtterancesResult(SampleUtterance sampleUtterance = default, float? score = default)
         {
-            return new QueryUtterancesResult(sampleUtterance, score, additionalBinaryDataProperties: null);
+            return new QueryUtterancesResult(sampleUtterance, score, default);
         }
 
-        /// <summary> Sample utterance. </summary>
         /// <param name="text"> Text attribute of sample utterance. </param>
         /// <param name="links"> Links attribute of sample utterance. </param>
         /// <param name="qid"> Question id of sample utterance (for stackoverflow questions titles). </param>
@@ -346,7 +473,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         {
             links ??= new ChangeTrackingList<string>();
 
-            return new SampleUtterance(text, links.ToList(), qid, additionalBinaryDataProperties: null);
+            return new SampleUtterance(text, (links ?? new ChangeTrackingList<string>()).ToList(), qid, default);
         }
     }
 }

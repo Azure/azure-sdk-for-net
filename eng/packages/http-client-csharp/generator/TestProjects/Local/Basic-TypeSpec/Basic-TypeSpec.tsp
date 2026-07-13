@@ -749,3 +749,33 @@ interface PlantOperations {
     @body body: Tree;
   };
 }
+
+
+model Cat {
+  id: HttpPart<string>;
+  boolPart: HttpPart<boolean>;
+  int32Part: HttpPart<int32>;
+  int64Part: HttpPart<int64>;
+  float32Part: HttpPart<float32>;
+  float64Part: HttpPart<float64>;
+  decimalPart: HttpPart<decimal128>;
+  int8Part: HttpPart<int8>;
+  uint8Part: HttpPart<uint8>;
+  dictionaryPart: HttpPart<Record<string>>;
+  dictionaryModelPart: HttpPart<Record<ThingModel>>;
+  listPart: HttpPart<string[]>;
+  listModelPart: HttpPart<ThingModel[]>;
+  multipleListPart: HttpPart<string>[];
+  profileImage: HttpPart<File>;
+  extensibleEnumPart: HttpPart<StringExtensibleEnum>;
+  fixedEnumPart: HttpPart<StringFixedEnum>;
+  intExtensibleEnumPart: HttpPart<IntExtensibleEnum>;
+  intFixedEnumPart: HttpPart<IntFixedEnum>;
+}
+
+@post
+@route("/cats")
+op uploadCat(
+  @header contentType: "multipart/form-data",
+  @multipartBody body: Cat,
+): NoContentResponse;

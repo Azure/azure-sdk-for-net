@@ -41,10 +41,10 @@ namespace Azure.AI.Extensions.OpenAI
         public string Id { get; set; }
 
         /// <summary> The ID of the approval request being answered. </summary>
-        public string ApprovalRequestId { get; }
+        public string ApprovalRequestId { get; set; }
 
         /// <summary> Whether the request was approved. </summary>
-        public bool Approve { get; }
+        public bool Approve { get; set; }
 
         /// <summary> Gets or sets the Reason. </summary>
         public string Reason { get; set; }

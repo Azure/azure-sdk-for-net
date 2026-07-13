@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.NetApp
         ListQuotaReportResult IOperationSource<ListQuotaReportResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ListQuotaReportResult result = ListQuotaReportResult.DeserializeListQuotaReportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ListQuotaReportResult.DeserializeListQuotaReportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.NetApp
         async ValueTask<ListQuotaReportResult> IOperationSource<ListQuotaReportResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ListQuotaReportResult result = ListQuotaReportResult.DeserializeListQuotaReportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ListQuotaReportResult.DeserializeListQuotaReportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

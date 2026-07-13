@@ -10,6 +10,10 @@ namespace Azure.AI.AgentServer.Invocations;
 /// is required. Override the optional methods to opt in to GET, cancel, and
 /// OpenAPI endpoints (they return 404 by default).
 /// </summary>
+/// <remarks>
+/// To opt in to the <c>invocations_ws</c> (WebSocket) transport, derive from
+/// <see cref="InvocationWebSocketHandler"/> instead.
+/// </remarks>
 public abstract class InvocationHandler
 {
     /// <summary>
@@ -33,7 +37,7 @@ public abstract class InvocationHandler
     /// <param name="invocationId">The invocation identifier.</param>
     /// <param name="request">The incoming HTTP request.</param>
     /// <param name="response">The outgoing HTTP response.</param>
-    /// <param name="context">Per-request context with isolation keys, headers, and query parameters.</param>
+    /// <param name="context">Per-request context with platform identity, headers, and query parameters.</param>
     /// <param name="cancellationToken">A token to observe for cancellation.</param>
     /// <returns>A task representing the async operation.</returns>
     public virtual Task GetAsync(
@@ -54,7 +58,7 @@ public abstract class InvocationHandler
     /// <param name="invocationId">The invocation identifier.</param>
     /// <param name="request">The incoming HTTP request.</param>
     /// <param name="response">The outgoing HTTP response.</param>
-    /// <param name="context">Per-request context with isolation keys, headers, and query parameters.</param>
+    /// <param name="context">Per-request context with platform identity, headers, and query parameters.</param>
     /// <param name="cancellationToken">A token to observe for cancellation.</param>
     /// <returns>A task representing the async operation.</returns>
     public virtual Task CancelAsync(

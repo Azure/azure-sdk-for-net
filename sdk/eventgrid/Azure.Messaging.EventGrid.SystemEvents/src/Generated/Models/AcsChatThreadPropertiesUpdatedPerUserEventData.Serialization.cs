@@ -117,6 +117,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteObjectValue<object>(item.Value, options);
             }
             writer.WriteEndObject();
+            if (Optional.IsDefined(RetentionPolicy))
+            {
+                writer.WritePropertyName("retentionPolicy"u8);
+                writer.WriteObjectValue(RetentionPolicy, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -154,6 +159,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             DateTimeOffset? editTime = default;
             IReadOnlyDictionary<string, string> metadata = default;
             IReadOnlyDictionary<string, object> properties = default;
+            AcsChatRetentionPolicy retentionPolicy = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("recipientCommunicationIdentifier"u8))
@@ -241,6 +247,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     properties = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("retentionPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    retentionPolicy = AcsChatRetentionPolicy.DeserializeAcsChatRetentionPolicy(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -256,7 +271,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 editedByCommunicationIdentifier,
                 editTime,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
-                properties);
+                properties,
+                retentionPolicy);
         }
 
         internal partial class AcsChatThreadPropertiesUpdatedPerUserEventDataConverter : JsonConverter<AcsChatThreadPropertiesUpdatedPerUserEventData>

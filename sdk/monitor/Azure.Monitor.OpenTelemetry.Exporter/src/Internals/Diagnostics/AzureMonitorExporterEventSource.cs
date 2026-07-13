@@ -536,5 +536,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(56, Message = "Failed to calculate exception rate due to an exception. {0}", Level = EventLevel.Warning)]
         public void FailedToCalculateExceptionRate(string exceptionMessage) => WriteEvent(56, exceptionMessage);
+
+        [Event(57, Message = "Failed to fetch SDK statistics configuration from '{0}'. SDK statistics will be disabled for this process. Reason: {1}", Level = EventLevel.Informational)]
+        public void SdkStatsConfigFetchFailed(string configUrl, string reason) => WriteEvent(57, configUrl, reason);
+
+        [Event(58, Message = "SDK statistics disabled by remote configuration at '{0}'.", Level = EventLevel.Informational)]
+        public void SdkStatsDisabledByConfig(string configUrl) => WriteEvent(58, configUrl);
     }
 }

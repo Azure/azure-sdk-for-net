@@ -8,73 +8,70 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.SecurityInsights.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsPackageResource"/> and their operations.
-    /// Each <see cref="SecurityInsightsPackageResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
-    /// To get a <see cref="SecurityInsightsPackageCollection"/> instance call the GetSecurityInsightsPackages method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// Each <see cref="SecurityInsightsPackageResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="SecurityInsightsPackageCollection"/> instance call the GetSecurityInsightsPackages method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class SecurityInsightsPackageCollection : ArmCollection, IEnumerable<SecurityInsightsPackageResource>, IAsyncEnumerable<SecurityInsightsPackageResource>
     {
-        private readonly ClientDiagnostics _securityInsightsPackageContentPackageClientDiagnostics;
-        private readonly ContentPackageRestOperations _securityInsightsPackageContentPackageRestClient;
-        private readonly ClientDiagnostics _securityInsightsPackageContentPackagesClientDiagnostics;
-        private readonly ContentPackagesRestOperations _securityInsightsPackageContentPackagesRestClient;
+        private readonly ClientDiagnostics _contentPackageClientDiagnostics;
+        private readonly ContentPackage _contentPackageRestClient;
+        private readonly ClientDiagnostics _contentPackagesClientDiagnostics;
+        private readonly ContentPackages _contentPackagesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsPackageCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsPackageCollection for mocking. </summary>
         protected SecurityInsightsPackageCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsPackageCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsPackageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityInsightsPackageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityInsightsPackageContentPackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsPackageResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityInsightsPackageResource.ResourceType, out string securityInsightsPackageContentPackageApiVersion);
-            _securityInsightsPackageContentPackageRestClient = new ContentPackageRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsPackageContentPackageApiVersion);
-            _securityInsightsPackageContentPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsPackageResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityInsightsPackageResource.ResourceType, out string securityInsightsPackageContentPackagesApiVersion);
-            _securityInsightsPackageContentPackagesRestClient = new ContentPackagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsPackageContentPackagesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SecurityInsightsPackageResource.ResourceType, out string securityInsightsPackageApiVersion);
+            _contentPackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsPackageResource.ResourceType.Namespace, Diagnostics);
+            _contentPackageRestClient = new ContentPackage(_contentPackageClientDiagnostics, Pipeline, Endpoint, securityInsightsPackageApiVersion ?? "2025-07-01-preview");
+            _contentPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsPackageResource.ResourceType.Namespace, Diagnostics);
+            _contentPackagesRestClient = new ContentPackages(_contentPackagesClientDiagnostics, Pipeline, Endpoint, securityInsightsPackageApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType), nameof(id));
+            if (id.ResourceType != "Microsoft.OperationalInsights/workspaces")
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.OperationalInsights/workspaces"), nameof(id));
+            }
         }
 
         /// <summary>
         /// Install a package to the workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentPackage_Install</description>
+        /// <term> Operation Id. </term>
+        /// <description> PackageModels_Install. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,23 +79,31 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="packageId"> package Id. </param>
         /// <param name="data"> Package installation properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsPackageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string packageId, SecurityInsightsPackageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsPackageContentPackageClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _contentPackageClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _securityInsightsPackageContentPackageRestClient.InstallAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsPackageContentPackageRestClient.CreateInstallRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsPackageResource>(Response.FromValue(new SecurityInsightsPackageResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentPackageRestClient.CreateInstallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, SecurityInsightsPackageData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsPackageData> response = Response.FromValue(SecurityInsightsPackageData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsPackageResource> operation = new SecurityInsightsArmOperation<SecurityInsightsPackageResource>(Response.FromValue(new SecurityInsightsPackageResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -112,20 +117,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Install a package to the workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentPackage_Install</description>
+        /// <term> Operation Id. </term>
+        /// <description> PackageModels_Install. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,23 +134,31 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="packageId"> package Id. </param>
         /// <param name="data"> Package installation properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SecurityInsightsPackageResource> CreateOrUpdate(WaitUntil waitUntil, string packageId, SecurityInsightsPackageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsPackageContentPackageClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _contentPackageClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _securityInsightsPackageContentPackageRestClient.Install(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, data, cancellationToken);
-                var uri = _securityInsightsPackageContentPackageRestClient.CreateInstallRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsPackageResource>(Response.FromValue(new SecurityInsightsPackageResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentPackageRestClient.CreateInstallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, SecurityInsightsPackageData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsPackageData> response = Response.FromValue(SecurityInsightsPackageData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsPackageResource> operation = new SecurityInsightsArmOperation<SecurityInsightsPackageResource>(Response.FromValue(new SecurityInsightsPackageResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -163,38 +172,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets an installed packages by its id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentPackages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PackageModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="packageId"> package Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecurityInsightsPackageResource>> GetAsync(string packageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
 
-            using var scope = _securityInsightsPackageContentPackagesClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.Get");
+            using DiagnosticScope scope = _contentPackagesClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsPackageContentPackagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsPackageData> response = Response.FromValue(SecurityInsightsPackageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -208,38 +221,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets an installed packages by its id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentPackages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PackageModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="packageId"> package Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecurityInsightsPackageResource> Get(string packageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
 
-            using var scope = _securityInsightsPackageContentPackagesClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.Get");
+            using DiagnosticScope scope = _contentPackagesClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsPackageContentPackagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsPackageData> response = Response.FromValue(SecurityInsightsPackageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -253,102 +270,146 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets all installed packages.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentPackages_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> PackageModels_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
+        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="search"> Searches for a substring in the response. Optional. </param>
+        /// <param name="count"> Instructs the server to return only object count without actual body. Optional. </param>
+        /// <param name="top"> Returns only the first n results. Optional. </param>
+        /// <param name="skip"> Used to skip n elements in the OData query (offset). Returns a nextLink to the next page of results if there are any left. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsPackageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityInsightsPackageResource> GetAllAsync(SecurityInsightsPackageCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityInsightsPackageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityInsightsPackageResource> GetAllAsync(string filter = default, string @orderby = default, string search = default, bool? count = default, int? top = default, int? skip = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            options ??= new SecurityInsightsPackageCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsPackageContentPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.OrderBy, options.Search, options.Count, options.Top, options.Skip, options.SkipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsPackageContentPackagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.OrderBy, options.Search, options.Count, options.Top, options.Skip, options.SkipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsPackageResource(Client, SecurityInsightsPackageData.DeserializeSecurityInsightsPackageData(e)), _securityInsightsPackageContentPackagesClientDiagnostics, Pipeline, "SecurityInsightsPackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityInsightsPackageData, SecurityInsightsPackageResource>(new ContentPackagesGetAllAsyncCollectionResultOfT(
+                _contentPackagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                @orderby,
+                search,
+                count,
+                top,
+                skip,
+                skipToken,
+                context,
+                "SecurityInsightsPackageCollection.GetAll"), data => new SecurityInsightsPackageResource(Client, data));
         }
 
         /// <summary>
         /// Gets all installed packages.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentPackages_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> PackageModels_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
+        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="search"> Searches for a substring in the response. Optional. </param>
+        /// <param name="count"> Instructs the server to return only object count without actual body. Optional. </param>
+        /// <param name="top"> Returns only the first n results. Optional. </param>
+        /// <param name="skip"> Used to skip n elements in the OData query (offset). Returns a nextLink to the next page of results if there are any left. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityInsightsPackageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityInsightsPackageResource> GetAll(SecurityInsightsPackageCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityInsightsPackageResource> GetAll(string filter = default, string @orderby = default, string search = default, bool? count = default, int? top = default, int? skip = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            options ??= new SecurityInsightsPackageCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsPackageContentPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.OrderBy, options.Search, options.Count, options.Top, options.Skip, options.SkipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsPackageContentPackagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.OrderBy, options.Search, options.Count, options.Top, options.Skip, options.SkipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsPackageResource(Client, SecurityInsightsPackageData.DeserializeSecurityInsightsPackageData(e)), _securityInsightsPackageContentPackagesClientDiagnostics, Pipeline, "SecurityInsightsPackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityInsightsPackageData, SecurityInsightsPackageResource>(new ContentPackagesGetAllCollectionResultOfT(
+                _contentPackagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                @orderby,
+                search,
+                count,
+                top,
+                skip,
+                skipToken,
+                context,
+                "SecurityInsightsPackageCollection.GetAll"), data => new SecurityInsightsPackageResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentPackages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PackageModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="packageId"> package Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string packageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
 
-            using var scope = _securityInsightsPackageContentPackagesClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.Exists");
+            using DiagnosticScope scope = _contentPackagesClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsPackageContentPackagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsPackageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsPackageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsPackageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -362,36 +423,50 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentPackages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PackageModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="packageId"> package Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string packageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
 
-            using var scope = _securityInsightsPackageContentPackagesClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.Exists");
+            using DiagnosticScope scope = _contentPackagesClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityInsightsPackageContentPackagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsPackageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsPackageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsPackageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -405,38 +480,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentPackages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PackageModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="packageId"> package Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsPackageResource>> GetIfExistsAsync(string packageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
 
-            using var scope = _securityInsightsPackageContentPackagesClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.GetIfExists");
+            using DiagnosticScope scope = _contentPackagesClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsPackageContentPackagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsPackageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsPackageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsPackageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsPackageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -450,38 +541,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentPackages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PackageModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="packageId"> package Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecurityInsightsPackageResource> GetIfExists(string packageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
 
-            using var scope = _securityInsightsPackageContentPackagesClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.GetIfExists");
+            using DiagnosticScope scope = _contentPackagesClientDiagnostics.CreateScope("SecurityInsightsPackageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityInsightsPackageContentPackagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsPackageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsPackageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsPackageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsPackageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -493,17 +600,18 @@ namespace Azure.ResourceManager.SecurityInsights
 
         IEnumerator<SecurityInsightsPackageResource> IEnumerable<SecurityInsightsPackageResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecurityInsightsPackageResource> IAsyncEnumerable<SecurityInsightsPackageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

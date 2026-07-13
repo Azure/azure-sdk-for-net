@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class SqlServerJobScheduleTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SqlServerJobScheduleType value) => value switch
         {
             SqlServerJobScheduleType.Once => "Once",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlServerJobScheduleType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SqlServerJobScheduleType ToSqlServerJobScheduleType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Once")) return SqlServerJobScheduleType.Once;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Recurring")) return SqlServerJobScheduleType.Recurring;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Once"))
+            {
+                return SqlServerJobScheduleType.Once;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Recurring"))
+            {
+                return SqlServerJobScheduleType.Recurring;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlServerJobScheduleType value.");
         }
     }

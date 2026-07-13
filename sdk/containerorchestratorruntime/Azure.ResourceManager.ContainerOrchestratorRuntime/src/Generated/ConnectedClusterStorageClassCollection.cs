@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 HttpMessage message = _storageClassRestClient.CreateCreateOrUpdateRequest(Id.ToString(), storageClassName, ConnectedClusterStorageClassData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource>(
-                    new ConnectedClusterStorageClassOperationSource(Client),
+                    new ConnectedClusterStorageClassResourceOperationSource(Client),
                     _storageClassClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 HttpMessage message = _storageClassRestClient.CreateCreateOrUpdateRequest(Id.ToString(), storageClassName, ConnectedClusterStorageClassData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource>(
-                    new ConnectedClusterStorageClassOperationSource(Client),
+                    new ConnectedClusterStorageClassResourceOperationSource(Client),
                     _storageClassClientDiagnostics,
                     Pipeline,
                     message.Request,

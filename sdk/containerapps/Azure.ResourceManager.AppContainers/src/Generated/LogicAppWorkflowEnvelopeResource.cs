@@ -6,47 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A Class representing a LogicAppWorkflowEnvelope along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogicAppWorkflowEnvelopeResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetLogicAppWorkflowEnvelopeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LogicAppResource"/> using the GetLogicAppWorkflowEnvelope method.
+    /// A class representing a LogicAppWorkflowEnvelope along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogicAppWorkflowEnvelopeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LogicAppResource"/> using the GetLogicAppWorkflowEnvelopes method.
     /// </summary>
     public partial class LogicAppWorkflowEnvelopeResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="LogicAppWorkflowEnvelopeResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="containerAppName"> The containerAppName. </param>
-        /// <param name="logicAppName"> The logicAppName. </param>
-        /// <param name="workflowName"> The workflowName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string logicAppName, string workflowName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/workflows/{workflowName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _logicAppWorkflowEnvelopeLogicAppsClientDiagnostics;
-        private readonly LogicAppsRestOperations _logicAppWorkflowEnvelopeLogicAppsRestClient;
+        private readonly ClientDiagnostics _logicAppsClientDiagnostics;
+        private readonly LogicApps _logicAppsRestClient;
         private readonly LogicAppWorkflowEnvelopeData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/logicApps/workflows";
 
-        /// <summary> Initializes a new instance of the <see cref="LogicAppWorkflowEnvelopeResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of LogicAppWorkflowEnvelopeResource for mocking. </summary>
         protected LogicAppWorkflowEnvelopeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LogicAppWorkflowEnvelopeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicAppWorkflowEnvelopeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogicAppWorkflowEnvelopeResource(ArmClient client, LogicAppWorkflowEnvelopeData data) : this(client, data.Id)
@@ -55,71 +43,94 @@ namespace Azure.ResourceManager.AppContainers
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LogicAppWorkflowEnvelopeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicAppWorkflowEnvelopeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LogicAppWorkflowEnvelopeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _logicAppWorkflowEnvelopeLogicAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string logicAppWorkflowEnvelopeLogicAppsApiVersion);
-            _logicAppWorkflowEnvelopeLogicAppsRestClient = new LogicAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, logicAppWorkflowEnvelopeLogicAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string logicAppWorkflowEnvelopeApiVersion);
+            _logicAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            _logicAppsRestClient = new LogicApps(_logicAppsClientDiagnostics, Pipeline, Endpoint, logicAppWorkflowEnvelopeApiVersion ?? "2025-10-02-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual LogicAppWorkflowEnvelopeData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="containerAppName"> The containerAppName. </param>
+        /// <param name="logicAppName"> The logicAppName. </param>
+        /// <param name="workflowName"> The workflowName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string logicAppName, string workflowName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/workflows/{workflowName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get workflow information by its name
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogicApps_GetWorkflow</description>
+        /// <term> Operation Id. </term>
+        /// <description> LogicApps_GetWorkflow. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogicAppWorkflowEnvelopeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LogicAppWorkflowEnvelopeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<LogicAppWorkflowEnvelopeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _logicAppWorkflowEnvelopeLogicAppsClientDiagnostics.CreateScope("LogicAppWorkflowEnvelopeResource.Get");
+            using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppWorkflowEnvelopeResource.Get");
             scope.Start();
             try
             {
-                var response = await _logicAppWorkflowEnvelopeLogicAppsRestClient.GetWorkflowAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _logicAppsRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<LogicAppWorkflowEnvelopeData> response = Response.FromValue(LogicAppWorkflowEnvelopeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LogicAppWorkflowEnvelopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.AppContainers
         /// Get workflow information by its name
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/workflows/{workflowName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/workflows/{workflowName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogicApps_GetWorkflow</description>
+        /// <term> Operation Id. </term>
+        /// <description> LogicApps_GetWorkflow. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogicAppWorkflowEnvelopeResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="LogicAppWorkflowEnvelopeResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LogicAppWorkflowEnvelopeResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _logicAppWorkflowEnvelopeLogicAppsClientDiagnostics.CreateScope("LogicAppWorkflowEnvelopeResource.Get");
+            using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppWorkflowEnvelopeResource.Get");
             scope.Start();
             try
             {
-                var response = _logicAppWorkflowEnvelopeLogicAppsRestClient.GetWorkflow(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _logicAppsRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<LogicAppWorkflowEnvelopeData> response = Response.FromValue(LogicAppWorkflowEnvelopeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LogicAppWorkflowEnvelopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

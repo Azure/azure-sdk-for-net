@@ -6,11 +6,13 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Evaluation;
 
 namespace Azure.AI.Projects
 {
+    [Experimental("AAIP001")]
     internal partial class ProjectSchedulesGetAllAsyncCollectionResultOfT : AsyncCollectionResult<ProjectsSchedule>
     {
         private readonly ProjectSchedules _client;
@@ -39,7 +41,7 @@ namespace Azure.AI.Projects
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+                ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
                 yield return result;
 
                 nextPageUri = ((PagedSchedule)result).NextLink;
@@ -76,6 +78,23 @@ namespace Azure.AI.Projects
             {
                 yield return item;
                 await Task.Yield();
+            }
+        }
+
+        /// <summary> Sends the request in the pipeline message and returns the response. </summary>
+        /// <param name="message"> The pipeline message containing the request to send. </param>
+        private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
+        {
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ProjectSchedules.GetAll");
+            scope.Start();
+            try
+            {
+                return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
     }

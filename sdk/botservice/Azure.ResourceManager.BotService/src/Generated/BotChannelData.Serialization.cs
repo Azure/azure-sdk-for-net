@@ -136,6 +136,21 @@ namespace Azure.ResourceManager.BotService
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -166,7 +181,7 @@ namespace Azure.ResourceManager.BotService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            SystemData systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             BotChannelProperties properties = default;
@@ -174,7 +189,7 @@ namespace Azure.ResourceManager.BotService
             BotServiceKind? kind = default;
             ETag? eTag = default;
             IReadOnlyList<string> zones = default;
-            SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -198,6 +213,15 @@ namespace Azure.ResourceManager.BotService
                         continue;
                     }
                     resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBotServiceContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -283,15 +307,6 @@ namespace Azure.ResourceManager.BotService
                     zones = array;
                     continue;
                 }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBotServiceContext.Default);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -301,7 +316,7 @@ namespace Azure.ResourceManager.BotService
                 id,
                 name,
                 resourceType,
-                additionalBinaryDataProperties,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
@@ -309,7 +324,7 @@ namespace Azure.ResourceManager.BotService
                 kind,
                 eTag,
                 zones ?? new ChangeTrackingList<string>(),
-                systemData);
+                additionalBinaryDataProperties);
         }
     }
 }

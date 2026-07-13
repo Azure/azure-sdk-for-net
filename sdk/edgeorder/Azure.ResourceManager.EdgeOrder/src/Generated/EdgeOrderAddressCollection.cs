@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 HttpMessage message = _addressResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, EdgeOrderAddressData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EdgeOrderArmOperation<EdgeOrderAddressResource> operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(
-                    new EdgeOrderAddressOperationSource(Client),
+                    new EdgeOrderAddressResourceOperationSource(Client),
                     _addressResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 HttpMessage message = _addressResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, EdgeOrderAddressData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EdgeOrderArmOperation<EdgeOrderAddressResource> operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(
-                    new EdgeOrderAddressOperationSource(Client),
+                    new EdgeOrderAddressResourceOperationSource(Client),
                     _addressResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

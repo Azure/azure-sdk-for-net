@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct ServerWorkspaceFeature : IEquatable<ServerWorkspaceFeature>
     {
         private readonly string _value;
+        /// <summary> Connected. </summary>
+        private const string ConnectedValue = "Connected";
+        /// <summary> Disconnected. </summary>
+        private const string DisconnectedValue = "Disconnected";
 
         /// <summary> Initializes a new instance of <see cref="ServerWorkspaceFeature"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServerWorkspaceFeature(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ConnectedValue = "Connected";
-        private const string DisconnectedValue = "Disconnected";
+            _value = value;
+        }
 
         /// <summary> Connected. </summary>
         public static ServerWorkspaceFeature Connected { get; } = new ServerWorkspaceFeature(ConnectedValue);
+
         /// <summary> Disconnected. </summary>
         public static ServerWorkspaceFeature Disconnected { get; } = new ServerWorkspaceFeature(DisconnectedValue);
+
         /// <summary> Determines if two <see cref="ServerWorkspaceFeature"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServerWorkspaceFeature left, ServerWorkspaceFeature right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServerWorkspaceFeature"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServerWorkspaceFeature left, ServerWorkspaceFeature right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServerWorkspaceFeature"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServerWorkspaceFeature"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServerWorkspaceFeature(string value) => new ServerWorkspaceFeature(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServerWorkspaceFeature"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServerWorkspaceFeature?(string value) => value == null ? null : new ServerWorkspaceFeature(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServerWorkspaceFeature other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServerWorkspaceFeature other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

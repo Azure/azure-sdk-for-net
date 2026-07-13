@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             FirewallPolicyRuleCollectionGroupDraftResource firewallPolicyRuleCollectionGroupDraft = client.GetFirewallPolicyRuleCollectionGroupDraftResource(firewallPolicyRuleCollectionGroupDraftResourceId);
 
             // invoke the operation
-            await firewallPolicyRuleCollectionGroupDraft.DeleteAsync(WaitUntil.Completed);
+            await firewallPolicyRuleCollectionGroupDraft.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -108,13 +108,11 @@ IPProtocols = {FirewallPolicyRuleNetworkProtocol.Tcp},
 SourceAddresses = {"10.1.25.0/24"},
 DestinationAddresses = {"*"},
 DestinationPorts = {"*"},
-Name = "network-rule1",
 }},
-Name = "Example-Filter-Rule-Collection",
 Priority = 100,
 }},
             };
-            ArmOperation<FirewallPolicyRuleCollectionGroupDraftResource> lro = await firewallPolicyRuleCollectionGroupDraft.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<FirewallPolicyRuleCollectionGroupDraftResource> lro = await firewallPolicyRuleCollectionGroupDraft.CreateOrUpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             FirewallPolicyRuleCollectionGroupDraftResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 HttpMessage message = _nGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ngroupsName, NGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerInstanceArmOperation<NGroupResource> operation = new ContainerInstanceArmOperation<NGroupResource>(
-                    new NGroupOperationSource(Client),
+                    new NGroupResourceOperationSource(Client),
                     _nGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 HttpMessage message = _nGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ngroupsName, NGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerInstanceArmOperation<NGroupResource> operation = new ContainerInstanceArmOperation<NGroupResource>(
-                    new NGroupOperationSource(Client),
+                    new NGroupResourceOperationSource(Client),
                     _nGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,

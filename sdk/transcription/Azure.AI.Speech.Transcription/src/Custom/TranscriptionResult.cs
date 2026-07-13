@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Speech.Transcription;
 
@@ -26,36 +25,6 @@ public partial class TranscriptionResult
         }
     }
 
-    private IEnumerable<TranscribedPhrases> _TranscribedPhrases;
-
-    /// <summary> The transcribed phrases by their channel. </summary>
-    public IEnumerable<TranscribedPhrases> PhrasesByChannel
-    {
-        get
-        {
-            if (_TranscribedPhrases != null)
-            {
-                return _TranscribedPhrases;
-            }
-            var TranscribedPhrases = new List<TranscribedPhrases>();
-
-            var CombinedPhrases = this.CombinedPhrases.ToDictionary((phrase) => phrase.Channel ?? -1);
-            var Phrases = this.Phrases.GroupBy((phrase) => phrase.Channel).ToDictionary((e) => e.Key ?? -1, (e) => e.ToList());
-            foreach (var key in CombinedPhrases.Keys)
-            {
-                var CombinedPhrase = CombinedPhrases[key];
-                var Phrase = Phrases[key];
-                TranscribedPhrases.Add(new TranscribedPhrases(key == -1 ? null : key, CombinedPhrase.Text, Phrase));
-            }
-
-            _TranscribedPhrases = TranscribedPhrases;
-            return _TranscribedPhrases;
-        }
-    }
-
     /// <summary> The duration of the audio in milliseconds. </summary>
     internal int DurationMilliseconds { get; }
-
-    /// <summary> The transcription results segmented into phrases. </summary>
-    internal IReadOnlyList<TranscribedPhrase> Phrases { get; }
 }

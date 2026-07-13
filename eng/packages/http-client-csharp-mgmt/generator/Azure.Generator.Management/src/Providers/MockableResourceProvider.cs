@@ -204,8 +204,8 @@ namespace Azure.Generator.Management.Providers
             {
                 foreach (var resourceMethod in resourceMethods)
                 {
-                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, true));
-                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, false));
+                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, true, _operationContext));
+                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, false, _operationContext));
                 }
             }
 
@@ -300,7 +300,7 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
-        private MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync)
+        private protected MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync, OperationContext operationContext, ParameterProvider? scopeParameter = null)
         {
             var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
 
@@ -326,7 +326,7 @@ namespace Azure.Generator.Management.Providers
                 methodName = isAsync ? $"{baseName}Async" : baseName;
             }
 
-            return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName, resource);
+            return BuildServiceMethodWithContext(resourceMethod.InputMethod, resourceMethod.InputClient, operationContext, isAsync, methodName, resource, scopeParameter);
         }
 
         protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null, ResourceClientProvider? explicitResourceClient = null)
@@ -337,23 +337,26 @@ namespace Azure.Generator.Management.Providers
         protected MethodProvider BuildServiceMethodWithContext(InputServiceMethod method, InputClient inputClient, OperationContext operationContext, bool isAsync, string? methodName = null, ResourceClientProvider? explicitResourceClient = null, ParameterProvider? scopeParameter = null)
         {
             var clientInfo = _clientInfos[inputClient];
+            var parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
             return method switch
             {
-                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, operationContext, clientInfo, pagingMethod, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter),
-                _ => BuildNonPagingServiceMethod(method, operationContext, clientInfo, isAsync, methodName, explicitResourceClient, scopeParameter)
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, parameterMappings, clientInfo, pagingMethod, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter),
+                _ => BuildNonPagingServiceMethod(method, parameterMappings, clientInfo, isAsync, methodName, explicitResourceClient, scopeParameter)
             };
         }
 
-        private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, OperationContext operationContext, RestClientInfo clientInfo, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient = null, ParameterProvider? scopeParameter = null)
+        private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, ParameterContextRegistry parameterMappings, RestClientInfo clientInfo, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient = null, ParameterProvider? scopeParameter = null)
         {
-            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable.
+            // Long-running operations are excluded: an LRO returning an array is surfaced as
+            // ArmOperation<IReadOnlyList<T>> instead of a pageable.
             var responseBodyType = method.GetResponseBodyType();
-            if (responseBodyType != null && responseBodyType.IsList)
+            if (responseBodyType != null && responseBodyType.IsList && !method.IsLongRunningOperation())
             {
-                return new ArrayResponseOperationMethodProvider(this, operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter);
+                return new ArrayResponseOperationMethodProvider(this, parameterMappings, clientInfo, method, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter);
             }
 
-            return new ResourceOperationMethodProvider(this, operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient: explicitResourceClient, scopeParameter: scopeParameter);
+        return new ResourceOperationMethodProvider(this, parameterMappings, clientInfo, method, ResourceOperationKind.Action, isAsync, methodName, explicitResourceClient: explicitResourceClient, scopeParameter: scopeParameter);
         }
 
         public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)

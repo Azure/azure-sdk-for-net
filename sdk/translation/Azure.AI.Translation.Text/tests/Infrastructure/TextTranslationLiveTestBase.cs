@@ -19,6 +19,8 @@ namespace Azure.AI.Translation.Text.Tests
         {
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
             SanitizedHeaders.Add("Ocp-Apim-ResourceId");
+            // TODO: Remove once 2026-06-06 API version is live and tests are re-recorded.
+            IgnoredQueryParameters.Add("api-version");
         }
 
         public TextTranslationClient GetClient(

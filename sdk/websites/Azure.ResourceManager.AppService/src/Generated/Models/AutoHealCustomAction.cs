@@ -7,47 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary>
     /// Custom action to be executed
     /// when an auto heal rule is triggered.
-    /// Serialized Name: AutoHealCustomAction
     /// </summary>
     public partial class AutoHealCustomAction
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutoHealCustomAction"/>. </summary>
         public AutoHealCustomAction()
@@ -55,32 +26,21 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoHealCustomAction"/>. </summary>
-        /// <param name="exe">
-        /// Executable to be run.
-        /// Serialized Name: AutoHealCustomAction.exe
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for the executable.
-        /// Serialized Name: AutoHealCustomAction.parameters
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoHealCustomAction(string exe, string parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="exe"> Executable to be run. </param>
+        /// <param name="parameters"> Parameters for the executable. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutoHealCustomAction(string exe, string parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Exe = exe;
             Parameters = parameters;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Executable to be run.
-        /// Serialized Name: AutoHealCustomAction.exe
-        /// </summary>
+        /// <summary> Executable to be run. </summary>
         [WirePath("exe")]
         public string Exe { get; set; }
-        /// <summary>
-        /// Parameters for the executable.
-        /// Serialized Name: AutoHealCustomAction.parameters
-        /// </summary>
+
+        /// <summary> Parameters for the executable. </summary>
         [WirePath("parameters")]
         public string Parameters { get; set; }
     }

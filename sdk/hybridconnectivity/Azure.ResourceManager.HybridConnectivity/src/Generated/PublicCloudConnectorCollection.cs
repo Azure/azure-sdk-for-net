@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 HttpMessage message = _publicCloudConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, PublicCloudConnectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridConnectivityArmOperation<PublicCloudConnectorResource> operation = new HybridConnectivityArmOperation<PublicCloudConnectorResource>(
-                    new PublicCloudConnectorOperationSource(Client),
+                    new PublicCloudConnectorResourceOperationSource(Client),
                     _publicCloudConnectorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 HttpMessage message = _publicCloudConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, PublicCloudConnectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridConnectivityArmOperation<PublicCloudConnectorResource> operation = new HybridConnectivityArmOperation<PublicCloudConnectorResource>(
-                    new PublicCloudConnectorOperationSource(Client),
+                    new PublicCloudConnectorResourceOperationSource(Client),
                     _publicCloudConnectorsClientDiagnostics,
                     Pipeline,
                     message.Request,

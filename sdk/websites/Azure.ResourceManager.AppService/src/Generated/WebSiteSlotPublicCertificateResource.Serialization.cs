@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class WebSiteSlotPublicCertificateResource : IJsonModel<PublicCertificateData>
     {
-        private static PublicCertificateData s_dataDeserializationInstance;
-        private static PublicCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PublicCertificateData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PublicCertificateData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PublicCertificateData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PublicCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PublicCertificateData>)Data).Write(writer, options);
 
-        PublicCertificateData IJsonModel<PublicCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublicCertificateData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PublicCertificateData IJsonModel<PublicCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PublicCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PublicCertificateData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PublicCertificateData IPersistableModel<PublicCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublicCertificateData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<PublicCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublicCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PublicCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

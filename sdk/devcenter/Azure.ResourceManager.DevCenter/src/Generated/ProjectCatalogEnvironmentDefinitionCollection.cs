@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.DevCenter
     {
         private readonly ClientDiagnostics _environmentDefinitionsClientDiagnostics;
         private readonly EnvironmentDefinitions _environmentDefinitionsRestClient;
-        private readonly ClientDiagnostics _projectCatalogEnvironmentDefinitionsClientDiagnostics;
-        private readonly ProjectCatalogEnvironmentDefinitions _projectCatalogEnvironmentDefinitionsRestClient;
 
         /// <summary> Initializes a new instance of ProjectCatalogEnvironmentDefinitionCollection for mocking. </summary>
         protected ProjectCatalogEnvironmentDefinitionCollection()
@@ -43,8 +41,6 @@ namespace Azure.ResourceManager.DevCenter
             TryGetApiVersion(ProjectCatalogEnvironmentDefinitionResource.ResourceType, out string projectCatalogEnvironmentDefinitionApiVersion);
             _environmentDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectCatalogEnvironmentDefinitionResource.ResourceType.Namespace, Diagnostics);
             _environmentDefinitionsRestClient = new EnvironmentDefinitions(_environmentDefinitionsClientDiagnostics, Pipeline, Endpoint, projectCatalogEnvironmentDefinitionApiVersion ?? "2026-01-01-preview");
-            _projectCatalogEnvironmentDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectCatalogEnvironmentDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _projectCatalogEnvironmentDefinitionsRestClient = new ProjectCatalogEnvironmentDefinitions(_projectCatalogEnvironmentDefinitionsClientDiagnostics, Pipeline, Endpoint, projectCatalogEnvironmentDefinitionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
