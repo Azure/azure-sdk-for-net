@@ -113,7 +113,7 @@ function parseArgs(argv) {
   return options;
 }
 
-function main(argv) {
+async function main(argv) {
   const options = parseArgs(argv);
   const root = path.resolve(options.evalRoot);
 
@@ -139,7 +139,7 @@ function main(argv) {
     const sparseCheckoutPaths = known ? known.sparse : [];
     const cacheRoot = path.dirname(fixture.cachePath);
     console.log(`[prime-fixtures] Priming ${fixture.repoName} @ ${fixture.ref} from ${repoUrl}`);
-    syncRepo({
+    await syncRepo({
       cacheRoot,
       repoUrl,
       repoName: fixture.repoName,
@@ -154,10 +154,8 @@ function main(argv) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  try {
-    main(process.argv.slice(2));
-  } catch (error) {
-    console.error(error.message);
+  main(process.argv.slice(2)).catch((error) => {
+    console.error(error instanceof Error ? error.message : error);
     process.exit(1);
-  }
+  });
 }

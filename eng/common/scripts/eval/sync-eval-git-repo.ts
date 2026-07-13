@@ -3,20 +3,22 @@
 // fetch + checkout. Primes the cache Vally's `environment.git` fixtures point at; FETCH_HEAD
 // is landed on a local branch named <ref> so `git worktree add --detach <tmp> <ref>` resolves.
 
-import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
+import { execFile, isExecError } from "./lib/exec.ts";
 
-// Throws on non-zero git exit so a failed clone stops immediately.
-// NOTE: azure-rest-api-specs ships shared exec primitives (.github/shared/src/exec.js), but
-// they aren't importable here — eng/common has no cross-repo dependency on that package and
-// those helpers carry specs-repo-specific assumptions. This intentionally stays a tiny local
-// wrapper; revisit if a shared eng/common exec utility is ever introduced.
-function invokeGit(args) {
-  const proc = spawnSync("git", args, { stdio: ["ignore", "ignore", "inherit"] });
-  if (proc.status !== 0) {
-    throw new Error(`git ${args.join(" ")} failed (exit ${proc.status})`);
+// Throws on non-zero git exit so a failed clone stops immediately. Delegates to the shared
+// execFile helper (copied from azure-rest-api-specs; see lib/exec.ts), which runs git without a
+// shell (no injection) and captures output; git's stderr is surfaced only when the command fails.
+async function invokeGit(args: string[]): Promise<void> {
+  try {
+    await execFile("git", args);
+  } catch (error) {
+    if (isExecError(error) && error.stderr) {
+      process.stderr.write(error.stderr);
+    }
+    throw new Error(`git ${args.join(" ")} failed`);
   }
 }
 
@@ -30,9 +32,9 @@ function invokeGit(args) {
  * @param {string} [options.ref] Branch/ref to check out.
  * @param {string[]} [options.sparseCheckoutPaths] Cone-sparse paths (pass [] for full tree).
  * @param {number} [options.maxAgeHours] Skip the refresh fetch if cached within this window.
- * @returns {string} The cache path.
+ * @returns {Promise<string>} The cache path.
  */
-export function syncRepo({
+export async function syncRepo({
   cacheRoot,
   repoUrl = "https://github.com/Azure/azure-rest-api-specs.git",
   repoName = "azure-rest-api-specs",
@@ -50,16 +52,16 @@ export function syncRepo({
     console.log(`[sync-eval-git-repo] Cloning ${repoName} (${ref}) into cache: ${cache}`);
     fs.mkdirSync(cache, { recursive: true });
     // init + fetch <ref> (not clone --depth 1) so any branch/tag/SHA is pinned on a cold cache.
-    invokeGit(["-C", cache, "init", "--quiet"]);
-    invokeGit(["-C", cache, "remote", "add", "origin", repoUrl]);
+    await invokeGit(["-C", cache, "init", "--quiet"]);
+    await invokeGit(["-C", cache, "remote", "add", "origin", repoUrl]);
     if (sparseCheckoutPaths.length > 0) {
-      invokeGit(["-C", cache, "sparse-checkout", "init", "--cone"]);
-      invokeGit(["-C", cache, "sparse-checkout", "set", ...sparseCheckoutPaths]);
+      await invokeGit(["-C", cache, "sparse-checkout", "init", "--cone"]);
+      await invokeGit(["-C", cache, "sparse-checkout", "set", ...sparseCheckoutPaths]);
     }
-    invokeGit(["-C", cache, "fetch", "--depth", "1", "--filter=blob:none", "origin", ref]);
+    await invokeGit(["-C", cache, "fetch", "--depth", "1", "--filter=blob:none", "origin", ref]);
     // Land FETCH_HEAD on a real local branch named <ref> (not detached) so Vally's worktree
     // fixtures can resolve `git worktree add --detach <tmp> <ref>`.
-    invokeGit(["-C", cache, "checkout", "-B", ref, "FETCH_HEAD"]);
+    await invokeGit(["-C", cache, "checkout", "-B", ref, "FETCH_HEAD"]);
     fs.writeFileSync(stamp, new Date().toISOString());
   } else {
     let stale = true;
@@ -69,10 +71,10 @@ export function syncRepo({
     }
     if (stale) {
       console.log(`[sync-eval-git-repo] Refreshing cache (>${maxAgeHours}h old): ${cache}`);
-      invokeGit(["-C", cache, "fetch", "--depth", "1", "origin", ref]);
+      await invokeGit(["-C", cache, "fetch", "--depth", "1", "origin", ref]);
       // Re-point the local <ref> branch at FETCH_HEAD (also repairs a previously detached cache)
       // so the worktree fixtures keep resolving.
-      invokeGit(["-C", cache, "checkout", "-B", ref, "FETCH_HEAD"]);
+      await invokeGit(["-C", cache, "checkout", "-B", ref, "FETCH_HEAD"]);
       fs.writeFileSync(stamp, new Date().toISOString());
     } else {
       console.log(`[sync-eval-git-repo] Cache is fresh (<${maxAgeHours}h): ${cache}`);
@@ -121,11 +123,12 @@ function parseArgs(argv) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  try {
-    const cache = syncRepo(parseArgs(process.argv.slice(2)));
-    console.log(cache); // echo the cache path so a wrapper can capture it
-  } catch (error) {
-    console.error(error.message);
-    process.exit(1);
-  }
+  syncRepo(parseArgs(process.argv.slice(2)))
+    .then((cache) => {
+      console.log(cache); // echo the cache path so a wrapper can capture it
+    })
+    .catch((error) => {
+      console.error(error instanceof Error ? error.message : error);
+      process.exit(1);
+    });
 }
