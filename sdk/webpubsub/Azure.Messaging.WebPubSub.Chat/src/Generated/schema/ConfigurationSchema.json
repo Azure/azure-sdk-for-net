@@ -1,0 +1,55 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "WebPubSubChatServiceClient": {
+          "type": "object",
+          "description": "Configuration for WebPubSubChatServiceClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Hub": {
+              "type": "string"
+            },
+            "ConnectionString": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/webPubSubChatServiceClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "webPubSubChatServiceClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "ReverseProxyEndpoint": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
