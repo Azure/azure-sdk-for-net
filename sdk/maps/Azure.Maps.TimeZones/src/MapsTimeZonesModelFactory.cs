@@ -16,7 +16,8 @@ namespace Azure.Maps.TimeZones
         /// <returns> A new <see cref="WindowsTimeZoneData"/> instance for mocking. </returns>
         public static WindowsTimeZoneData WindowsTimeZoneData(IEnumerable<WindowsTimeZone> windowsTimeZones = null)
         {
-            return new WindowsTimeZoneData(windowsTimeZones?.ToList());
+            windowsTimeZones ??= new List<WindowsTimeZone>();
+            return new WindowsTimeZoneData(windowsTimeZones.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="IanaIdData"/> for mocking. </summary>
@@ -24,7 +25,8 @@ namespace Azure.Maps.TimeZones
         /// <returns> A new <see cref="IanaIdData"/> instance for mocking. </returns>
         public static IanaIdData IanaIdData(IEnumerable<IanaId> ianaIds = null)
         {
-            return new IanaIdData(ianaIds?.ToList());
+            ianaIds ??= new List<IanaId>();
+            return new IanaIdData(ianaIds.ToList());
         }
     }
 }

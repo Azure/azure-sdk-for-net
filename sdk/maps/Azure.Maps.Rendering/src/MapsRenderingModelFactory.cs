@@ -30,7 +30,12 @@ namespace Azure.Maps.Rendering
         /// <returns> A new <see cref="MapTileSet"/> instance for mocking. </returns>
         public static MapTileSet MapTileSet(string tileJsonVersion = null, string name = null, string description = null, string version = null, string attribution = null, string template = null, string legend = null, string scheme = null, IEnumerable<string> tiles = null, IEnumerable<string> grids = null, IEnumerable<string> data = null, int? minZoom = null, int? maxZoom = null, IEnumerable<float> bounds = null, IEnumerable<float> center = null)
         {
-            return new MapTileSet(tileJsonVersion, name, description, version, attribution, template, legend, scheme, tiles?.ToList(), grids?.ToList(), data?.ToList(), minZoom, maxZoom, bounds?.ToList(), center?.ToList());
+            tiles ??= new List<string>();
+            grids ??= new List<string>();
+            data ??= new List<string>();
+            bounds ??= new List<float>();
+            center ??= new List<float>();
+            return new MapTileSet(tileJsonVersion, name, description, version, attribution, template, legend, scheme, tiles.ToList(), grids.ToList(), data.ToList(), minZoom, maxZoom, bounds.ToList(), center.ToList());
         }
     }
 }
