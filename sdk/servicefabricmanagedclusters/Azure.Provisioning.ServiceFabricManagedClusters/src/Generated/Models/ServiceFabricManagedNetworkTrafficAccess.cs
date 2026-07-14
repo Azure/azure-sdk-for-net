@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     {
         /// <summary> The network traffic is allowed. </summary>
         [DataMember(Name = "allow")]
-        Allow,
+        Allow = 0,
         /// <summary> The network traffic is denied. </summary>
         [DataMember(Name = "deny")]
-        Deny
+        Deny = 1
     }
 }

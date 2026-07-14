@@ -14,24 +14,24 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     {
         /// <summary> Protocol applies to HTTP. </summary>
         [DataMember(Name = "http")]
-        Http,
+        Http = 0,
         /// <summary> Protocol applies to HTTPS. </summary>
         [DataMember(Name = "https")]
-        Https,
+        Https = 1,
         /// <summary> Protocol applies to TCP. </summary>
         [DataMember(Name = "tcp")]
-        Tcp,
+        Tcp = 2,
         /// <summary> Protocol applies to UDP. </summary>
         [DataMember(Name = "udp")]
-        Udp,
+        Udp = 3,
         /// <summary> Protocol applies to ICMP. </summary>
         [DataMember(Name = "icmp")]
-        Icmp,
+        Icmp = 4,
         /// <summary> Protocol applies to AH. </summary>
         [DataMember(Name = "ah")]
-        AH,
+        AH = 5,
         /// <summary> Protocol applies to ESP. </summary>
         [DataMember(Name = "esp")]
-        Esp
+        Esp = 6
     }
 }

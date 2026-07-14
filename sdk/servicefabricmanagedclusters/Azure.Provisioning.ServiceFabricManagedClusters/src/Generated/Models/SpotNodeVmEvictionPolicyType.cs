@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     public enum SpotNodeVmEvictionPolicyType
     {
         /// <summary> Eviction policy will be Delete for SPOT vms. </summary>
-        Delete,
+        Delete = 0,
         /// <summary> Eviction policy will be Deallocate for SPOT vms. </summary>
-        Deallocate
+        Deallocate = 1
     }
 }

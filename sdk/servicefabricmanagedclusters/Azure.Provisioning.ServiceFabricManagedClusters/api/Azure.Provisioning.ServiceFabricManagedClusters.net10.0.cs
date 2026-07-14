@@ -595,11 +595,11 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         [System.Runtime.Serialization.DataMemberAttribute(Name="Premium_LRS")]
         PremiumLrs = 2,
         [System.Runtime.Serialization.DataMemberAttribute(Name="PremiumV2_LRS")]
-        PremiumV2LRS = 3,
+        PremiumV2Lrs = 3,
         [System.Runtime.Serialization.DataMemberAttribute(Name="StandardSSD_ZRS")]
-        PremiumZrs = 4,
+        StandardSsdZrs = 4,
         [System.Runtime.Serialization.DataMemberAttribute(Name="Premium_ZRS")]
-        PremiumZRS = 5,
+        PremiumZrs = 5,
     }
     public partial class ServiceFabricManagedNetworkSecurityRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     public enum ManagedServiceCorrelationScheme
     {
         /// <summary> Aligned affinity ensures that the primaries of the partitions of the affinitized services are collocated on the same nodes. This is the default and is the same as selecting the Affinity scheme. The value is 0. </summary>
-        AlignedAffinity,
+        AlignedAffinity = 0,
         /// <summary> Non-Aligned affinity guarantees that all replicas of each service will be placed on the same nodes. Unlike Aligned Affinity, this does not guarantee that replicas of particular role will be collocated. The value is 1. </summary>
-        NonAlignedAffinity
+        NonAlignedAffinity = 1
     }
 }

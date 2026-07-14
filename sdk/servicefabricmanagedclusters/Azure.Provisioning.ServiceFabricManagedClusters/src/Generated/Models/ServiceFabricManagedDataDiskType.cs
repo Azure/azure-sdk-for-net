@@ -14,21 +14,21 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     {
         /// <summary> Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent access. </summary>
         [DataMember(Name = "Standard_LRS")]
-        StandardLrs,
+        StandardLrs = 0,
         /// <summary> Standard SSD locally redundant storage. Best for web servers, lightly used enterprise applications and dev/test. </summary>
         [DataMember(Name = "StandardSSD_LRS")]
-        StandardSsdLrs,
+        StandardSsdLrs = 1,
         /// <summary> Premium SSD locally redundant storage. Best for production and performance sensitive workloads. </summary>
         [DataMember(Name = "Premium_LRS")]
-        PremiumLrs,
+        PremiumLrs = 2,
         /// <summary> Premium SSD V2 locally redundant storage. Best for production and performance sensitive workloads that consistently require low latency and high IOPS and throughput. </summary>
         [DataMember(Name = "PremiumV2_LRS")]
-        PremiumV2LRS,
+        PremiumV2Lrs = 3,
         /// <summary> Standard SSD zone redundant storage. Best for web servers, lightly used enterprise applications and dev/test that need storage resiliency against zone failures. </summary>
         [DataMember(Name = "StandardSSD_ZRS")]
-        PremiumZrs,
+        StandardSsdZrs = 4,
         /// <summary> Premium SSD zone redundant storage. Best for production workloads that need storage resiliency against zone failures. </summary>
         [DataMember(Name = "Premium_ZRS")]
-        PremiumZRS
+        PremiumZrs = 5
     }
 }

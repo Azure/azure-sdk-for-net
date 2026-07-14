@@ -11,6 +11,6 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     public enum VmssExtensionSetupOrder
     {
         /// <summary> Indicates that the vm extension should run before the service fabric runtime starts. </summary>
-        BeforeSFRuntime
+        BeforeSFRuntime = 0
     }
 }

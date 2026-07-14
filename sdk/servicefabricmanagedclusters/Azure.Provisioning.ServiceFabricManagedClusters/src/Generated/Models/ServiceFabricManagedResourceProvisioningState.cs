@@ -11,24 +11,24 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     public enum ServiceFabricManagedResourceProvisioningState
     {
         /// <summary> The resource does not have a provisioning state. </summary>
-        None,
+        None = 0,
         /// <summary> The resource is being created. </summary>
-        Creating,
+        Creating = 1,
         /// <summary> The resource is created. </summary>
-        Created,
+        Created = 2,
         /// <summary> The resource is being updated. </summary>
-        Updating,
+        Updating = 3,
         /// <summary> The resource provisioning has succeeded. </summary>
-        Succeeded,
+        Succeeded = 4,
         /// <summary> The resource provisioning has failed. </summary>
-        Failed,
+        Failed = 5,
         /// <summary> The resource provisioning has been canceled. </summary>
-        Canceled,
+        Canceled = 6,
         /// <summary> The resource is being deleted. </summary>
-        Deleting,
+        Deleting = 7,
         /// <summary> The resource has been deleted. </summary>
-        Deleted,
+        Deleted = 8,
         /// <summary> The resource provisioning state is a state other than the previously specified states. </summary>
-        Other
+        Other = 9
     }
 }

@@ -11,16 +11,16 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     public enum ServiceFabricManagedClusterState
     {
         /// <summary> Indicates that the cluster resource is created and the resource provider is waiting for Service Fabric VM extension to boot up and report to it. </summary>
-        WaitingForNodes,
+        WaitingForNodes = 0,
         /// <summary> Indicates that the Service Fabric runtime is being installed on the VMs. Cluster resource will be in this state until the cluster boots up and system services are up. </summary>
-        Deploying,
+        Deploying = 1,
         /// <summary> Indicates that the cluster is upgrading to establishes the cluster version. This upgrade is automatically initiated when the cluster boots up for the first time. </summary>
-        BaselineUpgrade,
+        BaselineUpgrade = 2,
         /// <summary> Indicates that the cluster is being upgraded with the user provided configuration. </summary>
-        Upgrading,
+        Upgrading = 3,
         /// <summary> Indicates that the last upgrade for the cluster has failed. </summary>
-        UpgradeFailed,
+        UpgradeFailed = 4,
         /// <summary> Indicates that the cluster is in a stable state. </summary>
-        Ready
+        Ready = 5
     }
 }

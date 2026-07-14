@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     {
         /// <summary> Transport protocol is TCP. </summary>
         [DataMember(Name = "tcp")]
-        Tcp,
+        Tcp = 0,
         /// <summary> Transport protocol is UDP. </summary>
         [DataMember(Name = "udp")]
-        Udp
+        Udp = 1
     }
 }

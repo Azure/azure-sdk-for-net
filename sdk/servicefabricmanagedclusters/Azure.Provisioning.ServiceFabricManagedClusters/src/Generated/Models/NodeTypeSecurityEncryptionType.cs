@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     {
         /// <summary> For encryption of the managed disk along with VMGuestState blob. </summary>
         [DataMember(Name = "DiskWithVMGuestState")]
-        DiskWithVmGuestState,
+        DiskWithVmGuestState = 0,
         /// <summary> For encryption of just the VMGuestState blob. </summary>
         [DataMember(Name = "VMGuestStateOnly")]
-        VmGuestStateOnly
+        VmGuestStateOnly = 1
     }
 }

@@ -11,10 +11,10 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     public enum ManagedClusterAddOnFeature
     {
         /// <summary> Dns service. </summary>
-        DnsService,
+        DnsService = 0,
         /// <summary> Backup and restore service. </summary>
-        BackupRestoreService,
+        BackupRestoreService = 1,
         /// <summary> Resource monitor service. </summary>
-        ResourceMonitorService
+        ResourceMonitorService = 2
     }
 }

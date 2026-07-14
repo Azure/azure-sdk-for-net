@@ -14,12 +14,12 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     {
         /// <summary> Probe protocol is TCP. </summary>
         [DataMember(Name = "tcp")]
-        Tcp,
+        Tcp = 0,
         /// <summary> Probe protocol is HTTP. </summary>
         [DataMember(Name = "http")]
-        Http,
+        Http = 1,
         /// <summary> Probe protocol is HTTPS. </summary>
         [DataMember(Name = "https")]
-        Https
+        Https = 2
     }
 }

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     public enum ZonalUpdateMode
     {
         /// <summary> The cluster will use 5 upgrade domains for Cross Az Node types. </summary>
-        Standard,
+        Standard = 0,
         /// <summary> The cluster will use a maximum of 3 upgrade domains per zone instead of 5 for Cross Az Node types for faster deployments. </summary>
-        Fast
+        Fast = 1
     }
 }

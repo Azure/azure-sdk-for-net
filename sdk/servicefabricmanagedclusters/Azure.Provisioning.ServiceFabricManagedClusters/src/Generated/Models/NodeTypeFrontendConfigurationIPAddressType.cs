@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     public enum NodeTypeFrontendConfigurationIPAddressType
     {
         /// <summary> IPv4 address type. </summary>
-        IPv4,
+        IPv4 = 0,
         /// <summary> IPv6 address type. </summary>
-        IPv6
+        IPv6 = 1
     }
 }

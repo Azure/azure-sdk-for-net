@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     public enum ServiceFabricManagedClusterPrivateIPAddressVersion
     {
         /// <summary> The IP configuration's private IP is IPv4. </summary>
-        IPv4,
+        IPv4 = 0,
         /// <summary> The IP configuration's private IP is IPv6. </summary>
-        IPv6
+        IPv6 = 1
     }
 }

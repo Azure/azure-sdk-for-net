@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     public enum ServiceFabricManagedClustersSkuName
     {
         /// <summary> Basic requires a minimum of 3 nodes and allows only 1 node type. </summary>
-        Basic,
+        Basic = 0,
         /// <summary> Requires a minimum of 5 nodes and allows 1 or more node type. </summary>
-        Standard
+        Standard = 1
     }
 }

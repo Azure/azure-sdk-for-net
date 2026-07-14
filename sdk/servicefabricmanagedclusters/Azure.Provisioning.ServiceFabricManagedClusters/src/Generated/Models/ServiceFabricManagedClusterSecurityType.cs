@@ -13,11 +13,11 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     public enum ServiceFabricManagedClusterSecurityType
     {
         /// <summary> Trusted Launch is a security type that secures generation 2 virtual machines. </summary>
-        TrustedLaunch,
+        TrustedLaunch = 0,
         /// <summary> Standard is the default security type for all machines. </summary>
-        Standard,
+        Standard = 1,
         /// <summary> ConfidentialVM provides hardware-based encryption, trusted execution environment (TEE) and isolation of the VM memory &amp; CPU from host. </summary>
         [DataMember(Name = "ConfidentialVM")]
-        ConfidentialVm
+        ConfidentialVm = 2
     }
 }

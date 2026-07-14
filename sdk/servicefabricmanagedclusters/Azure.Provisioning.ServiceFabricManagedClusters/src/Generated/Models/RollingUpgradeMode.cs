@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     public enum RollingUpgradeMode
     {
         /// <summary> The upgrade will stop after completing each upgrade domain and automatically monitor health before proceeding. </summary>
-        Monitored,
+        Monitored = 0,
         /// <summary> The upgrade will proceed automatically without performing any health monitoring. </summary>
-        UnmonitoredAuto
+        UnmonitoredAuto = 1
     }
 }

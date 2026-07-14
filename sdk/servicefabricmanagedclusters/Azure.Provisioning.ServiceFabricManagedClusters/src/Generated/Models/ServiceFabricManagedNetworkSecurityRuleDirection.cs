@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     {
         /// <summary> Inbound direction. </summary>
         [DataMember(Name = "inbound")]
-        Inbound,
+        Inbound = 0,
         /// <summary> Outbound direction. </summary>
         [DataMember(Name = "outbound")]
-        Outbound
+        Outbound = 1
     }
 }

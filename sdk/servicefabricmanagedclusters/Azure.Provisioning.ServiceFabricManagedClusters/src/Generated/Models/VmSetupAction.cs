@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     public enum VmSetupAction
     {
         /// <summary> Enable windows containers feature. </summary>
-        EnableContainers,
+        EnableContainers = 0,
         /// <summary> Enables windows HyperV feature. </summary>
-        EnableHyperV
+        EnableHyperV = 1
     }
 }

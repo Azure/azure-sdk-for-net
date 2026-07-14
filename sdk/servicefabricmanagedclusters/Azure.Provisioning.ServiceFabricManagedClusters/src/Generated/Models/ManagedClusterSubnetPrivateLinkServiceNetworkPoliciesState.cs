@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     {
         /// <summary> Enable apply network policies on private link service in the subnet. </summary>
         [DataMember(Name = "enabled")]
-        Enabled,
+        Enabled = 0,
         /// <summary> Disable apply network policies on private link service in the subnet. </summary>
         [DataMember(Name = "disabled")]
-        Disabled
+        Disabled = 1
     }
 }
