@@ -207,6 +207,180 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
+        /// Retrieves the revisions of one or more <see cref="FeatureFlag"/> entities that match the options specified in the passed-in <see cref="FeatureFlagSelector"/>.
+        /// </summary>
+        /// <param name="selector">Options used to select a set of <see cref="FeatureFlag"/> revisions from the configuration store.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An enumerable collection containing the retrieved <see cref="FeatureFlag"/> revisions.</returns>
+        public virtual AsyncPageable<FeatureFlag> GetFeatureFlagRevisionsAsync(FeatureFlagSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+
+            var pageableImplementation = GetFeatureFlagRevisionsPageableImplementation(selector, cancellationToken);
+
+            return new AsyncConditionalPageable<FeatureFlag>(pageableImplementation);
+        }
+
+        /// <summary>
+        /// Retrieves the revisions of one or more <see cref="FeatureFlag"/> entities that match the options specified in the passed-in <see cref="FeatureFlagSelector"/>.
+        /// </summary>
+        /// <param name="selector">Options used to select a set of <see cref="FeatureFlag"/> revisions from the configuration store.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An enumerable collection containing the retrieved <see cref="FeatureFlag"/> revisions.</returns>
+        public virtual Pageable<FeatureFlag> GetFeatureFlagRevisions(FeatureFlagSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+
+            var pageableImplementation = GetFeatureFlagRevisionsPageableImplementation(selector, cancellationToken);
+
+            return new ConditionalPageable<FeatureFlag>(pageableImplementation);
+        }
+
+        private ConditionalPageableImplementation<FeatureFlag> GetFeatureFlagRevisionsPageableImplementation(FeatureFlagSelector selector, CancellationToken cancellationToken)
+        {
+            (string name, string label, string acceptDatetime, IEnumerable<string> select, IList<string> tags) = TranslateFeatureFlagSelector(selector);
+
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            context.AddClassifier(304, isError: false);
+
+            HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
+            {
+                HttpMessage message = CreateGetFeatureFlagRevisionsRequest(name, label, null, select, tags, null, conditions, context);
+
+                // The generated revisions request does not accept a point-in-time parameter, so
+                // the Accept-Datetime header must be applied directly to honor point-in-time reads.
+                if (acceptDatetime != null)
+                {
+                    message.Request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+                }
+
+                return message;
+            }
+
+            HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
+            {
+                HttpMessage message = CreateNextGetFeatureFlagRevisionsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, label, null, select, tags, null, conditions, context);
+
+                // The generated next-page request only carries the continuation link, so the
+                // per-call headers must be re-applied to honor point-in-time reads and the
+                // per-page match conditions used by conditional paging.
+                if (acceptDatetime != null)
+                {
+                    message.Request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+                }
+                if (conditions != null)
+                {
+                    message.Request.Headers.Add(conditions);
+                }
+
+                return message;
+            }
+
+            return new ConditionalPageableImplementation<FeatureFlag>(FirstPageRequest, NextPageRequest, ParseGetFeatureFlagsResponse, Pipeline, ClientDiagnostics, "FeatureFlagClient.GetFeatureFlagRevisions", context);
+        }
+
+        /// <summary>
+        /// Gets a list of feature flag labels that match the options specified in the passed-in <see cref="SettingLabelSelector"/>.
+        /// </summary>
+        /// <param name="selector">Set of options for selecting the <see cref="SettingLabel"/> entities to retrieve.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An enumerable collection containing the retrieved feature flag <see cref="SettingLabel"/> entities.</returns>
+        public virtual AsyncPageable<SettingLabel> GetLabelsAsync(SettingLabelSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+            var name = selector.NameFilter;
+            List<SettingLabelFields> fields = selector.Fields?.Count > 0
+                ? [.. selector.Fields]
+                : null;
+            var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, dateTime, fields, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "FeatureFlagClient.GetLabels", "items", "@nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of feature flag labels that match the options specified in the passed-in <see cref="SettingLabelSelector"/>.
+        /// </summary>
+        /// <param name="selector">Set of options for selecting the <see cref="SettingLabel"/> entities to retrieve.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An enumerable collection containing the retrieved feature flag <see cref="SettingLabel"/> entities.</returns>
+        public virtual Pageable<SettingLabel> GetLabels(SettingLabelSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+            var name = selector.NameFilter;
+            List<SettingLabelFields> fields = selector.Fields?.Count > 0
+                ? [.. selector.Fields]
+                : null;
+            var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, dateTime, fields, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "FeatureFlagClient.GetLabels", "items", "@nextLink", cancellationToken);
+        }
+
+        // The labels operation is generated only onto ConfigurationClient, so the request is
+        // hand-authored here (mirroring the generated builder) to target the shared "/labels"
+        // endpoint. The resourceType is always set to "ff" so this client only returns labels
+        // associated with feature flags.
+        private HttpMessage CreateGetLabelsRequest(string name, string acceptDatetime, IEnumerable<SettingLabelFields> @select, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/labels", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (name != null)
+            {
+                uri.AppendQuery("name", name, true);
+            }
+            if (@select != null && !(@select is ChangeTrackingList<SettingLabelFields> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
+            }
+            uri.AppendQuery("resourceType", "ff", true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if (acceptDatetime != null)
+            {
+                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+            }
+            request.Headers.SetValue("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
+            return message;
+        }
+
+        private HttpMessage CreateNextGetLabelsRequest(Uri nextPage, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
+            return message;
+        }
+
+        /// <summary>
         /// Creates a <see cref="FeatureFlag"/> if the feature flag, uniquely identified by name and label, does not already exist in the configuration store.
         /// </summary>
         /// <param name="name">The name of the feature flag.</param>
@@ -217,7 +391,7 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<FeatureFlag>> AddFeatureFlagAsync(string name, bool? enabled, string label = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            return await AddFeatureFlagAsync(name, new FeatureFlag { Enabled = enabled }, label, cancellationToken).ConfigureAwait(false);
+            return await AddFeatureFlagAsync(new FeatureFlag { Name = name, Enabled = enabled, Label = label }, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -231,30 +405,28 @@ namespace Azure.Data.AppConfiguration
         public virtual Response<FeatureFlag> AddFeatureFlag(string name, bool? enabled, string label = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            return AddFeatureFlag(name, new FeatureFlag { Enabled = enabled }, label, cancellationToken);
+            return AddFeatureFlag(new FeatureFlag { Name = name, Enabled = enabled, Label = label }, cancellationToken);
         }
 
         /// <summary>
         /// Creates a <see cref="FeatureFlag"/> only if the feature flag does not already exist in the configuration store.
         /// </summary>
-        /// <param name="name">The name of the feature flag.</param>
-        /// <param name="flag">The <see cref="FeatureFlag"/> body to create.</param>
-        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="flag">The <see cref="FeatureFlag"/> body to create. The feature flag is identified by its <see cref="FeatureFlag.Name"/> and <see cref="FeatureFlag.Label"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the added <see cref="FeatureFlag"/>.</returns>
-        public virtual async Task<Response<FeatureFlag>> AddFeatureFlagAsync(string name, FeatureFlag flag, string label = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FeatureFlag>> AddFeatureFlagAsync(FeatureFlag flag, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(flag, nameof(flag));
+            Argument.AssertNotNullOrEmpty(flag.Name, $"{nameof(flag)}.{nameof(FeatureFlag.Name)}");
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(AddFeatureFlag)}");
-            scope.AddAttribute(OTelAttributeKey, name);
+            scope.AddAttribute(OTelAttributeKey, flag.Name);
             scope.Start();
 
             try
             {
                 MatchConditions matchConditions = new MatchConditions { IfNoneMatch = ETag.All };
-                return await PutFeatureFlagAsync(name, flag, label, null, matchConditions, cancellationToken).ConfigureAwait(false);
+                return await PutFeatureFlagAsync(flag.Name, flag, flag.Label, null, matchConditions, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -266,24 +438,22 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Creates a <see cref="FeatureFlag"/> only if the feature flag does not already exist in the configuration store.
         /// </summary>
-        /// <param name="name">The name of the feature flag.</param>
-        /// <param name="flag">The <see cref="FeatureFlag"/> body to create.</param>
-        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="flag">The <see cref="FeatureFlag"/> body to create. The feature flag is identified by its <see cref="FeatureFlag.Name"/> and <see cref="FeatureFlag.Label"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the added <see cref="FeatureFlag"/>.</returns>
-        public virtual Response<FeatureFlag> AddFeatureFlag(string name, FeatureFlag flag, string label = default, CancellationToken cancellationToken = default)
+        public virtual Response<FeatureFlag> AddFeatureFlag(FeatureFlag flag, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(flag, nameof(flag));
+            Argument.AssertNotNullOrEmpty(flag.Name, $"{nameof(flag)}.{nameof(FeatureFlag.Name)}");
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(AddFeatureFlag)}");
-            scope.AddAttribute(OTelAttributeKey, name);
+            scope.AddAttribute(OTelAttributeKey, flag.Name);
             scope.Start();
 
             try
             {
                 MatchConditions matchConditions = new MatchConditions { IfNoneMatch = ETag.All };
-                return PutFeatureFlag(name, flag, label, null, matchConditions, cancellationToken);
+                return PutFeatureFlag(flag.Name, flag, flag.Label, null, matchConditions, cancellationToken);
             }
             catch (Exception e)
             {
@@ -303,7 +473,7 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<FeatureFlag>> SetFeatureFlagAsync(string name, bool? enabled, string label = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            return await SetFeatureFlagAsync(name, new FeatureFlag { Enabled = enabled }, label, onlyIfUnchanged: false, cancellationToken).ConfigureAwait(false);
+            return await SetFeatureFlagAsync(new FeatureFlag { Name = name, Enabled = enabled, Label = label }, onlyIfUnchanged: false, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -317,34 +487,32 @@ namespace Azure.Data.AppConfiguration
         public virtual Response<FeatureFlag> SetFeatureFlag(string name, bool? enabled, string label = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            return SetFeatureFlag(name, new FeatureFlag { Enabled = enabled }, label, onlyIfUnchanged: false, cancellationToken);
+            return SetFeatureFlag(new FeatureFlag { Name = name, Enabled = enabled, Label = label }, onlyIfUnchanged: false, cancellationToken);
         }
 
         /// <summary>
         /// Creates a <see cref="FeatureFlag"/> if it doesn't exist or overwrites the existing feature flag in the configuration store.
         /// </summary>
-        /// <param name="name">The name of the feature flag.</param>
-        /// <param name="flag">The <see cref="FeatureFlag"/> body to create or overwrite.</param>
-        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="flag">The <see cref="FeatureFlag"/> body to create or overwrite. The feature flag is identified by its <see cref="FeatureFlag.Name"/> and <see cref="FeatureFlag.Label"/>.</param>
         /// <param name="onlyIfUnchanged">If set to true and the feature flag exists in the configuration store, overwrite it only if the
         /// passed-in <see cref="FeatureFlag"/> is the same version as the one in the configuration store. The versions are the same if their
         /// <see cref="FeatureFlag.Etag"/> values match. If they differ, the service returns 412 (precondition failed) and a
         /// <see cref="RequestFailedException"/> is thrown.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the <see cref="FeatureFlag"/> written to the configuration store.</returns>
-        public virtual async Task<Response<FeatureFlag>> SetFeatureFlagAsync(string name, FeatureFlag flag, string label = default, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FeatureFlag>> SetFeatureFlagAsync(FeatureFlag flag, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(flag, nameof(flag));
+            Argument.AssertNotNullOrEmpty(flag.Name, $"{nameof(flag)}.{nameof(FeatureFlag.Name)}");
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(SetFeatureFlag)}");
-            scope.AddAttribute(OTelAttributeKey, name);
+            scope.AddAttribute(OTelAttributeKey, flag.Name);
             scope.Start();
 
             try
             {
                 MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.Etag } : default;
-                return await PutFeatureFlagAsync(name, flag, label, null, matchConditions, cancellationToken).ConfigureAwait(false);
+                return await PutFeatureFlagAsync(flag.Name, flag, flag.Label, null, matchConditions, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -356,8 +524,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Creates a <see cref="FeatureFlag"/> if it doesn't exist or overwrites the existing feature flag in the configuration store.
         /// </summary>
-        /// <param name="name">The name of the feature flag.</param>
-        /// <param name="flag">The <see cref="FeatureFlag"/> body to create or overwrite.</param>
+        /// <param name="flag">The <see cref="FeatureFlag"/> body to create or overwrite. The feature flag is identified by its <see cref="FeatureFlag.Name"/>.</param>
         /// <param name="label">A label used to group this feature flag with others.</param>
         /// <param name="onlyIfUnchanged">If set to true and the feature flag exists in the configuration store, overwrite it only if the
         /// passed-in <see cref="FeatureFlag"/> is the same version as the one in the configuration store. The versions are the same if their
@@ -365,19 +532,19 @@ namespace Azure.Data.AppConfiguration
         /// <see cref="RequestFailedException"/> is thrown.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the <see cref="FeatureFlag"/> written to the configuration store.</returns>
-        public virtual Response<FeatureFlag> SetFeatureFlag(string name, FeatureFlag flag, string label = default, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        public virtual Response<FeatureFlag> SetFeatureFlag(FeatureFlag flag, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(flag, nameof(flag));
+            Argument.AssertNotNullOrEmpty(flag.Name, $"{nameof(flag)}.{nameof(FeatureFlag.Name)}");
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(SetFeatureFlag)}");
-            scope.AddAttribute(OTelAttributeKey, name);
+            scope.AddAttribute(OTelAttributeKey, flag.Name);
             scope.Start();
 
             try
             {
                 MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.Etag } : default;
-                return PutFeatureFlag(name, flag, label, null, matchConditions, cancellationToken);
+                return PutFeatureFlag(flag.Name, flag, flag.Label, null, matchConditions, cancellationToken);
             }
             catch (Exception e)
             {

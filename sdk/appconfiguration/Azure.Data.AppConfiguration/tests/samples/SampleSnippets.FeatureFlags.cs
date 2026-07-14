@@ -73,9 +73,9 @@ namespace Azure.Data.AppConfiguration.Samples
             #region Snippet:GetLabelsByResourceType
 #if SNIPPET
             string endpoint = "<endpoint>";
-            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
-            // Only retrieve labels that are associated with feature flags.
-            var selector = new SettingLabelSelector { ResourceType = SettingLabelResourceType.FeatureFlag };
+            var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
+            // The FeatureFlagClient only retrieves labels that are associated with feature flags.
+            var selector = new SettingLabelSelector();
             foreach (SettingLabel label in client.GetLabels(selector))
             {
                 Console.WriteLine($"Label: {label.Name}");

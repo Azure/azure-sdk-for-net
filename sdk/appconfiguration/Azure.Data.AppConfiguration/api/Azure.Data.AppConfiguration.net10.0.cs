@@ -43,10 +43,6 @@ namespace Azure.Data.AppConfiguration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot>> ArchiveSnapshotAsync(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> CheckConfigurationSettings(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> CheckConfigurationSettingsAsync(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response CheckLabels(string name, string syncToken, string after, string acceptDatetime, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SettingLabelFields> select, string resourceType, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response CheckLabels(string name = null, string syncToken = null, string after = null, string acceptDatetime = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SettingLabelFields> select = null, string resourceType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CheckLabelsAsync(string name, string syncToken, string after, string acceptDatetime, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SettingLabelFields> select, string resourceType, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CheckLabelsAsync(string name = null, string syncToken = null, string after = null, string acceptDatetime = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SettingLabelFields> select = null, string resourceType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Data.AppConfiguration.CreateSnapshotOperation CreateSnapshot(Azure.WaitUntil wait, string snapshotName, Azure.Data.AppConfiguration.ConfigurationSnapshot snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Data.AppConfiguration.CreateSnapshotOperation> CreateSnapshotAsync(Azure.WaitUntil wait, string snapshotName, Azure.Data.AppConfiguration.ConfigurationSnapshot snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteConfigurationSetting(Azure.Data.AppConfiguration.ConfigurationSetting setting, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -68,11 +64,7 @@ namespace Azure.Data.AppConfiguration
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetConfigurationSettingsForSnapshotAsync(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override int GetHashCode() { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.SettingLabel> GetLabels(Azure.Data.AppConfiguration.SettingLabelSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetLabels(string name, string syncToken, string after, string acceptDatetime, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SettingLabelFields> select, string resourceType, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Data.AppConfiguration.SettingLabel> GetLabels(string name = null, string syncToken = null, string after = null, string acceptDatetime = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SettingLabelFields> select = null, string resourceType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.SettingLabel> GetLabelsAsync(Azure.Data.AppConfiguration.SettingLabelSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetLabelsAsync(string name, string syncToken, string after, string acceptDatetime, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SettingLabelFields> select, string resourceType, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.SettingLabel> GetLabelsAsync(string name = null, string syncToken = null, string after = null, string acceptDatetime = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.SettingLabelFields> select = null, string resourceType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetRevisions(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetRevisions(string keyFilter, string labelFilter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> GetRevisionsAsync(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -281,9 +273,9 @@ namespace Azure.Data.AppConfiguration
         public string Description { get { throw null; } set { } }
         public bool? Enabled { get { throw null; } set { } }
         public Azure.ETag? Etag { get { throw null; } }
-        public string Label { get { throw null; } }
+        public string Label { get { throw null; } set { } }
         public System.DateTimeOffset? LastModified { get { throw null; } }
-        public string Name { get { throw null; } }
+        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.Data.AppConfiguration.FeatureFlagTelemetryConfiguration Telemetry { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.FeatureFlagVariantDefinition> Variants { get { throw null; } }
@@ -326,9 +318,9 @@ namespace Azure.Data.AppConfiguration
         public FeatureFlagClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public FeatureFlagClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Data.AppConfiguration.FeatureFlagClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<Azure.Data.AppConfiguration.FeatureFlag> AddFeatureFlag(string name, Azure.Data.AppConfiguration.FeatureFlag flag, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Data.AppConfiguration.FeatureFlag> AddFeatureFlag(Azure.Data.AppConfiguration.FeatureFlag flag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.AppConfiguration.FeatureFlag> AddFeatureFlag(string name, bool? enabled, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> AddFeatureFlagAsync(string name, Azure.Data.AppConfiguration.FeatureFlag flag, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> AddFeatureFlagAsync(Azure.Data.AppConfiguration.FeatureFlag flag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> AddFeatureFlagAsync(string name, bool? enabled, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteFeatureFlag(Azure.Data.AppConfiguration.FeatureFlag flag, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteFeatureFlag(string name, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -340,11 +332,15 @@ namespace Azure.Data.AppConfiguration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> GetFeatureFlagAsync(Azure.Data.AppConfiguration.FeatureFlag flag, bool onlyIfChanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> GetFeatureFlagAsync(Azure.Data.AppConfiguration.FeatureFlag flag, System.DateTimeOffset acceptDateTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> GetFeatureFlagAsync(string name, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Data.AppConfiguration.FeatureFlag> GetFeatureFlagRevisions(Azure.Data.AppConfiguration.FeatureFlagSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.FeatureFlag> GetFeatureFlagRevisionsAsync(Azure.Data.AppConfiguration.FeatureFlagSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Data.AppConfiguration.FeatureFlag> GetFeatureFlags(Azure.Data.AppConfiguration.FeatureFlagSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.FeatureFlag> GetFeatureFlagsAsync(Azure.Data.AppConfiguration.FeatureFlagSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Data.AppConfiguration.FeatureFlag> SetFeatureFlag(string name, Azure.Data.AppConfiguration.FeatureFlag flag, string label = null, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Data.AppConfiguration.SettingLabel> GetLabels(Azure.Data.AppConfiguration.SettingLabelSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.SettingLabel> GetLabelsAsync(Azure.Data.AppConfiguration.SettingLabelSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Data.AppConfiguration.FeatureFlag> SetFeatureFlag(Azure.Data.AppConfiguration.FeatureFlag flag, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.AppConfiguration.FeatureFlag> SetFeatureFlag(string name, bool? enabled, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> SetFeatureFlagAsync(string name, Azure.Data.AppConfiguration.FeatureFlag flag, string label = null, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> SetFeatureFlagAsync(Azure.Data.AppConfiguration.FeatureFlag flag, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.FeatureFlag>> SetFeatureFlagAsync(string name, bool? enabled, string label = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class FeatureFlagClientExtensions
@@ -558,18 +554,12 @@ namespace Azure.Data.AppConfiguration
         public static bool operator !=(Azure.Data.AppConfiguration.SettingLabelFields left, Azure.Data.AppConfiguration.SettingLabelFields right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public enum SettingLabelResourceType
-    {
-        KeyValue = 0,
-        FeatureFlag = 1,
-    }
     public partial class SettingLabelSelector
     {
         public SettingLabelSelector() { }
         public System.DateTimeOffset? AcceptDateTime { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Data.AppConfiguration.SettingLabelFields> Fields { get { throw null; } }
         public string NameFilter { get { throw null; } set { } }
-        public Azure.Data.AppConfiguration.SettingLabelResourceType? ResourceType { get { throw null; } set { } }
     }
     public partial class SettingSelector
     {

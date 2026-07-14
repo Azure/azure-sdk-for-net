@@ -31,6 +31,7 @@ namespace Azure.Data.AppConfiguration.Tests
         private static readonly string s_connectionString = $"Endpoint={s_endpoint};Id={s_credential};Secret={s_secret}";
         private static readonly string s_troubleshootingLink = "https://aka.ms/azsdk/net/appconfiguration/troubleshoot";
         private static readonly string s_version = new ConfigurationClientOptions().Version;
+        private static readonly string s_featureFlagVersion = new FeatureFlagClientOptions().Version;
 
         private static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
         {
@@ -55,6 +56,16 @@ namespace Azure.Data.AppConfiguration.Tests
             var client = InstrumentClient(new ConfigurationClient(s_connectionString, options));
 
             return client;
+        }
+
+        private FeatureFlagClient CreateFeatureFlagTestService(HttpPipelineTransport transport)
+        {
+            var options = new FeatureFlagClientOptions
+            {
+                Transport = transport
+            };
+
+            return InstrumentClient(new FeatureFlagClient(s_connectionString, options));
         }
 
         [Test]
@@ -865,12 +876,9 @@ namespace Azure.Data.AppConfiguration.Tests
             response.SetContent(SerializationHelpers.Serialize((Items: responseLabels, NextLink: (string)null), SerializeLabels));
 
             var mockTransport = new MockTransport(response);
-            ConfigurationClient service = CreateTestService(mockTransport);
+            FeatureFlagClient service = CreateFeatureFlagTestService(mockTransport);
 
-            var query = new SettingLabelSelector
-            {
-                ResourceType = SettingLabelResourceType.FeatureFlag
-            };
+            var query = new SettingLabelSelector();
 
             await foreach (SettingLabel label in service.GetLabelsAsync(query, CancellationToken.None))
             {
@@ -880,7 +888,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             MockRequest request = mockTransport.Requests[0];
             Assert.That(request.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/labels?api-version={s_version}&resourceType=ff").IgnoreCase);
+            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/labels?api-version={s_featureFlagVersion}&resourceType=ff").IgnoreCase);
             AssertRequestCommon(request);
         }
 
