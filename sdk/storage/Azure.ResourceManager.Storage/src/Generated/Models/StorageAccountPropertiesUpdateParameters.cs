@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
         [WirePath("dualStackEndpointPreference.publishIpv6Endpoint")]
-        public bool? IsIPv6EndpointToBePublished
+        public bool? IsDualStackEndpointPreferenceIPv6EndpointToBePublished
         {
             get
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether Blob Geo Priority Replication is enabled for the storage account. </summary>
         [WirePath("geoPriorityReplicationStatus.isBlobEnabled")]
-        public bool? IsBlobEnabled
+        public bool? IsGeoPriorityReplicationStatusBlobEnabled
         {
             get
             {

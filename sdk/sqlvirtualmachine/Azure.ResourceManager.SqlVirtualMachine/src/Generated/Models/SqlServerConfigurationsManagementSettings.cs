@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> Enable or disable R services (SQL 2016 onwards). </summary>
-        public bool? IsRServicesEnabled
+        public bool? IsAdditionalFeaturesServerConfigurationsRServicesEnabled
         {
             get
             {

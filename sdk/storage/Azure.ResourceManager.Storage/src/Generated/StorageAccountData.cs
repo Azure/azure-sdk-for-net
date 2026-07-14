@@ -600,13 +600,13 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Indicates whether Blob Geo Priority Replication is enabled for the storage account. </summary>
-        [WirePath("properties.geoPriorityReplicationStatus.isBlobEnabled")]
-        public bool? IsBlobEnabled
+        /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
+        [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
+        public bool? IsDualStackEndpointPreferenceIPv6EndpointToBePublished
         {
             get
             {
-                return Properties is null ? default : Properties.IsBlobEnabled;
+                return Properties is null ? default : Properties.IsDualStackEndpointPreferenceIPv6EndpointToBePublished;
             }
             set
             {
@@ -614,7 +614,25 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new StorageAccountProperties();
                 }
-                Properties.IsBlobEnabled = value;
+                Properties.IsDualStackEndpointPreferenceIPv6EndpointToBePublished = value;
+            }
+        }
+
+        /// <summary> Indicates whether Blob Geo Priority Replication is enabled for the storage account. </summary>
+        [WirePath("properties.geoPriorityReplicationStatus.isBlobEnabled")]
+        public bool? IsGeoPriorityReplicationStatusBlobEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsGeoPriorityReplicationStatusBlobEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.IsGeoPriorityReplicationStatusBlobEnabled = value;
             }
         }
 

@@ -544,11 +544,11 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="directoryServiceOptions"> Indicates the directory service used. Note that this enum may be extended in the future. </param>
         /// <param name="activeDirectoryProperties"> Additional information about the directory service. Required if directoryServiceOptions is AD (AD DS authentication). Optional for directoryServiceOptions AADDS (Entra DS authentication) and AADKERB (Entra authentication). </param>
         /// <param name="defaultSharePermission"> Default share permission for users using Kerberos authentication if RBAC role is not assigned. </param>
-        /// <param name="isSmbOAuthEnabled"> Specifies if managed identities can access SMB shares using OAuth. The default interpretation is false for this property. </param>
+        /// <param name="isSmbOAuthSettingsSmbOAuthEnabled"> Specifies if managed identities can access SMB shares using OAuth. The default interpretation is false for this property. </param>
         /// <returns> A new <see cref="Models.FilesIdentityBasedAuthentication"/> instance for mocking. </returns>
-        public static FilesIdentityBasedAuthentication FilesIdentityBasedAuthentication(DirectoryServiceOption directoryServiceOptions = default, StorageActiveDirectoryProperties activeDirectoryProperties = default, DefaultSharePermission? defaultSharePermission = default, bool? isSmbOAuthEnabled = default)
+        public static FilesIdentityBasedAuthentication FilesIdentityBasedAuthentication(DirectoryServiceOption directoryServiceOptions = default, StorageActiveDirectoryProperties activeDirectoryProperties = default, DefaultSharePermission? defaultSharePermission = default, bool? isSmbOAuthSettingsSmbOAuthEnabled = default)
         {
-            return new FilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties, defaultSharePermission, isSmbOAuthEnabled is null ? default : new SmbOAuthSettings(isSmbOAuthEnabled, default), default);
+            return new FilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties, defaultSharePermission, isSmbOAuthSettingsSmbOAuthEnabled is null ? default : new SmbOAuthSettings(isSmbOAuthSettingsSmbOAuthEnabled, default), default);
         }
 
         /// <param name="domainName"> Specifies the primary domain that the AD DNS server is authoritative for. This property is required if directoryServiceOptions is set to AD (AD DS authentication). If directoryServiceOptions is set to AADDS (Entra DS authentication), providing this property is optional, as it will be inferred automatically if omitted. If directoryServiceOptions is set to AADKERB (Entra authentication), this property is optional; it is needed to support configuration of directory- and file-level permissions via Windows File Explorer, but is not required for authentication. </param>
@@ -1100,29 +1100,29 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <param name="smbSetting"> Setting for SMB protocol. </param>
-        /// <param name="isRequired"> Indicates whether encryption in transit is required. </param>
+        /// <param name="isNfsEncryptionInTransitRequired"> Indicates whether encryption in transit is required. </param>
         /// <returns> A new <see cref="Models.FileServiceProtocolSettings"/> instance for mocking. </returns>
-        public static FileServiceProtocolSettings FileServiceProtocolSettings(SmbSetting smbSetting = default, bool? isRequired = default)
+        public static FileServiceProtocolSettings FileServiceProtocolSettings(SmbSetting smbSetting = default, bool? isNfsEncryptionInTransitRequired = default)
         {
-            return new FileServiceProtocolSettings(smbSetting, isRequired is null ? default : new NfsSetting(new EncryptionInTransit(isRequired, default), default), default);
+            return new FileServiceProtocolSettings(smbSetting, default, default);
         }
 
-        /// <param name="isMultiChannelEnabled"> Indicates whether multichannel is enabled. </param>
+        /// <param name="isMultichannelMultiChannelEnabled"> Indicates whether multichannel is enabled. </param>
         /// <param name="versions"> SMB protocol versions supported by server. Valid values are SMB2.1, SMB3.0, SMB3.1.1. Should be passed as a string with delimiter ';'. </param>
         /// <param name="authenticationMethods"> SMB authentication methods supported by server. Valid values are NTLMv2, Kerberos. Should be passed as a string with delimiter ';'. </param>
         /// <param name="kerberosTicketEncryption"> Kerberos ticket encryption supported by server. Valid values are RC4-HMAC, AES-256. Should be passed as a string with delimiter ';'. </param>
         /// <param name="channelEncryption"> SMB channel encryption supported by server. Valid values are AES-128-CCM, AES-128-GCM, AES-256-GCM. Should be passed as a string with delimiter ';'. </param>
-        /// <param name="isRequired"> Indicates whether encryption in transit is required. </param>
+        /// <param name="isEncryptionInTransitRequired"> Indicates whether encryption in transit is required. </param>
         /// <returns> A new <see cref="Models.SmbSetting"/> instance for mocking. </returns>
-        public static SmbSetting SmbSetting(bool? isMultiChannelEnabled = default, string versions = default, string authenticationMethods = default, string kerberosTicketEncryption = default, string channelEncryption = default, bool? isRequired = default)
+        public static SmbSetting SmbSetting(bool? isMultichannelMultiChannelEnabled = default, string versions = default, string authenticationMethods = default, string kerberosTicketEncryption = default, string channelEncryption = default, bool? isEncryptionInTransitRequired = default)
         {
             return new SmbSetting(
-                isMultiChannelEnabled is null ? default : new Multichannel(isMultiChannelEnabled, default),
+                isMultichannelMultiChannelEnabled is null ? default : new Multichannel(isMultichannelMultiChannelEnabled, default),
                 versions,
                 authenticationMethods,
                 kerberosTicketEncryption,
                 channelEncryption,
-                isRequired is null ? default : new EncryptionInTransit(isRequired, default),
+                isEncryptionInTransitRequired is null ? default : new EncryptionInTransit(isEncryptionInTransitRequired, default),
                 default);
         }
 

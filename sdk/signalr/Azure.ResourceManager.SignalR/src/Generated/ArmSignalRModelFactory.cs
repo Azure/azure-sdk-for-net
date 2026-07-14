@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// When it's false, the data plane of the resource is started.
         /// </param>
         /// <param name="routeSettings"> Route settings for the resource. </param>
-        /// <param name="isClientCertEnabled"> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </param>
+        /// <param name="isTlsClientCertEnabled"> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </param>
         /// <param name="resourceLogCategories"> Gets or sets the list of category configurations. </param>
         /// <param name="corsAllowedOrigins"> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </param>
         /// <param name="upstreamTemplates"> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="kind"> The kind of the service. </param>
         /// <param name="identity"> A class represent managed identities used for request and response. </param>
         /// <returns> A new <see cref="SignalR.SignalRData"/> instance for mocking. </returns>
-        public static SignalRData SignalRData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SignalRProvisioningState? provisioningState = default, string externalIP = default, string hostName = default, int? publicPort = default, int? serverPort = default, string version = default, IEnumerable<SignalRPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources = default, string hostNamePrefix = default, IEnumerable<SignalRFeature> features = default, SignalRLiveTraceConfiguration liveTraceConfiguration = default, SignalRServerlessSettings serverless = default, SignalRNetworkAcls networkACLs = default, SignalRApplicationFirewallSettings applicationFirewall = default, string publicNetworkAccess = default, bool? disableLocalAuth = default, bool? disableAadAuth = default, string regionEndpointEnabled = default, string resourceStopped = default, SignalRRouteSettings routeSettings = default, bool? isClientCertEnabled = default, IEnumerable<SignalRResourceLogCategory> resourceLogCategories = default, IEnumerable<string> corsAllowedOrigins = default, IEnumerable<SignalRUpstreamTemplate> upstreamTemplates = default, SignalRResourceSku sku = default, SignalRServiceKind? kind = default, ManagedServiceIdentity identity = default)
+        public static SignalRData SignalRData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SignalRProvisioningState? provisioningState = default, string externalIP = default, string hostName = default, int? publicPort = default, int? serverPort = default, string version = default, IEnumerable<SignalRPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources = default, string hostNamePrefix = default, IEnumerable<SignalRFeature> features = default, SignalRLiveTraceConfiguration liveTraceConfiguration = default, SignalRServerlessSettings serverless = default, SignalRNetworkAcls networkACLs = default, SignalRApplicationFirewallSettings applicationFirewall = default, string publicNetworkAccess = default, bool? disableLocalAuth = default, bool? disableAadAuth = default, string regionEndpointEnabled = default, string resourceStopped = default, SignalRRouteSettings routeSettings = default, bool? isTlsClientCertEnabled = default, IEnumerable<SignalRResourceLogCategory> resourceLogCategories = default, IEnumerable<string> corsAllowedOrigins = default, IEnumerable<SignalRUpstreamTemplate> upstreamTemplates = default, SignalRResourceSku sku = default, SignalRServiceKind? kind = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && externalIP is null && hostName is null && publicPort is null && serverPort is null && version is null && privateEndpointConnections is null && sharedPrivateLinkResources is null && isClientCertEnabled is null && hostNamePrefix is null && features is null && liveTraceConfiguration is null && resourceLogCategories is null && corsAllowedOrigins is null && serverless is null && upstreamTemplates is null && networkACLs is null && applicationFirewall is null && publicNetworkAccess is null && disableLocalAuth is null && disableAadAuth is null && regionEndpointEnabled is null && resourceStopped is null && routeSettings is null ? default : new SignalRProperties(
+                provisioningState is null && externalIP is null && hostName is null && publicPort is null && serverPort is null && version is null && privateEndpointConnections is null && sharedPrivateLinkResources is null && isTlsClientCertEnabled is null && hostNamePrefix is null && features is null && liveTraceConfiguration is null && resourceLogCategories is null && corsAllowedOrigins is null && serverless is null && upstreamTemplates is null && networkACLs is null && applicationFirewall is null && publicNetworkAccess is null && disableLocalAuth is null && disableAadAuth is null && regionEndpointEnabled is null && resourceStopped is null && routeSettings is null ? default : new SignalRProperties(
                     provisioningState,
                     externalIP,
                     hostName,
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     version,
                     (privateEndpointConnections ?? new ChangeTrackingList<SignalRPrivateEndpointConnectionData>()).ToList(),
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>()).ToList(),
-                    new SignalRTlsSettings(isClientCertEnabled, default),
+                    new SignalRTlsSettings(isTlsClientCertEnabled, default),
                     hostNamePrefix,
                     (features ?? new ChangeTrackingList<SignalRFeature>()).ToList(),
                     liveTraceConfiguration,

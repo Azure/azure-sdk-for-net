@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether multichannel is enabled. </summary>
         [WirePath("multichannel.enabled")]
-        public bool? IsMultiChannelEnabled
+        public bool? IsMultichannelMultiChannelEnabled
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether encryption in transit is required. </summary>
         [WirePath("encryptionInTransit.required")]
-        public bool? IsRequired
+        public bool? IsEncryptionInTransitRequired
         {
             get
             {

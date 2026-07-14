@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Specifies if managed identities can access SMB shares using OAuth. The default interpretation is false for this property. </summary>
         [WirePath("smbOAuthSettings.isSmbOAuthEnabled")]
-        public bool? IsSmbOAuthEnabled
+        public bool? IsSmbOAuthSettingsSmbOAuthEnabled
         {
             get
             {

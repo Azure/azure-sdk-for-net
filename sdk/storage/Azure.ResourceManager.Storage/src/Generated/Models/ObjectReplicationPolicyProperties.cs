@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether object replication metrics feature is enabled for the policy. </summary>
         [WirePath("metrics.enabled")]
-        public bool? IsMetricsEnabled
+        public bool? IsMetricsMetricsEnabled
         {
             get
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether object replication priority replication feature is enabled for the policy. </summary>
         [WirePath("priorityReplication.enabled")]
-        public bool? IsPriorityReplicationEnabled
+        public bool? IsPriorityReplicationPriorityReplicationEnabled
         {
             get
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether object replication tags replication feature is enabled for the policy. </summary>
         [WirePath("tagsReplication.enabled")]
-        public bool? IsTagsReplicationEnabled
+        public bool? IsTagsReplicationTagsReplicationEnabled
         {
             get
             {

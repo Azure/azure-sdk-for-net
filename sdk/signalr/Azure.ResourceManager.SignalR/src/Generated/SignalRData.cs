@@ -382,11 +382,11 @@ namespace Azure.ResourceManager.SignalR
 
         /// <summary> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </summary>
         [WirePath("properties.tls.clientCertEnabled")]
-        public bool? IsClientCertEnabled
+        public bool? IsTlsClientCertEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.IsClientCertEnabled;
+                return Properties is null ? default : Properties.IsTlsClientCertEnabled;
             }
             set
             {
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     Properties = new SignalRProperties();
                 }
-                Properties.IsClientCertEnabled = value;
+                Properties.IsTlsClientCertEnabled = value;
             }
         }
 

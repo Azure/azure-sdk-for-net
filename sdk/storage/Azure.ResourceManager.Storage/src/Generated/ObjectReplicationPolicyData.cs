@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Indicates whether object replication metrics feature is enabled for the policy. </summary>
         [WirePath("properties.metrics.enabled")]
-        public bool? IsMetricsEnabled
+        public bool? IsMetricsMetricsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.IsMetricsEnabled;
+                return Properties is null ? default : Properties.IsMetricsMetricsEnabled;
             }
             set
             {
@@ -125,17 +125,17 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new ObjectReplicationPolicyProperties();
                 }
-                Properties.IsMetricsEnabled = value;
+                Properties.IsMetricsMetricsEnabled = value;
             }
         }
 
         /// <summary> Indicates whether object replication priority replication feature is enabled for the policy. </summary>
         [WirePath("properties.priorityReplication.enabled")]
-        public bool? IsPriorityReplicationEnabled
+        public bool? IsPriorityReplicationPriorityReplicationEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.IsPriorityReplicationEnabled;
+                return Properties is null ? default : Properties.IsPriorityReplicationPriorityReplicationEnabled;
             }
             set
             {
@@ -143,17 +143,17 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new ObjectReplicationPolicyProperties();
                 }
-                Properties.IsPriorityReplicationEnabled = value;
+                Properties.IsPriorityReplicationPriorityReplicationEnabled = value;
             }
         }
 
         /// <summary> Indicates whether object replication tags replication feature is enabled for the policy. </summary>
         [WirePath("properties.tagsReplication.enabled")]
-        public bool? IsTagsReplicationEnabled
+        public bool? IsTagsReplicationTagsReplicationEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.IsTagsReplicationEnabled;
+                return Properties is null ? default : Properties.IsTagsReplicationTagsReplicationEnabled;
             }
             set
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new ObjectReplicationPolicyProperties();
                 }
-                Properties.IsTagsReplicationEnabled = value;
+                Properties.IsTagsReplicationTagsReplicationEnabled = value;
             }
         }
     }

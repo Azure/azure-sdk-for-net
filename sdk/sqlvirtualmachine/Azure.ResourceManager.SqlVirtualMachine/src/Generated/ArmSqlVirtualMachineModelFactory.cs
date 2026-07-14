@@ -256,17 +256,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="sqlConnectivityUpdateSettings"> SQL connectivity type settings. </param>
         /// <param name="sqlWorkloadType"> SQL Server workload type. </param>
         /// <param name="sqlStorageUpdateSettings"> SQL storage update settings. </param>
-        /// <param name="isRServicesEnabled"> Enable or disable R services (SQL 2016 onwards). </param>
+        /// <param name="isAdditionalFeaturesServerConfigurationsRServicesEnabled"> Enable or disable R services (SQL 2016 onwards). </param>
         /// <param name="sqlInstanceSettings"> SQL Instance settings. </param>
         /// <param name="azureAdAuthenticationClientId"> The client Id of the Managed Identity to query Microsoft Graph API. An empty string must be used for the system assigned Managed Identity. </param>
         /// <returns> A new <see cref="Models.SqlServerConfigurationsManagementSettings"/> instance for mocking. </returns>
-        public static SqlServerConfigurationsManagementSettings SqlServerConfigurationsManagementSettings(SqlConnectivityUpdateSettings sqlConnectivityUpdateSettings = default, SqlWorkloadType? sqlWorkloadType = default, SqlStorageUpdateSettings sqlStorageUpdateSettings = default, bool? isRServicesEnabled = default, SqlInstanceSettings sqlInstanceSettings = default, string azureAdAuthenticationClientId = default)
+        public static SqlServerConfigurationsManagementSettings SqlServerConfigurationsManagementSettings(SqlConnectivityUpdateSettings sqlConnectivityUpdateSettings = default, SqlWorkloadType? sqlWorkloadType = default, SqlStorageUpdateSettings sqlStorageUpdateSettings = default, bool? isAdditionalFeaturesServerConfigurationsRServicesEnabled = default, SqlInstanceSettings sqlInstanceSettings = default, string azureAdAuthenticationClientId = default)
         {
             return new SqlServerConfigurationsManagementSettings(
                 sqlConnectivityUpdateSettings,
                 sqlWorkloadType is null ? default : new SqlWorkloadTypeUpdateSettings(sqlWorkloadType, default),
                 sqlStorageUpdateSettings,
-                isRServicesEnabled is null ? default : new AdditionalFeaturesServerConfigurations(isRServicesEnabled, default),
+                isAdditionalFeaturesServerConfigurationsRServicesEnabled is null ? default : new AdditionalFeaturesServerConfigurations(isAdditionalFeaturesServerConfigurationsRServicesEnabled, default),
                 sqlInstanceSettings,
                 azureAdAuthenticationClientId is null ? default : new AADAuthenticationSettings(azureAdAuthenticationClientId, default),
                 default);
