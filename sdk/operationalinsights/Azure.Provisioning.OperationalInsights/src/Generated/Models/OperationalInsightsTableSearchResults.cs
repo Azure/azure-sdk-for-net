@@ -20,7 +20,7 @@ namespace Azure.Provisioning.OperationalInsights
         private BicepValue<DateTimeOffset> _startSearchOn;
         private BicepValue<DateTimeOffset> _endSearchOn;
         private BicepValue<string> _sourceTable;
-        private BicepValue<string> _azureAsyncOperationId;
+        private BicepValue<Guid> _azureAsyncOperationId;
 
         /// <summary> Creates a new OperationalInsightsTableSearchResults. </summary>
         public OperationalInsightsTableSearchResults()
@@ -113,7 +113,7 @@ namespace Azure.Provisioning.OperationalInsights
         }
 
         /// <summary> Gets the AzureAsyncOperationId. </summary>
-        public BicepValue<string> AzureAsyncOperationId
+        public BicepValue<Guid> AzureAsyncOperationId
         {
             get
             {
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.OperationalInsights
             _startSearchOn = DefineProperty<DateTimeOffset>(nameof(StartSearchOn), new string[] { "startSearchTime" });
             _endSearchOn = DefineProperty<DateTimeOffset>(nameof(EndSearchOn), new string[] { "endSearchTime" });
             _sourceTable = DefineProperty<string>(nameof(SourceTable), new string[] { "sourceTable" }, isOutput: true);
-            _azureAsyncOperationId = DefineProperty<string>(nameof(AzureAsyncOperationId), new string[] { "azureAsyncOperationId" }, isOutput: true);
+            _azureAsyncOperationId = DefineProperty<Guid>(nameof(AzureAsyncOperationId), new string[] { "azureAsyncOperationId" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

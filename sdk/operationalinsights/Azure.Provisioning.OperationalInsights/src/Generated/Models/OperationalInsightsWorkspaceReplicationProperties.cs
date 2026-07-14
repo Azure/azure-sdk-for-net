@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.OperationalInsights
     /// <summary> Workspace replication properties. </summary>
     public partial class OperationalInsightsWorkspaceReplicationProperties : ProvisionableConstruct
     {
-        private BicepValue<string> _location;
+        private BicepValue<AzureLocation> _location;
         private BicepValue<bool> _isReplicationEnabled;
         private BicepValue<OperationalInsightsWorkspaceReplicationState> _provisioningState;
         private BicepValue<DateTimeOffset> _createdOn;
@@ -26,7 +27,7 @@ namespace Azure.Provisioning.OperationalInsights
         }
 
         /// <summary> Gets or sets the Location. </summary>
-        public BicepValue<string> Location
+        public BicepValue<AzureLocation> Location
         {
             get
             {
@@ -89,7 +90,7 @@ namespace Azure.Provisioning.OperationalInsights
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _location = DefineProperty<string>(nameof(Location), new string[] { "location" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _isReplicationEnabled = DefineProperty<bool>(nameof(IsReplicationEnabled), new string[] { "enabled" });
             _provisioningState = DefineProperty<OperationalInsightsWorkspaceReplicationState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdDate" }, isOutput: true);

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.OperationalInsights
         private BicepValue<DateTimeOffset> _startRestoreOn;
         private BicepValue<DateTimeOffset> _endRestoreOn;
         private BicepValue<string> _sourceTable;
-        private BicepValue<string> _azureAsyncOperationId;
+        private BicepValue<Guid> _azureAsyncOperationId;
 
         /// <summary> Creates a new OperationalInsightsTableRestoredLogs. </summary>
         public OperationalInsightsTableRestoredLogs()
@@ -70,7 +70,7 @@ namespace Azure.Provisioning.OperationalInsights
         }
 
         /// <summary> Gets the AzureAsyncOperationId. </summary>
-        public BicepValue<string> AzureAsyncOperationId
+        public BicepValue<Guid> AzureAsyncOperationId
         {
             get
             {
@@ -86,7 +86,7 @@ namespace Azure.Provisioning.OperationalInsights
             _startRestoreOn = DefineProperty<DateTimeOffset>(nameof(StartRestoreOn), new string[] { "startRestoreTime" });
             _endRestoreOn = DefineProperty<DateTimeOffset>(nameof(EndRestoreOn), new string[] { "endRestoreTime" });
             _sourceTable = DefineProperty<string>(nameof(SourceTable), new string[] { "sourceTable" });
-            _azureAsyncOperationId = DefineProperty<string>(nameof(AzureAsyncOperationId), new string[] { "azureAsyncOperationId" }, isOutput: true);
+            _azureAsyncOperationId = DefineProperty<Guid>(nameof(AzureAsyncOperationId), new string[] { "azureAsyncOperationId" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

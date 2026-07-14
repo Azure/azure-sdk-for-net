@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -16,7 +17,7 @@ namespace Azure.Provisioning.OperationalInsights
         private BicepValue<bool> _isDataExportEnabled;
         private BicepValue<bool> _immediatePurgeDataOn30Days;
         private BicepValue<bool> _isLogAccessUsingOnlyResourcePermissionsEnabled;
-        private BicepValue<string> _clusterResourceId;
+        private BicepValue<ResourceIdentifier> _clusterResourceId;
         private BicepValue<bool> _isLocalAuthDisabled;
         private BicepValue<bool> _isUnifiedSentinelBillingOnly;
         private BicepList<string> _associations;
@@ -72,7 +73,7 @@ namespace Azure.Provisioning.OperationalInsights
         }
 
         /// <summary> Gets or sets the ClusterResourceId. </summary>
-        public BicepValue<string> ClusterResourceId
+        public BicepValue<ResourceIdentifier> ClusterResourceId
         {
             get
             {
@@ -128,7 +129,7 @@ namespace Azure.Provisioning.OperationalInsights
             _isDataExportEnabled = DefineProperty<bool>(nameof(IsDataExportEnabled), new string[] { "enableDataExport" });
             _immediatePurgeDataOn30Days = DefineProperty<bool>(nameof(ImmediatePurgeDataOn30Days), new string[] { "immediatePurgeDataOn30Days" });
             _isLogAccessUsingOnlyResourcePermissionsEnabled = DefineProperty<bool>(nameof(IsLogAccessUsingOnlyResourcePermissionsEnabled), new string[] { "enableLogAccessUsingOnlyResourcePermissions" });
-            _clusterResourceId = DefineProperty<string>(nameof(ClusterResourceId), new string[] { "clusterResourceId" });
+            _clusterResourceId = DefineProperty<ResourceIdentifier>(nameof(ClusterResourceId), new string[] { "clusterResourceId" });
             _isLocalAuthDisabled = DefineProperty<bool>(nameof(IsLocalAuthDisabled), new string[] { "disableLocalAuth" });
             _isUnifiedSentinelBillingOnly = DefineProperty<bool>(nameof(IsUnifiedSentinelBillingOnly), new string[] { "unifiedSentinelBillingOnly" }, isOutput: true);
             _associations = DefineListProperty<string>(nameof(Associations), new string[] { "associations" }, isOutput: true);

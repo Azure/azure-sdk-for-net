@@ -15,7 +15,7 @@ namespace Azure.Provisioning.OperationalInsights
     /// <summary> The list of Log Analytics workspaces associated with the cluster. </summary>
     public partial class OperationalInsightsClusterAssociatedWorkspace : ProvisionableConstruct
     {
-        private BicepValue<string> _workspaceId;
+        private BicepValue<Guid> _workspaceId;
         private BicepValue<string> _workspaceName;
         private BicepValue<ResourceIdentifier> _resourceId;
         private BicepValue<DateTimeOffset> _associatedOn;
@@ -26,7 +26,7 @@ namespace Azure.Provisioning.OperationalInsights
         }
 
         /// <summary> Gets the WorkspaceId. </summary>
-        public BicepValue<string> WorkspaceId
+        public BicepValue<Guid> WorkspaceId
         {
             get
             {
@@ -69,7 +69,7 @@ namespace Azure.Provisioning.OperationalInsights
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _workspaceId = DefineProperty<string>(nameof(WorkspaceId), new string[] { "workspaceId" }, isOutput: true);
+            _workspaceId = DefineProperty<Guid>(nameof(WorkspaceId), new string[] { "workspaceId" }, isOutput: true);
             _workspaceName = DefineProperty<string>(nameof(WorkspaceName), new string[] { "workspaceName" }, isOutput: true);
             _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" }, isOutput: true);
             _associatedOn = DefineProperty<DateTimeOffset>(nameof(AssociatedOn), new string[] { "associateDate" }, isOutput: true);

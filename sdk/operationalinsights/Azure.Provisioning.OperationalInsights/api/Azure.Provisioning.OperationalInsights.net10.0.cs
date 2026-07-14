@@ -108,7 +108,7 @@ namespace Azure.Provisioning.OperationalInsights
         public OperationalInsightsClusterAssociatedWorkspace() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> AssociatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> WorkspaceId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Guid> WorkspaceId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> WorkspaceName { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -140,7 +140,7 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<bool> IsAvailabilityZonesEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsReplicationEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastModifiedOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsClusterReplicationState> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -318,7 +318,7 @@ namespace Azure.Provisioning.OperationalInsights
         public OperationalInsightsKeyVaultProperties() { }
         public Azure.Provisioning.BicepValue<string> KeyName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> KeyRsaSize { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> KeyVaultUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> KeyVaultUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KeyVersion { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -389,7 +389,7 @@ namespace Azure.Provisioning.OperationalInsights
     public partial class OperationalInsightsPrivateLinkScopedResourceInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public OperationalInsightsPrivateLinkScopedResourceInfo() { }
-        public Azure.Provisioning.BicepValue<string> ResourceId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ScopeId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -542,7 +542,7 @@ namespace Azure.Provisioning.OperationalInsights
     public partial class OperationalInsightsTableRestoredLogs : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public OperationalInsightsTableRestoredLogs() { }
-        public Azure.Provisioning.BicepValue<string> AzureAsyncOperationId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Guid> AzureAsyncOperationId { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndRestoreOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SourceTable { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartRestoreOn { get { throw null; } set { } }
@@ -559,7 +559,7 @@ namespace Azure.Provisioning.OperationalInsights
     public partial class OperationalInsightsTableSearchResults : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public OperationalInsightsTableSearchResults() { }
-        public Azure.Provisioning.BicepValue<string> AzureAsyncOperationId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Guid> AzureAsyncOperationId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndSearchOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Limit { get { throw null; } set { } }
@@ -691,7 +691,7 @@ namespace Azure.Provisioning.OperationalInsights
     {
         public OperationalInsightsWorkspaceFeatures() { }
         public Azure.Provisioning.BicepList<string> Associations { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> ClusterResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ClusterResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> ImmediatePurgeDataOn30Days { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsDataExportEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsLocalAuthDisabled { get { throw null; } set { } }
@@ -705,7 +705,7 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsReplicationEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastModifiedOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceReplicationState> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }

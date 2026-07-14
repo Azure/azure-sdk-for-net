@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.OperationalInsights
     /// <summary> The key vault properties. </summary>
     public partial class OperationalInsightsKeyVaultProperties : ProvisionableConstruct
     {
-        private BicepValue<string> _keyVaultUri;
+        private BicepValue<Uri> _keyVaultUri;
         private BicepValue<string> _keyName;
         private BicepValue<string> _keyVersion;
         private BicepValue<int> _keyRsaSize;
@@ -24,7 +25,7 @@ namespace Azure.Provisioning.OperationalInsights
         }
 
         /// <summary> Gets or sets the KeyVaultUri. </summary>
-        public BicepValue<string> KeyVaultUri
+        public BicepValue<Uri> KeyVaultUri
         {
             get
             {
@@ -87,7 +88,7 @@ namespace Azure.Provisioning.OperationalInsights
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _keyVaultUri = DefineProperty<string>(nameof(KeyVaultUri), new string[] { "keyVaultUri" });
+            _keyVaultUri = DefineProperty<Uri>(nameof(KeyVaultUri), new string[] { "keyVaultUri" });
             _keyName = DefineProperty<string>(nameof(KeyName), new string[] { "keyName" });
             _keyVersion = DefineProperty<string>(nameof(KeyVersion), new string[] { "keyVersion" });
             _keyRsaSize = DefineProperty<int>(nameof(KeyRsaSize), new string[] { "keyRsaSize" });

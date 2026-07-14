@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.OperationalInsights
     /// <summary> Cluster replication properties. </summary>
     public partial class OperationalInsightsClusterReplicationProperties : ProvisionableConstruct
     {
-        private BicepValue<string> _location;
+        private BicepValue<AzureLocation> _location;
         private BicepValue<bool> _isReplicationEnabled;
         private BicepValue<bool> _isAvailabilityZonesEnabled;
         private BicepValue<OperationalInsightsClusterReplicationState> _provisioningState;
@@ -27,7 +28,7 @@ namespace Azure.Provisioning.OperationalInsights
         }
 
         /// <summary> Gets or sets the Location. </summary>
-        public BicepValue<string> Location
+        public BicepValue<AzureLocation> Location
         {
             get
             {
@@ -105,7 +106,7 @@ namespace Azure.Provisioning.OperationalInsights
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _location = DefineProperty<string>(nameof(Location), new string[] { "location" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _isReplicationEnabled = DefineProperty<bool>(nameof(IsReplicationEnabled), new string[] { "enabled" });
             _isAvailabilityZonesEnabled = DefineProperty<bool>(nameof(IsAvailabilityZonesEnabled), new string[] { "isAvailabilityZonesEnabled" });
             _provisioningState = DefineProperty<OperationalInsightsClusterReplicationState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
