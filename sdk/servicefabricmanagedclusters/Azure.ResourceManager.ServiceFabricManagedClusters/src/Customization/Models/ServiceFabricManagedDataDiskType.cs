@@ -10,12 +10,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     public readonly partial struct ServiceFabricManagedDataDiskType
     {
+        // The generated members use normalized acronym casing, but earlier versions exposed
+        // all-caps LRS/ZRS aliases. Keep these hidden aliases for API compatibility.
         /// <summary> Premium SSD V2 locally redundant storage. Best for production and performance sensitive workloads that consistently require low latency and high IOPS and throughput. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceFabricManagedDataDiskType PremiumV2LRS { get; } = new ServiceFabricManagedDataDiskType("PremiumV2_LRS");
+        public static ServiceFabricManagedDataDiskType PremiumV2LRS { get; } = ServiceFabricManagedDataDiskType.PremiumV2Lrs;
 
         /// <summary> Premium SSD zone redundant storage. Best for production workloads that need storage resiliency against zone failures. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceFabricManagedDataDiskType PremiumZRS { get; } = new ServiceFabricManagedDataDiskType("Premium_ZRS");
+        public static ServiceFabricManagedDataDiskType PremiumZRS { get; } = ServiceFabricManagedDataDiskType.PremiumZrs;
     }
 }

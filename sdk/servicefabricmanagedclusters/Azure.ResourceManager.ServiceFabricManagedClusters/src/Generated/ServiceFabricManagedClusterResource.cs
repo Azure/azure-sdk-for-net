@@ -439,9 +439,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostNoBodyAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> PostManagedApplyMaintenanceWindowAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostNoBody");
+            using DiagnosticScope scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostManagedApplyMaintenanceWindow");
             scope.Start();
             try
             {
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedApplyMaintenanceWindowRestClient.CreatePostNoBodyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _managedApplyMaintenanceWindowRestClient.CreatePostManagedApplyMaintenanceWindowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -482,9 +482,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response PostNoBody(CancellationToken cancellationToken = default)
+        public virtual Response PostManagedApplyMaintenanceWindow(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostNoBody");
+            using DiagnosticScope scope = _managedApplyMaintenanceWindowClientDiagnostics.CreateScope("ServiceFabricManagedClusterResource.PostManagedApplyMaintenanceWindow");
             scope.Start();
             try
             {
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedApplyMaintenanceWindowRestClient.CreatePostNoBodyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _managedApplyMaintenanceWindowRestClient.CreatePostManagedApplyMaintenanceWindowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
