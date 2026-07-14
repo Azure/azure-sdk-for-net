@@ -11,12 +11,12 @@ namespace Azure.Provisioning.Search
     public enum SearchServiceSharedPrivateLinkResourceStatus
     {
         /// <summary> The shared private link resource has been created and is pending approval. </summary>
-        Pending,
+        Pending = 0,
         /// <summary> The shared private link resource is approved and is ready for use. </summary>
-        Approved,
+        Approved = 1,
         /// <summary> The shared private link resource has been rejected and cannot be used. </summary>
-        Rejected,
+        Rejected = 2,
         /// <summary> The shared private link resource has been removed from the service. </summary>
-        Disconnected
+        Disconnected = 3
     }
 }

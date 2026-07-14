@@ -11,28 +11,28 @@ namespace Azure.Provisioning.Cdn
     public enum MatchOperator
     {
         /// <summary> Any. </summary>
-        Any,
+        Any = 0,
         /// <summary> IPMatch. </summary>
-        IPMatch,
+        IPMatch = 1,
         /// <summary> GeoMatch. </summary>
-        GeoMatch,
+        GeoMatch = 2,
         /// <summary> Equal. </summary>
-        Equal,
+        Equal = 3,
         /// <summary> Contains. </summary>
-        Contains,
+        Contains = 4,
         /// <summary> LessThan. </summary>
-        LessThan,
+        LessThan = 5,
         /// <summary> GreaterThan. </summary>
-        GreaterThan,
+        GreaterThan = 6,
         /// <summary> LessThanOrEqual. </summary>
-        LessThanOrEqual,
+        LessThanOrEqual = 7,
         /// <summary> GreaterThanOrEqual. </summary>
-        GreaterThanOrEqual,
+        GreaterThanOrEqual = 8,
         /// <summary> BeginsWith. </summary>
-        BeginsWith,
+        BeginsWith = 9,
         /// <summary> EndsWith. </summary>
-        EndsWith,
+        EndsWith = 10,
         /// <summary> RegEx. </summary>
-        RegEx
+        RegEx = 11
     }
 }

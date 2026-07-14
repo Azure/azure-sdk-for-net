@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue where `RequestFailedException` could throw a secondary `ArgumentNullException` while formatting a failed response that had a text content-type header but an empty body, masking the actual service failure. The exception now preserves the original HTTP status, reason phrase, and headers, and no longer formats empty response content.
+
 ### Other Changes
 
 ## 1.60.0 (2026-06-30)

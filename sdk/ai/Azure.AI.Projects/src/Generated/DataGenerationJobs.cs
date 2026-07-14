@@ -23,11 +23,13 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of DataGenerationJobs. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal DataGenerationJobs(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal DataGenerationJobs(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -35,6 +37,9 @@ namespace Azure.AI.Projects
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Retrieves the specified data generation job and its current status.
@@ -51,8 +56,18 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetGenerationJob(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetGenerationJobRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.GetGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetGenerationJobRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -70,8 +85,18 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetGenerationJobAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetGenerationJobRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.GetGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetGenerationJobRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the specified data generation job and its current status. </summary>
@@ -114,8 +139,18 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CreateGenerationJob(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateGenerationJobRequest(content, foundryFeatures, operationId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.CreateGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateGenerationJobRequest(content, foundryFeatures, operationId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -134,8 +169,18 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CreateGenerationJobAsync(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateGenerationJobRequest(content, foundryFeatures, operationId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.CreateGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateGenerationJobRequest(content, foundryFeatures, operationId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Submits a new data generation job for asynchronous execution. </summary>
@@ -179,8 +224,18 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CancelGenerationJob(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateCancelGenerationJobRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.CancelGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCancelGenerationJobRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -198,8 +253,18 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CancelGenerationJobAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateCancelGenerationJobRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.CancelGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCancelGenerationJobRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Cancels the specified data generation job if it is still in progress. </summary>
@@ -241,8 +306,18 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult DeleteGenerationJob(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteGenerationJobRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.DeleteGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteGenerationJobRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -260,8 +335,18 @@ namespace Azure.AI.Projects
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> DeleteGenerationJobAsync(string jobId, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteGenerationJobRequest(jobId, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.DeleteGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteGenerationJobRequest(jobId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Removes the specified data generation job and its associated output. </summary>

@@ -57,7 +57,7 @@ import {
   extractNameConstraintOverrides,
   isResourceIdPatternPrefixMatch
 } from "./resource-metadata.js";
-import { CSharpEmitterContext } from "@typespec/http-client-csharp";
+import type { CSharpEmitterContext } from "./code-model-types.js";
 import {
   getCrossLanguageDefinitionId,
   getClientType,

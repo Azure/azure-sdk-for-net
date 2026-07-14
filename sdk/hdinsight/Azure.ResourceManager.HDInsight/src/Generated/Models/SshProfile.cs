@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The list of SSH public keys. </summary>
-        public IList<HDInsightSshPublicKey> PublicKeys { get; }
+        public IList<HDInsightSshPublicKey> PublicKeys { get; } = new ChangeTrackingList<HDInsightSshPublicKey>();
     }
 }

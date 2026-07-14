@@ -20,10 +20,11 @@ import {
   deduplicateApiVersionEnums,
   fixClientApiVersions
 } from "./api-version-fixer.js";
-
-type CodeModelMutator = NonNullable<Parameters<typeof emitAzureCodeModel>[1]>;
-type AzureCodeModel = Parameters<CodeModelMutator>[0];
-type AzureCSharpEmitterContext = Parameters<CodeModelMutator>[1];
+import type {
+  CodeModel,
+  CodeModelMutator,
+  CSharpEmitterContext
+} from "./code-model-types.js";
 
 export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   context.options["generator-name"] ??= "ManagementClientGenerator";
@@ -34,8 +35,8 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   context.program.reportDiagnostics(filterSuppressedDiagnostics(diagnostics));
 
   function updateCodeModel(
-    codeModel: AzureCodeModel,
-    sdkContext: AzureCSharpEmitterContext
+    codeModel: CodeModel,
+    sdkContext: CSharpEmitterContext
   ): ReturnType<CodeModelMutator> {
     // Transform subscriptionId parameters from client scope to method scope
     // This must happen before other transformations that may depend on method parameters
@@ -59,8 +60,8 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
 }
 
 function setFlattenProperty(
-  codeModel: AzureCodeModel,
-  sdkContext: AzureCSharpEmitterContext
+  codeModel: CodeModel,
+  sdkContext: CSharpEmitterContext
 ): void {
   for (const model of sdkContext.sdkPackage.models) {
     for (const property of model.properties) {

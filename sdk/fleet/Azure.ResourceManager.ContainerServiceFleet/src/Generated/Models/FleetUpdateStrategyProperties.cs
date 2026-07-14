@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 return Strategy.Stages;
             }
+            set
+            {
+                Strategy = new ContainerServiceFleetUpdateRunStrategy(value);
+            }
         }
     }
 }
