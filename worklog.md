@@ -111,3 +111,33 @@ The next blocker to resolve is emitter support for one of these strict-architect
 2. Extensions exposes the full shared/facade hierarchy AgentServer needs, and AgentServer alternates consistently to Extensions-owned types.
 
 Until the emitter crash is fixed or a supported Extensions-owned facade hierarchy is available, AgentServer generated files cannot be regenerated into the final strict architecture shape.
+
+## Ryan split-owner approach branch
+
+Ryan clarified that the key model-consolidation concept is not "AgentServer only consumes Extensions types." Instead, AgentServer should consume concrete model classes from both owning packages:
+
+- official OpenAI response/tool/event models from `OpenAI`
+- Azure/Foundry-specific additions from `Azure.AI.Extensions.OpenAI`
+
+This is being tested on:
+
+```text
+SDK branch: shiva/agentserver-openai-extension-concretes
+Spec branch: shiva/agentserver-openai-extension-concretes
+```
+
+The TypeSpec spike now maps the shared OpenAI bases/envelopes/events to `OpenAI.Responses.*`, for example:
+
+- `OpenAI.OutputItemType` -> `OpenAI.Responses.ResponseItemKind`
+- `OpenAI.ToolType` -> `OpenAI.Responses.ResponseToolKind`
+- `OpenAI.OutputItem` / `OpenAI.InputItem` -> `OpenAI.Responses.ResponseItem`
+- `OpenAI.Tool` -> `OpenAI.Responses.ResponseTool`
+- `OpenAI.Response` -> `OpenAI.Responses.ResponseResult`
+- `OpenAI.CreateResponse` -> `OpenAI.Responses.CreateResponseOptions`
+- `OpenAI.ResponseStreamEvent` -> `OpenAI.Responses.ResponseStreamEvent`
+
+Azure-specific leaf alternates remain mapped to `Azure.AI.Extensions.OpenAI.*`.
+
+Direct TypeSpec compile of this split-owner shape succeeds and gets past the previous `SwitchStatement.Accept` emitter crash. The compile currently reports warnings that local, unreleased `Azure.AI.Extensions.OpenAI` alternate types cannot be resolved from a NuGet package, which is expected for this spike because the SDK repo uses a project reference.
+
+The existing AgentServer Responses project also builds successfully after adding a production `OpenAI` package reference alongside the Extensions project reference.

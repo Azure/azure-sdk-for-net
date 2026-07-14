@@ -1,13 +1,18 @@
-# AgentServer Extensions model alternate repro
+# AgentServer Extensions-only model alternate repro
 
-This spike reproduces a C# emitter crash for the full model-consolidation architecture where `Azure.AI.AgentServer.Responses` consumes shared OpenAI/Foundry response models through `Azure.AI.Extensions.OpenAI`, not the OpenAI SDK directly.
+This document records the earlier Extensions-only spike that reproduced a C# emitter crash when `Azure.AI.AgentServer.Responses` consumed all shared OpenAI/Foundry response models through `Azure.AI.Extensions.OpenAI`, not the OpenAI SDK directly.
+
+Ryan later clarified that the intended model-consolidation shape is split-owner: AgentServer should consume official OpenAI concrete classes from `OpenAI` and Azure/Foundry-specific concrete classes from `Azure.AI.Extensions.OpenAI`. The split-owner branch gets past this emitter crash in direct TypeSpec compilation.
 
 ## Branches / working trees
 
-- SDK repo: `/root/github/azure-sdk-for-net`
+- Prior SDK branch: `/root/github/azure-sdk-for-net`
   - Branch: `shiva/agentserver-extensions-models`
-- Spec worktree: `/root/github/azure-rest-api-specs-agentserver-extensions`
+- Prior spec worktree: `/root/github/azure-rest-api-specs-agentserver-extensions`
   - Branch: `shiva/agentserver-extensions`
+- Split-owner test branches:
+  - SDK: `shiva/agentserver-openai-extension-concretes`
+  - Spec: `shiva/agentserver-openai-extension-concretes`
 
 The spec worktree is intentionally used instead of editing the main `azure-rest-api-specs` checkout directly.
 
@@ -16,12 +21,12 @@ The spec worktree is intentionally used instead of editing the main `azure-rest-
 Desired dependency direction:
 
 ```text
-OpenAI SDK
-  -> Azure.AI.Extensions.OpenAI
-      -> Azure.AI.AgentServer.Responses
+OpenAI SDK owns official OpenAI concrete response models
+Azure.AI.Extensions.OpenAI owns Azure/Foundry-specific concrete response models
+Azure.AI.AgentServer.Responses consumes concrete models from both owning packages
 ```
 
-The important part of this repro is that AgentServer's dependency graph stays Extensions-only. The current spike alternates the shared OpenAI response/tool bases, enums, and Azure-specific concrete variants to `Azure.AI.Extensions.OpenAI` identities, and scopes imported service operations out of C# generation so the emitter only needs protocol models/OpenAPI validation output.
+The earlier failing repro kept AgentServer's dependency graph Extensions-only. It alternated the shared OpenAI response/tool bases, enums, and Azure-specific concrete variants to `Azure.AI.Extensions.OpenAI` identities, and scoped imported service operations out of C# generation so the emitter only needed protocol models/OpenAPI validation output.
 
 Example shape in:
 
@@ -76,14 +81,13 @@ Object reference not set to an instance of an object.
 
 ## Why this matters
 
-The full architecture needs emitter support for this shape:
+The Extensions-only shape needed emitter support for this pattern:
 
 ```text
 AgentServer generated protocol package
-  -> shared response/tool/event types supplied by Extensions alternate types
-  -> Extensions is the only package that adapts OpenAI SDK types
+  -> all shared response/tool/event types supplied by Extensions alternate types
 ```
 
-Directly alternating AgentServer to `OpenAI.*` is not an acceptable workaround because it violates the required dependency direction. In addition, when tested, direct OpenAI alternates broke AgentServer's handwritten builders because they depend on protocol/event concepts such as `OutputItem`, `ResponseOutputItemAddedEvent`, and `ResponseOutputItemDoneEvent`.
+Ryan's corrected split-owner approach is different: only official OpenAI-owned models map to `OpenAI.*`; Azure-specific models still map to `Azure.AI.Extensions.OpenAI.*`.
 
-The issue to inspect is the emitter's generated discriminator/switch path when a package consumes polymorphic response/event/tool models through external alternate types.
+That split-owner approach compiles without the `SwitchStatement.Accept` crash in direct TypeSpec compilation.
