@@ -297,6 +297,5 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
-
     }
 }
