@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByTenantRequest(RequestContext context)
+        internal HttpMessage CreateGetTenantActivityLogAlertsRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
             return message;
         }
 
-        internal HttpMessage CreateNextGetByTenantRequest(Uri nextPage, RequestContext context)
+        internal HttpMessage CreateNextGetTenantActivityLogAlertsRequest(Uri nextPage, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

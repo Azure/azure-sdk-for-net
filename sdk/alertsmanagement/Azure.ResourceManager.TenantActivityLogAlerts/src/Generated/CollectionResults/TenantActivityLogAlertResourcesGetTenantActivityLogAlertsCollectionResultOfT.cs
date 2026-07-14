@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,33 +14,33 @@ using Azure.ResourceManager.TenantActivityLogAlerts.Models;
 
 namespace Azure.ResourceManager.TenantActivityLogAlerts
 {
-    internal partial class TenantActivityLogAlertResourcesGetByTenantAsyncCollectionResultOfT : AsyncPageable<TenantActivityLogAlertData>
+    internal partial class TenantActivityLogAlertResourcesGetTenantActivityLogAlertsCollectionResultOfT : Pageable<TenantActivityLogAlertData>
     {
         private readonly TenantActivityLogAlertResources _client;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of TenantActivityLogAlertResourcesGetByTenantAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of TenantActivityLogAlertResourcesGetTenantActivityLogAlertsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The TenantActivityLogAlertResources client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public TenantActivityLogAlertResourcesGetByTenantAsyncCollectionResultOfT(TenantActivityLogAlertResources client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public TenantActivityLogAlertResourcesGetTenantActivityLogAlertsCollectionResultOfT(TenantActivityLogAlertResources client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of TenantActivityLogAlertResourcesGetByTenantAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of TenantActivityLogAlertResourcesGetTenantActivityLogAlertsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of TenantActivityLogAlertResourcesGetByTenantAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<TenantActivityLogAlertData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of TenantActivityLogAlertResourcesGetTenantActivityLogAlertsCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<TenantActivityLogAlertData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -59,14 +58,14 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByTenantRequest(nextLink, _context) : _client.CreateGetByTenantRequest(_context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetTenantActivityLogAlertsRequest(nextLink, _context) : _client.CreateGetTenantActivityLogAlertsRequest(_context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

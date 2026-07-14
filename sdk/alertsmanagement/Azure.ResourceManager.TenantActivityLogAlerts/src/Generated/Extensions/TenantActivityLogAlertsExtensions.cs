@@ -60,36 +60,36 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         /// Get a list of all Tenant Activity Log Alert rules in the tenant.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTenantActivityLogAlertsTenantResource.GetByTenantAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTenantActivityLogAlertsTenantResource.GetTenantActivityLogAlertsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="TenantActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<TenantActivityLogAlertResource> GetByTenantAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<TenantActivityLogAlertResource> GetTenantActivityLogAlertsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableTenantActivityLogAlertsTenantResource(tenantResource).GetByTenantAsync(cancellationToken);
+            return GetMockableTenantActivityLogAlertsTenantResource(tenantResource).GetTenantActivityLogAlertsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Get a list of all Tenant Activity Log Alert rules in the tenant.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTenantActivityLogAlertsTenantResource.GetByTenant(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTenantActivityLogAlertsTenantResource.GetTenantActivityLogAlerts(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="TenantActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<TenantActivityLogAlertResource> GetByTenant(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static Pageable<TenantActivityLogAlertResource> GetTenantActivityLogAlerts(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableTenantActivityLogAlertsTenantResource(tenantResource).GetByTenant(cancellationToken);
+            return GetMockableTenantActivityLogAlertsTenantResource(tenantResource).GetTenantActivityLogAlerts(cancellationToken);
         }
 
         /// <summary>
