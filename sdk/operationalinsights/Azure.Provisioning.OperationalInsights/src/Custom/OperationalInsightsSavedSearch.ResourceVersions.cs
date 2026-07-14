@@ -3,6 +3,8 @@
 
 namespace Azure.Provisioning.OperationalInsights
 {
+    // Preserve previously shipped ResourceVersions values that are not emitted by the
+    // TypeSpec-based provisioning generator for the current API version.
     public partial class OperationalInsightsSavedSearch
     {
         public static partial class ResourceVersions

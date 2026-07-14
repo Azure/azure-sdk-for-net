@@ -615,6 +615,7 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceCapping WorkspaceCapping { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspace FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceSharedKeys GetKeys() { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -719,6 +720,13 @@ namespace Azure.Provisioning.OperationalInsights
         RollingBack = 6,
         Failed = 7,
         Canceled = 8,
+    }
+    public partial class OperationalInsightsWorkspaceSharedKeys : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public OperationalInsightsWorkspaceSharedKeys() { }
+        public Azure.Provisioning.BicepValue<string> PrimarySharedKey { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SecondarySharedKey { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class OperationalInsightsWorkspaceSku : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
