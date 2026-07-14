@@ -1886,6 +1886,7 @@ namespace Azure.Provisioning.CognitiveServices
         public ServiceAccountApiProperties() { }
         public Azure.Provisioning.BicepValue<System.Guid> AadClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> AadTenantId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<System.BinaryData> AdditionalProperties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableStatistics { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> EventHubConnectionString { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> QnaAzureSearchEndpointId { get { throw null; } set { } }
