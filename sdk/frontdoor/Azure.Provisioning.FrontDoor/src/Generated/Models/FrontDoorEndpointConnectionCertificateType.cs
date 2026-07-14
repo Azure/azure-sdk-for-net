@@ -11,6 +11,6 @@ namespace Azure.Provisioning.FrontDoor
     public enum FrontDoorEndpointConnectionCertificateType
     {
         /// <summary> Dedicated. </summary>
-        Dedicated
+        Dedicated = 0
     }
 }

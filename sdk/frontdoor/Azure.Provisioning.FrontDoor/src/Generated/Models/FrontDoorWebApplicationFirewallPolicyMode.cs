@@ -11,8 +11,8 @@ namespace Azure.Provisioning.FrontDoor
     public enum FrontDoorWebApplicationFirewallPolicyMode
     {
         /// <summary> Prevention. </summary>
-        Prevention,
+        Prevention = 0,
         /// <summary> Detection. </summary>
-        Detection
+        Detection = 1
     }
 }

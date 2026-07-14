@@ -11,10 +11,10 @@ namespace Azure.Provisioning.FrontDoor
     public enum FrontDoorSensitivityType
     {
         /// <summary> Low Sensitivity - triggers the rule by larger spikes in traffic. </summary>
-        Low,
+        Low = 0,
         /// <summary> Medium Sensitivity - triggers the rule by moderate spikes in traffic. </summary>
-        Medium,
+        Medium = 1,
         /// <summary> High Sensitivity - triggers the rule by smaller spikes in traffic. </summary>
-        High
+        High = 2
     }
 }

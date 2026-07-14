@@ -11,10 +11,10 @@ namespace Azure.Provisioning.FrontDoor
     public enum ManagedRuleSetActionType
     {
         /// <summary> Block. </summary>
-        Block,
+        Block = 0,
         /// <summary> Log. </summary>
-        Log,
+        Log = 1,
         /// <summary> Redirect. </summary>
-        Redirect
+        Redirect = 2
     }
 }

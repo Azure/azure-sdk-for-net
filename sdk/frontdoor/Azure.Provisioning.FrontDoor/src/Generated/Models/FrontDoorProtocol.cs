@@ -11,8 +11,8 @@ namespace Azure.Provisioning.FrontDoor
     public enum FrontDoorProtocol
     {
         /// <summary> Http. </summary>
-        Http,
+        Http = 0,
         /// <summary> Https. </summary>
-        Https
+        Https = 1
     }
 }

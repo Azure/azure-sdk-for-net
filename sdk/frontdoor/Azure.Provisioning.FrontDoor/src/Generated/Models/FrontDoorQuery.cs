@@ -11,12 +11,12 @@ namespace Azure.Provisioning.FrontDoor
     public enum FrontDoorQuery
     {
         /// <summary> StripNone. </summary>
-        StripNone,
+        StripNone = 0,
         /// <summary> StripAll. </summary>
-        StripAll,
+        StripAll = 1,
         /// <summary> StripOnly. </summary>
-        StripOnly,
+        StripOnly = 2,
         /// <summary> StripAllExcept. </summary>
-        StripAllExcept
+        StripAllExcept = 3
     }
 }

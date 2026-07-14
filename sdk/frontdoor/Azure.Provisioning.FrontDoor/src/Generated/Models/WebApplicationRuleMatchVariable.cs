@@ -11,24 +11,24 @@ namespace Azure.Provisioning.FrontDoor
     public enum WebApplicationRuleMatchVariable
     {
         /// <summary> RemoteAddr. </summary>
-        RemoteAddr,
+        RemoteAddr = 0,
         /// <summary> RequestMethod. </summary>
-        RequestMethod,
+        RequestMethod = 1,
         /// <summary> QueryString. </summary>
-        QueryString,
+        QueryString = 2,
         /// <summary> PostArgs. </summary>
-        PostArgs,
+        PostArgs = 3,
         /// <summary> RequestUri. </summary>
-        RequestUri,
+        RequestUri = 4,
         /// <summary> RequestHeader. </summary>
-        RequestHeader,
+        RequestHeader = 5,
         /// <summary> RequestBody. </summary>
-        RequestBody,
+        RequestBody = 6,
         /// <summary> Cookies. </summary>
-        Cookies,
+        Cookies = 7,
         /// <summary> SocketAddr. </summary>
-        SocketAddr,
+        SocketAddr = 8,
         /// <summary> JA4 Match Variable. </summary>
-        JA4
+        JA4 = 9
     }
 }

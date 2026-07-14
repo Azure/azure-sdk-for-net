@@ -14,16 +14,16 @@ namespace Azure.Provisioning.FrontDoor
     {
         /// <summary> Equals Exception Value Match Operator. </summary>
         [DataMember(Name = "Equals")]
-        EqualsValue,
+        EqualsValue = 0,
         /// <summary> Contains Exception Value Match Operator. </summary>
-        Contains,
+        Contains = 1,
         /// <summary> StartsWith Exception Value Match Operator. </summary>
-        StartsWith,
+        StartsWith = 2,
         /// <summary> EndsWith Exception Value Match Operator. </summary>
-        EndsWith,
+        EndsWith = 3,
         /// <summary> EqualsAny Exception Value Match Operator. </summary>
-        EqualsAny,
+        EqualsAny = 4,
         /// <summary> IPMatch Exception Value Match Operator. </summary>
-        IPMatch
+        IPMatch = 5
     }
 }

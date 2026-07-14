@@ -11,6 +11,6 @@ namespace Azure.Provisioning.FrontDoor
     public enum FrontDoorTlsProtocolType
     {
         /// <summary> ServerNameIndication. </summary>
-        ServerNameIndication
+        ServerNameIndication = 0
     }
 }

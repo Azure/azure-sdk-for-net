@@ -11,18 +11,18 @@ namespace Azure.Provisioning.FrontDoor
     public enum ScrubbingRuleEntryMatchVariable
     {
         /// <summary> RequestIPAddress. </summary>
-        RequestIPAddress,
+        RequestIPAddress = 0,
         /// <summary> RequestUri. </summary>
-        RequestUri,
+        RequestUri = 1,
         /// <summary> QueryStringArgNames. </summary>
-        QueryStringArgNames,
+        QueryStringArgNames = 2,
         /// <summary> RequestHeaderNames. </summary>
-        RequestHeaderNames,
+        RequestHeaderNames = 3,
         /// <summary> RequestCookieNames. </summary>
-        RequestCookieNames,
+        RequestCookieNames = 4,
         /// <summary> RequestBodyPostArgNames. </summary>
-        RequestBodyPostArgNames,
+        RequestBodyPostArgNames = 5,
         /// <summary> RequestBodyJsonArgNames. </summary>
-        RequestBodyJsonArgNames
+        RequestBodyJsonArgNames = 6
     }
 }

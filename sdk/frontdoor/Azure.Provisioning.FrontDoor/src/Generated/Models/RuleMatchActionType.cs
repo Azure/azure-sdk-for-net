@@ -13,19 +13,19 @@ namespace Azure.Provisioning.FrontDoor
     public enum RuleMatchActionType
     {
         /// <summary> Allow. </summary>
-        Allow,
+        Allow = 0,
         /// <summary> Block. </summary>
-        Block,
+        Block = 1,
         /// <summary> Log. </summary>
-        Log,
+        Log = 2,
         /// <summary> Redirect. </summary>
-        Redirect,
+        Redirect = 3,
         /// <summary> AnomalyScoring. </summary>
-        AnomalyScoring,
+        AnomalyScoring = 4,
         /// <summary> JSChallenge. </summary>
-        JSChallenge,
+        JSChallenge = 5,
         /// <summary> CAPTCHA. </summary>
         [DataMember(Name = "CAPTCHA")]
-        Captcha
+        Captcha = 6
     }
 }

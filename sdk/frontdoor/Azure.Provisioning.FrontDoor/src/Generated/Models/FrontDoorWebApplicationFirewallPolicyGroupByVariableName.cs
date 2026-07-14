@@ -11,10 +11,10 @@ namespace Azure.Provisioning.FrontDoor
     public enum FrontDoorWebApplicationFirewallPolicyGroupByVariableName
     {
         /// <summary> SocketAddr. </summary>
-        SocketAddr,
+        SocketAddr = 0,
         /// <summary> GeoLocation. </summary>
-        GeoLocation,
+        GeoLocation = 1,
         /// <summary> None. </summary>
-        None
+        None = 2
     }
 }

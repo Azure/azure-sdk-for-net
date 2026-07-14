@@ -11,8 +11,8 @@ namespace Azure.Provisioning.FrontDoor
     public enum WebApplicationRuleType
     {
         /// <summary> MatchRule. </summary>
-        MatchRule,
+        MatchRule = 0,
         /// <summary> RateLimitRule. </summary>
-        RateLimitRule
+        RateLimitRule = 1
     }
 }

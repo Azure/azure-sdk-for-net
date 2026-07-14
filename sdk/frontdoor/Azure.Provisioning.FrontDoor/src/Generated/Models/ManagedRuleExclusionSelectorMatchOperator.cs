@@ -14,14 +14,14 @@ namespace Azure.Provisioning.FrontDoor
     {
         /// <summary> Equals. </summary>
         [DataMember(Name = "Equals")]
-        EqualsValue,
+        EqualsValue = 0,
         /// <summary> Contains. </summary>
-        Contains,
+        Contains = 1,
         /// <summary> StartsWith. </summary>
-        StartsWith,
+        StartsWith = 2,
         /// <summary> EndsWith. </summary>
-        EndsWith,
+        EndsWith = 3,
         /// <summary> EqualsAny. </summary>
-        EqualsAny
+        EqualsAny = 4
     }
 }

@@ -11,10 +11,10 @@ namespace Azure.Provisioning.FrontDoor
     public enum FrontDoorForwardingProtocol
     {
         /// <summary> HttpOnly. </summary>
-        HttpOnly,
+        HttpOnly = 0,
         /// <summary> HttpsOnly. </summary>
-        HttpsOnly,
+        HttpsOnly = 1,
         /// <summary> MatchRequest. </summary>
-        MatchRequest
+        MatchRequest = 2
     }
 }

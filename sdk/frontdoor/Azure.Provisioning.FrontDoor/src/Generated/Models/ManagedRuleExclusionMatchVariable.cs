@@ -11,14 +11,14 @@ namespace Azure.Provisioning.FrontDoor
     public enum ManagedRuleExclusionMatchVariable
     {
         /// <summary> RequestHeaderNames. </summary>
-        RequestHeaderNames,
+        RequestHeaderNames = 0,
         /// <summary> RequestCookieNames. </summary>
-        RequestCookieNames,
+        RequestCookieNames = 1,
         /// <summary> QueryStringArgNames. </summary>
-        QueryStringArgNames,
+        QueryStringArgNames = 2,
         /// <summary> RequestBodyPostArgNames. </summary>
-        RequestBodyPostArgNames,
+        RequestBodyPostArgNames = 3,
         /// <summary> RequestBodyJsonArgNames. </summary>
-        RequestBodyJsonArgNames
+        RequestBodyJsonArgNames = 4
     }
 }

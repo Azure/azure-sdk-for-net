@@ -13,9 +13,9 @@ namespace Azure.Provisioning.FrontDoor
     public enum ScrubbingRuleEntryMatchOperator
     {
         /// <summary> EqualsAny. </summary>
-        EqualsAny,
+        EqualsAny = 0,
         /// <summary> Equals. </summary>
         [DataMember(Name = "Equals")]
-        EqualsValue
+        EqualsValue = 1
     }
 }

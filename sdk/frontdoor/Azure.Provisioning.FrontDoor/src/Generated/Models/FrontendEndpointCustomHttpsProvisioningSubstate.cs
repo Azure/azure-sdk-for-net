@@ -13,25 +13,25 @@ namespace Azure.Provisioning.FrontDoor
     public enum FrontendEndpointCustomHttpsProvisioningSubstate
     {
         /// <summary> SubmittingDomainControlValidationRequest. </summary>
-        SubmittingDomainControlValidationRequest,
+        SubmittingDomainControlValidationRequest = 0,
         /// <summary> PendingDomainControlValidationREquestApproval. </summary>
         [DataMember(Name = "PendingDomainControlValidationREquestApproval")]
-        PendingDomainControlValidationRequestApproval,
+        PendingDomainControlValidationRequestApproval = 1,
         /// <summary> DomainControlValidationRequestApproved. </summary>
-        DomainControlValidationRequestApproved,
+        DomainControlValidationRequestApproved = 2,
         /// <summary> DomainControlValidationRequestRejected. </summary>
-        DomainControlValidationRequestRejected,
+        DomainControlValidationRequestRejected = 3,
         /// <summary> DomainControlValidationRequestTimedOut. </summary>
-        DomainControlValidationRequestTimedOut,
+        DomainControlValidationRequestTimedOut = 4,
         /// <summary> IssuingCertificate. </summary>
-        IssuingCertificate,
+        IssuingCertificate = 5,
         /// <summary> DeployingCertificate. </summary>
-        DeployingCertificate,
+        DeployingCertificate = 6,
         /// <summary> CertificateDeployed. </summary>
-        CertificateDeployed,
+        CertificateDeployed = 7,
         /// <summary> DeletingCertificate. </summary>
-        DeletingCertificate,
+        DeletingCertificate = 8,
         /// <summary> CertificateDeleted. </summary>
-        CertificateDeleted
+        CertificateDeleted = 9
     }
 }

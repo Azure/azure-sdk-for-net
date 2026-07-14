@@ -11,14 +11,14 @@ namespace Azure.Provisioning.FrontDoor
     public enum FrontendEndpointCustomHttpsProvisioningState
     {
         /// <summary> Enabling. </summary>
-        Enabling,
+        Enabling = 0,
         /// <summary> Enabled. </summary>
-        Enabled,
+        Enabled = 1,
         /// <summary> Disabling. </summary>
-        Disabling,
+        Disabling = 2,
         /// <summary> Disabled. </summary>
-        Disabled,
+        Disabled = 3,
         /// <summary> Failed. </summary>
-        Failed
+        Failed = 4
     }
 }

@@ -11,10 +11,10 @@ namespace Azure.Provisioning.FrontDoor
     public enum RulesEngineHeaderActionType
     {
         /// <summary> Append. </summary>
-        Append,
+        Append = 0,
         /// <summary> Delete. </summary>
-        Delete,
+        Delete = 1,
         /// <summary> Overwrite. </summary>
-        Overwrite
+        Overwrite = 2
     }
 }

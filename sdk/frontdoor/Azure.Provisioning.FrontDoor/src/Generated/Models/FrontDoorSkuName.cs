@@ -14,12 +14,12 @@ namespace Azure.Provisioning.FrontDoor
     {
         /// <summary> Classic_AzureFrontDoor. </summary>
         [DataMember(Name = "Classic_AzureFrontDoor")]
-        ClassicAzureFrontDoor,
+        ClassicAzureFrontDoor = 0,
         /// <summary> Standard_AzureFrontDoor. </summary>
         [DataMember(Name = "Standard_AzureFrontDoor")]
-        StandardAzureFrontDoor,
+        StandardAzureFrontDoor = 1,
         /// <summary> Premium_AzureFrontDoor. </summary>
         [DataMember(Name = "Premium_AzureFrontDoor")]
-        PremiumAzureFrontDoor
+        PremiumAzureFrontDoor = 2
     }
 }

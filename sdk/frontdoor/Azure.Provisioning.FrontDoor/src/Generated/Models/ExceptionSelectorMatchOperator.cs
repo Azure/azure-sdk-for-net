@@ -14,6 +14,6 @@ namespace Azure.Provisioning.FrontDoor
     {
         /// <summary> Equals Selector Match Operator. </summary>
         [DataMember(Name = "Equals")]
-        EqualsValue
+        EqualsValue = 0
     }
 }

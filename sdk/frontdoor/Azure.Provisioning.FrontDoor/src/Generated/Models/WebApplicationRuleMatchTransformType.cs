@@ -13,18 +13,18 @@ namespace Azure.Provisioning.FrontDoor
     public enum WebApplicationRuleMatchTransformType
     {
         /// <summary> Lowercase. </summary>
-        Lowercase,
+        Lowercase = 0,
         /// <summary> Uppercase. </summary>
-        Uppercase,
+        Uppercase = 1,
         /// <summary> Trim. </summary>
-        Trim,
+        Trim = 2,
         /// <summary> UrlDecode. </summary>
         [DataMember(Name = "UrlDecode")]
-        UriDecode,
+        UriDecode = 3,
         /// <summary> UrlEncode. </summary>
         [DataMember(Name = "UrlEncode")]
-        UriEncode,
+        UriEncode = 4,
         /// <summary> RemoveNulls. </summary>
-        RemoveNulls
+        RemoveNulls = 5
     }
 }

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.FrontDoor
     public enum SessionAffinityEnabledState
     {
         /// <summary> Enabled. </summary>
-        Enabled,
+        Enabled = 0,
         /// <summary> Disabled. </summary>
-        Disabled
+        Disabled = 1
     }
 }

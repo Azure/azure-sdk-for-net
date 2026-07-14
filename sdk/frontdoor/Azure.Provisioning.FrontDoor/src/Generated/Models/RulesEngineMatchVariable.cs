@@ -11,28 +11,28 @@ namespace Azure.Provisioning.FrontDoor
     public enum RulesEngineMatchVariable
     {
         /// <summary> IsMobile. </summary>
-        IsMobile,
+        IsMobile = 0,
         /// <summary> RemoteAddr. </summary>
-        RemoteAddr,
+        RemoteAddr = 1,
         /// <summary> RequestMethod. </summary>
-        RequestMethod,
+        RequestMethod = 2,
         /// <summary> QueryString. </summary>
-        QueryString,
+        QueryString = 3,
         /// <summary> PostArgs. </summary>
-        PostArgs,
+        PostArgs = 4,
         /// <summary> RequestUri. </summary>
-        RequestUri,
+        RequestUri = 5,
         /// <summary> RequestPath. </summary>
-        RequestPath,
+        RequestPath = 6,
         /// <summary> RequestFilename. </summary>
-        RequestFilename,
+        RequestFilename = 7,
         /// <summary> RequestFilenameExtension. </summary>
-        RequestFilenameExtension,
+        RequestFilenameExtension = 8,
         /// <summary> RequestHeader. </summary>
-        RequestHeader,
+        RequestHeader = 9,
         /// <summary> RequestBody. </summary>
-        RequestBody,
+        RequestBody = 10,
         /// <summary> RequestScheme. </summary>
-        RequestScheme
+        RequestScheme = 11
     }
 }

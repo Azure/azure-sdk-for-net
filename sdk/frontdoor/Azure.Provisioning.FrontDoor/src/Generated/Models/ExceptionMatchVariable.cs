@@ -11,10 +11,10 @@ namespace Azure.Provisioning.FrontDoor
     public enum ExceptionMatchVariable
     {
         /// <summary> Request Uri Exception Match Variable. </summary>
-        RequestUri,
+        RequestUri = 0,
         /// <summary> Socket Address Exception Match Variable. </summary>
-        SocketAddr,
+        SocketAddr = 1,
         /// <summary> Request Header Names Exception Match Variable. </summary>
-        RequestHeaderNames
+        RequestHeaderNames = 2
     }
 }

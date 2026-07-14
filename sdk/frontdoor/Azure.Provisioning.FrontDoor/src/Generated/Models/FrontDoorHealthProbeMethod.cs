@@ -14,9 +14,9 @@ namespace Azure.Provisioning.FrontDoor
     {
         /// <summary> GET. </summary>
         [DataMember(Name = "GET")]
-        Get,
+        Get = 0,
         /// <summary> HEAD. </summary>
         [DataMember(Name = "HEAD")]
-        Head
+        Head = 1
     }
 }

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.FrontDoor
     public enum FrontDoorCertificateSource
     {
         /// <summary> AzureKeyVault. </summary>
-        AzureKeyVault,
+        AzureKeyVault = 0,
         /// <summary> FrontDoor. </summary>
-        FrontDoor
+        FrontDoor = 1
     }
 }
