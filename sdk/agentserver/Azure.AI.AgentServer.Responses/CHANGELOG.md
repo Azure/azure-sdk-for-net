@@ -3,12 +3,50 @@
 ## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
+- Resilient responses. Resilient background responses (`ResponsesServerOptions.ResilientBackground`)
+  are composed directly on the `Azure.AI.AgentServer.Core` durable-task and event-stream primitives
+  rather than a bespoke Responses-owned recovery stack, matching the Python implementation.
+  Interrupted background responses are automatically recovered and re-invoked in the next process
+  lifetime.
+  - Resilient streaming with checkpoint/resumption: handlers persist durable snapshots at safe
+    boundaries via `ResponseEventStream.Checkpoint()` and, on a recovered entry, reconstruct the
+    resumption response from `ResponseContext.IsRecovery` / `ResponseContext.PersistedResponse`.
+  - Steerable conversations (`ResponsesServerOptions.SteerableConversations`) with in-turn steering:
+    a superseding turn enqueues and drains against the active turn, observable through
+    `ResponseContext.IsSteeredTurn` and `ResponseContext.PendingInputCount`; fork, lock, and
+    queue-full conflicts map to `409 Conflict`.
+  - Durable per-conversation developer metadata via `ResponseContext.ConversationChainMetadata`
+    (namespaced, with explicit `FlushAsync`) keyed on a stable `ResponseContext.ConversationChainId`.
+  - Internal metadata is persisted for recovery and stripped on egress so it never leaks to clients.
+  - Fail-loud composition validation: misconfigured resilient setups fail at startup with actionable
+    errors instead of silently degrading.
+  - The local default response provider is now file-based (durable) when resilient background is
+    enabled outside a hosted environment.
+  - Every stored (`store=true`) request now runs its handler inside a Core resilient task —
+    foreground or background, streaming or non-streaming — so a crashed turn is task-tracked and
+    recovered/marked-failed by the next-lifetime recovery scan (matching the Python resilience
+    contract; only `store=false` runs inline). Streaming relays the per-response event stream
+    immediately, preserving standalone SSE `error` semantics for pre-creation failures and
+    `response.failed` (not `response.completed`) for terminal persistence failures.
+  - A streaming turn superseded by steering that reaches its terminal via the framework
+    completion fallback (a non-cooperative handler that lets its token trip without emitting its
+    own terminal) is now durably persisted as `completed`, so the client-visible
+    `response.completed` matches the stored record and the turn is valid conversation context for
+    the draining steered turn (FR-053).
 
 ### Breaking Changes
+- Removed the public `ResponsesStreamProvider` abstract class and the public `IAsyncObserver<T>`
+  interface. SSE streaming is now composed on the `Azure.AI.AgentServer.Core` event-stream
+  primitive (`IEventStreamRegistry` / `IEventStream`) rather than a Responses-owned stream
+  provider, matching the Python implementation. The local default event-stream backing is
+  in-memory replay, upgraded automatically to durable file-backed replay when resilient
+  background is enabled outside a hosted environment.
 
 ### Bugs Fixed
 
 ### Other Changes
+- Documented the .NET ↔ Python resilience parity analysis (CONVERGED) in
+  `docs/dotnet-python-parity-report.md`.
 
 ## 1.0.0-beta.6 (2026-06-28)
 

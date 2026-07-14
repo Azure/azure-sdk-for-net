@@ -111,4 +111,72 @@ public class ResponseContext
     /// </summary>
     public virtual IReadOnlyDictionary<string, StringValues> QueryParameters { get; }
         = new Dictionary<string, StringValues>();
+
+    /// <summary>
+    /// Gets whether this handler invocation is a recovery re-invocation of a previously
+    /// interrupted background response (only possible when
+    /// <see cref="ResponsesServerOptions.ResilientBackground"/> is enabled). When
+    /// <see langword="true"/>, <see cref="PersistedResponse"/> carries the last durable
+    /// snapshot from the prior lifetime and request-scoped inputs are restored from the
+    /// persisted recovery payload. When <see langword="false"/> (the default), this is a
+    /// fresh invocation.
+    /// </summary>
+    public virtual bool IsRecovery => false;
+
+    /// <summary>
+    /// Gets the last durable response snapshot persisted before the current lifetime, or
+    /// <see langword="null"/> when this is not a recovery invocation
+    /// (<see cref="IsRecovery"/> is <see langword="false"/>). Handlers can use this to
+    /// resume from the last checkpointed watermark rather than restarting work.
+    /// </summary>
+    public virtual ResponseObject? PersistedResponse => null;
+
+    /// <summary>
+    /// Gets the stable conversation-chain identifier for this response. The value is stable
+    /// across turns of the same conversation and across recovery re-invocations, allowing
+    /// handlers to scope durable per-conversation state.
+    /// </summary>
+    public virtual string ConversationChainId => ResponseId;
+
+    /// <summary>
+    /// Gets the named-namespace metadata facade for durable, explicitly-flushed
+    /// per-conversation-chain metadata. Values are buffered until
+    /// <see cref="ConversationChainMetadata.FlushAsync"/> is called, at which point they are
+    /// persisted into the response snapshot so they survive crash/recovery. Names and keys
+    /// beginning with <c>_</c> are reserved and rejected.
+    /// </summary>
+    public virtual ConversationChainMetadata ConversationChainMetadata { get; } = new ConversationChainMetadata();
+
+    /// <summary>
+    /// Gets whether the current invocation is draining steering input (additional input that
+    /// arrived mid-turn for the same conversation) rather than starting a fresh turn. Only
+    /// meaningful when <see cref="ResponsesServerOptions.SteerableConversations"/> is enabled.
+    /// </summary>
+    public virtual bool IsSteeredTurn => false;
+
+    /// <summary>
+    /// Gets the number of steering input envelopes currently queued for the running handler
+    /// to drain. Zero when steering is disabled or no additional input is pending.
+    /// </summary>
+    public virtual int PendingInputCount => 0;
+
+    /// <summary>
+    /// Gets whether the client has explicitly cancelled this response. Distinct from
+    /// <see cref="IsShutdownRequested"/> (server shutting down) and client disconnect;
+    /// handlers can use this to stop work in response to an explicit cancel request.
+    /// </summary>
+    public virtual bool ClientCancelled => false;
+
+    /// <summary>
+    /// Defers the current handler invocation for recovery instead of failing. Used during a
+    /// graceful shutdown (Path B) or cooperative hand-off so that a resilient background
+    /// response is re-invoked in a subsequent process lifetime with its durable snapshot and
+    /// checkpoint watermark preserved, rather than transitioning to a failed terminal state.
+    /// Has an effect only for resilient background responses; for non-resilient responses it
+    /// completes without deferring.
+    /// </summary>
+    /// <param name="cancellationToken">A token to cancel the operation.</param>
+    /// <returns>A task that completes once the deferral has been recorded.</returns>
+    public virtual Task ExitForRecoveryAsync(CancellationToken cancellationToken = default)
+        => Task.CompletedTask;
 }

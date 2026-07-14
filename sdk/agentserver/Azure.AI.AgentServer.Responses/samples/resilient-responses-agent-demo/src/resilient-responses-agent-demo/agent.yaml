@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/microsoft/AgentSchema/refs/heads/main/schemas/v1.0/ContainerAgent.yaml
+
+# Deployed under a DISTINCT name from the Python sample (`resilient-responses-agent-demo`)
+# so both can coexist in the same Foundry project without collision.
+kind: hosted
+name: resilient-responses-agent-demo-dotnet
+description: |
+    Resilient + steerable Responses-protocol research agent (.NET). Demonstrates
+    long-running runs past sandbox eviction, crash recovery, steering, and operator
+    cancel on the Azure.AI.AgentServer resilient task + streaming primitives.
+metadata:
+    tags:
+        - AI Agent Hosting
+        - Responses Protocol
+        - Bring Your Own
+        - .NET
+        - Resilient
+protocols:
+    - protocol: responses
+      version: 2.0.0
+resources:
+    cpu: "1"
+    memory: 2Gi
+environment_variables:
+    - name: AZURE_AI_MODEL_DEPLOYMENT_NAME
+      value: gpt-5.4-nano
+    # Battery-gate cadence: a full run must reach a terminal state well inside the
+    # battery's 240s per-case wait window (battery/run_suite.py TERMINAL_TIMEOUT_S)
+    # so the "wait-for-completion" lanes (poll / reconnect / steering / sync) are a
+    # reliable, fast regression gate rather than a timing coin-flip. 3 phases ×
+    # 4 subcalls × 150 tokens with 1s cooldowns lands each full run around ~45-60s
+    # — comfortably under 240s and keeps the whole suite quick — while still
+    # exercising multi-phase progress, per-phase checkpointing, mid-run crash
+    # recovery landing on a phase boundary, and the resilient-task lease keep-alive.
+    # Crash/cancel/oversized lanes prove recovery explicitly and are cadence-independent.
+    #
+    # For the EXTENDED long-running showcase (a single run that outlives the
+    # platform's ~15-min sandbox-eviction window purely via lease keep-alive), set
+    # NUM_PHASES=15, INTRA_PHASE_COOLDOWN_SEC=30, INTER_PHASE_COOLDOWN_SEC=30 and
+    # drive it with demo-client.sh (not the battery). Local defaults (10/20s) in
+    # Program.cs apply when running outside the hosted container.
+    - name: NUM_PHASES
+      value: "3"
+    - name: INTRA_PHASE_COOLDOWN_SEC
+      value: "1"
+    - name: INTER_PHASE_COOLDOWN_SEC
+      value: "1"
+    - name: TARGET_OUTPUT_TOKENS
+      value: "150"

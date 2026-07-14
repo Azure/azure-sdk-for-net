@@ -58,22 +58,7 @@ public class ServiceRegistrationTests
     }
 
     [Test]
-    public void Custom_ResponsesStreamProvider_Takes_Precedence_Over_Default()
-    {
-        var custom = new StubStreamProvider();
-        var services = new ServiceCollection();
-        services.AddSingleton<ResponsesStreamProvider>(custom);
-        services.AddSingleton<ResponseHandler>(new TestHandler());
-        services.AddResponsesServer();
-
-        using var sp = services.BuildServiceProvider();
-        var resolved = sp.GetRequiredService<ResponsesStreamProvider>();
-
-        Assert.That(resolved, Is.SameAs(custom));
-    }
-
-    [Test]
-    public void Default_Registration_Provides_InMemory_For_All_Three_Interfaces()
+    public void Default_Registration_Selects_FileBacked_State_Provider()
     {
         var services = new ServiceCollection();
         services.AddSingleton<ResponseHandler>(new TestHandler());
@@ -82,12 +67,59 @@ public class ServiceRegistrationTests
         using var sp = services.BuildServiceProvider();
         var state = sp.GetRequiredService<ResponsesProvider>();
         var cancel = sp.GetRequiredService<ResponsesCancellationSignalProvider>();
-        var stream = sp.GetRequiredService<ResponsesStreamProvider>();
 
-        // State should be InMemoryResponsesProvider; cancel and stream are adapters backed by same provider
-        Assert.That(state, Is.InstanceOf<InMemoryResponsesProvider>());
+        // The durable file-backed provider is the local default (CC1) so response envelopes
+        // survive a process restart with full local fidelity, matching Python. The
+        // InMemoryResponsesProvider remains registered (it backs the cancellation signal
+        // adapter) but is no longer selected as the ResponsesProvider.
+        Assert.That(state, Is.InstanceOf<Azure.AI.AgentServer.Responses.Internal.Resilience.FileResponsesProvider>());
         Assert.That(cancel, Is.InstanceOf<InMemoryCancellationSignalProvider>());
-        Assert.That(stream, Is.InstanceOf<InMemoryStreamProvider>());
+        Assert.That(sp.GetRequiredService<InMemoryResponsesProvider>(), Is.Not.Null);
+    }
+
+    [Test]
+    public void ResilientBackground_Local_Registers_EventStreamRegistry()
+    {
+        var services = new ServiceCollection();
+        services.AddSingleton<ResponseHandler>(new TestHandler());
+        services.AddResponsesServer(o => o.ResilientBackground = true);
+
+        using var sp = services.BuildServiceProvider();
+
+        // SSE streaming now composes the Core event-stream primitive. The durable
+        // file-backed replay is an internal Core selection; from the Responses layer
+        // we assert the registry is available for the orchestrator/replay to use.
+        Assert.That(sp.GetService<Core.Streaming.IEventStreamRegistry>(), Is.Not.Null);
+    }
+
+    [Test]
+    public void ResilientBackground_Local_Selects_Durable_FileBacked_Provider()
+    {
+        var services = new ServiceCollection();
+        services.AddSingleton<ResponseHandler>(new TestHandler());
+        services.AddResponsesServer(o => o.ResilientBackground = true);
+
+        using var sp = services.BuildServiceProvider();
+        var state = sp.GetRequiredService<ResponsesProvider>();
+
+        // Resilient background requires state that survives restart → durable file-backed provider.
+        Assert.That(state, Is.InstanceOf<Azure.AI.AgentServer.Responses.Internal.Resilience.FileResponsesProvider>());
+    }
+
+    [Test]
+    public void Non_Resilient_Local_Defaults_To_FileBacked_Provider()
+    {
+        var services = new ServiceCollection();
+        services.AddSingleton<ResponseHandler>(new TestHandler());
+        services.AddResponsesServer(o => o.ResilientBackground = false);
+
+        using var sp = services.BuildServiceProvider();
+        var state = sp.GetRequiredService<ResponsesProvider>();
+
+        // CC1: the file-backed provider is the local default even when ResilientBackground is off.
+        // The InMemoryResponsesProvider stays registered but is no longer selected.
+        Assert.That(state, Is.InstanceOf<Azure.AI.AgentServer.Responses.Internal.Resilience.FileResponsesProvider>());
+        Assert.That(sp.GetRequiredService<InMemoryResponsesProvider>(), Is.Not.Null);
     }
 
     [Test]
@@ -102,14 +134,12 @@ public class ServiceRegistrationTests
         using var sp = services.BuildServiceProvider();
         var state = sp.GetRequiredService<ResponsesProvider>();
         var cancel = sp.GetRequiredService<ResponsesCancellationSignalProvider>();
-        var stream = sp.GetRequiredService<ResponsesStreamProvider>();
 
         // Custom state provider
         Assert.That(state, Is.SameAs(customState));
 
-        // Cancel and stream should resolve to InMemory adapters (not custom)
+        // Cancel should resolve to the InMemory adapter (not custom)
         Assert.That(cancel, Is.InstanceOf<InMemoryCancellationSignalProvider>());
-        Assert.That(stream, Is.InstanceOf<InMemoryStreamProvider>());
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -118,25 +148,22 @@ public class ServiceRegistrationTests
     // ═══════════════════════════════════════════════════════════════════════
 
     [Test]
-    public async Task Three_Separate_Providers_Each_Receive_Correct_Calls()
+    public async Task Separate_State_And_Cancel_Providers_Each_Receive_Correct_Calls()
     {
         var stateProvider = new RecordingStateProvider();
         var cancelProvider = new RecordingCancelProvider();
-        var streamProvider = new RecordingStreamProvider();
 
         using var factory = new TestWebApplicationFactory(
             configureTestServices: services =>
             {
                 services.AddSingleton<ResponsesProvider>(stateProvider);
                 services.AddSingleton<ResponsesCancellationSignalProvider>(cancelProvider);
-                services.AddSingleton<ResponsesStreamProvider>(streamProvider);
             });
         using var client = factory.CreateClient();
 
-        // POST /responses with bg+streaming — triggers CreateResponseAsync (state),
-        // CreateEventPublisherAsync (stream), GetResponseCancellationTokenAsync (cancel).
-        // Only bg+streaming mode exercises all three providers because non-replay modes
-        // use NullPublisher internally and skip the stream provider.
+        // POST /responses with bg+streaming — triggers CreateResponseAsync (state) and
+        // GetResponseCancellationTokenAsync (cancel). SSE streaming is now handled by the
+        // Core event-stream primitive, not a pluggable Responses stream provider.
         var body = JsonSerializer.Serialize(new { model = "test", background = true, stream = true });
         var response = await client.PostAsync("/responses",
             new StringContent(body, Encoding.UTF8, "application/json"));
@@ -148,23 +175,12 @@ public class ServiceRegistrationTests
         // Verify state provider got state calls
         XAssert.Contains("CreateResponseAsync", stateProvider.Calls);
 
-        // Verify stream provider got streaming call
-        XAssert.Contains("CreateEventPublisherAsync", streamProvider.Calls);
-
         // Verify cancellation provider got token creation call
         XAssert.Contains("GetResponseCancellationTokenAsync", cancelProvider.Calls);
 
-        // Verify NO cross-contamination: state provider should NOT have streaming/cancel calls
-        XAssert.DoesNotContain("CreateEventPublisherAsync", stateProvider.Calls);
+        // Verify NO cross-contamination between the two providers
         XAssert.DoesNotContain("CancelResponseAsync", stateProvider.Calls);
-
-        // Stream provider should NOT have state/cancel calls
-        XAssert.DoesNotContain("CreateResponseAsync", streamProvider.Calls);
-        XAssert.DoesNotContain("CancelResponseAsync", streamProvider.Calls);
-
-        // Cancel provider should NOT have state/streaming calls
         XAssert.DoesNotContain("CreateResponseAsync", cancelProvider.Calls);
-        XAssert.DoesNotContain("CreateEventPublisherAsync", cancelProvider.Calls);
     }
 
     [Test]
@@ -172,7 +188,6 @@ public class ServiceRegistrationTests
     {
         var stateProvider = new RecordingStateProvider();
         var cancelProvider = new RecordingCancelProvider();
-        var streamProvider = new RecordingStreamProvider();
 
         var blockingHandler = new TestHandler();
         blockingHandler.EventFactory = (_, ctx, ct) => BlockingStream(ctx, ct);
@@ -182,7 +197,6 @@ public class ServiceRegistrationTests
             {
                 services.AddSingleton<ResponsesProvider>(stateProvider);
                 services.AddSingleton<ResponsesCancellationSignalProvider>(cancelProvider);
-                services.AddSingleton<ResponsesStreamProvider>(streamProvider);
             });
         using var client = factory.CreateClient();
 
@@ -236,14 +250,6 @@ public class ServiceRegistrationTests
         public override Task CancelResponseAsync(string responseId, CancellationToken ct = default) => Task.CompletedTask;
         public override Task<CancellationToken> GetResponseCancellationTokenAsync(string responseId, CancellationToken ct = default)
             => Task.FromResult(CancellationToken.None);
-    }
-
-    private sealed class StubStreamProvider : ResponsesStreamProvider
-    {
-        public override Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, CancellationToken ct = default)
-            => throw new NotImplementedException();
-        public override Task<IAsyncDisposable> SubscribeToEventsAsync(string responseId, IAsyncObserver<ResponseStreamEvent> observer, long? cursor = null, CancellationToken ct = default)
-            => throw new NotImplementedException();
     }
 
     /// <summary>
@@ -319,51 +325,6 @@ public class ServiceRegistrationTests
             Calls.Add("GetResponseCancellationTokenAsync");
             var cts = _ctsSources.GetOrAdd(responseId, _ => new CancellationTokenSource());
             return Task.FromResult(cts.Token);
-        }
-    }
-
-    /// <summary>
-    /// Stream-only recording provider with working SeekableReplaySubject backing.
-    /// </summary>
-    private sealed class RecordingStreamProvider : ResponsesStreamProvider, IDisposable
-    {
-        private readonly ConcurrentDictionary<string, SeekableReplaySubject> _subjects = new();
-        private readonly TimeSpan _ttl = TimeSpan.FromMinutes(30);
-        public ConcurrentBag<string> Calls { get; } = new();
-
-        public override Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, CancellationToken ct = default)
-        {
-            Calls.Add("CreateEventPublisherAsync");
-            var subject = _subjects.GetOrAdd(responseId, _ => new SeekableReplaySubject(_ttl));
-            return Task.FromResult(subject.GetPublisher());
-        }
-
-        public override async Task<IAsyncDisposable> SubscribeToEventsAsync(
-            string responseId,
-            IAsyncObserver<ResponseStreamEvent> observer,
-            long? cursor = null,
-            CancellationToken ct = default)
-        {
-            Calls.Add("SubscribeToEventsAsync");
-            if (!_subjects.TryGetValue(responseId, out var subject))
-                throw new InvalidOperationException($"No event stream for '{responseId}'.");
-
-            var unwrapping = new UnwrappingObserver(observer);
-            return await subject.SubscribeAsync(unwrapping, cursor);
-        }
-
-        public void Dispose()
-        {
-            foreach (var s in _subjects.Values)
-                s.Dispose();
-        }
-
-        private sealed class UnwrappingObserver(IAsyncObserver<ResponseStreamEvent> inner)
-            : IAsyncObserver<(long SequenceNumber, ResponseStreamEvent Event)>
-        {
-            public ValueTask OnNextAsync((long SequenceNumber, ResponseStreamEvent Event) value) => inner.OnNextAsync(value.Event);
-            public ValueTask OnErrorAsync(Exception error) => inner.OnErrorAsync(error);
-            public ValueTask OnCompletedAsync() => inner.OnCompletedAsync();
         }
     }
 

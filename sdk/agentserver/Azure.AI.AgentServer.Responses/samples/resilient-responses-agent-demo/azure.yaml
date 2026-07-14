@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+requiredVersions:
+    extensions:
+        azure.ai.agents: '>=1.0.0-beta.4'
+name: resilient-responses-agent-demo-dotnet
+services:
+    resilient-responses-agent-demo-dotnet:
+        project: src/resilient-responses-agent-demo
+        host: azure.ai.agent
+        language: docker
+        docker:
+            remoteBuild: true
+        config:
+            container:
+                resources:
+                    cpu: "1"
+                    memory: 2Gi
+            deployments:
+                - model:
+                    format: OpenAI
+                    name: gpt-5.4-nano
+                    version: "2026-03-17"
+                  name: gpt-5.4-nano
+                  sku:
+                    capacity: 2500
+                    name: GlobalStandard
+infra:
+    provider: bicep
+    path: ./infra

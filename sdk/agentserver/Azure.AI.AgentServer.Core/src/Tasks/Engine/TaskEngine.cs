@@ -61,6 +61,8 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
     internal string Owner => _owner;
 
+    internal string InstanceId => _lease.InstanceId;
+
     internal LeaseManager Lease => _lease;
 
     internal TaskWriteSerializer Serializer => _serializer;
@@ -1669,9 +1671,14 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         try
         {
             // Reclaim the lease (same owner, new instance id, generation++ at the store).
-            TaskRecord reclaimed = await _lease.AcquireAsync(taskId, _owner, TaskEngineConstants.LeaseDurationSeconds).ConfigureAwait(false);
+            // Recovery reclaim must use WriteIntent.Reclaim so a 412 is treated as definitive race-loss
+            // (abandon) instead of retrying like heartbeat writes.
+            TaskRecord reclaimed = await _lease.ReclaimAsync(taskId, _owner, TaskEngineConstants.LeaseDurationSeconds).ConfigureAwait(false);
             // recovery_count mirrors the POST-reclaim lease generation (spec §22).
             runState.RecoveryCount = (int)(reclaimed.Lease?.Generation ?? runState.RecoveryCount);
+            // Operator-facing observability parity with Python (tasks/_manager.py): a crashed/
+            // abandoned task's lease has just been taken over by this instance.
+            _logger.StaleTaskReclaimed(taskId);
         }
         catch (Exception)
         {
@@ -1745,8 +1752,21 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 continue;
             }
 
-            await registration.RecoverDispatch(this, record).ConfigureAwait(false);
-            dispatched++;
+            try
+            {
+                await registration.RecoverDispatch(this, record).ConfigureAwait(false);
+                dispatched++;
+            }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                // Per-record isolation: one malformed/faulting recovery candidate must not abort
+                // the full sweep. The periodic durability loop retries this record on later scans.
+                _logger.RecoveryScanFailed(ex.GetType().Name);
+            }
         }
 
         return dispatched;

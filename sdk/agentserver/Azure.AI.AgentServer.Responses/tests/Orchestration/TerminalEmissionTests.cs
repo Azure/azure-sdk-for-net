@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Responses.Internal;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -22,6 +24,7 @@ public class TerminalEmissionTests : IDisposable
     private readonly TestHandler _handler;
     private readonly InMemoryResponsesProvider _provider;
     private readonly ResponseExecutionTracker _tracker;
+    private readonly IEventStreamRegistry _eventStreamRegistry;
     private readonly ResponseOrchestrator _orchestrator;
 
     public TerminalEmissionTests()
@@ -30,9 +33,11 @@ public class TerminalEmissionTests : IDisposable
         _provider = new InMemoryResponsesProvider(
             Options.Create(new InMemoryProviderOptions()), TimeProvider.System);
         _tracker = new ResponseExecutionTracker(NullLogger<ResponseExecutionTracker>.Instance);
+        _eventStreamRegistry = TestEventStreams.CreateInMemoryRegistry();
         _orchestrator = new ResponseOrchestrator(
-            _handler, _provider, new InMemoryCancellationSignalProvider(_provider), new InMemoryStreamProvider(_provider), _tracker,
-            NullLogger<ResponseOrchestrator>.Instance);
+            _handler, _provider, new InMemoryCancellationSignalProvider(_provider), _eventStreamRegistry, _tracker,
+            NullLogger<ResponseOrchestrator>.Instance,
+            Options.Create(new ResponsesServerOptions()));
     }
 
     [Test]
@@ -105,17 +110,16 @@ public class TerminalEmissionTests : IDisposable
     {
         var execution = _tracker.Create(responseId);
         execution.Response = new Models.ResponseObject(responseId, "test") { Status = ResponseStatus.InProgress };
-        var publisher = await _provider.CreateEventPublisherAsync(responseId);
+        var publisher = await TestEventStreams.CreatePublisherAsync(_eventStreamRegistry, responseId);
         return (execution, publisher);
     }
 
-    private async Task<(List<ResponseStreamEvent> Events, CollectingObserver Observer)>
+    private Task<(List<ResponseStreamEvent> Events, TestSubscription Observer)>
         SubscribeToEvents(string responseId)
     {
         var events = new List<ResponseStreamEvent>();
-        var observer = new CollectingObserver(events);
-        await _provider.SubscribeToEventsAsync(responseId, observer);
-        return (events, observer);
+        var subscription = TestEventStreams.Subscribe(_eventStreamRegistry, responseId, events);
+        return Task.FromResult((events, subscription));
     }
 
     public void Dispose()

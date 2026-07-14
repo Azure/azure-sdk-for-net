@@ -1,0 +1,32 @@
+# Files excluded from agent code deployment packaging.
+# Uses .gitignore syntax.
+# Note: only the root .agentignore is read; subdirectory files are not supported.
+#
+# To include a file that is excluded by default, use negation: !filename
+
+# azd tooling files
+azure.yaml
+.agentignore
+
+# Security / secrets
+.env
+.env.*
+.azure/
+.git/
+
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# Node
+node_modules/
+
+# Docker (this sample deploys via remote Docker build; the Dockerfile handles staging)
+Dockerfile
+.dockerignore
+
+# NOTE: packages/ (staged NuGet drop) and nuget.config MUST ship so the build can
+# restore the preview Azure.AI.AgentServer.* packages — do not add them here.

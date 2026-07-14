@@ -9,6 +9,7 @@ using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
 using Azure.AI.AgentServer.Core.Tasks.Serialization;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.AI.AgentServer.Core.Tests.Tasks;
 
@@ -17,7 +18,7 @@ internal sealed class TaskTestHost : IDisposable
 {
     private readonly string _tempDir;
 
-    private TaskTestHost(string tempDir, LocalTaskStore store, TaskRegistry registry, string agentName, string sessionId)
+    private TaskTestHost(string tempDir, LocalTaskStore store, TaskRegistry registry, string agentName, string sessionId, ILogger? logger)
     {
         _tempDir = tempDir;
         Store = store;
@@ -25,7 +26,7 @@ internal sealed class TaskTestHost : IDisposable
         Builder = new ResilientTaskBuilder(registry, new TaskServiceProviderAccessor());
         AgentName = agentName;
         SessionId = sessionId;
-        Engine = new TaskEngine(store, registry, agentName, sessionId);
+        Engine = new TaskEngine(store, registry, agentName, sessionId, logger);
     }
 
     public LocalTaskStore Store { get; }
@@ -41,18 +42,18 @@ internal sealed class TaskTestHost : IDisposable
     public string SessionId { get; }
 
     public static TaskTestHost Create(string? sharedDir = null, TaskRegistry? sharedRegistry = null,
-        string agentName = "agent-a", string sessionId = "sess-1")
+        string agentName = "agent-a", string sessionId = "sess-1", ILogger? logger = null)
     {
         string dir = sharedDir ?? Path.Combine(Path.GetTempPath(), "agentserver-us1-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(dir);
         var store = new LocalTaskStore(dir);
         var registry = sharedRegistry ?? new TaskRegistry();
-        return new TaskTestHost(dir, store, registry, agentName, sessionId);
+        return new TaskTestHost(dir, store, registry, agentName, sessionId, logger);
     }
 
     /// <summary>Creates a second host (simulating a process restart) over the same store + a fresh registry copy.</summary>
-    public TaskTestHost Restart(TaskRegistry registry)
-        => new(_tempDir, new LocalTaskStore(_tempDir), registry, AgentName, SessionId);
+    public TaskTestHost Restart(TaskRegistry registry, ILogger? logger = null)
+        => new(_tempDir, new LocalTaskStore(_tempDir), registry, AgentName, SessionId, logger);
 
     public ITaskInvoker Invoker => Engine;
 

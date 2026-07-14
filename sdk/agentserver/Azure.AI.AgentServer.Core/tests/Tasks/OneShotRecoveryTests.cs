@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
+using Azure.AI.AgentServer.Core.Tasks.Serialization;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests.Tasks;
@@ -137,5 +138,80 @@ public sealed class OneShotRecoveryTests
 
         // The reclaim bumped the lease generation from 0 to 1; recovery_count mirrors it (spec §22).
         Assert.That(observedRecoveryCount, Is.EqualTo(1));
+    }
+
+    [Test]
+    public async Task RecoveryScanContinuesWhenOneRecordFailsToRehydrate()
+    {
+        var registry = new TaskRegistry();
+        using var host = TaskTestHost.Create(sharedRegistry: registry);
+        int goodRecovered = 0;
+
+        host.Builder.AddTask<int, int>("bad", (ctx, ct) => Task.FromResult(ctx.Input));
+        host.Builder.AddTask<string, string>("good", (ctx, ct) =>
+        {
+            if (ctx.EntryMode == EntryMode.Recovered)
+            {
+                goodRecovered++;
+            }
+
+            return Task.FromResult(ctx.Input);
+        });
+
+        string owner = LeaseManager.FormatOwner(host.AgentName, host.SessionId);
+        await host.Store.CreateAsync(new Azure.AI.AgentServer.Core.Tasks.Providers.TaskCreateRequest
+        {
+            Id = "bad-1",
+            AgentName = host.AgentName,
+            SessionId = host.SessionId,
+            Title = "bad",
+            Status = "in_progress",
+            LeaseOwner = owner,
+            LeaseInstanceId = "bad-worker",
+            LeaseDurationSeconds = 60,
+            Payload = new System.Text.Json.Nodes.JsonObject
+            {
+                [TaskWireKeys.PayloadSchemaVersion] = TaskWireKeys.SchemaVersionValue,
+                [TaskWireKeys.PayloadInput] = "not-an-int",
+                [TaskWireKeys.PayloadLastInputId] = "bad-1",
+            },
+            Source = new System.Text.Json.Nodes.JsonObject
+            {
+                [TaskWireKeys.SourceType] = TaskWireKeys.SourceTypeValue,
+                [TaskWireKeys.SourceName] = "bad",
+                [TaskWireKeys.SourceServerVersion] = "test",
+            },
+        });
+
+        await host.Store.CreateAsync(new Azure.AI.AgentServer.Core.Tasks.Providers.TaskCreateRequest
+        {
+            Id = "good-1",
+            AgentName = host.AgentName,
+            SessionId = host.SessionId,
+            Title = "good",
+            Status = "in_progress",
+            LeaseOwner = owner,
+            LeaseInstanceId = "good-worker",
+            LeaseDurationSeconds = 60,
+            Payload = new System.Text.Json.Nodes.JsonObject
+            {
+                [TaskWireKeys.PayloadSchemaVersion] = TaskWireKeys.SchemaVersionValue,
+                [TaskWireKeys.PayloadInput] = "payload",
+                [TaskWireKeys.PayloadLastInputId] = "good-1",
+            },
+            Source = new System.Text.Json.Nodes.JsonObject
+            {
+                [TaskWireKeys.SourceType] = TaskWireKeys.SourceTypeValue,
+                [TaskWireKeys.SourceName] = "good",
+                [TaskWireKeys.SourceServerVersion] = "test",
+            },
+        });
+
+        int dispatched = await host.Engine.ScanAndRecoverAsync();
+
+        Assert.That(dispatched, Is.EqualTo(1), "only the valid record should dispatch");
+        Assert.That(goodRecovered, Is.EqualTo(1), "scan should continue after one record faults");
+        Assert.That(await host.Store.GetAsync("bad-1"), Is.Not.Null, "faulting record remains for later retry/manual handling");
+        await host.WaitUntilDeletedAsync("good-1", TimeSpan.FromSeconds(5));
     }
 }

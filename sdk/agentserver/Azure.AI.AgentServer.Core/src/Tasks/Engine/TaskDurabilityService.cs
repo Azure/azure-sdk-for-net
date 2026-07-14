@@ -67,6 +67,12 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
             _stopCts = new CancellationTokenSource();
         }
 
+        // Emit the operator-facing startup marker once per process boot, carrying the stable lease
+        // instance id (worker-<pid>-<hex>-<epoch>). A cross-process restart therefore surfaces as a
+        // NEW instance in the logs — parity with Python's "TaskManager starting (owner, instance,
+        // hosted)" line and the signal the hosted crash-recovery verifier greps to prove a restart.
+        _logger.TaskManagerStarting(_engine.Owner, _engine.InstanceId, Azure.AI.AgentServer.Core.FoundryEnvironment.IsHosted);
+
         // Cold-start scan blocks startup (SOT §49). A transient failure is logged rather than
         // faulting startup; the periodic loop then retries on its cadence.
         try

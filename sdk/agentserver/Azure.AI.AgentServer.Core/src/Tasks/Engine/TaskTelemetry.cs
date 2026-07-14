@@ -94,6 +94,20 @@ internal static partial class TaskTelemetry
         Message = "Failed to force-expire lease for task {TaskId} during shutdown (error {ErrorType}); lease will lapse on TTL.")]
     public static partial void LeaseForceExpireFailed(this ILogger logger, string taskId, string errorType);
 
+    [LoggerMessage(
+        EventId = 11,
+        EventName = "resilient_task_manager_starting",
+        Level = LogLevel.Information,
+        Message = "TaskManager starting (owner={Owner}, instance={Instance}, hosted={Hosted}).")]
+    public static partial void TaskManagerStarting(this ILogger logger, string owner, string instance, bool hosted);
+
+    [LoggerMessage(
+        EventId = 12,
+        EventName = "resilient_task_reclaimed_stale",
+        Level = LogLevel.Information,
+        Message = "Reclaimed stale task {TaskId} (generation will increment).")]
+    public static partial void StaleTaskReclaimed(this ILogger logger, string taskId);
+
     /// <summary>Starts an activity for a key task operation, or returns <see langword="null"/> when no listener is attached.</summary>
     /// <param name="operationName">The operation name (becomes the span name).</param>
     /// <param name="taskId">The task id, attached as a tag.</param>

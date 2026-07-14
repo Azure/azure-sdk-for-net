@@ -84,6 +84,23 @@ internal sealed class ResponseExecutionTracker : IHostedService, IDisposable
     public Task StartAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
     /// <inheritdoc/>
+    /// <remarks>
+    /// Graceful-shutdown grace window (US4 Path A/B): each in-flight execution is first signalled
+    /// (<c>IsShutdownRequested = true</c>) so a cooperative handler can observe the shutdown and either
+    /// wind down to a natural terminal (Path A) or call <see cref="ResponseContext.ExitForRecoveryAsync"/>
+    /// to hand off to next-lifetime recovery. The handler's cancellation token is then cancelled to
+    /// wake handlers parked at a safe boundary, and the framework waits for the background tasks to
+    /// drain within the host's <c>HostOptions.ShutdownTimeout</c> — which serves as the grace window.
+    /// If that window is exhausted with tasks still running, the process is terminated and any Row 1
+    /// work resumes via the next-lifetime recovery scan (Path C fallback, FR-015).
+    /// <para>
+    /// Known divergence (tracked for the .NET-vs-Python GAP review, code CR5-F2-SHUTDOWN-GRACE):
+    /// Python exposes a distinct <c>shutdown_grace_period_seconds</c> during which handlers are only
+    /// signalled (not yet cancelled), letting a token-honouring handler mid-computation reach a natural
+    /// terminal before force-cancel. Here cancellation is immediate, so a token-honouring handler is
+    /// routed to Path B rather than completing within a pre-cancel grace window.
+    /// </para>
+    /// </remarks>
     public async Task StopAsync(CancellationToken cancellationToken)
     {
         foreach (var execution in _executions.Values)

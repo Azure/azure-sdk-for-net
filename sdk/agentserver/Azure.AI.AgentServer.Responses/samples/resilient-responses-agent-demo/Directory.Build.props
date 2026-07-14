@@ -1,0 +1,12 @@
+<Project>
+  <!--
+    This sample is a self-contained, self-deployable demo app. It intentionally does
+    NOT import the repo-wide Directory.Build.props: it is not a shipping library, so it
+    opts out of the SDK versioning / analyzer / API-compat / Central-Package-Management
+    machinery and manages its own TargetFramework and package versions directly (exactly
+    as it would when a developer copies it out of the repo and runs `azd up`).
+  -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+</Project>

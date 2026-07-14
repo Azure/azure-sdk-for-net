@@ -1,8 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Streaming;
+using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Internal;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
+using Azure.AI.AgentServer.Responses.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Identity;
@@ -68,13 +73,16 @@ public static class ResponsesServerServiceCollectionExtensions
         services.TryAddSingleton<ResponsesActivitySource>();
 
         // InMemoryResponsesProvider is always registered: it backs
-        // ResponsesCancellationSignalProvider and ResponsesStreamProvider even when
-        // FoundryStorageProvider handles ResponsesProvider in hosted environments.
+        // ResponsesCancellationSignalProvider even when FoundryStorageProvider handles
+        // ResponsesProvider in hosted environments.
         services.TryAddSingleton<InMemoryResponsesProvider>();
         services.TryAddSingleton<ResponsesCancellationSignalProvider>(sp =>
             new InMemoryCancellationSignalProvider(sp.GetRequiredService<InMemoryResponsesProvider>()));
-        services.TryAddSingleton<ResponsesStreamProvider>(sp =>
-            new InMemoryStreamProvider(sp.GetRequiredService<InMemoryResponsesProvider>()));
+
+        // SSE streaming is composed on the Core event-stream primitive (registered via
+        // AddEventStreams below), not a pluggable Responses stream provider.
+
+        TokenCredential? resilientTaskCredential = null;
 
         // Auto-detect hosted environment: when FoundryEnvironment.IsHosted is true,
         // meaning the .NET hosting environment is not Development and
@@ -82,7 +90,8 @@ public static class ResponsesServerServiceCollectionExtensions
         // use FoundryStorageProvider for persistence; otherwise use in-memory.
         if (FoundryEnvironment.IsHosted)
         {
-            services.TryAddSingleton<TokenCredential>(_ => new DefaultAzureCredential());
+            resilientTaskCredential = new DefaultAzureCredential();
+            services.TryAddSingleton<TokenCredential>(_ => resilientTaskCredential);
 
             // Build the Azure.Core HttpPipeline with BearerTokenAuthenticationPolicy.
             // This automatically provides: retry, request ID, user-agent telemetry,
@@ -119,11 +128,82 @@ public static class ResponsesServerServiceCollectionExtensions
         }
         else
         {
-            services.TryAddSingleton<ResponsesProvider>(sp => sp.GetRequiredService<InMemoryResponsesProvider>());
+            // Local (non-hosted) environment. The durable filesystem-backed provider is the
+            // default so response envelopes survive a process restart (single-sandbox auto-recovery)
+            // with full fidelity locally — matching the Python implementation, where the file-backed
+            // store is the local default. The InMemoryResponsesProvider remains registered (it backs
+            // ResponsesCancellationSignalProvider) but is no longer selected as the ResponsesProvider;
+            // it is effectively dead unless a consumer explicitly discovers and wires it up.
+            services.TryAddSingleton<FileResponsesProvider>(_ => new FileResponsesProvider());
+            services.TryAddSingleton<ResponsesProvider>(sp =>
+                sp.GetRequiredService<FileResponsesProvider>());
         }
+
+        // The Responses layer does not own an event-stream store. SSE events are published onto
+        // the Core event-stream primitive (IEventStreamRegistry/IEventStream) — matching Python,
+        // which uses the core EventStream registry directly. Register it once here. The backing is
+        // chosen eagerly: local + ResilientBackground uses a durable file-backed replay so a
+        // reconnecting client can replay pre-restart SSE events after a single-sandbox recovery;
+        // otherwise an in-memory replay buffer is sufficient. TryAddSingleton in AddEventStreams
+        // preserves consumer precedence (a custom IEventStreamRegistry registered first wins).
+        var eagerOptions = new ResponsesServerOptions();
+        configure?.Invoke(eagerOptions);
+        var useDurableStreams = eagerOptions.ResilientBackground && !FoundryEnvironment.IsHosted;
+        var streamTtl = new InMemoryProviderOptions().EventStreamTtl;
+        services.AddEventStreams(o =>
+        {
+            if (useDurableStreams)
+            {
+                o.UseFileBackedReplay(
+                    storageDirectory: Internal.Resilience.ResponsesStatePaths.StreamsRoot(),
+                    cursor: payload => (int)((ResponseStreamEvent)payload).SequenceNumber,
+                    ttl: streamTtl,
+                    serializer: payload => ModelReaderWriter.Write(
+                        (ResponseStreamEvent)payload,
+                        ModelReaderWriterOptions.Json,
+                        AzureAIAgentServerResponsesContext.Default).ToArray(),
+                    deserializer: bytes => ModelReaderWriter.Read<ResponseStreamEvent>(
+                        new BinaryData(bytes),
+                        ModelReaderWriterOptions.Json,
+                        AzureAIAgentServerResponsesContext.Default)!);
+            }
+            else
+            {
+                o.UseInMemoryReplay(
+                    cursor: payload => (int)((ResponseStreamEvent)payload).SequenceNumber,
+                    ttl: streamTtl);
+            }
+        });
 
         services.AddSingleton<ResponseExecutionTracker>();
         services.AddHostedService(sp => sp.GetRequiredService<ResponseExecutionTracker>());
+
+        // Compose the Core resilient-task primitive (do NOT reinvent recovery/leasing/steering).
+        // In a local sandbox the Core task subsystem is ALWAYS available — matching Python, whose
+        // task subsystem is not gated on any option (`_pick_primitive` routes any conversation
+        // through the multi-turn task, and every stored response is tracked by a task so the
+        // next-lifetime recovery scan can act on it). The response orchestration runs INSIDE a Core
+        // @task / @multi_turn_task: Core's task engine owns crash recovery (its TaskDurabilityService
+        // cold-start scan), leasing, and steering. This composition is active in BOTH local and hosted
+        // environments; hosted mode selects the hosted task store via AddResilientTasks(credential),
+        // matching Python's hosted behavior.
+        //
+        // The multi-turn task is registered steerable only when SteerableConversations is set:
+        // a non-steerable multi-turn conversation turns concurrent overlap into a Core lock conflict
+        // (→ HTTP 409 conversation_locked), which is exactly the concurrency protection a plain
+        // conversation_id chain requires. Checkpoint/durable-stream backing stays resilient-only
+        // (see the useDurableStreams gate above) — this registration does not change that.
+        IResilientTaskBuilder taskBuilder = resilientTaskCredential is null
+            ? services.AddResilientTasks()
+            : services.AddResilientTasks(resilientTaskCredential);
+        taskBuilder.AddTask<ResponseTaskInput, ResponseTaskOutput>(
+            ResponsesResilientTaskHandler.OneShotTaskName,
+            (sp, ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(sp, ctx, ct));
+        taskBuilder.AddMultiTurnTask<ResponseTaskInput, ResponseTaskOutput>(
+            ResponsesResilientTaskHandler.MultiTurnTaskName,
+            (sp, ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(sp, ctx, ct),
+            steerable: eagerOptions.SteerableConversations);
+
         services.AddSingleton<IPayloadValidator, PayloadValidator>();
         services.AddScoped<ResponseOrchestrator>();
         services.AddScoped<ResponseEndpointHandler>();

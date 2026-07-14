@@ -3,6 +3,7 @@
 
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -28,8 +29,9 @@ public class CancelAsyncTests : IDisposable
             Options.Create(new InMemoryProviderOptions()), TimeProvider.System);
         _tracker = new ResponseExecutionTracker(NullLogger<ResponseExecutionTracker>.Instance);
         _orchestrator = new ResponseOrchestrator(
-            _handler, _provider, new InMemoryCancellationSignalProvider(_provider), new InMemoryStreamProvider(_provider), _tracker,
-            NullLogger<ResponseOrchestrator>.Instance);
+            _handler, _provider, new InMemoryCancellationSignalProvider(_provider), TestEventStreams.CreateInMemoryRegistry(), _tracker,
+            NullLogger<ResponseOrchestrator>.Instance,
+            Options.Create(new ResponsesServerOptions()));
     }
 
     [Test]

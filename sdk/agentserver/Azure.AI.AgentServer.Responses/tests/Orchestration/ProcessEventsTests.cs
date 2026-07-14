@@ -3,7 +3,9 @@
 
 using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Responses.Internal;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -26,6 +28,7 @@ public class ProcessEventsTests : IDisposable
     private readonly TestHandler _handler;
     private readonly InMemoryResponsesProvider _provider;
     private readonly ResponseExecutionTracker _tracker;
+    private readonly IEventStreamRegistry _eventStreamRegistry;
     private readonly ResponseOrchestrator _orchestrator;
 
     public ProcessEventsTests()
@@ -34,9 +37,11 @@ public class ProcessEventsTests : IDisposable
         _provider = new InMemoryResponsesProvider(
             Options.Create(new InMemoryProviderOptions()), TimeProvider.System);
         _tracker = new ResponseExecutionTracker(NullLogger<ResponseExecutionTracker>.Instance);
+        _eventStreamRegistry = TestEventStreams.CreateInMemoryRegistry();
         _orchestrator = new ResponseOrchestrator(
-            _handler, _provider, new InMemoryCancellationSignalProvider(_provider), new InMemoryStreamProvider(_provider), _tracker,
-            NullLogger<ResponseOrchestrator>.Instance);
+            _handler, _provider, new InMemoryCancellationSignalProvider(_provider), _eventStreamRegistry, _tracker,
+            NullLogger<ResponseOrchestrator>.Instance,
+            Options.Create(new ResponsesServerOptions()));
     }
 
     [Test]
@@ -178,14 +183,25 @@ public class ProcessEventsTests : IDisposable
         var context = new ResponseContext("resp_proc_07");
         var (events, observer) = await SubscribeToEvents("resp_proc_07");
 
-        await ConsumeProcessedEvents(new CreateResponse(), execution, context, publisher);
+        var yielded = await ConsumeProcessedEvents(new CreateResponse(), execution, context, publisher);
         await publisher.OnCompletedAsync();
         await observer.Completed.WaitAsync(TimeSpan.FromSeconds(5));
 
-        Assert.That(events.Count, Is.EqualTo(3));
+        // ProcessEventsAsync yields the FULL lifecycle (created, in_progress, completed) to the
+        // streaming yield path.
+        Assert.That(yielded.Count, Is.EqualTo(3));
+        XAssert.IsType<ResponseCreatedEvent>(yielded[0]);
+        XAssert.IsType<ResponseInProgressEvent>(yielded[1]);
+        XAssert.IsType<ResponseCompletedEvent>(yielded[2]);
+
+        // ...but only the NON-terminal events are published to the wire stream here. Terminal events
+        // (completed/failed/incomplete) are deliberately deferred to CreateStreamingAsync, which
+        // publishes the corrected terminal AFTER its Phase-2 persistence step so the wire stream
+        // (registry replay + resilient relay) observes the SAME terminal as the yield path — e.g.
+        // response.failed, not response.completed, when the terminal persist fails.
+        Assert.That(events.Count, Is.EqualTo(2));
         XAssert.IsType<ResponseCreatedEvent>(events[0]);
         XAssert.IsType<ResponseInProgressEvent>(events[1]);
-        XAssert.IsType<ResponseCompletedEvent>(events[2]);
     }
 
     [Test]
@@ -232,17 +248,20 @@ public class ProcessEventsTests : IDisposable
 
     // --- Helpers ---
 
-    private async Task ConsumeProcessedEvents(
+    private async Task<List<ResponseStreamEvent>> ConsumeProcessedEvents(
         CreateResponse request,
         ResponseExecution execution,
         ResponseContext context,
         IAsyncObserver<ResponseStreamEvent> publisher)
     {
-        await foreach (var _ in _orchestrator.ProcessEventsAsync(
+        var yielded = new List<ResponseStreamEvent>();
+        await foreach (var evt in _orchestrator.ProcessEventsAsync(
             request, execution, context, publisher, CancellationToken.None))
         {
-            // Consume all events
+            yielded.Add(evt);
         }
+
+        return yielded;
     }
 
     private async Task<(ResponseExecution Execution, IAsyncObserver<ResponseStreamEvent> Publisher)>
@@ -250,17 +269,16 @@ public class ProcessEventsTests : IDisposable
             bool isBackground = false, bool store = true)
     {
         var execution = _tracker.Create(responseId, isBackground, store: store);
-        var publisher = await _provider.CreateEventPublisherAsync(responseId);
+        var publisher = await TestEventStreams.CreatePublisherAsync(_eventStreamRegistry, responseId);
         return (execution, publisher);
     }
 
-    private async Task<(List<ResponseStreamEvent> Events, CollectingObserver Observer)>
+    private Task<(List<ResponseStreamEvent> Events, TestSubscription Observer)>
         SubscribeToEvents(string responseId)
     {
         var events = new List<ResponseStreamEvent>();
-        var observer = new CollectingObserver(events);
-        await _provider.SubscribeToEventsAsync(responseId, observer);
-        return (events, observer);
+        var subscription = TestEventStreams.Subscribe(_eventStreamRegistry, responseId, events);
+        return Task.FromResult((events, subscription));
     }
 
     private static OutputItemMessage CreateOutputMessage(string id, string text)

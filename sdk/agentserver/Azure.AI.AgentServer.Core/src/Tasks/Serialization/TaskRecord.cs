@@ -97,10 +97,10 @@ internal sealed class TaskRecord
             Source = Source.FromJson(obj[TaskWireKeys.Source]),
             Error = obj[TaskWireKeys.Error]?.DeepClone(),
             SuspensionReason = (string?)obj[TaskWireKeys.SuspensionReason],
-            CreatedAt = (string?)obj[TaskWireKeys.CreatedAt],
-            UpdatedAt = (string?)obj[TaskWireKeys.UpdatedAt],
-            StartedAt = (string?)obj[TaskWireKeys.StartedAt],
-            CompletedAt = (string?)obj[TaskWireKeys.CompletedAt],
+            CreatedAt = WireValue.AsString(obj[TaskWireKeys.CreatedAt]),
+            UpdatedAt = WireValue.AsString(obj[TaskWireKeys.UpdatedAt]),
+            StartedAt = WireValue.AsString(obj[TaskWireKeys.StartedAt]),
+            CompletedAt = WireValue.AsString(obj[TaskWireKeys.CompletedAt]),
             Etag = (string?)obj[TaskWireKeys.Etag],
         };
 

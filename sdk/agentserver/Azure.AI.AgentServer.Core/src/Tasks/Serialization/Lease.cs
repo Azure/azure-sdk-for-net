@@ -42,12 +42,12 @@ internal sealed class Lease
 
         return new Lease
         {
-            Owner = (string?)obj[TaskWireKeys.LeaseOwner] ?? string.Empty,
-            InstanceId = (string?)obj[TaskWireKeys.LeaseInstanceId] ?? string.Empty,
+            Owner = WireValue.AsStringOrEmpty(obj[TaskWireKeys.LeaseOwner]),
+            InstanceId = WireValue.AsStringOrEmpty(obj[TaskWireKeys.LeaseInstanceId]),
             Generation = (long?)obj[TaskWireKeys.LeaseGeneration] ?? 0,
-            ExpiresAt = (string?)obj[TaskWireKeys.LeaseExpiresAt] ?? string.Empty,
+            ExpiresAt = WireValue.AsStringOrEmpty(obj[TaskWireKeys.LeaseExpiresAt]),
             ExpiryCount = (long?)obj[TaskWireKeys.LeaseExpiryCount] ?? 0,
-            HeartbeatAt = (string?)obj[TaskWireKeys.LeaseHeartbeatAt],
+            HeartbeatAt = WireValue.AsString(obj[TaskWireKeys.LeaseHeartbeatAt]),
         };
     }
 

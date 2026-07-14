@@ -1190,7 +1190,7 @@ When `store=true` (the default), the library persists the response to durable st
 
 | Mode | When persistence fails | What the handler sees | What the client sees |
 |------|----------------------|----------------------|---------------------|
-| Non-streaming, non-background | After handler completes (in `FinalizeExecutionAsync`) | Nothing — handler already finished | Response with `status: "failed"`, `error.code: "storage_error"` |
+| Non-streaming, non-background | Phase 1 (create) or Phase 2 (finalize) | Nothing — handler already produced its response | **HTTP error** carrying the *original* storage error (e.g. `500` `storage_error`, or `400` for a non-retryable bad request); no dangling response is returned |
 | Streaming, non-background | Before yielding the terminal event | Nothing — handler already emitted terminal | Terminal event replaced with `response.failed` |
 | Background, non-streaming | Phase 1 (CreateResponse): before response returned to client | `CancellationToken` fires (`OperationCanceledException`) | HTTP 500 error (pre-creation failure) |
 | Background, non-streaming | Phase 2 (UpdateResponse): after handler completes | Nothing — handler already finished | `GET` returns `status: "failed"` |
@@ -1211,7 +1211,7 @@ When `store=true` (the default), the library persists the response to durable st
 
 **When does persistence failure affect running handlers?**
 
-Only in background Phase 1 — when the library tries to create the initial response record *before* the client knows about it. This is the only scenario where a persistence failure cancels an actively running handler. In all other cases, the handler has already completed its work by the time persistence occurs.
+In the **pre-creation (Phase 1)** persistence failure of a **background or streaming** response — when the library tries to create the initial response record *before* `response.created` reaches the client. In those modes the handler may still be emitting events when creation is persisted, so its `CancellationToken` fires. For a **non-streaming foreground** response the handler has already produced its full response by the time persistence occurs, so it is not cancelled — the failure surfaces as an HTTP error carrying the original storage error instead.
 
 
 

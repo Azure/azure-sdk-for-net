@@ -4,8 +4,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Streaming;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
 
@@ -20,9 +23,10 @@ internal sealed class ResponseOrchestrator
     private readonly ResponseHandler _handler;
     private readonly ResponsesProvider _provider;
     private readonly ResponsesCancellationSignalProvider _cancellationProvider;
-    private readonly ResponsesStreamProvider _streamProvider;
+    private readonly IEventStreamRegistry _eventStreamRegistry;
     private readonly ResponseExecutionTracker _tracker;
     private readonly ILogger<ResponseOrchestrator> _logger;
+    private readonly bool _resilientBackground;
 
     /// <summary>
     /// Initializes a new instance of <see cref="ResponseOrchestrator"/>.
@@ -31,16 +35,18 @@ internal sealed class ResponseOrchestrator
         ResponseHandler handler,
         ResponsesProvider provider,
         ResponsesCancellationSignalProvider cancellationProvider,
-        ResponsesStreamProvider streamProvider,
+        IEventStreamRegistry eventStreamRegistry,
         ResponseExecutionTracker tracker,
-        ILogger<ResponseOrchestrator> logger)
+        ILogger<ResponseOrchestrator> logger,
+        IOptions<ResponsesServerOptions> options)
     {
         _handler = handler;
         _provider = provider;
         _cancellationProvider = cancellationProvider;
-        _streamProvider = streamProvider;
+        _eventStreamRegistry = eventStreamRegistry;
         _tracker = tracker;
         _logger = logger;
+        _resilientBackground = options.Value.ResilientBackground;
     }
 
     // --- Status Helpers ---
@@ -98,8 +104,7 @@ internal sealed class ResponseOrchestrator
         // Non-streaming: consume all events, apply error recovery, finalize, return completed.
         // Non-streaming responses are never eligible for SSE replay (B2 requires both
         // background=true AND stream=true), so a NullPublisher that assigns sequence
-        // numbers without buffering is sufficient — avoids allocating a full
-        // SeekableReplaySubject.
+        // numbers without buffering is sufficient — avoids creating a Core event stream.
         IAsyncObserver<ResponseStreamEvent> publisher = new NullPublisher();
         try
         {
@@ -109,7 +114,23 @@ internal sealed class ResponseOrchestrator
                 // Consume — non-streaming just accumulates state.
             }
 
-            await EnsureTerminalOrFailAsync(execution, publisher);
+            // A handler may have swallowed the ExitForRecoveryAsync() signal with a broad catch and
+            // returned normally. Honor the deferral intent so the outcome is identical to the
+            // caught-signal path (FR-036); this must run before EnsureTerminalOrFailAsync so the
+            // response is not mistaken for a bad handler that ended without a terminal event.
+            ObserveSwallowedDeferral(execution, context);
+
+            if (!execution.DeferredForRecovery)
+            {
+                await EnsureTerminalOrFailAsync(execution, publisher);
+            }
+        }
+        catch (ResponseExitForRecovery)
+        {
+            // Handler deferred to next-lifetime recovery (FR-036): mark deferred so finalization
+            // skips the pre-terminal persist (preserving the last checkpoint snapshot) and retains
+            // the recovery entry (durable status stays non-terminal). NOT a failure.
+            execution.DeferredForRecovery = true;
         }
         catch (Exception ex) when (ex is not ResponsesApiException || execution.Response is not null)
         {
@@ -313,7 +334,12 @@ internal sealed class ResponseOrchestrator
         [EnumeratorCancellation] CancellationToken ct)
     {
         var firstEvent = true;
-        var outputItemCount = 0;
+
+        // On a crash-recovery re-invocation the handler may re-seed the stream from the durable
+        // snapshot (context.PersistedResponse). Those already-emitted output items are legitimately
+        // present without a fresh output_item.added event this lifetime, so the direct-manipulation
+        // guard (B30/S-033) starts from the recovered watermark rather than 0.
+        var outputItemCount = execution.RecoveredOutputWatermark;
 
         _logger.LogInformation(
             "Invoking handler {HandlerType} for response {ResponseId}",
@@ -322,6 +348,31 @@ internal sealed class ResponseOrchestrator
         await foreach (var evt in _handler.CreateAsync(request, context, ct)
             .WithCancellation(ct))
         {
+            // F2 (FR-036): ExitForRecoveryAsync() records DeferralRequested immediately before it
+            // raises the ResponseExitForRecovery signal. A handler that swallows that signal with a
+            // broad catch and then keeps yielding events (e.g. a terminal completed) must NOT be able
+            // to drive the durable response terminal — the signal "cannot be effectively swallowed"
+            // (parity with Python's BaseException, whose post-except code cannot run). So once a
+            // deferral was requested, stop consuming handler events WITHOUT processing, publishing, or
+            // persisting this (or any later) yielded event or control signal; mark the execution
+            // deferred so finalization takes the checkpoint-preserving deferral path (no terminal
+            // persist, recovery entry retained), exactly like the caught-signal path.
+            if (context is ResponseContextImpl deferImpl && deferImpl.DeferralRequested)
+            {
+                execution.DeferredForRecovery = true;
+                yield break;
+            }
+
+            // Checkpoint control signal (Row 11): persist the current snapshot (gated to resilient
+            // background) and resume the handler. Intercepted by CLR type BEFORE any wire coercion —
+            // it is never forwarded to the SSE stream and does not consume a sequence number. The
+            // handler's yield is backpressured because the persist is awaited inline here (FR-031).
+            if (evt is ResponseCheckpointEvent)
+            {
+                await DoCheckpointPersistAsync(execution, context).ConfigureAwait(false);
+                continue;
+            }
+
             if (firstEvent)
             {
                 firstEvent = false;
@@ -348,11 +399,14 @@ internal sealed class ResponseOrchestrator
                         $"Handler emitted response.created with terminal status '{createdEvt.Response.Status}'. Expected a non-terminal status. Handler type: {_handler.GetType().Name}.");
                 }
 
-                // B30/S-033: Output manipulation detection on response.created
-                if (createdEvt.Response.Output.Count != 0)
+                // B30/S-033: Output manipulation detection on response.created. On a crash-recovery
+                // re-invocation the handler legitimately re-seeds the stream with the items already
+                // emitted before the crash, so the expected count is the recovered watermark (0 on a
+                // normal invocation — behavior unchanged off the recovery path).
+                if (createdEvt.Response.Output.Count != execution.RecoveredOutputWatermark)
                 {
                     ThrowBadHandler(execution,
-                        $"Handler directly modified Response.Output (found {createdEvt.Response.Output.Count} items, expected 0). Use output builder events instead. Handler type: {_handler.GetType().Name}.");
+                        $"Handler directly modified Response.Output (found {createdEvt.Response.Output.Count} items, expected {execution.RecoveredOutputWatermark}). Use output builder events instead. Handler type: {_handler.GetType().Name}.");
                 }
 
                 // B31: Status is a required field. Auto-stamp InProgress if the
@@ -368,28 +422,57 @@ internal sealed class ResponseOrchestrator
                     ResponseMutations.StampAgentSessionId(execution, request);
                     ResponseMutations.StampRequestEchoFields(execution, request);
                     evt.SnapshotEmbeddedResponse(execution.Response!);
-                    await publisher.OnNextAsync(evt);
 
                     var (inputItems, historyItemIds) = await ResolveItemsForPersistenceAsync(context);
 
                     try
                     {
-                        await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response!, inputItems, historyItemIds), context.PlatformContext);
+                        if (context.IsRecovery)
+                        {
+                            // Recovery re-invocation: the response was already created in a prior
+                            // lifetime, so update the existing durable record rather than creating
+                            // a duplicate (CreateResponseAsync throws on an existing id). This keeps
+                            // exactly one logical response.created across lifetimes.
+                            await _provider.UpdateResponseAsync(execution.Response!, context.PlatformContext);
+                        }
+                        else
+                        {
+                            await _provider.CreateResponseAsync(new CreateResponseRequest(execution.Response!, inputItems, historyItemIds), context.PlatformContext);
+                        }
+
+                        // FR-037: record the durable snapshot written at response.created so a
+                        // subsequent no-change Checkpoint() is deduplicated (FR-030 idempotency).
+                        execution.LastPersistedSnapshotBytes =
+                            ResponseMutations.SerializeSnapshotForDedup(execution.Response!.Snapshot());
                     }
                     catch (Exception ex)
                     {
                         // Phase 1 persistence failed — the client has NOT received
-                        // response.created yet (yield return hasn't executed).
-                        // Null out Response so the error handling path treats this as
-                        // a pre-creation failure → standalone "error" SSE event per spec.
+                        // response.created yet (yield return hasn't executed) and it has NOT been
+                        // published to the wire stream (the publish now happens only AFTER a
+                        // successful persist, below). Null out Response so the error handling path
+                        // treats this as a pre-creation failure → standalone "error" SSE event per
+                        // spec (B8), for both the yield path and the registry relay path. Record the
+                        // original persistence exception so the resilient relay can surface it with
+                        // full fidelity (storage_error) instead of the generic server_error the relay
+                        // would otherwise derive from the execution-CTS cancellation below — the real
+                        // error is thrown on the task-body's yield path, which never reaches the relay.
                         // Cancel the execution CTS so the handler stops processing.
                         _logger.LogError(ex,
                             "Phase 1 persistence (CreateResponseAsync) failed for response {ResponseId}",
                             execution.ResponseId);
                         execution.Response = null;
+                        execution.PersistenceFailed = true;
+                        execution.PersistenceException = ex;
+                        execution.PreCreatedRelayFailure = ex;
                         execution.CancellationTokenSource.Cancel();
                         throw;
                     }
+
+                    // Publish response.created to the wire stream ONLY after Phase-1 persistence
+                    // succeeded — a registry subscriber (GET ?stream=true replay, or the resilient
+                    // relay) must never observe a created event whose durable write later failed.
+                    await publisher.OnNextAsync(evt);
 
                     // Signal that response.created has been processed — unblocks
                     // the bg non-streaming endpoint path waiting for the handler's response.
@@ -485,8 +568,15 @@ internal sealed class ResponseOrchestrator
             // Snapshot the Response embedded in lifecycle events
             evt.SnapshotEmbeddedResponse(execution.Response!);
 
-            // Push to replay subject via provider publisher
-            await publisher.OnNextAsync(evt);
+            // Push to replay subject via provider publisher. Terminal events
+            // (completed/failed/incomplete) are the ONE exception: they are published by
+            // CreateStreamingAsync AFTER its Phase-2 persistence step so the wire stream (registry
+            // replay + resilient relay) observes the SAME corrected terminal as the yield path —
+            // e.g. response.failed, not response.completed, when the terminal persist fails.
+            if (evt is not (ResponseCompletedEvent or ResponseFailedEvent or ResponseIncompleteEvent))
+            {
+                await publisher.OnNextAsync(evt);
+            }
 
             // Track highest emitted sequence number for SDK-synthesized terminal events (B9)
             if (evt.SequenceNumber > execution.LastEmittedSequenceNumber)
@@ -506,6 +596,80 @@ internal sealed class ResponseOrchestrator
     }
 
     /// <summary>
+    /// Persists a checkpoint snapshot yielded via <c>stream.Checkpoint()</c> (Row 11 / FR-030..037).
+    /// Semantics (all Python-parity with <c>_do_checkpoint_persist</c>):
+    /// <list type="bullet">
+    /// <item>No-op unless resilient background (<c>ResilientBackground</c> + <c>store</c> + <c>background</c>).</item>
+    /// <item>Dropped after a terminal status — the terminal write is authoritative (C4/FR-034).</item>
+    /// <item>Idempotent — a snapshot byte-identical to the last persisted one is skipped (FR-030).</item>
+    /// <item>Status preserved — the response is persisted as-is; the checkpoint never rewrites status.</item>
+    /// <item>Failures swallowed — a transient store error is logged, not surfaced to the handler, and
+    /// the prior snapshot is retained (C5/FR-035).</item>
+    /// </list>
+    /// </summary>
+    private async Task DoCheckpointPersistAsync(
+        ResponseExecution execution, ResponseContext context)
+    {
+        // No-op gate: checkpoints only persist for resilient background responses.
+        if (!_resilientBackground || !execution.IsBackground || !execution.Store)
+        {
+            return;
+        }
+
+        // Persist the authoritative orchestrator snapshot (execution.Response), not the stream-owned
+        // response carried by the checkpoint event. execution.Response reflects every event processed
+        // before this checkpoint (intercepted at the top of the loop) AND the SDK-managed stamps
+        // (agent_session_id, output-item auto-stamps) that the created/terminal writes also carry.
+        // Using the stream's un-stamped response would drop agent_session_id from the durable record
+        // for the whole in-progress window and defeat the FR-030 dedup baseline. If no created event
+        // has been processed yet there is nothing durable to checkpoint.
+        if (execution.Response is null)
+        {
+            return;
+        }
+
+        var snapshot = execution.Response.Snapshot();
+
+        // C4/FR-034: a checkpoint after the terminal event is dropped (no overwrite, no exception).
+        if (IsTerminalStatus(snapshot.Status))
+        {
+            return;
+        }
+
+        byte[]? snapshotBytes = ResponseMutations.SerializeSnapshotForDedup(snapshot);
+        if (snapshotBytes is null)
+        {
+            // If we cannot even serialize the snapshot, treat it like a swallowed transient failure:
+            // do not surface to the handler; retain the prior snapshot.
+            _logger.LogWarning(
+                "Checkpoint snapshot serialization failed for response {ResponseId}; checkpoint skipped.",
+                execution.ResponseId);
+            return;
+        }
+
+        // FR-030 idempotency: skip a byte-identical re-persist of the last durable snapshot.
+        if (execution.LastPersistedSnapshotBytes is { } prior
+            && prior.AsSpan().SequenceEqual(snapshotBytes))
+        {
+            return;
+        }
+
+        try
+        {
+            await _provider.UpdateResponseAsync(snapshot, context.PlatformContext).ConfigureAwait(false);
+            execution.LastPersistedSnapshotBytes = snapshotBytes;
+        }
+        catch (Exception ex)
+        {
+            // C5/FR-035: transient store failure during checkpoint is swallowed — the handler does not
+            // observe it and the prior durable snapshot is retained for recovery.
+            _logger.LogWarning(ex,
+                "Checkpoint persist failed for response {ResponseId}; prior snapshot retained.",
+                execution.ResponseId);
+        }
+    }
+
+    /// <summary>
     /// Wraps <see cref="ProcessEventsAsync"/> for streaming consumers with
     /// error recovery and finalization. The publisher is created internally.
     /// </summary>
@@ -520,12 +684,14 @@ internal sealed class ResponseOrchestrator
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        // Only bg+streaming responses need a replay-capable publisher — these are
-        // the only mode eligible for SSE replay via GET ?stream=true (B2).
-        // For non-background streaming the SSE events are delivered directly from
-        // the yield return path; no second subscriber ever connects.
-        var publisher = execution.IsBackground
-            ? await _streamProvider.CreateEventPublisherAsync(execution.ResponseId, ct)
+        // A replay-capable registry publisher is needed whenever a second subscriber consumes the
+        // per-response wire stream instead of the direct yield path: background responses (SSE replay
+        // via GET ?stream=true, B2) AND every resilient (task-wrapped) streaming turn, whose client
+        // connection relays the wire stream because the handler runs inside a decoupled Core task
+        // (execution.RelayViaRegistry). A plain foreground non-resilient stream delivers events straight
+        // from the yield path — no second subscriber ever connects — so it uses a NullPublisher.
+        var publisher = (execution.IsBackground || execution.RelayViaRegistry)
+            ? await EventStreamObserver.CreateAsync(await _eventStreamRegistry.GetOrCreateAsync(execution.ResponseId, ct).ConfigureAwait(false), ct).ConfigureAwait(false)
             : (IAsyncObserver<ResponseStreamEvent>)new NullPublisher();
         var enumerator = ProcessEventsAsync(request, execution, context, publisher, ct)
             .GetAsyncEnumerator(ct);
@@ -544,6 +710,14 @@ internal sealed class ResponseOrchestrator
 
                     evt = enumerator.Current;
                 }
+                catch (ResponseExitForRecovery)
+                {
+                    // Handler deferred to next-lifetime recovery (FR-036): mark deferred so
+                    // finalization skips the pre-terminal persist (preserving the last checkpoint
+                    // snapshot) and retains the recovery entry. Stop draining; NOT a failure.
+                    execution.DeferredForRecovery = true;
+                    break;
+                }
                 catch (Exception ex) when (ex is not ResponsesApiException || execution.Response is not null)
                 {
                     await HandleExecutionExceptionAsync(execution, publisher, ex);
@@ -561,6 +735,10 @@ internal sealed class ResponseOrchestrator
                     // Azure.Core pipeline already handles transport-level retries.
                     if (execution.Store && execution.Response is not null)
                     {
+                        // The while-loop owns the terminal persist for the cooperative streaming path;
+                        // record that so FinalizeExecutionAsync does not persist a second time (and so it
+                        // CAN persist a steering-completion terminal that never reached this block).
+                        execution.StreamingTerminalPersisted = true;
                         Exception? persistException = null;
                         try
                         {
@@ -599,22 +777,36 @@ internal sealed class ResponseOrchestrator
                                 evt.SequenceNumber, execution.Response.Snapshot());
                         }
                     }
+
+                    // Publish the corrected terminal to the wire stream here (NOT at the ProcessEventsAsync
+                    // push point) so registry subscribers observe the post-Phase-2 event: response.failed
+                    // when the terminal persist failed, otherwise the handler's terminal. No-op for a
+                    // NullPublisher (plain foreground non-resilient stream).
+                    await publisher.OnNextAsync(evt);
                 }
 
                 yield return evt;
             }
 
-            await EnsureTerminalOrFailAsync(execution, publisher);
+            // On a recovery deferral the handler intentionally ended non-terminal; do not treat
+            // that as a bad handler and do not synthesize a terminal failure (FR-036). Also honor a
+            // deferral signal a handler swallowed with a broad catch before returning normally.
+            ObserveSwallowedDeferral(execution, context);
 
-            // Yield terminal event emitted by error recovery or S-015 that wasn't
-            // yielded in the while loop (because C# disallows yield inside catch blocks).
-            // The SDK only sets Failed or Cancelled (never Incomplete — that's handler-driven),
-            // so this always emits ResponseFailedEvent.
-            if (!terminalEventYielded && execution.Response is not null
-                && IsTerminalStatus(execution.Response.Status))
+            if (!execution.DeferredForRecovery)
             {
-                yield return new ResponseFailedEvent(
-                    execution.LastEmittedSequenceNumber + 1, execution.Response.Snapshot());
+                await EnsureTerminalOrFailAsync(execution, publisher);
+
+                // Yield terminal event emitted by error recovery or S-015 that wasn't
+                // yielded in the while loop (because C# disallows yield inside catch blocks).
+                // The SDK only sets Failed or Cancelled (never Incomplete — that's handler-driven),
+                // so this always emits ResponseFailedEvent.
+                if (!terminalEventYielded && execution.Response is not null
+                    && IsTerminalStatus(execution.Response.Status))
+                {
+                    yield return new ResponseFailedEvent(
+                        execution.LastEmittedSequenceNumber + 1, execution.Response.Snapshot());
+                }
             }
         }
         finally
@@ -653,6 +845,24 @@ internal sealed class ResponseOrchestrator
     }
 
     /// <summary>
+    /// Detects a deferral signal that a handler swallowed with a broad <c>catch</c> and then
+    /// returned normally, marking the execution deferred so the durable outcome matches the
+    /// caught-signal path (FR-036): the response stays non-terminal (in_progress), finalization
+    /// skips the pre-terminal persist, and the recovery entry is retained. Idempotent — a no-op when
+    /// the execution is already deferred or the context did not request deferral. Mirrors the
+    /// non-swallowable nature of Python's <c>ResponseExitForRecovery(BaseException)</c>.
+    /// </summary>
+    private static void ObserveSwallowedDeferral(ResponseExecution execution, ResponseContext context)
+    {
+        if (!execution.DeferredForRecovery
+            && context is ResponseContextImpl impl
+            && impl.DeferralRequested)
+        {
+            execution.DeferredForRecovery = true;
+        }
+    }
+
+    /// <summary>
     /// S-015: if the handler ended without a terminal event, emits
     /// <see cref="ResponseFailedEvent"/>.
     /// </summary>
@@ -682,9 +892,20 @@ internal sealed class ResponseOrchestrator
     internal async Task EmitTerminalFailureAsync(
         ResponseExecution execution,
         IAsyncObserver<ResponseStreamEvent> publisher,
-        Exception? exception = null)
+        Exception? exception = null,
+        string? shutdownReason = null)
     {
-        if (exception is not null)
+        if (!string.IsNullOrEmpty(shutdownReason))
+        {
+            // Shutdown-driven mark-failed (Row 2/3): code=server_error with an
+            // additionalInfo.shutdown_reason diagnostic ("grace_exhausted" Path B, "crash_recovery"
+            // Path C), mirroring Python's dispatch matrix. Ordinary handler failures never carry this.
+            execution.Response!.SetFailed(
+                ResponseErrorCode.ServerError,
+                ApiErrorFactory.GenericServerErrorMessage,
+                shutdownReason);
+        }
+        else if (exception is not null)
         {
             execution.Response!.SetFailed(exception);
         }
@@ -711,6 +932,23 @@ internal sealed class ResponseOrchestrator
         var cancelledEvent = new ResponseFailedEvent(
             execution.LastEmittedSequenceNumber + 1, execution.Response!.Snapshot());
         await publisher.OnNextAsync(cancelledEvent);
+    }
+
+    /// <summary>
+    /// Sets the response status to <see cref="ResponseStatus.Completed"/>, snapshots the response,
+    /// and pushes a <see cref="ResponseCompletedEvent"/> to the publisher. Used for a steering
+    /// supersession where the framework woke the active turn but the handler did not itself emit a
+    /// terminal event before the token tripped: the partial output is preserved as a completed
+    /// (not cancelled, not failed) turn so it remains valid conversation context (FR-053).
+    /// </summary>
+    internal async Task EmitTerminalCompletionAsync(
+        ResponseExecution execution,
+        IAsyncObserver<ResponseStreamEvent> publisher)
+    {
+        execution.Response!.SetCompleted();
+        var completedEvent = new ResponseCompletedEvent(
+            execution.LastEmittedSequenceNumber + 1, execution.Response!.Snapshot());
+        await publisher.OnNextAsync(completedEvent);
     }
 
     /// <summary>
@@ -783,6 +1021,12 @@ internal sealed class ResponseOrchestrator
         // or fault the signal because execution.Response is null.
         if (execution.Response is null)
         {
+            // Record the pre-created failure so the resilient relay can surface it as a standalone
+            // `error` SSE event with full fidelity (B8). On the inline path the same exception is
+            // re-thrown by ThrowIfPreCreatedFailure and caught by SseResult; on the task-wrapped path
+            // it is thrown in the decoupled task body, so the relay reads it from here instead. Do not
+            // clobber a more specific failure already recorded by the Phase-1 persistence catch.
+            execution.PreCreatedRelayFailure ??= exception;
             return;
         }
 
@@ -798,9 +1042,39 @@ internal sealed class ResponseOrchestrator
             {
                 await EmitTerminalCancellationAsync(execution, publisher);
             }
+            else if (execution.SteeringRequested)
+            {
+                // Steering supersession (FR-053): a new turn arrived for the same steerable
+                // conversation while this turn was active, so the framework woke this turn by
+                // cancelling its token. A cooperative handler normally observes
+                // context.PendingInputCount and emits its own terminal (e.g. completed with the
+                // partial output). If it instead let the token trip without emitting a terminal,
+                // finalize it as completed — NOT cancelled — so the partial work is preserved as
+                // valid conversation context for the draining steered turn. Steering never marks
+                // the superseded turn cancelled.
+                await EmitTerminalCompletionAsync(execution, publisher);
+            }
             else if (execution.ShutdownRequested)
             {
-                await EmitTerminalFailureAsync(execution, publisher, exception);
+                // Path B (grace exhausted): the framework forcibly cancelled the handler at shutdown.
+                // Row 1 (resilient background) — hand the in-flight handler to next-lifetime recovery
+                // (FR-014): leave the response in_progress (NOT failed), preserve the last checkpoint
+                // snapshot, and retain the acceptance-time recovery entry so the next lifetime
+                // re-invokes with IsRecovery==true. A well-behaved handler observes context.Shutdown
+                // and calls ExitForRecoveryAsync() explicitly; this is the framework-level fallback
+                // for a Row 1 handler that did not.
+                if (_resilientBackground && execution.IsBackground && execution.Store)
+                {
+                    execution.DeferredForRecovery = true;
+                }
+                else
+                {
+                    // Row 2/3 (non-resilient background or foreground) — in-process fail semantics
+                    // (mark failed with code=server_error, persist final events, respond to waiting
+                    // clients in this lifetime). No next-lifetime re-invocation. The mark-failed is
+                    // shutdown-driven, so tag it with shutdown_reason="grace_exhausted" (Path B).
+                    await EmitTerminalFailureAsync(execution, publisher, exception, shutdownReason: "grace_exhausted");
+                }
             }
             else
             {
@@ -854,14 +1128,25 @@ internal sealed class ResponseOrchestrator
         IAsyncObserver<ResponseStreamEvent> publisher)
     {
         // 1. Complete the publisher — best effort.
-        try
+        // SKIP on recovery deferral (FR-036): a resilient background+streaming handler that called
+        // ExitForRecoveryAsync() is handing the durable stream off to the next lifetime, which will
+        // resume publishing onto it. Completing the publisher here writes a completion sentinel to
+        // the durable stream file; on the next restart RehydrateFromFile would seed the subject as
+        // already-completed, so a client reconnecting via GET /responses/{id}?stream=true while the
+        // re-invocation is still producing events would see a premature close and miss the live tail
+        // (violating FR-041). Leaving the stream open (no sentinel) mirrors a true crash, where the
+        // process dies and this finally never runs.
+        if (!execution.DeferredForRecovery)
         {
-            await publisher.OnCompletedAsync();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogWarning(ex,
-                "Publisher.OnCompletedAsync failed for response {ResponseId}", execution.ResponseId);
+            try
+            {
+                await publisher.OnCompletedAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex,
+                    "Publisher.OnCompletedAsync failed for response {ResponseId}", execution.ResponseId);
+            }
         }
 
         // 2. If the handler never yielded response.created, fault the signal so
@@ -886,7 +1171,17 @@ internal sealed class ResponseOrchestrator
         // mark the response as failed and keep it in the tracker.
         // SKIP for streaming mode: persistence was already attempted in CreateStreamingAsync
         // before the terminal event was yielded to the client (Option A).
-        if (!execution.IsStreaming || execution.Response?.Status == ResponseStatus.Cancelled)
+        // SKIP on recovery deferral (FR-036): the handler called ExitForRecoveryAsync() to hand
+        // off to the next lifetime, so overwriting the durable record now with the current
+        // pre-terminal in-memory response would clobber the last checkpoint snapshot. The recovery
+        // entry is retained (status stays non-terminal) and the next lifetime resumes from the
+        // preserved snapshot.
+        if (!execution.DeferredForRecovery
+            && (!execution.IsStreaming
+                || execution.Response?.Status == ResponseStatus.Cancelled
+                || (execution.IsStreaming
+                    && execution.Response?.Status == ResponseStatus.Completed
+                    && !execution.StreamingTerminalPersisted)))
         {
             try
             {
@@ -945,6 +1240,8 @@ internal sealed class ResponseOrchestrator
         // 6. Signal FinalizedSignal — CancelAsync and StopAsync await this to know
         // that the response is in its final state and has been persisted.
         execution.FinalizedSignal.TrySetResult();
+
+        // 7. Core owns durable task lifecycle cleanup for resilient background responses.
     }
 
     /// <summary>

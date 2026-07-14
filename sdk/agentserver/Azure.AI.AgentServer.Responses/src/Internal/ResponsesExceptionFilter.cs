@@ -143,9 +143,11 @@ internal sealed class ResponsesExceptionFilter : IEndpointFilter
     /// Formats an exception for the <c>x-platform-error-detail</c> header.
     /// Unwraps <see cref="AggregateException"/> (which adds noise without diagnostic
     /// value), uses <see cref="Exception.ToString()"/> for full stack trace context,
+    /// sanitizes control/non-ASCII characters so the value is a legal HTTP header
+    /// (Kestrel rejects CR/LF and other control chars — the stack trace is multi-line),
     /// and truncates to <see cref="MaxErrorDetailLength"/>.
     /// </summary>
-    private static string FormatErrorDetail(Exception ex)
+    internal static string FormatErrorDetail(Exception ex)
     {
         // Unwrap AggregateException — they just wrap the real exception(s)
         var unwrapped = ex;
@@ -156,7 +158,7 @@ internal sealed class ResponsesExceptionFilter : IEndpointFilter
                 : agg.Flatten();
         }
 
-        var detail = unwrapped.ToString();
+        var detail = SanitizeHeaderValue(unwrapped.ToString());
 
         if (detail.Length > MaxErrorDetailLength)
         {
@@ -164,6 +166,48 @@ internal sealed class ResponsesExceptionFilter : IEndpointFilter
         }
 
         return detail;
+    }
+
+    /// <summary>
+    /// Collapses any character that is illegal in an HTTP header value into a single
+    /// space. HTTP field values may only contain visible ASCII plus SP/HTAB (RFC 7230
+    /// §3.2), and Kestrel throws on CR, LF, other control characters, or non-ASCII —
+    /// exactly what a multi-line, potentially Unicode, exception <c>ToString()</c>
+    /// contains. Runs of illegal characters collapse to one space and surrounding
+    /// whitespace is trimmed so the resulting single-line value stays readable.
+    /// </summary>
+    private static string SanitizeHeaderValue(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return string.Empty;
+        }
+
+        var sb = new System.Text.StringBuilder(value.Length);
+        bool pendingSpace = false;
+        foreach (var ch in value)
+        {
+            // Legal: visible ASCII (0x21-0x7E) and a literal space (0x20). Everything
+            // else — control chars (incl. CR/LF/TAB), DEL, and non-ASCII — is illegal.
+            bool legal = ch is >= (char)0x21 and <= (char)0x7E;
+            if (legal)
+            {
+                if (pendingSpace && sb.Length > 0)
+                {
+                    sb.Append(' ');
+                }
+
+                pendingSpace = false;
+                sb.Append(ch);
+            }
+            else
+            {
+                // Space or any illegal char folds into a single separating space.
+                pendingSpace = true;
+            }
+        }
+
+        return sb.ToString();
     }
 
     /// <summary>

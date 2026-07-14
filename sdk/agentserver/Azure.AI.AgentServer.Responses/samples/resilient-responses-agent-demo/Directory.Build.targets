@@ -1,0 +1,4 @@
+<Project>
+  <!-- Empty on purpose — severs inheritance of the repo-wide Directory.Build.targets
+       for this self-contained demo (see Directory.Build.props for rationale). -->
+</Project>

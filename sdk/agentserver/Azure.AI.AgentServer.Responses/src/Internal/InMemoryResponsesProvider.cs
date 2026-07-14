@@ -10,26 +10,21 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
 /// Default in-memory implementation of <see cref="ResponsesProvider"/>,
-/// with cancellation and streaming capabilities exposed via
-/// <see cref="InMemoryCancellationSignalProvider"/> and <see cref="InMemoryStreamProvider"/> adapters.
-/// Stores responses, event streams, and cancellation tokens in concurrent dictionaries.
+/// with cancellation capabilities exposed via the
+/// <see cref="InMemoryCancellationSignalProvider"/> adapter.
+/// Stores responses and cancellation tokens in concurrent dictionaries.
 /// </summary>
 /// <remarks>
 /// <para>
-/// This implementation is suitable for single-instance deployments.
-/// For multi-instance or distributed deployments, consumers should extend
-/// the provider abstract classes with a distributed backend (e.g., Redis, SQL).
+/// This implementation is retained as a non-default fallback. The SDK selects a durable
+/// file-backed provider by default for local operation; this provider is only used when a
+/// consumer explicitly wires it up. SSE streaming is handled by the Core event-stream
+/// primitive, not by this provider.
 /// </para>
 /// <para>
 /// Response data (envelopes, items, history, conversation membership) is retained
-/// indefinitely. Event stream replay uses per-event TTL — each event expires individually
-/// from its emission time via the underlying <see cref="SeekableReplaySubject"/>.
-/// The subject container and cancellation token source are disposed after the TTL
+/// indefinitely. Per-response cancellation-token sources are disposed after the TTL
 /// window fully elapses since the last event was emitted.
-/// </para>
-/// <para>
-/// Event streaming uses <see cref="SeekableReplaySubject"/> which provides
-/// replay buffering with time-based eviction and cursor-based seeking.
 /// </para>
 /// </remarks>
 internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
@@ -54,15 +49,12 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     // --- Deletion tracking ---
     private readonly HashSet<string> _deletedResponseIds = new();
 
-    // --- Streaming & cancellation ---
-    private readonly ConcurrentDictionary<string, SeekableReplaySubject> _subjects = new();
+    // --- Cancellation ---
     private readonly ConcurrentDictionary<string, CancellationTokenSource> _cancellationTokenSources = new();
 
     /// <summary>
     /// Tracks when each response's last event was approximately emitted (terminal status time).
-    /// Used to GC the subject container after the per-event TTL window has fully elapsed.
-    /// The <see cref="SeekableReplaySubject"/> handles per-event expiry internally;
-    /// this timestamp determines when to dispose the empty subject shell.
+    /// Used to GC the per-response cancellation-token container after the TTL window has elapsed.
     /// </summary>
     private readonly ConcurrentDictionary<string, DateTimeOffset> _lastEventEmittedAt = new();
 
@@ -470,51 +462,6 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         AddToConversation(response);
     }
 
-    // --- Streaming ---
-
-    /// <summary>
-    /// Creates an event publisher backed by a <see cref="SeekableReplaySubject"/>.
-    /// </summary>
-    public Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(
-        string responseId, CancellationToken cancellationToken = default)
-    {
-        var subject = _subjects.GetOrAdd(responseId, _ => new SeekableReplaySubject(_eventStreamTtl));
-        return Task.FromResult(subject.GetPublisher());
-    }
-
-    /// <summary>
-    /// Subscribes to events by seeking into the <see cref="SeekableReplaySubject"/>.
-    /// </summary>
-    public async Task<IAsyncDisposable> SubscribeToEventsAsync(
-        string responseId,
-        IAsyncObserver<ResponseStreamEvent> observer,
-        long? cursor = null,
-        CancellationToken cancellationToken = default)
-    {
-        if (!_subjects.TryGetValue(responseId, out var subject))
-        {
-            throw new BadRequestException($"Event stream is not available for response '{responseId}'.");
-        }
-
-        // Wrap the caller's observer in an adapter that unwraps the (SeqNo, Event) tuple
-        var adapter = new UnwrappingObserver(observer);
-        return await subject.SubscribeAsync(adapter, cursor).ConfigureAwait(false);
-    }
-
-    /// <summary>
-    /// Removes the event stream for the specified response, freeing buffer memory.
-    /// After deletion, <see cref="SubscribeToEventsAsync"/> will throw for this response ID.
-    /// </summary>
-    public Task DeleteEventStreamAsync(string responseId)
-    {
-        if (_subjects.TryRemove(responseId, out var subject))
-        {
-            subject.Dispose();
-        }
-
-        return Task.CompletedTask;
-    }
-
     // --- Cancellation ---
 
     /// <summary>
@@ -551,12 +498,9 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     // --- Eviction ---
 
     /// <summary>
-    /// GC pass for event stream infrastructure.
-    /// The <see cref="SeekableReplaySubject"/> handles per-event TTL internally
-    /// (each event expires individually from its emission time). This method
-    /// disposes the subject container and CTS once the TTL window has fully
-    /// elapsed since the last event was emitted (i.e. the response reached
-    /// terminal status), meaning all buffered events have individually expired.
+    /// GC pass for per-response cancellation-token infrastructure. Once the TTL window has fully
+    /// elapsed since the last event was emitted (i.e. the response reached terminal status), the
+    /// per-response cancellation-token source is disposed.
     /// </summary>
     private void EvictExpired()
     {
@@ -568,11 +512,6 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 
             if (elapsed > _eventStreamTtl)
             {
-                if (_subjects.TryRemove(id, out var subject))
-                {
-                    subject.Dispose();
-                }
-
                 if (_cancellationTokenSources.TryRemove(id, out var cts))
                 {
                     cts.Dispose();
@@ -587,12 +526,6 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     public void Dispose()
     {
         _evictionTimer.Dispose();
-
-        foreach (var subject in _subjects.Values)
-        {
-            subject.Dispose();
-        }
-        _subjects.Clear();
 
         foreach (var cts in _cancellationTokenSources.Values)
         {
@@ -612,29 +545,5 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         {
             _deletedResponseIds.Clear();
         }
-    }
-
-    /// <summary>
-    /// Adapter observer that unwraps <c>(long SeqNo, ResponseStreamEvent Event)</c> tuples
-    /// from the <see cref="SeekableReplaySubject"/> into bare <see cref="ResponseStreamEvent"/>
-    /// values for the external subscriber.
-    /// </summary>
-    private sealed class UnwrappingObserver : IAsyncObserver<(long SeqNo, ResponseStreamEvent Event)>
-    {
-        private readonly IAsyncObserver<ResponseStreamEvent> _inner;
-
-        public UnwrappingObserver(IAsyncObserver<ResponseStreamEvent> inner)
-        {
-            _inner = inner;
-        }
-
-        public async ValueTask OnNextAsync((long SeqNo, ResponseStreamEvent Event) value)
-        {
-            await _inner.OnNextAsync(value.Event).ConfigureAwait(false);
-        }
-
-        public ValueTask OnErrorAsync(Exception error) => _inner.OnErrorAsync(error);
-
-        public ValueTask OnCompletedAsync() => _inner.OnCompletedAsync();
     }
 }

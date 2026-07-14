@@ -1,0 +1,18 @@
+# azd environment
+.azure/*/state/
+.azure/*/*.env.bak
+
+# Demo client runtime
+.demo-session
+
+# Docker-build staging dir — populated by ./build.sh which copies the checked-in
+# NuGet package drop from sdk/agentserver/packages/ into here. Never committed:
+# source of truth is the central packages directory.
+src/resilient-responses-agent-demo/packages/
+
+# .NET build output
+src/resilient-responses-agent-demo/bin/
+src/resilient-responses-agent-demo/obj/
+
+# Battery run artifacts (transient test output — never committed)
+battery/runs/

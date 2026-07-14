@@ -1,0 +1,78 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "resourceGroupName": {
+        "value": "${AZURE_RESOURCE_GROUP}"
+      },
+      "environmentName": {
+        "value": "${AZURE_ENV_NAME}"
+      },
+      "location": {
+        "value": "${AZURE_LOCATION}"
+      },
+      "aiFoundryResourceName": {
+        "value": "${AZURE_AI_ACCOUNT_NAME}"
+      },
+      "aiFoundryProjectName": {
+        "value": "${AZURE_AI_PROJECT_NAME}"
+      },
+      "aiDeploymentsLocation": {
+        "value": "${AZURE_AI_DEPLOYMENTS_LOCATION}"
+      },
+      "resourceTokenSalt": {
+        "value": "${AZD_RESOURCE_TOKEN_SALT=}"
+      },
+      "principalId": {
+        "value": "${AZURE_PRINCIPAL_ID}"
+      },
+      "principalType": {
+        "value": "${AZURE_PRINCIPAL_TYPE}"
+      },
+      "aiProjectDeploymentsJson": {
+        "value": "${AI_PROJECT_DEPLOYMENTS=[]}"
+      },
+      "aiProjectConnectionsJson": {
+        "value": "${AI_PROJECT_CONNECTIONS=[]}"
+      },
+      "aiProjectConnectionCredentialsJson": {
+        "value": "${AI_PROJECT_CONNECTION_CREDENTIALS}"
+      },
+      "aiProjectDependentResourcesJson": {
+        "value": "${AI_PROJECT_DEPENDENT_RESOURCES=[]}"
+      },
+      "enableMonitoring": {
+        "value": "${ENABLE_MONITORING=true}"
+      },
+      "enableHostedAgents": {
+        "value": "${ENABLE_HOSTED_AGENTS=false}"
+      },
+      "enableCapabilityHost": {
+        "value": "${ENABLE_CAPABILITY_HOST=true}"
+      },
+      "useExistingAiProject": {
+        "value": "${USE_EXISTING_AI_PROJECT=false}"
+      },
+      "existingContainerRegistryResourceId": {
+        "value": "${AZURE_CONTAINER_REGISTRY_RESOURCE_ID=}"
+      },
+      "existingContainerRegistryEndpoint": {
+        "value": "${AZURE_CONTAINER_REGISTRY_ENDPOINT=}"
+      },
+      "existingAcrConnectionName": {
+        "value": "${AZURE_AI_PROJECT_ACR_CONNECTION_NAME=}"
+      },
+      "skipAcr": {
+        "value": "${AZD_AGENT_SKIP_ACR=false}"
+      },
+      "existingApplicationInsightsConnectionString": {
+        "value": "${APPLICATIONINSIGHTS_CONNECTION_STRING=}"
+      },
+      "existingApplicationInsightsResourceId": {
+        "value": "${APPLICATIONINSIGHTS_RESOURCE_ID=}"
+      },
+      "existingAppInsightsConnectionName": {
+        "value": "${APPLICATIONINSIGHTS_CONNECTION_NAME=}"
+      }
+    }
+}
