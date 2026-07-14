@@ -483,11 +483,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Indicates whether a non compliance response is allowed for a LIST call. </summary>
-        public bool? IsNoncompliantCollectionResponseAllowed
+        public bool? IsOpenApiConfigurationValidationNoncompliantCollectionResponseAllowed
         {
             get
             {
-                return OpenApiConfiguration is null ? default : OpenApiConfiguration.IsNoncompliantCollectionResponseAllowed;
+                return OpenApiConfiguration is null ? default : OpenApiConfiguration.IsValidationNoncompliantCollectionResponseAllowed;
             }
             set
             {
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     OpenApiConfiguration = new OpenApiConfiguration();
                 }
-                OpenApiConfiguration.IsNoncompliantCollectionResponseAllowed = value;
+                OpenApiConfiguration.IsValidationNoncompliantCollectionResponseAllowed = value;
             }
         }
 
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Add-on plan conversion allowed. </summary>
-        public bool? IsAddOnPlanConversionAllowed
+        public bool? IsMarketplaceOptionsAddOnPlanConversionAllowed
         {
             get
             {

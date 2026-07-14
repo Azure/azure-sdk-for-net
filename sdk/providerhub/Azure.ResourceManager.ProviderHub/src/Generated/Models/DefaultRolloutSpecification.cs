@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public DefaultRolloutAutoProvisionConfig AutoProvisionConfig { get; set; }
 
         /// <summary> Indicates whether expedited rollout is enabled/disabled. </summary>
-        public bool? IsExpeditedRolloutEnabled
+        public bool? IsExpeditedRolloutExpeditedRolloutEnabled
         {
             get
             {

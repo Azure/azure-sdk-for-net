@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         internal OpenApiValidation Validation { get; set; }
 
         /// <summary> Indicates whether a non compliance response is allowed for a LIST call. </summary>
-        public bool? IsNoncompliantCollectionResponseAllowed
+        public bool? IsValidationNoncompliantCollectionResponseAllowed
         {
             get
             {

@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
             return new PortalServicesCopilotSettingsProperties(isAccessControlEnabled, provisioningState, default);
         }
 
-        /// <param name="isAccessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
+        /// <param name="isCopilotSettingsResourceUpdateAccessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
         /// <returns> A new <see cref="Models.PortalServicesCopilotSettingPatch"/> instance for mocking. </returns>
-        public static PortalServicesCopilotSettingPatch PortalServicesCopilotSettingPatch(bool? isAccessControlEnabled = default)
+        public static PortalServicesCopilotSettingPatch PortalServicesCopilotSettingPatch(bool? isCopilotSettingsResourceUpdateAccessControlEnabled = default)
         {
-            return new PortalServicesCopilotSettingPatch(isAccessControlEnabled is null ? default : new CopilotSettingsResourceUpdateProperties(isAccessControlEnabled, default), default);
+            return new PortalServicesCopilotSettingPatch(isCopilotSettingsResourceUpdateAccessControlEnabled is null ? default : new CopilotSettingsResourceUpdateProperties(isCopilotSettingsResourceUpdateAccessControlEnabled, default), default);
         }
     }
 }
