@@ -67,10 +67,9 @@ namespace Azure.ResourceManager.Redis.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                redisConfiguration is null && redisVersion is null && enableNonSslPort is null && isAccessKeyAuthenticationDisabled is null ? default : new RedisProperties(
+                redisConfiguration is null && redisVersion is null ? default : new RedisProperties(
                     redisConfiguration,
                     redisVersion,
-                    enableNonSslPort,
                     default,
                     default,
                     default,
@@ -78,7 +77,8 @@ namespace Azure.ResourceManager.Redis.Models
                     default,
                     default,
                     default,
-                    isAccessKeyAuthenticationDisabled,
+                    default,
+                    default,
                     default,
                     default,
                     default,
@@ -238,10 +238,9 @@ namespace Azure.ResourceManager.Redis.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new RedisCreateOrUpdateContent(
-                redisConfiguration is null && redisVersion is null && enableNonSslPort is null && isAccessKeyAuthenticationDisabled is null ? default : new RedisCreateProperties(
+                redisConfiguration is null && redisVersion is null ? default : new RedisCreateProperties(
                     redisConfiguration,
                     redisVersion,
-                    enableNonSslPort,
                     default,
                     default,
                     default,
@@ -249,7 +248,8 @@ namespace Azure.ResourceManager.Redis.Models
                     default,
                     default,
                     default,
-                    isAccessKeyAuthenticationDisabled,
+                    default,
+                    default,
                     default,
                     default,
                     default,
