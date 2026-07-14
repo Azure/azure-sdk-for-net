@@ -17,6 +17,11 @@ namespace Azure.Data.AppConfiguration
     /// <summary> A feature flag. </summary>
     public partial class FeatureFlag : IJsonModel<FeatureFlag>
     {
+        /// <summary> Initializes a new instance of <see cref="FeatureFlag"/> for deserialization. </summary>
+        internal FeatureFlag()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual FeatureFlag PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -97,11 +102,8 @@ namespace Azure.Data.AppConfiguration
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Enabled))
-            {
-                writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
-            }
+            writer.WritePropertyName("enabled"u8);
+            writer.WriteBooleanValue(Enabled);
             if (options.Format != "W" && Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
@@ -206,7 +208,7 @@ namespace Azure.Data.AppConfiguration
                 return null;
             }
             string name = default;
-            bool? enabled = default;
+            bool enabled = default;
             string label = default;
             string description = default;
             FeatureFlagConditions conditions = default;
@@ -226,10 +228,6 @@ namespace Azure.Data.AppConfiguration
                 }
                 if (prop.NameEquals("enabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     enabled = prop.Value.GetBoolean();
                     continue;
                 }

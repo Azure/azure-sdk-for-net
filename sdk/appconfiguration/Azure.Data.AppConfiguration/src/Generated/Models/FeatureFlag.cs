@@ -18,8 +18,10 @@ namespace Azure.Data.AppConfiguration
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FeatureFlag"/>. </summary>
-        public FeatureFlag()
+        /// <param name="enabled"> The enabled state of the feature flag. </param>
+        public FeatureFlag(bool enabled)
         {
+            Enabled = enabled;
             Variants = new ChangeTrackingList<FeatureFlagVariantDefinition>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -37,7 +39,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="lastModified"> A date representing the last time the feature flag was modified. </param>
         /// <param name="etag"> A value representing the current state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FeatureFlag(string name, bool? enabled, string label, string description, FeatureFlagConditions conditions, IList<FeatureFlagVariantDefinition> variants, FeatureFlagAllocation allocation, FeatureFlagTelemetryConfiguration telemetry, IDictionary<string, string> tags, DateTimeOffset? lastModified, ETag? etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FeatureFlag(string name, bool enabled, string label, string description, FeatureFlagConditions conditions, IList<FeatureFlagVariantDefinition> variants, FeatureFlagAllocation allocation, FeatureFlagTelemetryConfiguration telemetry, IDictionary<string, string> tags, DateTimeOffset? lastModified, ETag? etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Enabled = enabled;
@@ -53,14 +55,8 @@ namespace Azure.Data.AppConfiguration
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The name of the feature flag. </summary>
-        public string Name { get; }
-
         /// <summary> The enabled state of the feature flag. </summary>
-        public bool? Enabled { get; set; }
-
-        /// <summary> The label the feature flag belongs to. </summary>
-        public string Label { get; }
+        public bool Enabled { get; set; }
 
         /// <summary> The description of the feature flag. </summary>
         public string Description { get; set; }

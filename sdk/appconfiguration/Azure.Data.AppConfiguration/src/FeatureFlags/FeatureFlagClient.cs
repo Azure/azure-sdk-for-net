@@ -388,7 +388,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">A label used to group this feature flag with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the added <see cref="FeatureFlag"/>.</returns>
-        public virtual async Task<Response<FeatureFlag>> AddFeatureFlagAsync(string name, bool? enabled, string label = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FeatureFlag>> AddFeatureFlagAsync(string name, bool enabled, string label = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             return await AddFeatureFlagAsync(new FeatureFlag { Name = name, Enabled = enabled, Label = label }, cancellationToken).ConfigureAwait(false);
@@ -402,7 +402,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">A label used to group this feature flag with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the added <see cref="FeatureFlag"/>.</returns>
-        public virtual Response<FeatureFlag> AddFeatureFlag(string name, bool? enabled, string label = default, CancellationToken cancellationToken = default)
+        public virtual Response<FeatureFlag> AddFeatureFlag(string name, bool enabled, string label = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             return AddFeatureFlag(new FeatureFlag { Name = name, Enabled = enabled, Label = label }, cancellationToken);
@@ -470,7 +470,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">A label used to group this feature flag with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the <see cref="FeatureFlag"/> written to the configuration store.</returns>
-        public virtual async Task<Response<FeatureFlag>> SetFeatureFlagAsync(string name, bool? enabled, string label = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FeatureFlag>> SetFeatureFlagAsync(string name, bool enabled, string label = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             return await SetFeatureFlagAsync(new FeatureFlag { Name = name, Enabled = enabled, Label = label }, onlyIfUnchanged: false, cancellationToken).ConfigureAwait(false);
@@ -484,7 +484,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="label">A label used to group this feature flag with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the <see cref="FeatureFlag"/> written to the configuration store.</returns>
-        public virtual Response<FeatureFlag> SetFeatureFlag(string name, bool? enabled, string label = default, CancellationToken cancellationToken = default)
+        public virtual Response<FeatureFlag> SetFeatureFlag(string name, bool enabled, string label = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             return SetFeatureFlag(new FeatureFlag { Name = name, Enabled = enabled, Label = label }, onlyIfUnchanged: false, cancellationToken);
@@ -525,7 +525,6 @@ namespace Azure.Data.AppConfiguration
         /// Creates a <see cref="FeatureFlag"/> if it doesn't exist or overwrites the existing feature flag in the configuration store.
         /// </summary>
         /// <param name="flag">The <see cref="FeatureFlag"/> body to create or overwrite. The feature flag is identified by its <see cref="FeatureFlag.Name"/>.</param>
-        /// <param name="label">A label used to group this feature flag with others.</param>
         /// <param name="onlyIfUnchanged">If set to true and the feature flag exists in the configuration store, overwrite it only if the
         /// passed-in <see cref="FeatureFlag"/> is the same version as the one in the configuration store. The versions are the same if their
         /// <see cref="FeatureFlag.Etag"/> values match. If they differ, the service returns 412 (precondition failed) and a

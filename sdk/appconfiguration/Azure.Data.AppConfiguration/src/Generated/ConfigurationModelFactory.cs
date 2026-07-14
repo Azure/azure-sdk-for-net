@@ -77,7 +77,7 @@ namespace Azure.Data.AppConfiguration
             return new ConfigurationSettingsFilter(key, label, tags.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Labels are used to group key values or feature flags. </summary>
+        /// <summary> Labels are used to group key-values. </summary>
         /// <param name="name"> The name of the label. </param>
         /// <returns> A new <see cref="AppConfiguration.SettingLabel"/> instance for mocking. </returns>
         public static SettingLabel SettingLabel(string name = default)
@@ -98,7 +98,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="lastModified"> A date representing the last time the feature flag was modified. </param>
         /// <param name="etag"> A value representing the current state of the resource. </param>
         /// <returns> A new <see cref="AppConfiguration.FeatureFlag"/> instance for mocking. </returns>
-        public static FeatureFlag FeatureFlag(string name = default, bool? enabled = default, string label = default, string description = default, FeatureFlagConditions conditions = default, IEnumerable<FeatureFlagVariantDefinition> variants = default, FeatureFlagAllocation allocation = default, FeatureFlagTelemetryConfiguration telemetry = default, IDictionary<string, string> tags = default, DateTimeOffset? lastModified = default, ETag? etag = default)
+        public static FeatureFlag FeatureFlag(string name = default, bool enabled = default, string label = default, string description = default, FeatureFlagConditions conditions = default, IEnumerable<FeatureFlagVariantDefinition> variants = default, FeatureFlagAllocation allocation = default, FeatureFlagTelemetryConfiguration telemetry = default, IDictionary<string, string> tags = default, DateTimeOffset? lastModified = default, ETag? etag = default)
         {
             variants ??= new ChangeTrackingList<FeatureFlagVariantDefinition>();
             tags ??= new ChangeTrackingDictionary<string, string>();
