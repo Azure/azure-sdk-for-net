@@ -156,6 +156,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public SignalRConnectionInfo() { }
         [Newtonsoft.Json.JsonPropertyAttribute("accessToken")]
         public string AccessToken { get { throw null; } set { } }
+        [Newtonsoft.Json.JsonPropertyAttribute("tokenLifetimeSeconds", NullValueHandling=Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? TokenLifetimeSeconds { get { throw null; } set { } }
         [Newtonsoft.Json.JsonPropertyAttribute("url")]
         public string Url { get { throw null; } set { } }
     }
@@ -164,6 +166,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     public partial class SignalRConnectionInfoAttribute : Microsoft.Azure.WebJobs.Extensions.SignalRService.NegotiationBaseAttribute
     {
         public SignalRConnectionInfoAttribute() { }
+    }
+    [Microsoft.Azure.WebJobs.Description.BindingAttribute]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Parameter | System.AttributeTargets.ReturnValue)]
+    public partial class SignalRRefreshAttribute : Microsoft.Azure.WebJobs.Extensions.SignalRService.NegotiationBaseAttribute
+    {
+        public SignalRRefreshAttribute() { }
+        [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
+        public string ConnectionToken { get { throw null; } set { } }
+        public int TokenLifetimeSeconds { get { throw null; } set { } }
     }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute]
     [System.AttributeUsageAttribute(System.AttributeTargets.Parameter)]

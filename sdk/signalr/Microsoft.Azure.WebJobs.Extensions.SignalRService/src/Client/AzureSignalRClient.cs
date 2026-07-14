@@ -44,17 +44,57 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         public async Task<SignalRConnectionInfo> GetClientConnectionInfoAsync(string userId, IList<Claim> claims, HttpContext httpContext)
         {
-            var negotiateResponse = await _serviceHubContext.NegotiateAsync(new NegotiationOptions()
+            var negotiationOptions = new NegotiationOptions()
             {
                 UserId = userId,
                 Claims = BuildJwtClaims(claims, AzureSignalRUserPrefix).ToList(),
                 HttpContext = httpContext
-            }).ConfigureAwait(false);
+            };
+            var negotiateResult = await _serviceHubContext.NegotiateWithTokenLifetimeAsync(negotiationOptions).ConfigureAwait(false);
             return new SignalRConnectionInfo
             {
-                Url = negotiateResponse.Url,
-                AccessToken = negotiateResponse.AccessToken
+                Url = negotiateResult.Url,
+                AccessToken = negotiateResult.AccessToken,
+                TokenLifetimeSeconds = negotiateResult.TokenLifetimeSeconds
             };
+        }
+
+        /// <summary>
+        /// Refreshes the authentication expiration and application claims of a live client connection without reconnecting.
+        /// Returns a refreshed access token for the client.
+        /// Wraps the Management SDK's <c>RefreshConnectionAuthenticationAsync</c>.
+        /// </summary>
+        public async Task<SignalRConnectionInfo> RefreshConnectionInfoAsync(string connectionToken, DateTimeOffset expireTime, IList<Claim> claims)
+        {
+            if (string.IsNullOrEmpty(connectionToken))
+            {
+                throw new ArgumentException($"{nameof(connectionToken)} cannot be null or empty");
+            }
+
+            var result = await _serviceHubContext.RefreshConnectionAuthenticationAsync(
+                connectionToken,
+                expireTime,
+                BuildJwtClaims(claims, AzureSignalRUserPrefix).ToList()).ConfigureAwait(false);
+            return new SignalRConnectionInfo
+            {
+                AccessToken = result.AccessToken,
+                TokenLifetimeSeconds = result.TokenLifetimeSeconds
+            };
+        }
+
+        /// <summary>
+        /// Reads the current application claim set of a live client connection.
+        /// Wraps the Management SDK's <c>GetConnectionClaimsAsync</c>.
+        /// </summary>
+        public async Task<IList<Claim>> GetConnectionClaimsAsync(string connectionToken)
+        {
+            if (string.IsNullOrEmpty(connectionToken))
+            {
+                throw new ArgumentException($"{nameof(connectionToken)} cannot be null or empty");
+            }
+
+            var result = await _serviceHubContext.GetConnectionClaimsAsync(connectionToken).ConfigureAwait(false);
+            return result.Claims == null ? new List<Claim>() : result.Claims.ToList();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Breaking change")]

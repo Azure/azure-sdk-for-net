@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added serverless authentication refresh support so a Function App can extend a live SignalR client connection's authentication (and application claims) without reconnecting.
+
 ### Breaking Changes
 
 ### Bugs Fixed
