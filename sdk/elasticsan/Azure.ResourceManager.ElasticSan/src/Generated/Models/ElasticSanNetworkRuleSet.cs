@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         }
 
         /// <summary> The list of virtual network rules. </summary>
-        public IList<ElasticSanVirtualNetworkRule> VirtualNetworkRules { get; }
+        public IList<ElasticSanVirtualNetworkRule> VirtualNetworkRules { get; } = new ChangeTrackingList<ElasticSanVirtualNetworkRule>();
     }
 }

@@ -10,12 +10,22 @@
     <Description>This extension adds bindings for Storage</Description>
     <!-- This package is a metapackage. The flag below makes sure it doesn't include any DLL-->
     <IncludeBuildOutput>false</IncludeBuildOutput>
-    <!-- Remove once https://github.com/NuGet/Home/issues/8583 is fixed -->
-    <NoWarn>$(NoWarn);NU5128</NoWarn>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.Azure.WebJobs.Extensions.Storage.Blobs\src\Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.csproj" />
     <ProjectReference Include="..\..\Microsoft.Azure.WebJobs.Extensions.Storage.Queues\src\Microsoft.Azure.WebJobs.Extensions.Storage.Queues.csproj" />
   </ItemGroup>
+  <!-- Metapackage ships no assemblies of its own (IncludeBuildOutput=false), so pack an empty
+       "_._" placeholder into each target framework's lib folder to avoid NU5128. The shared
+       placeholder lives in eng/ so any future metapackage can reuse it. Read more:
+       https://learn.microsoft.com/nuget/reference/errors-and-warnings/nu5128 -->
+  <PropertyGroup>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_PackMetapackageLibPlaceholder</TargetsForTfmSpecificContentInPackage>
+  </PropertyGroup>
+  <Target Name="_PackMetapackageLibPlaceholder">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(RepoEngPath)/_._" PackagePath="lib/$(TargetFramework)/_._" />
+    </ItemGroup>
+  </Target>
 </Project>

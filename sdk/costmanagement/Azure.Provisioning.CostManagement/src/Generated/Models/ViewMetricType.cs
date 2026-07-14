@@ -13,11 +13,11 @@ namespace Azure.Provisioning.CostManagement
     public enum ViewMetricType
     {
         /// <summary> ActualCost. </summary>
-        ActualCost,
+        ActualCost = 0,
         /// <summary> AmortizedCost. </summary>
-        AmortizedCost,
+        AmortizedCost = 1,
         /// <summary> Ahub. </summary>
         [DataMember(Name = "AHUB")]
-        Ahub
+        Ahub = 2
     }
 }

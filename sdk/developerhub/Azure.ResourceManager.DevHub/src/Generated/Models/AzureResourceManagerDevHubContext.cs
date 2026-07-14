@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.DevHub
     [ModelReaderWriterBuildable(typeof(AzurePipelineProfile))]
     [ModelReaderWriterBuildable(typeof(DeveloperHubAdoOAuthCallContent))]
     [ModelReaderWriterBuildable(typeof(DeveloperHubAdoOAuthInfoResult))]
-    [ModelReaderWriterBuildable(typeof(DeveloperHubDeleteWorkflowResult))]
     [ModelReaderWriterBuildable(typeof(DeveloperHubExportTemplateContent))]
     [ModelReaderWriterBuildable(typeof(DeveloperHubGenerateVersionedTemplateResult))]
     [ModelReaderWriterBuildable(typeof(DeveloperHubGitHubOAuthCallContent))]
