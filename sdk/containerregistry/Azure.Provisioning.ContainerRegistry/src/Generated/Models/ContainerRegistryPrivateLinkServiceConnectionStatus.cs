@@ -11,12 +11,12 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ContainerRegistryPrivateLinkServiceConnectionStatus
     {
         /// <summary> Approved. </summary>
-        Approved,
+        Approved = 0,
         /// <summary> Pending. </summary>
-        Pending,
+        Pending = 1,
         /// <summary> Rejected. </summary>
-        Rejected,
+        Rejected = 2,
         /// <summary> Disconnected. </summary>
-        Disconnected
+        Disconnected = 3
     }
 }

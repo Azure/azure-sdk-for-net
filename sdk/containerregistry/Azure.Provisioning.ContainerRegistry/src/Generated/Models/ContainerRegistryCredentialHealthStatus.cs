@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ContainerRegistryCredentialHealthStatus
     {
         /// <summary> Healthy. </summary>
-        Healthy,
+        Healthy = 0,
         /// <summary> Unhealthy. </summary>
-        Unhealthy
+        Unhealthy = 1
     }
 }

@@ -14,18 +14,18 @@ namespace Azure.Provisioning.ContainerRegistry
     {
         /// <summary> Push. </summary>
         [DataMember(Name = "push")]
-        Push,
+        Push = 0,
         /// <summary> Delete. </summary>
         [DataMember(Name = "delete")]
-        Delete,
+        Delete = 1,
         /// <summary> Quarantine. </summary>
         [DataMember(Name = "quarantine")]
-        Quarantine,
+        Quarantine = 2,
         /// <summary> ChartPush. </summary>
         [DataMember(Name = "chart_push")]
-        ChartPush,
+        ChartPush = 3,
         /// <summary> ChartDelete. </summary>
         [DataMember(Name = "chart_delete")]
-        ChartDelete
+        ChartDelete = 4
     }
 }

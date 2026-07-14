@@ -11,14 +11,14 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ConnectedRegistryLogLevel
     {
         /// <summary> Debug. </summary>
-        Debug,
+        Debug = 0,
         /// <summary> Information. </summary>
-        Information,
+        Information = 1,
         /// <summary> Warning. </summary>
-        Warning,
+        Warning = 2,
         /// <summary> Error. </summary>
-        Error,
+        Error = 3,
         /// <summary> None. </summary>
-        None
+        None = 4
     }
 }

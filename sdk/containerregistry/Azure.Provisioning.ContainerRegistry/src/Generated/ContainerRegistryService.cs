@@ -26,7 +26,7 @@ namespace Azure.Provisioning.ContainerRegistry
         private ContainerRegistrySku _sku;
         private ManagedServiceIdentity _identity;
 
-        /// <summary> Creates a new ContainerRegistry. </summary>
+        /// <summary> Creates a new ContainerRegistryService. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
         public ContainerRegistryService(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries", resourceVersion ?? "2025-11-01")
@@ -404,7 +404,7 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Define all the provisionable properties for ContainerRegistry. </summary>
+        /// <summary> Define all the provisionable properties for ContainerRegistryService. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -419,7 +419,7 @@ namespace Azure.Provisioning.ContainerRegistry
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing ContainerRegistry. </summary>
+        /// <summary> Creates a reference to an existing ContainerRegistryService. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
         public static ContainerRegistryService FromExisting(string bicepIdentifier, string resourceVersion = null)
@@ -429,7 +429,7 @@ namespace Azure.Provisioning.ContainerRegistry
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for ContainerRegistry that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ContainerRegistryService that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>

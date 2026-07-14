@@ -22,7 +22,7 @@ namespace Azure.Provisioning.ContainerRegistry
         {
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         public BicepValue<ContainerRegistryCredentialHealthStatus> Status
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.ContainerRegistry
                 Initialize();
                 return _status;
             }
-            set
-            {
-                Initialize();
-                _status.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ErrorCode. </summary>
+        /// <summary> Gets the ErrorCode. </summary>
         public BicepValue<string> ErrorCode
         {
             get
@@ -45,25 +40,15 @@ namespace Azure.Provisioning.ContainerRegistry
                 Initialize();
                 return _errorCode;
             }
-            set
-            {
-                Initialize();
-                _errorCode.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ErrorMessage. </summary>
+        /// <summary> Gets the ErrorMessage. </summary>
         public BicepValue<string> ErrorMessage
         {
             get
             {
                 Initialize();
                 return _errorMessage;
-            }
-            set
-            {
-                Initialize();
-                _errorMessage.Assign(value);
             }
         }
 

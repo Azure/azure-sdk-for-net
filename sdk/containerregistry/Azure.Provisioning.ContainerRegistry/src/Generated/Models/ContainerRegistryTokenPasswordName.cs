@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ContainerRegistry
     {
         /// <summary> Password1. </summary>
         [DataMember(Name = "password1")]
-        Password1,
+        Password1 = 0,
         /// <summary> Password2. </summary>
         [DataMember(Name = "password2")]
-        Password2
+        Password2 = 1
     }
 }

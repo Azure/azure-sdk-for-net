@@ -11,6 +11,6 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ContainerRegistryCertificateType
     {
         /// <summary> LocalDirectory. </summary>
-        LocalDirectory
+        LocalDirectory = 0
     }
 }

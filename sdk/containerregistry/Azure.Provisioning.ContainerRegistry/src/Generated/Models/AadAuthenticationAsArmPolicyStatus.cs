@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ContainerRegistry
     {
         /// <summary> Enabled. </summary>
         [DataMember(Name = "enabled")]
-        Enabled,
+        Enabled = 0,
         /// <summary> Disabled. </summary>
         [DataMember(Name = "disabled")]
-        Disabled
+        Disabled = 1
     }
 }

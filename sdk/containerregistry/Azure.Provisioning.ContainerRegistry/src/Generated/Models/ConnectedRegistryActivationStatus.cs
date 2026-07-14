@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ConnectedRegistryActivationStatus
     {
         /// <summary> Active. </summary>
-        Active,
+        Active = 0,
         /// <summary> Inactive. </summary>
-        Inactive
+        Inactive = 1
     }
 }

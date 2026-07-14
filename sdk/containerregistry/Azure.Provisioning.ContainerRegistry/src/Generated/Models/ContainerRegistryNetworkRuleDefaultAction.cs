@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ContainerRegistryNetworkRuleDefaultAction
     {
         /// <summary> Allow. </summary>
-        Allow,
+        Allow = 0,
         /// <summary> Deny. </summary>
-        Deny
+        Deny = 1
     }
 }

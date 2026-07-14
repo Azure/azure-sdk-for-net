@@ -11,6 +11,6 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ContainerRegistryCredentialName
     {
         /// <summary> Credential1. </summary>
-        Credential1
+        Credential1 = 0
     }
 }

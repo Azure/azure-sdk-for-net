@@ -11,6 +11,6 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ContainerRegistryIPRuleAction
     {
         /// <summary> Allow. </summary>
-        Allow
+        Allow = 0
     }
 }

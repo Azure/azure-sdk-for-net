@@ -11,12 +11,12 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ConnectedRegistryConnectionState
     {
         /// <summary> Online. </summary>
-        Online,
+        Online = 0,
         /// <summary> Offline. </summary>
-        Offline,
+        Offline = 1,
         /// <summary> Syncing. </summary>
-        Syncing,
+        Syncing = 2,
         /// <summary> Unhealthy. </summary>
-        Unhealthy
+        Unhealthy = 3
     }
 }

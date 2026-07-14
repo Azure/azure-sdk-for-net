@@ -11,6 +11,6 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ContainerRegistryTrustPolicyType
     {
         /// <summary> Notary. </summary>
-        Notary
+        Notary = 0
     }
 }

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ActionsRequiredForPrivateLinkServiceConsumer
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> Recreate. </summary>
-        Recreate
+        Recreate = 1
     }
 }

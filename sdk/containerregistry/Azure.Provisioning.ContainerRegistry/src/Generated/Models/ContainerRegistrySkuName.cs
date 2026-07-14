@@ -11,12 +11,12 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ContainerRegistrySkuName
     {
         /// <summary> Classic. </summary>
-        Classic,
+        Classic = 0,
         /// <summary> Basic. </summary>
-        Basic,
+        Basic = 1,
         /// <summary> Standard. </summary>
-        Standard,
+        Standard = 2,
         /// <summary> Premium. </summary>
-        Premium
+        Premium = 3
     }
 }

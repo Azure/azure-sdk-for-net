@@ -11,16 +11,16 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ContainerRegistryProvisioningState
     {
         /// <summary> Creating. </summary>
-        Creating,
+        Creating = 0,
         /// <summary> Updating. </summary>
-        Updating,
+        Updating = 1,
         /// <summary> Deleting. </summary>
-        Deleting,
+        Deleting = 2,
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 3,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 4,
         /// <summary> Canceled. </summary>
-        Canceled
+        Canceled = 5
     }
 }

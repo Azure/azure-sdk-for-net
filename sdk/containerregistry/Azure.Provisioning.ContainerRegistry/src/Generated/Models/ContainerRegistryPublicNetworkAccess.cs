@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ContainerRegistryPublicNetworkAccess
     {
         /// <summary> Enabled. </summary>
-        Enabled,
+        Enabled = 0,
         /// <summary> Disabled. </summary>
-        Disabled
+        Disabled = 1
     }
 }

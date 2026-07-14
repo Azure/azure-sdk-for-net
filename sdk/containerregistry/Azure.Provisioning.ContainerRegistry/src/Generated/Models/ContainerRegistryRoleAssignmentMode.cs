@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ContainerRegistryRoleAssignmentMode
     {
         /// <summary> AbacRepositoryPermissions. </summary>
-        AbacRepositoryPermissions,
+        AbacRepositoryPermissions = 0,
         /// <summary> LegacyRegistryPermissions. </summary>
-        LegacyRegistryPermissions
+        LegacyRegistryPermissions = 1
     }
 }

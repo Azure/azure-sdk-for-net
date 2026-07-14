@@ -3,18 +3,13 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.Provisioning.ContainerRegistry
 {
-    [CodeGenType("ContainerRegistry")]
-    public partial class ContainerRegistryService
+    public partial class ContainerRegistryReplication
     {
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2017-03-01". </summary>
-            public static readonly string V2017_03_01 = "2017-03-01";
             /// <summary> API version "2017-10-01". </summary>
             public static readonly string V2017_10_01 = "2017-10-01";
             /// <summary> API version "2019-05-01". </summary>

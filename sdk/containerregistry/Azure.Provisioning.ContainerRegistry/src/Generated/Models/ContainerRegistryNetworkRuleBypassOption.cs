@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ContainerRegistryNetworkRuleBypassOption
     {
         /// <summary> AzureServices. </summary>
-        AzureServices,
+        AzureServices = 0,
         /// <summary> None. </summary>
-        None
+        None = 1
     }
 }

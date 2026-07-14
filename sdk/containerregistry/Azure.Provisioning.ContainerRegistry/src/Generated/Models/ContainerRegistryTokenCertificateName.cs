@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ContainerRegistry
     {
         /// <summary> Certificate1. </summary>
         [DataMember(Name = "certificate1")]
-        Certificate1,
+        Certificate1 = 0,
         /// <summary> Certificate2. </summary>
         [DataMember(Name = "certificate2")]
-        Certificate2
+        Certificate2 = 1
     }
 }

@@ -11,12 +11,12 @@ namespace Azure.Provisioning.ContainerRegistry
     public enum ConnectedRegistryMode
     {
         /// <summary> ReadWrite. </summary>
-        ReadWrite,
+        ReadWrite = 0,
         /// <summary> ReadOnly. </summary>
-        ReadOnly,
+        ReadOnly = 1,
         /// <summary> Registry. </summary>
-        Registry,
+        Registry = 2,
         /// <summary> Mirror. </summary>
-        Mirror
+        Mirror = 3
     }
 }
