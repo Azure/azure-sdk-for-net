@@ -14,6 +14,7 @@
 
 ### Sample Updates
 - Added sample demonstrating disabling and enabling Hosted Agent.
+- Added samples for Agent optinmization jobs.
 
 ## 2.1.0-beta.4 (2026-06-30)
 

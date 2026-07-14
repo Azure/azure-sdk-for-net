@@ -4,8 +4,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Data;
-using System.Numerics;
+using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
@@ -16,6 +16,7 @@ namespace Azure.AI.Projects.Agents.Tests.Samples;
 
 public class Sample_AgentsOptimizationCRUD : SamplesBase
 {
+    #region Snippet:Sample_OptimizationCriterion_AgentsOptimization
     private readonly OptimizationDatasetCriterion _criterion = new(
         name: "Groundedness",
         instruction: """
@@ -55,20 +56,23 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         }
         """
     );
+    #endregion
+    #region Snippet:Sample_Dataset_AgentsOptimization
     private OptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
     {
-        OptimizationInlineDatasetInput returnValues = new();
+        List<OptimizationDatasetItem> items = [];
         for (int i = start; i < start + itemNumber; i++)
         {
-            returnValues.Items.Add(new()
+            items.Add(new OptimizationDatasetItem()
             {
-                Query = $"What is 42 + {i * 2}",
-                GroundTruth = (42 + i * 2).ToString(),
+                Query = $"What is 42 + {i * 2}? Please save the result as text: The answer is .... For example: Q: What is 42 + 12? A: The answer is 56.",
+                GroundTruth = $"The answer is {(42 + i * 2)}",
                 Criteria = { _criterion }
             });
         }
-        return returnValues;
+        return new(items);
     }
+    #endregion
 
     [Test]
     [AsyncOnly]
@@ -78,9 +82,11 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+        var anotherModelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME2");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+        var anotherModelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME2;
 #endif
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("AgentsOptimization=V2Preview"), PipelinePosition.PerCall);
@@ -111,9 +117,19 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
             )
             {
                 ValidationDataset = GetDataset(7, 3),
+                Options = new OptimizationOptions()
+                {
+                    OptimizationModel = modelDeploymentName,
+                    EvalModel = modelDeploymentName,
+                    MaxCandidates = 3,
+                    OptimizationConfig =
+                    {
+                        {"model_search_space",  BinaryData.FromObjectAsJson(new[] {modelDeploymentName, anotherModelDeploymentName})},
+                        {"model", BinaryData.FromString(JsonSerializer.Serialize(modelDeploymentName)) }
+                    }
+                }
             }
         };
-
         OptimizationJob submittedJob1 = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
         Console.WriteLine($"Submitted optimization job: {submittedJob1.Id}");
         #endregion
@@ -121,6 +137,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         int reportedWarnings = 0;
         while (submittedJob1.Status != AgentsJobStatus.Failed && submittedJob1.Status != AgentsJobStatus.Succeeded)
         {
+            await Task.Delay(500);
             submittedJob1 = await jobsClient.GetAsync(submittedJob1.Id, cancellationToken: default);
             if (submittedJob1.Warnings.Count > reportedWarnings)
             {
@@ -139,7 +156,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         #region Snippet:Sample_CancelOptimizationJob_AgentsOptimization_Async
         OptimizationJob submittedJob2 = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
         Console.WriteLine($"Submitted optimization job: {submittedJob2.Id}");
-        OptimizationJob cancelledJob = await jobsClient.CancelAsync(jobId: job.Id, cancellationToken: default);
+        OptimizationJob cancelledJob = await jobsClient.CancelAsync(jobId: submittedJob2.Id, cancellationToken: default);
         while (cancelledJob.Status != AgentsJobStatus.Failed && cancelledJob.Status != AgentsJobStatus.Succeeded && cancelledJob.Status != AgentsJobStatus.Cancelled)
         {
             cancelledJob = await jobsClient.GetAsync(cancelledJob.Id, cancellationToken: default);
@@ -159,8 +176,118 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         #endregion
         #region Snippet:Sample_Delete_AgentsOptimization_Async
         await jobsClient.DeleteAsync(jobId: submittedJob1.Id, cancellationToken: default);
+        Console.WriteLine($"Deleted job {submittedJob1.Id}.");
         await jobsClient.DeleteAsync(jobId: submittedJob2.Id, cancellationToken: default);
+        Console.WriteLine($"Deleted job {submittedJob2.Id}.");
         await agentsClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        Console.WriteLine($"Agent deleted (name: {agentVersion.Name}, version: {agentVersion.Version})");
+        #endregion
+    }
+
+    [Test]
+    [SyncOnly]
+    public void AgentsOptimizationSync()
+    {
+#if SNIPPET
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+        var anotherModelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME2");
+#else
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+        var anotherModelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME2;
+#endif
+        AgentAdministrationClientOptions options = new();
+        options.AddPolicy(new FeaturePolicy("AgentsOptimization=V2Preview"), PipelinePosition.PerCall);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential(), options: options);
+        AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
+
+        #region Snippet:Sample_CreateAgent_AgentsOptimization_Sync
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        {
+            Instructions = "You are a prompt agent."
+        };
+        ProjectsAgentVersion agentVersion = agentsClient.CreateAgentVersion(
+            agentName: "myAgent",
+            options: new(agentDefinition));
+        Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
+        #endregion
+        #region Snippet:Sample_CreateOptimizationJob_AgentsOptimization_Sync
+        OptimizationJob job = new()
+        {
+            Inputs = new(
+                agent: new OptimizationAgentIdentifier(agentName: agentVersion.Name)
+                {
+                    AgentVersion = agentVersion.Version
+                },
+                trainDataset: GetDataset(0, 7),
+                evaluators: [new OptimizationEvaluatorRef(name: "builtin.meteor_score")]
+            )
+            {
+                ValidationDataset = GetDataset(7, 3),
+                Options = new OptimizationOptions()
+                {
+                    OptimizationModel = modelDeploymentName,
+                    EvalModel = modelDeploymentName,
+                    MaxCandidates = 3,
+                    OptimizationConfig =
+                    {
+                        {"model_search_space",  BinaryData.FromObjectAsJson(new[] {modelDeploymentName, anotherModelDeploymentName})},
+                        {"model", BinaryData.FromString(JsonSerializer.Serialize(modelDeploymentName)) }
+                    }
+                }
+            }
+        };
+        OptimizationJob submittedJob1 = jobsClient.Create(job: job, operationId: null, cancellationToken: default);
+        Console.WriteLine($"Submitted optimization job: {submittedJob1.Id}");
+        #endregion
+        #region Snippet:Sample_GetOptimizationJob_AgentsOptimization_Sync
+        int reportedWarnings = 0;
+        while (submittedJob1.Status != AgentsJobStatus.Failed && submittedJob1.Status != AgentsJobStatus.Succeeded)
+        {
+            Thread.Sleep(500);
+            submittedJob1 = jobsClient.Get(submittedJob1.Id, cancellationToken: default);
+            if (submittedJob1.Warnings.Count > reportedWarnings)
+            {
+                Console.WriteLine($"    {submittedJob1.Id}: {submittedJob1.Status}");
+                for (int i = reportedWarnings; i < submittedJob1.Warnings.Count; i++)
+                {
+                    Console.WriteLine($"    Warning in job {submittedJob1.Id}: {submittedJob1.Warnings[i]}");
+                }
+            }
+        }
+        if (submittedJob1.Status == AgentsJobStatus.Failed)
+        {
+            throw new InvalidOperationException($"The job {submittedJob1.Id} has failed. Code: {submittedJob1.Error.Code}, Message: {submittedJob1.Error.Message}");
+        }
+        #endregion
+        #region Snippet:Sample_CancelOptimizationJob_AgentsOptimization_Sync
+        OptimizationJob submittedJob2 = jobsClient.Create(job: job, operationId: null, cancellationToken: default);
+        Console.WriteLine($"Submitted optimization job: {submittedJob2.Id}");
+        OptimizationJob cancelledJob = jobsClient.Cancel(jobId: submittedJob2.Id, cancellationToken: default);
+        while (cancelledJob.Status != AgentsJobStatus.Failed && cancelledJob.Status != AgentsJobStatus.Succeeded && cancelledJob.Status != AgentsJobStatus.Cancelled)
+        {
+            cancelledJob = jobsClient.Get(cancelledJob.Id, cancellationToken: default);
+        }
+        if (cancelledJob.Status != AgentsJobStatus.Cancelled)
+        {
+            throw new InvalidOperationException($"The job {cancelledJob.Id} has unexpected status: {cancelledJob.Status}.");
+        }
+        Console.WriteLine($"The job {cancelledJob.Id} was cancelled.");
+        #endregion
+        #region Snippet:Sample_ListOptimizationJobs_AgentsOptimization_Sync
+        Console.WriteLine("Listing optimization jobs:");
+        foreach (OptimizationJob oneJob in jobsClient.GetAll())
+        {
+            Console.WriteLine($"    Job: {oneJob.Id}, Status: {oneJob.Status}.");
+        }
+        #endregion
+        #region Snippet:Sample_Delete_AgentsOptimization_Sync
+        jobsClient.Delete(jobId: submittedJob1.Id, cancellationToken: default);
+        Console.WriteLine($"Deleted job {submittedJob1.Id}.");
+        jobsClient.Delete(jobId: submittedJob2.Id, cancellationToken: default);
+        Console.WriteLine($"Deleted job {submittedJob2.Id}.");
+        agentsClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         Console.WriteLine($"Agent deleted (name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion
     }

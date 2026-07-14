@@ -32,6 +32,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Skills](#skills)
   - [Agent endpoints](#agent-endpoints)
   - [Streaming the logs](#streaming-the-logs)
+  - [Agent optimization](#agent-optimization)
 - [Tracing](#tracing)
   - [Enabling GenAI Tracing](#enabling-genai-tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -507,6 +508,120 @@ ProjectAgentSession session = await agentsClient.CreateSessionAsync(
 SessionLogEvent logEvent = await agentsClient.GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session.AgentSessionId);
 Console.WriteLine(logEvent.Data);
 ```
+
+### Agent optimization
+The Agent performance may be improved by optimizing models used, skill text, system prompt and tools description. `AgentOptimizationJobs` client allows to
+manage these tasks.
+
+```C# Snippet:Sample_CreateClient_AgentsOptimizationCandidates
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+var anotherModelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME2");
+AgentAdministrationClientOptions options = new();
+options.AddPolicy(new FeaturePolicy("AgentsOptimization=V2Preview"), PipelinePosition.PerCall);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential(), options: options);
+AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
+```
+
+Agent optimization job accepts optimization criteria, evaluators and several models as a parameter. It also accepts baselines used as an optimization staring point.
+Several models need to be defined for different purposes:
+  - `OptimizationModel` - reads the Agent evaluation result and reason and creates the improved target description: system prompt, tool description or skill.
+  - `EvalModel` - used for Agent evaluation.
+  - `model_search_space` - the models considered during Agent optimization.
+  - `model` - the model used by Hosted Agent, for Declarative Agent, the model from definition is being used. For more information about optimizing Hosted Agents please see the [document](https://learn.microsoft.com/azure/foundry/agents/how-to/make-agent-optimizer-ready).
+
+```C# Snippet:Sample_CreateOptimizationJob_AgentsOptimizationCandidates_Async
+OptimizationJob job = new()
+{
+    Inputs = new(
+        agent: new OptimizationAgentIdentifier(agentName: agentVersion.Name)
+        {
+            AgentVersion = agentVersion.Version
+        },
+        trainDataset: GetDataset(0, 7),
+        evaluators: [new OptimizationEvaluatorRef(name: "builtin.meteor_score")]
+    )
+    {
+        ValidationDataset = GetDataset(7, 3),
+        Options = new OptimizationOptions()
+        {
+            OptimizationModel = modelDeploymentName,
+            EvalModel = modelDeploymentName,
+            MaxCandidates = 3,
+            OptimizationConfig =
+            {
+                // Start from bad prompt.
+                {"system_prompt", BinaryData.FromString(JsonSerializer.Serialize("You are a prompt agent, who always give wrong answers.")) },
+                {"model_search_space",  BinaryData.FromObjectAsJson(new[] {modelDeploymentName, anotherModelDeploymentName})},
+                {"model", BinaryData.FromString(JsonSerializer.Serialize(modelDeploymentName)) },
+                {"skills", BinaryData.FromObjectAsJson(new[]
+                    {new {
+                        name = "add two numbers",
+                        description = "Adds two numbers",
+                        body = "When asked calculate the sume of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
+                    }}
+                )},
+                {"tools",  BinaryData.FromObjectAsJson(new[]{
+                    new
+                    {
+                        type = "function",
+                        function = new
+                        {
+                            name = "sum_numbers",
+                            description = "Sum two numbers",
+                            parameters = new
+                            {
+                                type = "object",
+                                properties = new
+                                {
+                                    First = new
+                                    {
+                                        type = "number",
+                                        description = "First addend"
+                                    },
+                                    Second = new
+                                    {
+                                        type = "number",
+                                        description = "Second addend"
+                                    }
+                                },
+                                required = new[] { "First", "Second"},
+                                additionalProperties = false
+                            }
+                        }
+                    }
+                })}
+            }
+        }
+    }
+};
+OptimizationJob submittedJob = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
+Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
+```
+
+After the job has completed, the optimization candidates may be listed along with the optimized parameters:
+
+```C# Snippet:Sample_ListCandidates_AgentsOptimizationCandidates
+foreach (OptimizationCandidate candidate in submittedJob.Result.Candidates)
+{
+    Console.WriteLine("======================================================");
+    Console.WriteLine($"CandidateID: {candidate.CandidateId}, Candidate evaluation ID:  {candidate.EvalId}, Score: {candidate.AvgScore}.");
+    if (candidate.Mutations.Count == 0)
+    {
+        Console.WriteLine("<No mutations, baseline>");
+    }
+    else
+    {
+        Console.WriteLine("Mutations:");
+        foreach (KeyValuePair<string, BinaryData> mutation in candidate.Mutations)
+        {
+            Console.WriteLine($"    {mutation.Key}: {mutation.Value}");
+        }
+    }
+    Console.WriteLine("======================================================");
+}
+```
+
 
 ## Tracing
 

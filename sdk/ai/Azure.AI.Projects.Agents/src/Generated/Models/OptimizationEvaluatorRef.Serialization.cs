@@ -127,21 +127,28 @@ namespace Azure.AI.Projects.Agents
             string name = default;
             string version = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            if (element.ValueKind == JsonValueKind.String)
             {
-                if (prop.NameEquals("name"u8))
+                name = element.GetString();
+            }
+            else
+            {
+                foreach (var prop in element.EnumerateObject())
                 {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("version"u8))
-                {
-                    version = prop.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    if (prop.NameEquals("name"u8))
+                    {
+                        name = prop.Value.GetString();
+                        continue;
+                    }
+                    if (prop.NameEquals("version"u8))
+                    {
+                        version = prop.Value.GetString();
+                        continue;
+                    }
+                    if (options.Format != "W")
+                    {
+                        additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    }
                 }
             }
             return new OptimizationEvaluatorRef(name, version, additionalBinaryDataProperties);
