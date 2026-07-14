@@ -891,6 +891,7 @@ jobs:
           GH_AW_MCP_CONFIG_69dba0081765e5b2_EOF
       - name: Mount MCP servers as CLIs
         id: mount-mcp-clis
+        continue-on-error: true
         env:
           MCP_GATEWAY_API_KEY: ${{ steps.start-mcp-gateway.outputs.gateway-api-key }}
           MCP_GATEWAY_DOMAIN: ${{ steps.start-mcp-gateway.outputs.gateway-domain }}
