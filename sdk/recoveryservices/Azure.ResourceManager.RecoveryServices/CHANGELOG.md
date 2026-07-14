@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2026-07-10)
+
+### Features Added
+
+- Upgraded api-version to 2026-05-01.
+- Added `ImmutabilitySettings` property to `RecoveryServicesSecuritySettings` for full immutability configuration access.
+- Added `ImmutabilityConfiguration` and `ImmutabilityType` models for vault immutability settings.
+- Added `RecoveryServicesCostGranularityLevel` enum for cost management granularity settings.
+- Added `CostManagementGranularityLevel` property to `RecoveryServicesVaultProperties`.
 
 ## 1.2.0 (2026-03-20)
 

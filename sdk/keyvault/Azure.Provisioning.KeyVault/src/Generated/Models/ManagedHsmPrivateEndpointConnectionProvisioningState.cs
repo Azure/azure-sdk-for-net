@@ -11,16 +11,16 @@ namespace Azure.Provisioning.KeyVault
     public enum ManagedHsmPrivateEndpointConnectionProvisioningState
     {
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 0,
         /// <summary> Creating. </summary>
-        Creating,
+        Creating = 1,
         /// <summary> Updating. </summary>
-        Updating,
+        Updating = 2,
         /// <summary> Deleting. </summary>
-        Deleting,
+        Deleting = 3,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 4,
         /// <summary> Disconnected. </summary>
-        Disconnected
+        Disconnected = 5
     }
 }

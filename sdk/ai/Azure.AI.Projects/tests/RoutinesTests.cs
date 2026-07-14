@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
 using Microsoft.ClientModel.TestFramework;
@@ -22,7 +23,8 @@ public class RoutinesTests : ProjectsClientTestBase
     {
         Schedule,
         Timer,
-        ManualDispatch
+        ManualDispatch,
+        GitHubEvent,
     }
     public RoutinesTests(bool isAsync) : base(isAsync)
     {
@@ -138,6 +140,7 @@ public class RoutinesTests : ProjectsClientTestBase
     [TestCase(TriggerType.Timer)]
     [TestCase(TriggerType.Schedule)]
     [TestCase(TriggerType.ManualDispatch)]
+    [TestCase(TriggerType.GitHubEvent)]
     [RecordedTest]
     public async Task TestRoutineE2E(TriggerType triggerType)
     {
@@ -171,7 +174,24 @@ public class RoutinesTests : ProjectsClientTestBase
         }
         else if (triggerType == TriggerType.ManualDispatch)
         {
-            trigger = new CustomRoutineTrigger(provider: "manual", parameters: new Dictionary<string, BinaryData>());
+            trigger = new CustomRoutineTrigger(provider: "teams", parameters: new Dictionary<string, BinaryData>()
+                {
+                    { "connection_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_CONNECTION_NAME)) },
+                    { "thread_type", BinaryData.FromString(JsonSerializer.Serialize("channel")) },
+                    { "group_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_GROUP_ID))},
+                    { "channel_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_CHANNEL_ID))},
+                });
+        }
+        else if (triggerType == TriggerType.GitHubEvent)
+        {
+            // When re recording this test please create the issue on the GitHub
+            // and assign it to yourself.
+            trigger = new GitHubIssueRoutineTrigger(
+                connectionId: TestEnvironment.GITHUB_CONNECTION_NAME,
+                owner: TestEnvironment.GITHUB_USERNAME,
+                repository: TestEnvironment.GITHUB_REPOSITORY,
+                issueEvent: GitHubIssueEvent.Opened
+            );
         }
         else
         {

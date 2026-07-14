@@ -11,12 +11,12 @@ namespace Azure.Provisioning.Batch
     public enum BatchPrivateLinkServiceConnectionStatus
     {
         /// <summary> The private endpoint connection is approved and can be used to access Batch account. </summary>
-        Approved,
+        Approved = 0,
         /// <summary> The private endpoint connection is pending and cannot be used to access Batch account. </summary>
-        Pending,
+        Pending = 1,
         /// <summary> The private endpoint connection is rejected and cannot be used to access Batch account. </summary>
-        Rejected,
+        Rejected = 2,
         /// <summary> The private endpoint connection is disconnected and cannot be used to access Batch account. </summary>
-        Disconnected
+        Disconnected = 3
     }
 }

@@ -44,5 +44,8 @@ interface Bazs {
     Parameters = {
       @query("$top")
       $top?: int32;
+
+      @query("filters")
+      filters?: string[];
     }>;
 }

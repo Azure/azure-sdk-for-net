@@ -11,6 +11,7 @@ namespace Azure.Generator.Provisioning.Primitives
     internal record ProvisioningPropertyInfo(
         string PropertyName,
         bool IsOutput,
+        bool IsSettable,
         bool IsRequired,
         string[] BicepPath,
         string? DefaultValue = null,

@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of devices for which the commit operation failed. </summary>
-        public IList<string> FailedDevices { get; }
+        public IList<string> FailedDevices { get; } = new ChangeTrackingList<string>();
     }
 }
