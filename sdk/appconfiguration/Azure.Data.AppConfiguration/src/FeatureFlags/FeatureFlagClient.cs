@@ -143,69 +143,6 @@ namespace Azure.Data.AppConfiguration
             return new ConditionalPageable<FeatureFlag>(pageableImplementation);
         }
 
-        private ConditionalPageableImplementation<FeatureFlag> GetFeatureFlagsPageableImplementation(FeatureFlagSelector selector, CancellationToken cancellationToken)
-        {
-            (string name, string label, string acceptDatetime, IEnumerable<string> select, IList<string> tags) = TranslateFeatureFlagSelector(selector);
-
-            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            context.AddClassifier(304, isError: false);
-
-            HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
-            {
-                return CreateGetFeatureFlagsRequest(name, label, null, null, acceptDatetime, select, conditions, tags, context);
-            }
-
-            HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
-            {
-                HttpMessage message = CreateNextGetFeatureFlagsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, label, null, null, acceptDatetime, select, conditions, tags, context);
-
-                // The generated next-page request only carries the continuation link, so the
-                // per-call headers must be re-applied to honor point-in-time reads and the
-                // per-page match conditions used by conditional paging.
-                if (acceptDatetime != null)
-                {
-                    message.Request.Headers.SetValue("Accept-Datetime", acceptDatetime);
-                }
-                if (conditions != null)
-                {
-                    message.Request.Headers.Add(conditions);
-                }
-
-                return message;
-            }
-
-            return new ConditionalPageableImplementation<FeatureFlag>(FirstPageRequest, NextPageRequest, ParseGetFeatureFlagsResponse, Pipeline, ClientDiagnostics, "FeatureFlagClient.GetFeatureFlags", context);
-        }
-
-        private (List<FeatureFlag> Values, string NextLink) ParseGetFeatureFlagsResponse(Response response)
-        {
-            var values = new List<FeatureFlag>();
-            string nextLink = null;
-
-            if (response.Status == 200)
-            {
-                FeatureFlagListResult result = (FeatureFlagListResult)response;
-                if (result.Items != null)
-                {
-                    foreach (FeatureFlag flag in result.Items)
-                    {
-                        values.Add(flag);
-                    }
-                }
-                nextLink = result.NextLink;
-            }
-
-            // The "Link" header is formatted as:
-            // <nextLink>; rel="next"
-            if (nextLink == null && response.Headers.TryGetValue("Link", out string linkHeader))
-            {
-                int nextLinkEndIndex = linkHeader.IndexOf('>');
-                nextLink = linkHeader.Substring(1, nextLinkEndIndex - 1);
-            }
-
-            return (values, nextLink);
-        }
-
         /// <summary>
         /// Retrieves the revisions of one or more <see cref="FeatureFlag"/> entities that match the options specified in the passed-in <see cref="FeatureFlagSelector"/>.
         /// </summary>
@@ -234,49 +171,6 @@ namespace Azure.Data.AppConfiguration
             var pageableImplementation = GetFeatureFlagRevisionsPageableImplementation(selector, cancellationToken);
 
             return new ConditionalPageable<FeatureFlag>(pageableImplementation);
-        }
-
-        private ConditionalPageableImplementation<FeatureFlag> GetFeatureFlagRevisionsPageableImplementation(FeatureFlagSelector selector, CancellationToken cancellationToken)
-        {
-            (string name, string label, string acceptDatetime, IEnumerable<string> select, IList<string> tags) = TranslateFeatureFlagSelector(selector);
-
-            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            context.AddClassifier(304, isError: false);
-
-            HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
-            {
-                HttpMessage message = CreateGetFeatureFlagRevisionsRequest(name, label, null, select, tags, null, conditions, context);
-
-                // The generated revisions request does not accept a point-in-time parameter, so
-                // the Accept-Datetime header must be applied directly to honor point-in-time reads.
-                if (acceptDatetime != null)
-                {
-                    message.Request.Headers.SetValue("Accept-Datetime", acceptDatetime);
-                }
-
-                return message;
-            }
-
-            HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
-            {
-                HttpMessage message = CreateNextGetFeatureFlagRevisionsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, label, null, select, tags, null, conditions, context);
-
-                // The generated next-page request only carries the continuation link, so the
-                // per-call headers must be re-applied to honor point-in-time reads and the
-                // per-page match conditions used by conditional paging.
-                if (acceptDatetime != null)
-                {
-                    message.Request.Headers.SetValue("Accept-Datetime", acceptDatetime);
-                }
-                if (conditions != null)
-                {
-                    message.Request.Headers.Add(conditions);
-                }
-
-                return message;
-            }
-
-            return new ConditionalPageableImplementation<FeatureFlag>(FirstPageRequest, NextPageRequest, ParseGetFeatureFlagsResponse, Pipeline, ClientDiagnostics, "FeatureFlagClient.GetFeatureFlagRevisions", context);
         }
 
         /// <summary>
@@ -321,63 +215,6 @@ namespace Azure.Data.AppConfiguration
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, dateTime, fields, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateNextGetLabelsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "FeatureFlagClient.GetLabels", "items", "@nextLink", cancellationToken);
-        }
-
-        // The labels operation is generated only onto ConfigurationClient, so the request is
-        // hand-authored here (mirroring the generated builder) to target the shared "/labels"
-        // endpoint. The resourceType is always set to "ff" so this client only returns labels
-        // associated with feature flags.
-        private HttpMessage CreateGetLabelsRequest(string name, string acceptDatetime, IEnumerable<SettingLabelFields> @select, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/labels", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (name != null)
-            {
-                uri.AppendQuery("name", name, true);
-            }
-            if (@select != null && !(@select is ChangeTrackingList<SettingLabelFields> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
-            }
-            uri.AppendQuery("resourceType", "ff", true);
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            if (acceptDatetime != null)
-            {
-                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
-            }
-            request.Headers.SetValue("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
-            return message;
-        }
-
-        private HttpMessage CreateNextGetLabelsRequest(Uri nextPage, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
-            return message;
         }
 
         /// <summary>
@@ -610,54 +447,6 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNull(flag, nameof(flag));
             MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.Etag } : default;
             return DeleteFeatureFlag(flag.Name, flag.Label, requestOptions, cancellationToken);
-        }
-
-        private async Task<Response> DeleteFeatureFlagAsync(string name, string label, MatchConditions requestOptions, CancellationToken cancellationToken)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(DeleteFeatureFlag)}");
-            scope.AddAttribute(OTelAttributeKey, name);
-            scope.Start();
-
-            try
-            {
-                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
-                Response response = await DeleteFeatureFlagAsync(name, label, null, requestOptions?.IfMatch, context).ConfigureAwait(false);
-                return response.Status switch
-                {
-                    200 => response,
-                    204 => response,
-                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        private Response DeleteFeatureFlag(string name, string label, MatchConditions requestOptions, CancellationToken cancellationToken)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(DeleteFeatureFlag)}");
-            scope.AddAttribute(OTelAttributeKey, name);
-            scope.Start();
-
-            try
-            {
-                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
-                Response response = DeleteFeatureFlag(name, label, null, requestOptions?.IfMatch, context);
-                return response.Status switch
-                {
-                    200 => response,
-                    204 => response,
-                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
@@ -898,6 +687,217 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => Response.FromValue((FeatureFlag)response, response),
+                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private ConditionalPageableImplementation<FeatureFlag> GetFeatureFlagsPageableImplementation(FeatureFlagSelector selector, CancellationToken cancellationToken)
+        {
+            (string name, string label, string acceptDatetime, IEnumerable<string> select, IList<string> tags) = TranslateFeatureFlagSelector(selector);
+
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            context.AddClassifier(304, isError: false);
+
+            HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
+            {
+                return CreateGetFeatureFlagsRequest(name, label, null, null, acceptDatetime, select, conditions, tags, context);
+            }
+
+            HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
+            {
+                HttpMessage message = CreateNextGetFeatureFlagsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, label, null, null, acceptDatetime, select, conditions, tags, context);
+
+                // The generated next-page request only carries the continuation link, so the
+                // per-call headers must be re-applied to honor point-in-time reads and the
+                // per-page match conditions used by conditional paging.
+                if (acceptDatetime != null)
+                {
+                    message.Request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+                }
+                if (conditions != null)
+                {
+                    message.Request.Headers.Add(conditions);
+                }
+
+                return message;
+            }
+
+            return new ConditionalPageableImplementation<FeatureFlag>(FirstPageRequest, NextPageRequest, ParseGetFeatureFlagsResponse, Pipeline, ClientDiagnostics, "FeatureFlagClient.GetFeatureFlags", context);
+        }
+
+        private (List<FeatureFlag> Values, string NextLink) ParseGetFeatureFlagsResponse(Response response)
+        {
+            var values = new List<FeatureFlag>();
+            string nextLink = null;
+
+            if (response.Status == 200)
+            {
+                FeatureFlagListResult result = (FeatureFlagListResult)response;
+                if (result.Items != null)
+                {
+                    foreach (FeatureFlag flag in result.Items)
+                    {
+                        values.Add(flag);
+                    }
+                }
+                nextLink = result.NextLink;
+            }
+
+            // The "Link" header is formatted as:
+            // <nextLink>; rel="next"
+            if (nextLink == null && response.Headers.TryGetValue("Link", out string linkHeader))
+            {
+                int nextLinkEndIndex = linkHeader.IndexOf('>');
+                nextLink = linkHeader.Substring(1, nextLinkEndIndex - 1);
+            }
+
+            return (values, nextLink);
+        }
+
+        private ConditionalPageableImplementation<FeatureFlag> GetFeatureFlagRevisionsPageableImplementation(FeatureFlagSelector selector, CancellationToken cancellationToken)
+        {
+            (string name, string label, string acceptDatetime, IEnumerable<string> select, IList<string> tags) = TranslateFeatureFlagSelector(selector);
+
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            context.AddClassifier(304, isError: false);
+
+            HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
+            {
+                HttpMessage message = CreateGetFeatureFlagRevisionsRequest(name, label, null, select, tags, null, conditions, context);
+
+                // The generated revisions request does not accept a point-in-time parameter, so
+                // the Accept-Datetime header must be applied directly to honor point-in-time reads.
+                if (acceptDatetime != null)
+                {
+                    message.Request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+                }
+
+                return message;
+            }
+
+            HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
+            {
+                HttpMessage message = CreateNextGetFeatureFlagRevisionsRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), name, label, null, select, tags, null, conditions, context);
+
+                // The generated next-page request only carries the continuation link, so the
+                // per-call headers must be re-applied to honor point-in-time reads and the
+                // per-page match conditions used by conditional paging.
+                if (acceptDatetime != null)
+                {
+                    message.Request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+                }
+                if (conditions != null)
+                {
+                    message.Request.Headers.Add(conditions);
+                }
+
+                return message;
+            }
+
+            return new ConditionalPageableImplementation<FeatureFlag>(FirstPageRequest, NextPageRequest, ParseGetFeatureFlagsResponse, Pipeline, ClientDiagnostics, "FeatureFlagClient.GetFeatureFlagRevisions", context);
+        }
+
+        // The labels operation is generated only onto ConfigurationClient, so the request is
+        // hand-authored here (mirroring the generated builder) to target the shared "/labels"
+        // endpoint. The resourceType is always set to "ff" so this client only returns labels
+        // associated with feature flags.
+        private HttpMessage CreateGetLabelsRequest(string name, string acceptDatetime, IEnumerable<SettingLabelFields> @select, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/labels", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (name != null)
+            {
+                uri.AppendQuery("name", name, true);
+            }
+            if (@select != null && !(@select is ChangeTrackingList<SettingLabelFields> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
+            }
+            uri.AppendQuery("resourceType", "ff", true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if (acceptDatetime != null)
+            {
+                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+            }
+            request.Headers.SetValue("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
+            return message;
+        }
+
+        private HttpMessage CreateNextGetLabelsRequest(Uri nextPage, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
+            return message;
+        }
+
+        private async Task<Response> DeleteFeatureFlagAsync(string name, string label, MatchConditions requestOptions, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(DeleteFeatureFlag)}");
+            scope.AddAttribute(OTelAttributeKey, name);
+            scope.Start();
+
+            try
+            {
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+                Response response = await DeleteFeatureFlagAsync(name, label, null, requestOptions?.IfMatch, context).ConfigureAwait(false);
+                return response.Status switch
+                {
+                    200 => response,
+                    204 => response,
+                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Response DeleteFeatureFlag(string name, string label, MatchConditions requestOptions, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(FeatureFlagClient)}.{nameof(DeleteFeatureFlag)}");
+            scope.AddAttribute(OTelAttributeKey, name);
+            scope.Start();
+
+            try
+            {
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+                Response response = DeleteFeatureFlag(name, label, null, requestOptions?.IfMatch, context);
+                return response.Status switch
+                {
+                    200 => response,
+                    204 => response,
                     _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
                 };
             }
