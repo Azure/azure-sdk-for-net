@@ -51,15 +51,15 @@ public class BasicBotServiceTests
             param location string = resourceGroup().location
 
             resource bot 'Microsoft.BotService/botServices@2023-09-15-preview' = {
-              name: take('bot-${uniqueString(resourceGroup().id)}', 24)
-              tags: {
-                environment: 'test'
-              }
-              location: location
+              name: take('bot-${uniqueString(resourceGroup().id)}', 64)
               properties: {
                 displayName: 'sample-bot'
                 endpoint: 'https://example.com/api/messages'
                 msaAppId: '00000000-0000-0000-0000-000000000000'
+              }
+              location: location
+              tags: {
+                environment: 'test'
               }
               sku: {
                 name: 'F0'
