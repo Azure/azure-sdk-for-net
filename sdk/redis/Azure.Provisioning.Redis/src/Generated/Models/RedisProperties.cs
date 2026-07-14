@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Redis
         private RedisAccessKeys _accessKeys;
         private BicepList<SubResource> _linkedServers;
         private BicepList<RedisInstanceDetails> _instances;
-        private BicepList<RedisPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<RedisPrivateEndpointConnection> _privateEndpointConnectionResources;
         private RedisSku _sku;
         private BicepValue<ResourceIdentifier> _subnetId;
         private BicepValue<IPAddress> _staticIP;
@@ -115,13 +115,13 @@ namespace Azure.Provisioning.Redis
             }
         }
 
-        /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<RedisPrivateEndpointConnection> PrivateEndpointConnections
+        /// <summary> Gets the PrivateEndpointConnectionResources. </summary>
+        public BicepList<RedisPrivateEndpointConnection> PrivateEndpointConnectionResources
         {
             get
             {
                 Initialize();
-                return _privateEndpointConnections;
+                return _privateEndpointConnectionResources;
             }
         }
 
@@ -361,7 +361,7 @@ namespace Azure.Provisioning.Redis
             _accessKeys = DefineModelProperty<RedisAccessKeys>(nameof(AccessKeys), new string[] { "accessKeys" }, isOutput: true);
             _linkedServers = DefineListProperty<SubResource>(nameof(LinkedServers), new string[] { "linkedServers" }, isOutput: true);
             _instances = DefineListProperty<RedisInstanceDetails>(nameof(Instances), new string[] { "instances" }, isOutput: true);
-            _privateEndpointConnections = DefineListProperty<RedisPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnectionResources = DefineListProperty<RedisPrivateEndpointConnection>(nameof(PrivateEndpointConnectionResources), new string[] { "privateEndpointConnections" }, isOutput: true);
             _sku = DefineModelProperty<RedisSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
             _subnetId = DefineProperty<ResourceIdentifier>(nameof(SubnetId), new string[] { "subnetId" });
             _staticIP = DefineProperty<IPAddress>(nameof(StaticIP), new string[] { "staticIP" });

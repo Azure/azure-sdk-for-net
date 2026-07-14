@@ -15,8 +15,6 @@ namespace Azure.Provisioning.Redis
     [CodeGenType("Redis")]
     public partial class RedisResource
     {
-        private BicepList<RedisPrivateEndpointConnectionData> _privateEndpointConnections;
-
         public static partial class ResourceVersions
         {
             /// <summary> API version "2014-04-01". </summary>
@@ -76,7 +74,7 @@ namespace Azure.Provisioning.Redis
                 {
                     Properties = new RedisProperties();
                 }
-                return Properties.PrivateEndpointConnections;
+                return Properties.PrivateEndpointConnectionResources;
             }
         }
 
@@ -90,14 +88,12 @@ namespace Azure.Provisioning.Redis
         {
             get
             {
-                Initialize();
-                return _privateEndpointConnections;
+                if (Properties is null)
+                {
+                    Properties = new RedisProperties();
+                }
+                return Properties.PrivateEndpointConnections;
             }
-        }
-
-        partial void DefineAdditionalProperties()
-        {
-            _privateEndpointConnections = DefineListProperty<RedisPrivateEndpointConnectionData>("PrivateEndpointConnections", new string[] { "properties", "privateEndpointConnections" }, isOutput: true);
         }
     }
 }

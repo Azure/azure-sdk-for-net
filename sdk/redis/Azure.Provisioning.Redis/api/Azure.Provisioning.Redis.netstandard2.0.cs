@@ -303,6 +303,7 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2024_11_01;
         }
     }
+    [System.ObsoleteAttribute("Use RedisPrivateEndpointConnection instead.")]
     public partial class RedisPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public RedisPrivateEndpointConnectionData() { }

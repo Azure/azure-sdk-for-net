@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -15,6 +16,7 @@ namespace Azure.Provisioning.Redis
     /// The Private Endpoint Connection resource.
     /// </summary>
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    [Obsolete("Use RedisPrivateEndpointConnection instead.")]
     public partial class RedisPrivateEndpointConnectionData : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _privateEndpointId;
