@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.NodePoolRollingStarted event. </summary>
+    [JsonConverter(typeof(ContainerServiceNodePoolRollingStartedEventDataConverter))]
     public partial class ContainerServiceNodePoolRollingStartedEventData : ContainerServiceNodePoolRollingEventData
     {
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNodePoolRollingStartedEventData"/>. </summary>

@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatAzureBotCommandReceivedInThread event. </summary>
+    [JsonConverter(typeof(AcsChatAzureBotCommandReceivedInThreadEventDataConverter))]
     public partial class AcsChatAzureBotCommandReceivedInThreadEventData : AcsChatMessageEventInThreadBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatAzureBotCommandReceivedInThreadEventData"/>. </summary>

@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.CallEnded event. </summary>
+    [JsonConverter(typeof(AcsCallEndedEventDataConverter))]
     public partial class AcsCallEndedEventData : AcsCallingEventProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsCallEndedEventData"/>. </summary>

@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The content of the event request message. </summary>
+    [JsonConverter(typeof(ContainerRegistryEventDataConverter))]
     public partial class ContainerRegistryEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

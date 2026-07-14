@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.DirectoryDeleted event. </summary>
+    [JsonConverter(typeof(StorageDirectoryDeletedEventDataConverter))]
     public partial class StorageDirectoryDeletedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

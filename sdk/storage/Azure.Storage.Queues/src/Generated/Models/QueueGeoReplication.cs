@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> Geo replication information for the secondary storage location. </summary>
+    [Core.CodeGenModelAttribute("GeoReplication")]
     public partial class QueueGeoReplication
     {
         /// <summary> Initializes a new instance of <see cref="QueueGeoReplication"/>. </summary>

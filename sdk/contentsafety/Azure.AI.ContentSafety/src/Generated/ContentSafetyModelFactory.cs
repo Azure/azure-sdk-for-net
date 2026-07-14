@@ -9,10 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure;
+using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
+    [Core.CodeGenModelAttribute("AIContentSafetyModelFactory")]
     public static partial class ContentSafetyModelFactory
     {
         /// <summary> The image analysis request. </summary>

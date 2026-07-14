@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceWriteFailure event. This is raised when a resource create or update operation fails. </summary>
+    [JsonConverter(typeof(ResourceWriteFailureEventDataConverter))]
     public partial class ResourceWriteFailureEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

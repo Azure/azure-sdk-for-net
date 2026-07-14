@@ -7,10 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Communication model identifier kind. </summary>
+    [Core.CodeGenModelAttribute("CommunicationIdentifierModelKind")]
     public readonly partial struct AcsCommunicationIdentifierKind : IEquatable<AcsCommunicationIdentifierKind>
     {
         private readonly string _value;

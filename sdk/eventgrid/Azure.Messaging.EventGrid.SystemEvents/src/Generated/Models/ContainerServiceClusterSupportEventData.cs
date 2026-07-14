@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of cluster support events. </summary>
+    [JsonConverter(typeof(ContainerServiceClusterSupportEventDataConverter))]
     public partial class ContainerServiceClusterSupportEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

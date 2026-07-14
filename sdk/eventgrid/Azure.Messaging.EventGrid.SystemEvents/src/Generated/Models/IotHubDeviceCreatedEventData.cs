@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.Devices.DeviceCreated event. </summary>
+    [JsonConverter(typeof(IotHubDeviceCreatedEventDataConverter))]
     public partial class IotHubDeviceCreatedEventData : DeviceLifeCycleEventProperties
     {
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceCreatedEventData"/>. </summary>

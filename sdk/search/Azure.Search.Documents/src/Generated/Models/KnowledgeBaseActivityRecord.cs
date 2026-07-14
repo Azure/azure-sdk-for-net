@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
@@ -14,6 +15,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// Base type for activity records. Tracks execution details, timing, and errors for knowledge base operations.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseSearchIndexActivityRecord"/>, <see cref="KnowledgeBaseAzureBlobActivityRecord"/>, <see cref="KnowledgeBaseIndexedSharePointActivityRecord"/>, <see cref="KnowledgeBaseIndexedOneLakeActivityRecord"/>, <see cref="KnowledgeBaseWebActivityRecord"/>, <see cref="KnowledgeBaseRemoteSharePointActivityRecord"/>, <see cref="KnowledgeBaseWorkIQActivityRecord"/>, <see cref="KnowledgeBaseFabricDataAgentActivityRecord"/>, <see cref="KnowledgeBaseFabricOntologyActivityRecord"/>, <see cref="KnowledgeBaseMcpServerActivityRecord"/>, <see cref="KnowledgeBaseFileActivityRecord"/>, <see cref="KnowledgeBaseIndexedSqlActivityRecord"/>, <see cref="KnowledgeBaseModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeBaseModelAnswerSynthesisActivityRecord"/>, <see cref="KnowledgeBaseModelWebSummarizationActivityRecord"/>, and <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownKnowledgeBaseActivityRecord))]
     public abstract partial class KnowledgeBaseActivityRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

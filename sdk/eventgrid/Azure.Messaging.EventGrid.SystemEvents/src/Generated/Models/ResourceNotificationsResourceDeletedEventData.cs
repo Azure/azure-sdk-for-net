@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -14,6 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// Describes the schema of the common properties across all ARN system topic
     /// delete events
     /// </summary>
+    [JsonConverter(typeof(ResourceNotificationsResourceDeletedEventDataConverter))]
     public partial class ResourceNotificationsResourceDeletedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

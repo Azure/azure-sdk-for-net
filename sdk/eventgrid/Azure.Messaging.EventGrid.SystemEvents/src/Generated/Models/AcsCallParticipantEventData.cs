@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all participant events. </summary>
+    [JsonConverter(typeof(AcsCallParticipantEventDataConverter))]
     public partial class AcsCallParticipantEventData : AcsCallingEventProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsCallParticipantEventData"/>. </summary>

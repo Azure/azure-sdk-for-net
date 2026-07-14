@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> A Microsoft Teams application. </summary>
+    [Core.CodeGenModelAttribute("MicrosoftTeamsAppIdentifierModel")]
     public partial class AcsMicrosoftTeamsAppIdentifier
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> The copy status. </summary>
+    [Core.CodeGenModelAttribute("CopyStatusType")]
     public enum CopyStatus
     {
         /// <summary> The copy operation is pending. </summary>

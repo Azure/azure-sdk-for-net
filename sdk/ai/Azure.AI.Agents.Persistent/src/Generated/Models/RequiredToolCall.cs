@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
@@ -14,6 +15,7 @@ namespace Azure.AI.Agents.Persistent
     /// An abstract representation of a tool invocation needed by the model to continue a run.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequiredFunctionToolCall"/>, <see cref="RequiredMcpToolCall"/>, and <see cref="RequiredComputerUseToolCall"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownRequiredToolCall))]
     public abstract partial class RequiredToolCall : RequiredAction
     {
         /// <summary> Initializes a new instance of <see cref="RequiredToolCall"/>. </summary>

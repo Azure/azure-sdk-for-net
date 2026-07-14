@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Web.SlotSwapWithPreviewStarted event. </summary>
+    [JsonConverter(typeof(WebSlotSwapWithPreviewStartedEventDataConverter))]
     public partial class WebSlotSwapWithPreviewStartedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

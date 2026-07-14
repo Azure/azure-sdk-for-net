@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an event grid event for a Microsoft.ResourceNotifications.ContainerServiceEventResources.ScheduledEventEmitted preview event.Schema of the Data property of an event grid event for a Microsoft.ResourceNotifications.ContainerServiceEventResources.ScheduledEventEmitted preview event. </summary>
+    [JsonConverter(typeof(ResourceNotificationsContainerServiceEventResourcesScheduledEventDataConverter))]
     public partial class ResourceNotificationsContainerServiceEventResourcesScheduledEventData : ResourceNotificationsResourceUpdatedEventData
     {
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsContainerServiceEventResourcesScheduledEventData"/>. </summary>

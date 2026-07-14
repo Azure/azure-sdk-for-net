@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Specify one of the following options: - Update: Writes the bytes specified by the request body into the specified range. - Clear: Clears the specified range and releases the space used in storage for that range. </summary>
+    [Core.CodeGenModelAttribute("FileRangeWriteType")]
     public enum ShareFileRangeWriteType
     {
         /// <summary> Writes the bytes specified by the request body into the specified range. </summary>

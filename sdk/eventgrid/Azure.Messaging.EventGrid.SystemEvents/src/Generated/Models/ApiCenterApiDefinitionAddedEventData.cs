@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the data property of an EventGridEvent for a Microsoft.ApiCenter.ApiDefinitionAdded event. </summary>
+    [JsonConverter(typeof(ApiCenterApiDefinitionAddedEventDataConverter))]
     public partial class ApiCenterApiDefinitionAddedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

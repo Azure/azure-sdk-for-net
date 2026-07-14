@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerRegistry.ImageDeleted event. </summary>
+    [JsonConverter(typeof(ContainerRegistryImageDeletedEventDataConverter))]
     public partial class ContainerRegistryImageDeletedEventData : ContainerRegistryEventData
     {
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryImageDeletedEventData"/>. </summary>

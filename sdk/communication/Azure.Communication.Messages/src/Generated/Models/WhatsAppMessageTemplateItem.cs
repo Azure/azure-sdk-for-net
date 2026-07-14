@@ -9,10 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication.Messages;
+using Azure.Core;
 
 namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> The WhatsApp-specific template response contract. </summary>
+    [Core.CodeGenModelAttribute("WhatsAppMessageTemplateItem")]
     public partial class WhatsAppMessageTemplateItem : MessageTemplateItem
     {
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateItem"/>. </summary>

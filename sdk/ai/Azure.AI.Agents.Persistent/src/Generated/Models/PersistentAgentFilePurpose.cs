@@ -7,10 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The possible values denoting the intended usage of a file. </summary>
+    [Core.CodeGenModelAttribute("FilePurpose")]
     public readonly partial struct PersistentAgentFilePurpose : IEquatable<PersistentAgentFilePurpose>
     {
         private readonly string _value;

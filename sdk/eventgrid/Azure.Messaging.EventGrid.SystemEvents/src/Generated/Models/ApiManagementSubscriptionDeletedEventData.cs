@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.SubscriptionDeleted event. </summary>
+    [JsonConverter(typeof(ApiManagementSubscriptionDeletedEventDataConverter))]
     public partial class ApiManagementSubscriptionDeletedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

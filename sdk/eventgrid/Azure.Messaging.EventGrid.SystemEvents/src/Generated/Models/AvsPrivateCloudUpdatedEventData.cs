@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.PrivateCloudUpdated event. </summary>
+    [JsonConverter(typeof(AvsPrivateCloudUpdatedEventDataConverter))]
     public partial class AvsPrivateCloudUpdatedEventData : AvsPrivateCloudEventData
     {
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudUpdatedEventData"/>. </summary>

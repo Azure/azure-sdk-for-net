@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobWaitingForActivation event. </summary>
+    [JsonConverter(typeof(AcsRouterJobWaitingForActivationEventDataConverter))]
     public partial class AcsRouterJobWaitingForActivationEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobWaitingForActivationEventData"/>. </summary>

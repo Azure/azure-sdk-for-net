@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayHostnameConfigurationUpdated event. </summary>
+    [JsonConverter(typeof(ApiManagementGatewayHostnameConfigurationUpdatedEventDataConverter))]
     public partial class ApiManagementGatewayHostnameConfigurationUpdatedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

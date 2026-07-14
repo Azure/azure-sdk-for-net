@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for Microsoft.AVS/scriptExecutions events. </summary>
+    [JsonConverter(typeof(AvsScriptExecutionEventDataConverter))]
     public partial class AvsScriptExecutionEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

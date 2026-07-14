@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.Devices.DeviceDisconnected event. </summary>
+    [JsonConverter(typeof(IotHubDeviceDisconnectedEventDataConverter))]
     public partial class IotHubDeviceDisconnectedEventData : DeviceConnectionStateEventProperties
     {
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceDisconnectedEventData"/>. </summary>

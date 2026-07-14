@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceActionCancel event. This is raised when a resource action operation is canceled. </summary>
+    [JsonConverter(typeof(ResourceActionCancelEventDataConverter))]
     public partial class ResourceActionCancelEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

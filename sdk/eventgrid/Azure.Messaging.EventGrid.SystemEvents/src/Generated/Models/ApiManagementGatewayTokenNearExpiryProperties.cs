@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Information related to a gateway token that is near expiry for a self-hosted gateway deployment. </summary>
+    [Core.CodeGenModelAttribute("ApiManagementNearExpiryGatewayTokenProperties")]
     public partial class ApiManagementGatewayTokenNearExpiryProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

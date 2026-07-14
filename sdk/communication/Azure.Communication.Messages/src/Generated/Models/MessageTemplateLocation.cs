@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
     /// <summary> The message template's location value information. </summary>
+    [Core.CodeGenModelAttribute("MessageTemplateLocation")]
     public partial class MessageTemplateLocation : MessageTemplateValue
     {
         /// <summary> Initializes a new instance of <see cref="MessageTemplateLocation"/>. </summary>

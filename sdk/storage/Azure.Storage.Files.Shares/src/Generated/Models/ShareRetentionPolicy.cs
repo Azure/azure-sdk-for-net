@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> The retention policy. </summary>
+    [Core.CodeGenModelAttribute("RetentionPolicy")]
     public partial class ShareRetentionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="ShareRetentionPolicy"/>. </summary>

@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.PrivateCloudFailed event. </summary>
+    [JsonConverter(typeof(AvsPrivateCloudFailedEventDataConverter))]
     public partial class AvsPrivateCloudFailedEventData : AvsPrivateCloudEventData
     {
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudFailedEventData"/>. </summary>

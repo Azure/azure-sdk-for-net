@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.EventGrid.MQTTClientCreatedOrUpdated event. </summary>
+    [JsonConverter(typeof(EventGridMqttClientCreatedOrUpdatedEventDataConverter))]
     public partial class EventGridMqttClientCreatedOrUpdatedEventData : EventGridMqttClientEventData
     {
         /// <summary> Initializes a new instance of <see cref="EventGridMqttClientCreatedOrUpdatedEventData"/>. </summary>

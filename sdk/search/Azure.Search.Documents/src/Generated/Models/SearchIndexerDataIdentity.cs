@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -14,6 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// Abstract base type for data identities.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownSearchIndexerDataIdentity))]
     public abstract partial class SearchIndexerDataIdentity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

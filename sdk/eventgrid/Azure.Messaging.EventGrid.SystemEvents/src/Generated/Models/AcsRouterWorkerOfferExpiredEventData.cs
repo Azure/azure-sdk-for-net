@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerOfferExpired event. </summary>
+    [JsonConverter(typeof(AcsRouterWorkerOfferExpiredEventDataConverter))]
     public partial class AcsRouterWorkerOfferExpiredEventData : AcsRouterWorkerEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerOfferExpiredEventData"/>. </summary>

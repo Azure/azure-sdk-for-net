@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -14,6 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// Specifies the vectorization method to be used during query time.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureOpenAIVectorizer"/>, <see cref="WebApiVectorizer"/>, <see cref="AIServicesVisionVectorizer"/>, and <see cref="AzureMachineLearningVectorizer"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownVectorSearchVectorizer))]
     public abstract partial class VectorSearchVectorizer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

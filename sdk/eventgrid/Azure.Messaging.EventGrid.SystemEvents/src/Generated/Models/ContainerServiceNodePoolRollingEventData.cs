@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of node pool rolling events. </summary>
+    [JsonConverter(typeof(ContainerServiceNodePoolRollingEventDataConverter))]
     public partial class ContainerServiceNodePoolRollingEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

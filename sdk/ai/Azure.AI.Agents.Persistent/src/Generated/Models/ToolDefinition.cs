@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
@@ -14,6 +15,7 @@ namespace Azure.AI.Agents.Persistent
     /// An abstract representation of an input tool definition that an agent can use.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CodeInterpreterToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="SharepointToolDefinition"/>, <see cref="AzureAISearchToolDefinition"/>, <see cref="OpenApiToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="DeepResearchToolDefinition"/>, <see cref="MCPToolDefinition"/>, <see cref="ComputerUseToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, and <see cref="BrowserAutomationToolDefinition"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownToolDefinition))]
     public abstract partial class ToolDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

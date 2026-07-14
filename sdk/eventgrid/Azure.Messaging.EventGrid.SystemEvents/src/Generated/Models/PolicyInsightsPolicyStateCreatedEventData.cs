@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.PolicyInsights.PolicyStateCreated event. </summary>
+    [JsonConverter(typeof(PolicyInsightsPolicyStateCreatedEventDataConverter))]
     public partial class PolicyInsightsPolicyStateCreatedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

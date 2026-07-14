@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Storage.StorageTaskCompleted event. </summary>
+    [JsonConverter(typeof(StorageTaskCompletedEventDataConverter))]
     public partial class StorageTaskCompletedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

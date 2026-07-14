@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AVS.ClusterUpdated event. </summary>
+    [JsonConverter(typeof(AvsClusterUpdatedEventDataConverter))]
     public partial class AvsClusterUpdatedEventData : AvsClusterEventData
     {
         /// <summary> Initializes a new instance of <see cref="AvsClusterUpdatedEventData"/>. </summary>

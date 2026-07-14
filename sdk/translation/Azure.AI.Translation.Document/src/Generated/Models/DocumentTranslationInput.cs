@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Definition for the input batch translation request. </summary>
+    [Core.CodeGenModelAttribute("BatchRequest")]
     public partial class DocumentTranslationInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

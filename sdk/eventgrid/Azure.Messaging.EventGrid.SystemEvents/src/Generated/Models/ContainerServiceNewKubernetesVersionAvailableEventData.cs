@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerService.NewKubernetesVersionAvailable event. </summary>
+    [JsonConverter(typeof(ContainerServiceNewKubernetesVersionAvailableEventDataConverter))]
     public partial class ContainerServiceNewKubernetesVersionAvailableEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

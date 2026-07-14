@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Storage Analytics metrics for file service. </summary>
+    [Core.CodeGenModelAttribute("Metrics")]
     public partial class ShareMetrics
     {
         /// <summary> Initializes a new instance of <see cref="ShareMetrics"/>. </summary>

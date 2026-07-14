@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatParticipantRemovedFromThreadWithUser event. </summary>
+    [JsonConverter(typeof(AcsChatParticipantRemovedFromThreadWithUserEventDataConverter))]
     public partial class AcsChatParticipantRemovedFromThreadWithUserEventData : AcsChatThreadEventBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatParticipantRemovedFromThreadWithUserEventData"/>. </summary>

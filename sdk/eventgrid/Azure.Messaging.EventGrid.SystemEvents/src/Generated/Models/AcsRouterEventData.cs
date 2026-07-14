@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all Router events. </summary>
+    [JsonConverter(typeof(AcsRouterEventDataConverter))]
     public partial class AcsRouterEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

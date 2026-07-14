@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.DataBox.CopyCompleted event. </summary>
+    [JsonConverter(typeof(DataBoxCopyCompletedEventDataConverter))]
     public partial class DataBoxCopyCompletedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

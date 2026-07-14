@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Destination for the finished translated documents. </summary>
+    [Core.CodeGenModelAttribute("TargetInput")]
     public partial class TranslationTarget
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

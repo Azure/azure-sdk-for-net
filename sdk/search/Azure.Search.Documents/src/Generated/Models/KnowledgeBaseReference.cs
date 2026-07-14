@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
@@ -16,6 +17,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// Base type for references.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseSearchIndexReference"/>, <see cref="KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBaseWebReference"/>, <see cref="KnowledgeBaseRemoteSharePointReference"/>, <see cref="KnowledgeBaseWorkIQReference"/>, <see cref="KnowledgeBaseFabricDataAgentReference"/>, <see cref="KnowledgeBaseFabricOntologyReference"/>, <see cref="KnowledgeBaseMcpServerReference"/>, <see cref="KnowledgeBaseFileReference"/>, and <see cref="KnowledgeBaseIndexedSqlReference"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownKnowledgeBaseReference))]
     public abstract partial class KnowledgeBaseReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

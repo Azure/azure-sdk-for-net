@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -13,6 +14,7 @@ namespace Azure.AI.Projects.Evaluation
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HourlyRecurrenceSchedule"/>, <see cref="DailyRecurrenceSchedule"/>, <see cref="WeeklyRecurrenceSchedule"/>, and <see cref="MonthlyRecurrenceSchedule"/>.
     /// </summary>
     [Experimental("AAIP001")]
+    [PersistableModelProxy(typeof(UnknownRecurrenceSchedule))]
     public abstract partial class RecurrenceSchedule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

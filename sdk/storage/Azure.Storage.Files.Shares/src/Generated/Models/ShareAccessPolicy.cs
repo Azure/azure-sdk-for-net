@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> An Access policy. </summary>
+    [Core.CodeGenModelAttribute("AccessPolicy")]
     public partial class ShareAccessPolicy
     {
         /// <summary> Initializes a new instance of <see cref="ShareAccessPolicy"/>. </summary>

@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ServiceBus.ActiveMessagesAvailablePeriodicNotifications event. </summary>
+    [JsonConverter(typeof(ServiceBusActiveMessagesAvailablePeriodicNotificationsEventDataConverter))]
     public partial class ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

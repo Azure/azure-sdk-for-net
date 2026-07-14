@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Describes the schema of the common properties across all ARN system topic events. </summary>
+    [JsonConverter(typeof(ResourceNotificationsResourceUpdatedEventDataConverter))]
     public partial class ResourceNotificationsResourceUpdatedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

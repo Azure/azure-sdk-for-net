@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Communication.Messages
 {
     /// <summary> Client options for clients in this library. </summary>
+    [Core.CodeGenModelAttribute("AzureCommunicationMessagesClientOptions")]
     public partial class CommunicationMessagesClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_09_01_Preview;

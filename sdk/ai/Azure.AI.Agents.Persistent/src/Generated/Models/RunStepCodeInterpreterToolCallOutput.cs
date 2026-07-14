@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
@@ -14,6 +15,7 @@ namespace Azure.AI.Agents.Persistent
     /// An abstract representation of an emitted output from a code interpreter tool.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepCodeInterpreterLogOutput"/> and <see cref="RunStepCodeInterpreterImageOutput"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownRunStepCodeInterpreterToolCallOutput))]
     public abstract partial class RunStepCodeInterpreterToolCallOutput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.EmailDeliveryReportReceived event. </summary>
+    [JsonConverter(typeof(AcsEmailDeliveryReportReceivedEventDataConverter))]
     public partial class AcsEmailDeliveryReportReceivedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -22,6 +22,7 @@ namespace Azure.AI.Speech.Transcription
     [ModelReaderWriterBuildable(typeof(TranscriptionDiarizationOptions))]
     [ModelReaderWriterBuildable(typeof(TranscriptionOptions))]
     [ModelReaderWriterBuildable(typeof(TranscriptionResult))]
+    [ModelReaderWriterBuildable(typeof(TranscriptionContent))]
     public partial class AzureAISpeechTranscriptionContext : ModelReaderWriterContext
     {
     }

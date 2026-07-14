@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Signed identifier. </summary>
+    [Core.CodeGenModelAttribute("SignedIdentifier")]
     public partial class ShareSignedIdentifier
     {
         /// <summary> Initializes a new instance of <see cref="ShareSignedIdentifier"/>. </summary>

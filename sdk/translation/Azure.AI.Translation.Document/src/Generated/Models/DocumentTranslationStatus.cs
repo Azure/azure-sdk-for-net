@@ -7,10 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary> List of possible statuses for job or document. </summary>
+    [Core.CodeGenModelAttribute("Status")]
     public readonly partial struct DocumentTranslationStatus : IEquatable<DocumentTranslationStatus>
     {
         private readonly string _value;

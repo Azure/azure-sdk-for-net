@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.CircuitBreaker.Opened event. </summary>
+    [JsonConverter(typeof(ApiManagementCircuitBreakerOpenedEventDataConverter))]
     public partial class ApiManagementCircuitBreakerOpenedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

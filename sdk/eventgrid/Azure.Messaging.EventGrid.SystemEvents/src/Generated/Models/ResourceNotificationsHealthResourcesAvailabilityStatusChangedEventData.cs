@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -15,6 +16,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// Microsoft.ResourceNotifications.HealthResources.AvailabilityStatusChanged
     /// event.
     /// </summary>
+    [JsonConverter(typeof(ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventDataConverter))]
     public partial class ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData : ResourceNotificationsResourceUpdatedEventData
     {
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData"/>. </summary>

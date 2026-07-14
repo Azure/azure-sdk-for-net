@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayCertificateAuthorityDeleted event. </summary>
+    [JsonConverter(typeof(ApiManagementGatewayCertificateAuthorityDeletedEventDataConverter))]
     public partial class ApiManagementGatewayCertificateAuthorityDeletedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

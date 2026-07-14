@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.IncomingCall event. </summary>
+    [JsonConverter(typeof(AcsIncomingCallEventDataConverter))]
     public partial class AcsIncomingCallEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

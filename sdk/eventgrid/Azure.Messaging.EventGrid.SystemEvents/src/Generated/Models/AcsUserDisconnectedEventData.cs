@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.UserDisconnected event. </summary>
+    [JsonConverter(typeof(AcsUserDisconnectedEventDataConverter))]
     public partial class AcsUserDisconnectedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

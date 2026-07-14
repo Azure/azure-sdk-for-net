@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Stats for the share. </summary>
+    [Core.CodeGenModelAttribute("ShareStats")]
     public partial class ShareStatistics
     {
         /// <summary> Initializes a new instance of <see cref="ShareStatistics"/>. </summary>

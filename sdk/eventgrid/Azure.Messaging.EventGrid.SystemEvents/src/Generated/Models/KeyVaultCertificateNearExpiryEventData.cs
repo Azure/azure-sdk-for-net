@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.CertificateNearExpiry event. </summary>
+    [JsonConverter(typeof(KeyVaultCertificateNearExpiryEventDataConverter))]
     public partial class KeyVaultCertificateNearExpiryEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

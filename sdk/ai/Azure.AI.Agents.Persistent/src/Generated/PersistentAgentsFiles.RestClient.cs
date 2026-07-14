@@ -11,6 +11,7 @@ using Azure.Core;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary></summary>
+    [Core.CodeGenClientAttribute("Files")]
     public partial class PersistentAgentsFiles
     {
         private static ResponseClassifier _pipelineMessageClassifier200;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
@@ -14,6 +15,7 @@ namespace Azure.AI.Agents.Persistent
     /// The abstract base representation of a single tool call within a streaming run step's delta tool call details.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepDeltaMcpToolCall"/>, <see cref="RunStepDeltaOpenAPIToolCall"/>, <see cref="RunStepDeltaConnectedAgentToolCall"/>, <see cref="RunStepDeltaFunctionToolCall"/>, <see cref="RunStepDeltaFileSearchToolCall"/>, <see cref="RunStepDeltaCodeInterpreterToolCall"/>, <see cref="RunStepDeltaBingGroundingToolCall"/>, <see cref="RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="RunStepDeltaAzureFunctionToolCall"/>, <see cref="RunStepDeltaDeepResearchToolCall"/>, <see cref="RunStepDeltaAzureAISearchToolCall"/>, <see cref="RunStepDeltaComputerUseToolCall"/>, <see cref="RunStepDeltaMicrosoftFabricToolCall"/>, and <see cref="RunStepDeltaSharepointToolCall"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownRunStepDeltaToolCall))]
     public abstract partial class RunStepDeltaToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaToolCall"/>. </summary>

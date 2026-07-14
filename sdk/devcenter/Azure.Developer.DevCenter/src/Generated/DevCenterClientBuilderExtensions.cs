@@ -7,12 +7,14 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Azure.Core;
 using Azure.Core.Extensions;
 using Azure.Developer.DevCenter;
 
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+    [global::Azure.Core.CodeGenClientAttribute("DeveloperDevCenterClientBuilderExtensions")]
     public static partial class DevCenterClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="DevCenterClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>

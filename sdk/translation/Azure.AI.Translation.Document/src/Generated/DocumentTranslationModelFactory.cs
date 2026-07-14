@@ -9,10 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
+    [Core.CodeGenModelAttribute("AITranslationDocumentModelFactory")]
     public static partial class DocumentTranslationModelFactory
     {
         /// <summary> Translation job submission batch request. </summary>

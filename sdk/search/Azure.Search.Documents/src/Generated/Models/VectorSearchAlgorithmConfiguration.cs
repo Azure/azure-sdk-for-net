@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -14,6 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// Contains configuration options specific to the algorithm used during indexing or querying.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HnswAlgorithmConfiguration"/> and <see cref="ExhaustiveKnnAlgorithmConfiguration"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownVectorSearchAlgorithmConfiguration))]
     public abstract partial class VectorSearchAlgorithmConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

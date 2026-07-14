@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for MQTT Client state changes. </summary>
+    [JsonConverter(typeof(EventGridMqttClientEventDataConverter))]
     public partial class EventGridMqttClientEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

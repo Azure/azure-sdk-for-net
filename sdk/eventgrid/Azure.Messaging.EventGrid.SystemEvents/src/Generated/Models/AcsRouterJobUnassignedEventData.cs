@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobUnassigned event. </summary>
+    [JsonConverter(typeof(AcsRouterJobUnassignedEventDataConverter))]
     public partial class AcsRouterJobUnassignedEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobUnassignedEventData"/>. </summary>

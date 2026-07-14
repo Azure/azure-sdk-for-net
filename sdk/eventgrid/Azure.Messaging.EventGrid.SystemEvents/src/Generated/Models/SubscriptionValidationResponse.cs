@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -16,6 +17,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// SubscriptionValidationEvent. When the validationCode is used, the
     /// SubscriptionValidationResponse can be used to build the response.
     /// </summary>
+    [JsonConverter(typeof(SubscriptionValidationResponseConverter))]
     public partial class SubscriptionValidationResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

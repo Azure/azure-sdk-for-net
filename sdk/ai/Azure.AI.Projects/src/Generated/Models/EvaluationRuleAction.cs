@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure.AI.Projects;
 
@@ -12,6 +13,7 @@ namespace Azure.AI.Projects.Evaluation
     /// Evaluation action model.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContinuousEvaluationRuleAction"/> and <see cref="HumanEvaluationPreviewRuleAction"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownEvaluationRuleAction))]
     public abstract partial class EvaluationRuleAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

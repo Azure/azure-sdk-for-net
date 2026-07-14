@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> Statistics for the storage queue service. </summary>
+    [Core.CodeGenModelAttribute("StorageServiceStats")]
     public partial class QueueServiceStatistics
     {
         /// <summary> Initializes a new instance of <see cref="QueueServiceStatistics"/>. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
@@ -14,6 +15,7 @@ namespace Azure.AI.Agents.Persistent
     /// Defines a single content block when creating a message. The 'type' field determines whether it is text, an image file, or an external image URL, etc.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageInputTextBlock"/>, <see cref="MessageInputImageFileBlock"/>, and <see cref="MessageInputImageUriBlock"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownMessageInputContentBlock))]
     public abstract partial class MessageInputContentBlock
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

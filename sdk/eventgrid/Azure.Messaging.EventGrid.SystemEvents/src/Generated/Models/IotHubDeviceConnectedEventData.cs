@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.Devices.DeviceConnected event. </summary>
+    [JsonConverter(typeof(IotHubDeviceConnectedEventDataConverter))]
     public partial class IotHubDeviceConnectedEventData : DeviceConnectionStateEventProperties
     {
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceConnectedEventData"/>. </summary>

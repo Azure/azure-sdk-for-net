@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Glossary / translation memory for the request. </summary>
+    [Core.CodeGenModelAttribute("Glossary")]
     public partial class TranslationGlossary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

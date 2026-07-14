@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all chat thread events. </summary>
+    [JsonConverter(typeof(AcsMessageEventDataConverter))]
     public partial class AcsMessageEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

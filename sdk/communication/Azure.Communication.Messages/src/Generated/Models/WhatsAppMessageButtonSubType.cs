@@ -8,10 +8,12 @@
 using System;
 using System.ComponentModel;
 using Azure.Communication.Messages;
+using Azure.Core;
 
 namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> The WhatsApp button sub type. </summary>
+    [Core.CodeGenModelAttribute("WhatsAppMessageButtonSubType")]
     public readonly partial struct WhatsAppMessageButtonSubType : IEquatable<WhatsAppMessageButtonSubType>
     {
         private readonly string _value;

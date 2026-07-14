@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceDeleteSuccess event. This is raised when a resource delete operation succeeds. </summary>
+    [JsonConverter(typeof(ResourceDeleteSuccessEventDataConverter))]
     public partial class ResourceDeleteSuccessEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

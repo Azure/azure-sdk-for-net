@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -14,6 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// Schema of the Data property of an EventGridEvent for a
     /// Microsoft.ResourceNotifications.Resources.CreatedOrUpdated event.
     /// </summary>
+    [JsonConverter(typeof(ResourceNotificationsResourceManagementCreatedOrUpdatedEventDataConverter))]
     public partial class ResourceNotificationsResourceManagementCreatedOrUpdatedEventData : ResourceNotificationsResourceUpdatedEventData
     {
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceManagementCreatedOrUpdatedEventData"/>. </summary>
