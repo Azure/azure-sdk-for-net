@@ -544,14 +544,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                isEnabled is null ? default : new SnapshotPolicyProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    isEnabled,
-                    default,
-                    default),
+                default,
                 eTag,
                 default);
         }
@@ -671,14 +664,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                backupPolicyId is null && isEnabled is null && volumeBackups is null ? default : new BackupPolicyProperties(
+                backupPolicyId is null && volumeBackups is null ? default : new BackupPolicyProperties(
                     backupPolicyId,
                     default,
                     default,
                     default,
                     default,
                     default,
-                    isEnabled,
+                    default,
                     (volumeBackups ?? new ChangeTrackingList<NetAppVolumeBackupDetail>()).ToList(),
                     default),
                 eTag,
@@ -1575,7 +1568,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                poolId is null && isCoolAccessEnabled is null ? default : new PoolProperties(
+                poolId is null ? default : new PoolProperties(
                     poolId,
                     default,
                     default,
@@ -1584,7 +1577,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     default,
                     default,
                     default,
-                    isCoolAccessEnabled,
+                    default,
                     default,
                     default),
                 eTag,

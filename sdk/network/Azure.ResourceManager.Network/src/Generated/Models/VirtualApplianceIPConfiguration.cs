@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Whether or not this is primary IP configuration of the NIC. </summary>
         [WirePath("properties.primary")]
-        public bool? Primary
+        public bool? VirtualApplianceIPPrimary
         {
             get
             {

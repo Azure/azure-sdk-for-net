@@ -7273,18 +7273,18 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                autoScaleBounds is null && gatewayType is null && vpnGatewayGeneration is null && enableBgp is null && enablePrivateIpAddress is null && virtualNetworkGatewayMigrationStatus is null && activeActive is null && enableHighBandwidthVpnGateway is null && disableIPSecReplayProtection is null && gatewayDefaultSiteId is null && virtualNetworkGatewayPolicyGroups is null && enableDnsForwarding is null && enableBgpRouteTranslationForNat is null && allowVirtualWanTraffic is null && allowRemoteVnetTraffic is null ? default : new VirtualNetworkGatewayPropertiesFormat(
+                autoScaleBounds is null && gatewayType is null && vpnGatewayGeneration is null && virtualNetworkGatewayMigrationStatus is null && enableHighBandwidthVpnGateway is null && gatewayDefaultSiteId is null && virtualNetworkGatewayPolicyGroups is null && allowVirtualWanTraffic is null ? default : new VirtualNetworkGatewayPropertiesFormat(
                     new VirtualNetworkGatewayAutoScaleConfiguration(autoScaleBounds, default),
                     default,
                     gatewayType,
                     default,
                     vpnGatewayGeneration,
-                    enableBgp,
-                    enablePrivateIpAddress,
+                    default,
+                    default,
                     virtualNetworkGatewayMigrationStatus,
-                    activeActive,
+                    default,
                     enableHighBandwidthVpnGateway,
-                    disableIPSecReplayProtection,
+                    default,
                     new NetworkSubResource(gatewayDefaultSiteId, default),
                     default,
                     default,
@@ -7293,13 +7293,13 @@ namespace Azure.ResourceManager.Network.Models
                     default,
                     default,
                     default,
-                    enableDnsForwarding,
                     default,
                     default,
                     default,
-                    enableBgpRouteTranslationForNat,
+                    default,
+                    default,
                     allowVirtualWanTraffic,
-                    allowRemoteVnetTraffic,
+                    default,
                     default,
                     default,
                     default),
@@ -7632,7 +7632,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                virtualNetworkGateway1Id is null && virtualNetworkGateway2Id is null && localNetworkGateway2Id is null && connectionProtocol is null && connectionMode is null && connectionStatus is null && tunnelConnectionStatus is null && peerId is null && enableBgp is null && gatewayCustomBgpIpAddresses is null && usePolicyBasedTrafficSelectors is null && expressRouteGatewayBypass is null && enablePrivateLinkFastPath is null ? default : new VirtualNetworkGatewayConnectionListEntityPropertiesFormat(
+                virtualNetworkGateway1Id is null && virtualNetworkGateway2Id is null && localNetworkGateway2Id is null && connectionProtocol is null && connectionMode is null && connectionStatus is null && tunnelConnectionStatus is null && peerId is null && gatewayCustomBgpIpAddresses is null && expressRouteGatewayBypass is null ? default : new VirtualNetworkGatewayConnectionListEntityPropertiesFormat(
                     default,
                     new VirtualNetworkConnectionGatewayReference(virtualNetworkGateway1Id, default),
                     new VirtualNetworkConnectionGatewayReference(virtualNetworkGateway2Id, default),
@@ -7647,15 +7647,15 @@ namespace Azure.ResourceManager.Network.Models
                     default,
                     default,
                     new NetworkSubResource(peerId, default),
-                    enableBgp,
+                    default,
                     (gatewayCustomBgpIpAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>()).ToList(),
-                    usePolicyBasedTrafficSelectors,
+                    default,
                     default,
                     default,
                     default,
                     default,
                     expressRouteGatewayBypass,
-                    enablePrivateLinkFastPath,
+                    default,
                     default,
                     default),
                 eTag);
@@ -8142,7 +8142,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                virtualNetworkGateway1 is null && virtualNetworkGateway2 is null && localNetworkGateway2 is null && connectionProtocol is null && connectionMode is null && tunnelProperties is null && connectionStatus is null && tunnelConnectionStatus is null && peerId is null && enableBgp is null && gatewayCustomBgpIpAddresses is null && useLocalAzureIpAddress is null && usePolicyBasedTrafficSelectors is null && expressRouteGatewayBypass is null && enablePrivateLinkFastPath is null ? default : new VirtualNetworkGatewayConnectionPropertiesFormat(
+                virtualNetworkGateway1 is null && virtualNetworkGateway2 is null && localNetworkGateway2 is null && connectionProtocol is null && connectionMode is null && tunnelProperties is null && connectionStatus is null && tunnelConnectionStatus is null && peerId is null && gatewayCustomBgpIpAddresses is null && expressRouteGatewayBypass is null ? default : new VirtualNetworkGatewayConnectionPropertiesFormat(
                     default,
                     virtualNetworkGateway1,
                     virtualNetworkGateway2,
@@ -8161,16 +8161,16 @@ namespace Azure.ResourceManager.Network.Models
                     default,
                     default,
                     new NetworkSubResource(peerId, default),
-                    enableBgp,
+                    default,
                     (gatewayCustomBgpIpAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>()).ToList(),
-                    useLocalAzureIpAddress,
-                    usePolicyBasedTrafficSelectors,
+                    default,
+                    default,
                     default,
                     default,
                     default,
                     default,
                     expressRouteGatewayBypass,
-                    enablePrivateLinkFastPath,
+                    default,
                     default,
                     default,
                     default,
@@ -10977,17 +10977,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.ConnectionMonitorContent"/> instance for mocking. </returns>
         public static ConnectionMonitorContent ConnectionMonitorContent(ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
         {
-            return new ConnectionMonitorContent(autoStart is null ? default : new ConnectionMonitorCreateOrUpdateContent(
-                default,
-                default,
-                autoStart,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default), default);
+            return new ConnectionMonitorContent(default, default);
         }
 
         /// <param name="id"> Resource ID. </param>
