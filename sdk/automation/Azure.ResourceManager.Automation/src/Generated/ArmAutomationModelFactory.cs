@@ -1135,7 +1135,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.AutomationCertificateCreateOrUpdateContent"/> instance for mocking. </returns>
         public static AutomationCertificateCreateOrUpdateContent AutomationCertificateCreateOrUpdateContent(string name = default, string base64Value = default, string description = default, string thumbprintString = default, bool? isExportable = default)
         {
-            return new AutomationCertificateCreateOrUpdateContent(name, isExportable is null ? default : new CertificateCreateOrUpdateProperties(default, default, default, isExportable, default), default);
+            return new AutomationCertificateCreateOrUpdateContent(name, default, default);
         }
 
         /// <param name="name"> Gets or sets the name of the certificate. </param>
@@ -1242,7 +1242,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.AutomationConnectionTypeCreateOrUpdateContent"/> instance for mocking. </returns>
         public static AutomationConnectionTypeCreateOrUpdateContent AutomationConnectionTypeCreateOrUpdateContent(string name = default, bool? isGlobal = default, IDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions = default)
         {
-            return new AutomationConnectionTypeCreateOrUpdateContent(name, isGlobal is null ? default : new ConnectionTypeCreateOrUpdateProperties(isGlobal, default, default), default);
+            return new AutomationConnectionTypeCreateOrUpdateContent(name, default, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1365,13 +1365,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DscConfigurationCreateOrUpdateContent(isLogVerboseEnabled is null && isLogProgressEnabled is null ? default : new DscConfigurationCreateOrUpdateProperties(
-                isLogVerboseEnabled,
-                isLogProgressEnabled,
-                default,
-                default,
-                default,
-                default), name, location, tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new DscConfigurationCreateOrUpdateContent(default, name, location, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="isLogVerboseEnabled"> Gets or sets verbose log option. </param>
@@ -1801,9 +1795,9 @@ namespace Azure.ResourceManager.Automation.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AutomationRunbookCreateOrUpdateContent(isLogVerboseEnabled is null && isLogProgressEnabled is null ? default : new RunbookCreateOrUpdateProperties(
-                isLogVerboseEnabled,
-                isLogProgressEnabled,
+            return new AutomationRunbookCreateOrUpdateContent(new RunbookCreateOrUpdateProperties(
+                default,
+                default,
                 default,
                 runbookType,
                 default,
@@ -2000,12 +1994,12 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.AutomationSourceControlCreateOrUpdateContent"/> instance for mocking. </returns>
         public static AutomationSourceControlCreateOrUpdateContent AutomationSourceControlCreateOrUpdateContent(Uri repoUri = default, string branch = default, string folderPath = default, bool? isAutoSyncEnabled = default, bool? isAutoPublishRunbookEnabled = default, SourceControlSourceType? sourceType = default, SourceControlSecurityTokenProperties securityToken = default, string description = default)
         {
-            return new AutomationSourceControlCreateOrUpdateContent(isAutoSyncEnabled is null && isAutoPublishRunbookEnabled is null && sourceType is null ? default : new SourceControlCreateOrUpdateProperties(
+            return new AutomationSourceControlCreateOrUpdateContent(sourceType is null ? default : new SourceControlCreateOrUpdateProperties(
                 default,
                 default,
                 default,
-                isAutoSyncEnabled,
-                isAutoPublishRunbookEnabled,
+                default,
+                default,
                 sourceType,
                 default,
                 default,
@@ -2164,7 +2158,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.AutomationVariableCreateOrUpdateContent"/> instance for mocking. </returns>
         public static AutomationVariableCreateOrUpdateContent AutomationVariableCreateOrUpdateContent(string name = default, string value = default, string description = default, bool? isEncrypted = default)
         {
-            return new AutomationVariableCreateOrUpdateContent(name, isEncrypted is null ? default : new VariableCreateOrUpdateProperties(default, default, isEncrypted, default), default);
+            return new AutomationVariableCreateOrUpdateContent(name, default, default);
         }
 
         /// <param name="name"> Gets or sets the name of the variable. </param>

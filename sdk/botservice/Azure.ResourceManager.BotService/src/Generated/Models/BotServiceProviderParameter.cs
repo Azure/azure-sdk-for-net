@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.BotService.Models
         internal ServiceProviderParameterMetadata Metadata { get; }
 
         /// <summary> Whether required the constraints of the bot meta data. </summary>
-        public bool? IsRequired
+        public bool? IsMetadataConstraintsRequired
         {
             get
             {
-                return Metadata is null ? default : Metadata.IsRequired;
+                return Metadata is null ? default : Metadata.IsConstraintsRequired;
             }
         }
     }

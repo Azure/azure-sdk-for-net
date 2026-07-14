@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Batch.Models
         internal ServiceArtifactReference ServiceArtifactReference { get; set; }
 
         /// <summary> If omitted, the default value is true. </summary>
-        public bool? IsAutomaticUpdateEnabled
+        public bool? IsWindowsConfigurationAutomaticUpdateEnabled
         {
             get
             {

@@ -1006,12 +1006,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <param name="isTpmEnabled"> Enable TPM flag. </param>
-        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine instance. </param>
+        /// <param name="isUefiSettingsSecureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine instance. </param>
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. EnableTPM and SecureBootEnabled must be set to true for SecurityType to function. </param>
         /// <returns> A new <see cref="Models.HciVmInstanceSecurityProfile"/> instance for mocking. </returns>
-        public static HciVmInstanceSecurityProfile HciVmInstanceSecurityProfile(bool? isTpmEnabled = default, bool? isSecureBootEnabled = default, HciVmSecurityType? securityType = default)
+        public static HciVmInstanceSecurityProfile HciVmInstanceSecurityProfile(bool? isTpmEnabled = default, bool? isUefiSettingsSecureBootEnabled = default, HciVmSecurityType? securityType = default)
         {
-            return new HciVmInstanceSecurityProfile(isTpmEnabled, isSecureBootEnabled is null ? default : new VirtualMachineInstancePropertiesSecurityProfileUefiSettings(isSecureBootEnabled, default), securityType, default);
+            return new HciVmInstanceSecurityProfile(isTpmEnabled, isUefiSettingsSecureBootEnabled is null ? default : new VirtualMachineInstancePropertiesSecurityProfileUefiSettings(isUefiSettingsSecureBootEnabled, default), securityType, default);
         }
 
         /// <param name="dataDisks"> adds data disks to the virtual machine instance. </param>
