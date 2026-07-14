@@ -7,8 +7,8 @@ using System.Text;
 namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 
 /// <summary>
-/// Derives the stable conversation chain identifier — the .NET port of Python
-/// <c>hosting/_chain_id.py</c> (<c>derive_conversation_chain_id</c>, Spec 038).
+/// Derives the stable conversation chain identifier
+/// (<c>derive_conversation_chain_id</c>, Spec 038).
 /// <para>
 /// The chain id (which equals the resilient <c>task_id</c>) is shared across every turn of one
 /// conversation chain and distinct across unrelated requests. It is a pure function of the

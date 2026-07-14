@@ -280,8 +280,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         }
 
         // Apply ordering (ascending = history first, then current; descending = reversed)
-        var ordered = ascending ? allItems : Enumerable.Reverse(allItems).ToList();
-        var list = ordered.ToList();
+        var list = ascending ? allItems.ToList() : Enumerable.Reverse(allItems).ToList();
 
         // Apply cursor-based pagination
         if (after is not null)

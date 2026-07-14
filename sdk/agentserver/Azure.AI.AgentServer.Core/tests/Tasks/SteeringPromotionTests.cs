@@ -57,6 +57,28 @@ public sealed class SteeringPromotionTests
     }
 
     [Test]
+    public async Task NeverSteeredMultiTurnSuspendOmitsSteeringBlock()
+    {
+        // Cross-language parity (suspend `if existing_steering:`): a multi-turn chain that is
+        // never steered must suspend with NO `steering` key at all — an absent block reads back as
+        // drain_in_progress=false / next_input_seq=0, identical to an empty placeholder, so the
+        // engine never mistakes a clean suspend for a mid-drain crash.
+        using TaskTestHost host = TaskTestHost.Create();
+        host.Builder.AddMultiTurnTask<string, string>(
+            "chat",
+            (ctx, ct) => Task.FromResult("F:" + ctx.Input),
+            steerable: true);
+
+        TaskRun<string> run = await host.Invoker.StartAsync<string, string>(
+            "chat", "in1", new RunOptions { TaskId = "t-nosteer", InputId = "i1" });
+        Assert.That(await run.GetResultAsync(), Is.EqualTo("F:in1"));
+
+        TaskRecord record = await host.WaitForStatusAsync("t-nosteer", "suspended", TimeSpan.FromSeconds(5));
+        Assert.That(record.Payload[TaskWireKeys.PayloadSteering], Is.Null,
+            "A never-steered chain must not write a steering block at suspend.");
+    }
+
+    [Test]
     public async Task TwoQueuedInputsPromoteInFifoOrderWithMonotonicSeq()
     {
         using TaskTestHost host = TaskTestHost.Create();

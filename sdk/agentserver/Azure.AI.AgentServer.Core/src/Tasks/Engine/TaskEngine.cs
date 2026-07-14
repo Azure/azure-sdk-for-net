@@ -146,6 +146,14 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 .ConfigureAwait(false);
     }
 
+    // Cross-language parity (title resolution): a task with no explicit title defaults to
+    // "<name>:<task_id[:8]>". The [:8] slice on a shorter id simply yields the whole id.
+    private static string DefaultTitle(string name, string taskId)
+    {
+        string suffix = taskId.Length <= 8 ? taskId : taskId.Substring(0, 8);
+        return $"{name}:{suffix}";
+    }
+
     private async Task<TaskRun<TOutput>> StartOneShotAsync<TInput, TOutput>(
         TaskRegistration registration, string name, string taskId, string inputId, bool inputIdSupplied, TInput input,
         CancellationToken cancellationToken)
@@ -159,6 +167,10 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             attachmentKey: AttachmentPromoter.InputAttachmentKey,
             thresholdBytes: AttachmentPromoter.InputThresholdBytes);
         payload[TaskWireKeys.PayloadInput] = inputSlot;
+        // Seed an empty metadata namespace at create (cross-language parity: the record always
+        // carries `payload["metadata"] = {}` on create). A first metadata flush merges into this
+        // object; its presence keeps the create-time record shape identical across runtimes.
+        payload[TaskWireKeys.PayloadMetadata] = new JsonObject();
         // Persist last_input_id only when the caller explicitly supplied input_id (Python parity:
         // `_build_framework_extras` writes it only for a caller-supplied id). When omitted, input_id
         // logically equals task_id and nothing is stamped.
@@ -189,7 +201,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 Id = taskId,
                 AgentName = _agentName,
                 SessionId = _sessionId,
-                Title = registration.Options?.Title ?? name,
+                Title = registration.Options?.Title ?? DefaultTitle(name, taskId),
                 Status = TaskWireKeys.StatusInProgress,
                 LeaseOwner = _owner,
                 LeaseInstanceId = _lease.InstanceId,
@@ -293,6 +305,9 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             var payload = new JsonObject
             {
                 [TaskWireKeys.PayloadInput] = inputSlot,
+                // Seed an empty metadata namespace at create (cross-language parity: the record
+                // always carries `payload["metadata"] = {}` on create).
+                [TaskWireKeys.PayloadMetadata] = new JsonObject(),
                 [TaskWireKeys.PayloadTurnStartedAt] = nowIso,
                 [TaskWireKeys.PayloadSchemaVersion] = TaskWireKeys.SchemaVersionValue,
             };
@@ -305,7 +320,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 Id = taskId,
                 AgentName = _agentName,
                 SessionId = _sessionId,
-                Title = registration.Options?.Title ?? name,
+                Title = registration.Options?.Title ?? DefaultTitle(name, taskId),
                 Status = TaskWireKeys.StatusInProgress,
                 LeaseOwner = _owner,
                 LeaseInstanceId = _lease.InstanceId,
@@ -723,7 +738,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
                     try
                     {
-                        await SuspendAsync(taskId, currentRun.Metadata, activeRun.Steering.ToPayload(), CancellationToken.None).ConfigureAwait(false);
+                        await SuspendAsync(taskId, currentRun.Metadata, activeRun.Steering.HasState ? activeRun.Steering.ToPayload() : null, CancellationToken.None).ConfigureAwait(false);
                     }
                     catch (Exception suspendEx)
                     {
@@ -788,7 +803,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 // error per FR-007/AS-6) and surface the outcome to the caller.
                 try
                 {
-                    await SuspendAsync(taskId, currentRun.Metadata, activeRun.Steering.ToPayload(), CancellationToken.None).ConfigureAwait(false);
+                    await SuspendAsync(taskId, currentRun.Metadata, activeRun.Steering.HasState ? activeRun.Steering.ToPayload() : null, CancellationToken.None).ConfigureAwait(false);
                 }
                 catch (Exception suspendEx)
                 {
@@ -1182,16 +1197,21 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
     // Parks a multi-turn chain: flushes touched metadata (logged-not-raised), then clears the
     // turn's input/promoted-attachment/retry counter and transitions to suspended, preserving
-    // _last_input_id and writing no output/error (FR-007/C-SUS-1/4). Also writes a clean
-    // _steering object (drain markers false, next_input_seq preserved) so a future lifetime that
-    // resumes this record cannot mistake it for a mid-drain crash.
+    // _last_input_id and writing no output/error (FR-007/C-SUS-1/4). The _steering object is
+    // written ONLY when the chain carries steering state (cross-language parity: suspend
+    // preserves an existing steering block with drain markers false and next_input_seq intact, but
+    // omits the key entirely for a never-steered chain — an absent block reads back as
+    // drain_in_progress=false, so a future lifetime cannot mistake it for a mid-drain crash).
     private async Task SuspendAsync(
-        string taskId, TaskMetadata metadata, JsonObject steeringPayload, CancellationToken cancellationToken)
+        string taskId, TaskMetadata metadata, JsonObject? steeringPayload, CancellationToken cancellationToken)
     {
         JsonObject metadataPayload = BuildMetadataPayload(metadata);
         metadataPayload[TaskWireKeys.PayloadInput] = null;
         metadataPayload[TaskWireKeys.PayloadRetryAttempt] = null;
-        metadataPayload[TaskWireKeys.PayloadSteering] = steeringPayload;
+        if (steeringPayload is not null)
+        {
+            metadataPayload[TaskWireKeys.PayloadSteering] = steeringPayload;
+        }
 
         await _serializer.UpdateAsync(
             taskId,
@@ -1208,13 +1228,9 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     }
 
     private TaskMetadata CreateMetadata(string taskId)
-    {
-        TaskMetadata root = null!;
-        root = new TaskMetadata(
+        => new TaskMetadata(
             string.Empty,
             (m, ct) => FlushMetadataAsync(taskId, m, ct));
-        return root;
-    }
 
     private static void HydrateMetadata(TaskMetadata metadata, TaskRecord record)
     {
@@ -1427,6 +1443,9 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             && seqValue.TryGetValue(out int seq))
         {
             queue.SeedNextSeq(seq);
+            // The record already carries a steering block, so a later suspend must preserve it
+            // (Python parity: `if existing_steering:`), even if the queue has drained back to empty.
+            queue.MarkPersistedSteering();
         }
     }
 
@@ -1676,7 +1695,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             TaskRecord reclaimed = await _lease.ReclaimAsync(taskId, _owner, TaskEngineConstants.LeaseDurationSeconds).ConfigureAwait(false);
             // recovery_count mirrors the POST-reclaim lease generation (spec §22).
             runState.RecoveryCount = (int)(reclaimed.Lease?.Generation ?? runState.RecoveryCount);
-            // Operator-facing observability parity with Python (tasks/_manager.py): a crashed/
+            // Operator-facing observability parity across runtimes: a crashed/
             // abandoned task's lease has just been taken over by this instance.
             _logger.StaleTaskReclaimed(taskId);
         }

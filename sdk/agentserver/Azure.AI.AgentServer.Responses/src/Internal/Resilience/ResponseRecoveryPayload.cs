@@ -10,8 +10,8 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// <summary>
 /// The typed, fail-closed persisted recovery payload for a resilient background response.
 /// <para>
-/// This is the .NET port of the Python <c>ResilientResponseInput</c> boundary
-/// (<c>hosting/_resilient_input.py</c>). It captures exactly the fields that must survive a
+/// This is the resilient-response input boundary (<c>ResilientResponseInput</c>). It captures
+/// exactly the fields that must survive a
 /// process crash so the response can be re-invoked (or marked failed) in a subsequent process
 /// lifetime. Everything else (<c>store</c>, <c>stream</c>, <c>background</c>, <c>model</c>,
 /// <c>previous_response_id</c>, the resolved conversation id, and the resolved input items) is
@@ -148,7 +148,12 @@ internal sealed class ResponseRecoveryPayload
                 writer.WritePropertyName(KAgentReference);
                 if (AgentReference is null)
                 {
-                    writer.WriteNullValue();
+                    // Cross-language parity (`_normalize_agent_reference(None) -> {}`):
+                    // an absent agent reference is serialized as an empty object, not JSON null.
+                    // The read path treats an empty object as "no agent reference" (null), so the
+                    // in-memory value round-trips cleanly.
+                    writer.WriteStartObject();
+                    writer.WriteEndObject();
                 }
                 else
                 {
@@ -238,8 +243,11 @@ internal sealed class ResponseRecoveryPayload
 
         AgentReference? agentReference = null;
         if (root.TryGetProperty(KAgentReference, out var arElement)
-            && arElement.ValueKind == JsonValueKind.Object)
+            && arElement.ValueKind == JsonValueKind.Object
+            && arElement.EnumerateObject().MoveNext())
         {
+            // A non-empty object is a real agent reference; an empty object `{}` (the Python-parity
+            // serialization for "none") reads back as null, matching the round-trip contract.
             agentReference = ModelReaderWriter.Read<AgentReference>(
                 BinaryData.FromString(arElement.GetRawText()), JsonOptions, AzureAIAgentServerResponsesContext.Default);
         }

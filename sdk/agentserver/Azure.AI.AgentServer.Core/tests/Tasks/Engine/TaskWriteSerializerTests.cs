@@ -118,7 +118,7 @@ public sealed class TaskWriteSerializerTests
     [Test]
     public void LeaseOwnershipChangedOnPatchAbandonsImmediately()
     {
-        // Python parity (_manager.py lease_ownership_changed -> TaskConflictError): the same
+        // Cross-language parity (lease_ownership_changed -> TaskConflictError): the same
         // immediate-abandon eviction semantics apply.
         AssertEvictionCodeAbandons(TaskStoreException.CodeLeaseOwnershipChanged);
     }

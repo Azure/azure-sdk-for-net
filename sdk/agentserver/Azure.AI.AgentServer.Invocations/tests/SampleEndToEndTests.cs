@@ -773,7 +773,7 @@ public class SampleEndToEndTests
     [Test]
     public async Task ResilientMultiturn_DoneMessage_TerminatesAndClearsSessionHistory()
     {
-        // Python parity: tests/e2e/test_resilient_multiturn.py::test_session_workflow_done_clears_history.
+        // Cross-language parity: test_session_workflow_done_clears_history.
         // A "done" message returns a terminal (finished) result whose summary reports the messages
         // exchanged so far, and clears the named-namespace session history + turn_count so a
         // subsequent turn on the same session starts fresh (turn == 1 again).

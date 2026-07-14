@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 
@@ -41,7 +40,4 @@ internal sealed class TaskRegistry
         => _registrations.TryGetValue(name, out TaskRegistration? r)
             ? r
             : throw new InvalidOperationException($"No task named '{name}' is registered.");
-
-    /// <summary>All registered task names.</summary>
-    public IReadOnlyCollection<string> Names => (IReadOnlyCollection<string>)_registrations.Keys;
 }

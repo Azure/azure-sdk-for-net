@@ -11,7 +11,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// responses) and then resumes the handler. It is NEVER forwarded to the SSE wire — the orchestrator
 /// intercepts it by CLR type before any wire coercion.
 /// <para>
-/// Mirrors Python's <c>ResponseCheckpointEvent</c> (streaming/_checkpoint.py). The base
+/// Mirrors the reference <c>ResponseCheckpointEvent</c>. The base
 /// <see cref="ResponseStreamEvent"/> discriminator is a reserved sentinel that never reaches
 /// serialization; the interception is purely type-based.
 /// </para>

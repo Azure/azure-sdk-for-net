@@ -31,7 +31,7 @@ internal sealed class TaskRunState<TOutput>
 
     public TaskMetadata Metadata { get; }
 
-    public bool IsQueued { get; set; }
+    public bool IsQueued { get; }
 
     /// <summary>
     /// The crash-recovery generation for the run's context (spec §22): mirrors the record's
@@ -47,8 +47,6 @@ internal sealed class TaskRunState<TOutput>
     public void SetResult(TOutput result) => _completion.TrySetResult(result);
 
     public void SetException(Exception exception) => _completion.TrySetException(exception);
-
-    public void SetCanceled() => _completion.TrySetCanceled();
 
     public async Task<TOutput> GetResultAsync(CancellationToken cancellationToken)
     {

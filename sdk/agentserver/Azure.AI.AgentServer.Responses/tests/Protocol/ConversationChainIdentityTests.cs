@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 /// </summary>
 public class ConversationChainIdentityTests
 {
-    // Cross-language reference values computed from the Python _chain_id.py algorithm.
+    // Cross-language reference values computed from the chain-id derivation algorithm.
     private const string ScopeAgentXSess1 = "RBLFeBVUOcoVFCqzbF9tBNC15n6Sf4yV";
     private const string PkConvAbc = "c3b410bb8f04c7d100";
 

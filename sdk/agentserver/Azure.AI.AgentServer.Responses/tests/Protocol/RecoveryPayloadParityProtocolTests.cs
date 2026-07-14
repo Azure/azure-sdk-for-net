@@ -94,7 +94,11 @@ public class RecoveryPayloadParityProtocolTests
             Assert.That(root.GetProperty("agent_session_id").ValueKind, Is.EqualTo(JsonValueKind.Null));
             Assert.That(root.GetProperty("user_id_key").ValueKind, Is.EqualTo(JsonValueKind.Null));
             Assert.That(root.GetProperty("call_id").ValueKind, Is.EqualTo(JsonValueKind.Null));
-            Assert.That(root.GetProperty("agent_reference").ValueKind, Is.EqualTo(JsonValueKind.Null));
+            // Python parity: an absent agent_reference is serialized as an empty object `{}`
+            // (_normalize_agent_reference(None) -> {}), NOT JSON null.
+            Assert.That(root.GetProperty("agent_reference").ValueKind, Is.EqualTo(JsonValueKind.Object));
+            Assert.That(root.GetProperty("agent_reference").EnumerateObject().MoveNext(), Is.False,
+                "Absent agent_reference must serialize as an empty object.");
         });
     }
 
@@ -146,5 +150,25 @@ public class RecoveryPayloadParityProtocolTests
         Assert.That(restored.ClientHeaders["x-client-a"], Is.EqualTo("1"));
         Assert.That(restored.ClientHeaders["x-client-b"], Is.EqualTo("2"));
         Assert.That(restored.QueryParameters["p"], Is.EqualTo("q"));
+    }
+
+    [Test]
+    public void AbsentAgentReference_RoundTripsToNull()
+    {
+        // DR-1 parity: null AgentReference serializes to `{}` on the wire (Python parity), and an
+        // empty object reads back as null — the in-memory value survives a full round trip.
+        var payload = new ResponseRecoveryPayload(
+            "caresp_ar", ResponseRecoveryPayload.DispositionReinvoke, SampleRequest(),
+            agentReference: null);
+
+        using (var doc = JsonDocument.Parse(payload.ToTaskInput().ToMemory()))
+        {
+            var ar = doc.RootElement.GetProperty("agent_reference");
+            Assert.That(ar.ValueKind, Is.EqualTo(JsonValueKind.Object));
+            Assert.That(ar.EnumerateObject().MoveNext(), Is.False);
+        }
+
+        var restored = ResponseRecoveryPayload.FromTaskInput(payload.ToTaskInput());
+        Assert.That(restored.AgentReference, Is.Null);
     }
 }

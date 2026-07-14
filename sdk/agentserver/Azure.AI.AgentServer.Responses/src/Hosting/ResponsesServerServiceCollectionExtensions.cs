@@ -204,7 +204,6 @@ public static class ResponsesServerServiceCollectionExtensions
             (sp, ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(sp, ctx, ct),
             steerable: eagerOptions.SteerableConversations);
 
-        services.AddSingleton<IPayloadValidator, PayloadValidator>();
         services.AddScoped<ResponseOrchestrator>();
         services.AddScoped<ResponseEndpointHandler>();
         services.AddScoped<ResponsesExceptionFilter>();

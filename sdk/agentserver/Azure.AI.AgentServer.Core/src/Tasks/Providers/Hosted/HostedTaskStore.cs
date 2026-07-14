@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
@@ -154,7 +155,7 @@ internal sealed class HostedTaskStore : ITaskStore
         TaskStorageErrorMapper.ThrowIfError(message.Response, taskId);
     }
 
-    private HttpMessage CreateRequest(RequestMethod method, string path, string? extraQuery = null)
+    private HttpMessage CreateRequest(RequestMethod method, string path, IReadOnlyList<KeyValuePair<string, string>>? queryParams = null)
     {
         var message = _pipeline.CreateMessage();
         var request = message.Request;
@@ -165,15 +166,12 @@ internal sealed class HostedTaskStore : ITaskStore
         uri.AppendPath(path, escape: false);
         uri.AppendQuery("api-version", ApiVersion, escapeValue: true);
 
-        if (extraQuery is not null)
+        if (queryParams is not null)
         {
-            foreach (var pair in extraQuery.Split('&'))
+            // Values are pre-escaped by the query builders; append verbatim.
+            foreach (var pair in queryParams)
             {
-                var eqIdx = pair.IndexOf('=');
-                if (eqIdx > 0)
-                {
-                    uri.AppendQuery(pair[..eqIdx], pair[(eqIdx + 1)..], escapeValue: false);
-                }
+                uri.AppendQuery(pair.Key, pair.Value, escapeValue: false);
             }
         }
 
@@ -254,46 +252,46 @@ internal sealed class HostedTaskStore : ITaskStore
         return CanonicalJson.SerializeToUtf8Bytes(element);
     }
 
-    private static string? BuildLeaseQuery(string? owner, string? instanceId, int? durationSeconds)
+    private static IReadOnlyList<KeyValuePair<string, string>>? BuildLeaseQuery(string? owner, string? instanceId, int? durationSeconds)
     {
         if (owner is null && instanceId is null && durationSeconds is null)
         {
             return null;
         }
 
-        var parts = new List<string>();
+        var parts = new List<KeyValuePair<string, string>>();
         if (owner is not null)
         {
-            parts.Add($"lease_owner={Uri.EscapeDataString(owner)}");
+            parts.Add(new("lease_owner", Uri.EscapeDataString(owner)));
         }
 
         if (instanceId is not null)
         {
-            parts.Add($"lease_instance_id={Uri.EscapeDataString(instanceId)}");
+            parts.Add(new("lease_instance_id", Uri.EscapeDataString(instanceId)));
         }
 
         if (durationSeconds.HasValue)
         {
-            parts.Add($"lease_duration_seconds={durationSeconds.Value}");
+            parts.Add(new("lease_duration_seconds", durationSeconds.Value.ToString(CultureInfo.InvariantCulture)));
         }
 
-        return string.Join("&", parts);
+        return parts;
     }
 
-    private static string? BuildDeleteQuery(bool force, bool cascade)
+    private static IReadOnlyList<KeyValuePair<string, string>>? BuildDeleteQuery(bool force, bool cascade)
     {
-        var parts = new List<string>();
+        var parts = new List<KeyValuePair<string, string>>();
         if (force)
         {
-            parts.Add("force=true");
+            parts.Add(new("force", "true"));
         }
 
         if (cascade)
         {
-            parts.Add("cascade=true");
+            parts.Add(new("cascade", "true"));
         }
 
-        return parts.Count > 0 ? string.Join("&", parts) : null;
+        return parts.Count > 0 ? parts : null;
     }
 
     private static JsonObject BuildPatchBody(TaskPatchRequest patch)
@@ -345,38 +343,38 @@ internal sealed class HostedTaskStore : ITaskStore
         return body;
     }
 
-    private static string? BuildListQuery(TaskListQuery query)
+    private static IReadOnlyList<KeyValuePair<string, string>>? BuildListQuery(TaskListQuery query)
     {
-        var parts = new List<string>();
+        var parts = new List<KeyValuePair<string, string>>();
 
         int limit = Math.Clamp(query.Limit <= 0 ? 20 : query.Limit, 1, 100);
-        parts.Add($"limit={limit}");
+        parts.Add(new("limit", limit.ToString(CultureInfo.InvariantCulture)));
 
-        parts.Add($"order={(query.Ascending ? "asc" : "desc")}");
+        parts.Add(new("order", query.Ascending ? "asc" : "desc"));
 
         if (query.AgentName is not null)
         {
-            parts.Add($"agent_name={Uri.EscapeDataString(query.AgentName)}");
+            parts.Add(new("agent_name", Uri.EscapeDataString(query.AgentName)));
         }
 
         if (query.SessionId is not null)
         {
-            parts.Add($"session_id={Uri.EscapeDataString(query.SessionId)}");
+            parts.Add(new("session_id", Uri.EscapeDataString(query.SessionId)));
         }
 
         if (query.HasError.HasValue)
         {
-            parts.Add($"has_error={(query.HasError.Value ? "true" : "false")}");
+            parts.Add(new("has_error", query.HasError.Value ? "true" : "false"));
         }
 
         if (query.LeaseExpired.HasValue)
         {
-            parts.Add($"lease_expired={(query.LeaseExpired.Value ? "true" : "false")}");
+            parts.Add(new("lease_expired", query.LeaseExpired.Value ? "true" : "false"));
         }
 
         if (query.LeaseOwner is not null)
         {
-            parts.Add($"lease_owner={Uri.EscapeDataString(query.LeaseOwner)}");
+            parts.Add(new("lease_owner", Uri.EscapeDataString(query.LeaseOwner)));
         }
 
         if (query.Tags is not null)
@@ -386,31 +384,31 @@ internal sealed class HostedTaskStore : ITaskStore
             // backend. (The SOT protocol spec's `tag=key:value` wording is being corrected to this.)
             foreach (var tag in query.Tags)
             {
-                parts.Add($"tag.{Uri.EscapeDataString(tag.Key)}={Uri.EscapeDataString(tag.Value)}");
+                parts.Add(new($"tag.{Uri.EscapeDataString(tag.Key)}", Uri.EscapeDataString(tag.Value)));
             }
         }
 
         if (query.SourceType is not null)
         {
-            parts.Add($"source_type={Uri.EscapeDataString(query.SourceType)}");
+            parts.Add(new("source_type", Uri.EscapeDataString(query.SourceType)));
         }
 
         if (query.Status is not null)
         {
-            parts.Add($"status={Uri.EscapeDataString(query.Status)}");
+            parts.Add(new("status", Uri.EscapeDataString(query.Status)));
         }
 
         if (query.After is not null)
         {
-            parts.Add($"after={Uri.EscapeDataString(query.After)}");
+            parts.Add(new("after", Uri.EscapeDataString(query.After)));
         }
 
         if (query.OmitAttachmentValues)
         {
-            parts.Add("omit_attachment_values=true");
+            parts.Add(new("omit_attachment_values", "true"));
         }
 
-        return parts.Count > 0 ? string.Join("&", parts) : null;
+        return parts.Count > 0 ? parts : null;
     }
 
     private static TaskRecord ParseRecordResponse(Response response)

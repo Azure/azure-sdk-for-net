@@ -161,20 +161,20 @@ internal static class CanonicalJson
             }
 
             // Integer outside the 64-bit range: emit the verbatim digits (JSON forbids
-            // leading zeros/plus signs, so this matches Python's str(int) exactly).
+            // leading zeros/plus signs, so this matches the canonical str(int) form exactly).
             return raw;
         }
 
-        return PythonFloatRepr(element.GetDouble());
+        return CanonicalFloatRepr(element.GetDouble());
     }
 
     /// <summary>
-    /// Formats a double exactly as CPython's <c>repr(float)</c> / <c>json.dumps</c> would, so
-    /// canonical hashes of user JSON containing floats match the Python implementation. This
-    /// reproduces CPython's shortest-round-trip digits plus its fixed-vs-exponential decision
-    /// (exponential when the decimal point position is &lt;= -4 or &gt; 16).
+    /// Formats a double using the canonical float representation (shortest round-trip digits plus
+    /// the fixed-vs-exponential decision: exponential when the decimal point position is
+    /// &lt;= -4 or &gt; 16), so canonical hashes of user JSON containing floats match across
+    /// runtimes.
     /// </summary>
-    private static string PythonFloatRepr(double d)
+    private static string CanonicalFloatRepr(double d)
     {
         if (double.IsNaN(d))
         {
@@ -191,7 +191,7 @@ internal static class CanonicalJson
             return "-Infinity";
         }
 
-        // .NET's "R" gives the shortest round-trippable digits, matching CPython's digit choice.
+        // .NET's "R" gives the shortest round-trippable digits, matching the canonical digit choice.
         string s = d.ToString("R", CultureInfo.InvariantCulture);
 
         bool negative = s.StartsWith("-", StringComparison.Ordinal);
@@ -228,7 +228,7 @@ internal static class CanonicalJson
         digits = digits.Substring(lead).TrimEnd('0');
         if (digits.Length == 0)
         {
-            // Value is zero: CPython repr is "0.0" (sign preserved for -0.0).
+            // Value is zero: canonical repr is "0.0" (sign preserved for -0.0).
             return negative ? "-0.0" : "0.0";
         }
 

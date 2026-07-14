@@ -4,8 +4,8 @@
 namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 
 /// <summary>
-/// The canonical, single decision site for resilient-response dispatch classification — the
-/// .NET port of Python <c>hosting/_dispatch.py</c> (<c>classify_row</c> / <c>decide_disposition</c>).
+/// The canonical, single decision site for resilient-response dispatch classification
+/// (<c>classify_row</c> / <c>decide_disposition</c>).
 /// <para>
 /// The resilience matrix rows are keyed on <c>(store, background, resilient_background)</c>:
 /// </para>

@@ -172,7 +172,7 @@ internal sealed class TaskWriteSerializer : IDisposable
                 (ex.Code == TaskStoreException.CodeBindingMismatch ||
                  ex.Code == TaskStoreException.CodeLeaseOwnershipChanged))
             {
-                // Python parity (SOT §39.1; _client.py binding_mismatch -> "evicted", _manager.py
+                // Cross-language parity (SOT §39.1; binding_mismatch -> "evicted",
                 // lease_ownership_changed -> TaskConflictError). A 409 binding_mismatch or
                 // lease_ownership_changed means the platform rebound this task to another worker —
                 // we were evicted. No CAS re-read can recover ownership, so abandon immediately for

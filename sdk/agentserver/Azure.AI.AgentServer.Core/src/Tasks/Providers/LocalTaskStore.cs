@@ -32,12 +32,8 @@ internal sealed class LocalTaskStore : ITaskStore
     /// <param name="baseDir">Override for the <c>tasks</c> root directory; resolved from config when null.</param>
     public LocalTaskStore(string? baseDir = null)
     {
-        _baseDir = baseDir ?? ResolveTasksRoot();
+        _baseDir = baseDir ?? AgentServerStatePaths.TasksRoot();
     }
-
-    /// <summary>Resolves the <c>tasks</c> storage root from the environment.</summary>
-    /// <returns>The absolute path to the tasks root directory.</returns>
-    public static string ResolveTasksRoot() => AgentServerStatePaths.TasksRoot();
 
     private string TaskDir(string agentName, string sessionId) => Path.Combine(_baseDir, agentName, sessionId);
 
@@ -575,10 +571,10 @@ internal sealed class LocalTaskStore : ITaskStore
             throw TaskStoreException.EtagMismatch(taskId);
         }
 
-        // Non-terminal tasks require force=true, mirroring the Python local provider. The SOT
+        // Non-terminal tasks require force=true, mirroring the local provider contract. The SOT
         // task-and-streaming spec §24.3 (authoritative for provider behavior) rejects this as
-        // invalid_request (400) — NOT a conflict (409); the service moved 409 -> 400. Python
-        // _local_provider.py raises _invalid_request for identical accept/reject parity.
+        // invalid_request (400) — NOT a conflict (409); the service moved 409 -> 400. The local
+        // provider raises _invalid_request for identical accept/reject parity.
         if (task.Status != TaskWireKeys.StatusCompleted && !force)
         {
             throw TaskStoreException.InvalidRequest(

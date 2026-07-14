@@ -12,8 +12,8 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.E2E.ResilienceContract;
 
 /// <summary>
-/// Row 1, Path C streaming recovery parity (US3, T078). Mirrors the Python
-/// <c>test_output_item_slot_reconciliation.py</c> and <c>test_reset_event_content.py</c> contracts:
+/// Row 1, Path C streaming recovery parity (US3, T078). Mirrors the reference
+/// <c>test_output_item_slot_reconciliation</c> and <c>test_reset_event_content</c> contracts:
 /// on a crash-recovery re-invocation of a streaming response the resumed builder must (a) allocate
 /// new output-item slots <em>past</em> the already-emitted (seeded) items so indices never collide,
 /// and (b) emit a <c>response.in_progress</c> reset event carrying the exact prior output items as the

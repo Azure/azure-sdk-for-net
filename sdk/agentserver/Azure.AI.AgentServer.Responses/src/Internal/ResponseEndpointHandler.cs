@@ -37,7 +37,6 @@ internal sealed class ResponseEndpointHandler
     private readonly IEventStreamRegistry _eventStreamRegistry;
     private readonly IOptions<ResponsesServerOptions> _options;
     private readonly ILogger<ResponseEndpointHandler> _logger;
-    private readonly IPayloadValidator _validator;
 
     /// <summary>
     /// Initializes a new instance of <see cref="ResponseEndpointHandler"/>.
@@ -50,8 +49,7 @@ internal sealed class ResponseEndpointHandler
         ResponsesCancellationSignalProvider cancellationProvider,
         IEventStreamRegistry eventStreamRegistry,
         IOptions<ResponsesServerOptions> options,
-        ILogger<ResponseEndpointHandler> logger,
-        IPayloadValidator validator)
+        ILogger<ResponseEndpointHandler> logger)
     {
         _activitySource = activitySource;
         _orchestrator = orchestrator;
@@ -61,7 +59,6 @@ internal sealed class ResponseEndpointHandler
         _eventStreamRegistry = eventStreamRegistry;
         _options = options;
         _logger = logger;
-        _validator = validator;
     }
 
     /// <summary>

@@ -23,11 +23,11 @@ internal sealed class TaskContextState<TInput>
         Metadata = metadata;
     }
 
-    public TInput Input { get; set; }
+    public TInput Input { get; }
 
     public string TaskId { get; }
 
-    public string InputId { get; set; }
+    public string InputId { get; }
 
     public EntryMode EntryMode { get; set; } = EntryMode.Fresh;
 

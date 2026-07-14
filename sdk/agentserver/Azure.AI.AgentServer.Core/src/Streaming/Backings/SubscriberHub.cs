@@ -21,7 +21,11 @@ internal sealed class SubscriberHub
         var channel = Channel.CreateUnbounded<object>(new UnboundedChannelOptions
         {
             SingleReader = true,
-            SingleWriter = false,
+
+            // Every write (Publish/CompleteAll and the closed-stream TryComplete in
+            // BeginSubscription) happens under the owning stream's lock, so there is never
+            // more than one concurrent writer.
+            SingleWriter = true,
         });
         _subscribers.Add(channel);
         return channel;

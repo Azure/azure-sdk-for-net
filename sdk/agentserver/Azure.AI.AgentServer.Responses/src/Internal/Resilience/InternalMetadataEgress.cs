@@ -7,8 +7,7 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 
 /// <summary>
 /// Strips framework-reserved internal metadata from a response/item payload immediately before
-/// it reaches the client wire. The .NET port of Python <c>strip_internal_metadata</c>
-/// (<c>_egress.py</c>).
+/// it reaches the client wire. Implements <c>strip_internal_metadata</c>.
 /// <para>
 /// Two reserved keys are persisted to the store (so they survive crashes and are available on
 /// recovery) but MUST NEVER reach the client:

@@ -181,8 +181,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
             }
         }
 
-        var ordered = ascending ? allItems : Enumerable.Reverse(allItems).ToList();
-        var list = ordered.ToList();
+        var list = ascending ? allItems.ToList() : Enumerable.Reverse(allItems).ToList();
 
         if (after is not null)
         {

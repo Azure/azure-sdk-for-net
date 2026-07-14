@@ -15,7 +15,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.E2E.ResilienceContract;
 /// <para>
 /// It PARSES <c>CONTRACT_COVERAGE.md</c> — the row×path map of every normative clause of
 /// <c>docs/resilience-contract.md</c> to its .NET conformance test — and enforces the coverage-map
-/// discipline mirrored from Python's <c>test_contract_completeness.py</c>:
+/// discipline mirrored from the reference <c>test_contract_completeness</c> harness:
 /// </para>
 /// <list type="bullet">
 /// <item>T059: every clause row is <c>covered</c> — no remaining <c>pending:&lt;task&gt;</c> cell

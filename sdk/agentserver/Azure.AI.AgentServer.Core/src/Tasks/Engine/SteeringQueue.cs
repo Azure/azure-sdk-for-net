@@ -24,6 +24,7 @@ internal sealed class SteeringQueue<TOutput>
     private readonly object _gate = new();
     private readonly LinkedList<QueuedInput<TOutput>> _pending = new();
     private int _nextSeq;
+    private bool _everSteered;
 
     /// <summary>Whether a queued input is currently being drained into a steered turn.</summary>
     public bool DrainInProgress { get; private set; }
@@ -44,6 +45,39 @@ internal sealed class SteeringQueue<TOutput>
     }
 
     /// <summary>
+    /// Whether this chain has ever been steered and therefore carries a persisted <c>steering</c>
+    /// block worth preserving at suspend. Matches the suspend-time <c>if existing_steering:</c>
+    /// guard: the <c>steering</c> payload block is written at suspend ONLY when
+    /// the record already has one. A chain gains a persisted block on its first steering append (or
+    /// on recovery of a record that already had one) and keeps it for the rest of its life — even
+    /// after the queue fully drains back to empty with a zero seq (small inputs never burn a seq).
+    /// A never-steered chain suspends with NO <c>steering</c> key at all; an absent block reads back
+    /// as <c>drain_in_progress=false</c> / <c>next_input_seq=0</c>, identical to an empty placeholder.
+    /// </summary>
+    public bool HasState
+    {
+        get
+        {
+            lock (_gate)
+            {
+                return _everSteered || _pending.Count > 0 || _nextSeq > 0 || DrainInProgress || ActiveInput is not null;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Marks the chain as having a persisted steering block (called on recovery of a record that
+    /// already carried one) so a subsequent suspend preserves rather than drops it, matching Python.
+    /// </summary>
+    public void MarkPersistedSteering()
+    {
+        lock (_gate)
+        {
+            _everSteered = true;
+        }
+    }
+
+    /// <summary>
     /// Appends an input to the FIFO. Throws <see cref="SteeringQueueFullException"/> when the
     /// queue already holds <see cref="MaxDepth"/> inputs.
     /// </summary>
@@ -58,6 +92,7 @@ internal sealed class SteeringQueue<TOutput>
             }
 
             _pending.AddLast(input);
+            _everSteered = true;
             return input;
         }
     }

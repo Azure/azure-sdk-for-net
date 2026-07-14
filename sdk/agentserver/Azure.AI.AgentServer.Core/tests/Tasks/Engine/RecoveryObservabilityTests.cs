@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Tasks.Engine;
 
 /// <summary>
 /// Verifies the resilient-task engine emits the operator-facing observability markers that the
-/// Python reference logs (azure-ai-agentserver-core <c>tasks/_manager.py</c>): a startup line
+/// reference implementation logs: a startup line
 /// carrying the stable lease <c>worker-…</c> instance id (so a cross-process restart is visible as
 /// a NEW instance) and a "Reclaimed stale task" line when a crashed/abandoned task's lease is
 /// taken over. These are what the hosted crash-recovery verifier (battery/verify_crash.py) greps
@@ -24,7 +24,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Tasks.Engine;
 [TestFixture]
 public sealed class RecoveryObservabilityTests
 {
-    // Mirrors the Python lease instance-id format worker-{pid}-{hex}-{epoch} that verify_crash.py greps.
+    // Mirrors the lease instance-id format worker-{pid}-{hex}-{epoch} that verify_crash.py greps.
     private static readonly Regex WorkerInstance = new(@"worker-\d+-[a-f0-9]+-\d+", RegexOptions.Compiled);
 
     [Test]
