@@ -1,4 +1,4 @@
-# Azure.ResourceManager.CommvaultContentStore management client library for .NET
+# Microsoft Azure CommvaultContentStore management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
