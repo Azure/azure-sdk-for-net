@@ -598,13 +598,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="computeRoles"> The list of roles in the cluster. </param>
         /// <param name="storageAccounts"> The list of storage accounts in the cluster. </param>
         /// <param name="diskEncryptionProperties"> The disk encryption properties. </param>
-        /// <param name="isEncryptionInTransitEnabled"> Indicates whether or not inter cluster node communication is encrypted in transit. </param>
+        /// <param name="isEncryptionInTransitPropertiesEncryptionInTransitEnabled"> Indicates whether or not inter cluster node communication is encrypted in transit. </param>
         /// <param name="minSupportedTlsVersion"> The minimal supported tls version. </param>
         /// <param name="networkProperties"> The network properties. </param>
         /// <param name="computeIsolationProperties"> The compute isolation properties. </param>
         /// <param name="privateLinkConfigurations"> The private link configurations. </param>
         /// <returns> A new <see cref="Models.HDInsightClusterCreateOrUpdateProperties"/> instance for mocking. </returns>
-        public static HDInsightClusterCreateOrUpdateProperties HDInsightClusterCreateOrUpdateProperties(string clusterVersion = default, HDInsightOSType? osType = default, HDInsightTier? tier = default, HDInsightClusterDefinition clusterDefinition = default, KafkaRestProperties kafkaRestProperties = default, HDInsightSecurityProfile securityProfile = default, IEnumerable<HDInsightClusterRole> computeRoles = default, IEnumerable<HDInsightStorageAccountInfo> storageAccounts = default, HDInsightDiskEncryptionProperties diskEncryptionProperties = default, bool? isEncryptionInTransitEnabled = default, string minSupportedTlsVersion = default, HDInsightClusterNetworkProperties networkProperties = default, HDInsightComputeIsolationProperties computeIsolationProperties = default, IEnumerable<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default)
+        public static HDInsightClusterCreateOrUpdateProperties HDInsightClusterCreateOrUpdateProperties(string clusterVersion = default, HDInsightOSType? osType = default, HDInsightTier? tier = default, HDInsightClusterDefinition clusterDefinition = default, KafkaRestProperties kafkaRestProperties = default, HDInsightSecurityProfile securityProfile = default, IEnumerable<HDInsightClusterRole> computeRoles = default, IEnumerable<HDInsightStorageAccountInfo> storageAccounts = default, HDInsightDiskEncryptionProperties diskEncryptionProperties = default, bool? isEncryptionInTransitPropertiesEncryptionInTransitEnabled = default, string minSupportedTlsVersion = default, HDInsightClusterNetworkProperties networkProperties = default, HDInsightComputeIsolationProperties computeIsolationProperties = default, IEnumerable<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default)
         {
             privateLinkConfigurations ??= new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
 
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 computeRoles is null ? default : new ComputeProfile((computeRoles ?? new ChangeTrackingList<HDInsightClusterRole>()).ToList(), default),
                 storageAccounts is null ? default : new StorageProfile((storageAccounts ?? new ChangeTrackingList<HDInsightStorageAccountInfo>()).ToList(), default),
                 diskEncryptionProperties,
-                isEncryptionInTransitEnabled is null ? default : new EncryptionInTransitProperties(isEncryptionInTransitEnabled, default),
+                isEncryptionInTransitPropertiesEncryptionInTransitEnabled is null ? default : new EncryptionInTransitProperties(isEncryptionInTransitPropertiesEncryptionInTransitEnabled, default),
                 minSupportedTlsVersion,
                 networkProperties,
                 computeIsolationProperties,

@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public IReadOnlyDictionary<string, string> MiscellaneousProperties { get; }
 
         /// <summary> Whether to enable or disable the workload identity Webhook. </summary>
-        public bool? IsWorkloadIdentityEnabled
+        public bool? IsSecurityProfileWorkloadIdentityEnabled
         {
             get
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         }
 
         /// <summary> Indicates whether the gateway for arc router connectivity is enabled. </summary>
-        public bool? IsGatewayEnabled
+        public bool? IsGatewayGatewayEnabled
         {
             get
             {

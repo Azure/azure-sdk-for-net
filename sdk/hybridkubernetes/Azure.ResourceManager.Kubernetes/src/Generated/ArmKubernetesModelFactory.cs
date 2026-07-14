@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="azureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. </param>
         /// <param name="aadProfile"> AAD profile for the connected cluster. </param>
         /// <param name="arcAgentProfile"> Arc agentry configuration for the provisioned cluster. </param>
-        /// <param name="isWorkloadIdentityEnabled"> Whether to enable or disable the workload identity Webhook. </param>
+        /// <param name="isSecurityProfileWorkloadIdentityEnabled"> Whether to enable or disable the workload identity Webhook. </param>
         /// <param name="oidcIssuerProfile"> Open ID Connect (OIDC) Issuer Profile for the connected cluster. </param>
-        /// <param name="isGatewayEnabled"> Indicates whether the gateway for arc router connectivity is enabled. </param>
+        /// <param name="isGatewayGatewayEnabled"> Indicates whether the gateway for arc router connectivity is enabled. </param>
         /// <param name="arcAgentryConfigurations"> Configuration settings for customizing the behavior of the connected cluster. </param>
         /// <param name="miscellaneousProperties"> More properties related to the Connected Cluster. </param>
         /// <returns> A new <see cref="Models.ConnectedClusterProperties"/> instance for mocking. </returns>
-        public static ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ConnectedClusterProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpirationOn = default, DateTimeOffset? lastConnectivityOn = default, ConnectedClusterConnectivityStatus? connectivityStatus = default, ConnectedClusterPrivateLinkState? privateLinkState = default, ResourceIdentifier privateLinkScopeResourceId = default, ConnectedClusterAzureHybridBenefit? azureHybridBenefit = default, ConnectedClusterAadProfile aadProfile = default, ConnectedClusterArcAgentProfile arcAgentProfile = default, bool? isWorkloadIdentityEnabled = default, ConnectedClusterOidcIssuerProfile oidcIssuerProfile = default, bool? isGatewayEnabled = default, IEnumerable<ConnectedClusterArcAgentryConfiguration> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default)
+        public static ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ConnectedClusterProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpirationOn = default, DateTimeOffset? lastConnectivityOn = default, ConnectedClusterConnectivityStatus? connectivityStatus = default, ConnectedClusterPrivateLinkState? privateLinkState = default, ResourceIdentifier privateLinkScopeResourceId = default, ConnectedClusterAzureHybridBenefit? azureHybridBenefit = default, ConnectedClusterAadProfile aadProfile = default, ConnectedClusterArcAgentProfile arcAgentProfile = default, bool? isSecurityProfileWorkloadIdentityEnabled = default, ConnectedClusterOidcIssuerProfile oidcIssuerProfile = default, bool? isGatewayGatewayEnabled = default, IEnumerable<ConnectedClusterArcAgentryConfiguration> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default)
         {
             arcAgentryConfigurations ??= new ChangeTrackingList<ConnectedClusterArcAgentryConfiguration>();
             miscellaneousProperties ??= new ChangeTrackingDictionary<string, string>();
@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 azureHybridBenefit,
                 aadProfile,
                 arcAgentProfile,
-                isWorkloadIdentityEnabled is null ? default : new ConnectedClusterSecurityProfile(new ConnectedClusterWorkloadIdentityProfile(isWorkloadIdentityEnabled, default), default),
+                default,
                 oidcIssuerProfile,
-                isGatewayEnabled is null ? default : new Gateway(isGatewayEnabled, default),
+                isGatewayGatewayEnabled is null ? default : new Gateway(isGatewayGatewayEnabled, default),
                 (arcAgentryConfigurations ?? new ChangeTrackingList<ConnectedClusterArcAgentryConfiguration>()).ToList(),
                 miscellaneousProperties ?? new ChangeTrackingDictionary<string, string>(),
                 default);
@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="distribution"> Represents the distribution of the connected cluster. </param>
         /// <param name="distributionVersion"> Represents the Kubernetes distribution version on this connected cluster. </param>
         /// <param name="azureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. </param>
-        /// <param name="isGatewayEnabled"> Indicates whether the gateway for arc router connectivity is enabled. </param>
+        /// <param name="isGatewayGatewayEnabled"> Indicates whether the gateway for arc router connectivity is enabled. </param>
         /// <returns> A new <see cref="Models.ConnectedClusterPatchProperties"/> instance for mocking. </returns>
-        public static ConnectedClusterPatchProperties ConnectedClusterPatchProperties(string distribution = default, string distributionVersion = default, ConnectedClusterAzureHybridBenefit? azureHybridBenefit = default, bool? isGatewayEnabled = default)
+        public static ConnectedClusterPatchProperties ConnectedClusterPatchProperties(string distribution = default, string distributionVersion = default, ConnectedClusterAzureHybridBenefit? azureHybridBenefit = default, bool? isGatewayGatewayEnabled = default)
         {
-            return new ConnectedClusterPatchProperties(distribution, distributionVersion, azureHybridBenefit, isGatewayEnabled is null ? default : new Gateway(isGatewayEnabled, default), default);
+            return new ConnectedClusterPatchProperties(distribution, distributionVersion, azureHybridBenefit, isGatewayGatewayEnabled is null ? default : new Gateway(isGatewayGatewayEnabled, default), default);
         }
 
         /// <param name="authenticationMethod"> The mode of client authentication. </param>

@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> If US Core Missing Data requirement is enabled. </summary>
-        public bool? IsUsCoreMissingDataEnabled
+        public bool? IsImplementationGuidesConfigurationUsCoreMissingDataEnabled
         {
             get
             {

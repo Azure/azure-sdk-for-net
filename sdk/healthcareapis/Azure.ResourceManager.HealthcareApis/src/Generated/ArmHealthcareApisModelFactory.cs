@@ -380,13 +380,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="resourceVersionPolicyConfiguration"> Determines tracking of history for resources. </param>
         /// <param name="importConfiguration"> Fhir Service import configuration. </param>
         /// <param name="exportStorageAccountName"> The name of the default export storage account. </param>
-        /// <param name="isUsCoreMissingDataEnabled"> If US Core Missing Data requirement is enabled. </param>
+        /// <param name="isImplementationGuidesConfigurationUsCoreMissingDataEnabled"> If US Core Missing Data requirement is enabled. </param>
         /// <param name="keyEncryptionKeyUri"> The URL of the key to use for encryption. </param>
         /// <param name="eTag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
         /// <param name="kind"> The kind of the service. </param>
         /// <returns> A new <see cref="HealthcareApis.FhirServiceData"/> instance for mocking. </returns>
-        public static FhirServiceData FhirServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthcareApisProvisioningState? provisioningState = default, FhirServiceAcrConfiguration acrConfiguration = default, FhirServiceAuthenticationConfiguration authenticationConfiguration = default, FhirServiceCorsConfiguration corsConfiguration = default, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = default, HealthcareApisPublicNetworkAccess? publicNetworkAccess = default, FhirServiceEventState? eventState = default, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration = default, FhirServiceImportConfiguration importConfiguration = default, string exportStorageAccountName = default, bool? isUsCoreMissingDataEnabled = default, Uri keyEncryptionKeyUri = default, ETag? eTag = default, ManagedServiceIdentity identity = default, FhirServiceKind? kind = default)
+        public static FhirServiceData FhirServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthcareApisProvisioningState? provisioningState = default, FhirServiceAcrConfiguration acrConfiguration = default, FhirServiceAuthenticationConfiguration authenticationConfiguration = default, FhirServiceCorsConfiguration corsConfiguration = default, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = default, HealthcareApisPublicNetworkAccess? publicNetworkAccess = default, FhirServiceEventState? eventState = default, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration = default, FhirServiceImportConfiguration importConfiguration = default, string exportStorageAccountName = default, bool? isImplementationGuidesConfigurationUsCoreMissingDataEnabled = default, Uri keyEncryptionKeyUri = default, ETag? eTag = default, ManagedServiceIdentity identity = default, FhirServiceKind? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && acrConfiguration is null && authenticationConfiguration is null && corsConfiguration is null && exportStorageAccountName is null && privateEndpointConnections is null && publicNetworkAccess is null && eventState is null && resourceVersionPolicyConfiguration is null && importConfiguration is null && isUsCoreMissingDataEnabled is null && keyEncryptionKeyUri is null ? default : new FhirServiceProperties(
+                provisioningState is null && acrConfiguration is null && authenticationConfiguration is null && corsConfiguration is null && exportStorageAccountName is null && privateEndpointConnections is null && publicNetworkAccess is null && eventState is null && resourceVersionPolicyConfiguration is null && importConfiguration is null && isImplementationGuidesConfigurationUsCoreMissingDataEnabled is null && keyEncryptionKeyUri is null ? default : new FhirServiceProperties(
                     provisioningState,
                     acrConfiguration,
                     authenticationConfiguration,
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     eventState,
                     resourceVersionPolicyConfiguration,
                     importConfiguration,
-                    new ImplementationGuidesConfiguration(isUsCoreMissingDataEnabled, default),
+                    new ImplementationGuidesConfiguration(isImplementationGuidesConfigurationUsCoreMissingDataEnabled, default),
                     new Encryption(new EncryptionCustomerManagedKeyEncryption(keyEncryptionKeyUri, default), default),
                     default),
                 eTag,

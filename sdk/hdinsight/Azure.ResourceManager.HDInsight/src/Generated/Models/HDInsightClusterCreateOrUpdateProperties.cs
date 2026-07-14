@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Indicates whether or not inter cluster node communication is encrypted in transit. </summary>
-        public bool? IsEncryptionInTransitEnabled
+        public bool? IsEncryptionInTransitPropertiesEncryptionInTransitEnabled
         {
             get
             {

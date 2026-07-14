@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         internal Gateway Gateway { get; set; }
 
         /// <summary> Indicates whether the gateway for arc router connectivity is enabled. </summary>
-        public bool? IsGatewayEnabled
+        public bool? IsGatewayGatewayEnabled
         {
             get
             {

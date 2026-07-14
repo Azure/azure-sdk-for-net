@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> If US Core Missing Data requirement is enabled. </summary>
-        public bool? IsUsCoreMissingDataEnabled
+        public bool? IsImplementationGuidesConfigurationUsCoreMissingDataEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.IsUsCoreMissingDataEnabled;
+                return Properties is null ? default : Properties.IsImplementationGuidesConfigurationUsCoreMissingDataEnabled;
             }
             set
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     Properties = new FhirServiceProperties();
                 }
-                Properties.IsUsCoreMissingDataEnabled = value;
+                Properties.IsImplementationGuidesConfigurationUsCoreMissingDataEnabled = value;
             }
         }
 
