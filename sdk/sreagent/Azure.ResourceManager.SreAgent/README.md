@@ -1,4 +1,4 @@
-# Azure.ResourceManager.SreAgent management client library for .NET
+# Microsoft Azure SreAgent management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
