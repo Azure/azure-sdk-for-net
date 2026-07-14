@@ -27,24 +27,28 @@ resources:
 environment_variables:
     - name: AZURE_AI_MODEL_DEPLOYMENT_NAME
       value: gpt-5.4-nano
-    # ── Long-running showcase cadence (hosted default) ──────────────────────
-    # Per-phase ≈ real LLM subcalls + 3×30s intra + 30s inter cooldowns ≈ 132s,
-    # × 15 phases ≈ 33 min — runs ~2x past the platform's ~15-min sandbox-eviction
-    # window so each demo run exercises the resilient-task lease keep-alive path
-    # end-to-end (the behavior this sample exists to showcase). Drive it with
-    # demo-client.sh. Local Program.cs defaults (10/20s, shorter) apply when running
-    # outside the hosted container for fast iteration.
+    # NOTE: the demo-only crash sentinel (POST /invocations {"message":"crash"} →
+    # Environment.Exit(137)) is enabled at the container-image level via `ENV DEMO_MODE=1`
+    # in the Dockerfile — the same pattern the responses demo uses — so it is NOT set here.
+    # A production image would leave DEMO_MODE off (default).
     #
-    # For a FAST regression cadence (e.g. an automated battery that must reach a
-    # terminal state quickly), override to NUM_PHASES=3, INTRA/INTER=1, and a small
-    # TARGET_OUTPUT_TOKENS so a full run lands in well under a minute.
+    # ── Regression-gate cadence (hosted default) ────────────────────────────
+    # NUM_PHASES=3 with 1s cooldowns → a full run reaches a terminal state in well
+    # under a minute, so crash→recover / steer / cancel scenarios (and demo-client.sh)
+    # complete quickly. Verified end-to-end against the live hosted agent.
+    #
+    # For a LONG-RUNNING showcase that exercises the resilient-task lease keep-alive
+    # ~2x past the platform's ~15-min sandbox-eviction window (matching the Python
+    # demo's committed cadence), override to NUM_PHASES=15, INTRA/INTER=30,
+    # TARGET_OUTPUT_TOKENS=1500 (≈33-min run). Local Program.cs defaults (10/20s)
+    # apply when running outside the hosted container.
     - name: NUM_PHASES
-      value: "15"
+      value: "3"
     - name: CALLS_PER_PHASE
       value: "4"
     - name: INTRA_PHASE_COOLDOWN_SEC
-      value: "30"
+      value: "1"
     - name: INTER_PHASE_COOLDOWN_SEC
-      value: "30"
+      value: "1"
     - name: TARGET_OUTPUT_TOKENS
-      value: "1500"
+      value: "150"

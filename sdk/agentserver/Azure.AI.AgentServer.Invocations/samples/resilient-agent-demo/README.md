@@ -41,7 +41,7 @@ the same four platform capabilities of the Hosted Agent + resilient-task primiti
 
 ## What the agent does
 
-A faithful port of the Python `resilient-agent-demo`: **15 research phases × 4
+A faithful port of the Python `resilient-agent-demo`: up to **15 research phases × 4
 chained sub-calls each** (research → critique → refine → synthesize), streaming
 every token to the consumer over SSE. The handler checkpoints phase/sub-call
 watermarks to `context.Metadata` and flushes **after each sub-call** — so a crash
@@ -50,6 +50,15 @@ actively streaming is replayed). Between sub-calls and between phases the agent
 sleeps for `INTRA_PHASE_COOLDOWN_SEC` / `INTER_PHASE_COOLDOWN_SEC` and emits a
 `cooldown` event so the terminal shows a low-key "cooling down…" line instead of
 going silent.
+
+> **Cadence.** The committed [`agent.yaml`](src/resilient-research-agent/agent.yaml)
+> ships a fast **battery-gate** cadence (3 phases, 1s cooldowns) so crash/steer/cancel
+> runs reach a terminal state in under a minute — this is what the hosted resilience
+> battery exercises. For the **long-running showcase** (a single run that outlives the
+> platform's ~15-min sandbox-eviction window purely via lease keep-alive, matching the
+> Python demo's committed cadence), override to `NUM_PHASES=15`,
+> `INTRA_PHASE_COOLDOWN_SEC=30`, `INTER_PHASE_COOLDOWN_SEC=30`,
+> `TARGET_OUTPUT_TOKENS=1500` and drive it with `demo-client.sh`.
 
 `ResilientResearchHandler.cs` holds the invocations protocol (POST/GET/cancel) plus
 the durable producer (`RunResearchAsync`); `Program.cs` holds the one-liner host
@@ -129,6 +138,17 @@ azd auth login
 azd up
 ```
 
+> **If `azd auth login` is blocked** (e.g. org policy disables the device-code flow),
+> point azd at your existing Azure CLI session instead:
+>
+> ```bash
+> az login                                  # once, interactively
+> azd config set auth.useAzCliAuth true     # azd reuses the az CLI token
+> export AZURE_CONFIG_DIR="$HOME/.azure"
+> az account set --subscription <sub-id>
+> azd up                                    # or: azd deploy for updates
+> ```
+
 `azd up` provisions infra (a `gpt-5.4-nano` deployment), remote-builds the
 container (the Dockerfile `dotnet restore`s from the staged drop), ships it, and
 prints the invocations endpoint.
@@ -179,12 +199,12 @@ iteration.
 | `FOUNDRY_PROJECT_ENDPOINT` | (platform-injected) | Foundry project endpoint for the upstream `gpt-5.4-nano` calls. When unset (and `USE_FAKE_MODEL != 1` is not forced), the agent uses the **synthetic-token fake model** so it runs offline. |
 | `AZURE_AI_MODEL_DEPLOYMENT_NAME` | `gpt-5.4-nano` | Responses-API model deployment name. |
 | `USE_FAKE_MODEL` | unset | Force the synthetic-token model even when an endpoint is set (used by the local kit + CI). |
-| `NUM_PHASES` | `15` | Research phases per run. |
+| `NUM_PHASES` | `3` (agent.yaml) / `15` code-default | Research phases per run. The committed `agent.yaml` uses a fast **battery-gate** cadence so a full run reaches a terminal state in well under a minute; raise to `15` for the long-running showcase (see [What the agent does](#what-the-agent-does)). |
 | `CALLS_PER_PHASE` | `4` | Chained sub-calls per phase. |
-| `TARGET_OUTPUT_TOKENS` | `1500` | Max tokens per sub-call. |
-| `INTRA_PHASE_COOLDOWN_SEC` | `30` hosted / `10` code-default | Sleep between sub-calls. |
-| `INTER_PHASE_COOLDOWN_SEC` | `30` hosted / `20` code-default | Sleep between phases. |
-| `DEMO_MODE` | `1` (in the demo image) | Enables the `crash` message sentinel. Leave off in production. |
+| `TARGET_OUTPUT_TOKENS` | `150` (agent.yaml) / `1500` code-default | Max tokens per sub-call. |
+| `INTRA_PHASE_COOLDOWN_SEC` | `1` (agent.yaml) / `10` code-default | Sleep between sub-calls. |
+| `INTER_PHASE_COOLDOWN_SEC` | `1` (agent.yaml) / `20` code-default | Sleep between phases. |
+| `DEMO_MODE` | `1` (set in the demo Dockerfile) | Enables the `crash` message sentinel + demo routes. Leave off in production. |
 | `AGENTSERVER_STATE_ROOT` | (local only) | Root for the file-backed tasks/streams store when running off-platform. |
 
 > **Local vs hosted backend selection.** `Azure.AI.AgentServer.Core` auto-selects

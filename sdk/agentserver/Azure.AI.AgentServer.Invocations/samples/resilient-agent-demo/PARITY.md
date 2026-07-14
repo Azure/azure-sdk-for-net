@@ -72,9 +72,8 @@ reports an accurate `completed=<n>/<total>`.
 
 ## Verified locally (credential-free)
 
-`azd`-hosted verification is blocked in this environment (org policy blocks
-`azd auth login` device-code flow), so all verification is local against
-`http://localhost:8088` with the synthetic-token model.
+Local verification runs against `http://localhost:8088` with the synthetic-token
+model, so it needs no Azure credentials.
 
 - **Crash → recover** (`local/run.sh`, `recovery_demo.py`): a run streams, crashes
   (`Environment.Exit(137)`), restarts against the same `AGENTSERVER_STATE_ROOT`, the
@@ -101,11 +100,41 @@ invocation id to the right container. This is **not** a divergence — it's a
 local-testing artifact of the missing proxy, identical in spirit to the Python
 kit's `FOUNDRY_AGENT_SESSION_ID` pinning.
 
-## Not yet verified against the live hosted agent
+## Verified against the live hosted agent
 
-Deploy + the hosted battery require `azd auth login` to the target tenant / Canada
-Central project, which is blocked here. The deploy scaffold (`azure.yaml`,
-`Dockerfile`, staged package drop) builds and the container boots offline; a hosted
-run is one `azd up` away for a user with credentials. The Python demo is the proven
-hosted reference; the .NET port matches it behavior-for-behavior per the tables
-above.
+The full resilience battery was run end-to-end against the **deployed** hosted agent
+(`resilient-research-agent-dotnet`) in the Canada Central Foundry project, driving the
+Invocations protocol over HTTPS with an Entra bearer token. All scenarios pass on the
+committed configuration:
+
+| Scenario | Assertion | Result |
+| --- | --- | --- |
+| **T1 run → complete** | `run_start → phase_start → token… → run_complete` | ✅ PASS |
+| **T2 crash → recover** | after `phase_end(1)`, `POST {"message":"crash"}` → `Environment.Exit(137)`; the platform nanny restarts the container (~1 min) with no new ingress; the resilient task auto-resumes: `run_start → recovered → phase_start(2)` (skips the completed phase) → `run_complete`, with a gap-free, dup-free sequence counter across the crash boundary | ✅ PASS |
+| **T3 steer** | mid-run `POST` of a new topic on the same `agent_session_id` winds the original turn down with `winding_down cause=steering`, then the steered turn starts fresh at **phase 1** on the new topic and completes | ✅ PASS |
+| **T4 operator cancel** | `POST /invocations/{id}/cancel` → `{status:cancelled}` and the stream emits `winding_down cause=operator_cancel` | ✅ PASS |
+
+The `recovered` event fires only when at least one phase completed before the crash
+(`EntryMode == Recovered && completed_phases > 0`) — identical to the Python guard
+(`entry_mode == "recovered" and completed > 0`). A crash mid-phase-1 recovers just the
+same (gap-free resume + `run_complete`) but emits no discrete `recovered` marker, by
+design.
+
+### Deploying and auth
+
+Deploy with `azd up` (first time) / `azd deploy` (updates) after `./build.sh` stages the
+package drop into the Docker context. Where the interactive `azd auth login` device-code
+flow is blocked by org policy, azd can reuse an existing Azure CLI session instead:
+
+```bash
+az login                                  # once, interactively
+azd config set auth.useAzCliAuth true     # make azd reuse the az CLI token
+export AZURE_CONFIG_DIR="$HOME/.azure"
+az account set --subscription <sub-id>
+azd up                                    # or: azd deploy
+```
+
+The hosted battery authenticates the same way — `az account get-access-token --resource
+https://ai.azure.com` for the bearer token, plus the `Foundry-Features: HostedAgents=V1Preview`
+header. The Python demo is the proven hosted reference; the .NET port matches it
+behavior-for-behavior per the tables above and this live run.
