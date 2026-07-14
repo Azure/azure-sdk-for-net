@@ -11,14 +11,14 @@ namespace Azure.Provisioning.Cdn
     public enum SharedPrivateLinkResourceStatus
     {
         /// <summary> Pending. </summary>
-        Pending,
+        Pending = 0,
         /// <summary> Approved. </summary>
-        Approved,
+        Approved = 1,
         /// <summary> Rejected. </summary>
-        Rejected,
+        Rejected = 2,
         /// <summary> Disconnected. </summary>
-        Disconnected,
+        Disconnected = 3,
         /// <summary> Timeout. </summary>
-        Timeout
+        Timeout = 4
     }
 }

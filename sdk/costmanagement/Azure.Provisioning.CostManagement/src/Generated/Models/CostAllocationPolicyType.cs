@@ -11,6 +11,6 @@ namespace Azure.Provisioning.CostManagement
     public enum CostAllocationPolicyType
     {
         /// <summary> FixedProportion. </summary>
-        FixedProportion
+        FixedProportion = 0
     }
 }

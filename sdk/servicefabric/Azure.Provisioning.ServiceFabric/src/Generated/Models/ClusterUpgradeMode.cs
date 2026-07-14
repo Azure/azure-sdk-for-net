@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ServiceFabric
     public enum ClusterUpgradeMode
     {
         /// <summary> The cluster will be automatically upgraded to the latest Service Fabric runtime version, <b>upgradeWave</b> will determine when the upgrade starts after the new version becomes available. </summary>
-        Automatic,
+        Automatic = 0,
         /// <summary> The cluster will not be automatically upgraded to the latest Service Fabric runtime version. The cluster is upgraded by setting the <b>clusterCodeVersion</b> property in the cluster resource. </summary>
-        Manual
+        Manual = 1
     }
 }
