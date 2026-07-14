@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Gets the Keys. </summary>
         [WirePath("keys")]
-        public IDictionary<string, string> Keys { get; }
+        public IDictionary<string, string> Keys { get; } = new ChangeTrackingDictionary<string, string>();
     }
 }

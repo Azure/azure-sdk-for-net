@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CostManagement
     public enum ViewPivotType
     {
         /// <summary> Dimension. </summary>
-        Dimension,
+        Dimension = 0,
         /// <summary> TagKey. </summary>
-        TagKey
+        TagKey = 1
     }
 }

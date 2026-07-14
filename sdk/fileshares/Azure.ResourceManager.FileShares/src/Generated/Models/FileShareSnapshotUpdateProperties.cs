@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.FileShares.Models
         }
 
         /// <summary> The metadata. </summary>
-        public IDictionary<string, string> Metadata { get; }
+        public IDictionary<string, string> Metadata { get; } = new ChangeTrackingDictionary<string, string>();
     }
 }

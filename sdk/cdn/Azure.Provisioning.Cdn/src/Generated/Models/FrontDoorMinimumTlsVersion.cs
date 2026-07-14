@@ -14,12 +14,12 @@ namespace Azure.Provisioning.Cdn
     {
         /// <summary> Tls1_0. </summary>
         [DataMember(Name = "TLS10")]
-        Tls1_0,
+        Tls1_0 = 0,
         /// <summary> Tls1_2. </summary>
         [DataMember(Name = "TLS12")]
-        Tls1_2,
+        Tls1_2 = 1,
         /// <summary> Tls1_3. </summary>
         [DataMember(Name = "TLS13")]
-        Tls1_3
+        Tls1_3 = 2
     }
 }

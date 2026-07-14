@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Array of column names to be included in the report. Any valid report column name is allowed. If not provided, then report includes all columns. </summary>
-        public IList<string> Columns { get; }
+        public IList<string> Columns { get; } = new ChangeTrackingList<string>();
     }
 }

@@ -105,7 +105,7 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the ErrorDetail. </summary>
+        /// <summary> Gets the ErrorDetail. </summary>
         public ManagedClusterPodIdentityProvisioningErrorDetail ProvisioningInfoErrorDetail
         {
             get

@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Cdn
     public enum ResponseBasedDetectedErrorType
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> TcpErrorsOnly. </summary>
-        TcpErrorsOnly,
+        TcpErrorsOnly = 1,
         /// <summary> TcpAndHttpErrors. </summary>
-        TcpAndHttpErrors
+        TcpAndHttpErrors = 2
     }
 }

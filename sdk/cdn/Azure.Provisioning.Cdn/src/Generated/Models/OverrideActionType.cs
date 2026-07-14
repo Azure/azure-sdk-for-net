@@ -11,12 +11,12 @@ namespace Azure.Provisioning.Cdn
     public enum OverrideActionType
     {
         /// <summary> Allow. </summary>
-        Allow,
+        Allow = 0,
         /// <summary> Block. </summary>
-        Block,
+        Block = 1,
         /// <summary> Log. </summary>
-        Log,
+        Log = 2,
         /// <summary> Redirect. </summary>
-        Redirect
+        Redirect = 3
     }
 }

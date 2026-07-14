@@ -14,48 +14,48 @@ namespace Azure.Provisioning.KeyVault
     {
         /// <summary> All. </summary>
         [DataMember(Name = "all")]
-        All,
+        All = 0,
         /// <summary> Get. </summary>
         [DataMember(Name = "get")]
-        Get,
+        Get = 1,
         /// <summary> List. </summary>
         [DataMember(Name = "list")]
-        List,
+        List = 2,
         /// <summary> Delete. </summary>
         [DataMember(Name = "delete")]
-        Delete,
+        Delete = 3,
         /// <summary> Set. </summary>
         [DataMember(Name = "set")]
-        Set,
+        Set = 4,
         /// <summary> Update. </summary>
         [DataMember(Name = "update")]
-        Update,
+        Update = 5,
         /// <summary> RegenerateKey. </summary>
         [DataMember(Name = "regeneratekey")]
-        RegenerateKey,
+        RegenerateKey = 6,
         /// <summary> Recover. </summary>
         [DataMember(Name = "recover")]
-        Recover,
+        Recover = 7,
         /// <summary> Purge. </summary>
         [DataMember(Name = "purge")]
-        Purge,
+        Purge = 8,
         /// <summary> Backup. </summary>
         [DataMember(Name = "backup")]
-        Backup,
+        Backup = 9,
         /// <summary> Restore. </summary>
         [DataMember(Name = "restore")]
-        Restore,
+        Restore = 10,
         /// <summary> SetSas. </summary>
         [DataMember(Name = "setsas")]
-        SetSas,
+        SetSas = 11,
         /// <summary> ListSas. </summary>
         [DataMember(Name = "listsas")]
-        ListSas,
+        ListSas = 12,
         /// <summary> GetSas. </summary>
         [DataMember(Name = "getsas")]
-        GetSas,
+        GetSas = 13,
         /// <summary> DeleteSas. </summary>
         [DataMember(Name = "deletesas")]
-        DeleteSas
+        DeleteSas = 14
     }
 }
