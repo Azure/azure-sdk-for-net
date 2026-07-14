@@ -108,11 +108,12 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 FeatureFlag flag = new FeatureFlag
                 {
+                    Name = name,
                     Enabled = true,
                     Description = "test description"
                 };
 
-                Response<FeatureFlag> response = await service.AddFeatureFlagAsync(name, flag);
+                Response<FeatureFlag> response = await service.AddFeatureFlagAsync(flag);
 
                 Assert.That(response.Value.Name, Is.EqualTo(name));
                 Assert.That(response.Value.Enabled, Is.EqualTo(true));
@@ -241,13 +242,14 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 FeatureFlag updated = new FeatureFlag
                 {
+                    Name = name,
                     Enabled = true,
                     Description = "updated"
                 };
                 // Copy etag from the added flag onto the new body so onlyIfUnchanged can be evaluated.
                 FeatureFlag withEtag = CloneWithEtag(updated, added.Value.Etag);
 
-                Response<FeatureFlag> response = await service.SetFeatureFlagAsync(name, withEtag, label: null, onlyIfUnchanged: true);
+                Response<FeatureFlag> response = await service.SetFeatureFlagAsync(withEtag, onlyIfUnchanged: true);
 
                 Assert.That(response.Value.Enabled, Is.EqualTo(true));
                 Assert.That(response.Value.Description, Is.EqualTo("updated"));
@@ -270,10 +272,10 @@ namespace Azure.Data.AppConfiguration.Tests
                 // Bump the server-side etag.
                 await service.SetFeatureFlagAsync(name, enabled: true);
 
-                FeatureFlag stale = CloneWithEtag(new FeatureFlag { Enabled = false }, added.Value.Etag);
+                FeatureFlag stale = CloneWithEtag(new FeatureFlag { Name = name, Enabled = false }, added.Value.Etag);
 
                 RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
-                    async () => await service.SetFeatureFlagAsync(name, stale, label: null, onlyIfUnchanged: true));
+                    async () => await service.SetFeatureFlagAsync(stale, onlyIfUnchanged: true));
 
                 Assert.That(ex.Status, Is.EqualTo(412));
             }
