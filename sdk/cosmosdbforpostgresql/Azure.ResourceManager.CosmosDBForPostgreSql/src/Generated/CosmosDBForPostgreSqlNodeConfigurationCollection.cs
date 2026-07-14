@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _cosmosDBForPostgreSqlNodeConfigurationsRestClient.CreateUpdateOnNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, CosmosDBForPostgreSqlServerConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource>(
-                    new CosmosDBForPostgreSqlNodeConfigurationOperationSource(Client),
+                    new CosmosDBForPostgreSqlNodeConfigurationResourceOperationSource(Client),
                     _cosmosDBForPostgreSqlNodeConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _cosmosDBForPostgreSqlNodeConfigurationsRestClient.CreateUpdateOnNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, CosmosDBForPostgreSqlServerConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource>(
-                    new CosmosDBForPostgreSqlNodeConfigurationOperationSource(Client),
+                    new CosmosDBForPostgreSqlNodeConfigurationResourceOperationSource(Client),
                     _cosmosDBForPostgreSqlNodeConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,

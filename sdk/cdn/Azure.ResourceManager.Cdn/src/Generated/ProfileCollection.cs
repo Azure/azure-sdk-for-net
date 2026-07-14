@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _profilesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, profileName, ProfileData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<ProfileResource> operation = new CdnArmOperation<ProfileResource>(
-                    new ProfileOperationSource(Client),
+                    new ProfileResourceOperationSource(Client),
                     _profilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _profilesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, profileName, ProfileData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<ProfileResource> operation = new CdnArmOperation<ProfileResource>(
-                    new ProfileOperationSource(Client),
+                    new ProfileResourceOperationSource(Client),
                     _profilesClientDiagnostics,
                     Pipeline,
                     message.Request,

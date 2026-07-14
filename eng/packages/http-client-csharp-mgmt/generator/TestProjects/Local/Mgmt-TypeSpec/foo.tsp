@@ -145,6 +145,13 @@ interface Foos {
     ArmResponse<FooDependency[]>
   >;
 
+  @action("splitDependencies")
+  splitDependencies is ArmResourceActionAsync<
+    Foo,
+    void,
+    FooDependency[]
+  >;
+
   /** Get the provisioning state of a Foo resource. */
   @get
   @action("getProvisioningState")
@@ -152,6 +159,15 @@ interface Foos {
     Foo,
     void,
     ArmResponse<FooProvisioningState>
+  >;
+
+  /** Get raw metadata (Record<unknown>) for a Foo resource. */
+  @get
+  @action("getMetadata")
+  getMetadata is ArmResourceActionSync<
+    Foo,
+    void,
+    ArmResponse<Record<unknown>>
   >;
 }
 

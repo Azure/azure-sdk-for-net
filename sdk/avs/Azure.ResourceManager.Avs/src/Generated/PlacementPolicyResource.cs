@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _placementPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PlacementPolicyPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<PlacementPolicyResource> operation = new AvsArmOperation<PlacementPolicyResource>(
-                    new PlacementPolicyOperationSource(Client),
+                    new PlacementPolicyResourceOperationSource(Client),
                     _placementPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _placementPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PlacementPolicyPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<PlacementPolicyResource> operation = new AvsArmOperation<PlacementPolicyResource>(
-                    new PlacementPolicyOperationSource(Client),
+                    new PlacementPolicyResourceOperationSource(Client),
                     _placementPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

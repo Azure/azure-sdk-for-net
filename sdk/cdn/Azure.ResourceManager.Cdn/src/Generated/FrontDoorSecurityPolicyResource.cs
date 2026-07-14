@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _securityPoliciesRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorSecurityPolicyPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<FrontDoorSecurityPolicyResource> operation = new CdnArmOperation<FrontDoorSecurityPolicyResource>(
-                    new FrontDoorSecurityPolicyOperationSource(Client),
+                    new FrontDoorSecurityPolicyResourceOperationSource(Client),
                     _securityPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _securityPoliciesRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorSecurityPolicyPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<FrontDoorSecurityPolicyResource> operation = new CdnArmOperation<FrontDoorSecurityPolicyResource>(
-                    new FrontDoorSecurityPolicyOperationSource(Client),
+                    new FrontDoorSecurityPolicyResourceOperationSource(Client),
                     _securityPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

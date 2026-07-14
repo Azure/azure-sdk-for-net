@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning;
@@ -139,6 +140,321 @@ namespace Azure.Provisioning.ContainerInstance
             {
                 Initialize();
                 _parent.Value = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Sku. </summary>
+        public BicepValue<ContainerGroupSku> Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.Sku = value;
+            }
+        }
+
+        /// <summary> Gets or sets the EncryptionProperties. </summary>
+        public ContainerGroupEncryptionProperties EncryptionProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.EncryptionProperties = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Containers. </summary>
+        public BicepList<ContainerInstanceContainer> Containers
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Containers;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.Containers = value;
+            }
+        }
+
+        /// <summary> Gets or sets the InitContainers. </summary>
+        public BicepList<InitContainerDefinitionContent> InitContainers
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InitContainers;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.InitContainers = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Extensions. </summary>
+        public BicepList<DeploymentExtensionSpec> Extensions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Extensions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.Extensions = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ImageRegistryCredentials. </summary>
+        public BicepList<ContainerGroupImageRegistryCredential> ImageRegistryCredentials
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImageRegistryCredentials;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.ImageRegistryCredentials = value;
+            }
+        }
+
+        /// <summary> Gets or sets the RestartPolicy. </summary>
+        public BicepValue<ContainerGroupRestartPolicy> RestartPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RestartPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.RestartPolicy = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ShutdownGracePeriod. </summary>
+        public BicepValue<DateTimeOffset> ShutdownGracePeriod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShutdownGracePeriod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.ShutdownGracePeriod = value;
+            }
+        }
+
+        /// <summary> Gets or sets the IPAddress. </summary>
+        public ContainerGroupIPAddress IPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IPAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.IPAddress = value;
+            }
+        }
+
+        /// <summary> Gets or sets the TimeToLive. </summary>
+        public BicepValue<DateTimeOffset> TimeToLive
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeToLive;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.TimeToLive = value;
+            }
+        }
+
+        /// <summary> Gets or sets the OSType. </summary>
+        public BicepValue<ContainerInstanceOperatingSystemType> OSType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.OSType = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Volumes. </summary>
+        public BicepList<ContainerVolume> Volumes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Volumes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.Volumes = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Priority. </summary>
+        public BicepValue<ContainerGroupPriority> Priority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.Priority = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SecurityContext. </summary>
+        public ContainerSecurityContextDefinition SecurityContext
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityContext;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.SecurityContext = value;
+            }
+        }
+
+        /// <summary> Gets the Revision. </summary>
+        public BicepValue<int> Revision
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                return Properties.Revision;
+            }
+        }
+
+        /// <summary> Gets the RegisteredRevisions. </summary>
+        public BicepList<int> RegisteredRevisions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                return Properties.RegisteredRevisions;
+            }
+        }
+
+        /// <summary> Gets or sets the UseKrypton. </summary>
+        public BicepValue<bool> UseKrypton
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UseKrypton;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.UseKrypton = value;
+            }
+        }
+
+        /// <summary> Gets or sets the LogAnalytics. </summary>
+        public ContainerGroupLogAnalytics DiagnosticsLogAnalytics
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiagnosticsLogAnalytics;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.DiagnosticsLogAnalytics = value;
+            }
+        }
+
+        /// <summary> Gets or sets the CcePolicy. </summary>
+        public BicepValue<string> ConfidentialComputeCcePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfidentialComputeCcePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerGroupProfileProperties();
+                }
+                Properties.ConfidentialComputeCcePolicy = value;
             }
         }
 

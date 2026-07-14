@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -97,7 +102,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
@@ -113,7 +119,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
@@ -129,7 +136,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
@@ -145,7 +153,8 @@
         "decorators": []
       },
       "value": "application/octet-stream",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "19",
@@ -161,7 +170,8 @@
         "decorators": []
       },
       "value": "application/octet-stream",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "21",
@@ -177,7 +187,8 @@
         "decorators": []
       },
       "value": "application/octet-stream",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "23",
@@ -193,7 +204,8 @@
         "decorators": []
       },
       "value": "image/png",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "25",
@@ -209,7 +221,8 @@
         "decorators": []
       },
       "value": "image/png",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "27",
@@ -225,7 +238,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "29",
@@ -241,7 +255,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "31",
@@ -257,7 +272,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "33",
@@ -273,7 +289,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "35",
@@ -289,7 +306,8 @@
         "decorators": []
       },
       "value": "application/octet-stream",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "37",
@@ -305,7 +323,8 @@
         "decorators": []
       },
       "value": "application/octet-stream",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "39",
@@ -321,7 +340,8 @@
         "decorators": []
       },
       "value": "application/octet-stream",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "41",
@@ -337,7 +357,8 @@
         "decorators": []
       },
       "value": "image/png",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "43",
@@ -353,7 +374,8 @@
         "decorators": []
       },
       "value": "image/png",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "45",
@@ -369,7 +391,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "47",
@@ -385,7 +408,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "49",
@@ -401,7 +425,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "51",
@@ -417,7 +442,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -434,6 +460,7 @@
           "name": "DefaultBytesProperty"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "54",
@@ -459,7 +486,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -476,6 +504,7 @@
           "name": "Base64BytesProperty"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "57",
@@ -501,7 +530,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -518,6 +548,7 @@
           "name": "Base64urlBytesProperty"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "60",
@@ -543,7 +574,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -560,6 +592,7 @@
           "name": "Base64urlArrayBytesProperty"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "63",
@@ -600,7 +633,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -610,6 +644,7 @@
       "$id": "67",
       "kind": "client",
       "name": "BytesClient",
+      "isExactName": false,
       "namespace": "Encode.Bytes",
       "doc": "Test for encode decorator on bytes.",
       "methods": [],
@@ -642,7 +677,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Encode.Bytes.endpoint"
+          "crossLanguageDefinitionId": "Encode.Bytes.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -654,17 +690,20 @@
           "$id": "71",
           "kind": "client",
           "name": "Query",
+          "isExactName": false,
           "namespace": "Encode.Bytes.Query",
           "methods": [
             {
               "$id": "72",
               "kind": "basic",
               "name": "default",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "73",
                 "name": "default",
+                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -709,9 +748,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Query.default.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -749,11 +790,13 @@
               "$id": "78",
               "kind": "basic",
               "name": "base64",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "79",
                 "name": "base64",
+                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -798,9 +841,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Query.base64.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -838,11 +883,13 @@
               "$id": "84",
               "kind": "basic",
               "name": "base64url",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "85",
                 "name": "base64url",
+                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -887,9 +934,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Query.base64url.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -927,11 +976,13 @@
               "$id": "90",
               "kind": "basic",
               "name": "base64urlArray",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "91",
                 "name": "base64urlArray",
+                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -967,9 +1018,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Query.base64urlArray.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -1033,7 +1086,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Bytes.Query.endpoint"
+              "crossLanguageDefinitionId": "Encode.Bytes.Query.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -1049,17 +1103,20 @@
           "$id": "97",
           "kind": "client",
           "name": "Property",
+          "isExactName": false,
           "namespace": "Encode.Bytes.Property",
           "methods": [
             {
               "$id": "98",
               "kind": "basic",
               "name": "default",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "99",
                 "name": "default",
+                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -1096,9 +1153,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Property.default.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "102",
@@ -1131,9 +1190,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Property.default.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "104",
@@ -1169,9 +1230,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Property.default.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1237,11 +1300,13 @@
               "$id": "106",
               "kind": "basic",
               "name": "base64",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "107",
                 "name": "base64",
+                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -1278,9 +1343,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Property.base64.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "110",
@@ -1313,9 +1380,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Property.base64.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "112",
@@ -1351,9 +1420,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Property.base64.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1419,11 +1490,13 @@
               "$id": "114",
               "kind": "basic",
               "name": "base64url",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "115",
                 "name": "base64url",
+                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -1460,9 +1533,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Property.base64url.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "118",
@@ -1495,9 +1570,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Property.base64url.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "120",
@@ -1533,9 +1610,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Property.base64url.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1601,11 +1680,13 @@
               "$id": "122",
               "kind": "basic",
               "name": "base64urlArray",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "123",
                 "name": "base64urlArray",
+                "isExactName": false,
                 "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
@@ -1642,9 +1723,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Property.base64urlArray.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "126",
@@ -1677,9 +1760,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Property.base64urlArray.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "128",
@@ -1715,9 +1800,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Property.base64urlArray.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1809,7 +1896,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Bytes.Property.endpoint"
+              "crossLanguageDefinitionId": "Encode.Bytes.Property.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -1825,17 +1913,20 @@
           "$id": "133",
           "kind": "client",
           "name": "Header",
+          "isExactName": false,
           "namespace": "Encode.Bytes.Header",
           "methods": [
             {
               "$id": "134",
               "kind": "basic",
               "name": "default",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "135",
                 "name": "default",
+                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -1880,9 +1971,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Header.default.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -1920,11 +2013,13 @@
               "$id": "140",
               "kind": "basic",
               "name": "base64",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "141",
                 "name": "base64",
+                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -1969,9 +2064,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Header.base64.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2009,11 +2106,13 @@
               "$id": "146",
               "kind": "basic",
               "name": "base64url",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "147",
                 "name": "base64url",
+                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -2058,9 +2157,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Header.base64url.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2098,11 +2199,13 @@
               "$id": "152",
               "kind": "basic",
               "name": "base64urlArray",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "153",
                 "name": "base64urlArray",
+                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -2139,9 +2242,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.Header.base64urlArray.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2205,7 +2310,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Bytes.Header.endpoint"
+              "crossLanguageDefinitionId": "Encode.Bytes.Header.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -2221,17 +2327,20 @@
           "$id": "159",
           "kind": "client",
           "name": "RequestBody",
+          "isExactName": false,
           "namespace": "Encode.Bytes.RequestBody",
           "methods": [
             {
               "$id": "160",
               "kind": "basic",
               "name": "default",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "161",
                 "name": "default",
+                "isExactName": false,
                 "resourceName": "RequestBody",
                 "accessibility": "public",
                 "parameters": [
@@ -2268,9 +2377,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.default.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "164",
@@ -2314,9 +2425,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.default.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {}
                   }
                 ],
@@ -2361,11 +2474,13 @@
               "$id": "168",
               "kind": "basic",
               "name": "octetStream",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "169",
                 "name": "octetStream",
+                "isExactName": false,
                 "resourceName": "RequestBody",
                 "accessibility": "public",
                 "parameters": [
@@ -2400,9 +2515,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.octetStream.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "172",
@@ -2446,9 +2563,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.octetStream.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {}
                   }
                 ],
@@ -2493,11 +2612,13 @@
               "$id": "176",
               "kind": "basic",
               "name": "customContentType",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "177",
                 "name": "customContentType",
+                "isExactName": false,
                 "resourceName": "RequestBody",
                 "accessibility": "public",
                 "parameters": [
@@ -2532,9 +2653,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.customContentType.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "180",
@@ -2578,9 +2701,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.customContentType.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {}
                   }
                 ],
@@ -2625,11 +2750,13 @@
               "$id": "184",
               "kind": "basic",
               "name": "base64",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "185",
                 "name": "base64",
+                "isExactName": false,
                 "resourceName": "RequestBody",
                 "accessibility": "public",
                 "parameters": [
@@ -2664,9 +2791,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.base64.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "188",
@@ -2712,9 +2841,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.base64.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "value"
@@ -2763,11 +2894,13 @@
               "$id": "192",
               "kind": "basic",
               "name": "base64url",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "193",
                 "name": "base64url",
+                "isExactName": false,
                 "resourceName": "RequestBody",
                 "accessibility": "public",
                 "parameters": [
@@ -2802,9 +2935,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.base64url.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "196",
@@ -2850,9 +2985,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.base64url.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "value"
@@ -2927,7 +3064,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.endpoint"
+              "crossLanguageDefinitionId": "Encode.Bytes.RequestBody.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -2943,17 +3081,20 @@
           "$id": "203",
           "kind": "client",
           "name": "ResponseBody",
+          "isExactName": false,
           "namespace": "Encode.Bytes.ResponseBody",
           "methods": [
             {
               "$id": "204",
               "kind": "basic",
               "name": "default",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "205",
                 "name": "default",
+                "isExactName": false,
                 "resourceName": "ResponseBody",
                 "accessibility": "public",
                 "parameters": [
@@ -2988,9 +3129,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.default.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3042,11 +3185,13 @@
               "$id": "209",
               "kind": "basic",
               "name": "octetStream",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "210",
                 "name": "octetStream",
+                "isExactName": false,
                 "resourceName": "ResponseBody",
                 "accessibility": "public",
                 "parameters": [
@@ -3081,9 +3226,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.octetStream.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3143,11 +3290,13 @@
               "$id": "214",
               "kind": "basic",
               "name": "customContentType",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "215",
                 "name": "customContentType",
+                "isExactName": false,
                 "resourceName": "ResponseBody",
                 "accessibility": "public",
                 "parameters": [
@@ -3182,9 +3331,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.customContentType.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3244,11 +3395,13 @@
               "$id": "219",
               "kind": "basic",
               "name": "base64",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "220",
                 "name": "base64",
+                "isExactName": false,
                 "resourceName": "ResponseBody",
                 "accessibility": "public",
                 "parameters": [
@@ -3283,9 +3436,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.base64.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3350,11 +3505,13 @@
               "$id": "224",
               "kind": "basic",
               "name": "base64url",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "225",
                 "name": "base64url",
+                "isExactName": false,
                 "resourceName": "ResponseBody",
                 "accessibility": "public",
                 "parameters": [
@@ -3389,9 +3546,11 @@
                         "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.base64url.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3490,7 +3649,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.endpoint"
+              "crossLanguageDefinitionId": "Encode.Bytes.ResponseBody.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

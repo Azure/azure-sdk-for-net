@@ -9,6 +9,7 @@
       "$id": "1",
       "kind": "client",
       "name": "CollectionFormatClient",
+      "isExactName": false,
       "namespace": "Parameters.CollectionFormat",
       "doc": "Test for collectionFormat.",
       "methods": [],
@@ -41,7 +42,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint"
+          "crossLanguageDefinitionId": "Parameters.CollectionFormat.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -53,17 +55,20 @@
           "$id": "5",
           "kind": "client",
           "name": "Query",
+          "isExactName": false,
           "namespace": "Parameters.CollectionFormat.Query",
           "methods": [
             {
               "$id": "6",
               "kind": "basic",
               "name": "multi",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "7",
                 "name": "multi",
+                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -111,9 +116,11 @@
                         "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.multi.colors",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -151,11 +158,13 @@
               "$id": "12",
               "kind": "basic",
               "name": "ssv",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "13",
                 "name": "ssv",
+                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -193,9 +202,11 @@
                         "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.ssv.colors",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -233,11 +244,13 @@
               "$id": "16",
               "kind": "basic",
               "name": "pipes",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "17",
                 "name": "pipes",
+                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -275,9 +288,11 @@
                         "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.pipes.colors",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -315,11 +330,13 @@
               "$id": "20",
               "kind": "basic",
               "name": "csv",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "21",
                 "name": "csv",
+                "isExactName": false,
                 "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
@@ -357,9 +374,11 @@
                         "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.csv.colors",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -423,7 +442,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.endpoint"
+              "crossLanguageDefinitionId": "Parameters.CollectionFormat.Query.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -439,17 +459,20 @@
           "$id": "27",
           "kind": "client",
           "name": "Header",
+          "isExactName": false,
           "namespace": "Parameters.CollectionFormat.Header",
           "methods": [
             {
               "$id": "28",
               "kind": "basic",
               "name": "csv",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "29",
                 "name": "csv",
+                "isExactName": false,
                 "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
@@ -488,9 +511,11 @@
                         "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header.csv.colors",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -554,7 +579,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header.endpoint"
+              "crossLanguageDefinitionId": "Parameters.CollectionFormat.Header.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

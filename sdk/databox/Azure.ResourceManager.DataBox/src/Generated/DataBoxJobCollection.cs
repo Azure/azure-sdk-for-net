@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBox
                 HttpMessage message = _jobResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, DataBoxJobData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxArmOperation<DataBoxJobResource> operation = new DataBoxArmOperation<DataBoxJobResource>(
-                    new DataBoxJobOperationSource(Client),
+                    new DataBoxJobResourceOperationSource(Client),
                     _jobResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataBox
                 HttpMessage message = _jobResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, DataBoxJobData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxArmOperation<DataBoxJobResource> operation = new DataBoxArmOperation<DataBoxJobResource>(
-                    new DataBoxJobOperationSource(Client),
+                    new DataBoxJobResourceOperationSource(Client),
                     _jobResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

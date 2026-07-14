@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Pipeline;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -157,6 +158,7 @@ namespace Azure.Generator.Tests
         [TestCase(typeof(ResourceIdentifier))]
         [TestCase(typeof(AzureLocation))]
         [TestCase(typeof(ResponseError))]
+        [TestCase(typeof(ClientDiagnostics))]
         public void CreatesFrameworkType(Type expectedType)
         {
             var factory = new TestTypeFactory();
@@ -305,6 +307,52 @@ namespace Azure.Generator.Tests
             Assert.AreEqual(
                 "global::System.ClientModel.Primitives.ModelReaderWriter.Read<global::Azure.Core.Expressions.DataFactory.DataFactoryElement<string>>(data, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default)",
                 displayString);
+        }
+
+        [Test]
+        public void ExternalIdentityOnModelResolvesToFrameworkType()
+        {
+            // Simulate @@alternateType(SomeModel, { identity: "Azure.Core.ResourceIdentifier" }, "csharp")
+            // The InputModelType has External.Identity set to a fully-qualified type name.
+            // Without explicit handling, the property would be silently dropped from generated code.
+            var externalType = new InputExternalTypeMetadata("Azure.Core.ResourceIdentifier", null, null);
+            var model = InputFactory.Model("AliasedModel", externalTypeMetadata: externalType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(model);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsFrameworkType);
+            Assert.AreEqual(typeof(ResourceIdentifier), actual.FrameworkType);
+        }
+
+        [Test]
+        public void ExternalIdentityOnModelResolvesToDataFactoryType()
+        {
+            // Repro from the issue: @@alternateType(SecretBase, { identity: "Azure.Core.Expressions.DataFactory.DataFactorySecret" }, "csharp")
+            // before the fix, this property would be silently dropped from the generated client.
+            var externalType = new InputExternalTypeMetadata(
+                "Azure.Core.Expressions.DataFactory.DataFactorySecret",
+                null,
+                null);
+            var model = InputFactory.Model("SecretBase", externalTypeMetadata: externalType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(model);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsFrameworkType);
+            Assert.AreEqual(typeof(DataFactorySecret), actual.FrameworkType);
+        }
+
+        [TestCase("Azure.Core.Expressions.DataFactory.DataFactorySecret", typeof(DataFactorySecret))]
+        [TestCase("Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference", typeof(DataFactoryLinkedServiceReference))]
+        [TestCase("Azure.Core.Expressions.DataFactory.DataFactorySecretString", typeof(DataFactorySecretString))]
+        public void DataFactoryFrameworkTypesAreResolvable(string identity, Type expectedType)
+        {
+            var factory = new TestTypeFactory();
+
+            var actual = factory.InvokeCreateFrameworkType(identity);
+
+            Assert.AreEqual(expectedType, actual);
         }
 
         [TestCase(typeof(ETag), false, ExpectedResult = "writer.WriteValue(value.ToString());\n")]

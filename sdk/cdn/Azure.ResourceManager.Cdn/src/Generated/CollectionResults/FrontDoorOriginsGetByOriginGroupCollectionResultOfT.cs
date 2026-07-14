@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 AFDOriginListResult result = AFDOriginListResult.FromResponse(response);
-                yield return Page<FrontDoorOriginData>.FromValues((IReadOnlyList<FrontDoorOriginData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<FrontDoorOriginData>.FromValues((IReadOnlyList<FrontDoorOriginData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

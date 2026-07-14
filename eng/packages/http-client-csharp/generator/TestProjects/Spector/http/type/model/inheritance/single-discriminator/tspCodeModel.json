@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "seagull",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "sparrow",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "goose",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "eagle",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "t-rex",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -97,7 +102,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
@@ -113,7 +119,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
@@ -129,7 +136,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
@@ -145,7 +153,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "19",
@@ -161,7 +170,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "21",
@@ -177,7 +187,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "23",
@@ -193,12 +204,47 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "25",
+      "kind": "constant",
+      "name": "GetModelAccept7",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "26",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "27",
+      "kind": "constant",
+      "name": "GetModelAccept8",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "28",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
     {
-      "$id": "25",
+      "$id": "29",
       "kind": "model",
       "name": "Bird",
       "namespace": "Type.Model.Inheritance.SingleDiscriminator",
@@ -211,13 +257,14 @@
           "name": "Bird"
         }
       },
+      "isExactName": false,
       "discriminatorProperty": {
-        "$id": "26",
+        "$id": "30",
         "kind": "property",
         "name": "kind",
         "serializedName": "kind",
         "type": {
-          "$id": "27",
+          "$id": "31",
           "kind": "string",
           "name": "string",
           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -234,19 +281,20 @@
             "name": "kind"
           }
         },
-        "isHttpMetadata": false
+        "isHttpMetadata": false,
+        "isExactName": false
       },
       "properties": [
         {
-          "$ref": "26"
+          "$ref": "30"
         },
         {
-          "$id": "28",
+          "$id": "32",
           "kind": "property",
           "name": "wingspan",
           "serializedName": "wingspan",
           "type": {
-            "$id": "29",
+            "$id": "33",
             "kind": "int32",
             "name": "int32",
             "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -263,12 +311,13 @@
               "name": "wingspan"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ],
       "discriminatedSubtypes": {
         "seagull": {
-          "$id": "30",
+          "$id": "34",
           "kind": "model",
           "name": "SeaGull",
           "namespace": "Type.Model.Inheritance.SingleDiscriminator",
@@ -282,12 +331,13 @@
               "name": "SeaGull"
             }
           },
+          "isExactName": false,
           "baseModel": {
-            "$ref": "25"
+            "$ref": "29"
           },
           "properties": [
             {
-              "$id": "31",
+              "$id": "35",
               "kind": "property",
               "name": "kind",
               "serializedName": "kind",
@@ -305,12 +355,13 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         },
         "sparrow": {
-          "$id": "32",
+          "$id": "36",
           "kind": "model",
           "name": "Sparrow",
           "namespace": "Type.Model.Inheritance.SingleDiscriminator",
@@ -324,12 +375,13 @@
               "name": "Sparrow"
             }
           },
+          "isExactName": false,
           "baseModel": {
-            "$ref": "25"
+            "$ref": "29"
           },
           "properties": [
             {
-              "$id": "33",
+              "$id": "37",
               "kind": "property",
               "name": "kind",
               "serializedName": "kind",
@@ -347,12 +399,13 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         },
         "goose": {
-          "$id": "34",
+          "$id": "38",
           "kind": "model",
           "name": "Goose",
           "namespace": "Type.Model.Inheritance.SingleDiscriminator",
@@ -366,12 +419,13 @@
               "name": "Goose"
             }
           },
+          "isExactName": false,
           "baseModel": {
-            "$ref": "25"
+            "$ref": "29"
           },
           "properties": [
             {
-              "$id": "35",
+              "$id": "39",
               "kind": "property",
               "name": "kind",
               "serializedName": "kind",
@@ -389,12 +443,13 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         },
         "eagle": {
-          "$id": "36",
+          "$id": "40",
           "kind": "model",
           "name": "Eagle",
           "namespace": "Type.Model.Inheritance.SingleDiscriminator",
@@ -408,12 +463,13 @@
               "name": "Eagle"
             }
           },
+          "isExactName": false,
           "baseModel": {
-            "$ref": "25"
+            "$ref": "29"
           },
           "properties": [
             {
-              "$id": "37",
+              "$id": "41",
               "kind": "property",
               "name": "kind",
               "serializedName": "kind",
@@ -431,19 +487,20 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             },
             {
-              "$id": "38",
+              "$id": "42",
               "kind": "property",
               "name": "friends",
               "serializedName": "friends",
               "type": {
-                "$id": "39",
+                "$id": "43",
                 "kind": "array",
                 "name": "ArrayBird",
                 "valueType": {
-                  "$ref": "25"
+                  "$ref": "29"
                 },
                 "crossLanguageDefinitionId": "TypeSpec.Array",
                 "decorators": []
@@ -459,25 +516,26 @@
                   "name": "friends"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             },
             {
-              "$id": "40",
+              "$id": "44",
               "kind": "property",
               "name": "hate",
               "serializedName": "hate",
               "type": {
-                "$id": "41",
+                "$id": "45",
                 "kind": "dict",
                 "keyType": {
-                  "$id": "42",
+                  "$id": "46",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
                 "valueType": {
-                  "$ref": "25"
+                  "$ref": "29"
                 },
                 "decorators": []
               },
@@ -492,15 +550,16 @@
                   "name": "hate"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             },
             {
-              "$id": "43",
+              "$id": "47",
               "kind": "property",
               "name": "partner",
               "serializedName": "partner",
               "type": {
-                "$ref": "25"
+                "$ref": "29"
               },
               "optional": true,
               "readOnly": false,
@@ -513,17 +572,12 @@
                   "name": "partner"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         }
       }
-    },
-    {
-      "$ref": "30"
-    },
-    {
-      "$ref": "32"
     },
     {
       "$ref": "34"
@@ -532,7 +586,13 @@
       "$ref": "36"
     },
     {
-      "$id": "44",
+      "$ref": "38"
+    },
+    {
+      "$ref": "40"
+    },
+    {
+      "$id": "48",
       "kind": "model",
       "name": "Dinosaur",
       "namespace": "Type.Model.Inheritance.SingleDiscriminator",
@@ -545,14 +605,15 @@
           "name": "Dinosaur"
         }
       },
+      "isExactName": false,
       "discriminatorProperty": {
-        "$id": "45",
+        "$id": "49",
         "kind": "property",
         "name": "kind",
         "serializedName": "kind",
         "doc": "Discriminator property for Dinosaur.",
         "type": {
-          "$id": "46",
+          "$id": "50",
           "kind": "string",
           "name": "string",
           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -569,19 +630,20 @@
             "name": "kind"
           }
         },
-        "isHttpMetadata": false
+        "isHttpMetadata": false,
+        "isExactName": false
       },
       "properties": [
         {
-          "$ref": "45"
+          "$ref": "49"
         },
         {
-          "$id": "47",
+          "$id": "51",
           "kind": "property",
           "name": "size",
           "serializedName": "size",
           "type": {
-            "$id": "48",
+            "$id": "52",
             "kind": "int32",
             "name": "int32",
             "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -598,12 +660,13 @@
               "name": "size"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ],
       "discriminatedSubtypes": {
         "t-rex": {
-          "$id": "49",
+          "$id": "53",
           "kind": "model",
           "name": "TRex",
           "namespace": "Type.Model.Inheritance.SingleDiscriminator",
@@ -617,12 +680,13 @@
               "name": "TRex"
             }
           },
+          "isExactName": false,
           "baseModel": {
-            "$ref": "44"
+            "$ref": "48"
           },
           "properties": [
             {
-              "$id": "50",
+              "$id": "54",
               "kind": "property",
               "name": "kind",
               "serializedName": "kind",
@@ -640,38 +704,115 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         }
       }
     },
     {
-      "$ref": "49"
+      "$ref": "53"
+    },
+    {
+      "$id": "55",
+      "kind": "model",
+      "name": "Fish",
+      "namespace": "Type.Model.Inheritance.SingleDiscriminator",
+      "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Fish",
+      "usage": "Input,Output,Json",
+      "doc": "A discriminated model with no defined subtypes. The discriminator is declared but no models extend it.",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "Fish"
+        }
+      },
+      "isExactName": false,
+      "discriminatorProperty": {
+        "$id": "56",
+        "kind": "property",
+        "name": "kind",
+        "serializedName": "kind",
+        "type": {
+          "$id": "57",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": true,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Fish.kind",
+        "serializationOptions": {
+          "json": {
+            "name": "kind"
+          }
+        },
+        "isHttpMetadata": false,
+        "isExactName": false
+      },
+      "properties": [
+        {
+          "$ref": "56"
+        },
+        {
+          "$id": "58",
+          "kind": "property",
+          "name": "size",
+          "serializedName": "size",
+          "type": {
+            "$id": "59",
+            "kind": "int32",
+            "name": "int32",
+            "crossLanguageDefinitionId": "TypeSpec.int32",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.Fish.size",
+          "serializationOptions": {
+            "json": {
+              "name": "size"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
     }
   ],
   "clients": [
     {
-      "$id": "51",
+      "$id": "60",
       "kind": "client",
       "name": "SingleDiscriminatorClient",
+      "isExactName": false,
       "namespace": "Type.Model.Inheritance.SingleDiscriminator",
       "doc": "Illustrates inheritance with single discriminator.",
       "methods": [
         {
-          "$id": "52",
+          "$id": "61",
           "kind": "basic",
           "name": "getModel",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
-            "$id": "53",
+            "$id": "62",
             "name": "getModel",
+            "isExactName": false,
             "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "54",
+                "$id": "63",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -687,7 +828,7 @@
                 "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getModel.accept",
                 "methodParameterSegments": [
                   {
-                    "$id": "55",
+                    "$id": "64",
                     "kind": "method",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -701,9 +842,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -712,7 +855,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "25"
+                  "$ref": "29"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -738,12 +881,12 @@
           },
           "parameters": [
             {
-              "$ref": "55"
+              "$ref": "64"
             }
           ],
           "response": {
             "type": {
-              "$ref": "25"
+              "$ref": "29"
             }
           },
           "isOverride": false,
@@ -752,19 +895,21 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getModel"
         },
         {
-          "$id": "56",
+          "$id": "65",
           "kind": "basic",
           "name": "putModel",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
-            "$id": "57",
+            "$id": "66",
             "name": "putModel",
+            "isExactName": false,
             "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "58",
+                "$id": "67",
                 "kind": "header",
                 "name": "contentType",
                 "serializedName": "Content-Type",
@@ -781,7 +926,7 @@
                 "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putModel.contentType",
                 "methodParameterSegments": [
                   {
-                    "$id": "59",
+                    "$id": "68",
                     "kind": "method",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -796,17 +941,19 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
-                "$id": "60",
+                "$id": "69",
                 "kind": "body",
                 "name": "input",
                 "serializedName": "input",
                 "type": {
-                  "$ref": "25"
+                  "$ref": "29"
                 },
                 "isApiVersion": false,
                 "contentTypes": [
@@ -820,12 +967,12 @@
                 "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putModel.input",
                 "methodParameterSegments": [
                   {
-                    "$id": "61",
+                    "$id": "70",
                     "kind": "method",
                     "name": "input",
                     "serializedName": "input",
                     "type": {
-                      "$ref": "25"
+                      "$ref": "29"
                     },
                     "location": "Body",
                     "isApiVersion": false,
@@ -834,9 +981,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "input"
@@ -869,10 +1018,10 @@
           },
           "parameters": [
             {
-              "$ref": "61"
+              "$ref": "70"
             },
             {
-              "$ref": "59"
+              "$ref": "68"
             }
           ],
           "response": {},
@@ -882,19 +1031,21 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putModel"
         },
         {
-          "$id": "62",
+          "$id": "71",
           "kind": "basic",
           "name": "getRecursiveModel",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
-            "$id": "63",
+            "$id": "72",
             "name": "getRecursiveModel",
+            "isExactName": false,
             "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "64",
+                "$id": "73",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -910,7 +1061,7 @@
                 "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getRecursiveModel.accept",
                 "methodParameterSegments": [
                   {
-                    "$id": "65",
+                    "$id": "74",
                     "kind": "method",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -924,9 +1075,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getRecursiveModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -935,7 +1088,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "25"
+                  "$ref": "29"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -961,12 +1114,12 @@
           },
           "parameters": [
             {
-              "$ref": "65"
+              "$ref": "74"
             }
           ],
           "response": {
             "type": {
-              "$ref": "25"
+              "$ref": "29"
             }
           },
           "isOverride": false,
@@ -975,19 +1128,21 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getRecursiveModel"
         },
         {
-          "$id": "66",
+          "$id": "75",
           "kind": "basic",
           "name": "putRecursiveModel",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
-            "$id": "67",
+            "$id": "76",
             "name": "putRecursiveModel",
+            "isExactName": false,
             "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "68",
+                "$id": "77",
                 "kind": "header",
                 "name": "contentType",
                 "serializedName": "Content-Type",
@@ -1004,7 +1159,7 @@
                 "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel.contentType",
                 "methodParameterSegments": [
                   {
-                    "$id": "69",
+                    "$id": "78",
                     "kind": "method",
                     "name": "contentType",
                     "serializedName": "Content-Type",
@@ -1019,17 +1174,19 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
-                "$id": "70",
+                "$id": "79",
                 "kind": "body",
                 "name": "input",
                 "serializedName": "input",
                 "type": {
-                  "$ref": "25"
+                  "$ref": "29"
                 },
                 "isApiVersion": false,
                 "contentTypes": [
@@ -1043,12 +1200,12 @@
                 "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel.input",
                 "methodParameterSegments": [
                   {
-                    "$id": "71",
+                    "$id": "80",
                     "kind": "method",
                     "name": "input",
                     "serializedName": "input",
                     "type": {
-                      "$ref": "25"
+                      "$ref": "29"
                     },
                     "location": "Body",
                     "isApiVersion": false,
@@ -1057,9 +1214,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "input"
@@ -1092,10 +1251,10 @@
           },
           "parameters": [
             {
-              "$ref": "71"
+              "$ref": "80"
             },
             {
-              "$ref": "69"
+              "$ref": "78"
             }
           ],
           "response": {},
@@ -1105,19 +1264,21 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel"
         },
         {
-          "$id": "72",
+          "$id": "81",
           "kind": "basic",
           "name": "getMissingDiscriminator",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
-            "$id": "73",
+            "$id": "82",
             "name": "getMissingDiscriminator",
+            "isExactName": false,
             "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "74",
+                "$id": "83",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -1133,7 +1294,7 @@
                 "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getMissingDiscriminator.accept",
                 "methodParameterSegments": [
                   {
-                    "$id": "75",
+                    "$id": "84",
                     "kind": "method",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -1147,9 +1308,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getMissingDiscriminator.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1158,7 +1321,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "25"
+                  "$ref": "29"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -1184,12 +1347,12 @@
           },
           "parameters": [
             {
-              "$ref": "75"
+              "$ref": "84"
             }
           ],
           "response": {
             "type": {
-              "$ref": "25"
+              "$ref": "29"
             }
           },
           "isOverride": false,
@@ -1198,19 +1361,21 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getMissingDiscriminator"
         },
         {
-          "$id": "76",
+          "$id": "85",
           "kind": "basic",
           "name": "getWrongDiscriminator",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
-            "$id": "77",
+            "$id": "86",
             "name": "getWrongDiscriminator",
+            "isExactName": false,
             "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "78",
+                "$id": "87",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -1226,7 +1391,7 @@
                 "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getWrongDiscriminator.accept",
                 "methodParameterSegments": [
                   {
-                    "$id": "79",
+                    "$id": "88",
                     "kind": "method",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -1240,9 +1405,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getWrongDiscriminator.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1251,7 +1418,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "25"
+                  "$ref": "29"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -1277,12 +1444,12 @@
           },
           "parameters": [
             {
-              "$ref": "79"
+              "$ref": "88"
             }
           ],
           "response": {
             "type": {
-              "$ref": "25"
+              "$ref": "29"
             }
           },
           "isOverride": false,
@@ -1291,19 +1458,21 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getWrongDiscriminator"
         },
         {
-          "$id": "80",
+          "$id": "89",
           "kind": "basic",
           "name": "getLegacyModel",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
-            "$id": "81",
+            "$id": "90",
             "name": "getLegacyModel",
+            "isExactName": false,
             "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "82",
+                "$id": "91",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -1319,7 +1488,7 @@
                 "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getLegacyModel.accept",
                 "methodParameterSegments": [
                   {
-                    "$id": "83",
+                    "$id": "92",
                     "kind": "method",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -1333,9 +1502,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getLegacyModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1344,7 +1515,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "44"
+                  "$ref": "48"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -1370,29 +1541,262 @@
           },
           "parameters": [
             {
-              "$ref": "83"
+              "$ref": "92"
             }
           ],
           "response": {
             "type": {
-              "$ref": "44"
+              "$ref": "48"
             }
           },
           "isOverride": false,
           "generateConvenient": true,
           "generateProtocol": true,
           "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getLegacyModel"
+        },
+        {
+          "$id": "93",
+          "kind": "basic",
+          "name": "getNoSubtypesModel",
+          "isExactName": false,
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "94",
+            "name": "getNoSubtypesModel",
+            "isExactName": false,
+            "resourceName": "SingleDiscriminator",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "95",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "25"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getNoSubtypesModel.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "96",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "25"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getNoSubtypesModel.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "55"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/type/model/inheritance/single-discriminator/no-subtypes/model",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getNoSubtypesModel",
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
+          },
+          "parameters": [
+            {
+              "$ref": "96"
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "55"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getNoSubtypesModel"
+        },
+        {
+          "$id": "97",
+          "kind": "basic",
+          "name": "putNoSubtypesModel",
+          "isExactName": false,
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "98",
+            "name": "putNoSubtypesModel",
+            "isExactName": false,
+            "resourceName": "SingleDiscriminator",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "99",
+                "kind": "header",
+                "name": "contentType",
+                "serializedName": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "27"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": true,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putNoSubtypesModel.contentType",
+                "methodParameterSegments": [
+                  {
+                    "$id": "100",
+                    "kind": "method",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "27"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putNoSubtypesModel.contentType",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
+              },
+              {
+                "$id": "101",
+                "kind": "body",
+                "name": "input",
+                "serializedName": "input",
+                "type": {
+                  "$ref": "55"
+                },
+                "isApiVersion": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putNoSubtypesModel.input",
+                "methodParameterSegments": [
+                  {
+                    "$id": "102",
+                    "kind": "method",
+                    "name": "input",
+                    "serializedName": "input",
+                    "type": {
+                      "$ref": "55"
+                    },
+                    "location": "Body",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putNoSubtypesModel.input",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "input"
+                  }
+                }
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false,
+                "serializationOptions": {}
+              }
+            ],
+            "httpMethod": "PUT",
+            "uri": "{endpoint}",
+            "path": "/type/model/inheritance/single-discriminator/no-subtypes/model",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putNoSubtypesModel",
+            "decorators": [],
+            "namespace": "Type.Model.Inheritance.SingleDiscriminator"
+          },
+          "parameters": [
+            {
+              "$ref": "102"
+            },
+            {
+              "$ref": "100"
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putNoSubtypesModel"
         }
       ],
       "parameters": [
         {
-          "$id": "84",
+          "$id": "103",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "85",
+            "$id": "104",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1403,7 +1807,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "86",
+              "$id": "105",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1413,7 +1817,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.endpoint"
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

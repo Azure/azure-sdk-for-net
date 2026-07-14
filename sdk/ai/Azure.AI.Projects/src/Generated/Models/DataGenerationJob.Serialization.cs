@@ -169,7 +169,7 @@ namespace Azure.AI.Projects
             string id = default;
             DataGenerationJobInputs inputs = default;
             DataGenerationJobResult result = default;
-            JobStatus status = default;
+            ProjectsJobStatus status = default;
             FoundryOpenAIError error = default;
             DateTimeOffset createdAt = default;
             DateTimeOffset? finishedAt = default;
@@ -201,7 +201,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new JobStatus(prop.Value.GetString());
+                    status = new ProjectsJobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))

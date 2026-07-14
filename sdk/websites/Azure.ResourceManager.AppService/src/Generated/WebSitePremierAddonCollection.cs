@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -21,51 +23,49 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class WebSitePremierAddonCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _webSitePremierAddonWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _webSitePremierAddonWebAppsRestClient;
+        private readonly ClientDiagnostics _premierAddOnsClientDiagnostics;
+        private readonly PremierAddOns _premierAddOnsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="WebSitePremierAddonCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of WebSitePremierAddonCollection for mocking. </summary>
         protected WebSitePremierAddonCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebSitePremierAddonCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSitePremierAddonCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WebSitePremierAddonCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _webSitePremierAddonWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSitePremierAddonResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(WebSitePremierAddonResource.ResourceType, out string webSitePremierAddonWebAppsApiVersion);
-            _webSitePremierAddonWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSitePremierAddonWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(WebSitePremierAddonResource.ResourceType, out string webSitePremierAddonApiVersion);
+            _premierAddOnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSitePremierAddonResource.ResourceType.Namespace, Diagnostics);
+            _premierAddOnsRestClient = new PremierAddOns(_premierAddOnsClientDiagnostics, Pipeline, Endpoint, webSitePremierAddonApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != WebSiteResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Updates a named add-on of an app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_AddPremierAddOn</description>
+        /// <term> Operation Id. </term>
+        /// <description> PremierAddOns_AddPremierAddOn. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSitePremierAddonResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -73,23 +73,31 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="data"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<WebSitePremierAddonResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string premierAddOnName, PremierAddOnData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _premierAddOnsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _webSitePremierAddonWebAppsRestClient.AddPremierAddOnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _webSitePremierAddonWebAppsRestClient.CreateAddPremierAddOnRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<WebSitePremierAddonResource>(Response.FromValue(new WebSitePremierAddonResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _premierAddOnsRestClient.CreateAddPremierAddOnRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, premierAddOnName, PremierAddOnData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PremierAddOnData> response = Response.FromValue(PremierAddOnData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<WebSitePremierAddonResource> operation = new AppServiceArmOperation<WebSitePremierAddonResource>(Response.FromValue(new WebSitePremierAddonResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -103,20 +111,16 @@ namespace Azure.ResourceManager.AppService
         /// Description for Updates a named add-on of an app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_AddPremierAddOn</description>
+        /// <term> Operation Id. </term>
+        /// <description> PremierAddOns_AddPremierAddOn. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSitePremierAddonResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,23 +128,31 @@ namespace Azure.ResourceManager.AppService
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="data"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<WebSitePremierAddonResource> CreateOrUpdate(WaitUntil waitUntil, string premierAddOnName, PremierAddOnData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _premierAddOnsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _webSitePremierAddonWebAppsRestClient.AddPremierAddOn(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, data, cancellationToken);
-                var uri = _webSitePremierAddonWebAppsRestClient.CreateAddPremierAddOnRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<WebSitePremierAddonResource>(Response.FromValue(new WebSitePremierAddonResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _premierAddOnsRestClient.CreateAddPremierAddOnRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, premierAddOnName, PremierAddOnData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PremierAddOnData> response = Response.FromValue(PremierAddOnData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<WebSitePremierAddonResource> operation = new AppServiceArmOperation<WebSitePremierAddonResource>(Response.FromValue(new WebSitePremierAddonResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +166,42 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets a named add-on of an app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetPremierAddOn</description>
+        /// <term> Operation Id. </term>
+        /// <description> PremierAddOns_GetPremierAddOn. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSitePremierAddonResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<WebSitePremierAddonResource>> GetAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
-            using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.Get");
+            using DiagnosticScope scope = _premierAddOnsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.Get");
             scope.Start();
             try
             {
-                var response = await _webSitePremierAddonWebAppsRestClient.GetPremierAddOnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _premierAddOnsRestClient.CreateGetPremierAddOnRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, premierAddOnName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PremierAddOnData> response = Response.FromValue(PremierAddOnData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSitePremierAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +215,42 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets a named add-on of an app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetPremierAddOn</description>
+        /// <term> Operation Id. </term>
+        /// <description> PremierAddOns_GetPremierAddOn. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSitePremierAddonResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<WebSitePremierAddonResource> Get(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
-            using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.Get");
+            using DiagnosticScope scope = _premierAddOnsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.Get");
             scope.Start();
             try
             {
-                var response = _webSitePremierAddonWebAppsRestClient.GetPremierAddOn(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _premierAddOnsRestClient.CreateGetPremierAddOnRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, premierAddOnName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PremierAddOnData> response = Response.FromValue(PremierAddOnData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSitePremierAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,36 +264,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetPremierAddOn</description>
+        /// <term> Operation Id. </term>
+        /// <description> PremierAddOns_GetPremierAddOn. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSitePremierAddonResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
-            using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.Exists");
+            using DiagnosticScope scope = _premierAddOnsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _webSitePremierAddonWebAppsRestClient.GetPremierAddOnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _premierAddOnsRestClient.CreateGetPremierAddOnRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, premierAddOnName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PremierAddOnData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PremierAddOnData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PremierAddOnData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -287,36 +321,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetPremierAddOn</description>
+        /// <term> Operation Id. </term>
+        /// <description> PremierAddOns_GetPremierAddOn. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSitePremierAddonResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
-            using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.Exists");
+            using DiagnosticScope scope = _premierAddOnsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.Exists");
             scope.Start();
             try
             {
-                var response = _webSitePremierAddonWebAppsRestClient.GetPremierAddOn(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _premierAddOnsRestClient.CreateGetPremierAddOnRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, premierAddOnName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PremierAddOnData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PremierAddOnData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PremierAddOnData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -330,38 +378,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetPremierAddOn</description>
+        /// <term> Operation Id. </term>
+        /// <description> PremierAddOns_GetPremierAddOn. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSitePremierAddonResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<WebSitePremierAddonResource>> GetIfExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
-            using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.GetIfExists");
+            using DiagnosticScope scope = _premierAddOnsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _webSitePremierAddonWebAppsRestClient.GetPremierAddOnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _premierAddOnsRestClient.CreateGetPremierAddOnRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, premierAddOnName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PremierAddOnData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PremierAddOnData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PremierAddOnData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WebSitePremierAddonResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSitePremierAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -375,38 +439,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetPremierAddOn</description>
+        /// <term> Operation Id. </term>
+        /// <description> PremierAddOns_GetPremierAddOn. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSitePremierAddonResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<WebSitePremierAddonResource> GetIfExists(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
-            using var scope = _webSitePremierAddonWebAppsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.GetIfExists");
+            using DiagnosticScope scope = _premierAddOnsClientDiagnostics.CreateScope("WebSitePremierAddonCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _webSitePremierAddonWebAppsRestClient.GetPremierAddOn(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _premierAddOnsRestClient.CreateGetPremierAddOnRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, premierAddOnName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PremierAddOnData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PremierAddOnData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PremierAddOnData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WebSitePremierAddonResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSitePremierAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

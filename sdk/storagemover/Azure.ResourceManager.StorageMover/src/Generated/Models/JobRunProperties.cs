@@ -13,7 +13,6 @@ using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> Job run properties. </summary>
     internal partial class JobRunProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -9,6 +9,7 @@
       "$id": "1",
       "kind": "client",
       "name": "ConditionalRequestClient",
+      "isExactName": false,
       "namespace": "SpecialHeaders.ConditionalRequest",
       "doc": "Illustrates conditional request headers",
       "methods": [
@@ -16,12 +17,14 @@
           "$id": "2",
           "kind": "basic",
           "name": "postIfMatch",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check when only If-Match in header is defined.",
           "operation": {
             "$id": "3",
             "name": "postIfMatch",
+            "isExactName": false,
             "resourceName": "ConditionalRequest",
             "doc": "Check when only If-Match in header is defined.",
             "accessibility": "public",
@@ -67,9 +70,11 @@
                     "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.postIfMatch.ifMatch",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -107,12 +112,14 @@
           "$id": "8",
           "kind": "basic",
           "name": "postIfNoneMatch",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check when only If-None-Match in header is defined.",
           "operation": {
             "$id": "9",
             "name": "postIfNoneMatch",
+            "isExactName": false,
             "resourceName": "ConditionalRequest",
             "doc": "Check when only If-None-Match in header is defined.",
             "accessibility": "public",
@@ -158,9 +165,11 @@
                     "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.postIfNoneMatch.ifNoneMatch",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -198,12 +207,14 @@
           "$id": "14",
           "kind": "basic",
           "name": "headIfModifiedSince",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check when only If-Modified-Since in header is defined.",
           "operation": {
             "$id": "15",
             "name": "headIfModifiedSince",
+            "isExactName": false,
             "resourceName": "ConditionalRequest",
             "doc": "Check when only If-Modified-Since in header is defined.",
             "accessibility": "public",
@@ -265,9 +276,11 @@
                     "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.headIfModifiedSince.ifModifiedSince",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -305,12 +318,14 @@
           "$id": "22",
           "kind": "basic",
           "name": "postIfUnmodifiedSince",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "doc": "Check when only If-Unmodified-Since in header is defined.",
           "operation": {
             "$id": "23",
             "name": "postIfUnmodifiedSince",
+            "isExactName": false,
             "resourceName": "ConditionalRequest",
             "doc": "Check when only If-Unmodified-Since in header is defined.",
             "accessibility": "public",
@@ -372,9 +387,11 @@
                     "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.postIfUnmodifiedSince.ifUnmodifiedSince",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -438,7 +455,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.endpoint"
+          "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

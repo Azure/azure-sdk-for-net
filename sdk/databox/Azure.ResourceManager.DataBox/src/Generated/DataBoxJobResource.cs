@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DataBox
                 HttpMessage message = _jobResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxJobPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxArmOperation<DataBoxJobResource> operation = new DataBoxArmOperation<DataBoxJobResource>(
-                    new DataBoxJobOperationSource(Client),
+                    new DataBoxJobResourceOperationSource(Client),
                     _jobResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DataBox
                 HttpMessage message = _jobResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxJobPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxArmOperation<DataBoxJobResource> operation = new DataBoxArmOperation<DataBoxJobResource>(
-                    new DataBoxJobOperationSource(Client),
+                    new DataBoxJobResourceOperationSource(Client),
                     _jobResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class SharingUpdateOperationSource : IOperationSource<SharingUpdate>
+    /// <summary></summary>
+    internal partial class SharingUpdateOperationSource : IOperationSource<SharingUpdate>
     {
-        SharingUpdate IOperationSource<SharingUpdate>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal SharingUpdateOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return SharingUpdate.DeserializeSharingUpdate(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        SharingUpdate IOperationSource<SharingUpdate>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return SharingUpdate.DeserializeSharingUpdate(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SharingUpdate> IOperationSource<SharingUpdate>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return SharingUpdate.DeserializeSharingUpdate(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return SharingUpdate.DeserializeSharingUpdate(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

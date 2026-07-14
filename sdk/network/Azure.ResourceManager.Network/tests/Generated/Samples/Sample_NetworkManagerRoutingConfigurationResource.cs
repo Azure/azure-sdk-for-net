@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkManagerRoutingConfigurationResource networkManagerRoutingConfiguration = client.GetNetworkManagerRoutingConfigurationResource(networkManagerRoutingConfigurationResourceId);
 
             // invoke the operation
-            await networkManagerRoutingConfiguration.DeleteAsync(WaitUntil.Completed);
+            await networkManagerRoutingConfiguration.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Description = "A sample policy",
                 RouteTableUsageMode = RouteTableUsageMode.ManagedOnly,
             };
-            ArmOperation<NetworkManagerRoutingConfigurationResource> lro = await networkManagerRoutingConfiguration.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetworkManagerRoutingConfigurationResource> lro = await networkManagerRoutingConfiguration.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkManagerRoutingConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

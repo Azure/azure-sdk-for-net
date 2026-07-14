@@ -8,17 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class StaticInputData : IUtf8JsonSerializable, IJsonModel<StaticInputData>
+    /// <summary> Static input data definition. </summary>
+    public partial class StaticInputData : MonitoringInputDataBase, IJsonModel<StaticInputData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticInputData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="StaticInputData"/> for deserialization. </summary>
+        internal StaticInputData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MonitoringInputDataBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StaticInputData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStaticInputData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StaticInputData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StaticInputData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StaticInputData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StaticInputData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StaticInputData IPersistableModel<StaticInputData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StaticInputData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StaticInputData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StaticInputData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,335 +74,140 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StaticInputData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StaticInputData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StaticInputData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("windowStart"u8);
-            writer.WriteStringValue(WindowStart, "O");
-            writer.WritePropertyName("windowEnd"u8);
-            writer.WriteStringValue(WindowEnd, "O");
             if (Optional.IsDefined(PreprocessingComponentId))
             {
-                if (PreprocessingComponentId != null)
-                {
-                    writer.WritePropertyName("preprocessingComponentId"u8);
-                    writer.WriteStringValue(PreprocessingComponentId);
-                }
-                else
-                {
-                    writer.WriteNull("preprocessingComponentId");
-                }
+                writer.WritePropertyName("preprocessingComponentId"u8);
+                writer.WriteStringValue(PreprocessingComponentId);
             }
+            writer.WritePropertyName("windowEnd"u8);
+            writer.WriteStringValue(WindowEnd, "O");
+            writer.WritePropertyName("windowStart"u8);
+            writer.WriteStringValue(WindowStart, "O");
         }
 
-        StaticInputData IJsonModel<StaticInputData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StaticInputData IJsonModel<StaticInputData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StaticInputData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MonitoringInputDataBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StaticInputData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StaticInputData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StaticInputData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStaticInputData(document.RootElement, options);
         }
 
-        internal static StaticInputData DeserializeStaticInputData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static StaticInputData DeserializeStaticInputData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset windowStart = default;
-            DateTimeOffset windowEnd = default;
-            string preprocessingComponentId = default;
-            MonitoringInputDataType inputDataType = default;
+            IDictionary<string, string> columns = default;
             string dataContext = default;
+            MonitoringInputDataType inputDataType = default;
             JobInputType jobInputType = default;
             Uri uri = default;
-            IDictionary<string, string> columns = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string preprocessingComponentId = default;
+            DateTimeOffset windowEnd = default;
+            DateTimeOffset windowStart = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("windowStart"u8))
+                if (prop.NameEquals("columns"u8))
                 {
-                    windowStart = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("windowEnd"u8))
-                {
-                    windowEnd = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("preprocessingComponentId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        preprocessingComponentId = null;
-                        continue;
-                    }
-                    preprocessingComponentId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("inputDataType"u8))
-                {
-                    inputDataType = new MonitoringInputDataType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("dataContext"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        dataContext = null;
-                        continue;
-                    }
-                    dataContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("jobInputType"u8))
-                {
-                    jobInputType = new JobInputType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("uri"u8))
-                {
-                    uri = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("columns"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        columns = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     columns = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("dataContext"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dataContext = null;
+                        continue;
+                    }
+                    dataContext = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("inputDataType"u8))
+                {
+                    inputDataType = new MonitoringInputDataType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("jobInputType"u8))
+                {
+                    jobInputType = new JobInputType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("uri"u8))
+                {
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
+                if (prop.NameEquals("preprocessingComponentId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        preprocessingComponentId = null;
+                        continue;
+                    }
+                    preprocessingComponentId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("windowEnd"u8))
+                {
+                    windowEnd = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("windowStart"u8))
+                {
+                    windowStart = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new StaticInputData(
-                inputDataType,
+                columns ?? new ChangeTrackingDictionary<string, string>(),
                 dataContext,
+                inputDataType,
                 jobInputType,
                 uri,
-                columns ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                windowStart,
+                additionalBinaryDataProperties,
+                preprocessingComponentId,
                 windowEnd,
-                preprocessingComponentId);
+                windowStart);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowStart), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  windowStart: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  windowStart: ");
-                var formattedDateTimeString = TypeFormatters.ToString(WindowStart, "o");
-                builder.AppendLine($"'{formattedDateTimeString}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowEnd), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  windowEnd: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  windowEnd: ");
-                var formattedDateTimeString = TypeFormatters.ToString(WindowEnd, "o");
-                builder.AppendLine($"'{formattedDateTimeString}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreprocessingComponentId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  preprocessingComponentId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PreprocessingComponentId))
-                {
-                    builder.Append("  preprocessingComponentId: ");
-                    if (PreprocessingComponentId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PreprocessingComponentId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PreprocessingComponentId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InputDataType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  inputDataType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  inputDataType: ");
-                builder.AppendLine($"'{InputDataType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataContext), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dataContext: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DataContext))
-                {
-                    builder.Append("  dataContext: ");
-                    if (DataContext.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DataContext}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DataContext}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobInputType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  jobInputType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  jobInputType: ");
-                builder.AppendLine($"'{JobInputType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  uri: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Uri))
-                {
-                    builder.Append("  uri: ");
-                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Columns), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  columns: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Columns))
-                {
-                    if (Columns.Any())
-                    {
-                        builder.Append("  columns: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Columns)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<StaticInputData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StaticInputData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(StaticInputData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        StaticInputData IPersistableModel<StaticInputData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StaticInputData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeStaticInputData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StaticInputData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<StaticInputData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

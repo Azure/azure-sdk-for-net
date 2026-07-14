@@ -3,12 +3,50 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.AppService.Models
 {
+    [CodeGenSuppress("PfxBlob")]
+    [CodeGenSuppress("CerBlob")]
     public partial class AppCertificatePatch
     {
+        // GA shipped byte[] for PfxBlob; TypeSpec `bytes` now emits as BinaryData.
+        // Restore byte[] for backward compatibility by converting on access.
+        /// <summary> Pfx blob. </summary>
+        [WirePath("properties.pfxBlob")]
+        public byte[] PfxBlob
+        {
+            get => Properties is null ? null : Properties.PfxBlob?.ToArray();
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificatePatchResourceProperties();
+                }
+                Properties.PfxBlob = value is null ? null : BinaryData.FromBytes(value);
+            }
+        }
+
+        // GA shipped byte[] for CerBlob; TypeSpec `bytes` now emits as BinaryData
+        // (after restoring Create/Update visibility via @@visibility in client.tsp).
+        /// <summary> Raw bytes of .cer file. </summary>
+        [WirePath("properties.cerBlob")]
+        public byte[] CerBlob
+        {
+            get => Properties is null ? null : Properties.CerBlob?.ToArray();
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificatePatchResourceProperties();
+                }
+                Properties.CerBlob = value is null ? null : BinaryData.FromBytes(value);
+            }
+        }
+
         /// <summary>
         /// Certificate thumbprint.
         /// <para>

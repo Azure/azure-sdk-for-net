@@ -26,7 +26,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "4",
@@ -39,7 +40,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "5",
@@ -52,7 +54,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "6",
@@ -65,7 +68,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "7",
@@ -78,14 +82,16 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Client.Structure.Service",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [],
@@ -95,17 +101,20 @@
       "$id": "8",
       "kind": "client",
       "name": "ClientAClient",
+      "isExactName": false,
       "namespace": "Client.Structure.MultiClient",
       "methods": [
         {
           "$id": "9",
           "kind": "basic",
           "name": "renamedOne",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "10",
             "name": "renamedOne",
+            "isExactName": false,
             "resourceName": "ClientA",
             "accessibility": "public",
             "parameters": [],
@@ -140,11 +149,13 @@
           "$id": "11",
           "kind": "basic",
           "name": "renamedThree",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "12",
             "name": "renamedThree",
+            "isExactName": false,
             "resourceName": "ClientA",
             "accessibility": "public",
             "parameters": [],
@@ -179,11 +190,13 @@
           "$id": "13",
           "kind": "basic",
           "name": "renamedFive",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "14",
             "name": "renamedFive",
+            "isExactName": false,
             "resourceName": "ClientA",
             "accessibility": "public",
             "parameters": [],
@@ -235,7 +248,8 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.endpoint"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.endpoint",
+          "isExactName": false
         },
         {
           "$id": "17",
@@ -253,7 +267,8 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.client"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.client",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -266,17 +281,20 @@
       "$id": "18",
       "kind": "client",
       "name": "ClientBClient",
+      "isExactName": false,
       "namespace": "Client.Structure.MultiClient",
       "methods": [
         {
           "$id": "19",
           "kind": "basic",
           "name": "renamedTwo",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "20",
             "name": "renamedTwo",
+            "isExactName": false,
             "resourceName": "ClientB",
             "accessibility": "public",
             "parameters": [],
@@ -311,11 +329,13 @@
           "$id": "21",
           "kind": "basic",
           "name": "renamedFour",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "22",
             "name": "renamedFour",
+            "isExactName": false,
             "resourceName": "ClientB",
             "accessibility": "public",
             "parameters": [],
@@ -350,11 +370,13 @@
           "$id": "23",
           "kind": "basic",
           "name": "renamedSix",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "24",
             "name": "renamedSix",
+            "isExactName": false,
             "resourceName": "ClientB",
             "accessibility": "public",
             "parameters": [],
@@ -406,7 +428,8 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.endpoint"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.endpoint",
+          "isExactName": false
         },
         {
           "$id": "27",
@@ -424,7 +447,8 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.client"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.client",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

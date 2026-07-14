@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Specifies the kind of usage details. </param>
         /// <param name="eTag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties for modern usage details. </param>
-        internal ConsumptionModernUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UsageDetailsKind kind, ETag? eTag, IReadOnlyDictionary<string, string> tags, ModernUsageDetailProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag, tags)
+        internal ConsumptionModernUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UsageDetailsKind kind, ETag? eTag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ModernUsageDetailProperties properties) : base(id, name, resourceType, systemData, kind, eTag, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

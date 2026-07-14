@@ -147,6 +147,49 @@ namespace Azure.AI.Speech.Transcription.Samples
         }
 
         /// <summary>
+        /// Guide Enhanced Mode recognition toward a specific language using a locale.
+        /// </summary>
+        [RecordedTest]
+        public async Task EnhancedModeWithLocale()
+        {
+#if !SNIPPET
+            var client = CreateClient();
+#else
+            Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
+            ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
+            TranscriptionClient client = new TranscriptionClient(endpoint, credential);
+#endif
+
+            #region Snippet:EnhancedModeWithLocale
+#if SNIPPET
+            string audioFilePath = "path/to/audio.wav";
+#else
+            string audioFilePath = TestEnvironment.SampleEnglishAudioPath;
+#endif
+            using FileStream audioStream = File.OpenRead(audioFilePath);
+
+            EnhancedModeProperties enhancedMode = new EnhancedModeProperties
+            {
+                Task = "transcribe"
+            };
+
+            TranscriptionOptions options = new TranscriptionOptions(audioStream)
+            {
+                EnhancedMode = enhancedMode
+            };
+
+            // Guide recognition toward a specific language
+            options.Locales.Add("en-US");
+
+            ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
+            TranscriptionResult result = response.Value;
+
+            var channelPhrases = result.CombinedPhrases.First();
+            Console.WriteLine(channelPhrases.Text);
+            #endregion Snippet:EnhancedModeWithLocale
+        }
+
+        /// <summary>
         /// Combine Enhanced Mode with diarization and profanity filtering.
         /// </summary>
         [RecordedTest]

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceBus
                 HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, ServiceBusNamespaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceBusArmOperation<ServiceBusNamespaceResource> operation = new ServiceBusArmOperation<ServiceBusNamespaceResource>(
-                    new ServiceBusNamespaceOperationSource(Client),
+                    new ServiceBusNamespaceResourceOperationSource(Client),
                     _namespacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ServiceBus
                 HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, ServiceBusNamespaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceBusArmOperation<ServiceBusNamespaceResource> operation = new ServiceBusArmOperation<ServiceBusNamespaceResource>(
-                    new ServiceBusNamespaceOperationSource(Client),
+                    new ServiceBusNamespaceResourceOperationSource(Client),
                     _namespacesClientDiagnostics,
                     Pipeline,
                     message.Request,

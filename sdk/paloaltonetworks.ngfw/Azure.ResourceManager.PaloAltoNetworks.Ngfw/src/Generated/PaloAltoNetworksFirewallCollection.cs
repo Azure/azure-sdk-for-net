@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _firewallsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, PaloAltoNetworksFirewallData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<PaloAltoNetworksFirewallResource> operation = new NgfwArmOperation<PaloAltoNetworksFirewallResource>(
-                    new PaloAltoNetworksFirewallOperationSource(Client),
+                    new PaloAltoNetworksFirewallResourceOperationSource(Client),
                     _firewallsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _firewallsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, PaloAltoNetworksFirewallData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<PaloAltoNetworksFirewallResource> operation = new NgfwArmOperation<PaloAltoNetworksFirewallResource>(
-                    new PaloAltoNetworksFirewallOperationSource(Client),
+                    new PaloAltoNetworksFirewallResourceOperationSource(Client),
                     _firewallsClientDiagnostics,
                     Pipeline,
                     message.Request,

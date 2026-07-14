@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                accountUri is null && provisioningState is null && skuName is null ? default : new CodeSigningAccountProperties(accountUri, new ArtifactSigningAccountSku(skuName.GetValueOrDefault(), null), provisioningState, null));
+                accountUri is null && skuName is null && provisioningState is null ? default : new CodeSigningAccountProperties(accountUri, new ArtifactSigningAccountSku(skuName.GetValueOrDefault(), default), provisioningState, default),
+                default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -51,26 +51,24 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ArtifactSigningAccountPatch(tags, skuName is null ? default : new CodeSigningAccountPatchProperties(new AccountSkuPatch(skuName, null), null), additionalBinaryDataProperties: null);
+            return new ArtifactSigningAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), skuName is null ? default : new CodeSigningAccountPatchProperties(new AccountSkuPatch(skuName, default), default), default);
         }
 
-        /// <summary> The parameters used to check the availability of the artifact signing account name. </summary>
         /// <param name="resourceType"> The type of the resource, "Microsoft.CodeSigning/codeSigningAccounts". </param>
         /// <param name="name"> Artifact signing account name. </param>
         /// <returns> A new <see cref="Models.ArtifactSigningAccountNameAvailabilityContent"/> instance for mocking. </returns>
         public static ArtifactSigningAccountNameAvailabilityContent ArtifactSigningAccountNameAvailabilityContent(ResourceType resourceType = default, string name = default)
         {
-            return new ArtifactSigningAccountNameAvailabilityContent(resourceType, name, additionalBinaryDataProperties: null);
+            return new ArtifactSigningAccountNameAvailabilityContent(resourceType, name, default);
         }
 
-        /// <summary> The CheckNameAvailability operation response. </summary>
         /// <param name="isNameAvailable"> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> The reason that an artifact signing account name could not be used. The Reason element is only returned if nameAvailable is false. </param>
         /// <param name="message"> An error message explaining the Reason value in more detail. </param>
         /// <returns> A new <see cref="Models.ArtifactSigningAccountNameAvailabilityResult"/> instance for mocking. </returns>
         public static ArtifactSigningAccountNameAvailabilityResult ArtifactSigningAccountNameAvailabilityResult(bool? isNameAvailable = default, ArtifactSigningAccountNameUnavailabilityReason? reason = default, string message = default)
         {
-            return new ArtifactSigningAccountNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
+            return new ArtifactSigningAccountNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
         /// <param name="serialNumber"> Serial number of the certificate. </param>
@@ -104,11 +102,10 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                     remarks,
                     revocationStatus,
                     failureReason,
-                    null),
-                additionalBinaryDataProperties: null);
+                    default),
+                default);
         }
 
-        /// <summary> Defines the certificate revocation properties. </summary>
         /// <param name="serialNumber"> Serial number of the certificate. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
         /// <param name="effectiveOn"> The timestamp when the revocation is effective. </param>
@@ -123,7 +120,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                 effectiveOn,
                 reason,
                 remarks,
-                additionalBinaryDataProperties: null);
+                default);
         }
     }
 }

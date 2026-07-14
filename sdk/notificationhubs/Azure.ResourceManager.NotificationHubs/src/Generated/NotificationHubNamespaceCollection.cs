@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, NotificationHubNamespaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NotificationHubsArmOperation<NotificationHubNamespaceResource> operation = new NotificationHubsArmOperation<NotificationHubNamespaceResource>(
-                    new NotificationHubNamespaceOperationSource(Client),
+                    new NotificationHubNamespaceResourceOperationSource(Client),
                     _namespacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, NotificationHubNamespaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NotificationHubsArmOperation<NotificationHubNamespaceResource> operation = new NotificationHubsArmOperation<NotificationHubNamespaceResource>(
-                    new NotificationHubNamespaceOperationSource(Client),
+                    new NotificationHubNamespaceResourceOperationSource(Client),
                     _namespacesClientDiagnostics,
                     Pipeline,
                     message.Request,

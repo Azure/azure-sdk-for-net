@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Subscription
                 HttpMessage message = _subscriptionAliasResponsesRestClient.CreateCreateRequest(Id.Name, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SubscriptionArmOperation<SubscriptionAliasResource> operation = new SubscriptionArmOperation<SubscriptionAliasResource>(
-                    new SubscriptionAliasOperationSource(Client),
+                    new SubscriptionAliasResourceOperationSource(Client),
                     _subscriptionAliasResponsesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Subscription
                 HttpMessage message = _subscriptionAliasResponsesRestClient.CreateCreateRequest(Id.Name, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SubscriptionArmOperation<SubscriptionAliasResource> operation = new SubscriptionArmOperation<SubscriptionAliasResource>(
-                    new SubscriptionAliasOperationSource(Client),
+                    new SubscriptionAliasResourceOperationSource(Client),
                     _subscriptionAliasResponsesClientDiagnostics,
                     Pipeline,
                     message.Request,

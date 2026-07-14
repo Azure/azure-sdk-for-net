@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct DatasetReferenceType : IEquatable<DatasetReferenceType>
     {
         private readonly string _value;
+        /// <summary> DatasetReference. </summary>
+        private const string DatasetReferenceValue = "DatasetReference";
 
         /// <summary> Initializes a new instance of <see cref="DatasetReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DatasetReferenceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DatasetReferenceValue = "DatasetReference";
+            _value = value;
+        }
 
         /// <summary> DatasetReference. </summary>
         public static DatasetReferenceType DatasetReference { get; } = new DatasetReferenceType(DatasetReferenceValue);
+
         /// <summary> Determines if two <see cref="DatasetReferenceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DatasetReferenceType left, DatasetReferenceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DatasetReferenceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DatasetReferenceType left, DatasetReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DatasetReferenceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DatasetReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DatasetReferenceType(string value) => new DatasetReferenceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DatasetReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DatasetReferenceType?(string value) => value == null ? null : new DatasetReferenceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DatasetReferenceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DatasetReferenceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

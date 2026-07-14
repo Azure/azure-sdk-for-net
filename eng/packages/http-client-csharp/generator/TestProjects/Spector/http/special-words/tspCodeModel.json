@@ -26,7 +26,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "4",
@@ -39,7 +40,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "5",
@@ -52,7 +54,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "6",
@@ -65,7 +68,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "7",
@@ -78,7 +82,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "8",
@@ -91,7 +96,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "9",
@@ -104,7 +110,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "10",
@@ -117,7 +124,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "11",
@@ -130,7 +138,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "12",
@@ -143,7 +152,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "13",
@@ -156,7 +166,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "14",
@@ -169,7 +180,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "15",
@@ -182,7 +194,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "16",
@@ -195,7 +208,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "17",
@@ -208,7 +222,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "18",
@@ -221,7 +236,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "19",
@@ -234,7 +250,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "20",
@@ -247,7 +264,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "21",
@@ -260,7 +278,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "22",
@@ -273,7 +292,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "23",
@@ -286,7 +306,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "24",
@@ -299,7 +320,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "25",
@@ -312,7 +334,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "26",
@@ -325,7 +348,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "27",
@@ -338,7 +362,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "28",
@@ -351,7 +376,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "29",
@@ -364,7 +390,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "30",
@@ -377,7 +404,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "31",
@@ -390,7 +418,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "32",
@@ -403,7 +432,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "33",
@@ -416,7 +446,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "34",
@@ -429,7 +460,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "35",
@@ -442,7 +474,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "SpecialWords.ExtensibleStrings",
@@ -450,7 +483,8 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -468,7 +502,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "38",
@@ -484,7 +519,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "40",
@@ -500,7 +536,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "42",
@@ -516,7 +553,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "44",
@@ -532,7 +570,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "46",
@@ -548,7 +587,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "48",
@@ -564,7 +604,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "50",
@@ -580,7 +621,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "52",
@@ -596,7 +638,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "54",
@@ -612,7 +655,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "56",
@@ -628,7 +672,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "58",
@@ -644,7 +689,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "60",
@@ -660,7 +706,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "62",
@@ -676,7 +723,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "64",
@@ -692,7 +740,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "66",
@@ -708,7 +757,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "68",
@@ -724,7 +774,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "70",
@@ -740,7 +791,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "72",
@@ -756,7 +808,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "74",
@@ -772,7 +825,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "76",
@@ -788,7 +842,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "78",
@@ -804,7 +859,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "80",
@@ -820,7 +876,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "82",
@@ -836,7 +893,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "84",
@@ -852,7 +910,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "86",
@@ -868,7 +927,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "88",
@@ -884,7 +944,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "90",
@@ -900,7 +961,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "92",
@@ -916,7 +978,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "94",
@@ -932,7 +995,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "96",
@@ -948,7 +1012,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "98",
@@ -964,7 +1029,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "100",
@@ -980,7 +1046,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "102",
@@ -996,7 +1063,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "104",
@@ -1012,7 +1080,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "106",
@@ -1028,7 +1097,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "108",
@@ -1044,7 +1114,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "110",
@@ -1060,7 +1131,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "112",
@@ -1076,7 +1148,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "114",
@@ -1092,7 +1165,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "116",
@@ -1108,7 +1182,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -1125,6 +1200,7 @@
           "name": "and"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "119",
@@ -1149,7 +1225,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1166,6 +1243,7 @@
           "name": "as"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "122",
@@ -1190,7 +1268,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1207,6 +1286,7 @@
           "name": "assert"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "125",
@@ -1231,7 +1311,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1248,6 +1329,7 @@
           "name": "async"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "128",
@@ -1272,7 +1354,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1289,6 +1372,7 @@
           "name": "await"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "131",
@@ -1313,7 +1397,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1330,6 +1415,7 @@
           "name": "break"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "134",
@@ -1354,7 +1440,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1371,6 +1458,7 @@
           "name": "class"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "137",
@@ -1395,7 +1483,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1412,6 +1501,7 @@
           "name": "constructor"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "140",
@@ -1436,7 +1526,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1453,6 +1544,7 @@
           "name": "continue"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "143",
@@ -1477,7 +1569,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1494,6 +1587,7 @@
           "name": "def"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "146",
@@ -1518,7 +1612,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1535,6 +1630,7 @@
           "name": "del"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "149",
@@ -1559,7 +1655,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1576,6 +1673,7 @@
           "name": "elif"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "152",
@@ -1600,7 +1698,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1617,6 +1716,7 @@
           "name": "else"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "155",
@@ -1641,7 +1741,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1658,6 +1759,7 @@
           "name": "except"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "158",
@@ -1682,7 +1784,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1699,6 +1802,7 @@
           "name": "exec"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "161",
@@ -1723,7 +1827,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1740,6 +1845,7 @@
           "name": "finally"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "164",
@@ -1764,7 +1870,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1781,6 +1888,7 @@
           "name": "for"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "167",
@@ -1805,7 +1913,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1822,6 +1931,7 @@
           "name": "from"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "170",
@@ -1846,7 +1956,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1863,6 +1974,7 @@
           "name": "global"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "173",
@@ -1887,7 +1999,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1904,6 +2017,7 @@
           "name": "if"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "176",
@@ -1928,7 +2042,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1945,6 +2060,7 @@
           "name": "import"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "179",
@@ -1969,7 +2085,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1986,6 +2103,7 @@
           "name": "in"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "182",
@@ -2010,7 +2128,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2027,6 +2146,7 @@
           "name": "is"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "185",
@@ -2051,7 +2171,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2068,6 +2189,7 @@
           "name": "lambda"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "188",
@@ -2092,7 +2214,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2109,6 +2232,7 @@
           "name": "not"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "191",
@@ -2133,7 +2257,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2150,6 +2275,7 @@
           "name": "or"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "194",
@@ -2174,7 +2300,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2191,6 +2318,7 @@
           "name": "pass"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "197",
@@ -2215,7 +2343,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2232,6 +2361,7 @@
           "name": "raise"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "200",
@@ -2256,7 +2386,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2273,6 +2404,7 @@
           "name": "return"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "203",
@@ -2297,7 +2429,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2314,6 +2447,7 @@
           "name": "try"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "206",
@@ -2338,7 +2472,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2355,6 +2490,7 @@
           "name": "while"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "209",
@@ -2379,7 +2515,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2396,6 +2533,7 @@
           "name": "with"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "212",
@@ -2420,7 +2558,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2437,6 +2576,7 @@
           "name": "yield"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "215",
@@ -2461,7 +2601,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2478,6 +2619,7 @@
           "name": "SameAsModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "218",
@@ -2502,7 +2644,8 @@
               "name": "SameAsModel"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2519,6 +2662,7 @@
           "name": "DictMethods"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "221",
@@ -2543,7 +2687,8 @@
               "name": "keys"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "223",
@@ -2568,7 +2713,8 @@
               "name": "items"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "225",
@@ -2593,7 +2739,8 @@
               "name": "values"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "227",
@@ -2618,7 +2765,8 @@
               "name": "popitem"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "229",
@@ -2643,7 +2791,8 @@
               "name": "clear"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "231",
@@ -2668,7 +2817,8 @@
               "name": "update"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "233",
@@ -2693,7 +2843,8 @@
               "name": "setdefault"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "235",
@@ -2718,7 +2869,8 @@
               "name": "pop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "237",
@@ -2743,7 +2895,8 @@
               "name": "get"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "239",
@@ -2768,7 +2921,8 @@
               "name": "copy"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2785,6 +2939,7 @@
           "name": "ModelWithList"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "242",
@@ -2809,7 +2964,8 @@
               "name": "list"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2826,6 +2982,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "245",
@@ -2857,7 +3014,8 @@
               "name": "items"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -2867,6 +3025,7 @@
       "$id": "248",
       "kind": "client",
       "name": "SpecialWordsClient",
+      "isExactName": false,
       "namespace": "SpecialWords",
       "doc": "Scenarios to verify that reserved words can be used in service and generators will handle it appropriately.\n\nCurrent list of special words\n```txt\nand\nas\nassert\nasync\nawait\nbreak\nclass\nconstructor\ncontinue\ndef\ndel\nelif\nelse\nexcept\nexec\nfinally\nfor\nfrom\nglobal\nif\nimport\nin\nis\nlambda\nlist\nnot\nor\npass\nraise\nreturn\ntry\nwhile\nwith\nyield\n```",
       "methods": [],
@@ -2899,7 +3058,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "SpecialWords.endpoint"
+          "crossLanguageDefinitionId": "SpecialWords.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -2911,6 +3071,7 @@
           "$id": "252",
           "kind": "client",
           "name": "Models",
+          "isExactName": false,
           "namespace": "SpecialWords.Models",
           "doc": "Verify model names",
           "methods": [
@@ -2918,11 +3079,13 @@
               "$id": "253",
               "kind": "basic",
               "name": "withAnd",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "254",
                 "name": "withAnd",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -2959,9 +3122,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withAnd.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "257",
@@ -2997,9 +3162,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withAnd.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -3048,11 +3215,13 @@
               "$id": "259",
               "kind": "basic",
               "name": "withAs",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "260",
                 "name": "withAs",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -3089,9 +3258,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withAs.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "263",
@@ -3127,9 +3298,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withAs.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -3178,11 +3351,13 @@
               "$id": "265",
               "kind": "basic",
               "name": "withAssert",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "266",
                 "name": "withAssert",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -3219,9 +3394,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withAssert.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "269",
@@ -3257,9 +3434,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withAssert.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -3308,11 +3487,13 @@
               "$id": "271",
               "kind": "basic",
               "name": "withAsync",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "272",
                 "name": "withAsync",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -3349,9 +3530,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withAsync.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "275",
@@ -3387,9 +3570,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withAsync.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -3438,11 +3623,13 @@
               "$id": "277",
               "kind": "basic",
               "name": "withAwait",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "278",
                 "name": "withAwait",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -3479,9 +3666,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withAwait.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "281",
@@ -3517,9 +3706,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withAwait.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -3568,11 +3759,13 @@
               "$id": "283",
               "kind": "basic",
               "name": "withBreak",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "284",
                 "name": "withBreak",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -3609,9 +3802,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withBreak.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "287",
@@ -3647,9 +3842,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withBreak.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -3698,11 +3895,13 @@
               "$id": "289",
               "kind": "basic",
               "name": "withClass",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "290",
                 "name": "withClass",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -3739,9 +3938,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withClass.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "293",
@@ -3777,9 +3978,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withClass.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -3828,11 +4031,13 @@
               "$id": "295",
               "kind": "basic",
               "name": "withConstructor",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "296",
                 "name": "withConstructor",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -3869,9 +4074,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withConstructor.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "299",
@@ -3907,9 +4114,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withConstructor.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -3958,11 +4167,13 @@
               "$id": "301",
               "kind": "basic",
               "name": "withContinue",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "302",
                 "name": "withContinue",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -3999,9 +4210,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withContinue.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "305",
@@ -4037,9 +4250,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withContinue.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -4088,11 +4303,13 @@
               "$id": "307",
               "kind": "basic",
               "name": "withDef",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "308",
                 "name": "withDef",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -4129,9 +4346,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withDef.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "311",
@@ -4167,9 +4386,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withDef.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -4218,11 +4439,13 @@
               "$id": "313",
               "kind": "basic",
               "name": "withDel",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "314",
                 "name": "withDel",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -4259,9 +4482,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withDel.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "317",
@@ -4297,9 +4522,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withDel.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -4348,11 +4575,13 @@
               "$id": "319",
               "kind": "basic",
               "name": "withElif",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "320",
                 "name": "withElif",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -4389,9 +4618,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withElif.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "323",
@@ -4427,9 +4658,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withElif.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -4478,11 +4711,13 @@
               "$id": "325",
               "kind": "basic",
               "name": "withElse",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "326",
                 "name": "withElse",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -4519,9 +4754,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withElse.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "329",
@@ -4557,9 +4794,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withElse.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -4608,11 +4847,13 @@
               "$id": "331",
               "kind": "basic",
               "name": "withExcept",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "332",
                 "name": "withExcept",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -4649,9 +4890,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withExcept.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "335",
@@ -4687,9 +4930,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withExcept.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -4738,11 +4983,13 @@
               "$id": "337",
               "kind": "basic",
               "name": "withExec",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "338",
                 "name": "withExec",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -4779,9 +5026,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withExec.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "341",
@@ -4817,9 +5066,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withExec.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -4868,11 +5119,13 @@
               "$id": "343",
               "kind": "basic",
               "name": "withFinally",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "344",
                 "name": "withFinally",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -4909,9 +5162,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withFinally.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "347",
@@ -4947,9 +5202,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withFinally.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -4998,11 +5255,13 @@
               "$id": "349",
               "kind": "basic",
               "name": "withFor",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "350",
                 "name": "withFor",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -5039,9 +5298,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withFor.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "353",
@@ -5077,9 +5338,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withFor.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -5128,11 +5391,13 @@
               "$id": "355",
               "kind": "basic",
               "name": "withFrom",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "356",
                 "name": "withFrom",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -5169,9 +5434,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withFrom.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "359",
@@ -5207,9 +5474,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withFrom.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -5258,11 +5527,13 @@
               "$id": "361",
               "kind": "basic",
               "name": "withGlobal",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "362",
                 "name": "withGlobal",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -5299,9 +5570,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withGlobal.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "365",
@@ -5337,9 +5610,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withGlobal.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -5388,11 +5663,13 @@
               "$id": "367",
               "kind": "basic",
               "name": "withIf",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "368",
                 "name": "withIf",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -5429,9 +5706,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withIf.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "371",
@@ -5467,9 +5746,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withIf.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -5518,11 +5799,13 @@
               "$id": "373",
               "kind": "basic",
               "name": "withImport",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "374",
                 "name": "withImport",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -5559,9 +5842,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withImport.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "377",
@@ -5597,9 +5882,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withImport.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -5648,11 +5935,13 @@
               "$id": "379",
               "kind": "basic",
               "name": "withIn",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "380",
                 "name": "withIn",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -5689,9 +5978,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withIn.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "383",
@@ -5727,9 +6018,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withIn.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -5778,11 +6071,13 @@
               "$id": "385",
               "kind": "basic",
               "name": "withIs",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "386",
                 "name": "withIs",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -5819,9 +6114,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withIs.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "389",
@@ -5857,9 +6154,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withIs.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -5908,11 +6207,13 @@
               "$id": "391",
               "kind": "basic",
               "name": "withLambda",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "392",
                 "name": "withLambda",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -5949,9 +6250,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withLambda.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "395",
@@ -5987,9 +6290,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withLambda.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -6038,11 +6343,13 @@
               "$id": "397",
               "kind": "basic",
               "name": "withNot",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "398",
                 "name": "withNot",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -6079,9 +6386,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withNot.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "401",
@@ -6117,9 +6426,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withNot.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -6168,11 +6479,13 @@
               "$id": "403",
               "kind": "basic",
               "name": "withOr",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "404",
                 "name": "withOr",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -6209,9 +6522,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withOr.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "407",
@@ -6247,9 +6562,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withOr.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -6298,11 +6615,13 @@
               "$id": "409",
               "kind": "basic",
               "name": "withPass",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "410",
                 "name": "withPass",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -6339,9 +6658,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withPass.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "413",
@@ -6377,9 +6698,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withPass.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -6428,11 +6751,13 @@
               "$id": "415",
               "kind": "basic",
               "name": "withRaise",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "416",
                 "name": "withRaise",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -6469,9 +6794,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withRaise.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "419",
@@ -6507,9 +6834,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withRaise.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -6558,11 +6887,13 @@
               "$id": "421",
               "kind": "basic",
               "name": "withReturn",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "422",
                 "name": "withReturn",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -6599,9 +6930,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withReturn.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "425",
@@ -6637,9 +6970,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withReturn.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -6688,11 +7023,13 @@
               "$id": "427",
               "kind": "basic",
               "name": "withTry",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "428",
                 "name": "withTry",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -6729,9 +7066,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withTry.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "431",
@@ -6767,9 +7106,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withTry.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -6818,11 +7159,13 @@
               "$id": "433",
               "kind": "basic",
               "name": "withWhile",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "434",
                 "name": "withWhile",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -6859,9 +7202,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withWhile.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "437",
@@ -6897,9 +7242,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withWhile.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -6948,11 +7295,13 @@
               "$id": "439",
               "kind": "basic",
               "name": "withWith",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "440",
                 "name": "withWith",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -6989,9 +7338,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withWith.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "443",
@@ -7027,9 +7378,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withWith.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -7078,11 +7431,13 @@
               "$id": "445",
               "kind": "basic",
               "name": "withYield",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "446",
                 "name": "withYield",
+                "isExactName": false,
                 "resourceName": "Models",
                 "accessibility": "public",
                 "parameters": [
@@ -7119,9 +7474,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withYield.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "449",
@@ -7157,9 +7514,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Models.withYield.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -7234,7 +7593,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "SpecialWords.Models.endpoint"
+              "crossLanguageDefinitionId": "SpecialWords.Models.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -7250,6 +7610,7 @@
           "$id": "454",
           "kind": "client",
           "name": "ModelProperties",
+          "isExactName": false,
           "namespace": "SpecialWords.ModelProperties",
           "doc": "Verify model names",
           "methods": [
@@ -7257,11 +7618,13 @@
               "$id": "455",
               "kind": "basic",
               "name": "sameAsModel",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "456",
                 "name": "sameAsModel",
+                "isExactName": false,
                 "resourceName": "ModelProperties",
                 "accessibility": "public",
                 "parameters": [
@@ -7298,9 +7661,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.ModelProperties.sameAsModel.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "459",
@@ -7336,9 +7701,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.ModelProperties.sameAsModel.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -7387,11 +7754,13 @@
               "$id": "461",
               "kind": "basic",
               "name": "dictMethods",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "462",
                 "name": "dictMethods",
+                "isExactName": false,
                 "resourceName": "ModelProperties",
                 "accessibility": "public",
                 "parameters": [
@@ -7428,9 +7797,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.ModelProperties.dictMethods.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "465",
@@ -7466,9 +7837,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.ModelProperties.dictMethods.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -7517,11 +7890,13 @@
               "$id": "467",
               "kind": "basic",
               "name": "withList",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "468",
                 "name": "withList",
+                "isExactName": false,
                 "resourceName": "ModelProperties",
                 "accessibility": "public",
                 "parameters": [
@@ -7558,9 +7933,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.ModelProperties.withList.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "471",
@@ -7596,9 +7973,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.ModelProperties.withList.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -7673,7 +8052,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "SpecialWords.ModelProperties.endpoint"
+              "crossLanguageDefinitionId": "SpecialWords.ModelProperties.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -7689,6 +8069,7 @@
           "$id": "476",
           "kind": "client",
           "name": "ReservedOperationBodyParams",
+          "isExactName": false,
           "namespace": "SpecialWords.ReservedOperationBodyParams",
           "doc": "Verify that operation parameters whose names match Python Mapping protocol methods\n(e.g., items, keys, values) are sent with the original name on the wire, not mangled.",
           "methods": [
@@ -7696,11 +8077,13 @@
               "$id": "477",
               "kind": "basic",
               "name": "withItems",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "478",
                 "name": "withItems",
+                "isExactName": false,
                 "resourceName": "ReservedOperationBodyParams",
                 "accessibility": "public",
                 "parameters": [
@@ -7737,9 +8120,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.ReservedOperationBodyParams.withItems.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "481",
@@ -7775,9 +8160,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.ReservedOperationBodyParams.withItems.items",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -7852,7 +8239,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "SpecialWords.ReservedOperationBodyParams.endpoint"
+              "crossLanguageDefinitionId": "SpecialWords.ReservedOperationBodyParams.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -7868,6 +8256,7 @@
           "$id": "486",
           "kind": "client",
           "name": "ExtensibleStrings",
+          "isExactName": false,
           "namespace": "SpecialWords.ExtensibleStrings",
           "doc": "Verify enum member names that are special words.",
           "methods": [
@@ -7875,11 +8264,13 @@
               "$id": "487",
               "kind": "basic",
               "name": "putExtensibleStringValue",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "488",
                 "name": "putExtensibleStringValue",
+                "isExactName": false,
                 "resourceName": "ExtensibleStrings",
                 "accessibility": "public",
                 "parameters": [
@@ -7914,9 +8305,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.ExtensibleStrings.putExtensibleStringValue.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "491",
@@ -7949,9 +8342,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.ExtensibleStrings.putExtensibleStringValue.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "493",
@@ -7987,9 +8382,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.ExtensibleStrings.putExtensibleStringValue.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -8089,7 +8486,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "SpecialWords.ExtensibleStrings.endpoint"
+              "crossLanguageDefinitionId": "SpecialWords.ExtensibleStrings.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -8105,6 +8503,7 @@
           "$id": "498",
           "kind": "client",
           "name": "Operations",
+          "isExactName": false,
           "namespace": "SpecialWords",
           "doc": "Test reserved words as operation name.",
           "methods": [
@@ -8112,11 +8511,13 @@
               "$id": "499",
               "kind": "basic",
               "name": "and",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "500",
                 "name": "and",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8151,11 +8552,13 @@
               "$id": "501",
               "kind": "basic",
               "name": "as",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "502",
                 "name": "as",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8190,11 +8593,13 @@
               "$id": "503",
               "kind": "basic",
               "name": "assert",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "504",
                 "name": "assert",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8229,11 +8634,13 @@
               "$id": "505",
               "kind": "basic",
               "name": "async",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "506",
                 "name": "async",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8268,11 +8675,13 @@
               "$id": "507",
               "kind": "basic",
               "name": "await",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "508",
                 "name": "await",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8307,11 +8716,13 @@
               "$id": "509",
               "kind": "basic",
               "name": "break",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "510",
                 "name": "break",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8346,11 +8757,13 @@
               "$id": "511",
               "kind": "basic",
               "name": "class",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "512",
                 "name": "class",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8385,11 +8798,13 @@
               "$id": "513",
               "kind": "basic",
               "name": "constructor",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "514",
                 "name": "constructor",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8424,11 +8839,13 @@
               "$id": "515",
               "kind": "basic",
               "name": "continue",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "516",
                 "name": "continue",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8463,11 +8880,13 @@
               "$id": "517",
               "kind": "basic",
               "name": "def",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "518",
                 "name": "def",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8502,11 +8921,13 @@
               "$id": "519",
               "kind": "basic",
               "name": "del",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "520",
                 "name": "del",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8541,11 +8962,13 @@
               "$id": "521",
               "kind": "basic",
               "name": "elif",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "522",
                 "name": "elif",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8580,11 +9003,13 @@
               "$id": "523",
               "kind": "basic",
               "name": "else",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "524",
                 "name": "else",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8619,11 +9044,13 @@
               "$id": "525",
               "kind": "basic",
               "name": "except",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "526",
                 "name": "except",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8658,11 +9085,13 @@
               "$id": "527",
               "kind": "basic",
               "name": "exec",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "528",
                 "name": "exec",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8697,11 +9126,13 @@
               "$id": "529",
               "kind": "basic",
               "name": "finally",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "530",
                 "name": "finally",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8736,11 +9167,13 @@
               "$id": "531",
               "kind": "basic",
               "name": "for",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "532",
                 "name": "for",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8775,11 +9208,13 @@
               "$id": "533",
               "kind": "basic",
               "name": "from",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "534",
                 "name": "from",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8814,11 +9249,13 @@
               "$id": "535",
               "kind": "basic",
               "name": "global",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "536",
                 "name": "global",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8853,11 +9290,13 @@
               "$id": "537",
               "kind": "basic",
               "name": "if",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "538",
                 "name": "if",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8892,11 +9331,13 @@
               "$id": "539",
               "kind": "basic",
               "name": "import",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "540",
                 "name": "import",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8931,11 +9372,13 @@
               "$id": "541",
               "kind": "basic",
               "name": "in",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "542",
                 "name": "in",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -8970,11 +9413,13 @@
               "$id": "543",
               "kind": "basic",
               "name": "is",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "544",
                 "name": "is",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -9009,11 +9454,13 @@
               "$id": "545",
               "kind": "basic",
               "name": "lambda",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "546",
                 "name": "lambda",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -9048,11 +9495,13 @@
               "$id": "547",
               "kind": "basic",
               "name": "not",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "548",
                 "name": "not",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -9087,11 +9536,13 @@
               "$id": "549",
               "kind": "basic",
               "name": "or",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "550",
                 "name": "or",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -9126,11 +9577,13 @@
               "$id": "551",
               "kind": "basic",
               "name": "pass",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "552",
                 "name": "pass",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -9165,11 +9618,13 @@
               "$id": "553",
               "kind": "basic",
               "name": "raise",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "554",
                 "name": "raise",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -9204,11 +9659,13 @@
               "$id": "555",
               "kind": "basic",
               "name": "return",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "556",
                 "name": "return",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -9243,11 +9700,13 @@
               "$id": "557",
               "kind": "basic",
               "name": "try",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "558",
                 "name": "try",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -9282,11 +9741,13 @@
               "$id": "559",
               "kind": "basic",
               "name": "while",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "560",
                 "name": "while",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -9321,11 +9782,13 @@
               "$id": "561",
               "kind": "basic",
               "name": "with",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "562",
                 "name": "with",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -9360,11 +9823,13 @@
               "$id": "563",
               "kind": "basic",
               "name": "yield",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "564",
                 "name": "yield",
+                "isExactName": false,
                 "resourceName": "Operations",
                 "accessibility": "public",
                 "parameters": [],
@@ -9425,7 +9890,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "SpecialWords.Operations.endpoint"
+              "crossLanguageDefinitionId": "SpecialWords.Operations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -9441,6 +9907,7 @@
           "$id": "568",
           "kind": "client",
           "name": "Parameters",
+          "isExactName": false,
           "namespace": "SpecialWords",
           "doc": "Verify reserved words as parameter name.",
           "methods": [
@@ -9448,11 +9915,13 @@
               "$id": "569",
               "kind": "basic",
               "name": "withAnd",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "570",
                 "name": "withAnd",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -9495,9 +9964,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withAnd.and",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -9535,11 +10006,13 @@
               "$id": "575",
               "kind": "basic",
               "name": "withAs",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "576",
                 "name": "withAs",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -9582,9 +10055,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withAs.as",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -9622,11 +10097,13 @@
               "$id": "581",
               "kind": "basic",
               "name": "withAssert",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "582",
                 "name": "withAssert",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -9669,9 +10146,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withAssert.assert",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -9709,11 +10188,13 @@
               "$id": "587",
               "kind": "basic",
               "name": "withAsync",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "588",
                 "name": "withAsync",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -9756,9 +10237,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withAsync.async",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -9796,11 +10279,13 @@
               "$id": "593",
               "kind": "basic",
               "name": "withAwait",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "594",
                 "name": "withAwait",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -9843,9 +10328,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withAwait.await",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -9883,11 +10370,13 @@
               "$id": "599",
               "kind": "basic",
               "name": "withBreak",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "600",
                 "name": "withBreak",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -9930,9 +10419,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withBreak.break",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -9970,11 +10461,13 @@
               "$id": "605",
               "kind": "basic",
               "name": "withClass",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "606",
                 "name": "withClass",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -10017,9 +10510,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withClass.class",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10057,11 +10552,13 @@
               "$id": "611",
               "kind": "basic",
               "name": "withConstructor",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "612",
                 "name": "withConstructor",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -10104,9 +10601,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withConstructor.constructor",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10144,11 +10643,13 @@
               "$id": "617",
               "kind": "basic",
               "name": "withContinue",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "618",
                 "name": "withContinue",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -10191,9 +10692,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withContinue.continue",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10231,11 +10734,13 @@
               "$id": "623",
               "kind": "basic",
               "name": "withDef",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "624",
                 "name": "withDef",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -10278,9 +10783,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withDef.def",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10318,11 +10825,13 @@
               "$id": "629",
               "kind": "basic",
               "name": "withDel",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "630",
                 "name": "withDel",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -10365,9 +10874,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withDel.del",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10405,11 +10916,13 @@
               "$id": "635",
               "kind": "basic",
               "name": "withElif",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "636",
                 "name": "withElif",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -10452,9 +10965,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withElif.elif",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10492,11 +11007,13 @@
               "$id": "641",
               "kind": "basic",
               "name": "withElse",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "642",
                 "name": "withElse",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -10539,9 +11056,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withElse.else",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10579,11 +11098,13 @@
               "$id": "647",
               "kind": "basic",
               "name": "withExcept",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "648",
                 "name": "withExcept",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -10626,9 +11147,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withExcept.except",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10666,11 +11189,13 @@
               "$id": "653",
               "kind": "basic",
               "name": "withExec",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "654",
                 "name": "withExec",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -10713,9 +11238,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withExec.exec",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10753,11 +11280,13 @@
               "$id": "659",
               "kind": "basic",
               "name": "withFinally",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "660",
                 "name": "withFinally",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -10800,9 +11329,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withFinally.finally",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10840,11 +11371,13 @@
               "$id": "665",
               "kind": "basic",
               "name": "withFor",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "666",
                 "name": "withFor",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -10887,9 +11420,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withFor.for",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10927,11 +11462,13 @@
               "$id": "671",
               "kind": "basic",
               "name": "withFrom",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "672",
                 "name": "withFrom",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -10974,9 +11511,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withFrom.from",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -11014,11 +11553,13 @@
               "$id": "677",
               "kind": "basic",
               "name": "withGlobal",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "678",
                 "name": "withGlobal",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -11061,9 +11602,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withGlobal.global",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -11101,11 +11644,13 @@
               "$id": "683",
               "kind": "basic",
               "name": "withIf",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "684",
                 "name": "withIf",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -11148,9 +11693,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withIf.if",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -11188,11 +11735,13 @@
               "$id": "689",
               "kind": "basic",
               "name": "withImport",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "690",
                 "name": "withImport",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -11235,9 +11784,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withImport.import",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -11275,11 +11826,13 @@
               "$id": "695",
               "kind": "basic",
               "name": "withIn",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "696",
                 "name": "withIn",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -11322,9 +11875,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withIn.in",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -11362,11 +11917,13 @@
               "$id": "701",
               "kind": "basic",
               "name": "withIs",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "702",
                 "name": "withIs",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -11409,9 +11966,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withIs.is",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -11449,11 +12008,13 @@
               "$id": "707",
               "kind": "basic",
               "name": "withLambda",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "708",
                 "name": "withLambda",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -11496,9 +12057,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withLambda.lambda",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -11536,11 +12099,13 @@
               "$id": "713",
               "kind": "basic",
               "name": "withNot",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "714",
                 "name": "withNot",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -11583,9 +12148,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withNot.not",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -11623,11 +12190,13 @@
               "$id": "719",
               "kind": "basic",
               "name": "withOr",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "720",
                 "name": "withOr",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -11670,9 +12239,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withOr.or",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -11710,11 +12281,13 @@
               "$id": "725",
               "kind": "basic",
               "name": "withPass",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "726",
                 "name": "withPass",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -11757,9 +12330,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withPass.pass",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -11797,11 +12372,13 @@
               "$id": "731",
               "kind": "basic",
               "name": "withRaise",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "732",
                 "name": "withRaise",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -11844,9 +12421,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withRaise.raise",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -11884,11 +12463,13 @@
               "$id": "737",
               "kind": "basic",
               "name": "withReturn",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "738",
                 "name": "withReturn",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -11931,9 +12512,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withReturn.return",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -11971,11 +12554,13 @@
               "$id": "743",
               "kind": "basic",
               "name": "withTry",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "744",
                 "name": "withTry",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -12018,9 +12603,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withTry.try",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -12058,11 +12645,13 @@
               "$id": "749",
               "kind": "basic",
               "name": "withWhile",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "750",
                 "name": "withWhile",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -12105,9 +12694,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withWhile.while",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -12145,11 +12736,13 @@
               "$id": "755",
               "kind": "basic",
               "name": "withWith",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "756",
                 "name": "withWith",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -12192,9 +12785,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withWith.with",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -12232,11 +12827,13 @@
               "$id": "761",
               "kind": "basic",
               "name": "withYield",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "762",
                 "name": "withYield",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -12279,9 +12876,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withYield.yield",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -12319,11 +12918,13 @@
               "$id": "767",
               "kind": "basic",
               "name": "withCancellationToken",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "768",
                 "name": "withCancellationToken",
+                "isExactName": false,
                 "resourceName": "Parameters",
                 "accessibility": "public",
                 "parameters": [
@@ -12366,9 +12967,11 @@
                         "crossLanguageDefinitionId": "SpecialWords.Parameters.withCancellationToken.cancellationToken",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -12432,7 +13035,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "SpecialWords.Parameters.endpoint"
+              "crossLanguageDefinitionId": "SpecialWords.Parameters.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

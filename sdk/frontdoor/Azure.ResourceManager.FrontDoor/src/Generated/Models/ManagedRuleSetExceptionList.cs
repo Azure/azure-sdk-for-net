@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> List of exceptions. </summary>
         [WirePath("exceptions")]
-        public IList<FrontDoorManagedRuleSetException> Exceptions { get; }
+        public IList<FrontDoorManagedRuleSetException> Exceptions { get; } = new ChangeTrackingList<FrontDoorManagedRuleSetException>();
     }
 }

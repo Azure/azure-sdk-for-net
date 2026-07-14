@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Support
                 HttpMessage message = _tenantSupportTicketRestClient.CreateCreateRequest(supportTicketName, SupportTicketData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SupportArmOperation<TenantSupportTicketResource> operation = new SupportArmOperation<TenantSupportTicketResource>(
-                    new TenantSupportTicketOperationSource(Client),
+                    new TenantSupportTicketResourceOperationSource(Client),
                     _tenantSupportTicketClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Support
                 HttpMessage message = _tenantSupportTicketRestClient.CreateCreateRequest(supportTicketName, SupportTicketData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SupportArmOperation<TenantSupportTicketResource> operation = new SupportArmOperation<TenantSupportTicketResource>(
-                    new TenantSupportTicketOperationSource(Client),
+                    new TenantSupportTicketResourceOperationSource(Client),
                     _tenantSupportTicketClientDiagnostics,
                     Pipeline,
                     message.Request,

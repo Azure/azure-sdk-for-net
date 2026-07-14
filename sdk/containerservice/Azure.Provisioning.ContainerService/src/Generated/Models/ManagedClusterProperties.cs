@@ -874,6 +874,10 @@ namespace Azure.Provisioning.ContainerService
             _bootstrapProfile = DefineModelProperty<ManagedClusterBootstrapProfile>(nameof(BootstrapProfile), new string[] { "bootstrapProfile" });
             _aiToolchainOperatorProfile = DefineModelProperty<ManagedClusterAIToolchainOperatorProfile>(nameof(AiToolchainOperatorProfile), new string[] { "aiToolchainOperatorProfile" });
             _status = DefineModelProperty<ManagedClusterStatus>(nameof(Status), new string[] { "status" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

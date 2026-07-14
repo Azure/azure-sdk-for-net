@@ -7,18 +7,66 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    /// <summary>
+    /// AutoML vertical class.
+    /// Base class for AutoML verticals - TableVertical/ImageVertical/NLPVertical
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/>, and <see cref="TextNer"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownAutoMLVertical))]
-    public partial class AutoMLVertical : IUtf8JsonSerializable, IJsonModel<AutoMLVertical>
+    public abstract partial class AutoMLVertical : IJsonModel<AutoMLVertical>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoMLVertical>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AutoMLVertical"/> for deserialization. </summary>
+        internal AutoMLVertical()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutoMLVertical PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAutoMLVertical(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoMLVertical)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AutoMLVertical)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AutoMLVertical>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoMLVertical IPersistableModel<AutoMLVertical>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutoMLVertical>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutoMLVertical>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,42 +78,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoMLVertical)} does not support writing '{format}' format.");
             }
-
-            writer.WritePropertyName("taskType"u8);
-            writer.WriteStringValue(TaskType.ToString());
             if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData, options);
             if (Optional.IsDefined(TargetColumnName))
             {
-                if (TargetColumnName != null)
-                {
-                    writer.WritePropertyName("targetColumnName"u8);
-                    writer.WriteStringValue(TargetColumnName);
-                }
-                else
-                {
-                    writer.WriteNull("targetColumnName");
-                }
+                writer.WritePropertyName("targetColumnName"u8);
+                writer.WriteStringValue(TargetColumnName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            writer.WritePropertyName("taskType"u8);
+            writer.WriteStringValue(TaskType.ToString());
+            writer.WritePropertyName("trainingData"u8);
+            writer.WriteObjectValue(TrainingData, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -74,156 +114,58 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        AutoMLVertical IJsonModel<AutoMLVertical>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoMLVertical IJsonModel<AutoMLVertical>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutoMLVertical JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoMLVertical)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAutoMLVertical(document.RootElement, options);
         }
 
-        internal static AutoMLVertical DeserializeAutoMLVertical(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AutoMLVertical DeserializeAutoMLVertical(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("taskType", out JsonElement discriminator))
+            if (element.TryGetProperty("taskType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Classification": return ClassificationTask.DeserializeClassificationTask(element, options);
-                    case "Forecasting": return MachineLearningForecasting.DeserializeMachineLearningForecasting(element, options);
-                    case "ImageClassification": return ImageClassification.DeserializeImageClassification(element, options);
-                    case "ImageClassificationMultilabel": return ImageClassificationMultilabel.DeserializeImageClassificationMultilabel(element, options);
-                    case "ImageInstanceSegmentation": return ImageInstanceSegmentation.DeserializeImageInstanceSegmentation(element, options);
-                    case "ImageObjectDetection": return ImageObjectDetection.DeserializeImageObjectDetection(element, options);
-                    case "Regression": return AutoMLVerticalRegression.DeserializeAutoMLVerticalRegression(element, options);
-                    case "TextClassification": return TextClassification.DeserializeTextClassification(element, options);
-                    case "TextClassificationMultilabel": return TextClassificationMultilabel.DeserializeTextClassificationMultilabel(element, options);
-                    case "TextNER": return TextNer.DeserializeTextNer(element, options);
+                    case "Classification":
+                        return ClassificationTask.DeserializeClassificationTask(element, options);
+                    case "Forecasting":
+                        return MachineLearningForecasting.DeserializeMachineLearningForecasting(element, options);
+                    case "ImageClassification":
+                        return ImageClassification.DeserializeImageClassification(element, options);
+                    case "ImageClassificationMultilabel":
+                        return ImageClassificationMultilabel.DeserializeImageClassificationMultilabel(element, options);
+                    case "ImageInstanceSegmentation":
+                        return ImageInstanceSegmentation.DeserializeImageInstanceSegmentation(element, options);
+                    case "ImageObjectDetection":
+                        return ImageObjectDetection.DeserializeImageObjectDetection(element, options);
+                    case "Regression":
+                        return AutoMLVerticalRegression.DeserializeAutoMLVerticalRegression(element, options);
+                    case "TextClassification":
+                        return TextClassification.DeserializeTextClassification(element, options);
+                    case "TextClassificationMultilabel":
+                        return TextClassificationMultilabel.DeserializeTextClassificationMultilabel(element, options);
+                    case "TextNER":
+                        return TextNer.DeserializeTextNer(element, options);
                 }
             }
             return UnknownAutoMLVertical.DeserializeUnknownAutoMLVertical(element, options);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TaskType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  taskType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  taskType: ");
-                builder.AppendLine($"'{TaskType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogVerbosity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  logVerbosity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LogVerbosity))
-                {
-                    builder.Append("  logVerbosity: ");
-                    builder.AppendLine($"'{LogVerbosity.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrainingData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  trainingData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TrainingData))
-                {
-                    builder.Append("  trainingData: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, TrainingData, options, 2, false, "  trainingData: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetColumnName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  targetColumnName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TargetColumnName))
-                {
-                    builder.Append("  targetColumnName: ");
-                    if (TargetColumnName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TargetColumnName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TargetColumnName}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<AutoMLVertical>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(AutoMLVertical)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AutoMLVertical IPersistableModel<AutoMLVertical>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAutoMLVertical(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutoMLVertical)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AutoMLVertical>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -26,14 +26,16 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "client.clientnamespace.second.sub",
       "isFixed": false,
       "isFlags": false,
       "usage": "Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -51,7 +53,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "6",
@@ -67,7 +70,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -84,6 +88,7 @@
           "name": "FirstClientResult"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "9",
@@ -108,7 +113,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -125,6 +131,7 @@
           "name": "SecondClientResult"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "12",
@@ -145,7 +152,8 @@
               "name": "type"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -155,17 +163,20 @@
       "$id": "13",
       "kind": "client",
       "name": "ClientNamespaceFirstClient",
+      "isExactName": false,
       "namespace": "client.clientnamespace",
       "methods": [
         {
           "$id": "14",
           "kind": "basic",
           "name": "getFirst",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "15",
             "name": "getFirst",
+            "isExactName": false,
             "resourceName": "ClientNamespaceFirstClient",
             "accessibility": "public",
             "parameters": [
@@ -200,9 +211,11 @@
                     "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.getFirst.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -280,7 +293,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.endpoint"
+          "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -293,17 +307,20 @@
       "$id": "21",
       "kind": "client",
       "name": "ClientNamespaceSecondClient",
+      "isExactName": false,
       "namespace": "client.clientnamespace.second",
       "methods": [
         {
           "$id": "22",
           "kind": "basic",
           "name": "getSecond",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "23",
             "name": "getSecond",
+            "isExactName": false,
             "resourceName": "ClientNamespaceSecondClient",
             "accessibility": "public",
             "parameters": [
@@ -338,9 +355,11 @@
                     "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.getSecond.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -418,7 +437,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.endpoint"
+          "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

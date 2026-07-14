@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _managedCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedCertificateName, ContainerAppManagedCertificateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppManagedCertificateResource> operation = new AppContainersArmOperation<ContainerAppManagedCertificateResource>(
-                    new ContainerAppManagedCertificateOperationSource(Client),
+                    new ContainerAppManagedCertificateResourceOperationSource(Client),
                     _managedCertificatesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _managedCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedCertificateName, ContainerAppManagedCertificateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppManagedCertificateResource> operation = new AppContainersArmOperation<ContainerAppManagedCertificateResource>(
-                    new ContainerAppManagedCertificateOperationSource(Client),
+                    new ContainerAppManagedCertificateResourceOperationSource(Client),
                     _managedCertificatesClientDiagnostics,
                     Pipeline,
                     message.Request,

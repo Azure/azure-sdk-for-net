@@ -49,13 +49,13 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The unique ID of the file search tool call. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary>
         /// The status of the file search tool call. One of `in_progress`,
         ///   `searching`, `incomplete` or `failed`,
         /// </summary>
-        public InputItemFileSearchToolCallStatus Status { get; }
+        public InputItemFileSearchToolCallStatus Status { get; set; }
 
         /// <summary> The queries used to search for files. </summary>
         public IList<string> Queries { get; }

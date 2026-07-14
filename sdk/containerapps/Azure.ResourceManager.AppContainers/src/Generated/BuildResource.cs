@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _buildsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BuildData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<BuildResource> operation = new AppContainersArmOperation<BuildResource>(
-                    new BuildOperationSource(Client),
+                    new BuildResourceOperationSource(Client),
                     _buildsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _buildsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BuildData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<BuildResource> operation = new AppContainersArmOperation<BuildResource>(
-                    new BuildOperationSource(Client),
+                    new BuildResourceOperationSource(Client),
                     _buildsClientDiagnostics,
                     Pipeline,
                     message.Request,

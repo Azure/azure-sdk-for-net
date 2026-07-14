@@ -226,23 +226,6 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TrafficManagerUserMetricsResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.GetTrafficManagerUserMetric()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource"/> object. </returns>
-        public static TrafficManagerUserMetricsResource GetTrafficManagerUserMetric(this SubscriptionResource subscriptionResource)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).GetTrafficManagerUserMetric();
-        }
-
-        /// <summary>
         /// Lists all Traffic Manager profiles within a subscription.
         /// <item>
         /// <term> Mocking. </term>

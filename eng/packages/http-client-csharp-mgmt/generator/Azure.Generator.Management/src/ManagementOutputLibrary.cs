@@ -36,6 +36,12 @@ namespace Azure.Generator.Management
         private WirePathAttributeDefinition? _wirePathAttributeProvider;
         internal TypeProvider WirePathAttributeDefinition => _wirePathAttributeProvider ??= new WirePathAttributeDefinition();
 
+        private CodeGenResourceDataAttributeDefinition? _codeGenResourceDataAttributeProvider;
+        internal CustomCodeAttributeDefinition CodeGenResourceDataAttributeDefinition => _codeGenResourceDataAttributeProvider ??= new CodeGenResourceDataAttributeDefinition();
+
+        private CodeGenTagPatchHookAttributeDefinition? _codeGenTagPatchHookAttributeProvider;
+        internal CustomCodeAttributeDefinition CodeGenTagPatchHookAttributeDefinition => _codeGenTagPatchHookAttributeProvider ??= new CodeGenTagPatchHookAttributeDefinition();
+
         private CSharpType? _modelReaderWriterContextType;
         internal CSharpType ModelReaderWriterContextType => _modelReaderWriterContextType ??= new ModelReaderWriterContextDefinition().Type;
 
@@ -48,6 +54,20 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<CSharpType, OperationSourceProvider>? _operationSourceDict;
         internal IReadOnlyDictionary<CSharpType, OperationSourceProvider> OperationSourceDict => _operationSourceDict ??= BuildOperationSources();
+        internal OperationSourceProvider GetOperationSource(ResourceClientProvider resource)
+        {
+            var operationSources = OperationSourceDict;
+            if (!operationSources.TryGetValue(resource.Type, out var operationSource))
+            {
+                operationSource = new OperationSourceProvider(resource);
+                if (operationSources is Dictionary<CSharpType, OperationSourceProvider> mutableOperationSources)
+                {
+                    mutableOperationSources.Add(resource.Type, operationSource);
+                }
+            }
+
+            return operationSource;
+        }
 
         internal IReadOnlyList<ResourceClientProvider> ResourceProviders => GetValue(ref _resources);
         internal IReadOnlyList<ResourceCollectionClientProvider> ResourceCollectionProviders => GetValue(ref _resourceCollections);
@@ -63,9 +83,30 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>>? _outputFlattenPropertyMap;
         internal IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>> OutputFlattenPropertyMap => _outputFlattenPropertyMap ??= BuildOutputFlattenPropertyMap();
         private IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>> BuildOutputFlattenPropertyMap()
-            => ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap.ToDictionary(
-                kv => ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!,
-                kv => kv.Value.Select(p => ManagementClientGenerator.Instance.TypeFactory.CreateProperty(p, ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!)!).ToHashSet());
+        {
+            Dictionary<ModelProvider, HashSet<PropertyProvider>> result = [];
+            foreach (var (inputModel, flattenedProperties) in ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap)
+            {
+                foreach (var model in ResolveFlattenTargetModels(inputModel))
+                {
+                    result[model] = flattenedProperties
+                        .Select(p => ManagementClientGenerator.Instance.TypeFactory.CreateProperty(p, model)!)
+                        .ToHashSet();
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Resolves output model providers that should receive flattenProperty customizations for an input model.
+        /// </summary>
+        /// <param name="inputModel">The input model that owns the decorated flattened properties.</param>
+        /// <returns>The output model providers that represent the input model.</returns>
+        protected virtual IReadOnlyList<ModelProvider> ResolveFlattenTargetModels(InputModelType inputModel)
+        {
+            var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+            return model is null ? [] : [model];
+        }
 
         private HashSet<ModelProvider>? _safeFlattenDisabledModels;
         /// <summary>
@@ -160,12 +201,10 @@ namespace Azure.Generator.Management
                 resourceMethodCategories,
                 ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
 
-            // Extract extension non-resource methods for MockableArmClientProvider
-            var extensionNonResourceMethods = resourcesAndMethodsPerScope.TryGetValue(ResourceScope.Extension, out var extensionScope)
-                ? extensionScope.NonResourceMethods
-                : [];
+            // Extract extension methods for MockableArmClientProvider
+            var extensionScope = resourcesAndMethodsPerScope[ResourceScope.Extension];
 
-            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionNonResourceMethods);
+            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionScope.ResourceMethods, extensionScope.NonResourceMethods);
             var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
@@ -235,18 +274,8 @@ namespace Azure.Generator.Management
             }
         }
 
-        // TODO: replace this with CSharpType to TypeProvider mapping and move this logic to ModelFactoryVisitor
-        private HashSet<CSharpType>? _modelFactoryModels;
+        // TODO: replace this with CSharpType to TypeProvider mapping.
         private HashSet<CSharpType>? _allModelTypes;
-
-        private HashSet<CSharpType> ModelFactoryModels
-        {
-            get
-            {
-                BuildModelTypes();
-                return _modelFactoryModels!;
-            }
-        }
 
         private HashSet<CSharpType> AllModelTypes
         {
@@ -259,13 +288,12 @@ namespace Azure.Generator.Management
 
         private void BuildModelTypes()
         {
-            if (_modelFactoryModels is not null && _allModelTypes is not null)
+            if (_allModelTypes is not null)
             {
                 return; // already built
             }
 
             var allModelTypes = new HashSet<CSharpType>();
-            var modelFactoryModels = new HashSet<CSharpType>();
 
             foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
             {
@@ -274,48 +302,11 @@ namespace Azure.Generator.Management
                 {
                     var eraseNullableType = model.Type.WithNullable(false);
                     allModelTypes.Add(eraseNullableType);
-                    if (IsModelFactoryModel(model))
-                    {
-                        modelFactoryModels.Add(eraseNullableType);
-                    }
                 }
             }
 
             _allModelTypes = allModelTypes;
-            _modelFactoryModels = modelFactoryModels;
         }
-
-        private static bool IsModelFactoryModel(ModelProvider model)
-        {
-            // A model is a model factory model if it is public and it has at least one public property without a setter.
-            return model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) && EnumerateAllPublicProperties(model).Any(prop => !prop.Body.HasSetter);
-
-            IEnumerable<PropertyProvider> EnumerateAllPublicProperties(ModelProvider current)
-            {
-                var currentModel = current;
-                foreach (var property in currentModel.Properties)
-                {
-                    if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
-                    {
-                        yield return property;
-                    }
-                }
-
-                while (currentModel.BaseModelProvider is not null)
-                {
-                    currentModel = currentModel.BaseModelProvider;
-                    foreach (var property in currentModel.Properties)
-                    {
-                        if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
-                        {
-                            yield return property;
-                        }
-                    }
-                }
-            }
-        }
-
-        internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type.WithNullable(false));
 
         internal bool IsModelType(CSharpType type) => AllModelTypes.Contains(type.WithNullable(false));
 
@@ -343,7 +334,7 @@ namespace Azure.Generator.Management
             var arrayResponseCollectionResults = ExtractArrayResponseCollectionResults();
 
             return [
-                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider { IsSystemBase: true }),
+                .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
                 WirePathAttributeDefinition,
                 ArmOperation,
                 ArmOperationOfT,
@@ -427,35 +418,27 @@ namespace Azure.Generator.Management
                 _ => null
             };
 
-            if (lroMetadata != null)
+            var returnType = lroMetadata?.ReturnType;
+            if (returnType == null)
             {
-                var returnType = lroMetadata.ReturnType;
-                if (returnType is InputModelType inputModelType)
-                {
-                    var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputModelType);
-                    if (returnCSharpType == null)
-                    {
-                        return;
-                    }
-
-                    // Find all resource providers that use this data type
-                    var resourceProviders = ResourceProviders.Where(r => r.ResourceData.Type.Equals(returnCSharpType));
-
-                    if (resourceProviders.Any())
-                    {
-                        // For each resource provider, create an OperationSource keyed by the resource type
-                        foreach (var resourceProvider in resourceProviders)
-                        {
-                            operationSources.TryAdd(resourceProvider.Type, new OperationSourceProvider(resourceProvider));
-                        }
-                    }
-                    else
-                    {
-                        // This is a non-resource model - use the data type as the key
-                        operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
-                    }
-                }
+                return;
             }
+
+            var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(returnType);
+            if (returnCSharpType == null)
+            {
+                return;
+            }
+
+            // Find all resource providers that use this data type.
+            var resourceProviders = ResourceProviders.Where(r => r.ResourceData.Type.Equals(returnCSharpType)).ToList();
+            foreach (var resourceProvider in resourceProviders)
+            {
+                operationSources.TryAdd(resourceProvider.Type, new OperationSourceProvider(resourceProvider));
+            }
+
+            // Always register a concrete return-type source for non-resource/list/primitive/dictionary fallback paths.
+            operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
         }
 
         internal bool IsResourceModelType(CSharpType type) => GetResourceDataTypes().ContainsKey(type);
@@ -483,10 +466,7 @@ namespace Azure.Generator.Management
         internal bool TryGetResourceClientProvider(CSharpType resourceDataType, [MaybeNullWhen(false)] out ResourceClientProvider resourceClientProvider)
         {
             resourceClientProvider = null;
-            if (!GetResourceDataTypes().TryGetValue(resourceDataType, out var providers))
-            {
-                return false;
-            }
+            var providers = ResourceProviders.Where(p => p.IsResourceDataType(resourceDataType)).ToList();
 
             // Only wrap when the data type is exclusively used by one resource.
             // When multiple resources share the same data type, wrapping would pick an arbitrary resource,

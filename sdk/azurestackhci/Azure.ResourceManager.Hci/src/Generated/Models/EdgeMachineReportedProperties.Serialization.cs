@@ -109,6 +109,21 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("extensionProfile"u8);
                 writer.WriteObjectValue(ExtensionProfile, options);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(WorkloadInventory))
+            {
+                writer.WritePropertyName("workloadInventory"u8);
+                writer.WriteStartArray();
+                foreach (EdgeMachineWorkloadInventoryItem item in WorkloadInventory)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(WorkloadInventoryLastUpdated))
+            {
+                writer.WritePropertyName("workloadInventoryLastUpdated"u8);
+                writer.WriteStringValue(WorkloadInventoryLastUpdated.Value, "O");
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -158,6 +173,8 @@ namespace Azure.ResourceManager.Hci.Models
             StorageProfile storageProfile = default;
             SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default;
             ExtensionProfile extensionProfile = default;
+            IReadOnlyList<EdgeMachineWorkloadInventoryItem> workloadInventory = default;
+            DateTimeOffset? workloadInventoryLastUpdated = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -224,6 +241,29 @@ namespace Azure.ResourceManager.Hci.Models
                     extensionProfile = ExtensionProfile.DeserializeExtensionProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("workloadInventory"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EdgeMachineWorkloadInventoryItem> array = new List<EdgeMachineWorkloadInventoryItem>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(EdgeMachineWorkloadInventoryItem.DeserializeEdgeMachineWorkloadInventoryItem(item, options));
+                    }
+                    workloadInventory = array;
+                    continue;
+                }
+                if (prop.NameEquals("workloadInventoryLastUpdated"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    workloadInventoryLastUpdated = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -237,6 +277,8 @@ namespace Azure.ResourceManager.Hci.Models
                 storageProfile,
                 sbeDeploymentPackageInfo,
                 extensionProfile,
+                workloadInventory ?? new ChangeTrackingList<EdgeMachineWorkloadInventoryItem>(),
+                workloadInventoryLastUpdated,
                 additionalBinaryDataProperties);
         }
     }

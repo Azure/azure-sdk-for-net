@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct ReplicateMigrationState : IEquatable<ReplicateMigrationState>
     {
         private readonly string _value;
+        /// <summary> UNDEFINED. </summary>
+        private const string UndefinedValue = "UNDEFINED";
+        /// <summary> VALIDATING. </summary>
+        private const string ValidatingValue = "VALIDATING";
+        /// <summary> PENDING. </summary>
+        private const string PendingValue = "PENDING";
+        /// <summary> COMPLETE. </summary>
+        private const string CompleteValue = "COMPLETE";
+        /// <summary> ACTION_REQUIRED. </summary>
+        private const string ActionRequiredValue = "ACTION_REQUIRED";
+        /// <summary> FAILED. </summary>
+        private const string FailedValue = "FAILED";
 
         /// <summary> Initializes a new instance of <see cref="ReplicateMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReplicateMigrationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UndefinedValue = "UNDEFINED";
-        private const string ValidatingValue = "VALIDATING";
-        private const string PendingValue = "PENDING";
-        private const string CompleteValue = "COMPLETE";
-        private const string ActionRequiredValue = "ACTION_REQUIRED";
-        private const string FailedValue = "FAILED";
+            _value = value;
+        }
 
         /// <summary> UNDEFINED. </summary>
         public static ReplicateMigrationState Undefined { get; } = new ReplicateMigrationState(UndefinedValue);
+
         /// <summary> VALIDATING. </summary>
         public static ReplicateMigrationState Validating { get; } = new ReplicateMigrationState(ValidatingValue);
+
         /// <summary> PENDING. </summary>
         public static ReplicateMigrationState Pending { get; } = new ReplicateMigrationState(PendingValue);
+
         /// <summary> COMPLETE. </summary>
         public static ReplicateMigrationState Complete { get; } = new ReplicateMigrationState(CompleteValue);
+
         /// <summary> ACTION_REQUIRED. </summary>
         public static ReplicateMigrationState ActionRequired { get; } = new ReplicateMigrationState(ActionRequiredValue);
+
         /// <summary> FAILED. </summary>
         public static ReplicateMigrationState Failed { get; } = new ReplicateMigrationState(FailedValue);
+
         /// <summary> Determines if two <see cref="ReplicateMigrationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReplicateMigrationState left, ReplicateMigrationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReplicateMigrationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReplicateMigrationState left, ReplicateMigrationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReplicateMigrationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReplicateMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReplicateMigrationState(string value) => new ReplicateMigrationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReplicateMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReplicateMigrationState?(string value) => value == null ? null : new ReplicateMigrationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReplicateMigrationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReplicateMigrationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

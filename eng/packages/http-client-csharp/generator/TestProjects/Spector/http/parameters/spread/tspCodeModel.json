@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -97,7 +102,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
@@ -113,7 +119,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
@@ -129,7 +136,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
@@ -145,7 +153,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -163,6 +172,7 @@
           "name": "BodyParameter"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "20",
@@ -187,7 +197,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -204,6 +215,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "23",
@@ -228,7 +240,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -245,6 +258,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "26",
@@ -269,7 +283,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -286,6 +301,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "29",
@@ -310,7 +326,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -327,6 +344,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "32",
@@ -351,7 +369,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -368,6 +387,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "35",
@@ -393,7 +413,8 @@
               "name": "requiredString"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "37",
@@ -419,7 +440,8 @@
               "name": "optionalInt"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "39",
@@ -452,7 +474,8 @@
               "name": "requiredIntList"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "42",
@@ -485,7 +508,8 @@
               "name": "optionalStringList"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -502,6 +526,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "46",
@@ -527,7 +552,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "48",
@@ -553,7 +579,8 @@
               "name": "age"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -563,6 +590,7 @@
       "$id": "50",
       "kind": "client",
       "name": "SpreadClient",
+      "isExactName": false,
       "namespace": "Parameters.Spread",
       "doc": "Test for the spread operator.",
       "methods": [],
@@ -595,7 +623,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Parameters.Spread.endpoint"
+          "crossLanguageDefinitionId": "Parameters.Spread.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -607,17 +636,20 @@
           "$id": "54",
           "kind": "client",
           "name": "Model",
+          "isExactName": false,
           "namespace": "Parameters.Spread.Model",
           "methods": [
             {
               "$id": "55",
               "kind": "basic",
               "name": "spreadAsRequestBody",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "56",
                 "name": "spreadAsRequestBody",
+                "isExactName": false,
                 "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
@@ -654,9 +686,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadAsRequestBody.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "59",
@@ -696,9 +730,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadAsRequestBody.name",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -747,11 +783,13 @@
               "$id": "62",
               "kind": "basic",
               "name": "spreadCompositeRequestOnlyWithBody",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "63",
                 "name": "spreadCompositeRequestOnlyWithBody",
+                "isExactName": false,
                 "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
@@ -788,9 +826,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestOnlyWithBody.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "66",
@@ -826,9 +866,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestOnlyWithBody.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -877,11 +919,13 @@
               "$id": "68",
               "kind": "basic",
               "name": "spreadCompositeRequestWithoutBody",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "69",
                 "name": "spreadCompositeRequestWithoutBody",
+                "isExactName": false,
                 "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
@@ -927,9 +971,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestWithoutBody.name",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "74",
@@ -970,9 +1016,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestWithoutBody.testHeader",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -1013,11 +1061,13 @@
               "$id": "78",
               "kind": "basic",
               "name": "spreadCompositeRequest",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "79",
                 "name": "spreadCompositeRequest",
+                "isExactName": false,
                 "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
@@ -1063,9 +1113,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.name",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "84",
@@ -1106,9 +1158,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.testHeader",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "88",
@@ -1143,9 +1197,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "90",
@@ -1181,9 +1237,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequest.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1238,11 +1296,13 @@
               "$id": "92",
               "kind": "basic",
               "name": "spreadCompositeRequestMix",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "93",
                 "name": "spreadCompositeRequestMix",
+                "isExactName": false,
                 "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
@@ -1288,9 +1348,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.name",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "98",
@@ -1331,9 +1393,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.testHeader",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "102",
@@ -1368,9 +1432,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "104",
@@ -1410,9 +1476,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Model.spreadCompositeRequestMix.prop",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -1493,7 +1561,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Spread.Model.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Spread.Model.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -1509,17 +1578,20 @@
           "$id": "110",
           "kind": "client",
           "name": "Alias",
+          "isExactName": false,
           "namespace": "Parameters.Spread.Alias",
           "methods": [
             {
               "$id": "111",
               "kind": "basic",
               "name": "spreadAsRequestBody",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "112",
                 "name": "spreadAsRequestBody",
+                "isExactName": false,
                 "resourceName": "Alias",
                 "accessibility": "public",
                 "parameters": [
@@ -1556,9 +1628,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "115",
@@ -1598,9 +1672,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestBody.name",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -1649,11 +1725,13 @@
               "$id": "118",
               "kind": "basic",
               "name": "spreadParameterWithInnerModel",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "119",
                 "name": "spreadParameterWithInnerModel",
+                "isExactName": false,
                 "resourceName": "Alias",
                 "accessibility": "public",
                 "parameters": [
@@ -1699,9 +1777,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.id",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "124",
@@ -1742,9 +1822,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.x-ms-test-header",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "128",
@@ -1779,9 +1861,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "130",
@@ -1821,9 +1905,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerModel.name",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -1878,11 +1964,13 @@
               "$id": "133",
               "kind": "basic",
               "name": "spreadAsRequestParameter",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "134",
                 "name": "spreadAsRequestParameter",
+                "isExactName": false,
                 "resourceName": "Alias",
                 "accessibility": "public",
                 "parameters": [
@@ -1928,9 +2016,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.id",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "139",
@@ -1971,9 +2061,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.x-ms-test-header",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "143",
@@ -2008,9 +2100,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "145",
@@ -2050,9 +2144,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadAsRequestParameter.name",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -2107,11 +2203,13 @@
               "$id": "148",
               "kind": "basic",
               "name": "spreadWithMultipleParameters",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "149",
                 "name": "spreadWithMultipleParameters",
+                "isExactName": false,
                 "resourceName": "Alias",
                 "accessibility": "public",
                 "parameters": [
@@ -2157,9 +2255,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.id",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "154",
@@ -2200,9 +2300,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.x-ms-test-header",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "158",
@@ -2237,9 +2339,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "160",
@@ -2280,9 +2384,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.requiredString",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -2343,7 +2449,8 @@
                   "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.optionalInt",
                   "readOnly": false,
                   "access": "public",
-                  "decorators": []
+                  "decorators": [],
+                  "isExactName": false
                 },
                 {
                   "$id": "165",
@@ -2361,7 +2468,8 @@
                   "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.requiredIntList",
                   "readOnly": false,
                   "access": "public",
-                  "decorators": []
+                  "decorators": [],
+                  "isExactName": false
                 },
                 {
                   "$id": "166",
@@ -2379,7 +2487,8 @@
                   "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadWithMultipleParameters.optionalStringList",
                   "readOnly": false,
                   "access": "public",
-                  "decorators": []
+                  "decorators": [],
+                  "isExactName": false
                 },
                 {
                   "$ref": "159"
@@ -2395,12 +2504,14 @@
               "$id": "167",
               "kind": "basic",
               "name": "spreadParameterWithInnerAlias",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "spread an alias with contains another alias property as body.",
               "operation": {
                 "$id": "168",
                 "name": "spreadParameterWithInnerAlias",
+                "isExactName": false,
                 "resourceName": "Alias",
                 "doc": "spread an alias with contains another alias property as body.",
                 "accessibility": "public",
@@ -2447,9 +2558,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.id",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "173",
@@ -2490,9 +2603,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.x-ms-test-header",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "177",
@@ -2527,9 +2642,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "179",
@@ -2570,9 +2687,11 @@
                         "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.name",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -2630,7 +2749,8 @@
                   "crossLanguageDefinitionId": "Parameters.Spread.Alias.spreadParameterWithInnerAlias.age",
                   "readOnly": false,
                   "access": "public",
-                  "decorators": []
+                  "decorators": [],
+                  "isExactName": false
                 },
                 {
                   "$ref": "175"
@@ -2675,7 +2795,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Spread.Alias.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Spread.Alias.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

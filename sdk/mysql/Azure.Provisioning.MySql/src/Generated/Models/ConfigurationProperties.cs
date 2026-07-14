@@ -170,6 +170,10 @@ namespace Azure.Provisioning.MySql
             _isReadOnly = DefineProperty<MySqlFlexibleServerConfigReadOnlyState>(nameof(IsReadOnly), new string[] { "isReadOnly" }, isOutput: true);
             _isConfigPendingRestart = DefineProperty<MySqlFlexibleServerConfigPendingRestartState>(nameof(IsConfigPendingRestart), new string[] { "isConfigPendingRestart" }, isOutput: true);
             _isDynamicConfig = DefineProperty<MySqlFlexibleServerConfigDynamicState>(nameof(IsDynamicConfig), new string[] { "isDynamicConfig" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ConfigurationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

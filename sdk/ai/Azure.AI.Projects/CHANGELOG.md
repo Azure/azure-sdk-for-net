@@ -1,16 +1,37 @@
 # Release History
 
-## 2.1.0-beta.3 (Unreleased)
+## 3.0.0-beta.1 (Unreleased)
 
 ### Features Added
-- Added `AIProjectModels` client for model weights management, accessible via `AIProjectClient`.
-- Added memory store item CRUD operations for management of memories inside the `MemoryStore`.
+- Enabled the Model weights subclient.
+- Added the convenience methods `UploadModelAsync` and `UploadModel` to upload model weights.
+- Added distributed tracing support.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+### Sample Updates
+- Added sample for Model weights.
+- Added sample for `GitHubIssueRoutineTrigger`.
+- Updated sample for routine with manual dispatching so that it also demonstrates triggering based on message in Teams.
+
+## 2.1.0-beta.4 (2026-06-30)
+
+### Bugs Fixed
+- Fixed the `EvaluatorGenerationJob` serialization.
+
+### Sample Updates
+- Added sample for evaluator generator job.
+- Added sample for dispatching manual routine runs.
+
+## 2.1.0-beta.3 (2026-05-29)
+
+### Features Added
+- Added `AIProjectModels` client for model weights management, accessible via `AIProjectClient`.
+- Added memory store item CRUD operations for management of memories inside the `MemoryStore`.
 
 ## 2.1.0-beta.2 (2026-05-14)
 

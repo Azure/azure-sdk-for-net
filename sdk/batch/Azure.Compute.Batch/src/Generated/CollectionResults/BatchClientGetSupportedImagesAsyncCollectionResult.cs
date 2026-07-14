@@ -69,13 +69,13 @@ namespace Azure.Compute.Batch
                     yield break;
                 }
                 BatchAccountListSupportedImagesResult result = (BatchAccountListSupportedImagesResult)response;
+                nextPage = result.OdataNextLink;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureComputeBatchContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                nextPage = result.OdataNextLink;
                 if (nextPage == null)
                 {
                     yield break;

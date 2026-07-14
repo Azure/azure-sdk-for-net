@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A Class representing a RecoverableDatabase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RecoverableDatabaseResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetRecoverableDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetRecoverableDatabase method.
+    /// A class representing a RecoverableDatabase along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RecoverableDatabaseResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetRecoverableDatabases method.
     /// </summary>
     public partial class RecoverableDatabaseResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RecoverableDatabaseResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="serverName"> The serverName. </param>
-        /// <param name="databaseName"> The databaseName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _recoverableDatabaseClientDiagnostics;
-        private readonly RecoverableDatabasesRestOperations _recoverableDatabaseRestClient;
+        private readonly ClientDiagnostics _recoverableDatabasesClientDiagnostics;
+        private readonly RecoverableDatabases _recoverableDatabasesRestClient;
         private readonly RecoverableDatabaseData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/recoverableDatabases";
 
-        /// <summary> Initializes a new instance of the <see cref="RecoverableDatabaseResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RecoverableDatabaseResource for mocking. </summary>
         protected RecoverableDatabaseResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecoverableDatabaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoverableDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RecoverableDatabaseResource(ArmClient client, RecoverableDatabaseData data) : this(client, data.Id)
@@ -54,73 +43,95 @@ namespace Azure.ResourceManager.Sql
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecoverableDatabaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoverableDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RecoverableDatabaseResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recoverableDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string recoverableDatabaseApiVersion);
-            _recoverableDatabaseRestClient = new RecoverableDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recoverableDatabaseApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _recoverableDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            _recoverableDatabasesRestClient = new RecoverableDatabases(_recoverableDatabasesClientDiagnostics, Pipeline, Endpoint, recoverableDatabaseApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual RecoverableDatabaseData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a recoverable database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoverableDatabases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecoverableDatabases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoverableDatabaseResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoverableDatabaseResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RecoverableDatabaseResource>> GetAsync(string expand = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecoverableDatabaseResource>> GetAsync(string expand = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _recoverableDatabaseClientDiagnostics.CreateScope("RecoverableDatabaseResource.Get");
+            using DiagnosticScope scope = _recoverableDatabasesClientDiagnostics.CreateScope("RecoverableDatabaseResource.Get");
             scope.Start();
             try
             {
-                var response = await _recoverableDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recoverableDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RecoverableDatabaseData> response = Response.FromValue(RecoverableDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RecoverableDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,35 +145,43 @@ namespace Azure.ResourceManager.Sql
         /// Gets a recoverable database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecoverableDatabases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecoverableDatabases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoverableDatabaseResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoverableDatabaseResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RecoverableDatabaseResource> Get(string expand = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Response<RecoverableDatabaseResource> Get(string expand = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _recoverableDatabaseClientDiagnostics.CreateScope("RecoverableDatabaseResource.Get");
+            using DiagnosticScope scope = _recoverableDatabasesClientDiagnostics.CreateScope("RecoverableDatabaseResource.Get");
             scope.Start();
             try
             {
-                var response = _recoverableDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recoverableDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RecoverableDatabaseData> response = Response.FromValue(RecoverableDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RecoverableDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

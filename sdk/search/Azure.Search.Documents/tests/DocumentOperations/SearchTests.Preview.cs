@@ -17,22 +17,6 @@ namespace Azure.Search.Documents.Tests
     /// </summary>
     public partial class SearchTests
     {
-        // This file intentionally contains no tests in GA releases.
-        // It is scaffolding for the next preview API version and should not be counted as active coverage.
-        //
-        // Add preview-only search tests here.
-        // Each test should have [ServiceVersion(Min = CurrentPreviewVersion)] to ensure
-        // it only runs against the preview API version in the test matrix.
-        //
-        // Example:
-        // [Test]
-        // [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_05_01_Preview)]
-        // public async Task PreviewSearchFeature()
-        // {
-        //     await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
-        //     SearchClient client = resources.GetQueryClient();
-        //     // ... test preview-only search behavior
-        // }
     }
 }
 #endif

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string edgeDeviceJobApiVersion);
             _edgeDeviceJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _edgeDeviceJobsRestClient = new EdgeDeviceJobs(_edgeDeviceJobsClientDiagnostics, Pipeline, Endpoint, edgeDeviceJobApiVersion ?? "2026-04-01-preview");
+            _edgeDeviceJobsRestClient = new EdgeDeviceJobs(_edgeDeviceJobsClientDiagnostics, Pipeline, Endpoint, edgeDeviceJobApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _edgeDeviceJobsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, EdgeDeviceJobData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<EdgeDeviceJobResource> operation = new HciArmOperation<EdgeDeviceJobResource>(
-                    new EdgeDeviceJobOperationSource(Client),
+                    new EdgeDeviceJobResourceOperationSource(Client),
                     _edgeDeviceJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _edgeDeviceJobsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, EdgeDeviceJobData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<EdgeDeviceJobResource> operation = new HciArmOperation<EdgeDeviceJobResource>(
-                    new EdgeDeviceJobOperationSource(Client),
+                    new EdgeDeviceJobResourceOperationSource(Client),
                     _edgeDeviceJobsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -10,13 +10,60 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmEnableProtectionContent : IUtf8JsonSerializable, IJsonModel<InMageRcmEnableProtectionContent>
+    /// <summary> InMageRcm specific enable protection input. </summary>
+    public partial class InMageRcmEnableProtectionContent : EnableProtectionProviderSpecificContent, IJsonModel<InMageRcmEnableProtectionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmEnableProtectionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="InMageRcmEnableProtectionContent"/> for deserialization. </summary>
+        internal InMageRcmEnableProtectionContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EnableProtectionProviderSpecificContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmEnableProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInMageRcmEnableProtectionContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmEnableProtectionContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmEnableProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmEnableProtectionContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InMageRcmEnableProtectionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageRcmEnableProtectionContent IPersistableModel<InMageRcmEnableProtectionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (InMageRcmEnableProtectionContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InMageRcmEnableProtectionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InMageRcmEnableProtectionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +75,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmEnableProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmEnableProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageRcmEnableProtectionContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("fabricDiscoveryMachineId"u8);
             writer.WriteStringValue(FabricDiscoveryMachineId);
@@ -41,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();
-                foreach (var item in DisksToInclude)
+                foreach (InMageRcmDiskContent item in DisksToInclude)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -135,7 +181,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("targetVmTags"u8);
                 writer.WriteStartArray();
-                foreach (var item in TargetVmTags)
+                foreach (UserCreatedResourceTag item in TargetVmTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -145,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("seedManagedDiskTags"u8);
                 writer.WriteStartArray();
-                foreach (var item in SeedManagedDiskTags)
+                foreach (UserCreatedResourceTag item in SeedManagedDiskTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -155,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("targetManagedDiskTags"u8);
                 writer.WriteStartArray();
-                foreach (var item in TargetManagedDiskTags)
+                foreach (UserCreatedResourceTag item in TargetManagedDiskTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -165,7 +211,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("targetNicTags"u8);
                 writer.WriteStartArray();
-                foreach (var item in TargetNicTags)
+                foreach (UserCreatedResourceTag item in TargetNicTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -181,28 +227,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("targetVmSecurityProfile"u8);
                 writer.WriteObjectValue(TargetVmSecurityProfile, options);
             }
+            if (Optional.IsDefined(TargetCapacityReservationGroupId))
+            {
+                writer.WritePropertyName("targetCapacityReservationGroupId"u8);
+                writer.WriteStringValue(TargetCapacityReservationGroupId);
+            }
         }
 
-        InMageRcmEnableProtectionContent IJsonModel<InMageRcmEnableProtectionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageRcmEnableProtectionContent IJsonModel<InMageRcmEnableProtectionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InMageRcmEnableProtectionContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EnableProtectionProviderSpecificContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmEnableProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmEnableProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageRcmEnableProtectionContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInMageRcmEnableProtectionContent(document.RootElement, options);
         }
 
-        internal static InMageRcmEnableProtectionContent DeserializeInMageRcmEnableProtectionContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InMageRcmEnableProtectionContent DeserializeInMageRcmEnableProtectionContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string instanceType = "InMageRcm";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string fabricDiscoveryMachineId = default;
             IList<InMageRcmDiskContent> disksToInclude = default;
             InMageRcmDisksDefaultContent disksDefault = default;
@@ -229,240 +287,242 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IList<UserCreatedResourceTag> targetNicTags = default;
             string userSelectedOSName = default;
             RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string targetCapacityReservationGroupId = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("fabricDiscoveryMachineId"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    fabricDiscoveryMachineId = property.Value.GetString();
+                    instanceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("disksToInclude"u8))
+                if (prop.NameEquals("fabricDiscoveryMachineId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    fabricDiscoveryMachineId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("disksToInclude"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<InMageRcmDiskContent> array = new List<InMageRcmDiskContent>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(InMageRcmDiskContent.DeserializeInMageRcmDiskContent(item, options));
                     }
                     disksToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("disksDefault"u8))
+                if (prop.NameEquals("disksDefault"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disksDefault = InMageRcmDisksDefaultContent.DeserializeInMageRcmDisksDefaultContent(property.Value, options);
+                    disksDefault = InMageRcmDisksDefaultContent.DeserializeInMageRcmDisksDefaultContent(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("targetResourceGroupId"u8))
+                if (prop.NameEquals("targetResourceGroupId"u8))
                 {
-                    targetResourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    targetResourceGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetNetworkId"u8))
+                if (prop.NameEquals("targetNetworkId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    targetNetworkId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("testNetworkId"u8))
+                if (prop.NameEquals("testNetworkId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    testNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    testNetworkId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetSubnetName"u8))
+                if (prop.NameEquals("targetSubnetName"u8))
                 {
-                    targetSubnetName = property.Value.GetString();
+                    targetSubnetName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testSubnetName"u8))
+                if (prop.NameEquals("testSubnetName"u8))
                 {
-                    testSubnetName = property.Value.GetString();
+                    testSubnetName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetVmName"u8))
+                if (prop.NameEquals("targetVmName"u8))
                 {
-                    targetVmName = property.Value.GetString();
+                    targetVmName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetVmSize"u8))
+                if (prop.NameEquals("targetVmSize"u8))
                 {
-                    targetVmSize = property.Value.GetString();
+                    targetVmSize = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("licenseType"u8))
+                if (prop.NameEquals("licenseType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    licenseType = new SiteRecoveryLicenseType(property.Value.GetString());
+                    licenseType = new SiteRecoveryLicenseType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetAvailabilitySetId"u8))
+                if (prop.NameEquals("targetAvailabilitySetId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
+                    targetAvailabilitySetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetAvailabilityZone"u8))
+                if (prop.NameEquals("targetAvailabilityZone"u8))
                 {
-                    targetAvailabilityZone = property.Value.GetString();
+                    targetAvailabilityZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetProximityPlacementGroupId"u8))
+                if (prop.NameEquals("targetProximityPlacementGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
+                    targetProximityPlacementGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetBootDiagnosticsStorageAccountId"u8))
+                if (prop.NameEquals("targetBootDiagnosticsStorageAccountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetBootDiagnosticsStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    targetBootDiagnosticsStorageAccountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("runAsAccountId"u8))
+                if (prop.NameEquals("runAsAccountId"u8))
                 {
-                    runAsAccountId = property.Value.GetString();
+                    runAsAccountId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("processServerId"u8))
+                if (prop.NameEquals("processServerId"u8))
                 {
-                    processServerId = property.Value.GetGuid();
+                    processServerId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("multiVmGroupName"u8))
+                if (prop.NameEquals("multiVmGroupName"u8))
                 {
-                    multiVmGroupName = property.Value.GetString();
+                    multiVmGroupName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sqlServerLicenseType"u8))
+                if (prop.NameEquals("sqlServerLicenseType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sqlServerLicenseType = new SiteRecoverySqlServerLicenseType(property.Value.GetString());
+                    sqlServerLicenseType = new SiteRecoverySqlServerLicenseType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("linuxLicenseType"u8))
+                if (prop.NameEquals("linuxLicenseType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
+                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetVmTags"u8))
+                if (prop.NameEquals("targetVmTags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<UserCreatedResourceTag> array = new List<UserCreatedResourceTag>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(UserCreatedResourceTag.DeserializeUserCreatedResourceTag(item, options));
                     }
                     targetVmTags = array;
                     continue;
                 }
-                if (property.NameEquals("seedManagedDiskTags"u8))
+                if (prop.NameEquals("seedManagedDiskTags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<UserCreatedResourceTag> array = new List<UserCreatedResourceTag>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(UserCreatedResourceTag.DeserializeUserCreatedResourceTag(item, options));
                     }
                     seedManagedDiskTags = array;
                     continue;
                 }
-                if (property.NameEquals("targetManagedDiskTags"u8))
+                if (prop.NameEquals("targetManagedDiskTags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<UserCreatedResourceTag> array = new List<UserCreatedResourceTag>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(UserCreatedResourceTag.DeserializeUserCreatedResourceTag(item, options));
                     }
                     targetManagedDiskTags = array;
                     continue;
                 }
-                if (property.NameEquals("targetNicTags"u8))
+                if (prop.NameEquals("targetNicTags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<UserCreatedResourceTag> array = new List<UserCreatedResourceTag>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(UserCreatedResourceTag.DeserializeUserCreatedResourceTag(item, options));
                     }
                     targetNicTags = array;
                     continue;
                 }
-                if (property.NameEquals("userSelectedOSName"u8))
+                if (prop.NameEquals("userSelectedOSName"u8))
                 {
-                    userSelectedOSName = property.Value.GetString();
+                    userSelectedOSName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetVmSecurityProfile"u8))
+                if (prop.NameEquals("targetVmSecurityProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetVmSecurityProfile = RecoveryServicesSiteRecoverySecurityProfileProperties.DeserializeRecoveryServicesSiteRecoverySecurityProfileProperties(property.Value, options);
+                    targetVmSecurityProfile = RecoveryServicesSiteRecoverySecurityProfileProperties.DeserializeRecoveryServicesSiteRecoverySecurityProfileProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("instanceType"u8))
+                if (prop.NameEquals("targetCapacityReservationGroupId"u8))
                 {
-                    instanceType = property.Value.GetString();
+                    targetCapacityReservationGroupId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new InMageRcmEnableProtectionContent(
                 instanceType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 fabricDiscoveryMachineId,
                 disksToInclude ?? new ChangeTrackingList<InMageRcmDiskContent>(),
                 disksDefault,
@@ -488,38 +548,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 targetManagedDiskTags ?? new ChangeTrackingList<UserCreatedResourceTag>(),
                 targetNicTags ?? new ChangeTrackingList<UserCreatedResourceTag>(),
                 userSelectedOSName,
-                targetVmSecurityProfile);
+                targetVmSecurityProfile,
+                targetCapacityReservationGroupId);
         }
-
-        BinaryData IPersistableModel<InMageRcmEnableProtectionContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmEnableProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InMageRcmEnableProtectionContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        InMageRcmEnableProtectionContent IPersistableModel<InMageRcmEnableProtectionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmEnableProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInMageRcmEnableProtectionContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InMageRcmEnableProtectionContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<InMageRcmEnableProtectionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

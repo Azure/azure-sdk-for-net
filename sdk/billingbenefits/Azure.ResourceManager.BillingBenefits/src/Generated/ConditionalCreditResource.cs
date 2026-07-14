@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _conditionalCreditsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConditionalCreditPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<ConditionalCreditResource> operation = new BillingBenefitsArmOperation<ConditionalCreditResource>(
-                    new ConditionalCreditOperationSource(Client),
+                    new ConditionalCreditResourceOperationSource(Client),
                     _conditionalCreditsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _conditionalCreditsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConditionalCreditPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<ConditionalCreditResource> operation = new BillingBenefitsArmOperation<ConditionalCreditResource>(
-                    new ConditionalCreditOperationSource(Client),
+                    new ConditionalCreditResourceOperationSource(Client),
                     _conditionalCreditsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _conditionalCreditsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<ConditionalCreditResource> operation = new BillingBenefitsArmOperation<ConditionalCreditResource>(
-                    new ConditionalCreditOperationSource(Client),
+                    new ConditionalCreditResourceOperationSource(Client),
                     _conditionalCreditsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _conditionalCreditsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<ConditionalCreditResource> operation = new BillingBenefitsArmOperation<ConditionalCreditResource>(
-                    new ConditionalCreditOperationSource(Client),
+                    new ConditionalCreditResourceOperationSource(Client),
                     _conditionalCreditsClientDiagnostics,
                     Pipeline,
                     message.Request,

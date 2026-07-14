@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "constantValue",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "constantValue",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [],
@@ -42,6 +44,7 @@
       "$id": "5",
       "kind": "client",
       "name": "QueryClient",
+      "isExactName": false,
       "namespace": "Parameters.Query",
       "doc": "Test for query parameter cases.",
       "methods": [],
@@ -74,7 +77,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Parameters.Query.endpoint"
+          "crossLanguageDefinitionId": "Parameters.Query.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -86,6 +90,7 @@
           "$id": "9",
           "kind": "client",
           "name": "Constant",
+          "isExactName": false,
           "namespace": "Parameters.Query",
           "doc": "Constant query parameter verification",
           "methods": [
@@ -93,12 +98,14 @@
               "$id": "10",
               "kind": "basic",
               "name": "post",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "post constant query value",
               "operation": {
                 "$id": "11",
                 "name": "post",
+                "isExactName": false,
                 "resourceName": "Constant",
                 "doc": "post constant query value",
                 "accessibility": "public",
@@ -134,9 +141,11 @@
                         "crossLanguageDefinitionId": "Parameters.Query.Constant.post.queryParam",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -200,12 +209,155 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Query.Constant.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Query.Constant.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Parameters.Query.Constant",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "5"
+          },
+          "isMultiServiceClient": false
+        },
+        {
+          "$id": "17",
+          "kind": "client",
+          "name": "SpecialChar",
+          "isExactName": false,
+          "namespace": "Parameters.Query",
+          "doc": "Special char query parameter verification",
+          "methods": [
+            {
+              "$id": "18",
+              "kind": "basic",
+              "name": "dollarSign",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "19",
+                "name": "dollarSign",
+                "isExactName": false,
+                "resourceName": "SpecialChar",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "20",
+                    "kind": "query",
+                    "name": "filter",
+                    "serializedName": "$filter",
+                    "type": {
+                      "$id": "21",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Parameters.Query.SpecialChar.dollarSign.filter",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "22",
+                        "kind": "method",
+                        "name": "filter",
+                        "serializedName": "$filter",
+                        "type": {
+                          "$id": "23",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Parameters.Query.SpecialChar.dollarSign.filter",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/parameters/query/special-char/dollarSign",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Parameters.Query.SpecialChar.dollarSign",
+                "decorators": [],
+                "namespace": "Parameters.Query"
+              },
+              "parameters": [
+                {
+                  "$ref": "22"
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Parameters.Query.SpecialChar.dollarSign"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "24",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "25",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "26",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Parameters.Query.SpecialChar.endpoint",
+              "isExactName": false
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Parameters.Query.SpecialChar",
           "apiVersions": [],
           "parent": {
             "$ref": "5"

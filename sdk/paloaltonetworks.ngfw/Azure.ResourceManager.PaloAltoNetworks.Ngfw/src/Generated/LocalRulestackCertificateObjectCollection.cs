@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _certificateObjectLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, LocalRulestackCertificateObjectData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<LocalRulestackCertificateObjectResource> operation = new NgfwArmOperation<LocalRulestackCertificateObjectResource>(
-                    new LocalRulestackCertificateObjectOperationSource(Client),
+                    new LocalRulestackCertificateObjectResourceOperationSource(Client),
                     _certificateObjectLocalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _certificateObjectLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, LocalRulestackCertificateObjectData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<LocalRulestackCertificateObjectResource> operation = new NgfwArmOperation<LocalRulestackCertificateObjectResource>(
-                    new LocalRulestackCertificateObjectOperationSource(Client),
+                    new LocalRulestackCertificateObjectResourceOperationSource(Client),
                     _certificateObjectLocalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,

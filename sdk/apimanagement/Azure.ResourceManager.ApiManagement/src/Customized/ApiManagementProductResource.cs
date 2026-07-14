@@ -3,124 +3,69 @@
 
 #nullable disable
 
-using System;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementProductResource : ArmResource
+    public partial class ApiManagementProductResource
     {
-        /// <summary>
-        /// Lists the collection of subscriptions to the specified product.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/subscriptions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductSubscriptions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| stateComment | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| ownerId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| scope | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| user | expand |     |     |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionContractData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionContractData> GetAllProductSubscriptionDataAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        // Old SDK returned contextual wrapper types (ProductApiData, ProductGroupData) for
+        // association operations where the wire shape is identical to ApiData/GroupData.
+        // Not spec-fixable: TypeSpec has no concept of "same model, different name per context."
+
+        /// <summary> Gets the Product APIs. </summary>
+        public virtual AsyncPageable<ProductApiData> GetProductApisAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+            => new AsyncPageableWrapper<ApiData, ProductApiData>(
+                GetProductApisRawAsync(filter, top, skip, cancellationToken),
+                data => data is null ? null : new ProductApiData(data));
+
+        /// <summary> Gets the Product APIs. </summary>
+        public virtual Pageable<ProductApiData> GetProductApis(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+            => new PageableWrapper<ApiData, ProductApiData>(
+                GetProductApisRaw(filter, top, skip, cancellationToken),
+                data => data is null ? null : new ProductApiData(data));
+
+        /// <summary> Creates or updates the Product API. </summary>
+        public virtual async Task<Response<ProductApiData>> CreateOrUpdateProductApiAsync(string apiId, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubscriptionContractData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _productSubscriptionsClientDiagnostics.CreateScope("ApiManagementProductResource.GetAllProductSubscriptionData");
-                scope.Start();
-                try
-                {
-                    var response = await _productSubscriptionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SubscriptionContractData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _productSubscriptionsClientDiagnostics.CreateScope("ApiManagementProductResource.GetAllProductSubscriptionData");
-                scope.Start();
-                try
-                {
-                    var response = await _productSubscriptionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            Response<ApiData> response = await CreateOrUpdateProductApiRawAsync(apiId, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value is null ? null : new ProductApiData(response.Value), response.GetRawResponse());
         }
 
-        /// <summary>
-        /// Lists the collection of subscriptions to the specified product.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/subscriptions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductSubscriptions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| stateComment | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| ownerId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| scope | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| user | expand |     |     |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionContractData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionContractData> GetAllProductSubscriptionData(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <summary> Creates or updates the Product API. </summary>
+        public virtual Response<ProductApiData> CreateOrUpdateProductApi(string apiId, CancellationToken cancellationToken = default)
         {
-            Page<SubscriptionContractData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _productSubscriptionsClientDiagnostics.CreateScope("ApiManagementProductResource.GetAllProductSubscriptionData");
-                scope.Start();
-                try
-                {
-                    var response = _productSubscriptionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SubscriptionContractData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _productSubscriptionsClientDiagnostics.CreateScope("ApiManagementProductResource.GetAllProductSubscriptionData");
-                scope.Start();
-                try
-                {
-                    var response = _productSubscriptionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            Response<ApiData> response = CreateOrUpdateProductApiRaw(apiId, cancellationToken);
+            return Response.FromValue(response.Value is null ? null : new ProductApiData(response.Value), response.GetRawResponse());
+        }
+
+        /// <summary> Gets the Product Groups. </summary>
+        public virtual AsyncPageable<ProductGroupData> GetProductGroupsAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+            => new AsyncPageableWrapper<ApiManagementGroupData, ProductGroupData>(
+                GetProductGroupsRawAsync(filter, top, skip, cancellationToken),
+                data => data is null ? null : new ProductGroupData(data));
+
+        /// <summary> Gets the Product Groups. </summary>
+        public virtual Pageable<ProductGroupData> GetProductGroups(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+            => new PageableWrapper<ApiManagementGroupData, ProductGroupData>(
+                GetProductGroupsRaw(filter, top, skip, cancellationToken),
+                data => data is null ? null : new ProductGroupData(data));
+
+        /// <summary> Creates or updates the Product Group. </summary>
+        public virtual async Task<Response<ProductGroupData>> CreateOrUpdateProductGroupAsync(string groupId, CancellationToken cancellationToken = default)
+        {
+            Response<ApiManagementGroupData> response = await CreateOrUpdateProductGroupRawAsync(groupId, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value is null ? null : new ProductGroupData(response.Value), response.GetRawResponse());
+        }
+
+        /// <summary> Creates or updates the Product Group. </summary>
+        public virtual Response<ProductGroupData> CreateOrUpdateProductGroup(string groupId, CancellationToken cancellationToken = default)
+        {
+            Response<ApiManagementGroupData> response = CreateOrUpdateProductGroupRaw(groupId, cancellationToken);
+            return Response.FromValue(response.Value is null ? null : new ProductGroupData(response.Value), response.GetRawResponse());
         }
     }
 }

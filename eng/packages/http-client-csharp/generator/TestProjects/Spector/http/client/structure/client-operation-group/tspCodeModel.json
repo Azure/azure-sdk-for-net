@@ -26,7 +26,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "4",
@@ -39,7 +40,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "5",
@@ -52,7 +54,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "6",
@@ -65,7 +68,8 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "7",
@@ -78,14 +82,16 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Client.Structure.Service",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [],
@@ -95,17 +101,20 @@
       "$id": "8",
       "kind": "client",
       "name": "FirstClient",
+      "isExactName": false,
       "namespace": "Client.Structure.ClientOperationGroup",
       "methods": [
         {
           "$id": "9",
           "kind": "basic",
           "name": "one",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "10",
             "name": "one",
+            "isExactName": false,
             "resourceName": "ClientOperationGroup",
             "accessibility": "public",
             "parameters": [],
@@ -157,7 +166,8 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.endpoint"
+          "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.endpoint",
+          "isExactName": false
         },
         {
           "$id": "13",
@@ -175,7 +185,8 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.client"
+          "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.client",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -187,17 +198,20 @@
           "$id": "14",
           "kind": "client",
           "name": "Group3",
+          "isExactName": false,
           "namespace": "Client.Structure.ClientOperationGroup",
           "methods": [
             {
               "$id": "15",
               "kind": "basic",
               "name": "two",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "16",
                 "name": "two",
+                "isExactName": false,
                 "resourceName": "Group3",
                 "accessibility": "public",
                 "parameters": [],
@@ -232,11 +246,13 @@
               "$id": "17",
               "kind": "basic",
               "name": "three",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "18",
                 "name": "three",
+                "isExactName": false,
                 "resourceName": "Group3",
                 "accessibility": "public",
                 "parameters": [],
@@ -288,7 +304,8 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group3.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group3.endpoint",
+              "isExactName": false
             },
             {
               "$id": "21",
@@ -306,7 +323,8 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group3.client"
+              "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group3.client",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -322,17 +340,20 @@
           "$id": "22",
           "kind": "client",
           "name": "Group4",
+          "isExactName": false,
           "namespace": "Client.Structure.ClientOperationGroup",
           "methods": [
             {
               "$id": "23",
               "kind": "basic",
               "name": "four",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "24",
                 "name": "four",
+                "isExactName": false,
                 "resourceName": "Group4",
                 "accessibility": "public",
                 "parameters": [],
@@ -384,7 +405,8 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group4.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group4.endpoint",
+              "isExactName": false
             },
             {
               "$id": "27",
@@ -402,7 +424,8 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group4.client"
+              "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group4.client",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -421,17 +444,20 @@
       "$id": "28",
       "kind": "client",
       "name": "SubNamespace.SecondClient",
+      "isExactName": false,
       "namespace": "Client.Structure.AnotherClientOperationGroup",
       "methods": [
         {
           "$id": "29",
           "kind": "basic",
           "name": "five",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "30",
             "name": "five",
+            "isExactName": false,
             "resourceName": "AnotherClientOperationGroup",
             "accessibility": "public",
             "parameters": [],
@@ -483,7 +509,8 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.endpoint"
+          "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.endpoint",
+          "isExactName": false
         },
         {
           "$id": "33",
@@ -501,7 +528,8 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.client"
+          "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.client",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -513,17 +541,20 @@
           "$id": "34",
           "kind": "client",
           "name": "Group5",
+          "isExactName": false,
           "namespace": "Client.Structure.AnotherClientOperationGroup",
           "methods": [
             {
               "$id": "35",
               "kind": "basic",
               "name": "six",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "36",
                 "name": "six",
+                "isExactName": false,
                 "resourceName": "Group5",
                 "accessibility": "public",
                 "parameters": [],
@@ -575,7 +606,8 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.Group5.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.Group5.endpoint",
+              "isExactName": false
             },
             {
               "$id": "39",
@@ -593,7 +625,8 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.Group5.client"
+              "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.Group5.client",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

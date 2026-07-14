@@ -1,0 +1,6 @@
+directory: specification/hybridnetwork/HybridNetwork.Management
+commit: 645546d9a5519b169437b076df0624ff861f55b8
+repo: Azure/azure-rest-api-specs
+additionalDirectories:
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

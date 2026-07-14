@@ -47,6 +47,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _family = DefineProperty<ContainerServiceIPFamily>(nameof(Family), new string[] { "family" }, isOutput: true);
             _ip = DefineProperty<string>(nameof(IP), new string[] { "ip" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceMachineIPAddress that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -6,44 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A Class representing a BillingPaymentMethod along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingPaymentMethodResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBillingPaymentMethodResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingPaymentMethod method.
+    /// A class representing a BillingPaymentMethod along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingPaymentMethodResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingPaymentMethods method.
     /// </summary>
     public partial class BillingPaymentMethodResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BillingPaymentMethodResource"/> instance. </summary>
-        /// <param name="paymentMethodName"> The paymentMethodName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string paymentMethodName)
-        {
-            var resourceId = $"/providers/Microsoft.Billing/paymentMethods/{paymentMethodName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _billingPaymentMethodPaymentMethodsClientDiagnostics;
-        private readonly PaymentMethodsRestOperations _billingPaymentMethodPaymentMethodsRestClient;
+        private readonly ClientDiagnostics _paymentMethodsClientDiagnostics;
+        private readonly PaymentMethods _paymentMethodsRestClient;
         private readonly BillingPaymentMethodData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/paymentMethods";
 
-        /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingPaymentMethodResource for mocking. </summary>
         protected BillingPaymentMethodResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingPaymentMethodResource(ArmClient client, BillingPaymentMethodData data) : this(client, data.Id)
@@ -52,71 +44,90 @@ namespace Azure.ResourceManager.Billing
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingPaymentMethodResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingPaymentMethodPaymentMethodsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string billingPaymentMethodPaymentMethodsApiVersion);
-            _billingPaymentMethodPaymentMethodsRestClient = new PaymentMethodsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingPaymentMethodPaymentMethodsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string billingPaymentMethodApiVersion);
+            _paymentMethodsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _paymentMethodsRestClient = new PaymentMethods(_paymentMethodsClientDiagnostics, Pipeline, Endpoint, billingPaymentMethodApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BillingPaymentMethodData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="paymentMethodName"> The paymentMethodName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string paymentMethodName)
+        {
+            string resourceId = $"/providers/Microsoft.Billing/paymentMethods/{paymentMethodName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a payment method owned by the caller.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/paymentMethods/{paymentMethodName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/paymentMethods/{paymentMethodName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PaymentMethods_GetByUser</description>
+        /// <term> Operation Id. </term>
+        /// <description> PaymentMethodOperationGroup_GetByUser. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPaymentMethodResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingPaymentMethodResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BillingPaymentMethodResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodResource.Get");
+            using DiagnosticScope scope = _paymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodResource.Get");
             scope.Start();
             try
             {
-                var response = await _billingPaymentMethodPaymentMethodsRestClient.GetByUserAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _paymentMethodsRestClient.CreateGetByUserRequest(Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingPaymentMethodData> response = Response.FromValue(BillingPaymentMethodData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingPaymentMethodResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +141,41 @@ namespace Azure.ResourceManager.Billing
         /// Gets a payment method owned by the caller.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/paymentMethods/{paymentMethodName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/paymentMethods/{paymentMethodName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PaymentMethods_GetByUser</description>
+        /// <term> Operation Id. </term>
+        /// <description> PaymentMethodOperationGroup_GetByUser. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPaymentMethodResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingPaymentMethodResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BillingPaymentMethodResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodResource.Get");
+            using DiagnosticScope scope = _paymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodResource.Get");
             scope.Start();
             try
             {
-                var response = _billingPaymentMethodPaymentMethodsRestClient.GetByUser(Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _paymentMethodsRestClient.CreateGetByUserRequest(Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingPaymentMethodData> response = Response.FromValue(BillingPaymentMethodData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingPaymentMethodResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -170,20 +189,20 @@ namespace Azure.ResourceManager.Billing
         /// Deletes a payment method owned by the caller.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/paymentMethods/{paymentMethodName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/paymentMethods/{paymentMethodName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PaymentMethods_DeleteByUser</description>
+        /// <term> Operation Id. </term>
+        /// <description> PaymentMethodOperationGroup_DeleteByUser. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPaymentMethodResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingPaymentMethodResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,16 +210,23 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodResource.Delete");
+            using DiagnosticScope scope = _paymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodResource.Delete");
             scope.Start();
             try
             {
-                var response = await _billingPaymentMethodPaymentMethodsRestClient.DeleteByUserAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _billingPaymentMethodPaymentMethodsRestClient.CreateDeleteByUserRequestUri(Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new BillingArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _paymentMethodsRestClient.CreateDeleteByUserRequest(Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                BillingArmOperation operation = new BillingArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.Billing
         /// Deletes a payment method owned by the caller.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/paymentMethods/{paymentMethodName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/paymentMethods/{paymentMethodName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PaymentMethods_DeleteByUser</description>
+        /// <term> Operation Id. </term>
+        /// <description> PaymentMethodOperationGroup_DeleteByUser. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPaymentMethodResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingPaymentMethodResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,16 +261,23 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodResource.Delete");
+            using DiagnosticScope scope = _paymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodResource.Delete");
             scope.Start();
             try
             {
-                var response = _billingPaymentMethodPaymentMethodsRestClient.DeleteByUser(Id.Name, cancellationToken);
-                var uri = _billingPaymentMethodPaymentMethodsRestClient.CreateDeleteByUserRequestUri(Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new BillingArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _paymentMethodsRestClient.CreateDeleteByUserRequest(Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                BillingArmOperation operation = new BillingArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

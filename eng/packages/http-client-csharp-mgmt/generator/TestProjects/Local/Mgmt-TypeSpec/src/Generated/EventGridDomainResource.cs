@@ -338,7 +338,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _eventGridDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EventGridDomainData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<EventGridDomainResource> operation = new TestsArmOperation<EventGridDomainResource>(
-                    new EventGridDomainOperationSource(Client),
+                    new EventGridDomainResourceOperationSource(Client),
                     _eventGridDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -398,7 +398,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _eventGridDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EventGridDomainData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<EventGridDomainResource> operation = new TestsArmOperation<EventGridDomainResource>(
-                    new EventGridDomainOperationSource(Client),
+                    new EventGridDomainResourceOperationSource(Client),
                     _eventGridDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,

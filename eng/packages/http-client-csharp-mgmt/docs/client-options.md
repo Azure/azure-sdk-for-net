@@ -142,6 +142,21 @@ public override ResourceNameRequirements GetResourceNameRequirements()
 
 The `pattern` string is parsed to determine which `ResourceNameCharacters` flags to include. Character classes (`[a-z]`, `[A-Z]`, `[0-9]`, `-`, `_`, `.`, `()`) are extracted from the regex and tested against representative characters.
 
+## `resource-operation-kind`
+
+Overrides how a resource action is represented in the emitted ARM resource metadata.
+
+**Target:** ARM resource action operation.
+
+**Value:** `"CollectionAction"` marks the operation as a collection action so the generator places it on the resource collection client.
+
+**Example:**
+
+```typespec
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Mark collection action placement"
+@@clientOption(AlertActions.simulate, "resource-operation-kind", "CollectionAction", "csharp");
+```
+
 ## `disable-safe-flatten`
 
 Opts a model out of the C# generator's *safe-flatten* transform. By default, when a parent model has a property whose type is another model that contains exactly one public, non-discriminator, non-obsolete property, the generator lifts that single inner property up onto the parent and removes the inner type. Setting `disable-safe-flatten` to `true` on the inner model preserves it as a public type and keeps the parent's property pointing at it.

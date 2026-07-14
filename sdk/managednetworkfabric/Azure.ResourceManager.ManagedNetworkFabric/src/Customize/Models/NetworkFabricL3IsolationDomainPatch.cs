@@ -1,0 +1,449 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text.Json;
+using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
+
+namespace Azure.ResourceManager.ManagedNetworkFabric.Models
+{
+    // 1. The TypeSpec patch model now keeps the Swagger-compatible TagsUpdate base and the generated
+    //    C# patch shape is renamed to NetworkFabricL3IsolationDomainPatchContent.
+    // 2. We keep this obsolete compatibility type with the shipped NetworkFabricL3IsolationDomainPatch name and original
+    //    NetworkRackPatch inheritance, then adapt it to the generated content type at operation boundaries.
+    // 3. Without this custom code, the public NetworkFabricL3IsolationDomainPatch type and Update overloads that accept it would be
+    //    removed or would have the wrong base type, breaking existing callers.
+    /// <summary> The L3 Isolation Domain patch resource definition. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This compatibility type is obsolete and will be removed in a future version. Use NetworkFabricL3IsolationDomainPatchContent instead.")]
+    public partial class NetworkFabricL3IsolationDomainPatch : NetworkRackPatch, IJsonModel<NetworkFabricL3IsolationDomainPatch>, IPersistableModel<NetworkFabricL3IsolationDomainPatch>
+    {
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainPatch"/>. </summary>
+        public NetworkFabricL3IsolationDomainPatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> L3 Isolation Domain resource patch properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal NetworkFabricL3IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, L3IsolationDomainPatchProperties properties, NetworkFabricManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
+        {
+            Properties = properties;
+            Identity = identity;
+        }
+
+        /// <summary> L3 Isolation Domain resource patch properties. </summary>
+        internal L3IsolationDomainPatchProperties Properties { get; set; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
+
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
+        /// <summary> Advertise Connected Subnets. Ex: "True" | "False". </summary>
+        public RedistributeConnectedSubnet? RedistributeConnectedSubnets
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedistributeConnectedSubnets;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.RedistributeConnectedSubnets = value;
+            }
+        }
+
+        /// <summary> Advertise Static Routes. Ex: "True" | "False". </summary>
+        public RedistributeStaticRoute? RedistributeStaticRoutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedistributeStaticRoutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.RedistributeStaticRoutes = value;
+            }
+        }
+
+        /// <summary> Aggregate route configurations. </summary>
+        public AggregateRouteConfiguration AggregateRouteConfiguration
+        {
+            get
+            {
+                return ToAggregateRouteConfiguration(Properties?.AggregateRouteSettings);
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.AggregateRouteSettings = ToAggregateRoutePatchConfiguration(value);
+            }
+        }
+
+        /// <summary> Connected Subnet RoutePolicy. </summary>
+        public ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy
+        {
+            get
+            {
+                return ToConnectedSubnetRoutePolicy(Properties?.ConnectedSubnetRoutePolicySettings);
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.ConnectedSubnetRoutePolicySettings = ToConnectedSubnetRoutePolicyPatch(value);
+            }
+        }
+
+        /// <summary> IPv4 VRF Limit configuration. </summary>
+        public RoutePrefixLimitPatchProperties V4RoutePrefixLimit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.V4RoutePrefixLimit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.V4RoutePrefixLimit = value;
+            }
+        }
+
+        /// <summary> IPv6 VRF Limit configuration. </summary>
+        public RoutePrefixLimitPatchProperties V6RoutePrefixLimit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.V6RoutePrefixLimit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.V6RoutePrefixLimit = value;
+            }
+        }
+
+        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
+        public L3ExportRoutePolicyPatch StaticRouteExportRoutePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StaticRouteExportRoutePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.StaticRouteExportRoutePolicy = value;
+            }
+        }
+
+        /// <summary> Export Policy for the BGP Monitoring Protocol (BMP) Configuration. </summary>
+        public IList<BmpExportPolicy> ExportPolicies
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                return Properties.ExportPolicies;
+            }
+        }
+
+        private static AggregateRouteConfiguration ToAggregateRouteConfiguration(AggregateRoutePatchConfiguration value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            var result = new AggregateRouteConfiguration();
+            foreach (var route in value.IPv4Routes)
+            {
+                result.IPv4Routes.Add(route);
+            }
+            foreach (var route in value.IPv6Routes)
+            {
+                result.IPv6Routes.Add(route);
+            }
+            return result;
+        }
+
+        private static AggregateRoutePatchConfiguration ToAggregateRoutePatchConfiguration(AggregateRouteConfiguration value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            var result = new AggregateRoutePatchConfiguration();
+            foreach (var route in value.IPv4Routes)
+            {
+                result.IPv4Routes.Add(route);
+            }
+            foreach (var route in value.IPv6Routes)
+            {
+                result.IPv6Routes.Add(route);
+            }
+            return result;
+        }
+
+        private static ConnectedSubnetRoutePolicy ToConnectedSubnetRoutePolicy(ConnectedSubnetRoutePolicyPatch value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            return new ConnectedSubnetRoutePolicy
+            {
+                ExportRoutePolicy = ToL3ExportRoutePolicy(value.ExportRoutePolicy)
+            };
+        }
+
+        private static ConnectedSubnetRoutePolicyPatch ToConnectedSubnetRoutePolicyPatch(ConnectedSubnetRoutePolicy value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            return new ConnectedSubnetRoutePolicyPatch
+            {
+                ExportRoutePolicy = ToL3ExportRoutePolicyPatch(value.ExportRoutePolicy)
+            };
+        }
+
+        private static L3ExportRoutePolicy ToL3ExportRoutePolicy(L3ExportRoutePolicyPatch value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            return new L3ExportRoutePolicy
+            {
+                ExportIPv4RoutePolicyId = value.ExportIPv4RoutePolicyId,
+                ExportIPv6RoutePolicyId = value.ExportIPv6RoutePolicyId
+            };
+        }
+
+        private static L3ExportRoutePolicyPatch ToL3ExportRoutePolicyPatch(L3ExportRoutePolicy value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            return new L3ExportRoutePolicyPatch
+            {
+                ExportIPv4RoutePolicyId = value.ExportIPv4RoutePolicyId,
+                ExportIPv6RoutePolicyId = value.ExportIPv6RoutePolicyId
+            };
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkRackPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkFabricL3IsolationDomainPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkFabricL3IsolationDomainPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricL3IsolationDomainPatch IPersistableModel<NetworkFabricL3IsolationDomainPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkFabricL3IsolationDomainPatch)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFabricL3IsolationDomainPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="networkFabricL3IsolationDomainPatch"> The <see cref="NetworkFabricL3IsolationDomainPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkFabricL3IsolationDomainPatch networkFabricL3IsolationDomainPatch)
+        {
+            if (networkFabricL3IsolationDomainPatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(networkFabricL3IsolationDomainPatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<NetworkFabricL3IsolationDomainPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainPatch)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricL3IsolationDomainPatch IJsonModel<NetworkFabricL3IsolationDomainPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkFabricL3IsolationDomainPatch)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkRackPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainPatch)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFabricL3IsolationDomainPatch(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkFabricL3IsolationDomainPatch DeserializeNetworkFabricL3IsolationDomainPatch(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IDictionary<string, string> tags = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            L3IsolationDomainPatchProperties properties = default;
+            NetworkFabricManagedServiceIdentityPatch identity = default;
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = L3IsolationDomainPatchProperties.DeserializeL3IsolationDomainPatchProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(prop.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new NetworkFabricL3IsolationDomainPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties, identity);
+        }
+    }
+}

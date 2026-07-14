@@ -27,7 +27,8 @@
             "$ref": "1"
           },
           "doc": "Pending status.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "4",
@@ -41,7 +42,8 @@
             "$ref": "1"
           },
           "doc": "Success status.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "5",
@@ -55,7 +57,8 @@
             "$ref": "1"
           },
           "doc": "Error status.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Payload.Xml",
@@ -63,7 +66,8 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "8",
@@ -97,7 +102,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "10",
@@ -113,7 +119,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "12",
@@ -129,7 +136,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "14",
@@ -145,7 +153,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "16",
@@ -161,7 +170,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "18",
@@ -177,7 +187,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "20",
@@ -193,7 +204,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "22",
@@ -209,7 +221,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "24",
@@ -225,7 +238,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "26",
@@ -241,7 +255,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "28",
@@ -257,7 +272,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "30",
@@ -273,7 +289,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "32",
@@ -289,7 +306,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "34",
@@ -305,7 +323,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "36",
@@ -321,7 +340,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "38",
@@ -337,7 +357,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "40",
@@ -353,7 +374,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "42",
@@ -369,7 +391,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "44",
@@ -385,7 +408,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "46",
@@ -401,7 +425,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "48",
@@ -417,7 +442,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "50",
@@ -433,7 +459,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "52",
@@ -449,7 +476,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "54",
@@ -465,7 +493,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "56",
@@ -481,7 +510,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "58",
@@ -497,7 +527,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "60",
@@ -513,7 +544,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "62",
@@ -529,7 +561,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "64",
@@ -545,7 +578,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "66",
@@ -561,7 +595,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "68",
@@ -577,7 +612,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "70",
@@ -593,7 +629,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "72",
@@ -609,7 +646,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "74",
@@ -625,7 +663,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "76",
@@ -641,7 +680,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "78",
@@ -657,7 +697,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "80",
@@ -673,7 +714,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "82",
@@ -689,7 +731,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "84",
@@ -705,7 +748,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "86",
@@ -721,7 +765,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "88",
@@ -737,7 +782,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "90",
@@ -753,7 +799,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "92",
@@ -769,7 +816,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "94",
@@ -785,7 +833,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "96",
@@ -801,7 +850,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "98",
@@ -817,7 +867,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "100",
@@ -833,7 +884,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "102",
@@ -849,7 +901,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "104",
@@ -865,7 +918,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "106",
@@ -881,7 +935,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "108",
@@ -897,7 +952,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "110",
@@ -913,7 +969,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "112",
@@ -929,7 +986,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "114",
@@ -945,7 +1003,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "116",
@@ -961,7 +1020,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "118",
@@ -977,7 +1037,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "120",
@@ -993,7 +1054,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "122",
@@ -1009,7 +1071,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "124",
@@ -1025,7 +1088,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "126",
@@ -1041,7 +1105,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "128",
@@ -1057,7 +1122,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "130",
@@ -1073,7 +1139,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "132",
@@ -1089,7 +1156,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "134",
@@ -1105,7 +1173,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "136",
@@ -1121,7 +1190,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "138",
@@ -1137,7 +1207,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "140",
@@ -1153,7 +1224,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "142",
@@ -1169,7 +1241,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "144",
@@ -1185,7 +1258,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "146",
@@ -1201,7 +1275,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "148",
@@ -1217,7 +1292,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "150",
@@ -1233,7 +1309,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "152",
@@ -1249,7 +1326,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "154",
@@ -1265,7 +1343,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "156",
@@ -1281,7 +1360,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "158",
@@ -1297,7 +1377,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "160",
@@ -1313,7 +1394,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "162",
@@ -1329,7 +1411,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "164",
@@ -1345,7 +1428,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "166",
@@ -1361,7 +1445,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "168",
@@ -1377,7 +1462,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "170",
@@ -1393,7 +1479,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "172",
@@ -1409,7 +1496,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "174",
@@ -1425,7 +1513,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "176",
@@ -1441,7 +1530,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "178",
@@ -1457,7 +1547,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "180",
@@ -1473,7 +1564,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "182",
@@ -1489,7 +1581,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "184",
@@ -1505,7 +1598,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "186",
@@ -1521,7 +1615,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "188",
@@ -1537,7 +1632,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "190",
@@ -1553,7 +1649,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "192",
@@ -1569,7 +1666,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "194",
@@ -1585,7 +1683,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "196",
@@ -1601,7 +1700,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "198",
@@ -1617,7 +1717,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "200",
@@ -1633,7 +1734,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "202",
@@ -1649,7 +1751,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "204",
@@ -1665,7 +1768,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "206",
@@ -1681,7 +1785,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "208",
@@ -1697,7 +1802,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -1717,6 +1823,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "211",
@@ -1743,7 +1850,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "213",
@@ -1770,7 +1878,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1790,6 +1899,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "216",
@@ -1823,7 +1933,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "218",
@@ -1850,7 +1961,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1877,6 +1989,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "221",
@@ -1906,7 +2019,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "222",
@@ -1936,7 +2050,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1956,6 +2071,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "224",
@@ -1978,7 +2094,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1998,6 +2115,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "226",
@@ -2027,6 +2145,7 @@
                 "unwrapped": false
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "228",
@@ -2053,7 +2172,8 @@
                     "unwrapped": false
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -2070,7 +2190,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2093,6 +2214,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "231",
@@ -2127,7 +2249,8 @@
               "itemsName": "string"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "234",
@@ -2162,7 +2285,8 @@
               "itemsName": "int32"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2182,6 +2306,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "238",
@@ -2210,7 +2335,8 @@
               "itemsName": "colors"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "239",
@@ -2234,7 +2360,8 @@
               "itemsName": "int32"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2254,6 +2381,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "241",
@@ -2288,7 +2416,8 @@
               "itemsName": "Colors"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "242",
@@ -2319,7 +2448,8 @@
               "itemsName": "int32"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2339,6 +2469,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "244",
@@ -2394,7 +2525,8 @@
               "itemsName": "ItemName"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2414,6 +2546,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "249",
@@ -2444,7 +2577,8 @@
               "itemsName": "SimpleModel"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2464,6 +2598,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "252",
@@ -2492,7 +2627,8 @@
               "itemsName": "items"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2512,6 +2648,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "254",
@@ -2542,7 +2679,8 @@
               "itemsName": "SimpleModel"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2562,6 +2700,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "256",
@@ -2596,7 +2735,8 @@
               "itemsName": "ModelItem"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2616,6 +2756,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "258",
@@ -2649,6 +2790,7 @@
                   "unwrapped": false
                 }
               },
+              "isExactName": false,
               "properties": [
                 {
                   "$id": "261",
@@ -2675,7 +2817,8 @@
                       "unwrapped": false
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 }
               ]
             },
@@ -2703,7 +2846,8 @@
               "itemsName": "XmlBook"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2726,6 +2870,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "264",
@@ -2757,7 +2902,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "266",
@@ -2789,7 +2935,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "268",
@@ -2816,7 +2963,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2836,6 +2984,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "271",
@@ -2873,7 +3022,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "273",
@@ -2900,7 +3050,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "275",
@@ -2927,7 +3078,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2948,6 +3100,7 @@
               "kind": "enumvalue",
               "decorators": [],
               "name": "smp",
+              "isExactName": false,
               "value": "http://example.com/schema",
               "enumType": {
                 "$id": "279",
@@ -2976,6 +3129,7 @@
                     "kind": "enumvalue",
                     "decorators": [],
                     "name": "smp",
+                    "isExactName": false,
                     "value": "http://example.com/schema",
                     "enumType": {
                       "$ref": "279"
@@ -2990,6 +3144,7 @@
                     "kind": "enumvalue",
                     "decorators": [],
                     "name": "ns2",
+                    "isExactName": false,
                     "value": "http://example.com/ns2",
                     "enumType": {
                       "$ref": "279"
@@ -3028,6 +3183,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "283",
@@ -3054,7 +3210,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "285",
@@ -3081,7 +3238,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3102,6 +3260,7 @@
               "kind": "enumvalue",
               "decorators": [],
               "name": "smp",
+              "isExactName": false,
               "value": "http://example.com/schema",
               "enumType": {
                 "$ref": "279"
@@ -3125,6 +3284,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "289",
@@ -3151,7 +3311,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "291",
@@ -3178,6 +3339,7 @@
                   "kind": "enumvalue",
                   "decorators": [],
                   "name": "smp",
+                  "isExactName": false,
                   "value": "http://example.com/schema",
                   "enumType": {
                     "$ref": "279"
@@ -3202,7 +3364,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "294",
@@ -3229,6 +3392,7 @@
                   "kind": "enumvalue",
                   "decorators": [],
                   "name": "ns2",
+                  "isExactName": false,
                   "value": "http://example.com/ns2",
                   "enumType": {
                     "$ref": "279"
@@ -3253,7 +3417,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3273,6 +3438,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "298",
@@ -3304,7 +3470,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "300",
@@ -3336,7 +3503,8 @@
               "unwrapped": true
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3356,6 +3524,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "303",
@@ -3382,7 +3551,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "305",
@@ -3409,7 +3579,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3429,6 +3600,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "308",
@@ -3452,7 +3624,8 @@
               "itemsName": "SimpleModel"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3472,6 +3645,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "310",
@@ -3510,7 +3684,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3530,6 +3705,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "315",
@@ -3552,7 +3728,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "316",
@@ -3576,7 +3753,8 @@
               "itemsName": "string"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3596,6 +3774,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "318",
@@ -3618,7 +3797,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3638,6 +3818,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "320",
@@ -3673,7 +3854,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "323",
@@ -3709,7 +3891,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3729,6 +3912,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "327",
@@ -3755,7 +3939,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "329",
@@ -3782,7 +3967,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -3792,6 +3978,7 @@
       "$id": "331",
       "kind": "client",
       "name": "XmlClient",
+      "isExactName": false,
       "namespace": "Payload.Xml",
       "doc": "Sends and receives bodies in XML format.",
       "methods": [],
@@ -3824,7 +4011,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Payload.Xml.endpoint"
+          "crossLanguageDefinitionId": "Payload.Xml.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -3836,6 +4024,7 @@
           "$id": "335",
           "kind": "client",
           "name": "SimpleModelValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§1.1 — Operations for the SimpleModel type.",
           "methods": [
@@ -3843,11 +4032,13 @@
               "$id": "336",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "337",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "SimpleModelValue",
                 "accessibility": "public",
                 "parameters": [
@@ -3882,9 +4073,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.SimpleModelValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3944,11 +4137,13 @@
               "$id": "340",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "341",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "SimpleModelValue",
                 "accessibility": "public",
                 "parameters": [
@@ -3983,9 +4178,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.SimpleModelValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "344",
@@ -4021,9 +4218,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.SimpleModelValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -4098,7 +4297,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.SimpleModelValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.SimpleModelValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -4114,6 +4314,7 @@
           "$id": "349",
           "kind": "client",
           "name": "ModelWithRenamedPropertyValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§1.2 — Operations for the ModelWithRenamedProperty type.",
           "methods": [
@@ -4121,11 +4322,13 @@
               "$id": "350",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "351",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedPropertyValue",
                 "accessibility": "public",
                 "parameters": [
@@ -4160,9 +4363,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedPropertyValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -4222,11 +4427,13 @@
               "$id": "354",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "355",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedPropertyValue",
                 "accessibility": "public",
                 "parameters": [
@@ -4261,9 +4468,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedPropertyValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "358",
@@ -4299,9 +4508,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedPropertyValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -4376,7 +4587,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedPropertyValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedPropertyValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -4392,6 +4604,7 @@
           "$id": "363",
           "kind": "client",
           "name": "ModelWithRenamedFieldsValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§1.3, §2.3 — Operations for the ModelWithRenamedFields type.",
           "methods": [
@@ -4399,11 +4612,13 @@
               "$id": "364",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "365",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedFieldsValue",
                 "accessibility": "public",
                 "parameters": [
@@ -4438,9 +4653,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedFieldsValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -4500,11 +4717,13 @@
               "$id": "368",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "369",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedFieldsValue",
                 "accessibility": "public",
                 "parameters": [
@@ -4539,9 +4758,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedFieldsValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "372",
@@ -4577,9 +4798,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedFieldsValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -4654,7 +4877,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedFieldsValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedFieldsValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -4670,6 +4894,7 @@
           "$id": "377",
           "kind": "client",
           "name": "ModelWithNestedModelValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§2.1 — Operations for the ModelWithNestedModel type.",
           "methods": [
@@ -4677,11 +4902,13 @@
               "$id": "378",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "379",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithNestedModelValue",
                 "accessibility": "public",
                 "parameters": [
@@ -4716,9 +4943,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNestedModelValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -4778,11 +5007,13 @@
               "$id": "382",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "383",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithNestedModelValue",
                 "accessibility": "public",
                 "parameters": [
@@ -4817,9 +5048,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNestedModelValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "386",
@@ -4855,9 +5088,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNestedModelValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -4932,7 +5167,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithNestedModelValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithNestedModelValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -4948,6 +5184,7 @@
           "$id": "391",
           "kind": "client",
           "name": "ModelWithRenamedNestedModelValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§2.2 — Operations for the ModelWithRenamedNestedModel type.",
           "methods": [
@@ -4955,11 +5192,13 @@
               "$id": "392",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "393",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedNestedModelValue",
                 "accessibility": "public",
                 "parameters": [
@@ -4994,9 +5233,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedNestedModelValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -5056,11 +5297,13 @@
               "$id": "396",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "397",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedNestedModelValue",
                 "accessibility": "public",
                 "parameters": [
@@ -5095,9 +5338,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedNestedModelValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "400",
@@ -5133,9 +5378,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedNestedModelValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -5210,7 +5457,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedNestedModelValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedNestedModelValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -5226,6 +5474,7 @@
           "$id": "405",
           "kind": "client",
           "name": "ModelWithSimpleArraysValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§3.1 — Operations for the ModelWithSimpleArrays type.",
           "methods": [
@@ -5233,11 +5482,13 @@
               "$id": "406",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "407",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithSimpleArraysValue",
                 "accessibility": "public",
                 "parameters": [
@@ -5272,9 +5523,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithSimpleArraysValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -5334,11 +5587,13 @@
               "$id": "410",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "411",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithSimpleArraysValue",
                 "accessibility": "public",
                 "parameters": [
@@ -5373,9 +5628,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithSimpleArraysValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "414",
@@ -5411,9 +5668,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithSimpleArraysValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -5488,7 +5747,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithSimpleArraysValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithSimpleArraysValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -5504,6 +5764,7 @@
           "$id": "419",
           "kind": "client",
           "name": "ModelWithUnwrappedArrayValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§3.2 — Operations for the ModelWithUnwrappedArray type.",
           "methods": [
@@ -5511,11 +5772,13 @@
               "$id": "420",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "421",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithUnwrappedArrayValue",
                 "accessibility": "public",
                 "parameters": [
@@ -5550,9 +5813,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedArrayValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -5612,11 +5877,13 @@
               "$id": "424",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "425",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithUnwrappedArrayValue",
                 "accessibility": "public",
                 "parameters": [
@@ -5651,9 +5918,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedArrayValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "428",
@@ -5689,9 +5958,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedArrayValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -5766,7 +6037,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedArrayValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedArrayValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -5782,6 +6054,7 @@
           "$id": "433",
           "kind": "client",
           "name": "ModelWithRenamedArraysValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§3.3, §3.4 — Operations for the ModelWithRenamedArrays type.",
           "methods": [
@@ -5789,11 +6062,13 @@
               "$id": "434",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "435",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedArraysValue",
                 "accessibility": "public",
                 "parameters": [
@@ -5828,9 +6103,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedArraysValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -5890,11 +6167,13 @@
               "$id": "438",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "439",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedArraysValue",
                 "accessibility": "public",
                 "parameters": [
@@ -5929,9 +6208,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedArraysValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "442",
@@ -5967,9 +6248,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedArraysValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -6044,7 +6327,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedArraysValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedArraysValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -6060,6 +6344,7 @@
           "$id": "447",
           "kind": "client",
           "name": "ModelWithWrappedPrimitiveCustomItemNamesValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§3.5 — Operations for the ModelWithWrappedPrimitiveCustomItemNames type.",
           "methods": [
@@ -6067,11 +6352,13 @@
               "$id": "448",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "449",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithWrappedPrimitiveCustomItemNamesValue",
                 "accessibility": "public",
                 "parameters": [
@@ -6106,9 +6393,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithWrappedPrimitiveCustomItemNamesValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -6168,11 +6457,13 @@
               "$id": "452",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "453",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithWrappedPrimitiveCustomItemNamesValue",
                 "accessibility": "public",
                 "parameters": [
@@ -6207,9 +6498,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithWrappedPrimitiveCustomItemNamesValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "456",
@@ -6245,9 +6538,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithWrappedPrimitiveCustomItemNamesValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -6322,7 +6617,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithWrappedPrimitiveCustomItemNamesValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithWrappedPrimitiveCustomItemNamesValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -6338,6 +6634,7 @@
           "$id": "461",
           "kind": "client",
           "name": "ModelWithArrayOfModelValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§4.1 — Operations for the ModelWithArrayOfModel type.",
           "methods": [
@@ -6345,11 +6642,13 @@
               "$id": "462",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "463",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithArrayOfModelValue",
                 "accessibility": "public",
                 "parameters": [
@@ -6384,9 +6683,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithArrayOfModelValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -6446,11 +6747,13 @@
               "$id": "466",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "467",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithArrayOfModelValue",
                 "accessibility": "public",
                 "parameters": [
@@ -6485,9 +6788,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithArrayOfModelValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "470",
@@ -6523,9 +6828,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithArrayOfModelValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -6600,7 +6907,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithArrayOfModelValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithArrayOfModelValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -6616,6 +6924,7 @@
           "$id": "475",
           "kind": "client",
           "name": "ModelWithUnwrappedModelArrayValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§4.2 — Operations for the ModelWithUnwrappedModelArray type.",
           "methods": [
@@ -6623,11 +6932,13 @@
               "$id": "476",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "477",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithUnwrappedModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
@@ -6662,9 +6973,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedModelArrayValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -6724,11 +7037,13 @@
               "$id": "480",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "481",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithUnwrappedModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
@@ -6763,9 +7078,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedModelArrayValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "484",
@@ -6801,9 +7118,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedModelArrayValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -6878,7 +7197,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedModelArrayValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedModelArrayValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -6894,6 +7214,7 @@
           "$id": "489",
           "kind": "client",
           "name": "ModelWithRenamedWrappedModelArrayValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§4.3 — Operations for the ModelWithRenamedWrappedModelArray type.",
           "methods": [
@@ -6901,11 +7222,13 @@
               "$id": "490",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "491",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedWrappedModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
@@ -6940,9 +7263,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedModelArrayValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -7002,11 +7327,13 @@
               "$id": "494",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "495",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedWrappedModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
@@ -7041,9 +7368,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedModelArrayValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "498",
@@ -7079,9 +7408,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedModelArrayValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -7156,7 +7487,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedModelArrayValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedModelArrayValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -7172,6 +7504,7 @@
           "$id": "503",
           "kind": "client",
           "name": "ModelWithRenamedUnwrappedModelArrayValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§4.4 — Operations for the ModelWithRenamedUnwrappedModelArray type.",
           "methods": [
@@ -7179,11 +7512,13 @@
               "$id": "504",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "505",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedUnwrappedModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
@@ -7218,9 +7553,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedUnwrappedModelArrayValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -7280,11 +7617,13 @@
               "$id": "508",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "509",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedUnwrappedModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
@@ -7319,9 +7658,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedUnwrappedModelArrayValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "512",
@@ -7357,9 +7698,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedUnwrappedModelArrayValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -7434,7 +7777,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedUnwrappedModelArrayValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedUnwrappedModelArrayValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -7450,6 +7794,7 @@
           "$id": "517",
           "kind": "client",
           "name": "ModelWithRenamedWrappedAndItemModelArrayValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§4.5 — Operations for the ModelWithRenamedWrappedAndItemModelArray type.",
           "methods": [
@@ -7457,11 +7802,13 @@
               "$id": "518",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "519",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedWrappedAndItemModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
@@ -7496,9 +7843,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedAndItemModelArrayValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -7558,11 +7907,13 @@
               "$id": "522",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "523",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedWrappedAndItemModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
@@ -7597,9 +7948,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedAndItemModelArrayValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "526",
@@ -7635,9 +7988,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedAndItemModelArrayValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -7712,7 +8067,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedAndItemModelArrayValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedAndItemModelArrayValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -7728,6 +8084,7 @@
           "$id": "531",
           "kind": "client",
           "name": "ModelWithAttributesValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§5.1 — Operations for the ModelWithAttributes type.",
           "methods": [
@@ -7735,11 +8092,13 @@
               "$id": "532",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "533",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithAttributesValue",
                 "accessibility": "public",
                 "parameters": [
@@ -7774,9 +8133,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithAttributesValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -7836,11 +8197,13 @@
               "$id": "536",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "537",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithAttributesValue",
                 "accessibility": "public",
                 "parameters": [
@@ -7875,9 +8238,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithAttributesValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "540",
@@ -7913,9 +8278,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithAttributesValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -7990,7 +8357,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithAttributesValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithAttributesValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -8006,6 +8374,7 @@
           "$id": "545",
           "kind": "client",
           "name": "ModelWithRenamedAttributeValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§5.2 — Operations for the ModelWithRenamedAttribute type.",
           "methods": [
@@ -8013,11 +8382,13 @@
               "$id": "546",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "547",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedAttributeValue",
                 "accessibility": "public",
                 "parameters": [
@@ -8052,9 +8423,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedAttributeValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -8114,11 +8487,13 @@
               "$id": "550",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "551",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithRenamedAttributeValue",
                 "accessibility": "public",
                 "parameters": [
@@ -8153,9 +8528,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedAttributeValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "554",
@@ -8191,9 +8568,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedAttributeValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -8268,7 +8647,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedAttributeValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedAttributeValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -8284,6 +8664,7 @@
           "$id": "559",
           "kind": "client",
           "name": "ModelWithNamespaceValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§6.1, §7.1 — Operations for the ModelWithNamespace type.",
           "methods": [
@@ -8291,11 +8672,13 @@
               "$id": "560",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "561",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithNamespaceValue",
                 "accessibility": "public",
                 "parameters": [
@@ -8330,9 +8713,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -8392,11 +8777,13 @@
               "$id": "564",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "565",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithNamespaceValue",
                 "accessibility": "public",
                 "parameters": [
@@ -8431,9 +8818,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "568",
@@ -8469,9 +8858,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -8546,7 +8937,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -8562,6 +8954,7 @@
           "$id": "573",
           "kind": "client",
           "name": "ModelWithNamespaceOnPropertiesValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§6.2, §7.2 — Operations for the ModelWithNamespaceOnProperties type.",
           "methods": [
@@ -8569,11 +8962,13 @@
               "$id": "574",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "575",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithNamespaceOnPropertiesValue",
                 "accessibility": "public",
                 "parameters": [
@@ -8608,9 +9003,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceOnPropertiesValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -8670,11 +9067,13 @@
               "$id": "578",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "579",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithNamespaceOnPropertiesValue",
                 "accessibility": "public",
                 "parameters": [
@@ -8709,9 +9108,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceOnPropertiesValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "582",
@@ -8747,9 +9148,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceOnPropertiesValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -8824,7 +9227,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceOnPropertiesValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceOnPropertiesValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -8840,6 +9244,7 @@
           "$id": "587",
           "kind": "client",
           "name": "ModelWithTextValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "§8.1 — Operations for the ModelWithText type.",
           "methods": [
@@ -8847,11 +9252,13 @@
               "$id": "588",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "589",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithTextValue",
                 "accessibility": "public",
                 "parameters": [
@@ -8886,9 +9293,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithTextValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -8948,11 +9357,13 @@
               "$id": "592",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "593",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithTextValue",
                 "accessibility": "public",
                 "parameters": [
@@ -8987,9 +9398,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithTextValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "596",
@@ -9025,9 +9438,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithTextValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -9102,7 +9517,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithTextValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithTextValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -9118,6 +9534,7 @@
           "$id": "601",
           "kind": "client",
           "name": "ModelWithOptionalFieldValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "Operations for the ModelWithOptionalField type.",
           "methods": [
@@ -9125,11 +9542,13 @@
               "$id": "602",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "603",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithOptionalFieldValue",
                 "accessibility": "public",
                 "parameters": [
@@ -9164,9 +9583,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithOptionalFieldValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -9226,11 +9647,13 @@
               "$id": "606",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "607",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithOptionalFieldValue",
                 "accessibility": "public",
                 "parameters": [
@@ -9265,9 +9688,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithOptionalFieldValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "610",
@@ -9303,9 +9728,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithOptionalFieldValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -9380,7 +9807,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithOptionalFieldValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithOptionalFieldValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -9396,6 +9824,7 @@
           "$id": "615",
           "kind": "client",
           "name": "ModelWithEmptyArrayValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "Operations for the ModelWithEmptyArray type.",
           "methods": [
@@ -9403,11 +9832,13 @@
               "$id": "616",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "617",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithEmptyArrayValue",
                 "accessibility": "public",
                 "parameters": [
@@ -9442,9 +9873,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEmptyArrayValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -9504,11 +9937,13 @@
               "$id": "620",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "621",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithEmptyArrayValue",
                 "accessibility": "public",
                 "parameters": [
@@ -9543,9 +9978,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEmptyArrayValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "624",
@@ -9581,9 +10018,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEmptyArrayValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -9658,7 +10097,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithEmptyArrayValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithEmptyArrayValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -9674,6 +10114,7 @@
           "$id": "629",
           "kind": "client",
           "name": "ModelWithDictionaryValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "Operations for the ModelWithDictionary type.",
           "methods": [
@@ -9681,11 +10122,13 @@
               "$id": "630",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "631",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithDictionaryValue",
                 "accessibility": "public",
                 "parameters": [
@@ -9720,9 +10163,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithDictionaryValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -9782,11 +10227,13 @@
               "$id": "634",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "635",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithDictionaryValue",
                 "accessibility": "public",
                 "parameters": [
@@ -9821,9 +10268,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithDictionaryValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "638",
@@ -9859,9 +10308,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithDictionaryValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -9936,7 +10387,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithDictionaryValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithDictionaryValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -9952,6 +10404,7 @@
           "$id": "643",
           "kind": "client",
           "name": "ModelWithEncodedNamesValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "Operations for the ModelWithEncodedNames type.",
           "methods": [
@@ -9959,11 +10412,13 @@
               "$id": "644",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "645",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithEncodedNamesValue",
                 "accessibility": "public",
                 "parameters": [
@@ -9998,9 +10453,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEncodedNamesValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10060,11 +10517,13 @@
               "$id": "648",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "649",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithEncodedNamesValue",
                 "accessibility": "public",
                 "parameters": [
@@ -10099,9 +10558,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEncodedNamesValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "652",
@@ -10137,9 +10598,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEncodedNamesValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -10214,7 +10677,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithEncodedNamesValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithEncodedNamesValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -10230,6 +10694,7 @@
           "$id": "657",
           "kind": "client",
           "name": "ModelWithEnumValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "Operations for the ModelWithEnum type.",
           "methods": [
@@ -10237,11 +10702,13 @@
               "$id": "658",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "659",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithEnumValue",
                 "accessibility": "public",
                 "parameters": [
@@ -10276,9 +10743,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEnumValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10338,11 +10807,13 @@
               "$id": "662",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "663",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithEnumValue",
                 "accessibility": "public",
                 "parameters": [
@@ -10377,9 +10848,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEnumValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "666",
@@ -10415,9 +10888,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEnumValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -10492,7 +10967,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithEnumValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithEnumValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -10508,6 +10984,7 @@
           "$id": "671",
           "kind": "client",
           "name": "ModelWithDatetimeValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "Operations for the ModelWithDatetime type.",
           "methods": [
@@ -10515,11 +10992,13 @@
               "$id": "672",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "673",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "ModelWithDatetimeValue",
                 "accessibility": "public",
                 "parameters": [
@@ -10554,9 +11033,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithDatetimeValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10616,11 +11097,13 @@
               "$id": "676",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "677",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "ModelWithDatetimeValue",
                 "accessibility": "public",
                 "parameters": [
@@ -10655,9 +11138,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithDatetimeValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "680",
@@ -10693,9 +11178,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithDatetimeValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -10770,7 +11257,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithDatetimeValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithDatetimeValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -10786,6 +11274,7 @@
           "$id": "685",
           "kind": "client",
           "name": "XmlErrorValue",
+          "isExactName": false,
           "namespace": "Payload.Xml",
           "doc": "Operations that return an error response in XML format.",
           "methods": [
@@ -10793,11 +11282,13 @@
               "$id": "686",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "687",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "XmlErrorValue",
                 "accessibility": "public",
                 "parameters": [
@@ -10832,9 +11323,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.XmlErrorValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10920,7 +11413,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.XmlErrorValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.XmlErrorValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

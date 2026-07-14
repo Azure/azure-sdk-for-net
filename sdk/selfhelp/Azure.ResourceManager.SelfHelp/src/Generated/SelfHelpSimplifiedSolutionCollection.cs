@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SelfHelp
                 HttpMessage message = _simplifiedSolutionsResourcesRestClient.CreateCreateRequest(Id.ToString(), simplifiedSolutionsResourceName, SelfHelpSimplifiedSolutionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource>(
-                    new SelfHelpSimplifiedSolutionOperationSource(Client),
+                    new SelfHelpSimplifiedSolutionResourceOperationSource(Client),
                     _simplifiedSolutionsResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SelfHelp
                 HttpMessage message = _simplifiedSolutionsResourcesRestClient.CreateCreateRequest(Id.ToString(), simplifiedSolutionsResourceName, SelfHelpSimplifiedSolutionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource>(
-                    new SelfHelpSimplifiedSolutionOperationSource(Client),
+                    new SelfHelpSimplifiedSolutionResourceOperationSource(Client),
                     _simplifiedSolutionsResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

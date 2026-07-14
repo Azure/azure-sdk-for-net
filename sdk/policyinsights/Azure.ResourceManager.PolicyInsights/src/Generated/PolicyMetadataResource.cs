@@ -6,44 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
     /// <summary>
-    /// A Class representing a PolicyMetadata along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PolicyMetadataResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetPolicyMetadataResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetPolicyMetadata method.
+    /// A class representing a PolicyMetadata along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PolicyMetadataResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetAllPolicyMetadata method.
     /// </summary>
     public partial class PolicyMetadataResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PolicyMetadataResource"/> instance. </summary>
-        /// <param name="resourceName"> The resourceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceName)
-        {
-            var resourceId = $"/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _policyMetadataPolicyMetadataClientDiagnostics;
-        private readonly PolicyMetadataRestOperations _policyMetadataPolicyMetadataRestClient;
+        private readonly ClientDiagnostics _policyMetadataClientDiagnostics;
+        private readonly PolicyMetadata _policyMetadataRestClient;
         private readonly PolicyMetadataData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.PolicyInsights/policyMetadata";
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyMetadataResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PolicyMetadataResource for mocking. </summary>
         protected PolicyMetadataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PolicyMetadataResource(ArmClient client, PolicyMetadataData data) : this(client, data.Id)
@@ -52,71 +44,90 @@ namespace Azure.ResourceManager.PolicyInsights
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PolicyMetadataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _policyMetadataPolicyMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string policyMetadataPolicyMetadataApiVersion);
-            _policyMetadataPolicyMetadataRestClient = new PolicyMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, policyMetadataPolicyMetadataApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string policyMetadataApiVersion);
+            _policyMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ResourceType.Namespace, Diagnostics);
+            _policyMetadataRestClient = new PolicyMetadata(_policyMetadataClientDiagnostics, Pipeline, Endpoint, policyMetadataApiVersion ?? "2024-10-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PolicyMetadataData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="resourceName"> The resourceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceName)
+        {
+            string resourceId = $"/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get policy metadata resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyMetadata_GetResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyMetadataOperationGroup_GetResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyMetadataResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PolicyMetadataResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PolicyMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _policyMetadataPolicyMetadataClientDiagnostics.CreateScope("PolicyMetadataResource.Get");
+            using DiagnosticScope scope = _policyMetadataClientDiagnostics.CreateScope("PolicyMetadataResource.Get");
             scope.Start();
             try
             {
-                var response = await _policyMetadataPolicyMetadataRestClient.GetResourceAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policyMetadataRestClient.CreateGetResourceRequest(Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicyMetadataData> response = Response.FromValue(PolicyMetadataData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PolicyMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +141,41 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Get policy metadata resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyMetadata_GetResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyMetadataOperationGroup_GetResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyMetadataResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PolicyMetadataResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PolicyMetadataResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _policyMetadataPolicyMetadataClientDiagnostics.CreateScope("PolicyMetadataResource.Get");
+            using DiagnosticScope scope = _policyMetadataClientDiagnostics.CreateScope("PolicyMetadataResource.Get");
             scope.Start();
             try
             {
-                var response = _policyMetadataPolicyMetadataRestClient.GetResource(Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _policyMetadataRestClient.CreateGetResourceRequest(Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicyMetadataData> response = Response.FromValue(PolicyMetadataData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PolicyMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

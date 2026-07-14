@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _monitoringConfigRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, MonitoringMetricConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<MonitoringMetricConfigurationResource> operation = new DataBoxEdgeArmOperation<MonitoringMetricConfigurationResource>(
-                    new MonitoringMetricConfigurationOperationSource(Client),
+                    new MonitoringMetricConfigurationResourceOperationSource(Client),
                     _monitoringConfigClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _monitoringConfigRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, MonitoringMetricConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<MonitoringMetricConfigurationResource> operation = new DataBoxEdgeArmOperation<MonitoringMetricConfigurationResource>(
-                    new MonitoringMetricConfigurationOperationSource(Client),
+                    new MonitoringMetricConfigurationResourceOperationSource(Client),
                     _monitoringConfigClientDiagnostics,
                     Pipeline,
                     message.Request,

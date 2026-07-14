@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServicesAgentDeploymentProperties IPersistableModel<CognitiveServicesAgentDeploymentProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownCognitiveServicesAgentDeploymentProperties)PersistableModelCreateCore(data, options);
+        CognitiveServicesAgentDeploymentProperties IPersistableModel<CognitiveServicesAgentDeploymentProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (CognitiveServicesAgentDeploymentProperties)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CognitiveServicesAgentDeploymentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServicesAgentDeploymentProperties IJsonModel<CognitiveServicesAgentDeploymentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownCognitiveServicesAgentDeploymentProperties)JsonModelCreateCore(ref reader, options);
+        CognitiveServicesAgentDeploymentProperties IJsonModel<CognitiveServicesAgentDeploymentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (CognitiveServicesAgentDeploymentProperties)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

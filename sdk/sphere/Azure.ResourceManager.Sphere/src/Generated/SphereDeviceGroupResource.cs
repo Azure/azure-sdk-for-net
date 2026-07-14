@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Sphere
                 HttpMessage message = _deviceGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SphereDeviceGroupPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SphereArmOperation<SphereDeviceGroupResource> operation = new SphereArmOperation<SphereDeviceGroupResource>(
-                    new SphereDeviceGroupOperationSource(Client),
+                    new SphereDeviceGroupResourceOperationSource(Client),
                     _deviceGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Sphere
                 HttpMessage message = _deviceGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SphereDeviceGroupPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SphereArmOperation<SphereDeviceGroupResource> operation = new SphereArmOperation<SphereDeviceGroupResource>(
-                    new SphereDeviceGroupOperationSource(Client),
+                    new SphereDeviceGroupResourceOperationSource(Client),
                     _deviceGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,

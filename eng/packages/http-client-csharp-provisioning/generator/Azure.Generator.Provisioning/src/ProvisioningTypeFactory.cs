@@ -119,12 +119,12 @@ namespace Azure.Generator.Provisioning
                 ProvisioningResourceProvider? canonical = null;
                 foreach (var candidate in resources)
                 {
-                    if (string.Equals(candidate.ResourceMetadata?.ResourceName, model.Name, StringComparison.Ordinal))
+                    if (string.Equals(candidate.ResourceProjection?.ResourceName, model.Name, StringComparison.Ordinal))
                     {
                         return candidate;
                     }
                     if (canonical == null
-                        || string.CompareOrdinal(candidate.ResourceMetadata?.ResourceName, canonical.ResourceMetadata?.ResourceName) < 0)
+                        || string.CompareOrdinal(candidate.ResourceProjection?.ResourceName, canonical.ResourceProjection?.ResourceName) < 0)
                     {
                         canonical = candidate;
                     }
@@ -171,6 +171,12 @@ namespace Azure.Generator.Provisioning
 
         /// <inheritdoc/>
         protected override PropertyProvider? CreatePropertyCore(InputProperty inputProperty, TypeProvider enclosingType)
+            => CreateProvisioningProperty(inputProperty, enclosingType);
+
+        // Provisioning property metadata can depend on the enclosing provider (for example,
+        // singleton resource names). Call this directly from provisioning providers instead of
+        // the cached CreateProperty wrapper so each provider can supply its own metadata.
+        internal PropertyProvider? CreateProvisioningProperty(InputProperty inputProperty, TypeProvider enclosingType)
         {
             // Run base chain which creates property and applies visitor renames (e.g., etag → ETag).
             var baseProperty = base.CreatePropertyCore(inputProperty, enclosingType);
@@ -188,7 +194,7 @@ namespace Azure.Generator.Provisioning
 
                 return ProvisioningPropertyProvider.Create(
                     resolvedName, bicepType,
-                    info.IsOutput, info.IsRequired, info.BicepPath, info.DefaultValue,
+                    info.IsOutput, info.IsSettable, info.IsRequired, info.BicepPath, info.DefaultValue,
                     enclosingType);
             }
 

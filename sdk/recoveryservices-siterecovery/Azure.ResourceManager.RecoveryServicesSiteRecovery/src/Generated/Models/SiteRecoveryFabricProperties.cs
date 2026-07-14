@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Fabric properties. </summary>
     public partial class SiteRecoveryFabricProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricProperties"/>. </summary>
         internal SiteRecoveryFabricProperties()
@@ -57,15 +29,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="rolloverEncryptionDetails"> Rollover encryption details for the fabric. </param>
         /// <param name="internalIdentifier"> Dra Registration Id. </param>
         /// <param name="bcdrState"> BCDR state of the fabric. </param>
-        /// <param name="customDetails">
-        /// Fabric specific settings.
-        /// Please note <see cref="FabricSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SiteRecoveryFabricProviderSpecificDetails"/>, <see cref="HyperVSiteDetails"/>, <see cref="InMageRcmFabricSpecificDetails"/>, <see cref="VmmFabricDetails"/>, <see cref="VMwareDetails"/> and <see cref="VMwareV2FabricSpecificDetails"/>.
-        /// </param>
+        /// <param name="customDetails"> Fabric specific settings. </param>
         /// <param name="healthErrorDetails"> Fabric health error details. </param>
         /// <param name="health"> Health of fabric. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryFabricProperties(string friendlyName, SiteRecoveryEncryptionDetails encryptionDetails, SiteRecoveryEncryptionDetails rolloverEncryptionDetails, string internalIdentifier, string bcdrState, FabricSpecificDetails customDetails, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, string health, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryFabricProperties(string friendlyName, SiteRecoveryEncryptionDetails encryptionDetails, SiteRecoveryEncryptionDetails rolloverEncryptionDetails, string internalIdentifier, string bcdrState, FabricSpecificDetails customDetails, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, string health, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             EncryptionDetails = encryptionDetails;
@@ -75,27 +43,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CustomDetails = customDetails;
             HealthErrorDetails = healthErrorDetails;
             Health = health;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Friendly name of the fabric. </summary>
         public string FriendlyName { get; }
+
         /// <summary> Encryption details for the fabric. </summary>
         public SiteRecoveryEncryptionDetails EncryptionDetails { get; }
+
         /// <summary> Rollover encryption details for the fabric. </summary>
         public SiteRecoveryEncryptionDetails RolloverEncryptionDetails { get; }
+
         /// <summary> Dra Registration Id. </summary>
         public string InternalIdentifier { get; }
+
         /// <summary> BCDR state of the fabric. </summary>
         public string BcdrState { get; }
-        /// <summary>
-        /// Fabric specific settings.
-        /// Please note <see cref="FabricSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SiteRecoveryFabricProviderSpecificDetails"/>, <see cref="HyperVSiteDetails"/>, <see cref="InMageRcmFabricSpecificDetails"/>, <see cref="VmmFabricDetails"/>, <see cref="VMwareDetails"/> and <see cref="VMwareV2FabricSpecificDetails"/>.
-        /// </summary>
+
+        /// <summary> Fabric specific settings. </summary>
         public FabricSpecificDetails CustomDetails { get; }
+
         /// <summary> Fabric health error details. </summary>
         public IReadOnlyList<SiteRecoveryHealthError> HealthErrorDetails { get; }
+
         /// <summary> Health of fabric. </summary>
         public string Health { get; }
     }

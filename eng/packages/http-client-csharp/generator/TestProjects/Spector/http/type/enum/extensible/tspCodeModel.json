@@ -27,7 +27,8 @@
             "$ref": "1"
           },
           "doc": "Monday.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "4",
@@ -41,7 +42,8 @@
             "$ref": "1"
           },
           "doc": "Tuesday.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "5",
@@ -55,7 +57,8 @@
             "$ref": "1"
           },
           "doc": "Wednesday.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "6",
@@ -69,7 +72,8 @@
             "$ref": "1"
           },
           "doc": "Thursday.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "7",
@@ -83,7 +87,8 @@
             "$ref": "1"
           },
           "doc": "Friday.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "8",
@@ -97,7 +102,8 @@
             "$ref": "1"
           },
           "doc": "Saturday.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "9",
@@ -111,7 +117,8 @@
             "$ref": "1"
           },
           "doc": "Sunday.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Type.Enum.Extensible",
@@ -119,7 +126,8 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -137,7 +145,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "12",
@@ -153,7 +162,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "14",
@@ -169,7 +179,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "16",
@@ -185,7 +196,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "18",
@@ -201,7 +213,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "20",
@@ -217,7 +230,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "22",
@@ -233,7 +247,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "24",
@@ -249,7 +264,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [],
@@ -258,6 +274,7 @@
       "$id": "26",
       "kind": "client",
       "name": "ExtensibleClient",
+      "isExactName": false,
       "namespace": "Type.Enum.Extensible",
       "methods": [],
       "parameters": [
@@ -289,7 +306,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Enum.Extensible.endpoint"
+          "crossLanguageDefinitionId": "Type.Enum.Extensible.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -301,17 +319,20 @@
           "$id": "30",
           "kind": "client",
           "name": "String",
+          "isExactName": false,
           "namespace": "Type.Enum.Extensible",
           "methods": [
             {
               "$id": "31",
               "kind": "basic",
               "name": "getKnownValue",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "32",
                 "name": "getKnownValue",
+                "isExactName": false,
                 "resourceName": "String",
                 "accessibility": "public",
                 "parameters": [
@@ -346,9 +367,11 @@
                         "crossLanguageDefinitionId": "Type.Enum.Extensible.String.getKnownValue.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -408,11 +431,13 @@
               "$id": "35",
               "kind": "basic",
               "name": "getUnknownValue",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "36",
                 "name": "getUnknownValue",
+                "isExactName": false,
                 "resourceName": "String",
                 "accessibility": "public",
                 "parameters": [
@@ -447,9 +472,11 @@
                         "crossLanguageDefinitionId": "Type.Enum.Extensible.String.getUnknownValue.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -509,11 +536,13 @@
               "$id": "39",
               "kind": "basic",
               "name": "putKnownValue",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "40",
                 "name": "putKnownValue",
+                "isExactName": false,
                 "resourceName": "String",
                 "accessibility": "public",
                 "parameters": [
@@ -548,9 +577,11 @@
                         "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putKnownValue.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "43",
@@ -586,9 +617,11 @@
                         "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putKnownValue.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -637,11 +670,13 @@
               "$id": "45",
               "kind": "basic",
               "name": "putUnknownValue",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
                 "$id": "46",
                 "name": "putUnknownValue",
+                "isExactName": false,
                 "resourceName": "String",
                 "accessibility": "public",
                 "parameters": [
@@ -676,9 +711,11 @@
                         "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putUnknownValue.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "49",
@@ -714,9 +751,11 @@
                         "crossLanguageDefinitionId": "Type.Enum.Extensible.String.putUnknownValue.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -791,7 +830,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Enum.Extensible.String.endpoint"
+              "crossLanguageDefinitionId": "Type.Enum.Extensible.String.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

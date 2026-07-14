@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricStationConnectionMode : IEquatable<NetworkFabricStationConnectionMode>
     {
         private readonly string _value;
+        /// <summary> StationConnectionMode Active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> StationConnectionMode Passive. </summary>
+        private const string PassiveValue = "Passive";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricStationConnectionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricStationConnectionMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string PassiveValue = "Passive";
+            _value = value;
+        }
 
         /// <summary> StationConnectionMode Active. </summary>
         public static NetworkFabricStationConnectionMode Active { get; } = new NetworkFabricStationConnectionMode(ActiveValue);
+
         /// <summary> StationConnectionMode Passive. </summary>
         public static NetworkFabricStationConnectionMode Passive { get; } = new NetworkFabricStationConnectionMode(PassiveValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricStationConnectionMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricStationConnectionMode left, NetworkFabricStationConnectionMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricStationConnectionMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricStationConnectionMode left, NetworkFabricStationConnectionMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricStationConnectionMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricStationConnectionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricStationConnectionMode(string value) => new NetworkFabricStationConnectionMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricStationConnectionMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricStationConnectionMode?(string value) => value == null ? null : new NetworkFabricStationConnectionMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricStationConnectionMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricStationConnectionMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

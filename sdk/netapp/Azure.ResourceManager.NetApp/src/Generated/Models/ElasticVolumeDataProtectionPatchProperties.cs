@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -16,11 +15,6 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ElasticVolumeDataProtectionPatchProperties"/>. </summary>
-        public ElasticVolumeDataProtectionPatchProperties()
-        {
-        }
 
         /// <summary> Initializes a new instance of <see cref="ElasticVolumeDataProtectionPatchProperties"/>. </summary>
         /// <param name="snapshot"> Used to apply a snapshot policy to a volume. </param>
@@ -35,25 +29,5 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Used to apply a snapshot policy to a volume. </summary>
         internal ElasticVolumeSnapshotProperties Snapshot { get; set; }
-
-        /// <summary> Used to configure backups on an elastic volume. </summary>
-        public ElasticVolumeBackupProperties Backup { get; set; }
-
-        /// <summary> Snapshot Policy ResourceId. </summary>
-        public ResourceIdentifier SnapshotPolicyResourceId
-        {
-            get
-            {
-                return Snapshot is null ? default : Snapshot.SnapshotPolicyResourceId;
-            }
-            set
-            {
-                if (Snapshot is null)
-                {
-                    Snapshot = new ElasticVolumeSnapshotProperties();
-                }
-                Snapshot.SnapshotPolicyResourceId = value;
-            }
-        }
     }
 }

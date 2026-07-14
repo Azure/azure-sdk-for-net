@@ -6,49 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A Class representing a SiteRecoveryMigrationItem along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryMigrationItemResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryMigrationItemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource"/> using the GetSiteRecoveryMigrationItem method.
+    /// A class representing a SiteRecoveryMigrationItem along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryMigrationItemResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource"/> using the GetSiteRecoveryMigrationItems method.
     /// </summary>
     public partial class SiteRecoveryMigrationItemResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SiteRecoveryMigrationItemResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="resourceName"> The resourceName. </param>
-        /// <param name="fabricName"> The fabricName. </param>
-        /// <param name="protectionContainerName"> The protectionContainerName. </param>
-        /// <param name="migrationItemName"> The migrationItemName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics;
-        private readonly ReplicationMigrationItemsRestOperations _siteRecoveryMigrationItemReplicationMigrationItemsRestClient;
+        private readonly ClientDiagnostics _replicationMigrationItemsClientDiagnostics;
+        private readonly ReplicationMigrationItems _replicationMigrationItemsRestClient;
         private readonly SiteRecoveryMigrationItemData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationMigrationItems";
 
-        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryMigrationItemResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemResource for mocking. </summary>
         protected SiteRecoveryMigrationItemResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryMigrationItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteRecoveryMigrationItemResource(ArmClient client, SiteRecoveryMigrationItemData data) : this(client, data.Id)
@@ -57,140 +44,95 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryMigrationItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteRecoveryMigrationItemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string siteRecoveryMigrationItemReplicationMigrationItemsApiVersion);
-            _siteRecoveryMigrationItemReplicationMigrationItemsRestClient = new ReplicationMigrationItemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryMigrationItemReplicationMigrationItemsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string siteRecoveryMigrationItemApiVersion);
+            _replicationMigrationItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
+            _replicationMigrationItemsRestClient = new ReplicationMigrationItems(_replicationMigrationItemsClientDiagnostics, Pipeline, Endpoint, siteRecoveryMigrationItemApiVersion ?? "2026-02-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SiteRecoveryMigrationItemData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
+        /// <param name="protectionContainerName"> The protectionContainerName. </param>
+        /// <param name="migrationItemName"> The migrationItemName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string protectionContainerName, string migrationItemName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of MigrationRecoveryPointResources in the SiteRecoveryMigrationItem. </summary>
-        /// <returns> An object representing collection of MigrationRecoveryPointResources and their operations over a MigrationRecoveryPointResource. </returns>
-        public virtual MigrationRecoveryPointCollection GetMigrationRecoveryPoints()
-        {
-            return GetCachedClient(client => new MigrationRecoveryPointCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a recovery point for a migration item.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/migrationRecoveryPoints/{migrationRecoveryPointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MigrationRecoveryPoints_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MigrationRecoveryPointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="migrationRecoveryPointName"> The migration recovery point name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="migrationRecoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MigrationRecoveryPointResource>> GetMigrationRecoveryPointAsync(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
-        {
-            return await GetMigrationRecoveryPoints().GetAsync(migrationRecoveryPointName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a recovery point for a migration item.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/migrationRecoveryPoints/{migrationRecoveryPointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MigrationRecoveryPoints_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MigrationRecoveryPointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="migrationRecoveryPointName"> The migration recovery point name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="migrationRecoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MigrationRecoveryPointResource> GetMigrationRecoveryPoint(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
-        {
-            return GetMigrationRecoveryPoints().Get(migrationRecoveryPointName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the details of a migration item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SiteRecoveryMigrationItemResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Get");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Get");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SiteRecoveryMigrationItemData> response = Response.FromValue(SiteRecoveryMigrationItemData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecoveryMigrationItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -204,120 +146,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Gets the details of a migration item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteRecoveryMigrationItemResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Get");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Get");
             scope.Start();
             try
             {
-                var response = _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SiteRecoveryMigrationItemData> response = Response.FromValue(SiteRecoveryMigrationItemData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecoveryMigrationItemResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to delete an ASR migration item.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deleteOption"> The delete option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string deleteOption = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deleteOption, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deleteOption).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to delete an ASR migration item.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deleteOption"> The delete option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, string deleteOption = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deleteOption, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deleteOption).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -330,20 +194,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to update the recovery settings of an ASR migration item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -355,14 +219,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Update");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Update");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SiteRecoveryMigrationItemPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
+                    _replicationMigrationItemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -376,20 +253,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to update the recovery settings of an ASR migration item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,14 +278,127 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Update");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Update");
             scope.Start();
             try
             {
-                var response = _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SiteRecoveryMigrationItemPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
+                    _replicationMigrationItemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to delete an ASR migration item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="deleteOption"> The delete option. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string deleteOption = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deleteOption, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesSiteRecoveryArmOperation operation = new RecoveryServicesSiteRecoveryArmOperation(_replicationMigrationItemsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to delete an ASR migration item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="deleteOption"> The delete option. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string deleteOption = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deleteOption, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesSiteRecoveryArmOperation operation = new RecoveryServicesSiteRecoveryArmOperation(_replicationMigrationItemsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -422,20 +412,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to initiate migration of the item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/migrate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/migrate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_Migrate</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_Migrate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -447,14 +437,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Migrate");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Migrate");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.MigrateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateMigrateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SiteRecoveryMigrateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
+                    _replicationMigrationItemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -468,20 +471,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to initiate migration of the item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/migrate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/migrate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_Migrate</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_Migrate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -493,14 +496,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Migrate");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Migrate");
             scope.Start();
             try
             {
-                var response = _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.Migrate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateMigrateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SiteRecoveryMigrateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
+                    _replicationMigrationItemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -514,20 +530,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to initiate pause replication of the item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/pauseReplication</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/pauseReplication. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_PauseReplication</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_PauseReplication. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -539,14 +555,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.PauseReplication");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.PauseReplication");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.PauseReplicationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreatePauseReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreatePauseReplicationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PauseReplicationContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
+                    _replicationMigrationItemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -560,20 +589,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to initiate pause replication of the item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/pauseReplication</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/pauseReplication. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_PauseReplication</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_PauseReplication. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -585,14 +614,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.PauseReplication");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.PauseReplication");
             scope.Start();
             try
             {
-                var response = _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.PauseReplication(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreatePauseReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreatePauseReplicationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PauseReplicationContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
+                    _replicationMigrationItemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -606,20 +648,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to initiate resume replication of the item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/resumeReplication</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/resumeReplication. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_ResumeReplication</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_ResumeReplication. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -631,14 +673,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.ResumeReplication");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.ResumeReplication");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.ResumeReplicationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateResumeReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateResumeReplicationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ResumeReplicationContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
+                    _replicationMigrationItemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -652,20 +707,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to initiate resume replication of the item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/resumeReplication</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/resumeReplication. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_ResumeReplication</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_ResumeReplication. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -677,14 +732,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.ResumeReplication");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.ResumeReplication");
             scope.Start();
             try
             {
-                var response = _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.ResumeReplication(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateResumeReplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateResumeReplicationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ResumeReplicationContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
+                    _replicationMigrationItemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -698,20 +766,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to resynchronize replication of an ASR migration item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/resync</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/resync. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_Resync</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_Resync. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -723,14 +791,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Resync");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Resync");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.ResyncAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateResyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateResyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MigrationItemResyncContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
+                    _replicationMigrationItemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -744,20 +825,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to resynchronize replication of an ASR migration item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/resync</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/resync. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_Resync</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_Resync. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -769,14 +850,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Resync");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.Resync");
             scope.Start();
             try
             {
-                var response = _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.Resync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateResyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateResyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MigrationItemResyncContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
+                    _replicationMigrationItemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -790,20 +884,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to initiate test migration of the item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/testMigrate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/testMigrate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_TestMigrate</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_TestMigrate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -815,14 +909,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.TestMigrate");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.TestMigrate");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.TestMigrateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateTestMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateTestMigrateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TestMigrateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
+                    _replicationMigrationItemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -836,20 +943,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to initiate test migration of the item.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/testMigrate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/testMigrate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_TestMigrate</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_TestMigrate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -861,14 +968,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.TestMigrate");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.TestMigrate");
             scope.Start();
             try
             {
-                var response = _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.TestMigrate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateTestMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateTestMigrateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TestMigrateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
+                    _replicationMigrationItemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -882,20 +1002,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to initiate test migrate cleanup.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/testMigrateCleanup</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/testMigrateCleanup. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_TestMigrateCleanup</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_TestMigrateCleanup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -907,14 +1027,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.TestMigrateCleanup");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.TestMigrateCleanup");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.TestMigrateCleanupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateTestMigrateCleanupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateTestMigrateCleanupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TestMigrateCleanupContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
+                    _replicationMigrationItemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -928,20 +1061,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to initiate test migrate cleanup.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/testMigrateCleanup</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems/{migrationItemName}/testMigrateCleanup. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_TestMigrateCleanup</description>
+        /// <term> Operation Id. </term>
+        /// <description> MigrationItems_TestMigrateCleanup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteRecoveryMigrationItemResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -953,14 +1086,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.TestMigrateCleanup");
+            using DiagnosticScope scope = _replicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemResource.TestMigrateCleanup");
             scope.Start();
             try
             {
-                var response = _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.TestMigrateCleanup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateTestMigrateCleanupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationMigrationItemsRestClient.CreateTestMigrateCleanupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TestMigrateCleanupContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
+                    _replicationMigrationItemsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -968,6 +1114,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of MigrationRecoveryPoints in the <see cref="SiteRecoveryMigrationItemResource"/>. </summary>
+        /// <returns> An object representing collection of MigrationRecoveryPoints and their operations over a MigrationRecoveryPointResource. </returns>
+        public virtual MigrationRecoveryPointCollection GetMigrationRecoveryPoints()
+        {
+            return GetCachedClient(client => new MigrationRecoveryPointCollection(client, Id));
+        }
+
+        /// <summary> Gets a recovery point for a migration item. </summary>
+        /// <param name="migrationRecoveryPointName"> The migration recovery point name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="migrationRecoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MigrationRecoveryPointResource>> GetMigrationRecoveryPointAsync(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(migrationRecoveryPointName, nameof(migrationRecoveryPointName));
+
+            return await GetMigrationRecoveryPoints().GetAsync(migrationRecoveryPointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a recovery point for a migration item. </summary>
+        /// <param name="migrationRecoveryPointName"> The migration recovery point name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="migrationRecoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="migrationRecoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MigrationRecoveryPointResource> GetMigrationRecoveryPoint(string migrationRecoveryPointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(migrationRecoveryPointName, nameof(migrationRecoveryPointName));
+
+            return GetMigrationRecoveryPoints().Get(migrationRecoveryPointName, cancellationToken);
         }
     }
 }

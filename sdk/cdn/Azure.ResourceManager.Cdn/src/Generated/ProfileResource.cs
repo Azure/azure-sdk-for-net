@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfilePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<ProfileResource> operation = new CdnArmOperation<ProfileResource>(
-                    new ProfileOperationSource(Client),
+                    new ProfileResourceOperationSource(Client),
                     _profilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfilePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<ProfileResource> operation = new CdnArmOperation<ProfileResource>(
-                    new ProfileOperationSource(Client),
+                    new ProfileResourceOperationSource(Client),
                     _profilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -2095,7 +2095,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _afdProfilesRestClient.CreateUpgradeFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfileUpgradeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<ProfileResource> operation = new CdnArmOperation<ProfileResource>(
-                    new ProfileOperationSource(Client),
+                    new ProfileResourceOperationSource(Client),
                     _afdProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -2154,7 +2154,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _afdProfilesRestClient.CreateUpgradeFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfileUpgradeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<ProfileResource> operation = new CdnArmOperation<ProfileResource>(
-                    new ProfileOperationSource(Client),
+                    new ProfileResourceOperationSource(Client),
                     _afdProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,

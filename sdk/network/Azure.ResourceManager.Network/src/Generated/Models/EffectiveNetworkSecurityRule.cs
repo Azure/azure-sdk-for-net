@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Effective network security rules. </summary>
     public partial class EffectiveNetworkSecurityRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityRule"/>. </summary>
         internal EffectiveNetworkSecurityRule()
@@ -72,8 +44,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="access"> Whether network traffic is allowed or denied. </param>
         /// <param name="priority"> The priority of the rule. </param>
         /// <param name="direction"> The direction of the rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EffectiveNetworkSecurityRule(string name, EffectiveSecurityRuleProtocol? protocol, string sourcePortRange, string destinationPortRange, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, string sourceAddressPrefix, string destinationAddressPrefix, IReadOnlyList<string> sourceAddressPrefixes, IReadOnlyList<string> destinationAddressPrefixes, IReadOnlyList<string> expandedSourceAddressPrefix, IReadOnlyList<string> expandedDestinationAddressPrefix, SecurityRuleAccess? access, int? priority, SecurityRuleDirection? direction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EffectiveNetworkSecurityRule(string name, EffectiveSecurityRuleProtocol? protocol, string sourcePortRange, string destinationPortRange, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, string sourceAddressPrefix, string destinationAddressPrefix, IReadOnlyList<string> sourceAddressPrefixes, IReadOnlyList<string> destinationAddressPrefixes, IReadOnlyList<string> expandedSourceAddressPrefix, IReadOnlyList<string> expandedDestinationAddressPrefix, SecurityRuleAccess? access, int? priority, SecurityRuleDirection? direction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Protocol = protocol;
@@ -90,51 +62,65 @@ namespace Azure.ResourceManager.Network.Models
             Access = access;
             Priority = priority;
             Direction = direction;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the security rule specified by the user (if created by the user). </summary>
         [WirePath("name")]
         public string Name { get; }
+
         /// <summary> The network protocol this rule applies to. </summary>
         [WirePath("protocol")]
         public EffectiveSecurityRuleProtocol? Protocol { get; }
+
         /// <summary> The source port or range. </summary>
         [WirePath("sourcePortRange")]
         public string SourcePortRange { get; }
+
         /// <summary> The destination port or range. </summary>
         [WirePath("destinationPortRange")]
         public string DestinationPortRange { get; }
+
         /// <summary> The source port ranges. Expected values include a single integer between 0 and 65535, a range using '-' as separator (e.g. 100-400), or an asterisk (*). </summary>
         [WirePath("sourcePortRanges")]
         public IReadOnlyList<string> SourcePortRanges { get; }
+
         /// <summary> The destination port ranges. Expected values include a single integer between 0 and 65535, a range using '-' as separator (e.g. 100-400), or an asterisk (*). </summary>
         [WirePath("destinationPortRanges")]
         public IReadOnlyList<string> DestinationPortRanges { get; }
+
         /// <summary> The source address prefix. </summary>
         [WirePath("sourceAddressPrefix")]
         public string SourceAddressPrefix { get; }
+
         /// <summary> The destination address prefix. </summary>
         [WirePath("destinationAddressPrefix")]
         public string DestinationAddressPrefix { get; }
+
         /// <summary> The source address prefixes. Expected values include CIDR IP ranges, Default Tags (VirtualNetwork, AzureLoadBalancer, Internet), System Tags, and the asterisk (*). </summary>
         [WirePath("sourceAddressPrefixes")]
         public IReadOnlyList<string> SourceAddressPrefixes { get; }
+
         /// <summary> The destination address prefixes. Expected values include CIDR IP ranges, Default Tags (VirtualNetwork, AzureLoadBalancer, Internet), System Tags, and the asterisk (*). </summary>
         [WirePath("destinationAddressPrefixes")]
         public IReadOnlyList<string> DestinationAddressPrefixes { get; }
+
         /// <summary> The expanded source address prefix. </summary>
         [WirePath("expandedSourceAddressPrefix")]
         public IReadOnlyList<string> ExpandedSourceAddressPrefix { get; }
+
         /// <summary> Expanded destination address prefix. </summary>
         [WirePath("expandedDestinationAddressPrefix")]
         public IReadOnlyList<string> ExpandedDestinationAddressPrefix { get; }
+
         /// <summary> Whether network traffic is allowed or denied. </summary>
         [WirePath("access")]
         public SecurityRuleAccess? Access { get; }
+
         /// <summary> The priority of the rule. </summary>
         [WirePath("priority")]
         public int? Priority { get; }
+
         /// <summary> The direction of the rule. </summary>
         [WirePath("direction")]
         public SecurityRuleDirection? Direction { get; }

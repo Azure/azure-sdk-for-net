@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CostManagement
                 HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id.ToString(), operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource> operation = new CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource>(
-                    new GenerateDetailedCostReportOperationResultOperationSource(Client),
+                    new GenerateDetailedCostReportOperationResultResourceOperationSource(Client),
                     _generateDetailedCostReportOperationResultsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CostManagement
                 HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id.ToString(), operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource> operation = new CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource>(
-                    new GenerateDetailedCostReportOperationResultOperationSource(Client),
+                    new GenerateDetailedCostReportOperationResultResourceOperationSource(Client),
                     _generateDetailedCostReportOperationResultsClientDiagnostics,
                     Pipeline,
                     message.Request,

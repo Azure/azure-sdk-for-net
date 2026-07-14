@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _discountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, DiscountData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<DiscountResource> operation = new BillingBenefitsArmOperation<DiscountResource>(
-                    new DiscountOperationSource(Client),
+                    new DiscountResourceOperationSource(Client),
                     _discountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _discountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, DiscountData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<DiscountResource> operation = new BillingBenefitsArmOperation<DiscountResource>(
-                    new DiscountOperationSource(Client),
+                    new DiscountResourceOperationSource(Client),
                     _discountsClientDiagnostics,
                     Pipeline,
                     message.Request,

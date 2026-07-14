@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -137,22 +138,28 @@ namespace Azure.Generator.Management.Tests.Providers
             var outputLibrary = plugin.Object.OutputLibrary as ManagementOutputLibrary;
             Assert.That(outputLibrary, Is.Not.Null);
 
-            // Verify that TWO separate OperationSources are created, not just one
+            // Verify that separate OperationSources are created per resource. In addition, when multiple
+            // resources share the same data type we also register a fallback OperationSource keyed by the
+            // raw data type, so that ResourceOperationMethodProvider.BuildLroHandling can look it up when
+            // TryGetResourceClientProvider declines to wrap (Count != 1 case).
             var operationSources = outputLibrary!.OperationSourceDict;
-            Assert.That(operationSources.Count, Is.EqualTo(2),
-                "Should generate 2 OperationSources for 2 resources sharing the same data model");
+            Assert.That(operationSources.Count, Is.EqualTo(3),
+                "Should generate 2 resource-keyed OperationSources plus 1 data-type-keyed fallback");
 
             // Verify the OperationSource names and types
             var operationSourcesList = operationSources.Values.ToList();
             var names = operationSourcesList.Select(os => os.Name).OrderBy(n => n).ToList();
 
             // Both resources should have their own OperationSource
-            Assert.That(names, Does.Contain("SiteOperationSource"), "Should have SiteResourceOperationSource");
-            Assert.That(names, Does.Contain("SitesBySubscriptionOperationSource"), "Should have SitesBySubscriptionResourceOperationSource");
+            Assert.That(names, Does.Contain("SiteResourceOperationSource"), "Should have SiteResourceOperationSource");
+            Assert.That(names, Does.Contain("SitesBySubscriptionResourceOperationSource"), "Should have SitesBySubscriptionResourceOperationSource");
+            // And the fallback entry keyed by the shared data type should be registered as a non-resource OperationSource
+            Assert.That(names, Does.Contain("SiteDataOperationSource"),
+                "Should have a fallback OperationSource keyed by the shared data type for the non-wrap LRO path");
 
             // Verify each OperationSource implements IOperationSource<CorrectResourceType>
-            var siteOperationSource = operationSourcesList.First(os => os.Name == "SiteOperationSource");
-            var sitesBySubOperationSource = operationSourcesList.First(os => os.Name == "SitesBySubscriptionOperationSource");
+            var siteOperationSource = operationSourcesList.First(os => os.Name == "SiteResourceOperationSource");
+            var sitesBySubOperationSource = operationSourcesList.First(os => os.Name == "SitesBySubscriptionResourceOperationSource");
 
             // Check that the OperationSource implements IOperationSource<T> with the correct T
             var siteImplements = siteOperationSource.Implements;
@@ -336,6 +343,16 @@ namespace Azure.Generator.Management.Tests.Providers
                 Assert.That(body, Does.Not.Contain("DeserializeOperationStatusResult"),
                     $"{(isAsync ? "CreateResultAsync" : "CreateResult")} must not call the inaccessible internal Deserialize factory.");
             }
+        }
+
+        [TestCase]
+        public void Verify_GenericResultType_UsesGenericOperationSourceName()
+        {
+            _ = ManagementMockHelpers.LoadMockPlugin();
+
+            var provider = new OperationSourceProvider(new CSharpType(typeof(IList<>), typeof(string)));
+
+            Assert.That(provider.Name, Is.EqualTo("IListOfStringOperationSource"));
         }
 
         private static (MethodProvider CreateResult, MethodProvider CreateResultAsync) GetNonResourceFrameworkOperationSourceMethods()

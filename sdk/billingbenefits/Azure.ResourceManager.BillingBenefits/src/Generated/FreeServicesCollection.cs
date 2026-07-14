@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _freeServicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, FreeServicesData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<FreeServicesResource> operation = new BillingBenefitsArmOperation<FreeServicesResource>(
-                    new FreeServicesOperationSource(Client),
+                    new FreeServicesResourceOperationSource(Client),
                     _freeServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _freeServicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, FreeServicesData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<FreeServicesResource> operation = new BillingBenefitsArmOperation<FreeServicesResource>(
-                    new FreeServicesOperationSource(Client),
+                    new FreeServicesResourceOperationSource(Client),
                     _freeServicesClientDiagnostics,
                     Pipeline,
                     message.Request,

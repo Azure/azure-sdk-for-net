@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Description about the errors happen while performing migration validation. </summary>
     public partial class ExecutionStatistics
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExecutionStatistics"/>. </summary>
         internal ExecutionStatistics()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="waitStats"> Dictionary of sql query execution wait types and the respective statistics. </param>
         /// <param name="hasErrors"> Indicates whether the query resulted in an error. </param>
         /// <param name="sqlErrors"> List of sql Errors. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExecutionStatistics(long? executionCount, float? cpuTimeInMilliseconds, float? elapsedTimeInMilliseconds, IReadOnlyDictionary<string, MigrationValidationWaitStatistics> waitStats, bool? hasErrors, IReadOnlyList<string> sqlErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExecutionStatistics(long? executionCount, float? cpuTimeInMilliseconds, float? elapsedTimeInMilliseconds, IReadOnlyDictionary<string, MigrationValidationWaitStatistics> waitStats, bool? hasErrors, IReadOnlyList<string> sqlErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExecutionCount = executionCount;
             CpuTimeInMilliseconds = cpuTimeInMilliseconds;
@@ -68,19 +40,24 @@ namespace Azure.ResourceManager.DataMigration.Models
             WaitStats = waitStats;
             HasErrors = hasErrors;
             SqlErrors = sqlErrors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> No. of query executions. </summary>
         public long? ExecutionCount { get; }
+
         /// <summary> CPU Time in millisecond(s) for the query execution. </summary>
         public float? CpuTimeInMilliseconds { get; }
+
         /// <summary> Time taken in millisecond(s) for executing the query. </summary>
         public float? ElapsedTimeInMilliseconds { get; }
+
         /// <summary> Dictionary of sql query execution wait types and the respective statistics. </summary>
         public IReadOnlyDictionary<string, MigrationValidationWaitStatistics> WaitStats { get; }
+
         /// <summary> Indicates whether the query resulted in an error. </summary>
         public bool? HasErrors { get; }
+
         /// <summary> List of sql Errors. </summary>
         public IReadOnlyList<string> SqlErrors { get; }
     }
