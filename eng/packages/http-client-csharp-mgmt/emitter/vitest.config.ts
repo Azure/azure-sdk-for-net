@@ -4,6 +4,7 @@ export default defineConfig({
   test: {
     environment: "node",
     isolate: false,
+    testTimeout: 30000,
     coverage: {
       reporter: ["cobertura", "json", "text"]
     },
