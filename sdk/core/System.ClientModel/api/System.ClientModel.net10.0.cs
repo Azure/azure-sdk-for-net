@@ -13,6 +13,13 @@ namespace System.ClientModel
         public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(System.ClientModel.ClientResult page);
     }
+    public abstract partial class AsyncStreamingClientResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>, System.IAsyncDisposable
+    {
+        protected internal AsyncStreamingClientResult(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
     public abstract partial class AuthenticationTokenProvider
     {
         protected AuthenticationTokenProvider() { }
@@ -128,6 +135,14 @@ namespace System.ClientModel
         public override bool TryComputeLength(out long length) { throw null; }
         public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public abstract partial class StreamingClientResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable, System.IDisposable
+    {
+        protected internal StreamingClientResult(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public void Dispose() { }
+        public System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
+        protected abstract System.Collections.Generic.IEnumerable<T> GetValues();
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
 }
 namespace System.ClientModel.Primitives

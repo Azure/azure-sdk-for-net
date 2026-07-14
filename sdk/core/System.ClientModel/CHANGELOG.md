@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `StreamingClientResult<T>` and `AsyncStreamingClientResult<T>` for one-shot enumeration of values from streaming service responses while retaining access to the raw response.
+
 ### Breaking Changes
 
 ### Bugs Fixed
