@@ -2341,11 +2341,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="description"> The offering description. </param>
-        /// <param name="isMdcContainersImageAssessmentEnabled"> Is Microsoft Defender container image assessment enabled. </param>
+        /// <param name="isMdcContainersImageAssessmentMdcContainersImageAssessmentEnabled"> Is Microsoft Defender container image assessment enabled. </param>
         /// <returns> A new <see cref="Models.DefenderCspmJFrogOffering"/> instance for mocking. </returns>
-        public static DefenderCspmJFrogOffering DefenderCspmJFrogOffering(string description = default, bool? isMdcContainersImageAssessmentEnabled = default)
+        public static DefenderCspmJFrogOffering DefenderCspmJFrogOffering(string description = default, bool? isMdcContainersImageAssessmentMdcContainersImageAssessmentEnabled = default)
         {
-            return new DefenderCspmJFrogOffering(default, description, default, isMdcContainersImageAssessmentEnabled is null ? default : new DefenderCspmJFrogOfferingMdcContainersImageAssessment(isMdcContainersImageAssessmentEnabled, default));
+            return new DefenderCspmJFrogOffering(default, description, default, isMdcContainersImageAssessmentMdcContainersImageAssessmentEnabled is null ? default : new DefenderCspmJFrogOfferingMdcContainersImageAssessment(isMdcContainersImageAssessmentMdcContainersImageAssessmentEnabled, default));
         }
 
         /// <param name="environmentType"> The type of the environment data. </param>

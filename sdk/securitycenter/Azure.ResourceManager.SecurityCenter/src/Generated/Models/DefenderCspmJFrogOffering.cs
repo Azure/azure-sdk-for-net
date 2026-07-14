@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal DefenderCspmJFrogOfferingMdcContainersImageAssessment MdcContainersImageAssessment { get; set; }
 
         /// <summary> Is Microsoft Defender container image assessment enabled. </summary>
-        public bool? IsMdcContainersImageAssessmentEnabled
+        public bool? IsMdcContainersImageAssessmentMdcContainersImageAssessmentEnabled
         {
             get
             {
