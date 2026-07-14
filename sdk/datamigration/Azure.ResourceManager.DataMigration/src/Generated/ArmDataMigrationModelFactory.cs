@@ -200,10 +200,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sqlServerInstanceId"> Optional property - Resource Id for the source Sql server instance. Validations are performed on this property to ensure that it follows the correct format. </param>
         /// <param name="migrationStatusDetails"> Detailed migration status. Not included by default. </param>
         /// <param name="targetSqlConnection"> Target SQL DB connection details. </param>
-        /// <param name="isOfflineMigration"> Offline migration. </param>
+        /// <param name="isOfflineConfigurationOfflineMigration"> Offline migration. </param>
         /// <param name="tableList"> List of tables to copy. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlDBProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlDBProperties DatabaseMigrationSqlDBProperties(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, DataMigrationSqlConnectionInformation sourceSqlConnection = default, string sourceDatabaseName = default, string sourceServerName = default, string targetDatabaseCollation = default, string sqlServerInstanceId = default, DataMigrationSqlDBMigrationStatusDetails migrationStatusDetails = default, DataMigrationSqlConnectionInformation targetSqlConnection = default, bool? isOfflineMigration = default, IEnumerable<string> tableList = default)
+        public static DatabaseMigrationSqlDBProperties DatabaseMigrationSqlDBProperties(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, DataMigrationSqlConnectionInformation sourceSqlConnection = default, string sourceDatabaseName = default, string sourceServerName = default, string targetDatabaseCollation = default, string sqlServerInstanceId = default, DataMigrationSqlDBMigrationStatusDetails migrationStatusDetails = default, DataMigrationSqlConnectionInformation targetSqlConnection = default, bool? isOfflineConfigurationOfflineMigration = default, IEnumerable<string> tableList = default)
         {
             tableList ??= new ChangeTrackingList<string>();
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 sqlServerInstanceId,
                 migrationStatusDetails,
                 targetSqlConnection,
-                isOfflineMigration is null ? default : new DataMigrationSqlDBOfflineConfiguration(isOfflineMigration, default),
+                isOfflineConfigurationOfflineMigration is null ? default : new DataMigrationSqlDBOfflineConfiguration(isOfflineConfigurationOfflineMigration, default),
                 (tableList ?? new ChangeTrackingList<string>()).ToList());
         }
 

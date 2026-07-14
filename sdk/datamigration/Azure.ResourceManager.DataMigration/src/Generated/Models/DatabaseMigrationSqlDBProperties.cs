@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public IList<string> TableList { get; }
 
         /// <summary> Offline migration. </summary>
-        public bool? IsOfflineMigration
+        public bool? IsOfflineConfigurationOfflineMigration
         {
             get
             {

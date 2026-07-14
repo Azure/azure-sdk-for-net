@@ -527,16 +527,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                isEnabled is null ? default : new ArmTemplateProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    isEnabled,
-                    default),
+                default,
                 default);
         }
 
@@ -751,7 +742,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                managedImageId is null && customImagePlan is null && isPlanAuthorized is null ? default : new CustomImageProperties(
+                managedImageId is null && customImagePlan is null ? default : new CustomImageProperties(
                     default,
                     default,
                     default,
@@ -761,7 +752,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     default,
                     default,
                     customImagePlan,
-                    isPlanAuthorized,
+                    default,
                     default,
                     default,
                     default),
@@ -886,15 +877,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                imageReference is null && isEnabled is null && isPlanAuthorized is null ? default : new GalleryImageProperties(
+                imageReference is null ? default : new GalleryImageProperties(
                     default,
                     default,
                     default,
                     imageReference,
                     default,
-                    isEnabled,
                     default,
-                    isPlanAuthorized,
+                    default,
+                    default,
                     default),
                 default);
         }
@@ -1428,7 +1419,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                isAuthenticationWithSshKey is null && labSubnetName is null && labVirtualNetworkId is null && disallowPublicIPAddress is null && allowClaim is null ? default : new LabVirtualMachineProperties(
+                labSubnetName is null && labVirtualNetworkId is null ? default : new LabVirtualMachineProperties(
                     default,
                     default,
                     default,
@@ -1442,11 +1433,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     default,
                     default,
                     default,
-                    isAuthenticationWithSshKey,
+                    default,
                     default,
                     labSubnetName,
                     labVirtualNetworkId,
-                    disallowPublicIPAddress,
                     default,
                     default,
                     default,
@@ -1455,7 +1445,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     default,
                     default,
                     default,
-                    allowClaim,
+                    default,
+                    default,
                     default,
                     default,
                     default,

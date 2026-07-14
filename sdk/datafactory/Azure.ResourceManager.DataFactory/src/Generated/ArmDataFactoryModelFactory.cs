@@ -564,13 +564,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 (pipelines ?? new ChangeTrackingList<TriggerPipelineReference>()).ToList(),
-                ignoreEmptyBlobs is null ? default : new BlobEventsTriggerTypeProperties(
-                    default,
-                    default,
-                    ignoreEmptyBlobs,
-                    default,
-                    default,
-                    default));
+                default);
         }
 
         /// <param name="description"> Trigger description. </param>
@@ -6356,25 +6350,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new SelfHostedIntegrationRuntimeStatus(default, dataFactoryName, state, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), isSelfContainedInteractiveAuthoringEnabled is null ? default : new SelfHostedIntegrationRuntimeStatusTypeProperties(
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                isSelfContainedInteractiveAuthoringEnabled,
-                default));
+            return new SelfHostedIntegrationRuntimeStatus(default, dataFactoryName, state, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), default);
         }
 
         /// <param name="nodeName"> Name of the integration runtime node. </param>
@@ -6740,7 +6716,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 policy,
-                waitOnCompletion is null ? default : new ExecutePipelineActivityTypeProperties(default, default, waitOnCompletion, default));
+                default);
         }
 
         /// <param name="isSecureInputEnabled"> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </param>
@@ -6859,7 +6835,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>()).ToList(),
                 (userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                isSequential is null ? default : new ForEachActivityTypeProperties(isSequential, default, default, default, default));
+                default);
         }
 
         /// <param name="name"> Activity name. </param>
@@ -13752,13 +13728,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 name,
                 resourceType,
                 systemData,
-                folderName is null && allowVnetOverride is null ? default : new ChangeDataCapture(
+                folderName is null ? default : new ChangeDataCapture(
                     new ChangeDataCaptureFolder(folderName, default),
                     default,
                     default,
                     default,
                     default,
-                    allowVnetOverride,
+                    default,
                     default,
                     default),
                 eTag,
