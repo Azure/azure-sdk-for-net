@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerInstance
     public enum ContainerGroupPriority
     {
         /// <summary> Regular. </summary>
-        Regular,
+        Regular = 0,
         /// <summary> Spot. </summary>
-        Spot
+        Spot = 1
     }
 }
