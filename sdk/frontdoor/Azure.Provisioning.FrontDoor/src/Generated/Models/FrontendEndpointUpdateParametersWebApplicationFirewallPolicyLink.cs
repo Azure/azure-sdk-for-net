@@ -21,13 +21,18 @@ namespace Azure.Provisioning.FrontDoor
         {
         }
 
-        /// <summary> Gets the Id. </summary>
+        /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> Id
         {
             get
             {
                 Initialize();
                 return _id;
+            }
+            set
+            {
+                Initialize();
+                _id.Assign(value);
             }
         }
 

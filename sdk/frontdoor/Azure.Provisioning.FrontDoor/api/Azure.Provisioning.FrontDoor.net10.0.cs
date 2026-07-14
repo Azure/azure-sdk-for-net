@@ -434,18 +434,18 @@ namespace Azure.Provisioning.FrontDoor
     }
     public partial class FrontendEndpoint : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        internal FrontendEndpoint() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontendEndpoint(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.FrontDoor.CustomHttpsConfiguration CustomHttpsConfiguration { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontendEndpointCustomHttpsProvisioningState> CustomHttpsProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontendEndpointCustomHttpsProvisioningSubstate> CustomHttpsProvisioningSubstate { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.FrontDoor.FrontDoorResource Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontDoorResourceState> ResourceState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.SessionAffinityEnabledState> SessionAffinityEnabledState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<int> SessionAffinityTtlInSeconds { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WebApplicationFirewallPolicyLinkId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.SessionAffinityEnabledState> SessionAffinityEnabledState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> SessionAffinityTtlInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WebApplicationFirewallPolicyLinkId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.FrontDoor.FrontendEndpoint FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }

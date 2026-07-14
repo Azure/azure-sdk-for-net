@@ -23,7 +23,7 @@ namespace Azure.Provisioning.FrontDoor
         /// <summary> Creates a new FrontendEndpoint. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal FrontendEndpoint(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/frontDoors/frontendEndpoints", resourceVersion ?? "2025-11-01")
+        public FrontendEndpoint(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/frontDoors/frontendEndpoints", resourceVersion ?? "2025-11-01")
         {
         }
 
@@ -52,13 +52,18 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         internal FrontendEndpointProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -82,6 +87,10 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
                 return Properties.ResourceState;
             }
         }
@@ -91,6 +100,10 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
                 return Properties.CustomHttpsProvisioningState;
             }
         }
@@ -100,6 +113,10 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
                 return Properties.CustomHttpsProvisioningSubstate;
             }
         }
@@ -109,43 +126,75 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
-                return Properties.CustomHttpsConfiguration;
+                return Properties is null ? default : Properties.CustomHttpsConfiguration;
             }
         }
 
-        /// <summary> Gets the HostName. </summary>
+        /// <summary> Gets or sets the HostName. </summary>
         public BicepValue<string> HostName
         {
             get
             {
-                return Properties.HostName;
+                return Properties is null ? default : Properties.HostName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
+                Properties.HostName = value;
             }
         }
 
-        /// <summary> Gets the SessionAffinityEnabledState. </summary>
+        /// <summary> Gets or sets the SessionAffinityEnabledState. </summary>
         public BicepValue<SessionAffinityEnabledState> SessionAffinityEnabledState
         {
             get
             {
-                return Properties.SessionAffinityEnabledState;
+                return Properties is null ? default : Properties.SessionAffinityEnabledState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
+                Properties.SessionAffinityEnabledState = value;
             }
         }
 
-        /// <summary> Gets the SessionAffinityTtlInSeconds. </summary>
+        /// <summary> Gets or sets the SessionAffinityTtlInSeconds. </summary>
         public BicepValue<int> SessionAffinityTtlInSeconds
         {
             get
             {
-                return Properties.SessionAffinityTtlInSeconds;
+                return Properties is null ? default : Properties.SessionAffinityTtlInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
+                Properties.SessionAffinityTtlInSeconds = value;
             }
         }
 
-        /// <summary> Gets the Id. </summary>
+        /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> WebApplicationFirewallPolicyLinkId
         {
             get
             {
-                return Properties.WebApplicationFirewallPolicyLinkId;
+                return Properties is null ? default : Properties.WebApplicationFirewallPolicyLinkId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
+                Properties.WebApplicationFirewallPolicyLinkId = value;
             }
         }
 
@@ -176,7 +225,7 @@ namespace Azure.Provisioning.FrontDoor
         /// <summary> Get the requirements for naming this resource. </summary>
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 255, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers);
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 255, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 
         /// <summary></summary>
         public static partial class ResourceVersions
