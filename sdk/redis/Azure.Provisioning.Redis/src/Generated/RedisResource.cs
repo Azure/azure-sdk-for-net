@@ -234,19 +234,6 @@ namespace Azure.Provisioning.Redis
             }
         }
 
-        /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<RedisPrivateEndpointConnection> PrivateEndpointConnections
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new RedisProperties();
-                }
-                return Properties.PrivateEndpointConnections;
-            }
-        }
-
         /// <summary> Gets or sets the Sku. </summary>
         public RedisSku Sku
         {

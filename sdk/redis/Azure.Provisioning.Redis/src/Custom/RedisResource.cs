@@ -3,6 +3,9 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.Provisioning;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -12,6 +15,8 @@ namespace Azure.Provisioning.Redis
     [CodeGenType("Redis")]
     public partial class RedisResource
     {
+        private BicepList<RedisPrivateEndpointConnectionData> _privateEndpointConnections;
+
         public static partial class ResourceVersions
         {
             /// <summary> API version "2014-04-01". </summary>
@@ -59,6 +64,40 @@ namespace Azure.Provisioning.Redis
             RedisAccessKeys keys = new();
             ((IBicepValue)keys).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
             return keys;
+        }
+
+        /// <summary> Gets the private endpoint connection resources. </summary>
+        [CodeGenMember("PrivateEndpointConnections")]
+        public BicepList<RedisPrivateEndpointConnection> PrivateEndpointConnectionResources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary>
+        /// Gets the private endpoint connection data models.
+        /// This compatibility property is preserved for the previous generated model shape. Use <see cref="PrivateEndpointConnectionResources"/> instead.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use PrivateEndpointConnectionResources instead.")]
+        public BicepList<RedisPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                Initialize();
+                return _privateEndpointConnections;
+            }
+        }
+
+        partial void DefineAdditionalProperties()
+        {
+            _privateEndpointConnections = DefineListProperty<RedisPrivateEndpointConnectionData>("PrivateEndpointConnections", new string[] { "properties", "privateEndpointConnections" }, isOutput: true);
         }
     }
 }
