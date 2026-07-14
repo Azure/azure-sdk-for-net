@@ -124,6 +124,27 @@ namespace Azure.Provisioning.ContainerRegistry
         public Azure.Provisioning.BicepValue<string> UsernameSecretIdentifier { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryBuiltInRole : System.IEquatable<Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryBuiltInRole(string value) { throw null; }
+        public static Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole AcrDelete { get { throw null; } }
+        public static Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole AcrImageSigner { get { throw null; } }
+        public static Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole AcrPull { get { throw null; } }
+        public static Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole AcrPush { get { throw null; } }
+        public static Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole AcrQuarantineReader { get { throw null; } }
+        public static Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole AcrQuarantineWriter { get { throw null; } }
+        public bool Equals(Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public static string GetBuiltInRoleName(Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole value) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole left, Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole right) { throw null; }
+        public static implicit operator Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole (string value) { throw null; }
+        public static bool operator !=(Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole left, Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ContainerRegistryCacheRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerRegistryCacheRule(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -407,6 +428,8 @@ namespace Azure.Provisioning.ContainerRegistry
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.ContainerRegistryZoneRedundancy> ZoneRedundancy { get { throw null; } set { } }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.ContainerRegistry.ContainerRegistryBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.ContainerRegistry.ContainerRegistryService FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
