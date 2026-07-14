@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         /// <param name="scopes"> Target Azure Monitor workspaces resource ids. This api-version is currently limited to creating with one scope. This may change in future. </param>
         /// <param name="interval"> The interval in which to run the Prometheus rule group represented in ISO 8601 duration format. Should be between 1 and 15 minutes. </param>
         /// <param name="rules"> Defines the rules in the Prometheus rule group. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> or <paramref name="rules"/> is null. </exception>
         /// <returns> A new <see cref="PrometheusRuleGroups.PrometheusRuleGroupData"/> instance for mocking. </returns>
         public static PrometheusRuleGroupData PrometheusRuleGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, bool? isEnabled = default, string clusterName = default, IEnumerable<ResourceIdentifier> scopes = default, TimeSpan? interval = default, IEnumerable<PrometheusRule> rules = default)
         {
@@ -40,20 +41,19 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                new PrometheusRuleGroupProperties(
-                    description,
+                isEnabled is null ? default : new PrometheusRuleGroupProperties(
+                    default,
                     isEnabled,
-                    clusterName,
-                    (scopes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    interval,
-                    (rules ?? new ChangeTrackingList<PrometheusRule>()).ToList(),
-                    null));
+                    default,
+                    default,
+                    default,
+                    default,
+                    default),
+                default);
         }
 
-        /// <summary> An Azure Prometheus alerting or recording rule. </summary>
         /// <param name="record"> Recorded metrics name. </param>
         /// <param name="alert"> Alert rule name. </param>
         /// <param name="isEnabled"> Enable/disable rule. </param>
@@ -76,16 +76,15 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                 alert,
                 isEnabled,
                 expression,
-                labels,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
                 severity,
                 minActiveDuration,
-                annotations,
-                actions.ToList(),
+                annotations ?? new ChangeTrackingDictionary<string, string>(),
+                (actions ?? new ChangeTrackingList<PrometheusRuleGroupAction>()).ToList(),
                 resolveConfiguration,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> An alert action. Only relevant for alerts. </summary>
         /// <param name="actionGroupId"> The resource id of the action group to use. </param>
         /// <param name="actionProperties"> The properties of an action group object. </param>
         /// <returns> A new <see cref="Models.PrometheusRuleGroupAction"/> instance for mocking. </returns>
@@ -93,7 +92,15 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         {
             actionProperties ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PrometheusRuleGroupAction(actionGroupId, actionProperties, additionalBinaryDataProperties: null);
+            return new PrometheusRuleGroupAction(actionGroupId, actionProperties ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="isAutoResolved"> Enable alert auto-resolution. </param>
+        /// <param name="timeToResolve"> Alert auto-resolution timeout. </param>
+        /// <returns> A new <see cref="Models.PrometheusRuleResolveConfiguration"/> instance for mocking. </returns>
+        public static PrometheusRuleResolveConfiguration PrometheusRuleResolveConfiguration(bool? isAutoResolved = default, TimeSpan? timeToResolve = default)
+        {
+            return new PrometheusRuleResolveConfiguration(isAutoResolved, timeToResolve, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PrometheusRuleGroupPatch(tags, isEnabled is null ? default : new PrometheusRuleGroupResourcePatchParametersProperties(isEnabled, null), additionalBinaryDataProperties: null);
+            return new PrometheusRuleGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), isEnabled is null ? default : new PrometheusRuleGroupResourcePatchParametersProperties(isEnabled, default), default);
         }
     }
 }
