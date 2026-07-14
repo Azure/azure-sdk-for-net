@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Azure.Generator.Tests.TestHelpers
 {
@@ -23,6 +24,56 @@ namespace Azure.Generator.Tests.TestHelpers
     {
         private static readonly string _configFilePath = Path.Combine(AppContext.BaseDirectory, TestHelpersFolder);
         private const string TestHelpersFolder = "TestHelpers";
+
+        public static async Task<Mock<AzureClientGenerator>> LoadMockGeneratorAsync(
+            Func<InputType, TypeProvider, IReadOnlyList<TypeProvider>>? createSerializationsCore = null,
+            Func<InputType, CSharpType>? createCSharpTypeCore = null,
+            Func<InputApiKeyAuth>? apiKeyAuth = null,
+            Func<InputOAuth2Auth>? oauth2Auth = null,
+            Func<IReadOnlyList<string>>? apiVersions = null,
+            Func<IReadOnlyList<InputLiteralType>>? inputLiterals = null,
+            Func<IReadOnlyList<InputEnumType>>? inputEnums = null,
+            Func<IReadOnlyList<InputModelType>>? inputModels = null,
+            Func<IReadOnlyList<InputClient>>? clients = null,
+            Func<InputClient, ClientProvider?>? createClientCore = null,
+            Func<IReadOnlyList<ScmLibraryVisitor>>? visitors = null,
+            ClientResponseApi? clientResponseApi = null,
+            ClientPipelineApi? clientPipelineApi = null,
+            HttpMessageApi? httpMessageApi = null,
+            string? configurationJson = null,
+            string? inputNamespace = null,
+            Func<Task<Compilation>>? compilation = null,
+            Func<Task<Compilation>>? lastContractCompilation = null)
+        {
+            var mockGenerator = LoadMockGenerator(
+                createSerializationsCore,
+                createCSharpTypeCore,
+                apiKeyAuth,
+                oauth2Auth,
+                apiVersions,
+                inputLiterals,
+                inputEnums,
+                inputModels,
+                clients,
+                createClientCore,
+                visitors,
+                clientResponseApi,
+                clientPipelineApi,
+                httpMessageApi,
+                configurationJson,
+                inputNamespace);
+
+            var compilationResult = compilation is null ? null : await compilation();
+            var lastContractCompilationResult = lastContractCompilation is null ? null : await lastContractCompilation();
+            var sourceInputModel = new Mock<SourceInputModel>(
+                () => new SourceInputModel(compilationResult, lastContractCompilationResult))
+            {
+                CallBase = true
+            };
+            mockGenerator.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
+
+            return mockGenerator;
+        }
 
         public static Mock<AzureClientGenerator> LoadMockGenerator(
             Func<InputType, TypeProvider, IReadOnlyList<TypeProvider>>? createSerializationsCore = null,
@@ -122,19 +173,6 @@ namespace Azure.Generator.Tests.TestHelpers
                     "_customCodeView",
                     BindingFlags.NonPublic | BindingFlags.Instance)?
                 .SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
-        }
-
-        // PropertyProvider.OriginalName has an internal init accessor and the custom-code parser
-        // (NamedTypeSymbolProvider) is internal to Microsoft.TypeSpec.Generator with no InternalsVisibleTo
-        // for this test assembly, so there is currently no way to load a real [CodeGenMember] rename here.
-        // Set the backing field via reflection to simulate a property renamed through custom code.
-        // Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60907.
-        public static void SetOriginalName(PropertyProvider property, string originalName)
-        {
-            typeof(PropertyProvider)
-                .GetField($"<{nameof(PropertyProvider.OriginalName)}>k__BackingField",
-                    BindingFlags.NonPublic | BindingFlags.Instance)!
-                .SetValue(property, originalName);
         }
 
         private static Compilation? BuildLastContractCompilation(IEnumerable<string>? sources)

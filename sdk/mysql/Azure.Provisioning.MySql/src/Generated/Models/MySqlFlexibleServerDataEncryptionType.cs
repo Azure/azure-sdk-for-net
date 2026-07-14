@@ -11,8 +11,8 @@ namespace Azure.Provisioning.MySql
     public enum MySqlFlexibleServerDataEncryptionType
     {
         /// <summary> AzureKeyVault. </summary>
-        AzureKeyVault,
+        AzureKeyVault = 0,
         /// <summary> SystemManaged. </summary>
-        SystemManaged
+        SystemManaged = 1
     }
 }

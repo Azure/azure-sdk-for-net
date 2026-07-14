@@ -836,9 +836,9 @@ namespace Azure.Provisioning.ContainerService
     public partial class ManagedClusterAddonProfileIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedClusterAddonProfileIdentity() { }
-        public Azure.Provisioning.BicepValue<System.Guid> ClientId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Guid> ObjectId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> ClientId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Guid> ObjectId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ManagedClusterAdvancedNetworking : Azure.Provisioning.Primitives.ProvisionableConstruct

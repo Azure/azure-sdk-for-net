@@ -9,9 +9,9 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.Cose;
 using System.Text;
 using Azure.Core;
-using static Azure.Security.CodeTransparency.Receipt.CcfReceipt;
+using static Azure.Security.CodeTransparency.CcfReceipt;
 
-namespace Azure.Security.CodeTransparency.Receipt
+namespace Azure.Security.CodeTransparency
 {
     /// <summary>
     /// CcfReceiptVerifier class contains the methods to verify the CCF SCITT receipt

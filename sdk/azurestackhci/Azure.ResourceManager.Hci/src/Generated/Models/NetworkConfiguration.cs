@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> List of network adapters. </summary>
         [WirePath("networkAdapters")]
-        public IList<HciNetworkAdapter> NetworkAdapters { get; }
+        public IList<HciNetworkAdapter> NetworkAdapters { get; } = new ChangeTrackingList<HciNetworkAdapter>();
     }
 }

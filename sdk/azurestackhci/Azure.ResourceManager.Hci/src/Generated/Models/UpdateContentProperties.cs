@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Represents the payloads of a update content resource. </summary>
         [WirePath("updatePayloads")]
-        public IList<ContentPayload> UpdatePayloads { get; }
+        public IList<ContentPayload> UpdatePayloads { get; } = new ChangeTrackingList<ContentPayload>();
     }
 }
