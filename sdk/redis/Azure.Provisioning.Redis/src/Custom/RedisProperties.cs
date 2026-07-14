@@ -7,12 +7,15 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.Redis
 {
-#pragma warning disable CS0618 // RedisPrivateEndpointConnectionData is intentionally preserved for obsolete compatibility APIs.
     internal partial class RedisProperties
     {
+#pragma warning disable CS0618 // RedisPrivateEndpointConnectionData is intentionally preserved for obsolete compatibility APIs.
         private BicepList<RedisPrivateEndpointConnectionData> _privateEndpointConnections;
+#pragma warning restore CS0618
 
+#pragma warning disable CS0618 // RedisPrivateEndpointConnectionData is intentionally preserved for obsolete compatibility APIs.
         internal BicepList<RedisPrivateEndpointConnectionData> PrivateEndpointConnections
+#pragma warning restore CS0618
         {
             get
             {
@@ -23,8 +26,9 @@ namespace Azure.Provisioning.Redis
 
         partial void DefineAdditionalProperties()
         {
+#pragma warning disable CS0618 // RedisPrivateEndpointConnectionData is intentionally preserved for obsolete compatibility APIs.
             _privateEndpointConnections = DefineListProperty<RedisPrivateEndpointConnectionData>("PrivateEndpointConnections", new string[] { "privateEndpointConnections" }, isOutput: true);
+#pragma warning restore CS0618
         }
     }
-#pragma warning restore CS0618
 }
