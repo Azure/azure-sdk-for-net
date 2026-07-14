@@ -137,19 +137,19 @@ namespace Azure.ResourceManager.Grafana.Models
         /// Email server settings.
         /// https://grafana.com/docs/grafana/v9.0/setup-grafana/configure-grafana/#smtp
         /// </param>
-        /// <param name="isExternalEnabled"> Set to false to disable external snapshot publish endpoint. </param>
+        /// <param name="isSnapshotsExternalEnabled"> Set to false to disable external snapshot publish endpoint. </param>
         /// <param name="users"> Grafana users settings. </param>
-        /// <param name="isCsrfAlwaysCheckEnabled"> Set to true to execute the CSRF check even if the login cookie is not in a request (default false). </param>
-        /// <param name="isCaptureEnabled"> Set to false to disable capture screenshot in Unified Alert due to performance issue. </param>
+        /// <param name="isSecurityCsrfAlwaysCheckEnabled"> Set to true to execute the CSRF check even if the login cookie is not in a request (default false). </param>
+        /// <param name="isUnifiedAlertingScreenshotsCaptureEnabled"> Set to false to disable capture screenshot in Unified Alert due to performance issue. </param>
         /// <returns> A new <see cref="Models.GrafanaConfigurations"/> instance for mocking. </returns>
-        public static GrafanaConfigurations GrafanaConfigurations(GrafanaSmtpSettings smtp = default, bool? isExternalEnabled = default, GrafanaUserSettings users = default, bool? isCsrfAlwaysCheckEnabled = default, bool? isCaptureEnabled = default)
+        public static GrafanaConfigurations GrafanaConfigurations(GrafanaSmtpSettings smtp = default, bool? isSnapshotsExternalEnabled = default, GrafanaUserSettings users = default, bool? isSecurityCsrfAlwaysCheckEnabled = default, bool? isUnifiedAlertingScreenshotsCaptureEnabled = default)
         {
             return new GrafanaConfigurations(
                 smtp,
-                isExternalEnabled is null ? default : new GrafanaSnapshotsSettings(isExternalEnabled, default),
+                isSnapshotsExternalEnabled is null ? default : new GrafanaSnapshotsSettings(isSnapshotsExternalEnabled, default),
                 users,
-                isCsrfAlwaysCheckEnabled is null ? default : new GrafanaSecuritySettings(isCsrfAlwaysCheckEnabled, default),
-                isCaptureEnabled is null ? default : new UnifiedAlertingScreenshots(isCaptureEnabled, default),
+                isSecurityCsrfAlwaysCheckEnabled is null ? default : new GrafanaSecuritySettings(isSecurityCsrfAlwaysCheckEnabled, default),
+                isUnifiedAlertingScreenshotsCaptureEnabled is null ? default : new UnifiedAlertingScreenshots(isUnifiedAlertingScreenshotsCaptureEnabled, default),
                 default);
         }
 

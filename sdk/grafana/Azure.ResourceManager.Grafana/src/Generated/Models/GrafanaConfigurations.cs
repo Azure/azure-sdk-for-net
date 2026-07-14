@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Grafana.Models
         internal UnifiedAlertingScreenshots UnifiedAlertingScreenshots { get; set; }
 
         /// <summary> Set to false to disable external snapshot publish endpoint. </summary>
-        public bool? IsExternalEnabled
+        public bool? IsSnapshotsExternalEnabled
         {
             get
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Grafana.Models
         }
 
         /// <summary> Set to true to execute the CSRF check even if the login cookie is not in a request (default false). </summary>
-        public bool? IsCsrfAlwaysCheckEnabled
+        public bool? IsSecurityCsrfAlwaysCheckEnabled
         {
             get
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Grafana.Models
         }
 
         /// <summary> Set to false to disable capture screenshot in Unified Alert due to performance issue. </summary>
-        public bool? IsCaptureEnabled
+        public bool? IsUnifiedAlertingScreenshotsCaptureEnabled
         {
             get
             {
