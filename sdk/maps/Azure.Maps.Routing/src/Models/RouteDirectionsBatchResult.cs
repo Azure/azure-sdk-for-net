@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
@@ -30,7 +31,7 @@ namespace Azure.Maps.Routing.Models
         /// <param name="results"> Batch result of the query. </param>
         internal RouteDirectionsBatchResult(BatchResultSummary batchSummary, IReadOnlyList<RouteDirectionsBatchItemResponse> results) : base(batchSummary)
         {
-            Results = results;
+            Results = (results ?? new List<RouteDirectionsBatchItemResponse>()).ToList().AsReadOnly();
         }
 
         /// <summary> Array containing the batch results. </summary>
