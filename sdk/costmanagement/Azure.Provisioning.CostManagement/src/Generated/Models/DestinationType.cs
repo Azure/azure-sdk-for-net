@@ -11,6 +11,6 @@ namespace Azure.Provisioning.CostManagement
     public enum DestinationType
     {
         /// <summary> AzureBlob. </summary>
-        AzureBlob
+        AzureBlob = 0
     }
 }
