@@ -115,7 +115,7 @@ internal static class BicepTypeMapping
         List<PropertyExpression> properties = [];
         foreach (JsonProperty property in element.EnumerateObject())
         {
-            properties.Add(new PropertyExpression(property.Name, ToBicep(property.Value)));
+            properties.Add(new PropertyExpression(property.Name, ToBicep(property.Value), allowRawName: false));
         }
         return [.. properties];
     }
