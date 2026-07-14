@@ -23,6 +23,7 @@ namespace Azure.Generator.Provisioning
         private Dictionary<string, ProvisioningResourceProvider>? _resourcesByIdPattern;
         private Dictionary<InputModelType, List<ProvisioningResourceProvider>>? _resourcesByModel;
         private BuiltInRoleProvider? _builtInRole;
+        private CodeGenEnumValueAttributeDefinition? _codeGenEnumValueAttributeDefinition;
 
         /// <summary>
         /// Gets the BuiltInRole type provider if any resources define RBAC roles.
@@ -35,6 +36,8 @@ namespace Azure.Generator.Provisioning
                 return _builtInRole;
             }
         }
+
+        internal CodeGenEnumValueAttributeDefinition CodeGenEnumValueAttributeDefinition => _codeGenEnumValueAttributeDefinition ??= new();
 
         /// <summary>
         /// Gets all provisioning resource providers.
@@ -59,7 +62,7 @@ namespace Azure.Generator.Provisioning
             var resourcesByModel = new Dictionary<InputModelType, List<ProvisioningResourceProvider>>();
             foreach (var projection in inputLibrary.ResourceProjections)
             {
-                var resource = new ProvisioningResourceProvider(projection, projection.IsSettable);
+                var resource = new ProvisioningResourceProvider(projection);
                 resources.Add(resource);
                 foreach (var resourceIdPattern in projection.ResourceIdPatterns)
                 {
@@ -150,6 +153,7 @@ namespace Azure.Generator.Provisioning
             {
                 providers.Add(BuiltInRole);
             }
+            providers.Add(CodeGenEnumValueAttributeDefinition);
 
             // Build models and enums via TypeFactory — our overridden CreateModel/CreateEnum
             // return ProvisioningModelProvider/ProvisioningResourceProvider/EnumProvider.

@@ -3,12 +3,20 @@
 ## 3.0.0-beta.1 (Unreleased)
 
 ### Features Added
+- Enabled the Model weights subclient.
+- Added the convenience methods `UploadModelAsync` and `UploadModel` to upload model weights.
+- Added distributed tracing support.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+### Sample Updates
+- Added sample for Model weights.
+- Added sample for `GitHubIssueRoutineTrigger`.
+- Updated sample for routine with manual dispatching so that it also demonstrates triggering based on message in Teams.
 
 ## 2.1.0-beta.4 (2026-06-30)
 

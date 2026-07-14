@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="backupStorageVersion"> Backup storage version. </param>
         /// <param name="publicNetworkAccess"> property to enable or disable resource provider inbound network traffic from public clients. </param>
         /// <param name="monitoringSettings"> Monitoring Settings of the vault. </param>
+        /// <param name="costManagementGranularityLevel"> Settings for granularity level. </param>
         /// <param name="crossSubscriptionRestoreState"> Gets or sets the CrossSubscriptionRestoreState. </param>
         /// <param name="redundancySettings"> The redundancy Settings of a Vault. </param>
         /// <param name="securitySettings"> Security Settings of the vault. </param>
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="bcdrSecurityLevel"> Security levels of Recovery Services Vault for business continuity and disaster recovery. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <returns> A new <see cref="Models.RecoveryServicesVaultProperties"/> instance for mocking. </returns>
-        public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState = default, VaultUpgradeDetails upgradeDetails = default, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = default, VaultPrivateEndpointState? privateEndpointStateForBackup = default, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = default, VaultPropertiesEncryption encryption = default, VaultPropertiesMoveDetails moveDetails = default, ResourceMoveState? moveState = default, BackupStorageVersion? backupStorageVersion = default, VaultPublicNetworkAccess? publicNetworkAccess = default, VaultMonitoringSettings monitoringSettings = default, CrossSubscriptionRestoreState? crossSubscriptionRestoreState = default, VaultPropertiesRedundancySettings redundancySettings = default, RecoveryServicesSecuritySettings securitySettings = default, SecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default)
+        public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState = default, VaultUpgradeDetails upgradeDetails = default, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = default, VaultPrivateEndpointState? privateEndpointStateForBackup = default, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = default, VaultPropertiesEncryption encryption = default, VaultPropertiesMoveDetails moveDetails = default, ResourceMoveState? moveState = default, BackupStorageVersion? backupStorageVersion = default, VaultPublicNetworkAccess? publicNetworkAccess = default, VaultMonitoringSettings monitoringSettings = default, GranularityLevel? costManagementGranularityLevel = default, CrossSubscriptionRestoreState? crossSubscriptionRestoreState = default, VaultPropertiesRedundancySettings redundancySettings = default, RecoveryServicesSecuritySettings securitySettings = default, SecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default)
         {
             privateEndpointConnections ??= new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>();
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
@@ -102,6 +103,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 backupStorageVersion,
                 publicNetworkAccess,
                 monitoringSettings,
+                costManagementGranularityLevel is null ? default : new CostManagementSettings(costManagementGranularityLevel, default),
                 crossSubscriptionRestoreState is null ? default : new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
                 redundancySettings,
                 securitySettings,
@@ -235,14 +237,34 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesClassicAlertSettings(alertsForCriticalOperations, emailNotificationsForSiteRecovery, default);
         }
 
-        /// <param name="immutabilityState"> Gets or sets the State. </param>
+        /// <param name="immutabilitySettings"> Immutability Settings of a vault. </param>
         /// <param name="softDeleteSettings"> Soft delete Settings of a vault. </param>
         /// <param name="multiUserAuthorization"> MUA Settings of a vault. </param>
         /// <param name="sourceScanConfiguration"> Source scan configuration of vault. </param>
         /// <returns> A new <see cref="Models.RecoveryServicesSecuritySettings"/> instance for mocking. </returns>
-        public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilityState? immutabilityState = default, RecoveryServicesSoftDeleteSettings softDeleteSettings = default, MultiUserAuthorization? multiUserAuthorization = default, SourceScanConfiguration sourceScanConfiguration = default)
+        public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilitySettings immutabilitySettings = default, RecoveryServicesSoftDeleteSettings softDeleteSettings = default, MultiUserAuthorization? multiUserAuthorization = default, SourceScanConfiguration sourceScanConfiguration = default)
         {
-            return new RecoveryServicesSecuritySettings(immutabilityState is null ? default : new ImmutabilitySettings(immutabilityState, default), softDeleteSettings, multiUserAuthorization, sourceScanConfiguration, default);
+            return new RecoveryServicesSecuritySettings(immutabilitySettings, softDeleteSettings, multiUserAuthorization, sourceScanConfiguration, default);
+        }
+
+        /// <param name="state"></param>
+        /// <param name="configuration">
+        /// Immutability configuration of the vault — selects whether immutability is
+        /// inherited from the backup policy (AsPerPolicy) or fixed for a specific
+        /// duration (TimeBased).
+        /// </param>
+        /// <returns> A new <see cref="Models.ImmutabilitySettings"/> instance for mocking. </returns>
+        public static ImmutabilitySettings ImmutabilitySettings(ImmutabilityState? state = default, ImmutabilityConfiguration configuration = default)
+        {
+            return new ImmutabilitySettings(state, configuration, default);
+        }
+
+        /// <param name="type"> Immutability type. 'AsPerPolicy' inherits duration from backup policy; 'TimeBased' requires explicit durationInDays. </param>
+        /// <param name="durationInDays"> Duration in days. Required when type is TimeBased, omitted when AsPerPolicy. </param>
+        /// <returns> A new <see cref="Models.ImmutabilityConfiguration"/> instance for mocking. </returns>
+        public static ImmutabilityConfiguration ImmutabilityConfiguration(ImmutabilityType? @type = default, int? durationInDays = default)
+        {
+            return new ImmutabilityConfiguration(@type, durationInDays, default);
         }
 
         /// <param name="softDeleteState"></param>
@@ -628,6 +650,60 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new DeletedVaultRestoreInput(deletedVaultRestoreInputRecoveryResourceGroupId is null ? default : new DeletedVaultRestoreInputProperties(deletedVaultRestoreInputRecoveryResourceGroupId, default), default);
         }
 
+        /// <param name="provisioningState"> Provisioning State. </param>
+        /// <param name="upgradeDetails"> Details for upgrading vault. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connection. </param>
+        /// <param name="privateEndpointStateForBackup"> Private endpoint state for backup. </param>
+        /// <param name="privateEndpointStateForSiteRecovery"> Private endpoint state for site recovery. </param>
+        /// <param name="encryption"> Customer Managed Key details of the resource. </param>
+        /// <param name="moveDetails"> The details of the latest move operation performed on the Azure Resource. </param>
+        /// <param name="moveState"> The State of the Resource after the move operation. </param>
+        /// <param name="backupStorageVersion"> Backup storage version. </param>
+        /// <param name="publicNetworkAccess"> property to enable or disable resource provider inbound network traffic from public clients. </param>
+        /// <param name="monitoringSettings"> Monitoring Settings of the vault. </param>
+        /// <param name="crossSubscriptionRestoreState"> Gets or sets the CrossSubscriptionRestoreState. </param>
+        /// <param name="redundancySettings"> The redundancy Settings of a Vault. </param>
+        /// <param name="securitySettings"> Security Settings of the vault. </param>
+        /// <param name="secureScore"> Secure Score of Recovery Services Vault. </param>
+        /// <param name="bcdrSecurityLevel"> Security levels of Recovery Services Vault for business continuity and disaster recovery. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
+        /// <returns> A new <see cref="Models.RecoveryServicesVaultProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState = default, VaultUpgradeDetails upgradeDetails = default, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = default, VaultPrivateEndpointState? privateEndpointStateForBackup = default, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = default, VaultPropertiesEncryption encryption = default, VaultPropertiesMoveDetails moveDetails = default, ResourceMoveState? moveState = default, BackupStorageVersion? backupStorageVersion = default, VaultPublicNetworkAccess? publicNetworkAccess = default, VaultMonitoringSettings monitoringSettings = default, CrossSubscriptionRestoreState? crossSubscriptionRestoreState = default, VaultPropertiesRedundancySettings redundancySettings = default, RecoveryServicesSecuritySettings securitySettings = default, SecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default)
+        {
+            return new RecoveryServicesVaultProperties(
+                provisioningState,
+                upgradeDetails,
+                (privateEndpointConnections ?? new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>()).ToList(),
+                privateEndpointStateForBackup,
+                privateEndpointStateForSiteRecovery,
+                encryption,
+                moveDetails,
+                moveState,
+                backupStorageVersion,
+                publicNetworkAccess,
+                monitoringSettings,
+                default,
+                crossSubscriptionRestoreState is null ? default : new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
+                redundancySettings,
+                securitySettings,
+                secureScore,
+                bcdrSecurityLevel,
+                (resourceGuardOperationRequests ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <param name="immutabilityState"> Gets or sets the State. </param>
+        /// <param name="softDeleteSettings"> Soft delete Settings of a vault. </param>
+        /// <param name="multiUserAuthorization"> MUA Settings of a vault. </param>
+        /// <param name="sourceScanConfiguration"> Source scan configuration of vault. </param>
+        /// <returns> A new <see cref="Models.RecoveryServicesSecuritySettings"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilityState? immutabilityState = default, RecoveryServicesSoftDeleteSettings softDeleteSettings = default, MultiUserAuthorization? multiUserAuthorization = default, SourceScanConfiguration sourceScanConfiguration = default)
+        {
+            return new RecoveryServicesSecuritySettings(immutabilityState is null ? default : new ImmutabilitySettings(immutabilityState, default, default), softDeleteSettings, multiUserAuthorization, sourceScanConfiguration, default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesVaultProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="upgradeDetails"> Details for upgrading vault. </param>
@@ -660,6 +736,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 backupStorageVersion,
                 publicNetworkAccess,
                 monitoringSettings,
+                default,
                 crossSubscriptionRestoreState is null ? default : new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
                 redundancySettings,
                 securitySettings,
@@ -677,7 +754,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilityState? immutabilityState, RecoveryServicesSoftDeleteSettings softDeleteSettings, MultiUserAuthorization? multiUserAuthorization)
         {
-            return new RecoveryServicesSecuritySettings(immutabilityState is null ? default : new ImmutabilitySettings(immutabilityState, default), softDeleteSettings, multiUserAuthorization, default, default);
+            return new RecoveryServicesSecuritySettings(immutabilityState is null ? default : new ImmutabilitySettings(immutabilityState, default, default), softDeleteSettings, multiUserAuthorization, default, default);
         }
     }
 }

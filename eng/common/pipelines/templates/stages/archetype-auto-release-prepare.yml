@@ -21,8 +21,8 @@ stages:
   # fixed cross-language output contract. Downstream release stages read outputs as:
   #   condition:  dependencies.AutoReleasePrepare.outputs['ResolveAutoReleasePackages.resolve.<var>']
   #   variables:  stageDependencies.AutoReleasePrepare.ResolveAutoReleasePackages.outputs['resolve.<var>']
-  # Emitted variables: AutoReleasePrNumber, AutoReleaseLabelPresent, HasAutoReleaseArtifacts,
-  # AutoReleaseArtifactsJson, and ReleaseArtifact_<safeName> per declared artifact.
+  # Emitted variables: HasAutoReleaseArtifacts (the single eligibility gate), AutoReleaseArtifactsJson,
+  # and ReleaseArtifact_<safeName> per declared artifact.
   - stage: AutoReleasePrepare
     displayName: Auto-release prepare
     dependsOn: ${{ parameters.DependsOn }}
