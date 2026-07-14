@@ -11,12 +11,12 @@ namespace Azure.Provisioning.DurableTask
     public enum DurableTaskPurgeableOrchestrationState
     {
         /// <summary> The orchestration is completed. </summary>
-        Completed,
+        Completed = 0,
         /// <summary> The orchestration is failed. </summary>
-        Failed,
+        Failed = 1,
         /// <summary> The orchestration is terminated. </summary>
-        Terminated,
+        Terminated = 2,
         /// <summary> The orchestration is canceled. </summary>
-        Canceled
+        Canceled = 3
     }
 }

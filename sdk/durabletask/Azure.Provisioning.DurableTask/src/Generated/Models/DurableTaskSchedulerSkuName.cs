@@ -11,8 +11,8 @@ namespace Azure.Provisioning.DurableTask
     public enum DurableTaskSchedulerSkuName
     {
         /// <summary> Dedicated SKU. </summary>
-        Dedicated,
+        Dedicated = 0,
         /// <summary> Consumption SKU. </summary>
-        Consumption
+        Consumption = 1
     }
 }

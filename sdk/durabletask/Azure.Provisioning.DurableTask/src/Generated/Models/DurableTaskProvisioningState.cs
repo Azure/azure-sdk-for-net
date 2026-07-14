@@ -11,18 +11,18 @@ namespace Azure.Provisioning.DurableTask
     public enum DurableTaskProvisioningState
     {
         /// <summary> Resource has been created. </summary>
-        Succeeded,
+        Succeeded = 0,
         /// <summary> Resource creation failed. </summary>
-        Failed,
+        Failed = 1,
         /// <summary> Resource creation was canceled. </summary>
-        Canceled,
+        Canceled = 2,
         /// <summary> The resource is being provisioned. </summary>
-        Provisioning,
+        Provisioning = 3,
         /// <summary> The resource is updating. </summary>
-        Updating,
+        Updating = 4,
         /// <summary> The resource is being deleted. </summary>
-        Deleting,
+        Deleting = 5,
         /// <summary> The resource create request has been accepted. </summary>
-        Accepted
+        Accepted = 6
     }
 }

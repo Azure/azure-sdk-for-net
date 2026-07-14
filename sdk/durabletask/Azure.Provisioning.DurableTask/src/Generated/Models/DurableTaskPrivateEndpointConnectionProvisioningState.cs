@@ -11,12 +11,12 @@ namespace Azure.Provisioning.DurableTask
     public enum DurableTaskPrivateEndpointConnectionProvisioningState
     {
         /// <summary> Connection has been provisioned. </summary>
-        Succeeded,
+        Succeeded = 0,
         /// <summary> Connection is being created. </summary>
-        Creating,
+        Creating = 1,
         /// <summary> Connection is being deleted. </summary>
-        Deleting,
+        Deleting = 2,
         /// <summary> Connection provisioning has failed. </summary>
-        Failed
+        Failed = 3
     }
 }

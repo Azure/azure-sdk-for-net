@@ -11,8 +11,8 @@ namespace Azure.Provisioning.DurableTask
     public enum DurableTaskResourceRedundancyState
     {
         /// <summary> The resource is not redundant. </summary>
-        None,
+        None = 0,
         /// <summary> The resource is zone redundant. </summary>
-        Zone
+        Zone = 1
     }
 }
