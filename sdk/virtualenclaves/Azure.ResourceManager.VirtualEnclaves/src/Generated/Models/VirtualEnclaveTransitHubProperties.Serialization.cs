@@ -105,6 +105,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SecurityProvider))
+            {
+                writer.WritePropertyName("securityProvider"u8);
+                writer.WriteStringValue(SecurityProvider.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -151,6 +156,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             TransitHubState? state = default;
             VirtualEnclaveTransitOptionProperties transitOption = default;
             IReadOnlyList<ResourceIdentifier> resourceCollection = default;
+            SecurityProvider? securityProvider = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -202,12 +208,27 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     resourceCollection = array;
                     continue;
                 }
+                if (prop.NameEquals("securityProvider"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityProvider = new SecurityProvider(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualEnclaveTransitHubProperties(provisioningState, state, transitOption, resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
+            return new VirtualEnclaveTransitHubProperties(
+                provisioningState,
+                state,
+                transitOption,
+                resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>(),
+                securityProvider,
+                additionalBinaryDataProperties);
         }
     }
 }

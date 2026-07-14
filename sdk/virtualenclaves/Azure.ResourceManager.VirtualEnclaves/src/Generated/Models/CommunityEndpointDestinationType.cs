@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         private const string IPAddressValue = "IPAddress";
         /// <summary> DestinationType Type PrivateNetwork. </summary>
         private const string PrivateNetworkValue = "PrivateNetwork";
+        /// <summary> DestinationType Type ServiceTag. </summary>
+        private const string ServiceTagValue = "ServiceTag";
 
         /// <summary> Initializes a new instance of <see cref="CommunityEndpointDestinationType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -45,6 +47,9 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
 
         /// <summary> DestinationType Type PrivateNetwork. </summary>
         public static CommunityEndpointDestinationType PrivateNetwork { get; } = new CommunityEndpointDestinationType(PrivateNetworkValue);
+
+        /// <summary> DestinationType Type ServiceTag. </summary>
+        public static CommunityEndpointDestinationType ServiceTag { get; } = new CommunityEndpointDestinationType(ServiceTagValue);
 
         /// <summary> Determines if two <see cref="CommunityEndpointDestinationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

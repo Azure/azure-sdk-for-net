@@ -91,6 +91,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Condition))
+            {
+                writer.WritePropertyName("condition"u8);
+                writer.WriteStringValue(Condition);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,6 +140,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             }
             string roleDefinitionId = default;
             IList<VirtualEnclavePrincipal> principals = default;
+            string condition = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,12 +163,17 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     principals = array;
                     continue;
                 }
+                if (prop.NameEquals("condition"u8))
+                {
+                    condition = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualEnclaveRoleAssignmentItem(roleDefinitionId, principals ?? new ChangeTrackingList<VirtualEnclavePrincipal>(), additionalBinaryDataProperties);
+            return new VirtualEnclaveRoleAssignmentItem(roleDefinitionId, principals ?? new ChangeTrackingList<VirtualEnclavePrincipal>(), condition, additionalBinaryDataProperties);
         }
     }
 }

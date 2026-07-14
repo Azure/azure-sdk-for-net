@@ -164,6 +164,24 @@ namespace Azure.ResourceManager.VirtualEnclaves
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DedicatedHubResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesArmClient.GetDedicatedHubResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DedicatedHubResource"/> object. </returns>
+        public static DedicatedHubResource GetDedicatedHubResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableVirtualEnclavesArmClient(client).GetDedicatedHubResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="VirtualEnclaveApprovalResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -662,6 +680,44 @@ namespace Azure.ResourceManager.VirtualEnclaves
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableVirtualEnclavesSubscriptionResource(subscriptionResource).GetVirtualEnclaveCommunityEndpoints(communityName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List DedicatedHubResource resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetDedicatedHubResourcesAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DedicatedHubResource> GetDedicatedHubResourcesAsync(this SubscriptionResource subscriptionResource, string communityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableVirtualEnclavesSubscriptionResource(subscriptionResource).GetDedicatedHubResourcesAsync(communityName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List DedicatedHubResource resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableVirtualEnclavesSubscriptionResource.GetDedicatedHubResources(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DedicatedHubResource> GetDedicatedHubResources(this SubscriptionResource subscriptionResource, string communityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableVirtualEnclavesSubscriptionResource(subscriptionResource).GetDedicatedHubResources(communityName, cancellationToken);
         }
     }
 }

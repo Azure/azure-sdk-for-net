@@ -14,7 +14,7 @@ using Azure.ResourceManager.VirtualEnclaves;
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> Community Endpoint patchable Properties. </summary>
-    internal partial class CommunityEndpointPatchProperties : IJsonModel<CommunityEndpointPatchProperties>
+    public partial class CommunityEndpointPatchProperties : IJsonModel<CommunityEndpointPatchProperties>
     {
         /// <summary> Initializes a new instance of <see cref="CommunityEndpointPatchProperties"/> for deserialization. </summary>
         internal CommunityEndpointPatchProperties()
@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(UpdateMode))
+            {
+                writer.WritePropertyName("updateMode"u8);
+                writer.WriteStringValue(UpdateMode.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -129,6 +134,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 return null;
             }
             IList<CommunityEndpointDestinationRule> ruleCollection = default;
+            UpdateMode? updateMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,12 +148,21 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     ruleCollection = array;
                     continue;
                 }
+                if (prop.NameEquals("updateMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    updateMode = new UpdateMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CommunityEndpointPatchProperties(ruleCollection, additionalBinaryDataProperties);
+            return new CommunityEndpointPatchProperties(ruleCollection, updateMode, additionalBinaryDataProperties);
         }
     }
 }

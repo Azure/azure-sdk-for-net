@@ -31,11 +31,13 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveRoleAssignmentItem"/>. </summary>
         /// <param name="roleDefinitionId"> Role definition identifier. </param>
         /// <param name="principals"> List of principal IDs to which to assign this role definition. </param>
+        /// <param name="condition"> Condition under which the principal can be granted permission. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveRoleAssignmentItem(string roleDefinitionId, IList<VirtualEnclavePrincipal> principals, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveRoleAssignmentItem(string roleDefinitionId, IList<VirtualEnclavePrincipal> principals, string condition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RoleDefinitionId = roleDefinitionId;
             Principals = principals;
+            Condition = condition;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,5 +46,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
 
         /// <summary> List of principal IDs to which to assign this role definition. </summary>
         public IList<VirtualEnclavePrincipal> Principals { get; }
+
+        /// <summary> Condition under which the principal can be granted permission. </summary>
+        public string Condition { get; set; }
     }
 }

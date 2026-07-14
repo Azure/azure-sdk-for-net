@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         {
             TryGetApiVersion(ResourceType, out string virtualEnclaveCommunityApiVersion);
             _communityClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", ResourceType.Namespace, Diagnostics);
-            _communityRestClient = new Community(_communityClientDiagnostics, Pipeline, Endpoint, virtualEnclaveCommunityApiVersion ?? "2025-05-01-preview");
+            _communityRestClient = new Community(_communityClientDiagnostics, Pipeline, Endpoint, virtualEnclaveCommunityApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -847,6 +847,39 @@ namespace Azure.ResourceManager.VirtualEnclaves
             Argument.AssertNotNullOrEmpty(communityEndpointName, nameof(communityEndpointName));
 
             return GetVirtualEnclaveCommunityEndpoints().Get(communityEndpointName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DedicatedHubResources in the <see cref="VirtualEnclaveCommunityResource"/>. </summary>
+        /// <returns> An object representing collection of DedicatedHubResources and their operations over a DedicatedHubResource. </returns>
+        public virtual DedicatedHubResourceCollection GetDedicatedHubResources()
+        {
+            return GetCachedClient(client => new DedicatedHubResourceCollection(client, Id));
+        }
+
+        /// <summary> Get a DedicatedHubResource. </summary>
+        /// <param name="dedicatedHubName"> The name of the Dedicated Hub Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dedicatedHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DedicatedHubResource>> GetDedicatedHubResourceAsync(string dedicatedHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dedicatedHubName, nameof(dedicatedHubName));
+
+            return await GetDedicatedHubResources().GetAsync(dedicatedHubName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a DedicatedHubResource. </summary>
+        /// <param name="dedicatedHubName"> The name of the Dedicated Hub Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dedicatedHubName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dedicatedHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DedicatedHubResource> GetDedicatedHubResource(string dedicatedHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dedicatedHubName, nameof(dedicatedHubName));
+
+            return GetDedicatedHubResources().Get(dedicatedHubName, cancellationToken);
         }
     }
 }

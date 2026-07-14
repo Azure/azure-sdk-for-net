@@ -35,22 +35,9 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         }
 
         /// <summary> Community Endpoint Patch properties. </summary>
-        internal CommunityEndpointPatchProperties Properties { get; set; }
+        public CommunityEndpointPatchProperties Properties { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-
-        /// <summary> Community Endpoint Rule Collection. </summary>
-        public IList<CommunityEndpointDestinationRule> CommunityEndpointPatchRuleCollection
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new CommunityEndpointPatchProperties();
-                }
-                return Properties.RuleCollection;
-            }
-        }
     }
 }

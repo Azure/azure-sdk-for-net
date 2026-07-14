@@ -98,13 +98,16 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
             // invoke the operation
             VirtualEnclaveEndpointPatch patch = new VirtualEnclaveEndpointPatch
             {
-                EnclaveEndpointPatchRuleCollection = {new EnclaveEndpointDestinationRule
+                Properties = new EnclaveEndpointPatchProperties(new EnclaveEndpointDestinationRule[]
+{
+new EnclaveEndpointDestinationRule
 {
 Protocols = {EnclaveEndpointProtocol.Tcp},
 EndpointRuleName = "54CEECEF-2C30-488E-946F-D20F414D99BA",
 Destination = "10.0.0.0/24",
 Ports = "443",
-}},
+}
+}),
                 Tags =
 {
 ["sampletag"] = "samplevalue"

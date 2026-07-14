@@ -34,12 +34,14 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="ruleCollection"> Community Endpoint Rule Collection. </param>
         /// <param name="resourceCollection"> List of resource ids created by community endpoint. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
+        /// <param name="updateMode"> Whether update mode is automatic or manual. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveCommunityEndpointProperties(IList<CommunityEndpointDestinationRule> ruleCollection, IReadOnlyList<ResourceIdentifier> resourceCollection, VirtualEnclaveProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveCommunityEndpointProperties(IList<CommunityEndpointDestinationRule> ruleCollection, IReadOnlyList<ResourceIdentifier> resourceCollection, VirtualEnclaveProvisioningState? provisioningState, UpdateMode? updateMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleCollection = ruleCollection;
             ResourceCollection = resourceCollection;
             ProvisioningState = provisioningState;
+            UpdateMode = updateMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,5 +53,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
 
         /// <summary> Provisioning State. </summary>
         public VirtualEnclaveProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Whether update mode is automatic or manual. </summary>
+        public UpdateMode? UpdateMode { get; set; }
     }
 }

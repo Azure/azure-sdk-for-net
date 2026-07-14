@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    /// <summary> ApprovalSettings Properties. </summary>
+    /// <summary> Virtual Enclave ApprovalSettings Properties for 2025-11-01-preview and later versions. </summary>
     public partial class VirtualEnclaveApprovalSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -20,89 +19,33 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveApprovalSettings"/>. </summary>
         public VirtualEnclaveApprovalSettings()
         {
-            MandatoryApprovers = new ChangeTrackingList<VirtualEnclaveMandatoryApprover>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveApprovalSettings"/>. </summary>
-        /// <param name="endpointCreation"> Approval required for endpoint creation (Required or NotRequired). </param>
-        /// <param name="endpointUpdate"> Approval required for endpoint update (Required or NotRequired). </param>
-        /// <param name="endpointDeletion"> Approval required for endpoint deletion (Required or NotRequired). </param>
-        /// <param name="connectionCreation"> Approval required for enclave connection creation (Required or NotRequired). </param>
-        /// <param name="connectionUpdate"> Approval required for enclave connection update (Required or NotRequired). </param>
-        /// <param name="connectionDeletion"> Approval required for enclave connection deletion (Required or NotRequired). </param>
-        /// <param name="enclaveCreation"> Approval required for virtual enclave creation (Required or NotRequired). </param>
-        /// <param name="enclaveDeletion"> Approval required for virtual enclave deletion (Required or NotRequired). </param>
-        /// <param name="maintenanceMode"> Approval required for toggling maintenance mode (Required or NotRequired). </param>
-        /// <param name="serviceCatalogDeployment"> Approval required for deploying service catalog templates (Required or NotRequired). </param>
-        /// <param name="notificationOnApprovalCreation"> Notification will be sent on creation of an Approval Request. </param>
-        /// <param name="notificationOnApprovalAction"> Notification will be sent on any action taken (Approve/Reject) on an Approval Request. </param>
-        /// <param name="notificationOnApprovalDeletion"> Notification will be sent on deletion of an Approval Request. </param>
-        /// <param name="mandatoryApprovers"> List of mandatory approvers for the approval request. </param>
-        /// <param name="minimumApproversRequired"> Minimum number of approvers required for the approval request. </param>
+        /// <param name="enclaveEndpointUpdate"> Approval configuration for enclave endpoint updates. </param>
+        /// <param name="connectionCreation"> Approval configuration for connection creation. </param>
+        /// <param name="connectionUpdate"> Approval configuration for connection updates. </param>
+        /// <param name="enclaveMaintenanceMode"> Approval configuration for enclave maintenance mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveApprovalSettings(VirtualEnclaveApprovalPolicy? endpointCreation, VirtualEnclaveApprovalPolicy? endpointUpdate, VirtualEnclaveApprovalPolicy? endpointDeletion, VirtualEnclaveApprovalPolicy? connectionCreation, VirtualEnclaveApprovalPolicy? connectionUpdate, VirtualEnclaveApprovalPolicy? connectionDeletion, VirtualEnclaveApprovalPolicy? enclaveCreation, VirtualEnclaveApprovalPolicy? enclaveDeletion, VirtualEnclaveApprovalPolicy? maintenanceMode, VirtualEnclaveApprovalPolicy? serviceCatalogDeployment, VirtualEnclaveApprovalPolicy? notificationOnApprovalCreation, VirtualEnclaveApprovalPolicy? notificationOnApprovalAction, VirtualEnclaveApprovalPolicy? notificationOnApprovalDeletion, IList<VirtualEnclaveMandatoryApprover> mandatoryApprovers, long? minimumApproversRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveApprovalSettings(ApprovalSettingConfiguration enclaveEndpointUpdate, ApprovalSettingConfiguration connectionCreation, ApprovalSettingConfiguration connectionUpdate, ApprovalSettingConfiguration enclaveMaintenanceMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EndpointCreation = endpointCreation;
-            EndpointUpdate = endpointUpdate;
-            EndpointDeletion = endpointDeletion;
+            EnclaveEndpointUpdate = enclaveEndpointUpdate;
             ConnectionCreation = connectionCreation;
             ConnectionUpdate = connectionUpdate;
-            ConnectionDeletion = connectionDeletion;
-            EnclaveCreation = enclaveCreation;
-            EnclaveDeletion = enclaveDeletion;
-            MaintenanceMode = maintenanceMode;
-            ServiceCatalogDeployment = serviceCatalogDeployment;
-            NotificationOnApprovalCreation = notificationOnApprovalCreation;
-            NotificationOnApprovalAction = notificationOnApprovalAction;
-            NotificationOnApprovalDeletion = notificationOnApprovalDeletion;
-            MandatoryApprovers = mandatoryApprovers;
-            MinimumApproversRequired = minimumApproversRequired;
+            EnclaveMaintenanceMode = enclaveMaintenanceMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Approval required for endpoint creation (Required or NotRequired). </summary>
-        public VirtualEnclaveApprovalPolicy? EndpointCreation { get; set; }
+        /// <summary> Approval configuration for enclave endpoint updates. </summary>
+        public ApprovalSettingConfiguration EnclaveEndpointUpdate { get; set; }
 
-        /// <summary> Approval required for endpoint update (Required or NotRequired). </summary>
-        public VirtualEnclaveApprovalPolicy? EndpointUpdate { get; set; }
+        /// <summary> Approval configuration for connection creation. </summary>
+        public ApprovalSettingConfiguration ConnectionCreation { get; set; }
 
-        /// <summary> Approval required for endpoint deletion (Required or NotRequired). </summary>
-        public VirtualEnclaveApprovalPolicy? EndpointDeletion { get; set; }
+        /// <summary> Approval configuration for connection updates. </summary>
+        public ApprovalSettingConfiguration ConnectionUpdate { get; set; }
 
-        /// <summary> Approval required for enclave connection creation (Required or NotRequired). </summary>
-        public VirtualEnclaveApprovalPolicy? ConnectionCreation { get; set; }
-
-        /// <summary> Approval required for enclave connection update (Required or NotRequired). </summary>
-        public VirtualEnclaveApprovalPolicy? ConnectionUpdate { get; set; }
-
-        /// <summary> Approval required for enclave connection deletion (Required or NotRequired). </summary>
-        public VirtualEnclaveApprovalPolicy? ConnectionDeletion { get; set; }
-
-        /// <summary> Approval required for virtual enclave creation (Required or NotRequired). </summary>
-        public VirtualEnclaveApprovalPolicy? EnclaveCreation { get; set; }
-
-        /// <summary> Approval required for virtual enclave deletion (Required or NotRequired). </summary>
-        public VirtualEnclaveApprovalPolicy? EnclaveDeletion { get; set; }
-
-        /// <summary> Approval required for toggling maintenance mode (Required or NotRequired). </summary>
-        public VirtualEnclaveApprovalPolicy? MaintenanceMode { get; set; }
-
-        /// <summary> Approval required for deploying service catalog templates (Required or NotRequired). </summary>
-        public VirtualEnclaveApprovalPolicy? ServiceCatalogDeployment { get; set; }
-
-        /// <summary> Notification will be sent on creation of an Approval Request. </summary>
-        public VirtualEnclaveApprovalPolicy? NotificationOnApprovalCreation { get; set; }
-
-        /// <summary> Notification will be sent on any action taken (Approve/Reject) on an Approval Request. </summary>
-        public VirtualEnclaveApprovalPolicy? NotificationOnApprovalAction { get; set; }
-
-        /// <summary> Notification will be sent on deletion of an Approval Request. </summary>
-        public VirtualEnclaveApprovalPolicy? NotificationOnApprovalDeletion { get; set; }
-
-        /// <summary> List of mandatory approvers for the approval request. </summary>
-        public IList<VirtualEnclaveMandatoryApprover> MandatoryApprovers { get; }
-
-        /// <summary> Minimum number of approvers required for the approval request. </summary>
-        public long? MinimumApproversRequired { get; set; }
+        /// <summary> Approval configuration for enclave maintenance mode. </summary>
+        public ApprovalSettingConfiguration EnclaveMaintenanceMode { get; set; }
     }
 }

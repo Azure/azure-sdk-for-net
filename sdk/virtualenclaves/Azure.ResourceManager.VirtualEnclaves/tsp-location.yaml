@@ -1,5 +1,5 @@
 directory: specification\mission\Mission.Management
-commit: 34055f27a4e67f0555408a2bc1156c12051cbdb4
+commit: e0594098dde23f29e9908a1f230021e5f4609a4b
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
 

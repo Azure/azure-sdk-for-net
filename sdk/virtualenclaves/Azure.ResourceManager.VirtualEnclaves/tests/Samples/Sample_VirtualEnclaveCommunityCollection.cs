@@ -132,23 +132,38 @@ Principals = {new VirtualEnclavePrincipal("01234567-89ab-ef01-2345-0123456789ab"
 Principals = {new VirtualEnclavePrincipal("355a6bb0-abc0-4cba-000d-12a345b678c9", VirtualEnclavePrincipalType.User)},
 }},
                     FirewallSku = VirtualEnclaveFirewallSku.Standard,
-                    ApprovalSettings = new VirtualEnclaveApprovalSettings
+                    GranularApprovalSettings = new VirtualEnclaveBaseApprovalSettings
                     {
-                        EndpointCreation = VirtualEnclaveApprovalPolicy.NotRequired,
-                        EndpointUpdate = VirtualEnclaveApprovalPolicy.Required,
-                        EndpointDeletion = VirtualEnclaveApprovalPolicy.NotRequired,
-                        ConnectionCreation = VirtualEnclaveApprovalPolicy.Required,
-                        ConnectionUpdate = VirtualEnclaveApprovalPolicy.Required,
-                        ConnectionDeletion = VirtualEnclaveApprovalPolicy.NotRequired,
-                        EnclaveCreation = VirtualEnclaveApprovalPolicy.NotRequired,
-                        EnclaveDeletion = VirtualEnclaveApprovalPolicy.NotRequired,
-                        MaintenanceMode = VirtualEnclaveApprovalPolicy.NotRequired,
-                        ServiceCatalogDeployment = VirtualEnclaveApprovalPolicy.NotRequired,
-                        NotificationOnApprovalCreation = VirtualEnclaveApprovalPolicy.NotRequired,
-                        NotificationOnApprovalAction = VirtualEnclaveApprovalPolicy.NotRequired,
-                        NotificationOnApprovalDeletion = VirtualEnclaveApprovalPolicy.NotRequired,
-                        MandatoryApprovers = { new VirtualEnclaveMandatoryApprover("00000000-0000-0000-0000-000000000000") },
-                        MinimumApproversRequired = 0L,
+                        CommunityEndpointUpdate = new ApprovalSettingConfiguration
+                        {
+                            ApprovalPolicy = VirtualEnclaveApprovalPolicy.Required,
+                            MinimumApproversRequired = 0,
+                            MandatoryApprovers = { new VirtualEnclaveMandatoryApprover("00000000-0000-0000-0000-000000000000") },
+                        },
+                        EnclaveEndpointUpdate = new ApprovalSettingConfiguration
+                        {
+                            ApprovalPolicy = VirtualEnclaveApprovalPolicy.Required,
+                        },
+                        EnclaveCreation = new ApprovalSettingConfiguration
+                        {
+                            ApprovalPolicy = VirtualEnclaveApprovalPolicy.NotRequired,
+                        },
+                        ConnectionCreation = new ApprovalSettingConfiguration
+                        {
+                            ApprovalPolicy = VirtualEnclaveApprovalPolicy.Required,
+                        },
+                        ConnectionUpdate = new ApprovalSettingConfiguration
+                        {
+                            ApprovalPolicy = VirtualEnclaveApprovalPolicy.Required,
+                        },
+                        CommunityMaintenanceMode = new ApprovalSettingConfiguration
+                        {
+                            ApprovalPolicy = VirtualEnclaveApprovalPolicy.NotRequired,
+                        },
+                        EnclaveMaintenanceMode = new ApprovalSettingConfiguration
+                        {
+                            ApprovalPolicy = VirtualEnclaveApprovalPolicy.NotRequired,
+                        },
                     },
                     MaintenanceModeConfiguration = new VirtualEnclaveMaintenanceModeConfiguration(VirtualEnclaveMaintenanceMode.Off)
                     {

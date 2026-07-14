@@ -29,13 +29,15 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="state"> The state of the transitHub. </param>
         /// <param name="transitOption"> The TransitOption of the transitHub. </param>
         /// <param name="resourceCollection"> List of resource ids modified by transitHubs. </param>
+        /// <param name="securityProvider"> Specifies the security provider for the transit hub. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveTransitHubProperties(VirtualEnclaveProvisioningState? provisioningState, TransitHubState? state, VirtualEnclaveTransitOptionProperties transitOption, IReadOnlyList<ResourceIdentifier> resourceCollection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveTransitHubProperties(VirtualEnclaveProvisioningState? provisioningState, TransitHubState? state, VirtualEnclaveTransitOptionProperties transitOption, IReadOnlyList<ResourceIdentifier> resourceCollection, SecurityProvider? securityProvider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             State = state;
             TransitOption = transitOption;
             ResourceCollection = resourceCollection;
+            SecurityProvider = securityProvider;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -50,5 +52,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
 
         /// <summary> List of resource ids modified by transitHubs. </summary>
         public IReadOnlyList<ResourceIdentifier> ResourceCollection { get; }
+
+        /// <summary> Specifies the security provider for the transit hub. </summary>
+        public SecurityProvider? SecurityProvider { get; set; }
     }
 }

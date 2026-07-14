@@ -33,6 +33,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         private EnclaveEndpoints _enclaveEndpointsRestClient;
         private ClientDiagnostics _communityEndpointsClientDiagnostics;
         private CommunityEndpoints _communityEndpointsRestClient;
+        private ClientDiagnostics _dedicatedHubClientDiagnostics;
+        private DedicatedHub _dedicatedHubRestClient;
 
         /// <summary> Initializes a new instance of MockableVirtualEnclavesSubscriptionResource for mocking. </summary>
         protected MockableVirtualEnclavesSubscriptionResource()
@@ -48,31 +50,35 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
 
         private ClientDiagnostics WorkloadClientDiagnostics => _workloadClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workload WorkloadRestClient => _workloadRestClient ??= new Workload(WorkloadClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private Workload WorkloadRestClient => _workloadRestClient ??= new Workload(WorkloadClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics VirtualEnclaveClientDiagnostics => _virtualEnclaveClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualEnclave VirtualEnclaveRestClient => _virtualEnclaveRestClient ??= new VirtualEnclave(VirtualEnclaveClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private VirtualEnclave VirtualEnclaveRestClient => _virtualEnclaveRestClient ??= new VirtualEnclave(VirtualEnclaveClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics CommunityClientDiagnostics => _communityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Community CommunityRestClient => _communityRestClient ??= new Community(CommunityClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private Community CommunityRestClient => _communityRestClient ??= new Community(CommunityClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics TransitHubClientDiagnostics => _transitHubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TransitHub TransitHubRestClient => _transitHubRestClient ??= new TransitHub(TransitHubClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private TransitHub TransitHubRestClient => _transitHubRestClient ??= new TransitHub(TransitHubClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics EnclaveConnectionClientDiagnostics => _enclaveConnectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EnclaveConnection EnclaveConnectionRestClient => _enclaveConnectionRestClient ??= new EnclaveConnection(EnclaveConnectionClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private EnclaveConnection EnclaveConnectionRestClient => _enclaveConnectionRestClient ??= new EnclaveConnection(EnclaveConnectionClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics EnclaveEndpointsClientDiagnostics => _enclaveEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EnclaveEndpoints EnclaveEndpointsRestClient => _enclaveEndpointsRestClient ??= new EnclaveEndpoints(EnclaveEndpointsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private EnclaveEndpoints EnclaveEndpointsRestClient => _enclaveEndpointsRestClient ??= new EnclaveEndpoints(EnclaveEndpointsClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
         private ClientDiagnostics CommunityEndpointsClientDiagnostics => _communityEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CommunityEndpoints CommunityEndpointsRestClient => _communityEndpointsRestClient ??= new CommunityEndpoints(CommunityEndpointsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private CommunityEndpoints CommunityEndpointsRestClient => _communityEndpointsRestClient ??= new CommunityEndpoints(CommunityEndpointsClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+
+        private ClientDiagnostics DedicatedHubClientDiagnostics => _dedicatedHubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DedicatedHub DedicatedHubRestClient => _dedicatedHubRestClient ??= new DedicatedHub(DedicatedHubClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
         /// <summary>
         /// List WorkloadResource resources by subscription ID
@@ -87,7 +93,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,7 +126,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,7 +159,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,7 +187,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,7 +215,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,7 +243,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,7 +271,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,7 +304,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,7 +337,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -359,7 +365,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -387,7 +393,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -420,7 +426,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -453,7 +459,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -486,7 +492,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -504,6 +510,72 @@ namespace Azure.ResourceManager.VirtualEnclaves.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<VirtualEnclaveCommunityEndpointData, VirtualEnclaveCommunityEndpointResource>(new CommunityEndpointsGetBySubscriptionCollectionResultOfT(CommunityEndpointsRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableVirtualEnclavesSubscriptionResource.GetVirtualEnclaveCommunityEndpoints"), data => new VirtualEnclaveCommunityEndpointResource(Client, data));
+        }
+
+        /// <summary>
+        /// List DedicatedHubResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Mission/communities/{communityName}/dedicatedHubs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DedicatedHub_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DedicatedHubResource> GetDedicatedHubResourcesAsync(string communityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DedicatedHubResourceData, DedicatedHubResource>(new DedicatedHubGetBySubscriptionAsyncCollectionResultOfT(DedicatedHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableVirtualEnclavesSubscriptionResource.GetDedicatedHubResources"), data => new DedicatedHubResource(Client, data));
+        }
+
+        /// <summary>
+        /// List DedicatedHubResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Mission/communities/{communityName}/dedicatedHubs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DedicatedHub_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="communityName"> The name of the communityResource Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DedicatedHubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DedicatedHubResource> GetDedicatedHubResources(string communityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DedicatedHubResourceData, DedicatedHubResource>(new DedicatedHubGetBySubscriptionCollectionResultOfT(DedicatedHubRestClient, Guid.Parse(Id.SubscriptionId), communityName, context, "MockableVirtualEnclavesSubscriptionResource.GetDedicatedHubResources"), data => new DedicatedHubResource(Client, data));
         }
     }
 }

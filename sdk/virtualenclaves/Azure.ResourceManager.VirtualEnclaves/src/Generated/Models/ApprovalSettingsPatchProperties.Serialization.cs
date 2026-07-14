@@ -13,8 +13,8 @@ using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    /// <summary> ApprovalSettings Properties. </summary>
-    internal partial class ApprovalSettingsPatchProperties : IJsonModel<ApprovalSettingsPatchProperties>
+    /// <summary> Granular ApprovalSettings Patch Properties. </summary>
+    public partial class ApprovalSettingsPatchProperties : IJsonModel<ApprovalSettingsPatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -74,15 +74,40 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 throw new FormatException($"The model {nameof(ApprovalSettingsPatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(MandatoryApprovers))
+            if (Optional.IsDefined(CommunityEndpointUpdate))
             {
-                writer.WritePropertyName("mandatoryApprovers"u8);
-                writer.WriteStartArray();
-                foreach (VirtualEnclaveMandatoryApprover item in MandatoryApprovers)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("communityEndpointUpdate"u8);
+                writer.WriteObjectValue(CommunityEndpointUpdate, options);
+            }
+            if (Optional.IsDefined(EnclaveEndpointUpdate))
+            {
+                writer.WritePropertyName("enclaveEndpointUpdate"u8);
+                writer.WriteObjectValue(EnclaveEndpointUpdate, options);
+            }
+            if (Optional.IsDefined(EnclaveCreation))
+            {
+                writer.WritePropertyName("enclaveCreation"u8);
+                writer.WriteObjectValue(EnclaveCreation, options);
+            }
+            if (Optional.IsDefined(ConnectionCreation))
+            {
+                writer.WritePropertyName("connectionCreation"u8);
+                writer.WriteObjectValue(ConnectionCreation, options);
+            }
+            if (Optional.IsDefined(ConnectionUpdate))
+            {
+                writer.WritePropertyName("connectionUpdate"u8);
+                writer.WriteObjectValue(ConnectionUpdate, options);
+            }
+            if (Optional.IsDefined(CommunityMaintenanceMode))
+            {
+                writer.WritePropertyName("communityMaintenanceMode"u8);
+                writer.WriteObjectValue(CommunityMaintenanceMode, options);
+            }
+            if (Optional.IsDefined(EnclaveMaintenanceMode))
+            {
+                writer.WritePropertyName("enclaveMaintenanceMode"u8);
+                writer.WriteObjectValue(EnclaveMaintenanceMode, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,22 +151,77 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 return null;
             }
-            IList<VirtualEnclaveMandatoryApprover> mandatoryApprovers = default;
+            ApprovalSettingConfiguration communityEndpointUpdate = default;
+            ApprovalSettingConfiguration enclaveEndpointUpdate = default;
+            ApprovalSettingConfiguration enclaveCreation = default;
+            ApprovalSettingConfiguration connectionCreation = default;
+            ApprovalSettingConfiguration connectionUpdate = default;
+            ApprovalSettingConfiguration communityMaintenanceMode = default;
+            ApprovalSettingConfiguration enclaveMaintenanceMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("mandatoryApprovers"u8))
+                if (prop.NameEquals("communityEndpointUpdate"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<VirtualEnclaveMandatoryApprover> array = new List<VirtualEnclaveMandatoryApprover>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    communityEndpointUpdate = ApprovalSettingConfiguration.DeserializeApprovalSettingConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("enclaveEndpointUpdate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(VirtualEnclaveMandatoryApprover.DeserializeVirtualEnclaveMandatoryApprover(item, options));
+                        continue;
                     }
-                    mandatoryApprovers = array;
+                    enclaveEndpointUpdate = ApprovalSettingConfiguration.DeserializeApprovalSettingConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("enclaveCreation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enclaveCreation = ApprovalSettingConfiguration.DeserializeApprovalSettingConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("connectionCreation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    connectionCreation = ApprovalSettingConfiguration.DeserializeApprovalSettingConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("connectionUpdate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    connectionUpdate = ApprovalSettingConfiguration.DeserializeApprovalSettingConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("communityMaintenanceMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    communityMaintenanceMode = ApprovalSettingConfiguration.DeserializeApprovalSettingConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("enclaveMaintenanceMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enclaveMaintenanceMode = ApprovalSettingConfiguration.DeserializeApprovalSettingConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +229,15 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApprovalSettingsPatchProperties(mandatoryApprovers ?? new ChangeTrackingList<VirtualEnclaveMandatoryApprover>(), additionalBinaryDataProperties);
+            return new ApprovalSettingsPatchProperties(
+                communityEndpointUpdate,
+                enclaveEndpointUpdate,
+                enclaveCreation,
+                connectionCreation,
+                connectionUpdate,
+                communityMaintenanceMode,
+                enclaveMaintenanceMode,
+                additionalBinaryDataProperties);
         }
     }
 }

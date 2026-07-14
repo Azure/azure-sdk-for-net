@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    /// <summary> ApprovalSettings Properties. </summary>
-    internal partial class ApprovalSettingsPatchProperties
+    /// <summary> Granular ApprovalSettings Patch Properties. </summary>
+    public partial class ApprovalSettingsPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -20,19 +19,48 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <summary> Initializes a new instance of <see cref="ApprovalSettingsPatchProperties"/>. </summary>
         public ApprovalSettingsPatchProperties()
         {
-            MandatoryApprovers = new ChangeTrackingList<VirtualEnclaveMandatoryApprover>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApprovalSettingsPatchProperties"/>. </summary>
-        /// <param name="mandatoryApprovers"> List of mandatory approvers for the approval request. </param>
+        /// <param name="communityEndpointUpdate"> Approval configuration for community endpoint updates. </param>
+        /// <param name="enclaveEndpointUpdate"> Approval configuration for enclave endpoint updates. </param>
+        /// <param name="enclaveCreation"> Approval configuration for enclave creation. </param>
+        /// <param name="connectionCreation"> Approval configuration for connection creation. </param>
+        /// <param name="connectionUpdate"> Approval configuration for connection updates. </param>
+        /// <param name="communityMaintenanceMode"> Approval configuration for community maintenance mode. </param>
+        /// <param name="enclaveMaintenanceMode"> Approval configuration for enclave maintenance mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApprovalSettingsPatchProperties(IList<VirtualEnclaveMandatoryApprover> mandatoryApprovers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApprovalSettingsPatchProperties(ApprovalSettingConfiguration communityEndpointUpdate, ApprovalSettingConfiguration enclaveEndpointUpdate, ApprovalSettingConfiguration enclaveCreation, ApprovalSettingConfiguration connectionCreation, ApprovalSettingConfiguration connectionUpdate, ApprovalSettingConfiguration communityMaintenanceMode, ApprovalSettingConfiguration enclaveMaintenanceMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MandatoryApprovers = mandatoryApprovers;
+            CommunityEndpointUpdate = communityEndpointUpdate;
+            EnclaveEndpointUpdate = enclaveEndpointUpdate;
+            EnclaveCreation = enclaveCreation;
+            ConnectionCreation = connectionCreation;
+            ConnectionUpdate = connectionUpdate;
+            CommunityMaintenanceMode = communityMaintenanceMode;
+            EnclaveMaintenanceMode = enclaveMaintenanceMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> List of mandatory approvers for the approval request. </summary>
-        public IList<VirtualEnclaveMandatoryApprover> MandatoryApprovers { get; }
+        /// <summary> Approval configuration for community endpoint updates. </summary>
+        public ApprovalSettingConfiguration CommunityEndpointUpdate { get; set; }
+
+        /// <summary> Approval configuration for enclave endpoint updates. </summary>
+        public ApprovalSettingConfiguration EnclaveEndpointUpdate { get; set; }
+
+        /// <summary> Approval configuration for enclave creation. </summary>
+        public ApprovalSettingConfiguration EnclaveCreation { get; set; }
+
+        /// <summary> Approval configuration for connection creation. </summary>
+        public ApprovalSettingConfiguration ConnectionCreation { get; set; }
+
+        /// <summary> Approval configuration for connection updates. </summary>
+        public ApprovalSettingConfiguration ConnectionUpdate { get; set; }
+
+        /// <summary> Approval configuration for community maintenance mode. </summary>
+        public ApprovalSettingConfiguration CommunityMaintenanceMode { get; set; }
+
+        /// <summary> Approval configuration for enclave maintenance mode. </summary>
+        public ApprovalSettingConfiguration EnclaveMaintenanceMode { get; set; }
     }
 }

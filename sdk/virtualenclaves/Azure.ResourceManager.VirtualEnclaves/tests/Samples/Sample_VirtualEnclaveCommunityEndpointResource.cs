@@ -98,14 +98,17 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
             // invoke the operation
             VirtualEnclaveCommunityEndpointPatch patch = new VirtualEnclaveCommunityEndpointPatch
             {
-                CommunityEndpointPatchRuleCollection = {new CommunityEndpointDestinationRule
+                Properties = new CommunityEndpointPatchProperties(new CommunityEndpointDestinationRule[]
+{
+new CommunityEndpointDestinationRule
 {
 DestinationType = CommunityEndpointDestinationType.Fqdn,
 Protocols = {CommunityEndpointProtocol.Tcp},
 TransitHubResourceId = new ResourceIdentifier("/subscriptions/c64f6eca-bdc5-4bc2-88d6-f8f1dc23f86c/resourceGroups/testrg/providers/Microsoft.Mission/communities/TestMyCommunity/transitHubs/TestThName"),
 Destination = "foo.example.com",
 Ports = "443",
-}},
+}
+}),
                 Tags =
 {
 ["sampletag"] = "samplevalue"

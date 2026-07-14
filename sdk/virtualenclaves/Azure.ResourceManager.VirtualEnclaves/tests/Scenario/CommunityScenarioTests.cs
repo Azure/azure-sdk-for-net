@@ -33,14 +33,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Tests.Scenario
                     AddressSpace = "10.0.0.0/16",
                     FirewallSku = VirtualEnclaveFirewallSku.Standard,
                     PolicyOverride = VirtualEnclaveCommunityPolicyOverride.Enclave,
-                    ApprovalSettings = new VirtualEnclaveApprovalSettings
+                    GranularApprovalSettings = new VirtualEnclaveBaseApprovalSettings
                     {
-                        EndpointCreation = VirtualEnclaveApprovalPolicy.Required,
-                        EndpointUpdate = VirtualEnclaveApprovalPolicy.Required,
-                        EndpointDeletion = VirtualEnclaveApprovalPolicy.Required,
-                        ConnectionCreation = VirtualEnclaveApprovalPolicy.Required,
-                        ConnectionUpdate = VirtualEnclaveApprovalPolicy.Required,
-                        ConnectionDeletion = VirtualEnclaveApprovalPolicy.Required
+                        CommunityEndpointUpdate = new ApprovalSettingConfiguration { ApprovalPolicy = VirtualEnclaveApprovalPolicy.Required },
+                        EnclaveEndpointUpdate = new ApprovalSettingConfiguration { ApprovalPolicy = VirtualEnclaveApprovalPolicy.Required },
+                        ConnectionCreation = new ApprovalSettingConfiguration { ApprovalPolicy = VirtualEnclaveApprovalPolicy.Required },
+                        ConnectionUpdate = new ApprovalSettingConfiguration { ApprovalPolicy = VirtualEnclaveApprovalPolicy.Required }
                     }
                 },
                 Tags =
@@ -84,8 +82,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Tests.Scenario
             Assert.That(community.Value.Data.Properties.AddressSpace, Is.EqualTo("10.0.0.0/16"));
             Assert.That(community.Value.Data.Properties.FirewallSku, Is.EqualTo(VirtualEnclaveFirewallSku.Standard));
             Assert.That(community.Value.Data.Properties.PolicyOverride, Is.EqualTo(VirtualEnclaveCommunityPolicyOverride.Enclave));
-            Assert.That(community.Value.Data.Properties.ApprovalSettings.EndpointCreation, Is.EqualTo(VirtualEnclaveApprovalPolicy.Required));
-            Assert.That(community.Value.Data.Properties.ApprovalSettings.ConnectionCreation, Is.EqualTo(VirtualEnclaveApprovalPolicy.Required));
+            Assert.That(community.Value.Data.Properties.GranularApprovalSettings.CommunityEndpointUpdate.ApprovalPolicy, Is.EqualTo(VirtualEnclaveApprovalPolicy.Required));
+            Assert.That(community.Value.Data.Properties.GranularApprovalSettings.ConnectionCreation.ApprovalPolicy, Is.EqualTo(VirtualEnclaveApprovalPolicy.Required));
             Assert.That(community.Value.Data.Properties.DnsServers, Has.Member("168.63.129.16"));
             Assert.That(community.Value.Data.Properties.GovernedServiceList, Has.Count.EqualTo(1));
             Assert.That(community.Value.Data.Properties.CommunityRoleAssignments, Has.Count.EqualTo(1));
