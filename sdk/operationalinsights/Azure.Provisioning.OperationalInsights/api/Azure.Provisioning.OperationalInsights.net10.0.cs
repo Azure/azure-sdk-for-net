@@ -690,6 +690,7 @@ namespace Azure.Provisioning.OperationalInsights
     public partial class OperationalInsightsWorkspaceFeatures : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public OperationalInsightsWorkspaceFeatures() { }
+        public Azure.Provisioning.BicepDictionary<System.BinaryData> AdditionalProperties { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> Associations { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ClusterResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> ImmediatePurgeDataOn30Days { get { throw null; } set { } }
