@@ -51,22 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceValidateContent"/> instance for mocking. </returns>
         public static AppServiceValidateContent AppServiceValidateContent(string name = default, ValidateResourceType validateResourceType = default, AzureLocation location = default, ResourceIdentifier serverFarmId = default, string skuName = default, bool? needLinuxWorkers = default, bool? isSpot = default, int? capacity = default, string hostingEnvironment = default, bool? isXenon = default, Uri containerRegistryBaseUri = default, string containerRegistryUsername = default, string containerRegistryPassword = default, string containerImageRepository = default, string containerImageTag = default, string containerImagePlatform = default, AppServiceEnvironmentProperties appServiceEnvironment = default)
         {
-            return new AppServiceValidateContent(name, validateResourceType, location, needLinuxWorkers is null && isSpot is null && isXenon is null ? default : new ValidateProperties(
-                default,
-                default,
-                needLinuxWorkers,
-                isSpot,
-                default,
-                default,
-                isXenon,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default), default);
+            return new AppServiceValidateContent(name, validateResourceType, location, default, default);
         }
 
         /// <param name="provisioningState"> Provisioning state of the App Service Environment. </param>

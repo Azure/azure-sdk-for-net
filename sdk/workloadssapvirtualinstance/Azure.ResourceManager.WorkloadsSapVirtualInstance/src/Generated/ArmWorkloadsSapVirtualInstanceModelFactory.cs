@@ -100,20 +100,20 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
-        /// <param name="isSecondaryIPEnabled"> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </param>
+        /// <param name="isNetworkConfigurationSecondaryIPEnabled"> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </param>
         /// <param name="databaseType"> The database type. </param>
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <param name="diskVolumeConfigurations"> The disk configuration for the db volume. For HANA, Required volumes are: ['hana/data', 'hana/log', hana/shared', 'usr/sap', 'os'], Optional volume : ['backup']. </param>
         /// <param name="customResourceNames"> The set of custom names to be used for underlying azure resources that are part of the SAP system. </param>
         /// <returns> A new <see cref="Models.SingleServerConfiguration"/> instance for mocking. </returns>
-        public static SingleServerConfiguration SingleServerConfiguration(string appResourceGroup = default, bool? isSecondaryIPEnabled = default, SapDatabaseType? databaseType = default, ResourceIdentifier subnetId = default, SapVirtualMachineConfiguration virtualMachineConfiguration = default, IDictionary<string, DiskVolumeConfiguration> diskVolumeConfigurations = default, SingleServerCustomResourceNames customResourceNames = default)
+        public static SingleServerConfiguration SingleServerConfiguration(string appResourceGroup = default, bool? isNetworkConfigurationSecondaryIPEnabled = default, SapDatabaseType? databaseType = default, ResourceIdentifier subnetId = default, SapVirtualMachineConfiguration virtualMachineConfiguration = default, IDictionary<string, DiskVolumeConfiguration> diskVolumeConfigurations = default, SingleServerCustomResourceNames customResourceNames = default)
         {
             return new SingleServerConfiguration(
                 appResourceGroup,
                 default,
                 default,
-                isSecondaryIPEnabled is null ? default : new NetworkConfiguration(isSecondaryIPEnabled, default),
+                isNetworkConfigurationSecondaryIPEnabled is null ? default : new NetworkConfiguration(isNetworkConfigurationSecondaryIPEnabled, default),
                 databaseType,
                 subnetId,
                 virtualMachineConfiguration,
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         }
 
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
-        /// <param name="isSecondaryIPEnabled"> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </param>
+        /// <param name="isNetworkConfigurationSecondaryIPEnabled"> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </param>
         /// <param name="centralServer"> The central server configuration. </param>
         /// <param name="applicationServer"> The application server configuration. </param>
         /// <param name="databaseServer"> The database configuration. </param>
@@ -252,13 +252,13 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="storageTransportFileShareConfiguration"> The properties of the transport directory attached to the VIS. The default for transportFileShareConfiguration is the createAndMount flow if storage configuration is missing. </param>
         /// <param name="customResourceNames"> The set of custom names to be used for underlying azure resources that are part of the SAP system. </param>
         /// <returns> A new <see cref="Models.ThreeTierConfiguration"/> instance for mocking. </returns>
-        public static ThreeTierConfiguration ThreeTierConfiguration(string appResourceGroup = default, bool? isSecondaryIPEnabled = default, CentralServerConfiguration centralServer = default, ApplicationServerConfiguration applicationServer = default, DatabaseConfiguration databaseServer = default, SapHighAvailabilityType? highAvailabilityType = default, FileShareConfiguration storageTransportFileShareConfiguration = default, ThreeTierCustomResourceNames customResourceNames = default)
+        public static ThreeTierConfiguration ThreeTierConfiguration(string appResourceGroup = default, bool? isNetworkConfigurationSecondaryIPEnabled = default, CentralServerConfiguration centralServer = default, ApplicationServerConfiguration applicationServer = default, DatabaseConfiguration databaseServer = default, SapHighAvailabilityType? highAvailabilityType = default, FileShareConfiguration storageTransportFileShareConfiguration = default, ThreeTierCustomResourceNames customResourceNames = default)
         {
             return new ThreeTierConfiguration(
                 appResourceGroup,
                 default,
                 default,
-                isSecondaryIPEnabled is null ? default : new NetworkConfiguration(isSecondaryIPEnabled, default),
+                isNetworkConfigurationSecondaryIPEnabled is null ? default : new NetworkConfiguration(isNetworkConfigurationSecondaryIPEnabled, default),
                 centralServer,
                 applicationServer,
                 databaseServer,

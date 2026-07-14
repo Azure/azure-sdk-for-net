@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         public SingleServerCustomResourceNames CustomResourceNames { get; set; }
 
         /// <summary> Specifies whether a secondary IP address should be added to the network interface on all VMs of the SAP system being deployed. </summary>
-        public bool? IsSecondaryIPEnabled
+        public bool? IsNetworkConfigurationSecondaryIPEnabled
         {
             get
             {
