@@ -83,7 +83,7 @@ namespace Azure.Provisioning.Redis
         /// This compatibility property is preserved for the previous generated model shape. Use <see cref="PrivateEndpointConnectionResources"/> instead.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("Use PrivateEndpointConnectionResources instead.")]
+        [Obsolete("This property is deprecated and it will be removed in a future version. Please use PrivateEndpointConnectionResources instead.")]
         public BicepList<RedisPrivateEndpointConnectionData> PrivateEndpointConnections
         {
             get

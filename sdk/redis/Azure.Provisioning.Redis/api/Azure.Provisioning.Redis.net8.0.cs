@@ -268,6 +268,12 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2024_11_01;
         }
     }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public enum RedisPatchScheduleDefaultName
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="default")]
+        Default = 0,
+    }
     public partial class RedisPatchScheduleSetting : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public RedisPatchScheduleSetting() { }
@@ -303,7 +309,7 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2024_11_01;
         }
     }
-    [System.ObsoleteAttribute("Use RedisPrivateEndpointConnection instead.")]
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version. Please use RedisPrivateEndpointConnection instead.")]
     public partial class RedisPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public RedisPrivateEndpointConnectionData() { }
@@ -373,7 +379,7 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Port { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Redis.RedisPrivateEndpointConnection> PrivateEndpointConnectionResources { get { throw null; } }
-        [System.ObsoleteAttribute("Use PrivateEndpointConnectionResources instead.")]
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use PrivateEndpointConnectionResources instead.")]
         public Azure.Provisioning.BicepList<Azure.Provisioning.Redis.RedisPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.RedisPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }

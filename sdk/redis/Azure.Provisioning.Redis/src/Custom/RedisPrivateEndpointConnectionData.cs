@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Redis
     /// The Private Endpoint Connection resource.
     /// </summary>
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-    [Obsolete("Use RedisPrivateEndpointConnection instead.")]
+    [Obsolete("This type is deprecated and it will be removed in a future version. Please use RedisPrivateEndpointConnection instead.")]
     public partial class RedisPrivateEndpointConnectionData : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _privateEndpointId;
