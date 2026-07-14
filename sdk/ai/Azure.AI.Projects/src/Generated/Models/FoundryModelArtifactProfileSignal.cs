@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary> Signals detected in the model artifact. </summary>
     [Experimental("AAIP001")]
-    internal readonly partial struct FoundryModelArtifactProfileSignal : IEquatable<FoundryModelArtifactProfileSignal>
+    public readonly partial struct FoundryModelArtifactProfileSignal : IEquatable<FoundryModelArtifactProfileSignal>
     {
         private readonly string _value;
         /// <summary> Pickle deserialization detected. </summary>

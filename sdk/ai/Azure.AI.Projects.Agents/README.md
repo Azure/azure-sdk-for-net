@@ -25,6 +25,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Hosted Agents](#hosted-agents)
     - [Hosted Agents from Docker images](#hosted-docker-based)
     - [Hosted Agents from Code](#hosted-code-based)
+    - [Enabling and disabling Hosted Agents](#hosted-agent-management)
   - [External Agents](#external-agents)
   - [Toolboxes](#toolboxes)
   - [Sessions](#sessions)
@@ -242,6 +243,36 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 {
     throw new InvalidOperationException($"The Agent deployment failed, status: {agentVersion.Status}");
 }
+```
+
+#### Enabling and disabling Hosted Agents<a id="hosted-agent-management"></a>
+Hosted agents may be disabled. In this case, the task, running in existing session will complete, but no new tasks
+and session creations will be allowed. The attempt to create a session on disabled Agent will result in 403 error.
+
+```C# Snippet:Sample_DisableTheAgent_HostedAgentSessionsAgents_Async
+await agentsClient.DisableAgentAsync(agentVersion.Name);
+// The new session cannot be created.
+try
+{
+    await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+    throw new InvalidOperationException("Stopped Agent was unexpectedly able to create session.");
+}
+catch (ClientResultException ex)
+{
+    if (ex.Status != 403)
+    {
+        throw;
+    }
+    Console.WriteLine(ex.Message);
+}
+```
+
+The disabled Agent may be enabled, and it will be able to accept requests and sessions again.
+
+```C# Snippet:Sample_EnableTheAgent_HostedAgentSessionsAgents_Async
+await agentsClient.EnableAgentAsync(agentVersion.Name);
+ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(agentVersion.Name, new VersionRefIndicator(agentVersion.Version));
+Console.WriteLine($"The session {session2.AgentSessionId} was created.");
 ```
 
 ### External Agents

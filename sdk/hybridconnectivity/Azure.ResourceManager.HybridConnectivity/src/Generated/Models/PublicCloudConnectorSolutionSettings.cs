@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, string> AdditionalProperties => _additionalStringProperties;
+        public IDictionary<string, string> AdditionalProperties { get; } = new ChangeTrackingDictionary<string, string>();
     }
 }

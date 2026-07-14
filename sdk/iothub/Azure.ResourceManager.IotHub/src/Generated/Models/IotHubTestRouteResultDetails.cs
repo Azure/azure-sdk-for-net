@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> JSON-serialized list of route compilation errors. </summary>
-        public IList<RouteCompilationError> CompilationErrors { get; }
+        public IList<RouteCompilationError> CompilationErrors { get; } = new ChangeTrackingList<RouteCompilationError>();
     }
 }
