@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Fixed `BicepValue<BinaryData>` literal compilation for values containing valid JSON, including JSON primitives, arrays, and objects.
+- Fixed `BicepValue<BinaryData>` literal compilation for values containing valid JSON or raw bytes.
 
 ### Other Changes
 

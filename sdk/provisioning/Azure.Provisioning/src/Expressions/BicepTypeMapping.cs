@@ -80,13 +80,10 @@ internal static class BicepTypeMapping
         };
 
     /// <summary>
-    /// Convert a <see cref="BinaryData"/> value containing JSON into a Bicep expression.
+    /// Convert a <see cref="BinaryData"/> value into a Bicep expression.
     /// </summary>
     /// <param name="value">The <see cref="BinaryData"/> value.</param>
     /// <returns>The corresponding Bicep expression.</returns>
-    /// <exception cref="InvalidOperationException">
-    /// Thrown when the value is not valid JSON.
-    /// </exception>
     public static BicepExpression ToBicep(BinaryData value)
     {
         try
@@ -94,9 +91,9 @@ internal static class BicepTypeMapping
             using JsonDocument document = JsonDocument.Parse(value.ToString());
             return ToBicep(document.RootElement);
         }
-        catch (JsonException ex)
+        catch (JsonException)
         {
-            throw new InvalidOperationException("Cannot convert BinaryData to a Bicep expression. Only BinaryData values containing valid JSON are supported.", ex);
+            return BicepSyntax.Value(Convert.ToBase64String(value.ToArray()));
         }
     }
 

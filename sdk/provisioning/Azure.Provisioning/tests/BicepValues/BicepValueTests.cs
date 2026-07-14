@@ -120,6 +120,7 @@ public class BicepValueTests
     {
         TestHelpers.AssertExpression("'plain string'", new BicepValue<BinaryData>(BinaryData.FromString("\"plain string\"")));
         TestHelpers.AssertExpression("'string with \\'single quote\\''", new BicepValue<BinaryData>(BinaryData.FromObjectAsJson("string with 'single quote'")));
+        TestHelpers.AssertExpression("'AQIDBA=='", new BicepValue<BinaryData>(BinaryData.FromString("\"AQIDBA==\"")));
         TestHelpers.AssertExpression("true", new BicepValue<BinaryData>(BinaryData.FromString("true")));
         TestHelpers.AssertExpression("false", new BicepValue<BinaryData>(BinaryData.FromString("false")));
         TestHelpers.AssertExpression("null", new BicepValue<BinaryData>(BinaryData.FromString("null")));
@@ -234,15 +235,11 @@ public class BicepValueTests
     }
 
     [Test]
-    public void ValidateNonJsonBinaryDataThrows()
+    public void ValidateNonJsonBinaryDataCompilesToBase64String()
     {
-        InvalidOperationException stringException = Assert.Throws<InvalidOperationException>(
-            () => new BicepValue<BinaryData>(BinaryData.FromString("plain string")).Compile())!;
-        Assert.That(stringException.Message, Does.Contain("Only BinaryData values containing valid JSON are supported."));
-
-        InvalidOperationException bytesException = Assert.Throws<InvalidOperationException>(
-            () => new BicepValue<BinaryData>(BinaryData.FromBytes([1, 2, 3, 4])).Compile())!;
-        Assert.That(bytesException.Message, Does.Contain("Only BinaryData values containing valid JSON are supported."));
+        TestHelpers.AssertExpression("'cGxhaW4gc3RyaW5n'", new BicepValue<BinaryData>(BinaryData.FromString("plain string")));
+        TestHelpers.AssertExpression("'QVFJREJBPT0='", new BicepValue<BinaryData>(BinaryData.FromString("AQIDBA==")));
+        TestHelpers.AssertExpression("'AQIDBA=='", new BicepValue<BinaryData>(BinaryData.FromBytes([1, 2, 3, 4])));
     }
 
     [Test]
