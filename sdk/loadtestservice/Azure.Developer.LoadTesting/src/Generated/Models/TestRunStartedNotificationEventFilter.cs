@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> The notification event filter when the event type is TestRunStarted and scope is Tests. </summary>
-    public partial class TestRunStartedNotificationEventFilter : TestsNotificationEventFilter
+    internal partial class TestRunStartedNotificationEventFilter : TestsNotificationEventFilter
     {
         /// <summary> Initializes a new instance of <see cref="TestRunStartedNotificationEventFilter"/>. </summary>
         public TestRunStartedNotificationEventFilter() : base(NotificationEventType.TestRunStarted)

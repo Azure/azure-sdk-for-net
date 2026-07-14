@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the policy of not masking found PII. </summary>
-    public partial class NoMaskPolicyType : BaseRedactionPolicy
+    internal partial class NoMaskPolicyType : BaseRedactionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="NoMaskPolicyType"/>. </summary>
         public NoMaskPolicyType() : base(RedactionPolicyKind.NoMask)

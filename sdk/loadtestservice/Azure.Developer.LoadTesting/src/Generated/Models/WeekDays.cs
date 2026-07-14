@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Defines the days of the week. </summary>
-    public readonly partial struct WeekDays : IEquatable<WeekDays>
+    internal readonly partial struct WeekDays : IEquatable<WeekDays>
     {
         private readonly string _value;
         /// <summary> Refers to Sunday. </summary>

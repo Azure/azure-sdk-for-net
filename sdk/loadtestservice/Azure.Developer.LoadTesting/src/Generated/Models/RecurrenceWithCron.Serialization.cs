@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Recurrence is set based on cron expression. </summary>
-    public partial class RecurrenceWithCron : LoadTestingRecurrence, IJsonModel<RecurrenceWithCron>
+    internal partial class RecurrenceWithCron : LoadTestingRecurrence, IJsonModel<RecurrenceWithCron>
     {
         /// <summary> Initializes a new instance of <see cref="RecurrenceWithCron"/> for deserialization. </summary>
         internal RecurrenceWithCron()

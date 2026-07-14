@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A screenshot action. </summary>
-    public partial class ScreenshotAction : ComputerUseAction
+    internal partial class ScreenshotAction : ComputerUseAction
     {
         /// <summary> Initializes a new instance of <see cref="ScreenshotAction"/>. </summary>
         internal ScreenshotAction() : base("screenshot")

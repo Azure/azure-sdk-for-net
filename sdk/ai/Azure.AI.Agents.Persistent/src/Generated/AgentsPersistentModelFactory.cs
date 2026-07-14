@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Agents.Persistent
@@ -837,7 +835,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary>
         /// An abstract representation of a tool invocation needed by the model to continue a run.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequiredFunctionToolCall"/>, <see cref="Persistent.RequiredMcpToolCall"/>, and <see cref="Persistent.RequiredComputerUseToolCall"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequiredFunctionToolCall"/>, <see cref="Persistent.RequiredMcpToolCall"/>, and <see cref="RequiredComputerUseToolCall"/>.
         /// </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
@@ -864,131 +862,15 @@ namespace Azure.AI.Agents.Persistent
                 serverLabel);
         }
 
-        /// <summary> A representation of a requested call to a Computer Use tool, needed by the model to continue evaluation of a run. </summary>
-        /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
-        /// <param name="computerUsePreview"> Detailed information about the computer use action to be executed. </param>
-        /// <returns> A new <see cref="Persistent.RequiredComputerUseToolCall"/> instance for mocking. </returns>
-        public static RequiredComputerUseToolCall RequiredComputerUseToolCall(string id = default, RequiredComputerUseToolCallDetails computerUsePreview = default)
-        {
-            return new RequiredComputerUseToolCall(default, additionalBinaryDataProperties: null, id, computerUsePreview);
-        }
-
-        /// <summary> The detailed information for a computer use tool invocation. </summary>
-        /// <param name="action"> The action to be performed by the computer use tool. </param>
-        /// <param name="pendingSafetyChecks"> Safety checks that are pending acknowledgment by the developer. </param>
-        /// <returns> A new <see cref="Persistent.RequiredComputerUseToolCallDetails"/> instance for mocking. </returns>
-        public static RequiredComputerUseToolCallDetails RequiredComputerUseToolCallDetails(ComputerUseAction action = default, IEnumerable<SafetyCheck> pendingSafetyChecks = default)
-        {
-            pendingSafetyChecks ??= new ChangeTrackingList<SafetyCheck>();
-
-            return new RequiredComputerUseToolCallDetails(action, pendingSafetyChecks.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary>
         /// An abstract representation of a computer use action.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.ClickAction"/>, <see cref="Persistent.DoubleClickAction"/>, <see cref="Persistent.DragAction"/>, <see cref="Persistent.KeyPressAction"/>, <see cref="Persistent.MoveAction"/>, <see cref="Persistent.ScreenshotAction"/>, <see cref="Persistent.ScrollAction"/>, <see cref="Persistent.TypeAction"/>, and <see cref="Persistent.WaitAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClickAction"/>, <see cref="DoubleClickAction"/>, <see cref="DragAction"/>, <see cref="KeyPressAction"/>, <see cref="MoveAction"/>, <see cref="ScreenshotAction"/>, <see cref="ScrollAction"/>, <see cref="TypeAction"/>, and <see cref="WaitAction"/>.
         /// </summary>
         /// <param name="type"> The type of computer use action. </param>
         /// <returns> A new <see cref="Persistent.ComputerUseAction"/> instance for mocking. </returns>
         public static ComputerUseAction ComputerUseAction(string @type = default)
         {
             return new UnknownComputerUseAction(@type, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A click action. </summary>
-        /// <param name="x"> The x-coordinate where the click occurred. </param>
-        /// <param name="y"> The y-coordinate where the click occurred. </param>
-        /// <param name="button"> Indicates which mouse button was pressed during the click. </param>
-        /// <returns> A new <see cref="Persistent.ClickAction"/> instance for mocking. </returns>
-        public static ClickAction ClickAction(int x = default, int y = default, MouseButton button = default)
-        {
-            return new ClickAction("click", additionalBinaryDataProperties: null, x, y, button);
-        }
-
-        /// <summary> A double click action. </summary>
-        /// <param name="x"> The x-coordinate where the double click occurred. </param>
-        /// <param name="y"> The y-coordinate where the double click occurred. </param>
-        /// <returns> A new <see cref="Persistent.DoubleClickAction"/> instance for mocking. </returns>
-        public static DoubleClickAction DoubleClickAction(int x = default, int y = default)
-        {
-            return new DoubleClickAction("double_click", additionalBinaryDataProperties: null, x, y);
-        }
-
-        /// <summary> A drag action. </summary>
-        /// <param name="path"> An array of coordinates representing the path of the drag action. </param>
-        /// <returns> A new <see cref="Persistent.DragAction"/> instance for mocking. </returns>
-        public static DragAction DragAction(IEnumerable<CoordinatePoint> path = default)
-        {
-            path ??= new ChangeTrackingList<CoordinatePoint>();
-
-            return new DragAction("drag", additionalBinaryDataProperties: null, path.ToList());
-        }
-
-        /// <summary> A coordinate point with x and y values. </summary>
-        /// <param name="x"> The x-coordinate. </param>
-        /// <param name="y"> The y-coordinate. </param>
-        /// <returns> A new <see cref="Persistent.CoordinatePoint"/> instance for mocking. </returns>
-        public static CoordinatePoint CoordinatePoint(int x = default, int y = default)
-        {
-            return new CoordinatePoint(x, y, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A collection of keypresses the model would like to perform. </summary>
-        /// <param name="keys"> The combination of keys the model is requesting to be pressed. This is an array of strings, each representing a key. </param>
-        /// <returns> A new <see cref="Persistent.KeyPressAction"/> instance for mocking. </returns>
-        public static KeyPressAction KeyPressAction(IEnumerable<string> keys = default)
-        {
-            keys ??= new ChangeTrackingList<string>();
-
-            return new KeyPressAction("keypress", additionalBinaryDataProperties: null, keys.ToList());
-        }
-
-        /// <summary> A mouse move action. </summary>
-        /// <param name="x"> The x-coordinate to move to. </param>
-        /// <param name="y"> The y-coordinate to move to. </param>
-        /// <returns> A new <see cref="Persistent.MoveAction"/> instance for mocking. </returns>
-        public static MoveAction MoveAction(int x = default, int y = default)
-        {
-            return new MoveAction("move", additionalBinaryDataProperties: null, x, y);
-        }
-
-        /// <summary> A screenshot action. </summary>
-        /// <returns> A new <see cref="Persistent.ScreenshotAction"/> instance for mocking. </returns>
-        public static ScreenshotAction ScreenshotAction()
-        {
-            return new ScreenshotAction("screenshot", additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A scroll action. </summary>
-        /// <param name="x"> The x-coordinate where the scroll occurred. </param>
-        /// <param name="y"> The y-coordinate where the scroll occurred. </param>
-        /// <param name="scrollX"> The horizontal scroll distance. </param>
-        /// <param name="scrollY"> The vertical scroll distance. </param>
-        /// <returns> A new <see cref="Persistent.ScrollAction"/> instance for mocking. </returns>
-        public static ScrollAction ScrollAction(int x = default, int y = default, int scrollX = default, int scrollY = default)
-        {
-            return new ScrollAction(
-                "scroll",
-                additionalBinaryDataProperties: null,
-                x,
-                y,
-                scrollX,
-                scrollY);
-        }
-
-        /// <summary> An action to type in text. </summary>
-        /// <param name="text"> The text to type. </param>
-        /// <returns> A new <see cref="Persistent.TypeAction"/> instance for mocking. </returns>
-        public static TypeAction TypeAction(string text = default)
-        {
-            return new TypeAction("type", additionalBinaryDataProperties: null, text);
-        }
-
-        /// <summary> A wait action. </summary>
-        /// <returns> A new <see cref="Persistent.WaitAction"/> instance for mocking. </returns>
-        public static WaitAction WaitAction()
-        {
-            return new WaitAction("wait", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Safety check that has been acknowledged by the developer. </summary>

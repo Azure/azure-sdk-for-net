@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the volume entity resolution model. </summary>
-    public partial class VolumeResolution : ResolutionBase, IJsonModel<VolumeResolution>
+    internal partial class VolumeResolution : ResolutionBase, IJsonModel<VolumeResolution>
     {
         /// <summary> Initializes a new instance of <see cref="VolumeResolution"/> for deserialization. </summary>
         internal VolumeResolution()

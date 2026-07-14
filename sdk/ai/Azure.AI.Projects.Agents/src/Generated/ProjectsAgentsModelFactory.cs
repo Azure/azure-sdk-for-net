@@ -3,7 +3,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -1939,15 +1938,6 @@ namespace Azure.AI.Projects.Agents
         public static PatchAgentOptions PatchAgentOptions(AgentEndpointConfiguration agentEndpoint = default, AgentCard agentCard = default)
         {
             return new PatchAgentOptions(agentEndpoint, agentCard, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The UpdateToolboxRequest. </summary>
-        /// <param name="name"> The name of the toolbox to update. </param>
-        /// <param name="defaultVersion"> The version identifier that the toolbox should point to. When set, the toolbox's default version will resolve to this version instead of the latest. </param>
-        /// <returns> A new <see cref="Agents.UpdateToolboxRequest"/> instance for mocking. </returns>
-        public static UpdateToolboxRequest UpdateToolboxRequest(string name = default, string defaultVersion = default)
-        {
-            return new UpdateToolboxRequest(name, defaultVersion, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"></param>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Recurrence model when frequency is set as Hourly. </summary>
-    public partial class HourlyRecurrence : LoadTestingRecurrence
+    internal partial class HourlyRecurrence : LoadTestingRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="HourlyRecurrence"/>. </summary>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of hours between each recurrence. </param>

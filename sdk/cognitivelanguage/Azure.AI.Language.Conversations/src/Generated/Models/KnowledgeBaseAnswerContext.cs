@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Context object with previous QnA's information. </summary>
-    public partial class KnowledgeBaseAnswerContext
+    internal partial class KnowledgeBaseAnswerContext
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

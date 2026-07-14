@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The type of the extracted number entity. </summary>
-    public readonly partial struct NumberKind : IEquatable<NumberKind>
+    internal readonly partial struct NumberKind : IEquatable<NumberKind>
     {
         private readonly string _value;
         /// <summary> Integer number. </summary>

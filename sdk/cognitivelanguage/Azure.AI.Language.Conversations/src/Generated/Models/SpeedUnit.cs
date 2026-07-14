@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The speed Unit of measurement. </summary>
-    public readonly partial struct SpeedUnit : IEquatable<SpeedUnit>
+    internal readonly partial struct SpeedUnit : IEquatable<SpeedUnit>
     {
         private readonly string _value;
         /// <summary> Unspecified speed unit. </summary>

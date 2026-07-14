@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> This is a set of request parameters for Question Answering knowledge bases. </summary>
-    public partial class QuestionAnsweringConfig : AnalysisConfig, IJsonModel<QuestionAnsweringConfig>
+    internal partial class QuestionAnsweringConfig : AnalysisConfig, IJsonModel<QuestionAnsweringConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

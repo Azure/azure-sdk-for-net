@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Find QnAs that are associated with the given list of metadata. </summary>
-    public partial class MetadataFilter : IJsonModel<MetadataFilter>
+    internal partial class MetadataFilter : IJsonModel<MetadataFilter>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

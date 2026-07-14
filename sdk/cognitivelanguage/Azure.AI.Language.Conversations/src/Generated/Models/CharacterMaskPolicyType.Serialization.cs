@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the policy of masking with a redaction character. </summary>
-    public partial class CharacterMaskPolicyType : BaseRedactionPolicy, IJsonModel<CharacterMaskPolicyType>
+    internal partial class CharacterMaskPolicyType : BaseRedactionPolicy, IJsonModel<CharacterMaskPolicyType>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

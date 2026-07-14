@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the area entity resolution model. </summary>
-    public partial class AreaResolution : ResolutionBase
+    internal partial class AreaResolution : ResolutionBase
     {
         /// <summary> Initializes a new instance of <see cref="AreaResolution"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>

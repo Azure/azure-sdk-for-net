@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> This customizes how the service calls LUIS Generally Available projects. </summary>
-    public partial class LuisCallingConfig : IJsonModel<LuisCallingConfig>
+    internal partial class LuisCallingConfig : IJsonModel<LuisCallingConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

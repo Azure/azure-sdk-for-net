@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Recurrence model when frequency is set as MonthlyByDays . </summary>
-    public partial class MonthlyRecurrenceByWeekDays : LoadTestingRecurrence
+    internal partial class MonthlyRecurrenceByWeekDays : LoadTestingRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="MonthlyRecurrenceByWeekDays"/>. </summary>
         /// <param name="index"> Index of the week in a month at which the recurrence should repeat. For example, if the index is '2', weekDay is 'Monday', interval is 3 and frequency is 'Month', the recurrence will run every second Monday of the month and repeat every 3 months. Value of index can be 1 to 5. </param>

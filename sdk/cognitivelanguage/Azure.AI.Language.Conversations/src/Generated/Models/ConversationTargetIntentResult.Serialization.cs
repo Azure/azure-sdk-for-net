@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> A wrap up of Conversation project response. </summary>
-    public partial class ConversationTargetIntentResult : TargetIntentResult, IJsonModel<ConversationTargetIntentResult>
+    internal partial class ConversationTargetIntentResult : TargetIntentResult, IJsonModel<ConversationTargetIntentResult>
     {
         /// <summary> Initializes a new instance of <see cref="ConversationTargetIntentResult"/> for deserialization. </summary>
         internal ConversationTargetIntentResult()

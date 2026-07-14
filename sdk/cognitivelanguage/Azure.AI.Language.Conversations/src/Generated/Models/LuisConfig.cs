@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> This is a set of request parameters for LUIS Generally Available projects. </summary>
-    public partial class LuisConfig : AnalysisConfig
+    internal partial class LuisConfig : AnalysisConfig
     {
         /// <summary> Initializes a new instance of <see cref="LuisConfig"/>. </summary>
         public LuisConfig() : base(TargetProjectKind.Luis)

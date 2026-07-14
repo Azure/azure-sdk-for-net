@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the policy of masking PII with the entity type. </summary>
-    public partial class EntityMaskTypePolicyType : BaseRedactionPolicy, IJsonModel<EntityMaskTypePolicyType>
+    internal partial class EntityMaskTypePolicyType : BaseRedactionPolicy, IJsonModel<EntityMaskTypePolicyType>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
