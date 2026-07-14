@@ -6,46 +6,37 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Billing.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A Class representing a SubscriptionBillingInvoice along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionBillingInvoiceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionBillingInvoiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetSubscriptionBillingInvoice method.
+    /// A class representing a SubscriptionBillingInvoice along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionBillingInvoiceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetSubscriptionBillingInvoices method.
     /// </summary>
     public partial class SubscriptionBillingInvoiceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SubscriptionBillingInvoiceResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="invoiceName"> The invoiceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string invoiceName)
-        {
-            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _subscriptionBillingInvoiceInvoicesClientDiagnostics;
-        private readonly InvoicesRestOperations _subscriptionBillingInvoiceInvoicesRestClient;
+        private readonly ClientDiagnostics _invoicesClientDiagnostics;
+        private readonly Invoices _invoicesRestClient;
         private readonly BillingInvoiceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/billingSubscriptions/invoices";
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionBillingInvoiceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SubscriptionBillingInvoiceResource for mocking. </summary>
         protected SubscriptionBillingInvoiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionBillingInvoiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionBillingInvoiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubscriptionBillingInvoiceResource(ArmClient client, BillingInvoiceData data) : this(client, data.Id)
@@ -54,71 +45,91 @@ namespace Azure.ResourceManager.Billing
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionBillingInvoiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionBillingInvoiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SubscriptionBillingInvoiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionBillingInvoiceInvoicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string subscriptionBillingInvoiceInvoicesApiVersion);
-            _subscriptionBillingInvoiceInvoicesRestClient = new InvoicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionBillingInvoiceInvoicesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string subscriptionBillingInvoiceApiVersion);
+            _invoicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _invoicesRestClient = new Invoices(_invoicesClientDiagnostics, Pipeline, Endpoint, subscriptionBillingInvoiceApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BillingInvoiceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="invoiceName"> The invoiceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string invoiceName)
+        {
+            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets an invoice by subscription ID and invoice ID. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_GetByBillingSubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceByBillingSubscription_GetByBillingSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionBillingInvoiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionBillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SubscriptionBillingInvoiceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionBillingInvoiceInvoicesClientDiagnostics.CreateScope("SubscriptionBillingInvoiceResource.Get");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("SubscriptionBillingInvoiceResource.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionBillingInvoiceInvoicesRestClient.GetByBillingSubscriptionAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateGetByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingInvoiceData> response = Response.FromValue(BillingInvoiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionBillingInvoiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.Billing
         /// Gets an invoice by subscription ID and invoice ID. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_GetByBillingSubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceByBillingSubscription_GetByBillingSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionBillingInvoiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionBillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SubscriptionBillingInvoiceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionBillingInvoiceInvoicesClientDiagnostics.CreateScope("SubscriptionBillingInvoiceResource.Get");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("SubscriptionBillingInvoiceResource.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionBillingInvoiceInvoicesRestClient.GetByBillingSubscription(Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateGetByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingInvoiceData> response = Response.FromValue(BillingInvoiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SubscriptionBillingInvoiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,36 +191,49 @@ namespace Azure.ResourceManager.Billing
         /// Gets a URL to download an invoice by billing subscription. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}/download</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}/download. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_DownloadByBillingSubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceByBillingSubscription_DownloadByBillingSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionBillingInvoiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionBillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="documentName"> The ID that uniquely identifies an invoice document. This ID may be an identifier for an invoice PDF, a credit note, or a tax receipt. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadByBillingSubscriptionAsync(WaitUntil waitUntil, string documentName = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadByBillingSubscriptionAsync(WaitUntil waitUntil, string documentName = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionBillingInvoiceInvoicesClientDiagnostics.CreateScope("SubscriptionBillingInvoiceResource.DownloadByBillingSubscription");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("SubscriptionBillingInvoiceResource.DownloadByBillingSubscription");
             scope.Start();
             try
             {
-                var response = await _subscriptionBillingInvoiceInvoicesRestClient.DownloadByBillingSubscriptionAsync(Id.Parent.Name, Id.Name, documentName, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _subscriptionBillingInvoiceInvoicesClientDiagnostics, Pipeline, _subscriptionBillingInvoiceInvoicesRestClient.CreateDownloadByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, documentName).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateDownloadByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, documentName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
+                    new BillingDocumentDownloadResultOperationSource(),
+                    _invoicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,36 +247,49 @@ namespace Azure.ResourceManager.Billing
         /// Gets a URL to download an invoice by billing subscription. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}/download</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/default/billingSubscriptions/{subscriptionId}/invoices/{invoiceName}/download. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_DownloadByBillingSubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceByBillingSubscription_DownloadByBillingSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionBillingInvoiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionBillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="documentName"> The ID that uniquely identifies an invoice document. This ID may be an identifier for an invoice PDF, a credit note, or a tax receipt. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadByBillingSubscription(WaitUntil waitUntil, string documentName = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadByBillingSubscription(WaitUntil waitUntil, string documentName = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionBillingInvoiceInvoicesClientDiagnostics.CreateScope("SubscriptionBillingInvoiceResource.DownloadByBillingSubscription");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("SubscriptionBillingInvoiceResource.DownloadByBillingSubscription");
             scope.Start();
             try
             {
-                var response = _subscriptionBillingInvoiceInvoicesRestClient.DownloadByBillingSubscription(Id.Parent.Name, Id.Name, documentName, cancellationToken);
-                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _subscriptionBillingInvoiceInvoicesClientDiagnostics, Pipeline, _subscriptionBillingInvoiceInvoicesRestClient.CreateDownloadByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, documentName).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateDownloadByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, documentName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
+                    new BillingDocumentDownloadResultOperationSource(),
+                    _invoicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

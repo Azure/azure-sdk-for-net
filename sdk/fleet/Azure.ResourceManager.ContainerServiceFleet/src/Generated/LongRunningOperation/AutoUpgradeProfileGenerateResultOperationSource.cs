@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         AutoUpgradeProfileGenerateResult IOperationSource<AutoUpgradeProfileGenerateResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AutoUpgradeProfileGenerateResult result = AutoUpgradeProfileGenerateResult.DeserializeAutoUpgradeProfileGenerateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return AutoUpgradeProfileGenerateResult.DeserializeAutoUpgradeProfileGenerateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         async ValueTask<AutoUpgradeProfileGenerateResult> IOperationSource<AutoUpgradeProfileGenerateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AutoUpgradeProfileGenerateResult result = AutoUpgradeProfileGenerateResult.DeserializeAutoUpgradeProfileGenerateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return AutoUpgradeProfileGenerateResult.DeserializeAutoUpgradeProfileGenerateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

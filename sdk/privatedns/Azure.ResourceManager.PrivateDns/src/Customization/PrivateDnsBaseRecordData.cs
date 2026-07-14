@@ -3,6 +3,8 @@
 
 #nullable disable
 
+// TypeSpec generates a shared record-set data model; this base class preserves the shipped per-record data inheritance hierarchy.
+
 using System;
 using System.Collections.Generic;
 using Azure;
@@ -15,73 +17,66 @@ namespace Azure.ResourceManager.PrivateDns
     /// <summary> A class representing the Record data model. </summary>
     public partial class PrivateDnsBaseRecordData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-        /// <summary> Initializes a new instance of RecordData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsBaseRecordData"/>. </summary>
         public PrivateDnsBaseRecordData()
         {
-            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of RecordData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag of the record set. </param>
-        /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The TTL (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateDnsBaseRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsBaseRecordData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the record set. </param>
+        /// <param name="eTag"> The ETag of the record set. </param>
+        internal PrivateDnsBaseRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateDnsRecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
-            Metadata = metadata;
-            TtlInSeconds = ttl;
-            Fqdn = fqdn;
-            IsAutoRegistered = isAutoRegistered;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> The properties of the record set. </summary>
+        internal PrivateDnsRecordSetProperties Properties { get; set; }
 
         /// <summary> The ETag of the record set. </summary>
         public ETag? ETag { get; set; }
+
         /// <summary> The metadata attached to the record set. </summary>
-        public IDictionary<string, string> Metadata { get; }
+        public IDictionary<string, string> Metadata
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateDnsRecordSetProperties();
+                }
+                return Properties.Metadata;
+            }
+        }
+
         /// <summary> The TTL (time-to-live) of the records in the record set. </summary>
-        public long? TtlInSeconds { get; set; }
+        public long? TtlInSeconds
+        {
+            get => Properties is null ? default : Properties.TtlInSeconds;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateDnsRecordSetProperties();
+                }
+                Properties.TtlInSeconds = value;
+            }
+        }
+
         /// <summary> Fully qualified domain name of the record set. </summary>
-        public string Fqdn { get; }
+        public string Fqdn => Properties is null ? default : Properties.Fqdn;
+
         /// <summary> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </summary>
-        public bool? IsAutoRegistered { get; }
+        public bool? IsAutoRegistered => Properties is null ? default : Properties.IsAutoRegistered;
     }
 }

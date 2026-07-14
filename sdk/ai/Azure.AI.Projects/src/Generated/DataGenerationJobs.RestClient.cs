@@ -4,7 +4,6 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
@@ -42,7 +41,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetGenerationJobsRequest(string foundryFeatures, int? limit, string order, string after, string before, string scenario, IEnumerable<DataGenerationJobKind> @type, RequestOptions options)
+        internal PipelineMessage CreateGetGenerationJobsRequest(string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -62,14 +61,6 @@ namespace Azure.AI.Projects
             if (before != null)
             {
                 uri.AppendQuery("before", before, true);
-            }
-            if (scenario != null)
-            {
-                uri.AppendQuery("scenario", scenario, true);
-            }
-            if (@type != null && !(@type is ChangeTrackingList<DataGenerationJobKind> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("type", @type, ",", escape: true);
             }
             if (_apiVersion != null)
             {

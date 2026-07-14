@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     {
         private readonly ClientDiagnostics _sqlVirtualMachineGroupsClientDiagnostics;
         private readonly SqlVirtualMachineGroups _sqlVirtualMachineGroupsRestClient;
-        private readonly ClientDiagnostics _sqlVirtualMachinesClientDiagnostics;
-        private readonly SqlVirtualMachines _sqlVirtualMachinesRestClient;
 
         /// <summary> Initializes a new instance of SqlVmGroupCollection for mocking. </summary>
         protected SqlVmGroupCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             TryGetApiVersion(SqlVmGroupResource.ResourceType, out string sqlVmGroupApiVersion);
             _sqlVirtualMachineGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVmGroupResource.ResourceType.Namespace, Diagnostics);
             _sqlVirtualMachineGroupsRestClient = new SqlVirtualMachineGroups(_sqlVirtualMachineGroupsClientDiagnostics, Pipeline, Endpoint, sqlVmGroupApiVersion ?? "2023-10-01");
-            _sqlVirtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVmGroupResource.ResourceType.Namespace, Diagnostics);
-            _sqlVirtualMachinesRestClient = new SqlVirtualMachines(_sqlVirtualMachinesClientDiagnostics, Pipeline, Endpoint, sqlVmGroupApiVersion ?? "2023-10-01");
             ValidateResourceId(id);
         }
 
@@ -98,7 +94,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 HttpMessage message = _sqlVirtualMachineGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmGroupName, SqlVmGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlVirtualMachineArmOperation<SqlVmGroupResource> operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(
-                    new SqlVmGroupOperationSource(Client),
+                    new SqlVmGroupResourceOperationSource(Client),
                     _sqlVirtualMachineGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -156,7 +152,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 HttpMessage message = _sqlVirtualMachineGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmGroupName, SqlVmGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlVirtualMachineArmOperation<SqlVmGroupResource> operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(
-                    new SqlVmGroupOperationSource(Client),
+                    new SqlVmGroupResourceOperationSource(Client),
                     _sqlVirtualMachineGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,

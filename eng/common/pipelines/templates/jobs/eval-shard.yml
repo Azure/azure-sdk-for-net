@@ -1,0 +1,141 @@
+# Fan-out shard job: one leg per shard runs its evals against the prebuilt MCP and publishes
+# per-leg JUnit (always) + transcripts (on failure). Pass/fail is the eval VERDICT, not the
+# `vally` exit code (vally can exit 1 on a teardown flake after a pass).
+
+parameters:
+  - name: vallyRoot
+    # Required (no default) so each repo passes its own eval root explicitly.
+    type: string
+  - name: evalInvokeTemplate
+    # Swap point: runs `vally eval` for the shard (the common template is auth-conditional).
+    type: string
+    default: /eng/common/pipelines/templates/steps/eval-invoke.yml
+  - name: UseAzSdkAuthentication
+    # Forwarded to the invoke template: true runs the shard under AzureCLI@2.
+    type: boolean
+    default: false
+  - name: threshold
+    # Pass-rate gate forwarded to the invoke template (`vally eval --threshold` + shard verdict).
+    type: number
+    default: 0.8
+  - name: preEvalTemplate
+    # Optional repo-specific setup run before the eval (e.g. start a bot/agent). Placeholder by default.
+    type: string
+    default: ''
+  - name: postEvalTemplate
+    # Optional repo-specific teardown run after the eval. Placeholder by default.
+    type: string
+    default: ''
+  - name: shardTimeoutInMinutes
+    # Per-shard job timeout. Must be a parameter (not a runtime variable) so 1ES resolves it at compile time.
+    type: number
+    default: 20
+
+jobs:
+  - job: RunShard
+    displayName: 'Eval'
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+    # A red shard shouldn't abort its siblings; the rollup gates in Summary.
+    continueOnError: true
+    timeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
+    strategy:
+      matrix: $[ stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix'] ]
+      maxParallel: 10
+    templateContext:
+      outputs:
+        # Artifact names carry $(System.JobAttempt) so "Rerun failed jobs" publishes a fresh
+        # name instead of colliding with the prior attempt's artifact (which fails the rerun).
+        # The Summary job keeps only the highest attempt per shard so retries supersede cleanly.
+        - output: pipelineArtifact
+          displayName: 'Publish $(shardName) JUnit'
+          artifactName: 'eval-result-$(shardName)-$(System.JobAttempt)'
+          targetPath: $(Build.ArtifactStagingDirectory)/junit
+          condition: always()
+        - output: pipelineArtifact
+          displayName: 'Publish $(shardName) transcripts (on failure)'
+          artifactName: 'eval-debug-$(shardName)-$(System.JobAttempt)'
+          targetPath: $(Build.ArtifactStagingDirectory)/debug
+          condition: failed()
+    steps:
+      - checkout: self
+        fetchDepth: 1
+
+      - task: UseNode@1
+        displayName: 'Use Node.js 22.x'
+        inputs:
+          version: 22.x
+
+      # 1ES Official image blocks registry.npmjs.org; restore via the azure-sdk npm mirror.
+      - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+        parameters:
+          npmrcPath: $(Build.SourcesDirectory)/.npmrc
+          registryUrl: https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/npm/registry/
+
+      # Installs vally-cli + its pinned copilot-sdk executor into node_modules.
+      - script: npm ci --userconfig $(Build.SourcesDirectory)/.npmrc
+        displayName: 'Install Vally CLI + copilot-sdk (pinned)'
+        workingDirectory: eng/common/scripts/eval
+
+      - download: current
+        artifact: mcp-servers
+        displayName: 'Download MCP server(s)'
+
+      - script: |
+          mkdir -p "$(Build.SourcesDirectory)/artifacts/mcp"
+          cp -r "$(Pipeline.Workspace)/mcp-servers/." "$(Build.SourcesDirectory)/artifacts/mcp/"
+        displayName: 'Stage MCP server(s) at expected path'
+
+      # Optional repo-specific setup (e.g. start a bot/agent) before the eval runs.
+      - ${{ if parameters.preEvalTemplate }}:
+        - template: ${{ parameters.preEvalTemplate }}
+
+      # Clone only the git fixtures this shard's evals reference (Vally won't clone them).
+      - script: |
+          patterns=()
+          set -f
+          for tok in $EVAL_ARGS; do
+            [ "$tok" = "-e" ] && continue
+            patterns+=(--pattern "$tok")
+          done
+          set +f
+          node "$(Build.SourcesDirectory)/eng/common/scripts/eval/init-eval-git-fixtures.js" \
+            --eval-root "$(Build.SourcesDirectory)/${{ parameters.vallyRoot }}" \
+            "${patterns[@]}"
+        displayName: 'Prime eval git fixtures'
+        env:
+          EVAL_ARGS: $(evalArgs)
+
+      # Runs the eval via the invoke template (auth-conditional in the common default).
+      - template: ${{ parameters.evalInvokeTemplate }}
+        parameters:
+          vallyRoot: ${{ parameters.vallyRoot }}
+          UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
+          threshold: ${{ parameters.threshold }}
+
+      # Optional repo-specific teardown after the eval.
+      - ${{ if parameters.postEvalTemplate }}:
+        - template: ${{ parameters.postEvalTemplate }}
+
+      # JUnit is tiny — stage it always; heavy transcripts stage separately on failure.
+      # Also create the debug dir here so the failed()-gated debug publish always has a target
+      # (otherwise the publish errors "Path does not exist" when the dir was never created).
+      - script: |
+          mkdir -p "$(Build.ArtifactStagingDirectory)/junit" "$(Build.ArtifactStagingDirectory)/debug"
+          find "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" -name '*.junit.xml' -exec cp {} "$(Build.ArtifactStagingDirectory)/junit/" \;
+        displayName: 'Collect $(shardName) JUnit'
+        condition: always()
+
+      # On a real failure keep transcripts; strip JUnit so Summary can't double-count it.
+      - script: |
+          src="$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)"
+          dest="$(Build.ArtifactStagingDirectory)/debug"
+          mkdir -p "$dest"
+          if [ -d "$src" ]; then
+            cp -r "$src/." "$dest/"
+            find "$dest" -name '*.junit.xml' -delete
+          fi
+        displayName: 'Collect $(shardName) transcripts (on failure)'
+        condition: failed()

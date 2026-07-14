@@ -10,21 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Unknown version of MultiPromQLCriteria. </summary>
     internal partial class UnknownMultiPromQLCriteria : MultiPromQLCriteria
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMultiPromQLCriteria"/>. </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="query"> The query used to evaluate the alert rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMultiPromQLCriteria(CriterionType criterionType, string name, string query, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(criterionType, name, query, serializedAdditionalRawData)
-        {
-            CriterionType = criterionType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownMultiPromQLCriteria"/> for deserialization. </summary>
-        internal UnknownMultiPromQLCriteria()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMultiPromQLCriteria(ScheduledQueryRuleCriterionType criterionType, string name, string query, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(criterionType != default ? criterionType : "unknown", name, query, additionalBinaryDataProperties)
         {
         }
     }

@@ -40,6 +40,36 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
             => Helper.GetUnderlyingCredential(credential);
 
         /// <summary>
+        /// Extracts the underlying <typeparamref name="TCredential"/> from the
+        /// <see cref="AuthenticationTokenProvider"/> produced by the resolver
+        /// path. <c>AzureCredentialResolver</c> wraps every single-source
+        /// credential in a <see cref="DefaultAzureCredential"/> whose
+        /// <c>Sources[0]</c> is the concrete credential; providers that
+        /// already match <typeparamref name="TCredential"/> (for example,
+        /// <see cref="ChainedTokenCredential"/>) are returned directly.
+        /// </summary>
+        protected TCredential GetUnderlyingFromTokenProvider(AuthenticationTokenProvider provider)
+        {
+            if (provider is TCredential direct)
+            {
+                return direct;
+            }
+
+            DefaultAzureCredential dac = provider as DefaultAzureCredential;
+            Assert.IsNotNull(dac, $"Expected DefaultAzureCredential or {typeof(TCredential).Name} but got {provider?.GetType().Name ?? "null"}");
+
+            FieldInfo sourcesField = typeof(DefaultAzureCredential).GetField("_sources", BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(sourcesField, "DefaultAzureCredential._sources field not found via reflection");
+
+            TokenCredential[] sources = (TokenCredential[])sourcesField.GetValue(dac);
+            Assert.AreEqual(1, sources?.Length ?? 0, $"Expected exactly one inner source on DefaultAzureCredential for {CredentialSource}");
+
+            TCredential underlying = sources[0] as TCredential;
+            Assert.IsNotNull(underlying, $"Underlying source was {sources[0]?.GetType().Name ?? "null"}, expected {typeof(TCredential).Name}");
+            return underlying;
+        }
+
+        /// <summary>
         /// Returns additional config key-value pairs required to create this credential.
         /// Override in subclasses that need more than just CredentialSource (e.g. TenantId, ClientId).
         /// </summary>
@@ -57,7 +87,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
 
         /// <summary>
         /// Verifies the credential can be created end-to-end from IConfiguration
-        /// using the GetAzureClientSettings / WithAzureCredential flow.
+        /// using GetAzureClientSettings.
         /// </summary>
         [Test]
         [NonParallelizable]
@@ -82,21 +112,21 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
 
                 var settings = config.GetAzureClientSettings<E2ETestSettings>("MyClient");
                 Assert.IsNotNull(settings.CredentialProvider, $"CredentialProvider should be set for {CredentialSource}");
-                Assert.IsInstanceOf<ConfigurableCredential>(settings.CredentialProvider, $"CredentialProvider should be ConfigurableCredential for {CredentialSource}");
 
-                var configurableCredential = (ConfigurableCredential)settings.CredentialProvider;
-                var underlying = GetUnderlying(configurableCredential);
-                Assert.IsInstanceOf<TCredential>(underlying, $"Underlying credential should be {typeof(TCredential).Name} for {CredentialSource}");
+                // GetAzureClientSettings returns the concrete credential type
+                // (wrapped in DefaultAzureCredential for single-source dispatch).
+                TCredential underlying = GetUnderlyingFromTokenProvider(settings.CredentialProvider);
+                Assert.IsNotNull(underlying, $"Underlying credential should be {typeof(TCredential).Name} for {CredentialSource}");
             }
         }
 
         /// <summary>
-        /// Verifies that without WithAzureCredential, CredentialProvider is null
+        /// Verifies that without an Azure credential resolver registered, CredentialProvider is null
         /// and AuthenticationPolicy.Create throws the appropriate error.
         /// </summary>
         [Test]
         [NonParallelizable]
-        public void WithoutWithAzureCredential_AuthenticationPolicyCreateThrows()
+        public void WithoutAzureCredentialResolver_AuthenticationPolicyCreateThrows()
         {
             using (new TestEnvVar(GetRequiredEnvVars()))
             {
@@ -125,37 +155,12 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
         }
 
         /// <summary>
-        /// Verifies that AddClient with WithAzureCredential resolves a working client from DI.
+        /// Verifies that AddClient through the SCM-only path (no Azure resolver registered)
+        /// throws ArgumentNullException because the credential is never resolved.
         /// </summary>
         [Test]
         [NonParallelizable]
-        public void AddClient_WithAzureCredential_ResolvesClient()
-        {
-            using (new TestEnvVar(GetRequiredEnvVars()))
-            {
-                HostApplicationBuilder builder = Host.CreateApplicationBuilder();
-                var configValues = BuildConfigValues();
-
-                builder.Configuration.AddInMemoryCollection(configValues);
-                builder.AddClient<DITestClient, E2ETestSettings>("MyClient").WithAzureCredential();
-
-                IHost host = builder.Build();
-                var client = host.Services.GetRequiredService<DITestClient>();
-
-                Assert.IsNotNull(client);
-                Assert.IsNotNull(client.Endpoint);
-                Assert.IsNotNull(client.Credential);
-                Assert.IsInstanceOf<ConfigurableCredential>(client.Credential);
-            }
-        }
-
-        /// <summary>
-        /// Verifies that AddClient without WithAzureCredential throws ArgumentNullException
-        /// because the credential is null when the DI container resolves the client.
-        /// </summary>
-        [Test]
-        [NonParallelizable]
-        public void AddClient_WithoutWithAzureCredential_ThrowsOnResolve()
+        public void AddClient_WithoutAzureCredentialResolver_ThrowsOnResolve()
         {
             using (new TestEnvVar(GetRequiredEnvVars()))
             {
@@ -172,37 +177,12 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
         }
 
         /// <summary>
-        /// Verifies that AddKeyedClient with WithAzureCredential resolves a working client from DI.
+        /// Verifies that AddKeyedClient through the SCM-only path (no Azure resolver registered)
+        /// throws ArgumentNullException because the credential is never resolved.
         /// </summary>
         [Test]
         [NonParallelizable]
-        public void AddKeyedClient_WithAzureCredential_ResolvesClient()
-        {
-            using (new TestEnvVar(GetRequiredEnvVars()))
-            {
-                HostApplicationBuilder builder = Host.CreateApplicationBuilder();
-                var configValues = BuildConfigValues();
-
-                builder.Configuration.AddInMemoryCollection(configValues);
-                builder.AddKeyedClient<DITestClient, E2ETestSettings>("myKey", "MyClient").WithAzureCredential();
-
-                IHost host = builder.Build();
-                var client = host.Services.GetRequiredKeyedService<DITestClient>("myKey");
-
-                Assert.IsNotNull(client);
-                Assert.IsNotNull(client.Endpoint);
-                Assert.IsNotNull(client.Credential);
-                Assert.IsInstanceOf<ConfigurableCredential>(client.Credential);
-            }
-        }
-
-        /// <summary>
-        /// Verifies that AddKeyedClient without WithAzureCredential throws ArgumentNullException
-        /// because the credential is null when the DI container resolves the client.
-        /// </summary>
-        [Test]
-        [NonParallelizable]
-        public void AddKeyedClient_WithoutWithAzureCredential_ThrowsOnResolve()
+        public void AddKeyedClient_WithoutAzureCredentialResolver_ThrowsOnResolve()
         {
             using (new TestEnvVar(GetRequiredEnvVars()))
             {

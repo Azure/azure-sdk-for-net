@@ -9,140 +9,282 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The metric alert resource for patch operations. </summary>
     public partial class MetricAlertPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MetricAlertPatch"/>. </summary>
         public MetricAlertPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            Scopes = new ChangeTrackingList<string>();
-            Actions = new ChangeTrackingList<MetricAlertAction>();
-            CustomProperties = new ChangeTrackingDictionary<string, string>();
-            ActionProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricAlertPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <param name="description"> The description of the metric alert that will be included in the alert email. </param>
-        /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
-        /// <param name="isEnabled"> The flag that indicates whether the metric alert is enabled. </param>
-        /// <param name="scopes"> The list of resource id's that this metric alert is scoped to. </param>
-        /// <param name="evaluationFrequency"> How often the metric alert is evaluated represented in ISO 8601 duration format. </param>
-        /// <param name="windowSize"> The period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
-        /// <param name="targetResourceType"> The resource type of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </param>
-        /// <param name="targetResourceRegion"> The region of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </param>
-        /// <param name="criteria">
-        /// Defines the specific alert criteria information.
-        /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="PromQLCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
-        /// </param>
-        /// <param name="isAutoMitigateEnabled"> The flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
-        /// <param name="resolveConfiguration"> The configuration for how the alert is resolved. Applicable for PromQLCriteria. </param>
-        /// <param name="actions"> The array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
-        /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
-        /// <param name="isMigrated"> The value indicating whether this alert rule is migrated. </param>
-        /// <param name="customProperties"> The properties of an alert payload. </param>
-        /// <param name="actionProperties"> The properties of an action properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricAlertPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, string description, int? severity, bool? isEnabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, ResolveConfiguration resolveConfiguration, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated, IDictionary<string, string> customProperties, IDictionary<string, string> actionProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="properties"> The alert rule properties of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MetricAlertPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, MetricAlertPropertiesPatch properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
-            Description = description;
-            Severity = severity;
-            IsEnabled = isEnabled;
-            Scopes = scopes;
-            EvaluationFrequency = evaluationFrequency;
-            WindowSize = windowSize;
-            TargetResourceType = targetResourceType;
-            TargetResourceRegion = targetResourceRegion;
-            Criteria = criteria;
-            IsAutoMitigateEnabled = isAutoMitigateEnabled;
-            ResolveConfiguration = resolveConfiguration;
-            Actions = actions;
-            LastUpdatedOn = lastUpdatedOn;
-            IsMigrated = isMigrated;
-            CustomProperties = customProperties;
-            ActionProperties = actionProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+
+        /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> The alert rule properties of the resource. </summary>
+        internal MetricAlertPropertiesPatch Properties { get; set; }
+
         /// <summary> The description of the metric alert that will be included in the alert email. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MetricAlertPropertiesPatch();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Alert severity {0, 1, 2, 3, 4}. </summary>
-        public int? Severity { get; set; }
+        public int? Severity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Severity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MetricAlertPropertiesPatch();
+                }
+                Properties.Severity = value;
+            }
+        }
+
         /// <summary> The flag that indicates whether the metric alert is enabled. </summary>
-        public bool? IsEnabled { get; set; }
+        public bool? IsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MetricAlertPropertiesPatch();
+                }
+                Properties.IsEnabled = value;
+            }
+        }
+
         /// <summary> The list of resource id's that this metric alert is scoped to. </summary>
-        public IList<string> Scopes { get; }
+        public IList<string> Scopes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MetricAlertPropertiesPatch();
+                }
+                return Properties.Scopes;
+            }
+        }
+
         /// <summary> How often the metric alert is evaluated represented in ISO 8601 duration format. </summary>
-        public TimeSpan? EvaluationFrequency { get; set; }
+        public TimeSpan? EvaluationFrequency
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EvaluationFrequency;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MetricAlertPropertiesPatch();
+                }
+                Properties.EvaluationFrequency = value;
+            }
+        }
+
         /// <summary> The period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </summary>
-        public TimeSpan? WindowSize { get; set; }
+        public TimeSpan? WindowSize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WindowSize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MetricAlertPropertiesPatch();
+                }
+                Properties.WindowSize = value;
+            }
+        }
+
         /// <summary> The resource type of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </summary>
-        public ResourceType? TargetResourceType { get; set; }
+        public ResourceType? TargetResourceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetResourceType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MetricAlertPropertiesPatch();
+                }
+                Properties.TargetResourceType = value;
+            }
+        }
+
         /// <summary> The region of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </summary>
-        public AzureLocation? TargetResourceRegion { get; set; }
-        /// <summary>
-        /// Defines the specific alert criteria information.
-        /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="PromQLCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
-        /// </summary>
-        public MetricAlertCriteria Criteria { get; set; }
+        public AzureLocation? TargetResourceRegion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetResourceRegion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MetricAlertPropertiesPatch();
+                }
+                Properties.TargetResourceRegion = value;
+            }
+        }
+
+        /// <summary> Defines the specific alert criteria information. </summary>
+        public MetricAlertCriteria Criteria
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Criteria;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MetricAlertPropertiesPatch();
+                }
+                Properties.Criteria = value;
+            }
+        }
+
         /// <summary> The flag that indicates whether the alert should be auto resolved or not. The default is true. </summary>
-        public bool? IsAutoMitigateEnabled { get; set; }
+        public bool? IsAutoMitigateEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAutoMitigateEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MetricAlertPropertiesPatch();
+                }
+                Properties.IsAutoMitigateEnabled = value;
+            }
+        }
+
         /// <summary> The configuration for how the alert is resolved. Applicable for PromQLCriteria. </summary>
-        public ResolveConfiguration ResolveConfiguration { get; set; }
+        public MetricAlertResolveConfiguration ResolveConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResolveConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MetricAlertPropertiesPatch();
+                }
+                Properties.ResolveConfiguration = value;
+            }
+        }
+
         /// <summary> The array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </summary>
-        public IList<MetricAlertAction> Actions { get; }
+        public IList<MetricAlertAction> Actions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MetricAlertPropertiesPatch();
+                }
+                return Properties.Actions;
+            }
+        }
+
         /// <summary> Last time the rule was updated in ISO8601 format. </summary>
-        public DateTimeOffset? LastUpdatedOn { get; }
+        public DateTimeOffset? LastUpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastUpdatedOn;
+            }
+        }
+
         /// <summary> The value indicating whether this alert rule is migrated. </summary>
-        public bool? IsMigrated { get; }
+        public bool? IsMigrated
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsMigrated;
+            }
+        }
+
         /// <summary> The properties of an alert payload. </summary>
-        public IDictionary<string, string> CustomProperties { get; }
+        public IDictionary<string, string> CustomProperties
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MetricAlertPropertiesPatch();
+                }
+                return Properties.CustomProperties;
+            }
+        }
+
         /// <summary> The properties of an action properties. </summary>
-        public IDictionary<string, string> ActionProperties { get; }
+        public IDictionary<string, string> ActionProperties
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MetricAlertPropertiesPatch();
+                }
+                return Properties.ActionProperties;
+            }
+        }
     }
 }

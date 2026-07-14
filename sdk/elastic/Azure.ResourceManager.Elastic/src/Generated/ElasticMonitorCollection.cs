@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Elastic
                 HttpMessage message = _elasticMonitorResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, ElasticMonitorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticArmOperation<ElasticMonitorResource> operation = new ElasticArmOperation<ElasticMonitorResource>(
-                    new ElasticMonitorOperationSource(Client),
+                    new ElasticMonitorResourceOperationSource(Client),
                     _elasticMonitorResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Elastic
                 HttpMessage message = _elasticMonitorResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, ElasticMonitorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticArmOperation<ElasticMonitorResource> operation = new ElasticArmOperation<ElasticMonitorResource>(
-                    new ElasticMonitorOperationSource(Client),
+                    new ElasticMonitorResourceOperationSource(Client),
                     _elasticMonitorResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

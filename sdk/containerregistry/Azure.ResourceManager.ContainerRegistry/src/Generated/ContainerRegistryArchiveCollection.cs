@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _archivesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _packageType, archiveName, ContainerRegistryArchiveData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ContainerRegistryArchiveResource> operation = new ContainerRegistryArmOperation<ContainerRegistryArchiveResource>(
-                    new ContainerRegistryArchiveOperationSource(Client),
+                    new ContainerRegistryArchiveResourceOperationSource(Client),
                     _archivesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _archivesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _packageType, archiveName, ContainerRegistryArchiveData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ContainerRegistryArchiveResource> operation = new ContainerRegistryArmOperation<ContainerRegistryArchiveResource>(
-                    new ContainerRegistryArchiveOperationSource(Client),
+                    new ContainerRegistryArchiveResourceOperationSource(Client),
                     _archivesClientDiagnostics,
                     Pipeline,
                     message.Request,

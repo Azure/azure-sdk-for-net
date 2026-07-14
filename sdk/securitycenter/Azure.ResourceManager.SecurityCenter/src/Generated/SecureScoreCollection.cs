@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -25,69 +26,75 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecureScoreCollection : ArmCollection, IEnumerable<SecureScoreResource>, IAsyncEnumerable<SecureScoreResource>
     {
-        private readonly ClientDiagnostics _secureScoreClientDiagnostics;
-        private readonly SecureScoresRestOperations _secureScoreRestClient;
+        private readonly ClientDiagnostics _secureScoresClientDiagnostics;
+        private readonly SecureScores _secureScoresRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SecureScoreCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecureScoreCollection for mocking. </summary>
         protected SecureScoreCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecureScoreCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureScoreCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecureScoreCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _secureScoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecureScoreResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SecureScoreResource.ResourceType, out string secureScoreApiVersion);
-            _secureScoreRestClient = new SecureScoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, secureScoreApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _secureScoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecureScoreResource.ResourceType.Namespace, Diagnostics);
+            _secureScoresRestClient = new SecureScores(_secureScoresClientDiagnostics, Pipeline, Endpoint, secureScoreApiVersion ?? "2020-01-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use 'ascScore'.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecureScoreItems_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecureScoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecureScoreResource>> GetAsync(string secureScoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
 
-            using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.Get");
+            using DiagnosticScope scope = _secureScoresClientDiagnostics.CreateScope("SecureScoreCollection.Get");
             scope.Start();
             try
             {
-                var response = await _secureScoreRestClient.GetAsync(Id.SubscriptionId, secureScoreName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecureScoreData> response = Response.FromValue(SecureScoreData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecureScoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,38 +108,42 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get secure score for a specific Microsoft Defender for Cloud initiative within your current scope. For the ASC Default initiative, use 'ascScore'.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecureScoreItems_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecureScoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecureScoreResource> Get(string secureScoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
 
-            using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.Get");
+            using DiagnosticScope scope = _secureScoresClientDiagnostics.CreateScope("SecureScoreCollection.Get");
             scope.Start();
             try
             {
-                var response = _secureScoreRestClient.Get(Id.SubscriptionId, secureScoreName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecureScoreData> response = Response.FromValue(SecureScoreData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecureScoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,50 +157,44 @@ namespace Azure.ResourceManager.SecurityCenter
         /// List secure scores for all your Microsoft Defender for Cloud initiatives within your current scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScores_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecureScoreItems_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecureScoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecureScoreResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecureScoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecureScoreResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _secureScoreRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _secureScoreRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecureScoreResource(Client, SecureScoreData.DeserializeSecureScoreData(e)), _secureScoreClientDiagnostics, Pipeline, "SecureScoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecureScoreData, SecureScoreResource>(new SecureScoresGetAllAsyncCollectionResultOfT(_secureScoresRestClient, Guid.Parse(Id.SubscriptionId), context, "SecureScoreCollection.GetAll"), data => new SecureScoreResource(Client, data));
         }
 
         /// <summary>
         /// List secure scores for all your Microsoft Defender for Cloud initiatives within your current scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScores_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecureScoreItems_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecureScoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,45 +202,61 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecureScoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecureScoreResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _secureScoreRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _secureScoreRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecureScoreResource(Client, SecureScoreData.DeserializeSecureScoreData(e)), _secureScoreClientDiagnostics, Pipeline, "SecureScoreCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecureScoreData, SecureScoreResource>(new SecureScoresGetAllCollectionResultOfT(_secureScoresRestClient, Guid.Parse(Id.SubscriptionId), context, "SecureScoreCollection.GetAll"), data => new SecureScoreResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecureScoreItems_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecureScoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string secureScoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
 
-            using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.Exists");
+            using DiagnosticScope scope = _secureScoresClientDiagnostics.CreateScope("SecureScoreCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _secureScoreRestClient.GetAsync(Id.SubscriptionId, secureScoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecureScoreData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecureScoreData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecureScoreData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,36 +270,50 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecureScoreItems_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecureScoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string secureScoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
 
-            using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.Exists");
+            using DiagnosticScope scope = _secureScoresClientDiagnostics.CreateScope("SecureScoreCollection.Exists");
             scope.Start();
             try
             {
-                var response = _secureScoreRestClient.Get(Id.SubscriptionId, secureScoreName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecureScoreData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecureScoreData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecureScoreData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -292,38 +327,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecureScoreItems_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecureScoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecureScoreResource>> GetIfExistsAsync(string secureScoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
 
-            using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.GetIfExists");
+            using DiagnosticScope scope = _secureScoresClientDiagnostics.CreateScope("SecureScoreCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _secureScoreRestClient.GetAsync(Id.SubscriptionId, secureScoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecureScoreData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecureScoreData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecureScoreData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecureScoreResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecureScoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -337,38 +388,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/secureScores/{secureScoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecureScores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecureScoreItems_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecureScoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="secureScoreName"> The initiative name. For the ASC Default initiative, use 'ascScore' as in the sample request below. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secureScoreName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecureScoreResource> GetIfExists(string secureScoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
 
-            using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.GetIfExists");
+            using DiagnosticScope scope = _secureScoresClientDiagnostics.CreateScope("SecureScoreCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _secureScoreRestClient.Get(Id.SubscriptionId, secureScoreName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecureScoreData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecureScoreData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecureScoreData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecureScoreResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecureScoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -388,6 +455,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecureScoreResource> IAsyncEnumerable<SecureScoreResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

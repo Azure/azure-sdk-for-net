@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.NetworkFunction
     {
         private readonly ClientDiagnostics _azureTrafficCollectorsClientDiagnostics;
         private readonly AzureTrafficCollectors _azureTrafficCollectorsRestClient;
-        private readonly ClientDiagnostics _azureTrafficCollectorsBySubscriptionClientDiagnostics;
-        private readonly AzureTrafficCollectorsBySubscription _azureTrafficCollectorsBySubscriptionRestClient;
         private readonly ClientDiagnostics _azureTrafficCollectorsByResourceGroupClientDiagnostics;
         private readonly AzureTrafficCollectorsByResourceGroup _azureTrafficCollectorsByResourceGroupRestClient;
 
@@ -46,8 +44,6 @@ namespace Azure.ResourceManager.NetworkFunction
             TryGetApiVersion(AzureTrafficCollectorResource.ResourceType, out string azureTrafficCollectorApiVersion);
             _azureTrafficCollectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", AzureTrafficCollectorResource.ResourceType.Namespace, Diagnostics);
             _azureTrafficCollectorsRestClient = new AzureTrafficCollectors(_azureTrafficCollectorsClientDiagnostics, Pipeline, Endpoint, azureTrafficCollectorApiVersion ?? "2022-11-01");
-            _azureTrafficCollectorsBySubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", AzureTrafficCollectorResource.ResourceType.Namespace, Diagnostics);
-            _azureTrafficCollectorsBySubscriptionRestClient = new AzureTrafficCollectorsBySubscription(_azureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, Endpoint, azureTrafficCollectorApiVersion ?? "2022-11-01");
             _azureTrafficCollectorsByResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", AzureTrafficCollectorResource.ResourceType.Namespace, Diagnostics);
             _azureTrafficCollectorsByResourceGroupRestClient = new AzureTrafficCollectorsByResourceGroup(_azureTrafficCollectorsByResourceGroupClientDiagnostics, Pipeline, Endpoint, azureTrafficCollectorApiVersion ?? "2022-11-01");
             ValidateResourceId(id);
@@ -102,7 +98,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _azureTrafficCollectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, AzureTrafficCollectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkFunctionArmOperation<AzureTrafficCollectorResource> operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(
-                    new AzureTrafficCollectorOperationSource(Client),
+                    new AzureTrafficCollectorResourceOperationSource(Client),
                     _azureTrafficCollectorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -160,7 +156,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _azureTrafficCollectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, AzureTrafficCollectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkFunctionArmOperation<AzureTrafficCollectorResource> operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(
-                    new AzureTrafficCollectorOperationSource(Client),
+                    new AzureTrafficCollectorResourceOperationSource(Client),
                     _azureTrafficCollectorsClientDiagnostics,
                     Pipeline,
                     message.Request,

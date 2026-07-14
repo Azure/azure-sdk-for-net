@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ResourceGraph
 {
+    /// <summary></summary>
     public partial class ResourceGraphQueryResource : IJsonModel<ResourceGraphQueryData>
     {
-        private static ResourceGraphQueryData s_dataDeserializationInstance;
-        private static ResourceGraphQueryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ResourceGraphQueryData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ResourceGraphQueryData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ResourceGraphQueryData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceGraphQueryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGraphQueryData>)Data).Write(writer, options);
 
-        ResourceGraphQueryData IJsonModel<ResourceGraphQueryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGraphQueryData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceGraphQueryData IJsonModel<ResourceGraphQueryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ResourceGraphQueryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceGraphQueryData>(Data, options, AzureResourceManagerResourceGraphContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ResourceGraphQueryData IPersistableModel<ResourceGraphQueryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceGraphQueryData>(data, options, AzureResourceManagerResourceGraphContext.Default);
 
-        string IPersistableModel<ResourceGraphQueryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceGraphQueryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourceGraphQueryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

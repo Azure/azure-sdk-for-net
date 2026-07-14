@@ -88,6 +88,11 @@ namespace Azure.AI.Projects
             writer.WriteObjectValue(Options, options);
             writer.WritePropertyName("scenario"u8);
             writer.WriteStringValue(Scenario.ToString());
+            if (Optional.IsDefined(OutputOptions))
+            {
+                writer.WritePropertyName("output_options"u8);
+                writer.WriteObjectValue(OutputOptions, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +139,7 @@ namespace Azure.AI.Projects
             IList<DataGenerationJobSource> sources = default;
             DataGenerationJobOptions options0 = default;
             DataGenerationJobScenario scenario = default;
+            DataGenerationJobOutputOptions outputOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,12 +168,27 @@ namespace Azure.AI.Projects
                     scenario = new DataGenerationJobScenario(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("output_options"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outputOptions = DataGenerationJobOutputOptions.DeserializeDataGenerationJobOutputOptions(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataGenerationJobInputs(name, sources, options0, scenario, additionalBinaryDataProperties);
+            return new DataGenerationJobInputs(
+                name,
+                sources,
+                options0,
+                scenario,
+                outputOptions,
+                additionalBinaryDataProperties);
         }
     }
 }

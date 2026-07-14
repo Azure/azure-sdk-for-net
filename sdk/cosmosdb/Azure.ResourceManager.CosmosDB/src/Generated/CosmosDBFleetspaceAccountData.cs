@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary>
-    /// A class representing the CosmosDBFleetspaceAccount data model.
-    /// An Azure Cosmos DB Fleetspace Account
-    /// </summary>
+    /// <summary> An Azure Cosmos DB Fleetspace Account. </summary>
     public partial class CosmosDBFleetspaceAccountData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBFleetspaceAccountData"/>. </summary>
         public CosmosDBFleetspaceAccountData()
@@ -57,25 +25,38 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBFleetspaceAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> A provisioning state of the Fleetspace Account. </param>
-        /// <param name="globalDatabaseAccountProperties"> Configuration for fleetspace Account in the fleetspace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBFleetspaceAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBStatus? provisioningState, CosmosDBFleetspaceAccountConfiguration globalDatabaseAccountProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> An Azure Cosmos DB Global Database Account which is part of a Fleetspace Account. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBFleetspaceAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FleetspaceAccountProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            GlobalDatabaseAccountProperties = globalDatabaseAccountProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> A provisioning state of the Fleetspace Account. </summary>
-        [WirePath("properties.provisioningState")]
-        public CosmosDBStatus? ProvisioningState { get; set; }
+        /// <summary> An Azure Cosmos DB Global Database Account which is part of a Fleetspace Account. </summary>
+        [WirePath("properties")]
+        internal FleetspaceAccountProperties Properties { get; set; }
+
         /// <summary> Configuration for fleetspace Account in the fleetspace. </summary>
         [WirePath("properties.globalDatabaseAccountProperties")]
-        public CosmosDBFleetspaceAccountConfiguration GlobalDatabaseAccountProperties { get; set; }
+        public CosmosDBFleetspaceAccountConfiguration GlobalDatabaseAccountProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GlobalDatabaseAccountProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FleetspaceAccountProperties();
+                }
+                Properties.GlobalDatabaseAccountProperties = value;
+            }
+        }
     }
 }

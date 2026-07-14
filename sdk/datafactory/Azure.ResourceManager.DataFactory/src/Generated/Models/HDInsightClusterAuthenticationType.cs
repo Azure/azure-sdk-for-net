@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct HDInsightClusterAuthenticationType : IEquatable<HDInsightClusterAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> BasicAuth. </summary>
+        private const string BasicAuthValue = "BasicAuth";
+        /// <summary> SystemAssignedManagedIdentity. </summary>
+        private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
+        /// <summary> UserAssignedManagedIdentity. </summary>
+        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
 
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HDInsightClusterAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicAuthValue = "BasicAuth";
-        private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
-        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
+            _value = value;
+        }
 
         /// <summary> BasicAuth. </summary>
         public static HDInsightClusterAuthenticationType BasicAuth { get; } = new HDInsightClusterAuthenticationType(BasicAuthValue);
+
         /// <summary> SystemAssignedManagedIdentity. </summary>
         public static HDInsightClusterAuthenticationType SystemAssignedManagedIdentity { get; } = new HDInsightClusterAuthenticationType(SystemAssignedManagedIdentityValue);
+
         /// <summary> UserAssignedManagedIdentity. </summary>
         public static HDInsightClusterAuthenticationType UserAssignedManagedIdentity { get; } = new HDInsightClusterAuthenticationType(UserAssignedManagedIdentityValue);
+
         /// <summary> Determines if two <see cref="HDInsightClusterAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HDInsightClusterAuthenticationType left, HDInsightClusterAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HDInsightClusterAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HDInsightClusterAuthenticationType left, HDInsightClusterAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightClusterAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HDInsightClusterAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HDInsightClusterAuthenticationType(string value) => new HDInsightClusterAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HDInsightClusterAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HDInsightClusterAuthenticationType?(string value) => value == null ? null : new HDInsightClusterAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HDInsightClusterAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HDInsightClusterAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

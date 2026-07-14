@@ -7,31 +7,33 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary>
-    /// The types of conditions for a multi resource alert.
-    /// Please note <see cref="MultiMetricCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DynamicMetricCriteria"/> and <see cref="MetricCriteria"/>.
-    /// </summary>
+    /// <summary> The types of conditions for a multi resource alert. </summary>
     public partial class MultiMetricCriteria
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/>. </summary>
+        /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeAggregation"> The criteria time aggregation types. Previously undocumented values might be returned. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="metricName"/> is null. </exception>
-        public MultiMetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation)
+        public MultiMetricCriteria(ScheduledQueryRuleCriterionType criterionType, string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(metricName, nameof(metricName));
 
+            CriterionType = criterionType;
             Name = name;
             MetricName = metricName;
             TimeAggregation = timeAggregation;
             Dimensions = new ChangeTrackingList<MetricDimension>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/>. </summary>
@@ -42,8 +44,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="timeAggregation"> The criteria time aggregation types. Previously undocumented values might be returned. </param>
         /// <param name="dimensions"> List of dimension conditions. </param>
         /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn't yet emitted, by causing the metric validation to be skipped. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal MultiMetricCriteria(CriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal MultiMetricCriteria(ScheduledQueryRuleCriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties)
         {
             CriterionType = criterionType;
             Name = name;
@@ -52,58 +54,31 @@ namespace Azure.ResourceManager.Monitor.Models
             TimeAggregation = timeAggregation;
             Dimensions = dimensions;
             SkipMetricValidation = skipMetricValidation;
-            AdditionalProperties = additionalProperties;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/> for deserialization. </summary>
-        internal MultiMetricCriteria()
-        {
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Specifies the type of threshold criteria. Previously undocumented values might be returned. </summary>
-        internal CriterionType CriterionType { get; set; }
+        internal ScheduledQueryRuleCriterionType CriterionType { get; set; }
+
         /// <summary> Name of the criteria. </summary>
         public string Name { get; set; }
+
         /// <summary> Name of the metric. </summary>
         public string MetricName { get; set; }
+
         /// <summary> Namespace of the metric. </summary>
         public string MetricNamespace { get; set; }
+
         /// <summary> The criteria time aggregation types. Previously undocumented values might be returned. </summary>
         public MetricCriteriaTimeAggregationType TimeAggregation { get; set; }
+
         /// <summary> List of dimension conditions. </summary>
         public IList<MetricDimension> Dimensions { get; }
+
         /// <summary> Allows creating an alert rule on a custom metric that isn't yet emitted, by causing the metric validation to be skipped. </summary>
         public bool? SkipMetricValidation { get; set; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

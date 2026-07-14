@@ -27,6 +27,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The exit code returned by the shell process. </summary>
-        public long ExitCode { get; }
+        public long ExitCode { get; set; }
     }
 }

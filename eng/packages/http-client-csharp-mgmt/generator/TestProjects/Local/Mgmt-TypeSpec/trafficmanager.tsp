@@ -120,7 +120,16 @@ interface TrafficProfiles {
   get is TrafficProfileOps.Read<TrafficProfile>;
   createOrUpdate is TrafficProfileOps.CreateOrUpdateSync<TrafficProfile>;
   delete is TrafficProfileOps.DeleteSync<TrafficProfile>;
-  list is TrafficProfileOps.List<TrafficProfile>;
+  @action("trafficProfiles")
+  list is ArmResourceListByParent<
+    TrafficProfile,
+    BaseParameters = {
+      ...ApiVersionParameter;
+      ...SubscriptionIdParameter;
+      ...ResourceGroupParameter;
+    },
+    Error = ErrorResponse
+  >;
 }
 
 #suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing custom resource pattern"

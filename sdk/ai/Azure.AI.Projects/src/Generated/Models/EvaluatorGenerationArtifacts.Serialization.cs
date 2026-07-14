@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Service-managed provenance artifacts produced by an evaluator generation job. Present only on EvaluatorVersion resources created via the generation pipeline. The combined-JSONL Foundry Dataset is read-only and resolves to a versioned dataset in a service-reserved namespace. </summary>
     public partial class EvaluatorGenerationArtifacts : IJsonModel<EvaluatorGenerationArtifacts>
@@ -76,10 +77,10 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(EvaluatorGenerationArtifacts)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue(Dataset, options);
+            writer.WriteObjectValue(Reference, options);
             writer.WritePropertyName("kinds"u8);
             writer.WriteStartArray();
-            foreach (string item in Kinds)
+            foreach (string item in DatasetRowKinds)
             {
                 if (item == null)
                 {
@@ -131,14 +132,14 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            DatasetReference dataset = default;
-            IList<string> kinds = default;
+            DatasetReference reference = default;
+            IList<string> datasetRowKinds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("dataset"u8))
                 {
-                    dataset = DatasetReference.DeserializeDatasetReference(prop.Value, options);
+                    reference = DatasetReference.DeserializeDatasetReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kinds"u8))
@@ -155,7 +156,7 @@ namespace Azure.AI.Projects
                             array.Add(item.GetString());
                         }
                     }
-                    kinds = array;
+                    datasetRowKinds = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +164,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EvaluatorGenerationArtifacts(dataset, kinds, additionalBinaryDataProperties);
+            return new EvaluatorGenerationArtifacts(reference, datasetRowKinds, additionalBinaryDataProperties);
         }
     }
 }

@@ -22,24 +22,27 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageProvisioningState? ProvisioningState { get; }
 
         // Backward-compatible alias: exposes the generated type alongside the prior GA type.
+        /// <summary> Represents the provisioning state of the storage task assignment. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("provisioningState")]
         public StorageTaskAssignmentProvisioningState? StorageTaskAssignmentProvisioningState
         {
             get
             {
-                if (ProvisioningState == null) return null;
+                if (ProvisioningState == null)
+                    return null;
                 return new StorageTaskAssignmentProvisioningState(ProvisioningState.Value.ToString());
             }
         }
 
         // Prior GA property name was "Enabled"; generated code renamed it.
         // Hidden alias preserves the old name for binary compat.
+        /// <summary> Indicates whether the storage task assignment is enabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
 
-        /// <summary> Id of the corresponding storage task. </summary>
+        /// <summary> The ID of the corresponding storage task. </summary>
         [WirePath("taskId")]
         public string TaskId { get; set; }
     }

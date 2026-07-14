@@ -35,12 +35,12 @@ namespace OpenAI
         }
 
         /// <summary> The type of computer environment to control. </summary>
-        public ComputerEnvironment Environment { get; }
+        public ComputerEnvironment Environment { get; set; }
 
         /// <summary> The width of the computer display. </summary>
-        public long DisplayWidth { get; }
+        public long DisplayWidth { get; set; }
 
         /// <summary> The height of the computer display. </summary>
-        public long DisplayHeight { get; }
+        public long DisplayHeight { get; set; }
     }
 }

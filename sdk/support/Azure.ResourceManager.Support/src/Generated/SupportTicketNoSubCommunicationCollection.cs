@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Support
                 HttpMessage message = _supportTicketNoSubCommunicationRestClient.CreateCreateRequest(Id.Name, communicationName, SupportTicketCommunicationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SupportArmOperation<SupportTicketNoSubCommunicationResource> operation = new SupportArmOperation<SupportTicketNoSubCommunicationResource>(
-                    new SupportTicketNoSubCommunicationOperationSource(Client),
+                    new SupportTicketNoSubCommunicationResourceOperationSource(Client),
                     _supportTicketNoSubCommunicationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Support
                 HttpMessage message = _supportTicketNoSubCommunicationRestClient.CreateCreateRequest(Id.Name, communicationName, SupportTicketCommunicationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SupportArmOperation<SupportTicketNoSubCommunicationResource> operation = new SupportArmOperation<SupportTicketNoSubCommunicationResource>(
-                    new SupportTicketNoSubCommunicationOperationSource(Client),
+                    new SupportTicketNoSubCommunicationResourceOperationSource(Client),
                     _supportTicketNoSubCommunicationClientDiagnostics,
                     Pipeline,
                     message.Request,

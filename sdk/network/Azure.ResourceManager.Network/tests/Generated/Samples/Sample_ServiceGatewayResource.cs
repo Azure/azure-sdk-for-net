@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             ServiceGatewayResource serviceGateway = client.GetServiceGatewayResource(serviceGatewayResourceId);
 
             // invoke the operation
-            await serviceGateway.DeleteAsync(WaitUntil.Completed);
+            await serviceGateway.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -157,7 +157,7 @@ Address = "10.0.0.6",
 }},
 }},
             };
-            await serviceGateway.UpdateAddressLocationsAsync(WaitUntil.Completed, content);
+            await serviceGateway.UpdateAddressLocationsAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -212,7 +212,7 @@ Address = "10.0.0.6",
 AddressLocation = "192.0.0.3",
 }},
             };
-            await serviceGateway.UpdateAddressLocationsAsync(WaitUntil.Completed, content);
+            await serviceGateway.UpdateAddressLocationsAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -245,7 +245,6 @@ AddressLocation = "192.0.0.3",
 {
 Service = new ServiceGatewayService
 {
-Name = "Service1",
 ServiceType = ServiceType.Inbound,
 IsDefault = true,
 LoadBalancerBackendPools = {new BackendAddressPoolData
@@ -259,13 +258,12 @@ PublicNatGatewayId = "/subscriptions/subid/resourceGroups/rg1/providers/Microsof
 IsDelete = true,
 Service = new ServiceGatewayService
 {
-Name = "Service2",
 ServiceType = ServiceType.Outbound,
 IsDefault = false,
 },
 }},
             };
-            await serviceGateway.UpdateServicesAsync(WaitUntil.Completed, content);
+            await serviceGateway.UpdateServicesAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

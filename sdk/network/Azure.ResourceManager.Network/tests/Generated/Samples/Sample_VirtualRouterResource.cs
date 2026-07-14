@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualRouterResource virtualRouter = client.GetVirtualRouterResource(virtualRouterResourceId);
 
             // invoke the operation
-            await virtualRouter.DeleteAsync(WaitUntil.Completed);
+            await virtualRouter.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["key1"] = "value1"
 },
             };
-            ArmOperation<VirtualRouterResource> lro = await virtualRouter.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<VirtualRouterResource> lro = await virtualRouter.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualRouterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             ExpressRouteGatewayResource expressRouteGateway = client.GetExpressRouteGatewayResource(expressRouteGatewayResourceId);
 
             // invoke the operation
-            await expressRouteGateway.DeleteAsync(WaitUntil.Completed);
+            await expressRouteGateway.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["tag2"] = "value2"
 },
             };
-            ArmOperation<ExpressRouteGatewayResource> lro = await expressRouteGateway.UpdateAsync(WaitUntil.Completed, expressRouteGatewayParameters);
+            ArmOperation<ExpressRouteGatewayResource> lro = await expressRouteGateway.UpdateAsync(WaitUntil.Completed, expressRouteGatewayParameters, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

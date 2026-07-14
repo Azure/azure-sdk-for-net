@@ -8,19 +8,82 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class SessionPoolData : IUtf8JsonSerializable, IJsonModel<SessionPoolData>
+    /// <summary> Container App session pool. </summary>
+    public partial class SessionPoolData : TrackedResourceData, IJsonModel<SessionPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SessionPoolData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SessionPoolData"/> for deserialization. </summary>
+        internal SessionPoolData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SessionPoolData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSessionPoolData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SessionPoolData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SessionPoolData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SessionPoolData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SessionPoolData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SessionPoolData IPersistableModel<SessionPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SessionPoolData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SessionPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="sessionPoolData"> The <see cref="SessionPoolData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SessionPoolData sessionPoolData)
+        {
+            if (sessionPoolData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(sessionPoolData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SessionPoolData"/> from. </param>
+        internal static SessionPoolData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSessionPoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SessionPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,719 +95,166 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SessionPoolData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SessionPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SessionPoolData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(EnvironmentId))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("environmentId"u8);
-                writer.WriteStringValue(EnvironmentId);
-            }
-            if (Optional.IsDefined(ContainerType))
-            {
-                writer.WritePropertyName("containerType"u8);
-                writer.WriteStringValue(ContainerType.Value.ToString());
-            }
-            if (Optional.IsDefined(PoolManagementType))
-            {
-                writer.WritePropertyName("poolManagementType"u8);
-                writer.WriteStringValue(PoolManagementType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(NodeCount))
-            {
-                writer.WritePropertyName("nodeCount"u8);
-                writer.WriteNumberValue(NodeCount.Value);
-            }
-            if (Optional.IsDefined(ScaleConfiguration))
-            {
-                writer.WritePropertyName("scaleConfiguration"u8);
-                writer.WriteObjectValue(ScaleConfiguration, options);
-            }
-            if (Optional.IsCollectionDefined(Secrets))
-            {
-                writer.WritePropertyName("secrets"u8);
-                writer.WriteStartArray();
-                foreach (var item in Secrets)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
-                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DynamicPoolConfiguration))
-            {
-                writer.WritePropertyName("dynamicPoolConfiguration"u8);
-                writer.WriteObjectValue(DynamicPoolConfiguration, options);
-            }
-            if (Optional.IsDefined(CustomContainerTemplate))
-            {
-                writer.WritePropertyName("customContainerTemplate"u8);
-                writer.WriteObjectValue(CustomContainerTemplate, options);
-            }
-            if (Optional.IsDefined(SessionNetworkConfiguration))
-            {
-                writer.WritePropertyName("sessionNetworkConfiguration"u8);
-                writer.WriteObjectValue(SessionNetworkConfiguration, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(PoolManagementEndpoint))
-            {
-                writer.WritePropertyName("poolManagementEndpoint"u8);
-                writer.WriteStringValue(PoolManagementEndpoint.AbsoluteUri);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(ManagedIdentitySettings))
-            {
-                writer.WritePropertyName("managedIdentitySettings"u8);
-                writer.WriteStartArray();
-                foreach (var item in ManagedIdentitySettings)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
         }
 
-        SessionPoolData IJsonModel<SessionPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SessionPoolData IJsonModel<SessionPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SessionPoolData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SessionPoolData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SessionPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SessionPoolData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSessionPoolData(document.RootElement, options);
         }
 
-        internal static SessionPoolData DeserializeSessionPoolData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SessionPoolData DeserializeSessionPoolData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            ResourceIdentifier environmentId = default;
-            ContainerType? containerType = default;
-            PoolManagementType? poolManagementType = default;
-            int? nodeCount = default;
-            SessionPoolScaleConfiguration scaleConfiguration = default;
-            IList<SessionPoolSecret> secrets = default;
-            DynamicPoolConfiguration dynamicPoolConfiguration = default;
-            CustomContainerTemplate customContainerTemplate = default;
-            SessionNetworkConfiguration sessionNetworkConfiguration = default;
-            Uri poolManagementEndpoint = default;
-            SessionPoolProvisioningState? provisioningState = default;
-            IList<SessionPoolManagedIdentitySetting> managedIdentitySettings = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            SessionPoolProperties properties = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerAppContainersContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppContainersContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppContainersContext.Default);
+                    properties = SessionPoolProperties.DeserializeSessionPoolProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("environmentId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            environmentId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("containerType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            containerType = new ContainerType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("poolManagementType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            poolManagementType = new PoolManagementType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("nodeCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            nodeCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("scaleConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            scaleConfiguration = SessionPoolScaleConfiguration.DeserializeSessionPoolScaleConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("secrets"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<SessionPoolSecret> array = new List<SessionPoolSecret>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(SessionPoolSecret.DeserializeSessionPoolSecret(item, options));
-                            }
-                            secrets = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("dynamicPoolConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dynamicPoolConfiguration = DynamicPoolConfiguration.DeserializeDynamicPoolConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("customContainerTemplate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            customContainerTemplate = CustomContainerTemplate.DeserializeCustomContainerTemplate(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("sessionNetworkConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sessionNetworkConfiguration = SessionNetworkConfiguration.DeserializeSessionNetworkConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("poolManagementEndpoint"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            poolManagementEndpoint = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new SessionPoolProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("managedIdentitySettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<SessionPoolManagedIdentitySetting> array = new List<SessionPoolManagedIdentitySetting>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(SessionPoolManagedIdentitySetting.DeserializeSessionPoolManagedIdentitySetting(item, options));
-                            }
-                            managedIdentitySettings = array;
-                            continue;
-                        }
-                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerAppContainersContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SessionPoolData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 identity,
-                environmentId,
-                containerType,
-                poolManagementType,
-                nodeCount,
-                scaleConfiguration,
-                secrets ?? new ChangeTrackingList<SessionPoolSecret>(),
-                dynamicPoolConfiguration,
-                customContainerTemplate,
-                sessionNetworkConfiguration,
-                poolManagementEndpoint,
-                provisioningState,
-                managedIdentitySettings ?? new ChangeTrackingList<SessionPoolManagedIdentitySetting>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  location: ");
-                builder.AppendLine($"'{Location.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("  tags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  identity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Identity))
-                {
-                    builder.Append("  identity: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnvironmentId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    environmentId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnvironmentId))
-                {
-                    builder.Append("    environmentId: ");
-                    builder.AppendLine($"'{EnvironmentId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    containerType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContainerType))
-                {
-                    builder.Append("    containerType: ");
-                    builder.AppendLine($"'{ContainerType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PoolManagementType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    poolManagementType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PoolManagementType))
-                {
-                    builder.Append("    poolManagementType: ");
-                    builder.AppendLine($"'{PoolManagementType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    nodeCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NodeCount))
-                {
-                    builder.Append("    nodeCount: ");
-                    builder.AppendLine($"{NodeCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleConfiguration), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    scaleConfiguration: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScaleConfiguration))
-                {
-                    builder.Append("    scaleConfiguration: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ScaleConfiguration, options, 4, false, "    scaleConfiguration: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Secrets), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    secrets: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Secrets))
-                {
-                    if (Secrets.Any())
-                    {
-                        builder.Append("    secrets: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Secrets)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    secrets: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DynamicPoolLifecycleConfiguration", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    dynamicPoolConfiguration: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      dynamicPoolConfiguration: {");
-                builder.Append("        lifecycleConfiguration: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(DynamicPoolConfiguration))
-                {
-                    builder.Append("    dynamicPoolConfiguration: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, DynamicPoolConfiguration, options, 4, false, "    dynamicPoolConfiguration: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomContainerTemplate), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    customContainerTemplate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CustomContainerTemplate))
-                {
-                    builder.Append("    customContainerTemplate: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CustomContainerTemplate, options, 4, false, "    customContainerTemplate: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SessionNetworkStatus", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sessionNetworkConfiguration: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      sessionNetworkConfiguration: {");
-                builder.Append("        status: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(SessionNetworkConfiguration))
-                {
-                    builder.Append("    sessionNetworkConfiguration: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, SessionNetworkConfiguration, options, 4, false, "    sessionNetworkConfiguration: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PoolManagementEndpoint), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    poolManagementEndpoint: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PoolManagementEndpoint))
-                {
-                    builder.Append("    poolManagementEndpoint: ");
-                    builder.AppendLine($"'{PoolManagementEndpoint.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedIdentitySettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    managedIdentitySettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ManagedIdentitySettings))
-                {
-                    if (ManagedIdentitySettings.Any())
-                    {
-                        builder.Append("    managedIdentitySettings: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ManagedIdentitySettings)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    managedIdentitySettings: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SessionPoolData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SessionPoolData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SessionPoolData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SessionPoolData IPersistableModel<SessionPoolData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SessionPoolData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSessionPoolData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SessionPoolData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SessionPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

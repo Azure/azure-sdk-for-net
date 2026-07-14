@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 HttpMessage message = _agriServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, AgricultureServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AgriculturePlatformArmOperation<AgricultureServiceResource> operation = new AgriculturePlatformArmOperation<AgricultureServiceResource>(
-                    new AgricultureServiceOperationSource(Client),
+                    new AgricultureServiceResourceOperationSource(Client),
                     _agriServiceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 HttpMessage message = _agriServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, AgricultureServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AgriculturePlatformArmOperation<AgricultureServiceResource> operation = new AgriculturePlatformArmOperation<AgricultureServiceResource>(
-                    new AgricultureServiceOperationSource(Client),
+                    new AgricultureServiceResourceOperationSource(Client),
                     _agriServiceClientDiagnostics,
                     Pipeline,
                     message.Request,

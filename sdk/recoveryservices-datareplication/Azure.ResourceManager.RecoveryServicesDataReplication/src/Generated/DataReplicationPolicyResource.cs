@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _policyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource>(
-                    new DataReplicationPolicyOperationSource(Client),
+                    new DataReplicationPolicyResourceOperationSource(Client),
                     _policyClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _policyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource>(
-                    new DataReplicationPolicyOperationSource(Client),
+                    new DataReplicationPolicyResourceOperationSource(Client),
                     _policyClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _securityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, ApplicationGatewayForContainersSecurityPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource> operation = new ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource>(
-                    new ApplicationGatewayForContainersSecurityPolicyOperationSource(Client),
+                    new ApplicationGatewayForContainersSecurityPolicyResourceOperationSource(Client),
                     _securityPoliciesInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _securityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, ApplicationGatewayForContainersSecurityPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource> operation = new ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource>(
-                    new ApplicationGatewayForContainersSecurityPolicyOperationSource(Client),
+                    new ApplicationGatewayForContainersSecurityPolicyResourceOperationSource(Client),
                     _securityPoliciesInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,

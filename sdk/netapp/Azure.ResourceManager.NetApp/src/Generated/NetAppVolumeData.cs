@@ -44,18 +44,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Volume properties. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="zones"> The availability zones. </param>
-        internal NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VolumeProperties properties, ETag? eTag, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VolumeProperties properties, ETag? eTag, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
             Zones = zones;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Volume properties. </summary>
@@ -534,23 +534,6 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Specifies the type of LDAP server for a given NFS volume. </summary>
-        public NetAppLdapServerType? LdapServerType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LdapServerType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VolumeProperties();
-                }
-                Properties.LdapServerType = value;
-            }
-        }
-
         /// <summary> Specifies whether Cool Access(tiering) is enabled for the volume. </summary>
         public bool? IsCoolAccessEnabled
         {
@@ -883,27 +866,6 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary>
-        /// Specifies the type of the Large Volume. When set to 'LargeVolume', the large volume is created with standard configuration.
-        /// If it is set to 'ExtraLargeVolume7Dot2PiB', the extra large volume is created with higher capacity limit 7.2PiB with cool access enabled,
-        /// delivering higher capacity limit with lower costs.
-        /// </summary>
-        public LargeVolumeType? LargeVolumeType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LargeVolumeType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VolumeProperties();
-                }
-                Properties.LargeVolumeType = value;
-            }
-        }
-
         /// <summary> Id of the snapshot or backup that the volume is restored from. </summary>
         public ResourceIdentifier OriginatingResourceId
         {
@@ -919,40 +881,6 @@ namespace Azure.ResourceManager.NetApp
             get
             {
                 return Properties is null ? default : Properties.InheritedSizeInBytes;
-            }
-        }
-
-        /// <summary> Language supported for volume. </summary>
-        public NetAppVolumeLanguage? Language
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Language;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VolumeProperties();
-                }
-                Properties.Language = value;
-            }
-        }
-
-        /// <summary> Specifies whether the volume operates in Breakthrough Mode. </summary>
-        public BreakthroughMode? BreakthroughMode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.BreakthroughMode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VolumeProperties();
-                }
-                Properties.BreakthroughMode = value;
             }
         }
 

@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.ServiceBus
         ServiceBusNamespaceFailOver IOperationSource<ServiceBusNamespaceFailOver>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ServiceBusNamespaceFailOver result = ServiceBusNamespaceFailOver.DeserializeServiceBusNamespaceFailOver(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ServiceBusNamespaceFailOver.DeserializeServiceBusNamespaceFailOver(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.ServiceBus
         async ValueTask<ServiceBusNamespaceFailOver> IOperationSource<ServiceBusNamespaceFailOver>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ServiceBusNamespaceFailOver result = ServiceBusNamespaceFailOver.DeserializeServiceBusNamespaceFailOver(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ServiceBusNamespaceFailOver.DeserializeServiceBusNamespaceFailOver(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

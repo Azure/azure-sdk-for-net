@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _virtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, DnsForwardingRulesetVirtualNetworkLinkData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource> operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(
-                    new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client),
+                    new DnsForwardingRulesetVirtualNetworkLinkResourceOperationSource(Client),
                     _virtualNetworkLinksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _virtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, DnsForwardingRulesetVirtualNetworkLinkData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource> operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(
-                    new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client),
+                    new DnsForwardingRulesetVirtualNetworkLinkResourceOperationSource(Client),
                     _virtualNetworkLinksClientDiagnostics,
                     Pipeline,
                     message.Request,

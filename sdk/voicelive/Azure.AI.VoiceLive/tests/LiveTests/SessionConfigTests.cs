@@ -118,7 +118,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
 
-            var content = new InputTextContentPart("Tell me a joke");
+            var content = new InputTextContentPart("What is 13 plus 29?");
 
             await session.AddItemAsync(new UserMessageItem(new[] { content }), null, TimeoutToken).ConfigureAwait(false);
 

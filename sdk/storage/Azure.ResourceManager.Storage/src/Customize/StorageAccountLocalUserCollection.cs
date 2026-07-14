@@ -9,11 +9,6 @@ using System.Threading;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="StorageAccountLocalUserResource"/> and their operations.
-    /// Each <see cref="StorageAccountLocalUserResource"/> in the collection will belong to the same instance of <see cref="StorageAccountResource"/>.
-    /// To get a <see cref="StorageAccountLocalUserCollection"/> instance call the GetStorageAccountLocalUsers method from an instance of <see cref="StorageAccountResource"/>.
-    /// </summary>
     public partial class StorageAccountLocalUserCollection : ArmCollection, IEnumerable<StorageAccountLocalUserResource>, IAsyncEnumerable<StorageAccountLocalUserResource>
     {
         /// <summary>

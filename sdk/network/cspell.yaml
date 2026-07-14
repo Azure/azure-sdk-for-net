@@ -10,3 +10,11 @@ overrides:
       - vnets
       - vxlan
       - quic
+  - filename: '**/sdk/network/Azure.ResourceManager.Network/api/*.cs'
+    words:
+      - TLSDHEDSSWITH
+      - TLSDHEDSSWITHAES
+      - TLSDHERSAWITHAES
+      - TLSECDHEECDSAWITHAES
+      - TLSECDHERSAWITHAES
+      - TLSRSAWITHAES

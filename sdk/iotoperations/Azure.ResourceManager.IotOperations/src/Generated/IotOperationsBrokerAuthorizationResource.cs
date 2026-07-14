@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _brokerAuthorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsBrokerAuthorizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource> operation = new IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource>(
-                    new IotOperationsBrokerAuthorizationOperationSource(Client),
+                    new IotOperationsBrokerAuthorizationResourceOperationSource(Client),
                     _brokerAuthorizationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _brokerAuthorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsBrokerAuthorizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource> operation = new IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource>(
-                    new IotOperationsBrokerAuthorizationOperationSource(Client),
+                    new IotOperationsBrokerAuthorizationResourceOperationSource(Client),
                     _brokerAuthorizationClientDiagnostics,
                     Pipeline,
                     message.Request,

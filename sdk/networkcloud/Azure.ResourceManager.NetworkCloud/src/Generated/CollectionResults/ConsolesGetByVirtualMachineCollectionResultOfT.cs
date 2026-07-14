@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.NetworkCloud
                     yield break;
                 }
                 ConsoleList result = ConsoleList.FromResponse(response);
-                yield return Page<NetworkCloudVirtualMachineConsoleData>.FromValues((IReadOnlyList<NetworkCloudVirtualMachineConsoleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkCloudVirtualMachineConsoleData>.FromValues((IReadOnlyList<NetworkCloudVirtualMachineConsoleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

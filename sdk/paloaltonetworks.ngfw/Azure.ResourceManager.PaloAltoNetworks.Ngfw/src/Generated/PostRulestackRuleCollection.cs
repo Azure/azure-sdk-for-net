@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _postRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, PostRulestackRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<PostRulestackRuleResource> operation = new NgfwArmOperation<PostRulestackRuleResource>(
-                    new PostRulestackRuleOperationSource(Client),
+                    new PostRulestackRuleResourceOperationSource(Client),
                     _postRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _postRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, PostRulestackRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<PostRulestackRuleResource> operation = new NgfwArmOperation<PostRulestackRuleResource>(
-                    new PostRulestackRuleOperationSource(Client),
+                    new PostRulestackRuleResourceOperationSource(Client),
                     _postRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

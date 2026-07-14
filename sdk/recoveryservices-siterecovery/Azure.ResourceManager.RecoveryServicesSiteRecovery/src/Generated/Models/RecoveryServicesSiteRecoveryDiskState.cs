@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct RecoveryServicesSiteRecoveryDiskState : IEquatable<RecoveryServicesSiteRecoveryDiskState>
     {
         private readonly string _value;
+        /// <summary> Unavailable. </summary>
+        private const string UnavailableValue = "Unavailable";
+        /// <summary> InitialReplicationPending. </summary>
+        private const string InitialReplicationPendingValue = "InitialReplicationPending";
+        /// <summary> InitialReplicationFailed. </summary>
+        private const string InitialReplicationFailedValue = "InitialReplicationFailed";
+        /// <summary> Protected. </summary>
+        private const string ProtectedValue = "Protected";
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecoveryDiskState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RecoveryServicesSiteRecoveryDiskState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnavailableValue = "Unavailable";
-        private const string InitialReplicationPendingValue = "InitialReplicationPending";
-        private const string InitialReplicationFailedValue = "InitialReplicationFailed";
-        private const string ProtectedValue = "Protected";
+            _value = value;
+        }
 
         /// <summary> Unavailable. </summary>
         public static RecoveryServicesSiteRecoveryDiskState Unavailable { get; } = new RecoveryServicesSiteRecoveryDiskState(UnavailableValue);
+
         /// <summary> InitialReplicationPending. </summary>
         public static RecoveryServicesSiteRecoveryDiskState InitialReplicationPending { get; } = new RecoveryServicesSiteRecoveryDiskState(InitialReplicationPendingValue);
+
         /// <summary> InitialReplicationFailed. </summary>
         public static RecoveryServicesSiteRecoveryDiskState InitialReplicationFailed { get; } = new RecoveryServicesSiteRecoveryDiskState(InitialReplicationFailedValue);
+
         /// <summary> Protected. </summary>
         public static RecoveryServicesSiteRecoveryDiskState Protected { get; } = new RecoveryServicesSiteRecoveryDiskState(ProtectedValue);
+
         /// <summary> Determines if two <see cref="RecoveryServicesSiteRecoveryDiskState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RecoveryServicesSiteRecoveryDiskState left, RecoveryServicesSiteRecoveryDiskState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RecoveryServicesSiteRecoveryDiskState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RecoveryServicesSiteRecoveryDiskState left, RecoveryServicesSiteRecoveryDiskState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryServicesSiteRecoveryDiskState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RecoveryServicesSiteRecoveryDiskState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RecoveryServicesSiteRecoveryDiskState(string value) => new RecoveryServicesSiteRecoveryDiskState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RecoveryServicesSiteRecoveryDiskState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RecoveryServicesSiteRecoveryDiskState?(string value) => value == null ? null : new RecoveryServicesSiteRecoveryDiskState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RecoveryServicesSiteRecoveryDiskState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RecoveryServicesSiteRecoveryDiskState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

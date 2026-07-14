@@ -88,6 +88,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("deleteTime"u8);
                 writer.WriteStringValue(DeleteTime.Value, "O");
             }
+            if (Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason.Value.ToString());
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -122,6 +127,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             long? version = default;
             CommunicationIdentifierModel deletedByCommunicationIdentifier = default;
             DateTimeOffset? deleteTime = default;
+            AcsChatThreadDeletedReasonType? reason = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("transactionId"u8))
@@ -166,6 +172,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     deleteTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (prop.NameEquals("reason"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reason = new AcsChatThreadDeletedReasonType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -178,7 +193,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 createTime,
                 version,
                 deletedByCommunicationIdentifier,
-                deleteTime);
+                deleteTime,
+                reason);
         }
 
         internal partial class AcsChatThreadDeletedEventDataConverter : JsonConverter<AcsChatThreadDeletedEventData>

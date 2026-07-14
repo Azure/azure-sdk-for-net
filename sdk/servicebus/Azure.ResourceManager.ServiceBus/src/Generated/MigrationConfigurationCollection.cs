@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceBus
                 HttpMessage message = _migrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName.ToString(), MigrationConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceBusArmOperation<MigrationConfigurationResource> operation = new ServiceBusArmOperation<MigrationConfigurationResource>(
-                    new MigrationConfigurationOperationSource(Client),
+                    new MigrationConfigurationResourceOperationSource(Client),
                     _migrationConfigsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceBus
                 HttpMessage message = _migrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName.ToString(), MigrationConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceBusArmOperation<MigrationConfigurationResource> operation = new ServiceBusArmOperation<MigrationConfigurationResource>(
-                    new MigrationConfigurationOperationSource(Client),
+                    new MigrationConfigurationResourceOperationSource(Client),
                     _migrationConfigsClientDiagnostics,
                     Pipeline,
                     message.Request,

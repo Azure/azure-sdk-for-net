@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 HttpMessage message = _taskRunsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, TaskRunPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TasksArmOperation<TaskRunResource> operation = new TasksArmOperation<TaskRunResource>(
-                    new TaskRunOperationSource(Client),
+                    new TaskRunResourceOperationSource(Client),
                     _taskRunsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 HttpMessage message = _taskRunsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, TaskRunPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TasksArmOperation<TaskRunResource> operation = new TasksArmOperation<TaskRunResource>(
-                    new TaskRunOperationSource(Client),
+                    new TaskRunResourceOperationSource(Client),
                     _taskRunsClientDiagnostics,
                     Pipeline,
                     message.Request,

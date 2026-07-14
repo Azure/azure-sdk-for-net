@@ -1,13 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Projects.Evaluation;
 
 [CodeGenType("AgentTaxonomyInput")] public partial class AgentTaxonomyInput { }
 [CodeGenType("AgentClusterInsightRequest")] public partial class AgentClusterInsightRequest { }
 [CodeGenType("AgentClusterInsightResult")] public partial class AgentClusterInsightResult { }
 [CodeGenType("AttackStrategy")] public readonly partial struct AttackStrategy { }
-[CodeGenType("AzureAIAgentTarget")] public partial class AzureAIAgentTarget { }
 [CodeGenType("AzureAIModelTarget")] public partial class AzureAIModelTarget { }
 [CodeGenType("AzureOpenAIModelConfiguration")] public partial class AzureOpenAIModelConfiguration { }
 [CodeGenType("ChartCoordinate")] public partial class ChartCoordinate { }
@@ -16,12 +17,20 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("ClusterTokenUsage")] public partial class ClusterTokenUsage { }
 [CodeGenType("CronTrigger")] public partial class CronTrigger { }
 [CodeGenType("DailyRecurrenceSchedule")] public partial class DailyRecurrenceSchedule { }
+[CodeGenType("Dimension")] public partial class EvaluationsDimension { }
+[CodeGenType("EndpointBasedEvaluatorDefinition")] public partial class EndpointBasedEvaluatorDefinition { }
 [CodeGenType("EvalResult")] public partial class EvalResult { }
 [CodeGenType("EvalRunResultCompareItem")] public partial class EvalRunResultCompareItem { }
 [CodeGenType("EvalRunResultComparison")] public partial class EvalRunResultComparison { }
 [CodeGenType("EvalRunResultSummary")] public partial class EvalRunResultSummary { }
 [CodeGenType("EvaluationComparisonInsightRequest")] public partial class EvaluationComparisonInsightRequest { }
 [CodeGenType("EvaluationComparisonInsightResult")] public partial class EvaluationComparisonInsightResult { }
+[CodeGenType("EvaluatorCredentialRequest")] public partial class EvaluationCredentialContent { }
+[CodeGenType("EvaluatorGenerationArtifacts")] public partial class EvaluatorGenerationArtifacts { }
+[CodeGenType("EvaluatorGenerationInputs")] public partial class EvaluatorGenerationInputs { }
+[CodeGenType("EvaluatorGenerationJobSource")] public partial class EvaluatorGenerationJobSource { }
+[CodeGenType("EvaluatorGenerationTokenUsage")] public partial class EvaluatorGenerationTokenUsage{ }
+[CodeGenType("EvaluationLevel")] public readonly partial struct ProjectsEvaluationLevel { }
 [CodeGenType("EvaluationResultSample")] public partial class EvaluationResultSample { }
 [CodeGenType("EvaluationRule")] public partial class EvaluationRule { }
 [CodeGenType("EvaluationRuleAction")] public abstract partial class EvaluationRuleAction { }
@@ -61,9 +70,12 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("PagedEvaluationTaxonomy")] internal partial class PagedEvaluationTaxonomy { }
 [CodeGenType("PagedEvaluatorVersion")] internal partial class PagedEvaluatorVersion { }
 [CodeGenType("PagedRedTeam")] internal partial class PagedRedTeam { }
+/// <summary> Represents an insight produced by a project insight run. </summary>
+[CodeGenType("ProjectInsight")] public partial class ProjectInsight { }
 [CodeGenType("PagedSchedule")] internal partial class PagedSchedule { }
 [CodeGenType("PagedScheduleRun")] internal partial class PagedScheduleRun { }
-[CodeGenType("ProjectInsight")] public partial class ProjectInsight { }
+/// <summary> Represents an insight produced by a project insight run. </summary>
+[CodeGenType("ProjectsInsight")] public partial class ProjectsInsight { }
 [CodeGenType("RecurrenceSchedule")] public abstract partial class RecurrenceSchedule { }
 [CodeGenType("RecurrenceTrigger")] public partial class RecurrenceTrigger { }
 [CodeGenType("RecurrenceType")] internal readonly partial struct RecurrenceType { }
@@ -86,5 +98,17 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("UnknownInsightSample")] internal partial class UnknownInsightSample { }
 [CodeGenType("UnknownRecurrenceSchedule")] internal partial class UnknownRecurrenceSchedule { }
 [CodeGenType("UnknownScheduleTask")] internal partial class UnknownScheduleTask { }
-[CodeGenType("UnknownRedTeamTargetConfig")] internal partial class UnknownTargetConfig { }
+[CodeGenType("UnknownRedTeamTargetConfig")][Experimental("AAIP001")] internal partial class UnknownTargetConfig { }
 [CodeGenType("UnknownTrigger")] internal partial class UnknownTrigger { }
+
+// Mark experimental classes if they cannot be marked automatically.
+[CodeGenType("ProjectEvaluatorsGetLatestVersionsCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetLatestVersionsCollectionResult { }
+[CodeGenType("ProjectEvaluatorsGetLatestVersionsAsyncCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetLatestVersionsAsyncCollectionResult { }
+[CodeGenType("ProjectInsightsGetAllAsyncCollectionResult")][Experimental("AAIP001")] internal partial class ProjectInsightsGetAllAsyncCollectionResult { }
+[CodeGenType("ProjectEvaluatorsGetVersionsAsyncCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetVersionsAsyncCollectionResult { }
+[CodeGenType("ProjectEvaluatorsGetVersionsCollectionResult")][Experimental("AAIP001")] internal partial class ProjectEvaluatorsGetVersionsCollectionResult { }
+[CodeGenType("ProjectInsightsGetAllCollectionResult")][Experimental("AAIP001")] internal partial class ProjectInsightsGetAllCollectionResult { }
+[CodeGenType("EvaluationTaxonomiesGetAllAsyncCollectionResult")][Experimental("AAIP001")] internal partial class EvaluationTaxonomiesGetAllAsyncCollectionResult { }
+[CodeGenType("EvaluationTaxonomiesGetAllCollectionResult")][Experimental("AAIP001")] internal partial class EvaluationTaxonomiesGetAllCollectionResult { }
+[CodeGenType("RedTeamsGetAllAsyncCollectionResult")][Experimental("AAIP001")] internal partial class RedTeamsGetAllAsyncCollectionResult { }
+[CodeGenType("RedTeamsGetAllCollectionResult")][Experimental("AAIP001")] internal partial class RedTeamsGetAllCollectionResult { }

@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _addonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DataBoxEdgeRoleAddonData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource>(
-                    new DataBoxEdgeRoleAddonOperationSource(Client),
+                    new DataBoxEdgeRoleAddonResourceOperationSource(Client),
                     _addonsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _addonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DataBoxEdgeRoleAddonData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource>(
-                    new DataBoxEdgeRoleAddonOperationSource(Client),
+                    new DataBoxEdgeRoleAddonResourceOperationSource(Client),
                     _addonsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary> The ServiceDefinedResourceName. </summary>
+    /// <summary></summary>
     public readonly partial struct ServiceDefinedResourceName : IEquatable<ServiceDefinedResourceName>
     {
         private readonly string _value;
+        /// <summary> default. </summary>
+        private const string DefaultValue = "default";
 
         /// <summary> Initializes a new instance of <see cref="ServiceDefinedResourceName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceDefinedResourceName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "default";
+            _value = value;
+        }
 
         /// <summary> default. </summary>
         public static ServiceDefinedResourceName Default { get; } = new ServiceDefinedResourceName(DefaultValue);
+
         /// <summary> Determines if two <see cref="ServiceDefinedResourceName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceDefinedResourceName left, ServiceDefinedResourceName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceDefinedResourceName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceDefinedResourceName left, ServiceDefinedResourceName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceDefinedResourceName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceDefinedResourceName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceDefinedResourceName(string value) => new ServiceDefinedResourceName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceDefinedResourceName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceDefinedResourceName?(string value) => value == null ? null : new ServiceDefinedResourceName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceDefinedResourceName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceDefinedResourceName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
     {
         private readonly ClientDiagnostics _backupInstanceResourcesClientDiagnostics;
         private readonly BackupInstanceResources _backupInstanceResourcesRestClient;
-        private readonly ClientDiagnostics _backupInstancesClientDiagnostics;
-        private readonly BackupInstances _backupInstancesRestClient;
         private readonly DataProtectionBackupInstanceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupInstances";
@@ -56,8 +54,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
             TryGetApiVersion(ResourceType, out string dataProtectionBackupInstanceApiVersion);
             _backupInstanceResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
             _backupInstanceResourcesRestClient = new BackupInstanceResources(_backupInstanceResourcesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupInstanceApiVersion ?? "2026-03-01");
-            _backupInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
-            _backupInstancesRestClient = new BackupInstances(_backupInstancesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupInstanceApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -1515,7 +1511,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 HttpMessage message = _backupInstanceResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataProtectionBackupInstanceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource> operation = new DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource>(
-                    new DataProtectionBackupInstanceOperationSource(Client),
+                    new DataProtectionBackupInstanceResourceOperationSource(Client),
                     _backupInstanceResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1575,7 +1571,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 HttpMessage message = _backupInstanceResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataProtectionBackupInstanceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource> operation = new DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource>(
-                    new DataProtectionBackupInstanceOperationSource(Client),
+                    new DataProtectionBackupInstanceResourceOperationSource(Client),
                     _backupInstanceResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

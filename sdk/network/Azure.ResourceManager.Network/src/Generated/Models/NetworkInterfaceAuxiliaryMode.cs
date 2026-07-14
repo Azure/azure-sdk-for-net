@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct NetworkInterfaceAuxiliaryMode : IEquatable<NetworkInterfaceAuxiliaryMode>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> MaxConnections. </summary>
+        private const string MaxConnectionsValue = "MaxConnections";
+        /// <summary> Floating. </summary>
+        private const string FloatingValue = "Floating";
+        /// <summary> AcceleratedConnections. </summary>
+        private const string AcceleratedConnectionsValue = "AcceleratedConnections";
 
         /// <summary> Initializes a new instance of <see cref="NetworkInterfaceAuxiliaryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkInterfaceAuxiliaryMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string MaxConnectionsValue = "MaxConnections";
-        private const string FloatingValue = "Floating";
-        private const string AcceleratedConnectionsValue = "AcceleratedConnections";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static NetworkInterfaceAuxiliaryMode None { get; } = new NetworkInterfaceAuxiliaryMode(NoneValue);
+
         /// <summary> MaxConnections. </summary>
         public static NetworkInterfaceAuxiliaryMode MaxConnections { get; } = new NetworkInterfaceAuxiliaryMode(MaxConnectionsValue);
+
         /// <summary> Floating. </summary>
         public static NetworkInterfaceAuxiliaryMode Floating { get; } = new NetworkInterfaceAuxiliaryMode(FloatingValue);
+
         /// <summary> AcceleratedConnections. </summary>
         public static NetworkInterfaceAuxiliaryMode AcceleratedConnections { get; } = new NetworkInterfaceAuxiliaryMode(AcceleratedConnectionsValue);
+
         /// <summary> Determines if two <see cref="NetworkInterfaceAuxiliaryMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkInterfaceAuxiliaryMode left, NetworkInterfaceAuxiliaryMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkInterfaceAuxiliaryMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkInterfaceAuxiliaryMode left, NetworkInterfaceAuxiliaryMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkInterfaceAuxiliaryMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkInterfaceAuxiliaryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkInterfaceAuxiliaryMode(string value) => new NetworkInterfaceAuxiliaryMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkInterfaceAuxiliaryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkInterfaceAuxiliaryMode?(string value) => value == null ? null : new NetworkInterfaceAuxiliaryMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkInterfaceAuxiliaryMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkInterfaceAuxiliaryMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

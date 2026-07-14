@@ -163,6 +163,11 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("tool_choice"u8);
                 writer.WriteObjectValue(ToolChoice, options);
             }
+            if (Optional.IsDefined(ParallelToolCalls))
+            {
+                writer.WritePropertyName("parallel_tool_calls"u8);
+                writer.WriteBooleanValue(ParallelToolCalls.Value);
+            }
             if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
@@ -189,6 +194,32 @@ namespace Azure.AI.VoiceLive
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
+            }
+            if (Optional.IsCollectionDefined(Include))
+            {
+                writer.WritePropertyName("include"u8);
+                writer.WriteStartArray();
+                foreach (SessionIncludeOption item in Include)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Agent))
             {
@@ -269,10 +300,13 @@ namespace Azure.AI.VoiceLive
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<VoiceLiveToolDefinition> tools = default;
             ToolChoiceOption toolChoice = default;
+            bool? parallelToolCalls = default;
             float? temperature = default;
             MaxResponseOutputTokensOption maxResponseOutputTokens = default;
             ReasoningEffort? reasoningEffort = default;
             BinaryData interimResponse = default;
+            IList<SessionIncludeOption> include = default;
+            IDictionary<string, string> metadata = default;
             RespondingAgentOptions agent = default;
             string id = default;
             BinaryData turnDetection = default;
@@ -421,6 +455,15 @@ namespace Azure.AI.VoiceLive
                     toolChoice = ToolChoiceOption.DeserializeToolChoiceOption(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("parallel_tool_calls"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parallelToolCalls = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("temperature"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -455,6 +498,41 @@ namespace Azure.AI.VoiceLive
                         continue;
                     }
                     interimResponse = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
+                if (prop.NameEquals("include"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SessionIncludeOption> array = new List<SessionIncludeOption>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new SessionIncludeOption(item.GetString()));
+                    }
+                    include = array;
+                    continue;
+                }
+                if (prop.NameEquals("metadata"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    metadata = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("agent"u8))
@@ -501,10 +579,13 @@ namespace Azure.AI.VoiceLive
                 outputAudioTimestampTypes ?? new ChangeTrackingList<AudioTimestampType>(),
                 tools ?? new ChangeTrackingList<VoiceLiveToolDefinition>(),
                 toolChoice,
+                parallelToolCalls,
                 temperature,
                 maxResponseOutputTokens,
                 reasoningEffort,
                 interimResponse,
+                include ?? new ChangeTrackingList<SessionIncludeOption>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
                 agent,
                 id,
                 turnDetection,

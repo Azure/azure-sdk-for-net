@@ -1,0 +1,43 @@
+# Live-tier eval CI: nightly end-to-end run of the live workflow scenarios against the real
+# azsdk-cli MCP and real Azure DevOps (writes confined to a test area).
+
+# Nightly only — no CI/PR trigger.
+trigger: none
+pr: none
+
+schedules:
+  - cron: '0 9 * * *'        # 09:00 UTC daily
+    displayName: 'Nightly live eval'
+    branches:
+      include:
+        - main
+    always: true             # run even when main has not changed
+
+variables:
+  # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
+  - template: /eng/pipelines/templates/variables/image.yml
+  # Provides the secret azuresdk-copilot-github-pat, mapped into GITHUB_TOKEN in the invoke step.
+  - group: AzSDK_Eval_Variable_group
+
+extends:
+  template: /eng/common/pipelines/templates/stages/archetype-eval.yml
+  parameters:
+    # Shared mock/live builder; select the live tier (real Cli MCP).
+    mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
+    TestType: live
+    vallyRoot: tools/azsdk-cli/Azure.Sdk.Tools.Vally
+    evalGlobs:
+      - 'evals/workflow-scenarios/live/*.eval.yaml'
+    # Run each shard under AzureCLI@2 so the real MCP's DevOps calls are authenticated.
+    UseAzSdkAuthentication: true
+    failOnFailedTests: true
+    # Live scenarios are end-to-end, so give each shard more headroom than the report-only tiers.
+    shardTimeoutInMinutes: 45
+    # Pass-rate gate for `vally eval`. This tier gates (failOnFailedTests: true), so the threshold
+    # is the real bar the nightly run must clear; raise it here as live coverage stabilizes.
+    threshold: 0.8
+    # This repo needs no repo-specific setup (the live MCP is built by the common BuildMcp job).
+    # A spec/language repo that must start its own bot / server / MCP copies the example hook and
+    # points these at it — see eng/common/pipelines/templates/steps/eval-hook-example.yml.
+    # preEvalTemplate: /eng/pipelines/eval/start-my-bot.yml
+    # postEvalTemplate: /eng/pipelines/eval/stop-my-bot.yml

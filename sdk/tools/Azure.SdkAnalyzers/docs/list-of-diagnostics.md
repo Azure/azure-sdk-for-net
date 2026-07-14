@@ -1,5 +1,52 @@
 # List of diagnostics produced by Azure.SdkAnalyzers
 
+## AZC0034
+
+### Cause
+
+A public type in an `Azure.*` namespace has a name that conflicts with a well-known type from another Azure SDK package or the .NET platform.
+
+### How to fix violation
+
+Rename the type to something more specific, typically by adding a namespace-derived prefix or a descriptive suffix.
+
+### Example of a violation
+
+#### Description
+
+The following code defines a public `BlobClient` type, which collides with `Azure.Storage.Blobs.BlobClient`.
+
+#### Code
+
+```c#
+namespace Azure.Test
+{
+    public class BlobClient { } // This will cause AZC0034
+}
+```
+
+### Example of how to fix
+
+#### Description
+
+Rename to a name that does not collide with the reserved type.
+
+#### Code
+
+```diff
+namespace Azure.Test
+{
+-   public class BlobClient { } // This will cause AZC0034
++   public class TestBlobClient { }
+}
+```
+
+### Notes
+
+- Only public, non-nested types in namespaces starting with `Azure` are analyzed.
+- A type defined in the same assembly as the reserved entry (e.g., `Operation` declared in `Azure.Core`) is not flagged against itself.
+- The set of reserved names is maintained in the `reserved-type-names.txt` and `reserved-type-qualified-names.txt` embedded resources.
+
 ## AZC0101
 
 ### Cause
@@ -157,3 +204,58 @@ public async Task GoodAsync(CancellationToken token)
 - The analyzer does not report diagnostics when a `RequestContext` is passed from a parameter or local variable
 - The analyzer works with lambda expressions and anonymous functions
 - Setting `CancellationToken` to `CancellationToken.None` or `default` when a cancellation token parameter is available will still trigger a warning
+
+## AZC0040
+
+### Cause
+
+A public or protected API member in an Azure SDK namespace exposes a type from the `Apache.Arrow` library (a type in the `Apache.Arrow` namespace or one of its child namespaces).
+
+### How to fix violation
+
+Keep `Apache.Arrow` types internal and expose abstractions owned by the SDK instead, converting to and from `Apache.Arrow` types behind the scenes.
+
+### Example of a violation
+
+#### Description
+
+The following code exposes `Apache.Arrow.Table` as the return type of a public method, which causes a violation of AZC0040.
+
+#### Code
+
+```c#
+using Apache.Arrow;
+
+namespace Azure.Data.Analytics
+{
+    public class AnalyticsClient
+    {
+        public Table GetTable() => null; // This will cause AZC0040
+    }
+}
+```
+
+### Example of how to fix
+
+#### Description
+
+Replace the `Apache.Arrow` type with a type owned by the SDK.
+
+#### Code
+
+```diff
+namespace Azure.Data.Analytics
+{
+    public class AnalyticsClient
+    {
+-       public Apache.Arrow.Table GetTable() => null; // This will cause AZC0040
++       public BinaryData GetTable() => null;
+    }
+}
+```
+
+### Notes
+
+- This analyzer only checks public and protected members of public types in Azure SDK namespaces (namespaces starting with `Azure.` except `Azure.Core.*`). `protected internal` members are included; `private protected` and `internal` members are not
+- A type is treated as an `Apache.Arrow` type when its containing namespace is `Apache.Arrow` or begins with `Apache.Arrow.`
+- Return types, parameter types, property types, field types, event types, base types, implemented interfaces, generic type arguments, array element types, and generic type parameter constraints are all analyzed

@@ -15,13 +15,6 @@
   
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
   
-  <PropertyGroup Condition="'$(IsWebjobsProject)' == 'true' and '$(IsClientLibrary)' == 'true'">
-    <NoWarn>
-      $(NoWarn);
-      AZC0006;
-      AZC0007;
-    </NoWarn>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(IsWebjobsProject)' == 'true' and ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true')">
     <NoWarn>
       $(NoWarn);
@@ -32,23 +25,7 @@
       SA1649;
     </NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
-    <!--
-    These analyzers are blocked by https://github.com/Azure/azure-sdk-tools/issues/127
-     -->
-    <NoWarn>
-      $(NoWarn);
-      AZC0006;
-      AZC0007;
-
-      <!--
-        Netstandard2.1 warnings that netstandard2.0 cannot adhere to.
-        Generally optimization/readability suggestions that standard2.0 doesn't suppot the API for.
-      -->
-      CA1835;
-      CA2249;
-    </NoWarn>
-
+  <PropertyGroup Condition="'$(IsClientLibrary)' == 'true' and '$(IsMgmtLibrary)' != 'true'">
     <!--
     Storage used to point to its main documentation page, but the rest of the
     Azure .NET SDK projects point to the github repo instead.  I'm leaving this
@@ -56,14 +33,6 @@
 
     <PackageProjectUrl>http://go.microsoft.com/fwlink/?LinkId=235168</PackageProjectUrl>
     -->
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(HasReleaseVersion)' != 'true'">
-    <!-- Verify that latest service version is used only when we ship release. -->
-    <NoWarn>
-      $(NoWarn);
-      AZC0010;
-	  AZC0011;
-    </NoWarn>
   </PropertyGroup>
 
 

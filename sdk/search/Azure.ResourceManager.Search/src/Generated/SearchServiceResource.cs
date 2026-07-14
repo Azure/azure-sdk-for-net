@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.Search
                 HttpMessage message = _servicesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SearchArmOperation<SearchServiceResource> operation = new SearchArmOperation<SearchServiceResource>(
-                    new SearchServiceOperationSource(Client),
+                    new SearchServiceResourceOperationSource(Client),
                     _servicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1074,7 +1074,7 @@ namespace Azure.ResourceManager.Search
                 HttpMessage message = _servicesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SearchArmOperation<SearchServiceResource> operation = new SearchArmOperation<SearchServiceResource>(
-                    new SearchServiceOperationSource(Client),
+                    new SearchServiceResourceOperationSource(Client),
                     _servicesClientDiagnostics,
                     Pipeline,
                     message.Request,

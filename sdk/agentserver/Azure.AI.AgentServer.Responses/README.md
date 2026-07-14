@@ -172,6 +172,63 @@ The library orchestrates the complete response lifecycle: `created` → `in_prog
 
 For detailed handler implementation guidance, see [docs/handler-implementation-guide.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md).
 
+### Input validation
+
+The library eagerly validates `previous_response_id` and `conversation.id` before starting handler execution:
+
+- **Format validation** — IDs that don't match the expected format return `400 Bad Request` with `param` identifying the invalid field.
+- **Existence check** — `previous_response_id` values that pass format validation but reference a nonexistent response return `404 Not Found` with a structured error containing `code` and `param`.
+
+This means handlers can rely on `ResponseContext.GetInputItemsAsync()` and `GetHistoryAsync()` returning valid data — invalid references are caught before `CreateAsync` is called.
+
+### Structured error responses
+
+All error responses follow the same JSON structure:
+
+```json
+{
+  "error": {
+    "code": "invalid_request_error",
+    "message": "The response 'resp_abc123' was not found.",
+    "param": "previous_response_id",
+    "type": "invalid_request_error"
+  }
+}
+```
+
+Exception types carry structured fields that map to the error body:
+
+| Exception | HTTP status | `error.code` | `error.param` |
+|-----------|-------------|--------------|----------------|
+| `PayloadValidationException` | 400 | `invalid_request_error` | Per-field errors |
+| `BadRequestException` | 400 | Caller-provided or `invalid_request_error` | Caller-provided |
+| `ResourceNotFoundException` | 404 | Caller-provided or `not_found` | Caller-provided |
+| `ResponsesApiException` | 500 | Upstream code or `server_error` | — |
+
+### Request correlation
+
+Every response includes an `x-request-id` header (set by Core's `RequestIdMiddleware`). Error responses also embed the same value in `error.additionalInfo.request_id`, so clients can correlate errors to specific requests even when headers are stripped by intermediaries.
+
+### Error source classification
+
+All error responses (4xx/5xx) include the `x-platform-error-source` header classifying the error origin as `user`, `platform`, or `upstream`. See the [Core README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core#error-source-classification) for the full classification table.
+
+### Platform context headers and session ID
+
+When the platform injects `x-agent-user-id` and `x-agent-foundry-call-id` request headers, the library reads them into the platform context and forwards the per-request call ID to the storage provider so that responses resolve the correct caller context server-side. The resolved session ID is returned on every response via the `x-agent-session-id` header.
+
+Handlers can access the platform context through `ResponseContext.PlatformContext` for custom partitioning logic.
+
+### Persistence resilience
+
+When storage operations fail (e.g., Foundry storage is unreachable), responses complete gracefully instead of crashing:
+
+- The response reaches a terminal state with `status: "failed"` and `error.code: "storage_error"`.
+- For streaming responses, the terminal SSE event is replaced with `response.failed` carrying `error_code="storage_error"`.
+- For synchronous responses, the error is returned as an HTTP 500 with the storage error details.
+
+This ensures clients always receive a definitive terminal state rather than hanging indefinitely.
+
 ### Thread safety
 
 All service instances registered via `AddResponsesServer()` are thread-safe. Handler instances are scoped per-request.
@@ -179,6 +236,63 @@ All service instances registered via `AddResponsesServer()` are thread-safe. Han
 ## Examples
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples).
+
+### Multi-user session (per-request call ID)
+
+On container protocol `2.0.0` a single agent session can serve **multiple users**. Forwarding the per-request `x-agent-foundry-call-id` on outbound toolbox calls lets the tool server resolve *which* user made this request and act on their behalf — so user A's and user B's requests to the same session each get a user-scoped result. (`x-agent-user-id` is never forwarded; the tool resolves the user from the call ID server-side. Use `context.PlatformContext.UserIdKey` only for the container's own per-user state.)
+
+Register `FoundryCallIdHandler` on the Foundry `HttpClient` so the current request's call ID is echoed on every outbound call:
+
+```C# Snippet:Responses_ReadMe_MultiUser_Startup
+builder.Services.AddAgentServerCore();
+
+// Any HttpClient with FoundryCallIdHandler echoes the CURRENT request's
+// x-agent-foundry-call-id — never bake one call's ID into static headers.
+builder.Services.AddHttpClient("foundry", c => c.BaseAddress = new Uri(projectEndpoint))
+    .AddHttpMessageHandler<FoundryCallIdHandler>();
+```
+
+```C# Snippet:Responses_ReadMe_MultiUser
+// One agent session can serve many users. Forwarding the per-request call ID on the
+// outbound toolbox call lets the tool server resolve which user made this request and
+// act on their behalf. x-agent-user-id is never forwarded; use
+// context.PlatformContext.UserIdKey only for the container's own per-user state.
+public class MultiUserHandler : ResponseHandler
+{
+    private readonly IHttpClientFactory _httpClientFactory;
+
+    public MultiUserHandler(IHttpClientFactory httpClientFactory) =>
+        _httpClientFactory = httpClientFactory;
+
+    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        ResponseContext context,
+        CancellationToken cancellationToken)
+    {
+        return new TextResponse(context, request,
+            createText: async ct =>
+            {
+                var query = await context.GetInputTextAsync(cancellationToken: ct);
+
+                // The "foundry" client is registered with FoundryCallIdHandler, so this
+                // request's x-agent-foundry-call-id rides the toolbox tools/call.
+                var foundry = _httpClientFactory.CreateClient("foundry");
+                using var resp = await foundry.PostAsJsonAsync(
+                    "/toolboxes/github/mcp",
+                    new
+                    {
+                        jsonrpc = "2.0",
+                        method = "tools/call",
+                        @params = new { name = "list_my_assigned_issues", arguments = new { filter = query } },
+                    },
+                    ct);
+
+                // The toolbox resolved the caller from the call ID and returned THIS user's issues.
+                return await resp.Content.ReadAsStringAsync(ct);
+            });
+    }
+}
+```
 
 ## Troubleshooting
 

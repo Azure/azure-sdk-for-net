@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -22,22 +23,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="StatementConditionProperties"/>. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="ipExtendedCommunityIds"> List of IP Extended Community resource IDs. </param>
         /// <param name="routePolicyConditionType"> Type of the condition used. </param>
         /// <param name="ipPrefixId"> Arm Resource Id of IpPrefix. </param>
-        /// <param name="ipExtendedCommunityIds"> List of IP Extended Community resource IDs. </param>
-        internal StatementConditionProperties(IList<ResourceIdentifier> ipCommunityIds, IDictionary<string, BinaryData> serializedAdditionalRawData, RoutePolicyConditionType? routePolicyConditionType, ResourceIdentifier ipPrefixId, IList<ResourceIdentifier> ipExtendedCommunityIds) : base(ipCommunityIds, serializedAdditionalRawData)
+        internal StatementConditionProperties(IList<ResourceIdentifier> ipCommunityIds, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ResourceIdentifier> ipExtendedCommunityIds, RoutePolicyConditionType? routePolicyConditionType, ResourceIdentifier ipPrefixId) : base(ipCommunityIds, additionalBinaryDataProperties)
         {
+            IPExtendedCommunityIds = ipExtendedCommunityIds;
             RoutePolicyConditionType = routePolicyConditionType;
             IPPrefixId = ipPrefixId;
-            IPExtendedCommunityIds = ipExtendedCommunityIds;
         }
+
+        /// <summary> List of IP Extended Community resource IDs. </summary>
+        public IList<ResourceIdentifier> IPExtendedCommunityIds { get; }
 
         /// <summary> Type of the condition used. </summary>
         public RoutePolicyConditionType? RoutePolicyConditionType { get; set; }
+
         /// <summary> Arm Resource Id of IpPrefix. </summary>
         public ResourceIdentifier IPPrefixId { get; set; }
-        /// <summary> List of IP Extended Community resource IDs. </summary>
-        public IList<ResourceIdentifier> IPExtendedCommunityIds { get; }
     }
 }

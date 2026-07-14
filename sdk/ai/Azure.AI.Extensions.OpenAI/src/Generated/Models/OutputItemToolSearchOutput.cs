@@ -17,7 +17,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="tools"> The loaded tool definitions returned by tool search. </param>
         /// <param name="status"> The status of the tool search output item that was recorded. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tools"/> is null. </exception>
-        public OutputItemToolSearchOutput(string callId, ResponsesToolSearchExecutionType execution, IEnumerable<ResponsesTool> tools, ResponsesFunctionCallOutputStatusEnum status) : base(AgentResponseItemKind.ToolSearchOutput)
+        public OutputItemToolSearchOutput(string callId, ResponsesToolSearchExecutionType execution, IEnumerable<ResponsesTool> tools, ResponsesFunctionCallOutputStatus status) : base(AgentResponseItemKind.ToolSearchOutput)
         {
             Argument.AssertNotNull(tools, nameof(tools));
 
@@ -38,7 +38,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="tools"> The loaded tool definitions returned by tool search. </param>
         /// <param name="status"> The status of the tool search output item that was recorded. </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
-        internal OutputItemToolSearchOutput(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, ResponsesToolSearchExecutionType execution, IList<ResponsesTool> tools, ResponsesFunctionCallOutputStatusEnum status, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemToolSearchOutput(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, ResponsesToolSearchExecutionType execution, IList<ResponsesTool> tools, ResponsesFunctionCallOutputStatus status, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             CallId = callId;
             Execution = execution;
@@ -57,7 +57,7 @@ namespace Azure.AI.Extensions.OpenAI
         public IList<ResponsesTool> Tools { get; }
 
         /// <summary> The status of the tool search output item that was recorded. </summary>
-        public ResponsesFunctionCallOutputStatusEnum Status { get; set; }
+        public ResponsesFunctionCallOutputStatus Status { get; set; }
 
         /// <summary> The identifier of the actor that created the item. </summary>
         public string CreatedBy { get; set; }

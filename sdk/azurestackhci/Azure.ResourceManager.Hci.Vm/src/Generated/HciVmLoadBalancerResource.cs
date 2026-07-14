@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _loadBalancersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmLoadBalancerPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmLoadBalancerResource> operation = new VmArmOperation<HciVmLoadBalancerResource>(
-                    new HciVmLoadBalancerOperationSource(Client),
+                    new HciVmLoadBalancerResourceOperationSource(Client),
                     _loadBalancersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _loadBalancersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmLoadBalancerPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmLoadBalancerResource> operation = new VmArmOperation<HciVmLoadBalancerResource>(
-                    new HciVmLoadBalancerOperationSource(Client),
+                    new HciVmLoadBalancerResourceOperationSource(Client),
                     _loadBalancersClientDiagnostics,
                     Pipeline,
                     message.Request,

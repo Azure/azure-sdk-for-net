@@ -1,6 +1,18 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
+## 1.0.0 (2026-07-15)
+
+### Features Added
+
+- General availability release targeting REST API version `2026-03-26`
+- Added a utility method `CcfReceipt.GetRegistrationTransactionId(byte[] receiptCoseSign1Bytes)` to extract the entry ID (registration transaction id) from a receipt
+
+### Other Changes
+
+- Removed namespace `Azure.Security.CodeTransparency.Receipt`, all classes have been moved to `Azure.Security.CodeTransparency`.
+- Updated `CodeTransparencyRedirectPolicy` to also allow 303 redirects which is returned in the case of the entry create operation.
+
+## 1.0.0-beta.9 (2026-05-26)
 
 ### Features Added
 
@@ -9,6 +21,10 @@
 ### Bugs Fixed
 
 - Improved redirect performance for write operations by caching the latest primary node URL from redirect responses and reusing it for subsequent non-GET requests. The cache is lazily populated and refreshed whenever the service redirects to a different primary node.
+
+### Other Changes
+
+- Hardened redirect handling in the Code Transparency client. Credentials and request bodies are now only forwarded on HTTPS redirects whose target hostname matches the configured service endpoint or one of its subdomains, with the same port. Redirects to any other target are refused. Write-URL cache writes are now staged per-call and only committed after a successful trusted redirect chain.
 
 ## 1.0.0-beta.8 (2026-03-02)
 

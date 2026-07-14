@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.FileShares
                 HttpMessage message = _fileShareSnapshotsRestClient.CreateCreateOrUpdateFileShareSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, FileShareSnapshotData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FileSharesArmOperation<FileShareSnapshotResource> operation = new FileSharesArmOperation<FileShareSnapshotResource>(
-                    new FileShareSnapshotOperationSource(Client),
+                    new FileShareSnapshotResourceOperationSource(Client),
                     _fileShareSnapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.FileShares
                 HttpMessage message = _fileShareSnapshotsRestClient.CreateCreateOrUpdateFileShareSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, FileShareSnapshotData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FileSharesArmOperation<FileShareSnapshotResource> operation = new FileSharesArmOperation<FileShareSnapshotResource>(
-                    new FileShareSnapshotOperationSource(Client),
+                    new FileShareSnapshotResourceOperationSource(Client),
                     _fileShareSnapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,

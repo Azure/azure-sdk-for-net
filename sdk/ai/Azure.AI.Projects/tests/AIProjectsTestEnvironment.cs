@@ -47,6 +47,7 @@ namespace Azure.AI.Projects.Tests
         public string OPENAPI_PROJECT_CONNECTION_ID => GetRecordedOptionalVariable(nameof(OPENAPI_PROJECT_CONNECTION_ID));
         public string SHAREPOINT_CONNECTION_ID => GetRecordedOptionalVariable(nameof(SHAREPOINT_CONNECTION_ID));
         public string FABRIC_CONNECTION_ID => GetRecordedOptionalVariable(nameof(FABRIC_CONNECTION_ID));
+        public string FABRIC_IQ_CONNECTION_ID => GetRecordedOptionalVariable(nameof(FABRIC_IQ_CONNECTION_ID));
         public string A2A_CONNECTION_ID => GetRecordedOptionalVariable(nameof(A2A_CONNECTION_ID));
         public string REMOTE_A2A_CONNECTION_ID => GetRecordedOptionalVariable("A2A_SPECIAL_CONNECTION_ID");
         public string A2A_BASE_URI => GetRecordedOptionalVariable("A2A_BASE_URI");
@@ -64,6 +65,14 @@ namespace Azure.AI.Projects.Tests
         public string FOUNDRY_AGENT_ID => GetRecordedVariable(nameof(FOUNDRY_AGENT_ID));
         public string TRACE_LOOKBACK_HOURS => GetRecordedVariable(nameof(TRACE_LOOKBACK_HOURS));
         public string STORAGE_QUEUE_URI => GetRecordedVariable(nameof(STORAGE_QUEUE_URI));
+        public string WORKIQ_CONNECTION_ID => GetRecordedVariable(nameof(WORKIQ_CONNECTION_ID));
+        public string HOSTED_AGENT_NAME => GetRecordedVariable(nameof(HOSTED_AGENT_NAME));
+        public string TEAMS_CONNECTION_NAME => GetRecordedVariable(nameof(TEAMS_CONNECTION_NAME));
+        public string TEAMS_GROUP_ID => GetRecordedVariable(nameof(TEAMS_GROUP_ID));
+        public string TEAMS_CHANNEL_ID => GetRecordedVariable(nameof(TEAMS_CHANNEL_ID));
+        public string GITHUB_CONNECTION_NAME => GetRecordedVariable(nameof(GITHUB_CONNECTION_NAME));
+        public string GITHUB_USERNAME => GetRecordedVariable(nameof(GITHUB_USERNAME));
+        public string GITHUB_REPOSITORY => GetRecordedVariable(nameof(GITHUB_REPOSITORY));
         public override Dictionary<string, string> ParseEnvironmentFile() => new()
         {
             { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }

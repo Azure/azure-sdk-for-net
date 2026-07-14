@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct SiteRecoveryProtectionHealth : IEquatable<SiteRecoveryProtectionHealth>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Normal. </summary>
+        private const string NormalValue = "Normal";
+        /// <summary> Warning. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> Critical. </summary>
+        private const string CriticalValue = "Critical";
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectionHealth"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SiteRecoveryProtectionHealth(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string NormalValue = "Normal";
-        private const string WarningValue = "Warning";
-        private const string CriticalValue = "Critical";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static SiteRecoveryProtectionHealth None { get; } = new SiteRecoveryProtectionHealth(NoneValue);
+
         /// <summary> Normal. </summary>
         public static SiteRecoveryProtectionHealth Normal { get; } = new SiteRecoveryProtectionHealth(NormalValue);
+
         /// <summary> Warning. </summary>
         public static SiteRecoveryProtectionHealth Warning { get; } = new SiteRecoveryProtectionHealth(WarningValue);
+
         /// <summary> Critical. </summary>
         public static SiteRecoveryProtectionHealth Critical { get; } = new SiteRecoveryProtectionHealth(CriticalValue);
+
         /// <summary> Determines if two <see cref="SiteRecoveryProtectionHealth"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SiteRecoveryProtectionHealth left, SiteRecoveryProtectionHealth right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SiteRecoveryProtectionHealth"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SiteRecoveryProtectionHealth left, SiteRecoveryProtectionHealth right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryProtectionHealth"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SiteRecoveryProtectionHealth"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SiteRecoveryProtectionHealth(string value) => new SiteRecoveryProtectionHealth(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SiteRecoveryProtectionHealth"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SiteRecoveryProtectionHealth?(string value) => value == null ? null : new SiteRecoveryProtectionHealth(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SiteRecoveryProtectionHealth other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SiteRecoveryProtectionHealth other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

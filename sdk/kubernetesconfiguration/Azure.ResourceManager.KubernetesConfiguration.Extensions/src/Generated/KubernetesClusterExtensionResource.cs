@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
                 HttpMessage message = _extensionsInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, KubernetesClusterExtensionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ExtensionsArmOperation<KubernetesClusterExtensionResource> operation = new ExtensionsArmOperation<KubernetesClusterExtensionResource>(
-                    new KubernetesClusterExtensionOperationSource(Client),
+                    new KubernetesClusterExtensionResourceOperationSource(Client),
                     _extensionsInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
                 HttpMessage message = _extensionsInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, KubernetesClusterExtensionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ExtensionsArmOperation<KubernetesClusterExtensionResource> operation = new ExtensionsArmOperation<KubernetesClusterExtensionResource>(
-                    new KubernetesClusterExtensionOperationSource(Client),
+                    new KubernetesClusterExtensionResourceOperationSource(Client),
                     _extensionsInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,

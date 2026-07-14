@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.AppConfiguration
                     yield break;
                 }
                 AppConfigurationPrivateEndpointConnectionListResult result = AppConfigurationPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<AppConfigurationPrivateEndpointConnectionData>.FromValues((IReadOnlyList<AppConfigurationPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AppConfigurationPrivateEndpointConnectionData>.FromValues((IReadOnlyList<AppConfigurationPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

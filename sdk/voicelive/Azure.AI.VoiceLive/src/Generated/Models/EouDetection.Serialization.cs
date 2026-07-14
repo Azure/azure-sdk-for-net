@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Top-level union for end-of-utterance (EOU) semantic detection configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSemanticEouDetection"/>, <see cref="AzureSemanticEouDetectionEn"/>, and <see cref="AzureSemanticEouDetectionMultilingual"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSemanticEouDetection"/>, <see cref="AzureSemanticEouDetectionEn"/>, <see cref="AzureSemanticEouDetectionMultilingual"/>, and <see cref="SmartEndOfTurnDetection"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEouDetection))]
     public abstract partial class EouDetection : IJsonModel<EouDetection>
@@ -135,6 +135,8 @@ namespace Azure.AI.VoiceLive
                         return AzureSemanticEouDetectionEn.DeserializeAzureSemanticEouDetectionEn(element, options);
                     case "semantic_detection_v1_multilingual":
                         return AzureSemanticEouDetectionMultilingual.DeserializeAzureSemanticEouDetectionMultilingual(element, options);
+                    case "smart_end_of_turn_detection":
+                        return SmartEndOfTurnDetection.DeserializeSmartEndOfTurnDetection(element, options);
                 }
             }
             return UnknownEouDetection.DeserializeUnknownEouDetection(element, options);

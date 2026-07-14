@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class ContinuousDtmfRecognitionRequestInternal
     {
         /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionRequestInternal"/>. </summary>
-        /// <param name="targetParticipant"> Defines options for recognition. </param>
+        /// <param name="targetParticipant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public ContinuousDtmfRecognitionRequestInternal(CommunicationIdentifierModel targetParticipant)
         {
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionRequestInternal"/>. </summary>
-        /// <param name="targetParticipant"> Defines options for recognition. </param>
+        /// <param name="targetParticipant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="operationCallbackUri">
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
@@ -36,7 +36,7 @@ namespace Azure.Communication.CallAutomation
             OperationCallbackUri = operationCallbackUri;
         }
 
-        /// <summary> Defines options for recognition. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }

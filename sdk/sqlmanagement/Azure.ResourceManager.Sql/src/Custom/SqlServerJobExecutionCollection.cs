@@ -1,9 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
 using System.Threading;
 using Azure.ResourceManager.Sql.Models;
 
@@ -11,150 +12,90 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerJobExecutionCollection
     {
-        /// <summary>
-        /// Lists a job&apos;s executions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobExecutions_ListByJob</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
-        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
-        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
-        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
-        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
-        /// <param name="skip"> The number of elements in the collection to skip. </param>
-        /// <param name="top"> The number of elements to return from the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServerJobExecutionResource> GetAllAsync(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary> Backward-compatible overload accepting an options bag. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<SqlServerJobExecutionResource> GetAllAsync(SqlServerJobExecutionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            SqlServerJobExecutionCollectionGetAllOptions options = new SqlServerJobExecutionCollectionGetAllOptions();
-            options.CreateTimeMin = createTimeMin;
-            options.CreateTimeMax = createTimeMax;
-            options.EndTimeMin = endTimeMin;
-            options.EndTimeMax = endTimeMax;
-            options.IsActive = isActive;
-            options.Skip = skip;
-            options.Top = top;
-
-            return GetAllAsync(options, cancellationToken);
+            options ??= new SqlServerJobExecutionCollectionGetAllOptions();
+            long? skip = options.Skip;
+            long? top = options.Top;
+            return GetAllAsync(options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, skip, top, cancellationToken);
         }
 
-        /// <summary>
-        /// Lists a job&apos;s executions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobExecutions_ListByJob</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
-        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
-        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
-        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
-        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
-        /// <param name="skip"> The number of elements in the collection to skip. </param>
-        /// <param name="top"> The number of elements to return from the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServerJobExecutionResource> GetAll(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary> Backward-compatible overload accepting an options bag. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<SqlServerJobExecutionResource> GetAll(SqlServerJobExecutionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            SqlServerJobExecutionCollectionGetAllOptions options = new SqlServerJobExecutionCollectionGetAllOptions();
-            options.CreateTimeMin = createTimeMin;
-            options.CreateTimeMax = createTimeMax;
-            options.EndTimeMin = endTimeMin;
-            options.EndTimeMax = endTimeMax;
-            options.IsActive = isActive;
-            options.Skip = skip;
-            options.Top = top;
-
-            return GetAll(options, cancellationToken);
+            options ??= new SqlServerJobExecutionCollectionGetAllOptions();
+            long? skip = options.Skip;
+            long? top = options.Top;
+            return GetAll(options.CreateTimeMin, options.CreateTimeMax, options.EndTimeMin, options.EndTimeMax, options.IsActive, skip, top, cancellationToken);
         }
 
-        /// <summary>
-        /// Lists target executions for all steps of a job execution.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/targets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobTargetExecutions_ListByJobExecution</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobExecutionId"> The id of the job execution. </param>
-        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
-        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
-        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
-        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
-        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
-        /// <param name="skip"> The number of elements in the collection to skip. </param>
-        /// <param name="top"> The number of elements to return from the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerJobExecutionStepTargetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServerJobExecutionStepTargetResource> GetJobTargetExecutionsAsync(Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary> Backward-compatible overload retained from v1.4.0 (skip/top were int?). </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<SqlServerJobExecutionResource> GetAllAsync(DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top, CancellationToken cancellationToken)
         {
-            SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions options = new SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions(jobExecutionId);
-            options.CreateTimeMin = createTimeMin;
-            options.CreateTimeMax = createTimeMax;
-            options.EndTimeMin = endTimeMin;
-            options.EndTimeMax = endTimeMax;
-            options.IsActive = isActive;
-            options.Skip = skip;
-            options.Top = top;
-
-            return GetJobTargetExecutionsAsync(options, cancellationToken);
+            var opts = new SqlServerJobExecutionCollectionGetAllOptions
+            {
+                CreateTimeMin = createTimeMin,
+                CreateTimeMax = createTimeMax,
+                EndTimeMin = endTimeMin,
+                EndTimeMax = endTimeMax,
+                IsActive = isActive,
+                Skip = skip,
+                Top = top,
+            };
+            return GetAllAsync(opts, cancellationToken);
         }
 
-        /// <summary>
-        /// Lists target executions for all steps of a job execution.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/targets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobTargetExecutions_ListByJobExecution</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobExecutionId"> The id of the job execution. </param>
-        /// <param name="createTimeMin"> If specified, only job executions created at or after the specified time are included. </param>
-        /// <param name="createTimeMax"> If specified, only job executions created before the specified time are included. </param>
-        /// <param name="endTimeMin"> If specified, only job executions completed at or after the specified time are included. </param>
-        /// <param name="endTimeMax"> If specified, only job executions completed before the specified time are included. </param>
-        /// <param name="isActive"> If specified, only active or only completed job executions are included. </param>
-        /// <param name="skip"> The number of elements in the collection to skip. </param>
-        /// <param name="top"> The number of elements to return from the collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerJobExecutionStepTargetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServerJobExecutionStepTargetResource> GetJobTargetExecutions(Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary> Backward-compatible overload retained from v1.4.0 (skip/top were int?). </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<SqlServerJobExecutionResource> GetAll(DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top, CancellationToken cancellationToken)
         {
-            SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions options = new SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions(jobExecutionId);
-            options.CreateTimeMin = createTimeMin;
-            options.CreateTimeMax = createTimeMax;
-            options.EndTimeMin = endTimeMin;
-            options.EndTimeMax = endTimeMax;
-            options.IsActive = isActive;
-            options.Skip = skip;
-            options.Top = top;
+            var opts = new SqlServerJobExecutionCollectionGetAllOptions
+            {
+                CreateTimeMin = createTimeMin,
+                CreateTimeMax = createTimeMax,
+                EndTimeMin = endTimeMin,
+                EndTimeMax = endTimeMax,
+                IsActive = isActive,
+                Skip = skip,
+                Top = top,
+            };
+            return GetAll(opts, cancellationToken);
+        }
 
-            return GetJobTargetExecutions(options, cancellationToken);
+        /// <summary> Not supported in v2.0.0. </summary>
+        [Obsolete("This API has been retired in version 2.0.0. Use SqlServerJobExecutionResource.GetJobTargetExecutionsAsync instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<SqlServerJobExecutionStepTargetResource> GetJobTargetExecutionsAsync(SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This API has been retired. Use SqlServerJobExecutionResource.GetJobTargetExecutionsAsync instead.");
+        }
+
+        /// <summary> Not supported in v2.0.0. </summary>
+        [Obsolete("This API has been retired in version 2.0.0. Use SqlServerJobExecutionResource.GetJobTargetExecutions instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<SqlServerJobExecutionStepTargetResource> GetJobTargetExecutions(SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions options, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This API has been retired. Use SqlServerJobExecutionResource.GetJobTargetExecutions instead.");
+        }
+
+        /// <summary> Not supported in v2.0.0. </summary>
+        [Obsolete("This API has been retired in version 2.0.0. Use SqlServerJobExecutionResource.GetJobTargetExecutionsAsync instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<SqlServerJobExecutionStepTargetResource> GetJobTargetExecutionsAsync(Guid jobExecutionId, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top, CancellationToken cancellationToken)
+        {
+            throw new NotSupportedException("This API has been retired. Use SqlServerJobExecutionResource.GetJobTargetExecutionsAsync instead.");
+        }
+
+        /// <summary> Not supported in v2.0.0. </summary>
+        [Obsolete("This API has been retired in version 2.0.0. Use SqlServerJobExecutionResource.GetJobTargetExecutions instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<SqlServerJobExecutionStepTargetResource> GetJobTargetExecutions(Guid jobExecutionId, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top, CancellationToken cancellationToken)
+        {
+            throw new NotSupportedException("This API has been retired. Use SqlServerJobExecutionResource.GetJobTargetExecutions instead.");
         }
     }
 }

@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 HttpMessage message = _bgpPeersRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, ConnectedClusterBgpPeerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource>(
-                    new ConnectedClusterBgpPeerOperationSource(Client),
+                    new ConnectedClusterBgpPeerResourceOperationSource(Client),
                     _bgpPeersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 HttpMessage message = _bgpPeersRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, ConnectedClusterBgpPeerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource>(
-                    new ConnectedClusterBgpPeerOperationSource(Client),
+                    new ConnectedClusterBgpPeerResourceOperationSource(Client),
                     _bgpPeersClientDiagnostics,
                     Pipeline,
                     message.Request,

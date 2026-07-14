@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     yield break;
                 }
                 ConfigTemplateListResult result = ConfigTemplateListResult.FromResponse(response);
-                yield return Page<EdgeConfigTemplateData>.FromValues((IReadOnlyList<EdgeConfigTemplateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EdgeConfigTemplateData>.FromValues((IReadOnlyList<EdgeConfigTemplateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

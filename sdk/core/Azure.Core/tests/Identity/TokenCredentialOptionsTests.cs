@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -165,6 +166,13 @@ namespace Azure.Core.Tests.Identity
             Assert.AreNotSame(original.AdditionalQueryParameters, clone.AdditionalQueryParameters, "AdditionalQueryParameters should be deep-copied, not shared.");
 #pragma warning restore AZID0001
 
+#pragma warning disable AZID0003 // TokenRequestCallback is experimental
+            if (original is ISupportsTokenRequestCallback origCallback && clone is ISupportsTokenRequestCallback cloneCallback)
+            {
+                Assert.AreEqual(origCallback.TokenRequestCallback, cloneCallback.TokenRequestCallback, "TokenRequestCallback should be copied to the clone.");
+            }
+#pragma warning restore AZID0003
+
             if (original is ISupportsAdditionallyAllowedTenants && clone is ISupportsAdditionallyAllowedTenants)
             {
                 CollectionAssert.AreEqual(original.AdditionallyAllowedTenants, clone.AdditionallyAllowedTenants);
@@ -234,13 +242,17 @@ namespace Azure.Core.Tests.Identity
 
         public class SupportsTokenCachePersistenceOptions : CloneTestOptions, ISupportsTokenCachePersistenceOptions { }
 
-        public class CloneTestOptions : TokenCredentialOptions
+        public class CloneTestOptions : TokenCredentialOptions, ISupportsTokenRequestCallback
         {
             public IList<string> AdditionallyAllowedTenants { get; } = new List<string>();
 
             public bool DisableInstanceDiscovery { get; set; }
 
             public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
+
+#pragma warning disable AZID0003 // TokenRequestCallbackContext is experimental
+            public Action<TokenRequestCallbackContext> TokenRequestCallback { get; set; }
+#pragma warning restore AZID0003
 
             public static T CreatePopulatedOptions<T>(bool setTransport)
                 where T : CloneTestOptions, new()
@@ -259,6 +271,12 @@ namespace Azure.Core.Tests.Identity
                         ["session_id"] = (Guid.NewGuid().ToString(), true)
                     },
 #pragma warning restore AZID0001
+#pragma warning disable AZID0003 // TokenRequestCallback is experimental
+                    TokenRequestCallback = data =>
+                    {
+                        data.BodyParameters["test"] = "value";
+                    },
+#pragma warning restore AZID0003
                     Retry =
                     {
                         MaxRetries = 15,
@@ -296,7 +314,8 @@ namespace Azure.Core.Tests.Identity
             typeof(ISupportsAdditionallyAllowedTenants),
             typeof(ISupportsDisableInstanceDiscovery),
             typeof(ISupportsTokenCachePersistenceOptions),
-            typeof(ISupportsTenantId)
+            typeof(ISupportsTenantId),
+            typeof(ISupportsTokenRequestCallback)
         };
 
         public static IEnumerable<TestCaseData> CredentialOptionsCloneTypeTestMatrix()

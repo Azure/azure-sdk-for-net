@@ -108,8 +108,10 @@ public class ConfigurationAndDISamples
 
         // Resolve the credential by walking a chain of CredentialResolver
         // instances against the named section. The first resolver whose
-        // TryResolve returns true wins.
-        AuthenticationTokenProvider? credential = configuration.GetCredential(
+        // TryResolve returns true wins. The returned CredentialSettings
+        // exposes the resolved provider via Credential.TokenProvider
+        // and the inline ApiKey via Credential.Key.
+        CredentialSettings? credential = configuration.GetCredentialSettings(
             "MyClient:Credential",
             new MyCredentialResolver());
 

@@ -15,19 +15,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class SiteRecoveryFabricProviderCreationContent : FabricSpecificCreationContent
     {
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricProviderCreationContent"/>. </summary>
-        public SiteRecoveryFabricProviderCreationContent()
+        public SiteRecoveryFabricProviderCreationContent() : base("Azure")
         {
-            InstanceType = "Azure";
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricProviderCreationContent"/>. </summary>
         /// <param name="instanceType"> Gets the class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> The Location. </param>
-        internal SiteRecoveryFabricProviderCreationContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureLocation? location) : base(instanceType, serializedAdditionalRawData)
+        internal SiteRecoveryFabricProviderCreationContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location) : base(instanceType, additionalBinaryDataProperties)
         {
             Location = location;
-            InstanceType = instanceType ?? "Azure";
         }
 
         /// <summary> The Location. </summary>

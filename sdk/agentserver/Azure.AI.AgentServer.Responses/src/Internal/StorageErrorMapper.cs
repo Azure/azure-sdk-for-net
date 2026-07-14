@@ -12,6 +12,14 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 internal static class StorageErrorMapper
 {
     /// <summary>
+    /// Exception.Data key that marks an exception as originating from the SDK's
+    /// own infrastructure (storage transport, authentication, internal pipeline).
+    /// Exceptions with this key set are classified as <c>platform</c>; all others
+    /// default to <c>upstream</c> (developer handler code) in the exception filter.
+    /// </summary>
+    internal const string PlatformErrorDataKey = "Azure.AI.AgentServer.PlatformError";
+
+    /// <summary>
     /// Reads the HTTP status code of <paramref name="response"/> and throws the appropriate
     /// SDK exception if the response indicates an error condition.
     /// Structured upstream error information is preserved in the thrown exception where
@@ -45,7 +53,9 @@ internal static class StorageErrorMapper
                     Param = errorInfo.Param,
                     Type = errorInfo.Type ?? "server_error",
                 };
-                throw new ResponsesApiException(error, 500);
+                var ex = new ResponsesApiException(error, 500);
+                ex.Data[PlatformErrorDataKey] = true;
+                throw ex;
         }
     }
 

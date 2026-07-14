@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
 
         /// <summary> Initializes a new instance of <see cref="SliCondition"/>. </summary>
         /// <param name="operator"> Operator used in the filtering condition. </param>
-        /// <param name="value"> Value used in filtering. </param>
+        /// <param name="value"> Value used in filtering. For most operators (eq, ne, lt, lte, gt, gte, startswith, notstartswith, contains, notcontains) this is a single value (for example "GetContosoUsers"). For the `in` and `notin` operators, multiple values must be joined by the delimiter `^^` (for example "east^^west^^north"). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SliCondition(SliConditionOperator @operator, string value)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <param name="scalarFunction"> Scalar function applied for filtering. </param>
         /// <param name="samplingType"> Defines the sampling type. </param>
         /// <param name="operator"> Operator used in the filtering condition. </param>
-        /// <param name="value"> Value used in filtering. </param>
+        /// <param name="value"> Value used in filtering. For most operators (eq, ne, lt, lte, gt, gte, startswith, notstartswith, contains, notcontains) this is a single value (for example "GetContosoUsers"). For the `in` and `notin` operators, multiple values must be joined by the delimiter `^^` (for example "east^^west^^north"). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SliCondition(string dimensionName, SliScalarFunction? scalarFunction, SliSamplingType? samplingType, SliConditionOperator @operator, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         /// <summary> Operator used in the filtering condition. </summary>
         public SliConditionOperator Operator { get; set; }
 
-        /// <summary> Value used in filtering. </summary>
+        /// <summary> Value used in filtering. For most operators (eq, ne, lt, lte, gt, gte, startswith, notstartswith, contains, notcontains) this is a single value (for example "GetContosoUsers"). For the `in` and `notin` operators, multiple values must be joined by the delimiter `^^` (for example "east^^west^^north"). </summary>
         public string Value { get; set; }
     }
 }

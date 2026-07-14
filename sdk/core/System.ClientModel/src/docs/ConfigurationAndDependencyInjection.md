@@ -214,8 +214,10 @@ public class MyCredentialResolver : CredentialResolver
 }
 ```
 
-Use `IConfiguration.GetCredential` to walk a chain of resolvers against the
-named section. The first resolver whose `TryResolve` returns `true` wins.
+Use `IConfiguration.GetCredentialSettings` to walk a chain of resolvers against the
+named section. The first resolver whose `TryResolve` returns `true` wins. The
+returned `CredentialSettings` exposes the resolved provider via
+`TokenProvider` and the inline ApiKey via `Key`.
 
 ```C# Snippet:CustomCredentialResolverExample
 ConfigurationManager configuration = new();
@@ -223,8 +225,10 @@ configuration.AddJsonFile("appsettings.json");
 
 // Resolve the credential by walking a chain of CredentialResolver
 // instances against the named section. The first resolver whose
-// TryResolve returns true wins.
-AuthenticationTokenProvider? credential = configuration.GetCredential(
+// TryResolve returns true wins. The returned CredentialSettings
+// exposes the resolved provider via Credential.TokenProvider
+// and the inline ApiKey via Credential.Key.
+CredentialSettings? credential = configuration.GetCredentialSettings(
     "MyClient:Credential",
     new MyCredentialResolver());
 ```

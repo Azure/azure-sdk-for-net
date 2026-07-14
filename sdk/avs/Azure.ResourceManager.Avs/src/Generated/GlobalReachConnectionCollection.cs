@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _globalReachConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalReachConnectionName, GlobalReachConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<GlobalReachConnectionResource> operation = new AvsArmOperation<GlobalReachConnectionResource>(
-                    new GlobalReachConnectionOperationSource(Client),
+                    new GlobalReachConnectionResourceOperationSource(Client),
                     _globalReachConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _globalReachConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalReachConnectionName, GlobalReachConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<GlobalReachConnectionResource> operation = new AvsArmOperation<GlobalReachConnectionResource>(
-                    new GlobalReachConnectionOperationSource(Client),
+                    new GlobalReachConnectionResourceOperationSource(Client),
                     _globalReachConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

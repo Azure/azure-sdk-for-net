@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
@@ -57,7 +57,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task RestorableDatabaseAccountList()
         {
@@ -65,7 +64,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await VerifyRestorableDatabaseAccount(_restorableDatabaseAccount.Data.Name);
         }
 
-        [Test]
         [RecordedTest]
         public async Task RestorableDatabaseAccountListWithContinuous7Account()
         {
@@ -73,7 +71,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await VerifyRestorableDatabaseAccount(_restorableDatabaseAccount.Data.Name);
         }
 
-        [Test]
         [RecordedTest]
         public async Task RestorableDatabaseAccountListWithContinuous30Account()
         {
@@ -81,7 +78,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await VerifyRestorableDatabaseAccount(_restorableDatabaseAccount.Data.Name);
         }
 
-        [Test]
         [RecordedTest]
         [Ignore("Not recorded")]
         public async Task RestorableDatabaseAccountListByLocation()
@@ -92,7 +88,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
         }
 
-        [Test]
         [RecordedTest]
         public async Task RestoreSqlDatabaseAccount()
         {
@@ -150,6 +145,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var createOptions = new CosmosDBAccountCreateOrUpdateContent(location, locations)
             {
+                DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
                 Kind = kind,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds, null),
                 IPRules = { new CosmosDBIPAddressOrRange("23.43.231.120", null) },
@@ -204,6 +200,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             CosmosDBAccountCreateOrUpdateContent databaseAccountCreateUpdateParameters = new CosmosDBAccountCreateOrUpdateContent(armLocation, locations)
             {
+                DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
                 Kind = kind,
                 CreateMode = CosmosDBAccountCreateMode.Restore,
                 RestoreParameters = restoreParameters
@@ -287,7 +284,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                         },
                         new List<CosmosDBVectorIndex>(),
                         new List<FullTextIndexPath>(),
-                        serializedAdditionalRawData: new Dictionary<string, BinaryData>())
+                        additionalBinaryDataProperties: new Dictionary<string, BinaryData>())
                 })
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

@@ -15,34 +15,25 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DelimitedTextReadSettings : FormatReadSettings
     {
         /// <summary> Initializes a new instance of <see cref="DelimitedTextReadSettings"/>. </summary>
-        public DelimitedTextReadSettings()
+        public DelimitedTextReadSettings() : base("DelimitedTextReadSettings")
         {
-            FormatReadSettingsType = "DelimitedTextReadSettings";
         }
 
         /// <summary> Initializes a new instance of <see cref="DelimitedTextReadSettings"/>. </summary>
         /// <param name="formatReadSettingsType"> The read setting type. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="skipLineCount"> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="compressionProperties">
-        /// Compression settings.
-        /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="TarGzipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
-        /// </param>
+        /// <param name="compressionProperties"> Compression settings. </param>
         internal DelimitedTextReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> skipLineCount, CompressionReadSettings compressionProperties) : base(formatReadSettingsType, additionalProperties)
         {
             SkipLineCount = skipLineCount;
             CompressionProperties = compressionProperties;
-            FormatReadSettingsType = formatReadSettingsType ?? "DelimitedTextReadSettings";
         }
 
         /// <summary> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> SkipLineCount { get; set; }
-        /// <summary>
-        /// Compression settings.
-        /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="TarGzipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
-        /// </summary>
+
+        /// <summary> Compression settings. </summary>
         public CompressionReadSettings CompressionProperties { get; set; }
     }
 }

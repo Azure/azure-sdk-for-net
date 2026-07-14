@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disk Details. </summary>
     public partial class SiteRecoveryOSDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryOSDetails"/>. </summary>
         internal SiteRecoveryOSDetails()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="osMajorVersion"> The OS Major Version. </param>
         /// <param name="osMinorVersion"> The OS Minor Version. </param>
         /// <param name="userSelectedOSName"> The OS name selected by user. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryOSDetails(string osType, string productType, string osEdition, string osVersion, string osMajorVersion, string osMinorVersion, string userSelectedOSName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryOSDetails(string osType, string productType, string osEdition, string osVersion, string osMajorVersion, string osMinorVersion, string userSelectedOSName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSType = osType;
             ProductType = productType;
@@ -68,21 +39,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             OSMajorVersion = osMajorVersion;
             OSMinorVersion = osMinorVersion;
             UserSelectedOSName = userSelectedOSName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> VM Disk details. </summary>
         public string OSType { get; }
+
         /// <summary> Product type. </summary>
         public string ProductType { get; }
+
         /// <summary> The OSEdition. </summary>
         public string OSEdition { get; }
+
         /// <summary> The OS Version. </summary>
         public string OSVersion { get; }
+
         /// <summary> The OS Major Version. </summary>
         public string OSMajorVersion { get; }
+
         /// <summary> The OS Minor Version. </summary>
         public string OSMinorVersion { get; }
+
         /// <summary> The OS name selected by user. </summary>
         public string UserSelectedOSName { get; }
     }

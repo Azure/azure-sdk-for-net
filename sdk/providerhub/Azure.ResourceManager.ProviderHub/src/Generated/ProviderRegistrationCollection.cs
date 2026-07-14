@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.ProviderHub
     {
         private readonly ClientDiagnostics _providerRegistrationsClientDiagnostics;
         private readonly ProviderRegistrations _providerRegistrationsRestClient;
-        private readonly ClientDiagnostics _providerHubClientClientDiagnostics;
-        private readonly ProviderHubClient _providerHubClientRestClient;
-        private readonly ClientDiagnostics _resourceActionsClientDiagnostics;
-        private readonly ResourceActions _resourceActionsRestClient;
-        private readonly ClientDiagnostics _registrationNewRegionFrontloadReleasesClientDiagnostics;
-        private readonly RegistrationNewRegionFrontloadReleases _registrationNewRegionFrontloadReleasesRestClient;
 
         /// <summary> Initializes a new instance of ProviderRegistrationCollection for mocking. </summary>
         protected ProviderRegistrationCollection()
@@ -48,12 +42,6 @@ namespace Azure.ResourceManager.ProviderHub
             TryGetApiVersion(ProviderRegistrationResource.ResourceType, out string providerRegistrationApiVersion);
             _providerRegistrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderRegistrationResource.ResourceType.Namespace, Diagnostics);
             _providerRegistrationsRestClient = new ProviderRegistrations(_providerRegistrationsClientDiagnostics, Pipeline, Endpoint, providerRegistrationApiVersion ?? "2024-09-01");
-            _providerHubClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderRegistrationResource.ResourceType.Namespace, Diagnostics);
-            _providerHubClientRestClient = new ProviderHubClient(_providerHubClientClientDiagnostics, Pipeline, Endpoint, providerRegistrationApiVersion ?? "2024-09-01");
-            _resourceActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderRegistrationResource.ResourceType.Namespace, Diagnostics);
-            _resourceActionsRestClient = new ResourceActions(_resourceActionsClientDiagnostics, Pipeline, Endpoint, providerRegistrationApiVersion ?? "2024-09-01");
-            _registrationNewRegionFrontloadReleasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderRegistrationResource.ResourceType.Namespace, Diagnostics);
-            _registrationNewRegionFrontloadReleasesRestClient = new RegistrationNewRegionFrontloadReleases(_registrationNewRegionFrontloadReleasesClientDiagnostics, Pipeline, Endpoint, providerRegistrationApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _providerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, ProviderRegistrationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation<ProviderRegistrationResource> operation = new ProviderHubArmOperation<ProviderRegistrationResource>(
-                    new ProviderRegistrationOperationSource(Client),
+                    new ProviderRegistrationResourceOperationSource(Client),
                     _providerRegistrationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -164,7 +152,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _providerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, ProviderRegistrationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation<ProviderRegistrationResource> operation = new ProviderHubArmOperation<ProviderRegistrationResource>(
-                    new ProviderRegistrationOperationSource(Client),
+                    new ProviderRegistrationResourceOperationSource(Client),
                     _providerRegistrationsClientDiagnostics,
                     Pipeline,
                     message.Request,

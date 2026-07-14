@@ -11,6 +11,7 @@ namespace Azure.AI.Projects
     [CodeGenType("AIProjectBlobReference")]
     public partial class AIProjectBlobReference
     {
+        /// <summary> The absolute URI of the referenced blob. </summary>
         public Uri BlobUri { get; }
     }
 }

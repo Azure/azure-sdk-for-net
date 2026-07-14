@@ -345,6 +345,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags[key] = value;
                     ArmOperation<IssueTestResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -393,6 +394,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags[key] = value;
                     ArmOperation<IssueTestResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -436,6 +438,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     IssueTestResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     IssueTestResourcePatch patch = new IssueTestResourcePatch();
+                    PrepareTagPatch(patch, current);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<IssueTestResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -479,6 +482,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     IssueTestResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     IssueTestResourcePatch patch = new IssueTestResourcePatch();
+                    PrepareTagPatch(patch, current);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<IssueTestResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -525,6 +529,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags.Remove(key);
                     ArmOperation<IssueTestResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -571,6 +576,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         patch.Tags.Add(tag);
                     }
+                    PrepareTagPatch(patch, current);
                     patch.Tags.Remove(key);
                     ArmOperation<IssueTestResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());

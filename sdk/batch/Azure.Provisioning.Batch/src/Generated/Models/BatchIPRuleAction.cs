@@ -11,6 +11,6 @@ namespace Azure.Provisioning.Batch
     public enum BatchIPRuleAction
     {
         /// <summary> Allow access for the matched client IP address. </summary>
-        Allow
+        Allow = 0
     }
 }
