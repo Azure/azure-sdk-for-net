@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum IstioIngressGatewayMode
     {
         /// <summary> The ingress gateway is assigned a public IP address and is publicly accessible. </summary>
-        External,
+        External = 0,
         /// <summary> The ingress gateway is assigned an internal IP address and cannot is accessed publicly. </summary>
-        Internal
+        Internal = 1
     }
 }

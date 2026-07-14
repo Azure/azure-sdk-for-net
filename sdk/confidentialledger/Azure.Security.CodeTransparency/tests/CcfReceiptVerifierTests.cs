@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Azure.Core.TestFramework;
-using Azure.Security.CodeTransparency.Receipt;
 using NUnit.Framework;
 
 namespace Azure.Security.CodeTransparency.Tests

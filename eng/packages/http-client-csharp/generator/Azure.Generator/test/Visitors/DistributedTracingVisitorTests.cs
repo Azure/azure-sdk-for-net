@@ -14,6 +14,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Tests.Visitors
@@ -166,14 +167,11 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual(Helpers.GetExpectedFromFile(isProtocolMethod.ToString()), result);
         }
 
-        // Regression test for https://github.com/Azure/azure-sdk-for-net/pull/58979.
-        // Libraries such as Azure.AI.Agents.Persistent declare the "ClientDiagnostics" property in
-        // hand-written custom code. The custom property's CSharpType is not equal to the framework
-        // ClientDiagnostics type injected into the visitor, so matching the property by type threw
-        // "Sequence contains no matching element" during regeneration. The property must be matched
-        // by name so that a custom-declared ClientDiagnostics property is still found.
+        // Libraries such as Azure.AI.Agents.Persistent declare ClientDiagnostics in custom code.
+        // The custom-code symbol must be normalized to the framework ClientDiagnostics type so the
+        // visitor can locate it by type.
         [Test]
-        public void TestProtocolMethodWithCustomTypedClientDiagnosticsProperty()
+        public async Task TestProtocolMethodWithCustomCodeClientDiagnosticsProperty()
         {
             var visitor = new TestDistributedTracingVisitor();
 
@@ -189,22 +187,20 @@ namespace Azure.Generator.Tests.Visitors
                 parameters: parameters);
             var basicServiceMethod = InputFactory.BasicServiceMethod("foo", basicOperation, parameters: parameters);
             var inputClient = InputFactory.Client("TestClient", methods: [basicServiceMethod]);
-            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            await MockHelpers.LoadMockGeneratorAsync(
+                clients: () => [inputClient],
+                compilation: () => Helpers.GetCompilationFromDirectoryAsync());
             // create the client provider
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
-
-            // Replace the generated ClientDiagnostics property with one whose CSharpType differs from
-            // the framework ClientDiagnostics type injected into the visitor, simulating a
-            // ClientDiagnostics property declared in custom code.
-            var customTypedClientDiagnostics = new PropertyProvider(
-                $"The ClientDiagnostics is used to provide tracing support for the client library.",
-                MethodSignatureModifiers.Internal,
-                new CSharpType(typeof(object)),
-                ClientDiagnosticsPropertyName,
-                new AutoPropertyBody(false),
-                clientProvider!);
-            clientProvider!.Update(properties: [customTypedClientDiagnostics]);
+            Assert.IsNotNull(clientProvider!.CustomCodeView);
+            var customClientDiagnosticsType = clientProvider.CanonicalView.Properties
+                .Single(p => p.Name == ClientDiagnosticsPropertyName)
+                .Type;
+            Assert.AreEqual(nameof(ClientDiagnostics), customClientDiagnosticsType.Name);
+            Assert.AreEqual(typeof(ClientDiagnostics).Namespace, customClientDiagnosticsType.Namespace);
+            Assert.IsTrue(customClientDiagnosticsType.IsFrameworkType);
+            Assert.IsTrue(customClientDiagnosticsType.Equals(new CSharpType(typeof(ClientDiagnostics))));
 
             // create a protocol method to test the visitor
             var methodSignature = new MethodSignature(
@@ -227,13 +223,10 @@ namespace Azure.Generator.Tests.Visitors
                 $"Protocol method should be wrapped with a diagnostic scope. Actual: {result}");
         }
 
-        // Regression test for https://github.com/Azure/azure-sdk-for-net/pull/58979.
         // Custom code can rename the ClientDiagnostics property via [CodeGenMember("ClientDiagnostics")],
-        // in which case the property's Name differs but its OriginalName is still "ClientDiagnostics".
-        // The visitor must locate the property by its OriginalName so the renamed property is still found
-        // (and it must be located by name, not by CSharpType, to keep the previous regression fixed).
+        // but type-based lookup must still locate the renamed property.
         [Test]
-        public void TestProtocolMethodWithRenamedClientDiagnosticsProperty()
+        public async Task TestProtocolMethodWithRenamedClientDiagnosticsProperty()
         {
             var visitor = new TestDistributedTracingVisitor();
 
@@ -249,25 +242,18 @@ namespace Azure.Generator.Tests.Visitors
                 parameters: parameters);
             var basicServiceMethod = InputFactory.BasicServiceMethod("foo", basicOperation, parameters: parameters);
             var inputClient = InputFactory.Client("TestClient", methods: [basicServiceMethod]);
-            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            await MockHelpers.LoadMockGeneratorAsync(
+                clients: () => [inputClient],
+                compilation: () => Helpers.GetCompilationFromDirectoryAsync());
             // create the client provider
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
-
-            // Replace the generated ClientDiagnostics property with one that has been renamed via custom
-            // code: its Name is different, but its OriginalName is still "ClientDiagnostics". The type is
-            // also non-framework, matching how a custom-declared property is modeled.
-            var renamedClientDiagnostics = new PropertyProvider(
-                $"The ClientDiagnostics is used to provide tracing support for the client library.",
-                MethodSignatureModifiers.Internal,
-                new CSharpType(typeof(object)),
-                "RenamedDiagnostics",
-                new AutoPropertyBody(false),
-                clientProvider!);
-            MockHelpers.SetOriginalName(renamedClientDiagnostics, ClientDiagnosticsPropertyName);
-            // NOTE: OriginalName is set via reflection because this test project lacks custom-code test
-            // infra to load a real [CodeGenMember] rename. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60907.
-            clientProvider!.Update(properties: [renamedClientDiagnostics]);
+            Assert.IsNotNull(clientProvider!.CustomCodeView);
+            Assert.AreEqual(
+                ClientDiagnosticsPropertyName,
+                clientProvider.CanonicalView.Properties
+                    .Single(p => p.Name == "RenamedDiagnostics")
+                    .OriginalName);
 
             // create a protocol method to test the visitor
             var methodSignature = new MethodSignature(

@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Cdn
     public enum FrontDoorCertificateType
     {
         /// <summary> CustomerCertificate. </summary>
-        CustomerCertificate,
+        CustomerCertificate = 0,
         /// <summary> ManagedCertificate. </summary>
-        ManagedCertificate,
+        ManagedCertificate = 1,
         /// <summary> AzureFirstPartyManagedCertificate. </summary>
-        AzureFirstPartyManagedCertificate
+        AzureFirstPartyManagedCertificate = 2
     }
 }
