@@ -14,9 +14,9 @@ namespace Azure.Provisioning.MySql
     {
         /// <summary> SystemDefault. </summary>
         [DataMember(Name = "system-default")]
-        SystemDefault,
+        SystemDefault = 0,
         /// <summary> UserOverride. </summary>
         [DataMember(Name = "user-override")]
-        UserOverride
+        UserOverride = 1
     }
 }

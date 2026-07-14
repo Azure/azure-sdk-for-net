@@ -11,16 +11,16 @@ namespace Azure.Provisioning.Batch
     public enum ContainerHostDataPath
     {
         /// <summary> The path for multi-instances task to shared their files. </summary>
-        Shared,
+        Shared = 0,
         /// <summary> The path for start task. </summary>
-        Startup,
+        Startup = 1,
         /// <summary> The path contains all virtual file systems are mounted on this node. </summary>
-        VfsMounts,
+        VfsMounts = 2,
         /// <summary> The task path. </summary>
-        Task,
+        Task = 3,
         /// <summary> The job-prep task path. </summary>
-        JobPrep,
+        JobPrep = 4,
         /// <summary> The applications path. </summary>
-        Applications
+        Applications = 5
     }
 }

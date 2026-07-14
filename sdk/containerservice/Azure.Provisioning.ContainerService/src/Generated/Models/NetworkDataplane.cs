@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ContainerService
     {
         /// <summary> Use Azure network dataplane. </summary>
         [DataMember(Name = "azure")]
-        Azure,
+        Azure = 0,
         /// <summary> Use Cilium network dataplane. See [Azure CNI Powered by Cilium](https://learn.microsoft.com/azure/aks/azure-cni-powered-by-cilium) for more information. </summary>
         [DataMember(Name = "cilium")]
-        Cilium
+        Cilium = 1
     }
 }

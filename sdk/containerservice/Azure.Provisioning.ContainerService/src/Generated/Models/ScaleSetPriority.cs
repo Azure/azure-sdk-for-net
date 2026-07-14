@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum ScaleSetPriority
     {
         /// <summary> Spot priority VMs will be used. There is no SLA for spot nodes. See [spot on AKS](https://docs.microsoft.com/azure/aks/spot-node-pool) for more information. </summary>
-        Spot,
+        Spot = 0,
         /// <summary> Regular VMs will be used. </summary>
-        Regular
+        Regular = 1
     }
 }

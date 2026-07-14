@@ -14,18 +14,18 @@ namespace Azure.Provisioning.KeyVault
     {
         /// <summary> StandardB1. </summary>
         [DataMember(Name = "Standard_B1")]
-        StandardB1,
+        StandardB1 = 0,
         /// <summary> CustomB32. </summary>
         [DataMember(Name = "Custom_B32")]
-        CustomB32,
+        CustomB32 = 1,
         /// <summary> CustomB6. </summary>
         [DataMember(Name = "Custom_B6")]
-        CustomB6,
+        CustomB6 = 2,
         /// <summary> CustomC42. </summary>
         [DataMember(Name = "Custom_C42")]
-        CustomC42,
+        CustomC42 = 3,
         /// <summary> CustomC10. </summary>
         [DataMember(Name = "Custom_C10")]
-        CustomC10
+        CustomC10 = 4
     }
 }
