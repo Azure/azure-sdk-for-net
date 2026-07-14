@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> List of errors found during analysis. </summary>
-        public IList<NginxDeploymentWafPolicyError> Errors { get; }
+        public IList<NginxDeploymentWafPolicyError> Errors { get; } = new ChangeTrackingList<NginxDeploymentWafPolicyError>();
     }
 }

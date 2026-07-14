@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Cdn
     public enum CdnManagedCertificateType
     {
         /// <summary> Shared. </summary>
-        Shared,
+        Shared = 0,
         /// <summary> Dedicated. </summary>
-        Dedicated
+        Dedicated = 1
     }
 }

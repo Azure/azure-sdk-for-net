@@ -9,6 +9,12 @@ parameters:
   - name: Condition
     type: string
     default: succeeded()
+  # Language-specific steps that run (in the resolve job) before the package-detection script.
+  # Repos whose Get-AllPackageInfoFromRepo needs tooling set up first (e.g. Python installing
+  # azure-sdk-tools from an authenticated feed) pass those steps here. Default is none.
+  - name: PreSteps
+    type: stepList
+    default: []
 
 stages:
   # Post-merge auto-release preparation, shared across language repos (this file lives in the synced
@@ -21,8 +27,8 @@ stages:
   # fixed cross-language output contract. Downstream release stages read outputs as:
   #   condition:  dependencies.AutoReleasePrepare.outputs['ResolveAutoReleasePackages.resolve.<var>']
   #   variables:  stageDependencies.AutoReleasePrepare.ResolveAutoReleasePackages.outputs['resolve.<var>']
-  # Emitted variables: AutoReleasePrNumber, AutoReleaseLabelPresent, HasAutoReleaseArtifacts,
-  # AutoReleaseArtifactsJson, and ReleaseArtifact_<safeName> per declared artifact.
+  # Emitted variables: HasAutoReleaseArtifacts (the single eligibility gate), AutoReleaseArtifactsJson,
+  # and ReleaseArtifact_<safeName> per declared artifact.
   - stage: AutoReleasePrepare
     displayName: Auto-release prepare
     dependsOn: ${{ parameters.DependsOn }}
@@ -43,6 +49,10 @@ stages:
             fetchDepth: 1
 
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+
+          # Optional language-specific environment setup (e.g. Python: UsePythonVersion + feed auth so
+          # the in-script azure-sdk-tools install resolves from an authenticated, reachable feed).
+          - ${{ parameters.PreSteps }}
 
           - task: PowerShell@2
             name: resolve
