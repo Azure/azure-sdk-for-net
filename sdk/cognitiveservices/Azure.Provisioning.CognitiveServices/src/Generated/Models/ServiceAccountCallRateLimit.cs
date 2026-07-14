@@ -22,7 +22,7 @@ namespace Azure.Provisioning.CognitiveServices
         {
         }
 
-        /// <summary> Gets or sets the Count. </summary>
+        /// <summary> Gets the Count. </summary>
         public BicepValue<float> Count
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _count;
             }
-            set
-            {
-                Initialize();
-                _count.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the RenewalPeriod. </summary>
+        /// <summary> Gets the RenewalPeriod. </summary>
         public BicepValue<float> RenewalPeriod
         {
             get
@@ -45,25 +40,15 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _renewalPeriod;
             }
-            set
-            {
-                Initialize();
-                _renewalPeriod.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Rules. </summary>
+        /// <summary> Gets the Rules. </summary>
         public BicepList<ServiceAccountThrottlingRule> Rules
         {
             get
             {
                 Initialize();
                 return _rules;
-            }
-            set
-            {
-                Initialize();
-                _rules.Assign(value);
             }
         }
 

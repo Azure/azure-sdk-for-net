@@ -25,7 +25,7 @@ namespace Azure.Provisioning.CognitiveServices
         {
         }
 
-        /// <summary> Gets or sets the Key. </summary>
+        /// <summary> Gets the Key. </summary>
         public BicepValue<string> Key
         {
             get
@@ -33,14 +33,9 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _key;
             }
-            set
-            {
-                Initialize();
-                _key.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the RenewalPeriod. </summary>
+        /// <summary> Gets the RenewalPeriod. </summary>
         public BicepValue<float> RenewalPeriod
         {
             get
@@ -48,14 +43,9 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _renewalPeriod;
             }
-            set
-            {
-                Initialize();
-                _renewalPeriod.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Count. </summary>
+        /// <summary> Gets the Count. </summary>
         public BicepValue<float> Count
         {
             get
@@ -63,14 +53,9 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _count;
             }
-            set
-            {
-                Initialize();
-                _count.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the MinCount. </summary>
+        /// <summary> Gets the MinCount. </summary>
         public BicepValue<float> MinCount
         {
             get
@@ -78,14 +63,9 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _minCount;
             }
-            set
-            {
-                Initialize();
-                _minCount.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the IsDynamicThrottlingEnabled. </summary>
+        /// <summary> Gets the IsDynamicThrottlingEnabled. </summary>
         public BicepValue<bool> IsDynamicThrottlingEnabled
         {
             get
@@ -93,25 +73,15 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _isDynamicThrottlingEnabled;
             }
-            set
-            {
-                Initialize();
-                _isDynamicThrottlingEnabled.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the MatchPatterns. </summary>
+        /// <summary> Gets the MatchPatterns. </summary>
         public BicepList<ServiceAccountThrottlingMatchPattern> MatchPatterns
         {
             get
             {
                 Initialize();
                 return _matchPatterns;
-            }
-            set
-            {
-                Initialize();
-                _matchPatterns.Assign(value);
             }
         }
 

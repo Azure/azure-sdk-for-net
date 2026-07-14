@@ -21,7 +21,7 @@ namespace Azure.Provisioning.CognitiveServices
         {
         }
 
-        /// <summary> Gets or sets the Path. </summary>
+        /// <summary> Gets the Path. </summary>
         public BicepValue<string> Path
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _path;
             }
-            set
-            {
-                Initialize();
-                _path.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Method. </summary>
+        /// <summary> Gets the Method. </summary>
         public BicepValue<string> Method
         {
             get
             {
                 Initialize();
                 return _method;
-            }
-            set
-            {
-                Initialize();
-                _method.Assign(value);
             }
         }
 

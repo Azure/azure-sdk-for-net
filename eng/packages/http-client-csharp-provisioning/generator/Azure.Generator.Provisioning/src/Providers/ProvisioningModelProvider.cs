@@ -47,14 +47,54 @@ namespace Azure.Generator.Provisioning.Providers
 
         protected override CSharpType? BuildBaseType()
         {
-            // Derived discriminated types inherit from their base model type
+            if (CustomCodeView?.BaseType != null)
+            {
+                var customBaseType = CustomCodeView.BaseType;
+                if (string.IsNullOrEmpty(customBaseType.Namespace))
+                {
+                    if (TryResolveTypeProviderByName(customBaseType.Name, out var provider))
+                    {
+                        return provider.Type;
+                    }
+
+                    foreach (var model in ProvisioningGenerator.Instance.InputLibrary.InputNamespace.Models
+                        .Where(model => string.Equals(model.Name, customBaseType.Name, StringComparison.Ordinal)
+                            || string.Equals(model.Name.ToIdentifierName(), customBaseType.Name, StringComparison.Ordinal)))
+                    {
+                        ProvisioningGenerator.Instance.TypeFactory.CreateModel(model);
+                    }
+
+                    if (TryResolveTypeProviderByName(customBaseType.Name, out provider))
+                    {
+                        return provider.Type;
+                    }
+                }
+
+                if (ProvisioningGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(customBaseType, out var mappedProvider)
+                    && mappedProvider != null)
+                {
+                    return mappedProvider.Type;
+                }
+
+                return customBaseType;
+            }
+
+            // Derived discriminated types inherit from their base model type.
             if (_inputModel.DiscriminatorValue != null && _inputModel.BaseModel != null)
             {
-                var baseProvider = CodeModelGenerator.Instance.TypeFactory.CreateModel(_inputModel.BaseModel);
+                var baseProvider = ProvisioningGenerator.Instance.TypeFactory.CreateModel(_inputModel.BaseModel);
                 if (baseProvider != null)
                     return baseProvider.Type;
             }
             return new CSharpType(typeof(ProvisionableConstruct));
+        }
+
+        private static bool TryResolveTypeProviderByName(string name, out TypeProvider provider)
+        {
+            provider = ProvisioningGenerator.Instance.TypeFactory.CSharpTypeMap.Values
+                .OfType<TypeProvider>()
+                .FirstOrDefault(p => string.Equals(p.Name, name, StringComparison.Ordinal))!;
+            return provider != null;
         }
 
         /// <inheritdoc/>
@@ -82,7 +122,7 @@ namespace Azure.Generator.Provisioning.Providers
 
             // Collect properties from the model and its base chain.
             // Non-discriminated models use ProvisionableConstruct as C# base (not the TypeSpec base),
-            // so inherited properties must be explicitly collected here.
+            // so inherited properties must be explicitly collected here unless custom code supplies the base type.
             var model = _inputModel;
             while (model != null)
             {
@@ -95,8 +135,8 @@ namespace Azure.Generator.Provisioning.Providers
                     if (property != null)
                         properties.Add(property);
                 }
-                // Discriminated types use C# inheritance, so only collect own properties
-                if (_inputModel.DiscriminatorValue != null) break;
+                // Discriminated types and custom-base types use C# inheritance, so only collect own properties.
+                if (_inputModel.DiscriminatorValue != null || CustomCodeView?.BaseType != null) break;
                 model = model.BaseModel;
             }
             return [.. properties];

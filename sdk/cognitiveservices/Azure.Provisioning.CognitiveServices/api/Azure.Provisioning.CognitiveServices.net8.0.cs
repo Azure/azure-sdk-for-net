@@ -689,17 +689,17 @@ namespace Azure.Provisioning.CognitiveServices
     }
     public partial class CognitiveServicesDeletedAccount : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        internal CognitiveServicesDeletedAccount() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public CognitiveServicesDeletedAccount(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.CognitiveServices.CognitiveServicesAccountProperties Properties { get { throw null; } }
-        public Azure.Provisioning.CognitiveServices.CognitiveServicesSku Sku { get { throw null; } }
+        public Azure.Provisioning.CognitiveServices.CognitiveServicesAccountProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.CognitiveServices.CognitiveServicesSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.CognitiveServices.CognitiveServicesBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.CognitiveServices.CognitiveServicesBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
@@ -756,11 +756,9 @@ namespace Azure.Provisioning.CognitiveServices
             public static readonly string V2026_05_01;
         }
     }
-    public partial class CognitiveServicesEncryptionScopeProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class CognitiveServicesEncryptionScopeProperties : Azure.Provisioning.CognitiveServices.ServiceAccountEncryptionProperties
     {
         public CognitiveServicesEncryptionScopeProperties() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.ServiceAccountEncryptionKeySource> KeySource { get { throw null; } set { } }
-        public Azure.Provisioning.CognitiveServices.CognitiveServicesKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.EncryptionScopeProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.EncryptionScopeState> State { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -1901,9 +1899,9 @@ namespace Azure.Provisioning.CognitiveServices
     public partial class ServiceAccountCallRateLimit : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceAccountCallRateLimit() { }
-        public Azure.Provisioning.BicepValue<float> Count { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<float> RenewalPeriod { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.ServiceAccountThrottlingRule> Rules { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<float> Count { get { throw null; } }
+        public Azure.Provisioning.BicepValue<float> RenewalPeriod { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.ServiceAccountThrottlingRule> Rules { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ServiceAccountEncryptionKeySource
@@ -1955,19 +1953,19 @@ namespace Azure.Provisioning.CognitiveServices
     public partial class ServiceAccountThrottlingMatchPattern : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceAccountThrottlingMatchPattern() { }
-        public Azure.Provisioning.BicepValue<string> Method { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Path { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Method { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Path { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ServiceAccountThrottlingRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceAccountThrottlingRule() { }
-        public Azure.Provisioning.BicepValue<float> Count { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsDynamicThrottlingEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Key { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.ServiceAccountThrottlingMatchPattern> MatchPatterns { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<float> MinCount { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<float> RenewalPeriod { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<float> Count { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsDynamicThrottlingEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Key { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.CognitiveServices.ServiceAccountThrottlingMatchPattern> MatchPatterns { get { throw null; } }
+        public Azure.Provisioning.BicepValue<float> MinCount { get { throw null; } }
+        public Azure.Provisioning.BicepValue<float> RenewalPeriod { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ServiceAccountUserOwnedStorage : Azure.Provisioning.Primitives.ProvisionableConstruct

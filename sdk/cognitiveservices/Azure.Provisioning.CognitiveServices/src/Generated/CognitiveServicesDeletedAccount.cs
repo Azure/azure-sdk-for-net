@@ -35,7 +35,7 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new CognitiveServicesDeletedAccount. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal CognitiveServicesDeletedAccount(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts", resourceVersion ?? "2026-05-01")
+        public CognitiveServicesDeletedAccount(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts", resourceVersion ?? "2026-05-01")
         {
         }
 
@@ -74,7 +74,7 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Gets the Tags. </summary>
+        /// <summary> Gets or sets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
             get
@@ -82,9 +82,14 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _tags;
             }
+            set
+            {
+                Initialize();
+                _tags.Assign(value);
+            }
         }
 
-        /// <summary> Gets the Location. </summary>
+        /// <summary> Gets or sets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
@@ -92,15 +97,25 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _location;
             }
+            set
+            {
+                Initialize();
+                _location.Assign(value);
+            }
         }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         public CognitiveServicesAccountProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -114,7 +129,7 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Gets the Kind. </summary>
+        /// <summary> Gets or sets the Kind. </summary>
         public BicepValue<string> Kind
         {
             get
@@ -122,9 +137,14 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _kind;
             }
+            set
+            {
+                Initialize();
+                _kind.Assign(value);
+            }
         }
 
-        /// <summary> Gets the Sku. </summary>
+        /// <summary> Gets or sets the Sku. </summary>
         public CognitiveServicesSku Sku
         {
             get
@@ -132,15 +152,25 @@ namespace Azure.Provisioning.CognitiveServices
                 Initialize();
                 return _sku;
             }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _sku, value);
+            }
         }
 
-        /// <summary> Gets the Identity. </summary>
+        /// <summary> Gets or sets the Identity. </summary>
         public ManagedServiceIdentity Identity
         {
             get
             {
                 Initialize();
                 return _identity;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _identity, value);
             }
         }
 
@@ -152,7 +182,7 @@ namespace Azure.Provisioning.CognitiveServices
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<CognitiveServicesAccountProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });

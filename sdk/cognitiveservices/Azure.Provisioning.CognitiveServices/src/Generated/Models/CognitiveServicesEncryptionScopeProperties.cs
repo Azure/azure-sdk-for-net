@@ -6,17 +6,14 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CognitiveServices
 {
     /// <summary> Properties to EncryptionScope. </summary>
-    public partial class CognitiveServicesEncryptionScopeProperties : ProvisionableConstruct
+    public partial class CognitiveServicesEncryptionScopeProperties : ServiceAccountEncryptionProperties
     {
         private BicepValue<EncryptionScopeProvisioningState> _provisioningState;
         private BicepValue<EncryptionScopeState> _state;
-        private CognitiveServicesKeyVaultProperties _keyVaultProperties;
-        private BicepValue<ServiceAccountEncryptionKeySource> _keySource;
 
         /// <summary> Creates a new CognitiveServicesEncryptionScopeProperties. </summary>
         public CognitiveServicesEncryptionScopeProperties()
@@ -48,44 +45,12 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Gets or sets the KeyVaultProperties. </summary>
-        public CognitiveServicesKeyVaultProperties KeyVaultProperties
-        {
-            get
-            {
-                Initialize();
-                return _keyVaultProperties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _keyVaultProperties, value);
-            }
-        }
-
-        /// <summary> Gets or sets the KeySource. </summary>
-        public BicepValue<ServiceAccountEncryptionKeySource> KeySource
-        {
-            get
-            {
-                Initialize();
-                return _keySource;
-            }
-            set
-            {
-                Initialize();
-                _keySource.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CognitiveServicesEncryptionScopeProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<EncryptionScopeProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _state = DefineProperty<EncryptionScopeState>(nameof(State), new string[] { "state" });
-            _keyVaultProperties = DefineModelProperty<CognitiveServicesKeyVaultProperties>(nameof(KeyVaultProperties), new string[] { "keyVaultProperties" });
-            _keySource = DefineProperty<ServiceAccountEncryptionKeySource>(nameof(KeySource), new string[] { "keySource" });
             DefineAdditionalProperties();
         }
 
