@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Indicate whether volume is nocopy. </summary>
         [WirePath("volume.nocopy")]
-        public bool? Nocopy
+        public bool? VolumeNocopy
         {
             get
             {

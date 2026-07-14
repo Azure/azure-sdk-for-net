@@ -6943,10 +6943,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="target"> Target of the mount. For bind mounts this is the path in the container. </param>
         /// <param name="consistency"> Consistency of the volume. </param>
         /// <param name="bind"> Bind Options of the mount. </param>
-        /// <param name="nocopy"> Indicate whether volume is nocopy. </param>
+        /// <param name="volumeNocopy"> Indicate whether volume is nocopy. </param>
         /// <param name="tmpfsSize"> Mention the Tmpfs size. </param>
         /// <returns> A new <see cref="Models.VolumeDefinition"/> instance for mocking. </returns>
-        public static VolumeDefinition VolumeDefinition(VolumeDefinitionType? definitionType = default, bool? readOnly = default, string source = default, string target = default, string consistency = default, MountBindOptions bind = default, bool? nocopy = default, int? tmpfsSize = default)
+        public static VolumeDefinition VolumeDefinition(VolumeDefinitionType? definitionType = default, bool? readOnly = default, string source = default, string target = default, string consistency = default, MountBindOptions bind = default, bool? volumeNocopy = default, int? tmpfsSize = default)
         {
             return new VolumeDefinition(
                 definitionType,
@@ -6955,7 +6955,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 target,
                 consistency,
                 bind,
-                nocopy is null ? default : new VolumeOptions(nocopy, default),
+                volumeNocopy is null ? default : new VolumeOptions(volumeNocopy, default),
                 tmpfsSize is null ? default : new TmpfsOptions(tmpfsSize, default),
                 default);
         }
