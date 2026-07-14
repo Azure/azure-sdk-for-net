@@ -65,9 +65,10 @@ namespace Azure.AI.VoiceLive
         /// </param>
         /// <param name="agent"> The agent configuration for the session, if applicable. </param>
         /// <param name="id"> The unique identifier for the session. </param>
+        /// <param name="expiresAt"> Expiration time for the session. This value is set by the server and cannot be changed with `session.update`. </param>
         /// <param name="turnDetection"> Type of turn detection to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveSessionResponse(string model, IList<InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, bool? parallelToolCalls, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, ReasoningEffort? reasoningEffort, BinaryData interimResponse, IList<SessionIncludeOption> include, IDictionary<string, string> metadata, RespondingAgentOptions agent, string id, BinaryData turnDetection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveSessionResponse(string model, IList<InteractionModality> modalities, AnimationOptions animation, VoiceProvider voice, string instructions, int? inputAudioSamplingRate, InputAudioFormat? inputAudioFormat, OutputAudioFormat? outputAudioFormat, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfiguration avatar, AudioInputTranscriptionOptions inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, ToolChoiceOption toolChoice, bool? parallelToolCalls, float? temperature, MaxResponseOutputTokensOption maxResponseOutputTokens, ReasoningEffort? reasoningEffort, BinaryData interimResponse, IList<SessionIncludeOption> include, IDictionary<string, string> metadata, RespondingAgentOptions agent, string id, DateTimeOffset? expiresAt, BinaryData turnDetection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Modalities = modalities;
@@ -93,6 +94,7 @@ namespace Azure.AI.VoiceLive
             Metadata = metadata;
             Agent = agent;
             Id = id;
+            ExpiresAt = expiresAt;
             _turnDetection = turnDetection;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -207,5 +209,8 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> The unique identifier for the session. </summary>
         public string Id { get; set; }
+
+        /// <summary> Expiration time for the session. This value is set by the server and cannot be changed with `session.update`. </summary>
+        public DateTimeOffset? ExpiresAt { get; set; }
     }
 }

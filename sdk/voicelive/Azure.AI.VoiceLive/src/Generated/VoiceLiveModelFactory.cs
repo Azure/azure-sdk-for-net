@@ -349,7 +349,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Top-level union for end-of-utterance (EOU) semantic detection configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.AzureSemanticEouDetection"/>, <see cref="VoiceLive.AzureSemanticEouDetectionEn"/>, <see cref="VoiceLive.AzureSemanticEouDetectionMultilingual"/>, and <see cref="VoiceLive.SmartEndOfTurnDetection"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.AzureSemanticEouDetection"/>, <see cref="VoiceLive.AzureSemanticEouDetectionEn"/>, and <see cref="VoiceLive.AzureSemanticEouDetectionMultilingual"/>.
         /// </summary>
         /// <param name="model"></param>
         /// <returns> A new <see cref="VoiceLive.EouDetection"/> instance for mocking. </returns>
@@ -374,19 +374,6 @@ namespace Azure.AI.VoiceLive
         public static AzureSemanticEouDetectionMultilingual AzureSemanticEouDetectionMultilingual(EouThresholdLevel? thresholdLevel = default, float? timeoutMs = default)
         {
             return new AzureSemanticEouDetectionMultilingual(EouDetectionModel.SemanticDetectionV1Multilingual, additionalBinaryDataProperties: null, thresholdLevel, timeoutMs);
-        }
-
-        /// <summary>
-        /// Audio-based end-of-turn detection. Operates directly on the input audio
-        /// stream rather than text. Use `threshold_level` and `timeout_ms` to tune
-        /// detection.
-        /// </summary>
-        /// <param name="thresholdLevel"> Threshold level setting. One of `low`, `medium`, `high`, or `default`. </param>
-        /// <param name="timeoutMs"> Timeout in milliseconds. </param>
-        /// <returns> A new <see cref="VoiceLive.SmartEndOfTurnDetection"/> instance for mocking. </returns>
-        public static SmartEndOfTurnDetection SmartEndOfTurnDetection(EouThresholdLevel? thresholdLevel = default, int? timeoutMs = default)
-        {
-            return new SmartEndOfTurnDetection(EouDetectionModel.SmartEndOfTurnDetection, additionalBinaryDataProperties: null, thresholdLevel, timeoutMs);
         }
 
         /// <summary> Base model for VAD-based turn detection. </summary>
@@ -1465,7 +1452,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// A voicelive server event.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionUpdateError"/>, <see cref="VoiceLive.ServerEventWarning"/>, <see cref="VoiceLive.SessionUpdateSessionCreated"/>, <see cref="VoiceLive.SessionUpdateSessionUpdated"/>, <see cref="VoiceLive.SessionUpdateAvatarConnecting"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCommitted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCleared"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="VoiceLive.SessionUpdateConversationItemCreated"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/>, <see cref="VoiceLive.SessionUpdateConversationItemDeleted"/>, <see cref="VoiceLive.SessionUpdateResponseCreated"/>, <see cref="VoiceLive.SessionUpdateResponseDone"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemAdded"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemDone"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartAdded"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartDone"/>, <see cref="VoiceLive.SessionUpdateResponseTextDelta"/>, <see cref="VoiceLive.SessionUpdateResponseTextDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDone"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="VoiceLive.SessionUpdateConversationItemRetrieved"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsInProgress"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsCompleted"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsFailed"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallInProgress"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallCompleted"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallFailed"/>, <see cref="VoiceLive.ServerEventSessionAvatarSwitchToSpeaking"/>, <see cref="VoiceLive.ServerEventSessionAvatarSwitchToIdle"/>, <see cref="VoiceLive.ServerEventResponseVideoDelta"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallSearching"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallInProgress"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallCompleted"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallSearching"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallInProgress"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallCompleted"/>, <see cref="VoiceLive.ServerEventOutputAudioBufferCleared"/>, <see cref="VoiceLive.ServerEventResponseAudioTranscriptAnnotationAdded"/>, <see cref="VoiceLive.ServerEventResponseInvocationDelta"/>, <see cref="VoiceLive.ServerEventRtcCallSdpCreated"/>, <see cref="VoiceLive.ServerEventRtcCallError"/>, <see cref="VoiceLive.ServerEventOutputAudioBufferStarted"/>, and <see cref="VoiceLive.ServerEventOutputAudioBufferStopped"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionUpdateError"/>, <see cref="VoiceLive.ServerEventWarning"/>, <see cref="VoiceLive.SessionUpdateSessionCreated"/>, <see cref="VoiceLive.SessionUpdateSessionUpdated"/>, <see cref="VoiceLive.SessionUpdateAvatarConnecting"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCommitted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCleared"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="VoiceLive.SessionUpdateConversationItemCreated"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/>, <see cref="VoiceLive.SessionUpdateConversationItemDeleted"/>, <see cref="VoiceLive.SessionUpdateResponseCreated"/>, <see cref="VoiceLive.SessionUpdateResponseDone"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemAdded"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemDone"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartAdded"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartDone"/>, <see cref="VoiceLive.SessionUpdateResponseTextDelta"/>, <see cref="VoiceLive.SessionUpdateResponseTextDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDone"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="VoiceLive.SessionUpdateConversationItemRetrieved"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsInProgress"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsCompleted"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsFailed"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallInProgress"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallCompleted"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallFailed"/>, <see cref="VoiceLive.ServerEventSessionAvatarSwitchToSpeaking"/>, <see cref="VoiceLive.ServerEventSessionAvatarSwitchToIdle"/>, <see cref="VoiceLive.ServerEventResponseVideoDelta"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallSearching"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallInProgress"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallCompleted"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallSearching"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallInProgress"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallCompleted"/>, <see cref="VoiceLive.ServerEventOutputAudioBufferCleared"/>, <see cref="VoiceLive.ServerEventResponseAudioTranscriptAnnotationAdded"/>, and <see cref="VoiceLive.ServerEventResponseInvocationDelta"/>.
         /// </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
@@ -2457,61 +2444,6 @@ namespace Azure.AI.VoiceLive
             delta ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new ServerEventResponseInvocationDelta(ServerEventType.ResponseInvocationDelta, eventId, additionalBinaryDataProperties: null, delta);
-        }
-
-        /// <summary> Returned when the WebRTC SDP negotiation completes successfully. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="rtcCallId"> The unique identifier for this RTC call session. </param>
-        /// <param name="sdpAnswer"> The SDP answer from the server for WebRTC negotiation. </param>
-        /// <returns> A new <see cref="VoiceLive.ServerEventRtcCallSdpCreated"/> instance for mocking. </returns>
-        public static ServerEventRtcCallSdpCreated ServerEventRtcCallSdpCreated(string eventId = default, string rtcCallId = default, string sdpAnswer = default)
-        {
-            return new ServerEventRtcCallSdpCreated(ServerEventType.RtcCallSdpCreated, eventId, additionalBinaryDataProperties: null, rtcCallId, sdpAnswer);
-        }
-
-        /// <summary> Returned when a WebRTC call operation fails. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="operation"> The operation that caused the error (e.g., `rtc.call.sdp.create`). </param>
-        /// <param name="rtcCallId"> The RTC call identifier, if available. </param>
-        /// <param name="error"> The error details. </param>
-        /// <returns> A new <see cref="VoiceLive.ServerEventRtcCallError"/> instance for mocking. </returns>
-        public static ServerEventRtcCallError ServerEventRtcCallError(string eventId = default, string operation = default, string rtcCallId = default, RtcCallErrorDetails error = default)
-        {
-            return new ServerEventRtcCallError(
-                ServerEventType.RtcCallError,
-                eventId,
-                additionalBinaryDataProperties: null,
-                operation,
-                rtcCallId,
-                error);
-        }
-
-        /// <summary> Error details for RTC call errors. </summary>
-        /// <param name="type"> The error category: `invalid_request_error` or `server_error`. </param>
-        /// <param name="code"> A machine-readable error code. </param>
-        /// <param name="message"> A human-readable error description. </param>
-        /// <returns> A new <see cref="VoiceLive.RtcCallErrorDetails"/> instance for mocking. </returns>
-        public static RtcCallErrorDetails RtcCallErrorDetails(string @type = default, string code = default, string message = default)
-        {
-            return new RtcCallErrorDetails(@type, code, message, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Returned when model audio output starts playing. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="responseId"> The ID of the response whose audio started playing. </param>
-        /// <returns> A new <see cref="VoiceLive.ServerEventOutputAudioBufferStarted"/> instance for mocking. </returns>
-        public static ServerEventOutputAudioBufferStarted ServerEventOutputAudioBufferStarted(string eventId = default, string responseId = default)
-        {
-            return new ServerEventOutputAudioBufferStarted(ServerEventType.OutputAudioBufferStarted, eventId, additionalBinaryDataProperties: null, responseId);
-        }
-
-        /// <summary> Returned when model audio output finishes playing. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="responseId"> The ID of the response whose audio stopped playing. </param>
-        /// <returns> A new <see cref="VoiceLive.ServerEventOutputAudioBufferStopped"/> instance for mocking. </returns>
-        public static ServerEventOutputAudioBufferStopped ServerEventOutputAudioBufferStopped(string eventId = default, string responseId = default)
-        {
-            return new ServerEventOutputAudioBufferStopped(ServerEventType.OutputAudioBufferStopped, eventId, additionalBinaryDataProperties: null, responseId);
         }
 
         /// <summary> Echo cancellation configuration for server-side audio processing. </summary>

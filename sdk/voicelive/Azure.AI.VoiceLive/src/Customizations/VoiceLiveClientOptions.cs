@@ -12,7 +12,7 @@ namespace Azure.AI.VoiceLive
     /// <summary> Client options for <see cref="VoiceLiveClient"/>. </summary>
     public partial class VoiceLiveClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_10_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_07_15;
 
         /// <summary> Initializes a new instance of VoiceLiveClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -22,6 +22,7 @@ namespace Azure.AI.VoiceLive
             {
                 ServiceVersion.V2025_10_01 => "2025-10-01",
                 ServiceVersion.V2026_01_01_PREVIEW => "2026-01-01-preview",
+                ServiceVersion.V2026_07_15 => "2026-07-15",
                 _ => throw new NotSupportedException()
             };
 
@@ -39,7 +40,11 @@ namespace Azure.AI.VoiceLive
             /// <summary>
             /// 2026-01-01-preview version.
             /// </summary>
-            V2026_01_01_PREVIEW = 2
+            V2026_01_01_PREVIEW = 2,
+            /// <summary>
+            /// 2026-07-15 version.
+            /// </summary>
+            V2026_07_15 = 3
         }
 
         /// <summary>

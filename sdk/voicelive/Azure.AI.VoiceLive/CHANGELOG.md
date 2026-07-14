@@ -1,5 +1,21 @@
 # Release History
 
+## 1.2.0 (2026-07-14)
+
+### Features Added
+
+- Added `AzureRealtimeNativeVoice` and `AzureRealtimeNativeVoiceName` with 12 new voice options (Aarti, Andrew, Ava, Denise, Diya, Elsa, Florian, Francisca, Meera, Xiaoxiao, Ximena, Yunxi).
+- Added `ParallelToolCalls` property on `VoiceLiveSessionOptions`.
+- Added `Channels` and `ReferenceSource` (`EchoCancellationReferenceSource`) properties on `AudioEchoCancellation`.
+- Added streaming text input events: `ClientEventInputTextDelta`, `ClientEventInputTextDone`.
+- Added `ServerEventResponseInvocationDelta` for streaming invocation deltas.
+- Added `ExpiresAt` property on `VoiceLiveSessionResponse` (server-set session expiration time).
+- Added the `2026-07-15` GA service version (`VoiceLiveClientOptions.ServiceVersion.V2026_07_15`), which is now the default.
+
+### Other Changes
+
+- Updated samples to use `MCPApprovalKind`.
+
 ## 1.2.0-beta.2 (2026-06-16)
 
 ### Other Changes
