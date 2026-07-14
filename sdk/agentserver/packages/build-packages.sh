@@ -7,9 +7,10 @@
 #         alongside this script and README.md. Devs consuming a sample do NOT
 #         need to run this — the packages are checked in. See README.md.
 #
-# Packages included (Azure.AI.AgentServer.{Core, Responses}):
-#   - Core       — resilient-task + event-stream primitives
-#   - Responses  — Responses protocol HTTP host (depends on Core)
+# Packages included (Azure.AI.AgentServer.{Core, Responses, Invocations}):
+#   - Core         — resilient-task + event-stream primitives
+#   - Responses    — Responses protocol HTTP host (depends on Core)
+#   - Invocations  — Invocations protocol HTTP host (depends on Core)
 #
 # Versions are taken from each project's <Version> in its .csproj. We pass
 # -p:SkipDevBuildNumber=true so the repo's dev "-alpha.<date>" suffix is NOT
@@ -33,6 +34,7 @@ AGENTSERVER_ROOT="$(cd "$PACKAGES_DIR/.." && pwd)"
 PROJECTS=(
     "Azure.AI.AgentServer.Core/src/Azure.AI.AgentServer.Core.csproj"
     "Azure.AI.AgentServer.Responses/src/Azure.AI.AgentServer.Responses.csproj"
+    "Azure.AI.AgentServer.Invocations/src/Azure.AI.AgentServer.Invocations.csproj"
 )
 
 echo "==> Rebuilding preview NuGet packages into: $PACKAGES_DIR"

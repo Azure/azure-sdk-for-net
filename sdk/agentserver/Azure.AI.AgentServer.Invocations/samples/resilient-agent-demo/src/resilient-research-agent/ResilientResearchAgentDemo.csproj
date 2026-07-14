@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>ResilientResearchAgentDemo</AssemblyName>
+    <RootNamespace>ResilientResearchAgentDemo</RootNamespace>
+    <!-- OpenAI.Responses types (ResponseItem, CreateResponseOptions, StreamingResponse*Update)
+         are marked [Experimental] in the OpenAI .NET SDK. Suppress the diagnostic project-wide
+         since we intentionally depend on the Responses API for the per-subcall model calls. -->
+    <NoWarn>$(NoWarn);OPENAI001</NoWarn>
+    <!-- Demo app, not a shipping package. -->
+    <IsPackable>false</IsPackable>
+    <IsShipping>false</IsShipping>
+  </PropertyGroup>
+
+  <!--
+    ── SDK reference (the ".NET package drop") ───────────────────────────────
+    These are consumed from the local NuGet feed configured in nuget.config
+    (../packages, staged from sdk/agentserver/packages/ by ../../build.sh) — NOT a
+    ProjectReference into azure-sdk-for-net. That makes this sample portable:
+    copy it (with the .nupkg drop) into any repo and it restores unchanged.
+
+    The drop ships the unreleased resilient + steerable + streaming preview surface.
+    When the packages publish to nuget.org, delete the local source in nuget.config
+    and these resolve from nuget.org with no other change.
+  -->
+  <ItemGroup>
+    <!-- Invocations pulls Core transitively; Core is pinned explicitly because the
+         handler/producer use the resilient task + event-stream primitives directly. -->
+    <PackageReference Include="Azure.AI.AgentServer.Invocations" Version="1.0.0-beta.6" />
+    <PackageReference Include="Azure.AI.AgentServer.Core" Version="1.0.0-beta.27" />
+    <!-- Foundry SDK — provides AIProjectClient and ProjectOpenAIClient -->
+    <PackageReference Include="Azure.AI.Projects" Version="2.0.1" />
+    <!-- OpenAI bridge for Foundry — GetProjectResponsesClientForModel(), CreateResponseOptions, ResponseItem -->
+    <PackageReference Include="Azure.AI.Extensions.OpenAI" Version="2.0.0" />
+    <!-- Azure authentication via DefaultAzureCredential -->
+    <PackageReference Include="Azure.Identity" Version="1.21.0" />
+  </ItemGroup>
+
+</Project>

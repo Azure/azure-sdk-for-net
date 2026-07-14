@@ -1,0 +1,34 @@
+# Build artifacts
+**/bin/
+**/obj/
+
+# .NET user secrets
+**/.secrets/
+
+# Local settings
+**/*.user
+**/*.suo
+
+# IDE settings
+.vs/
+.vscode/
+**/.idea/
+
+# Test results
+**/TestResults/
+
+# Version control
+.git/
+.gitignore
+
+# Docker files
+.dockerignore
+
+# Docs
+README.md
+
+# Local environment (never bake credentials into the image)
+.env
+
+# NOTE: packages/ (the staged NuGet drop) and nuget.config are intentionally NOT
+# ignored — the Docker build restores the preview AgentServer packages from them.

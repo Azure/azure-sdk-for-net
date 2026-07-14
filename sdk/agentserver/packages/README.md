@@ -12,9 +12,11 @@ It is the .NET analogue of the Python demo's checked-in wheels
 |---------|---------|----------------|
 | `Azure.AI.AgentServer.Core` | `1.0.0-beta.27` | `sdk/agentserver/Azure.AI.AgentServer.Core` |
 | `Azure.AI.AgentServer.Responses` | `1.0.0-beta.7` | `sdk/agentserver/Azure.AI.AgentServer.Responses` |
+| `Azure.AI.AgentServer.Invocations` | `1.0.0-beta.6` | `sdk/agentserver/Azure.AI.AgentServer.Invocations` |
 
-`Azure.AI.AgentServer.Responses` depends on `Azure.AI.AgentServer.Core`, so both
-must be present in the feed together.
+`Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations` each depend
+on `Azure.AI.AgentServer.Core`, so Core must be present in the feed alongside
+whichever protocol host a sample consumes.
 
 ## Consumption (a local NuGet feed)
 
