@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.PowerPlatform.Models
 {
     /// <summary> The type of identity used for the EnterprisePolicy. Currently, the only supported type is 'SystemAssigned', which implicitly creates an identity. </summary>
-    public enum ResourceIdentityType
+    public enum EnterprisePolicyIdentityType
     {
         /// <summary> SystemAssigned. </summary>
         SystemAssigned,

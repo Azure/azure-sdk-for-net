@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PowerPlatform.Models
 {
     /// <summary> The encryption settings for a configuration store. </summary>
-    public partial class PropertiesEncryption
+    public partial class EnterprisePolicyEncryptionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PropertiesEncryption"/>. </summary>
-        public PropertiesEncryption()
+        /// <summary> Initializes a new instance of <see cref="EnterprisePolicyEncryptionProperties"/>. </summary>
+        public EnterprisePolicyEncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PropertiesEncryption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnterprisePolicyEncryptionProperties"/>. </summary>
         /// <param name="keyVault"> Key vault properties. </param>
         /// <param name="state"> The state of onboarding, which only appears in the response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PropertiesEncryption(KeyVaultProperties keyVault, State? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnterprisePolicyEncryptionProperties(PowerPlatformKeyVaultProperties keyVault, EnterprisePolicyOnboardingState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyVault = keyVault;
             State = state;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         }
 
         /// <summary> Key vault properties. </summary>
-        public KeyVaultProperties KeyVault { get; set; }
+        public PowerPlatformKeyVaultProperties KeyVault { get; set; }
 
         /// <summary> The state of onboarding, which only appears in the response. </summary>
-        public State? State { get; set; }
+        public EnterprisePolicyOnboardingState? State { get; set; }
     }
 }

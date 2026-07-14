@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PowerPlatform
         }
 
         /// <summary> The encryption settings for a configuration store. </summary>
-        public PropertiesEncryption Encryption
+        public EnterprisePolicyEncryptionProperties Encryption
         {
             get
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PowerPlatform
         }
 
         /// <summary> The health status of the resource. </summary>
-        public HealthStatus? HealthStatus
+        public EnterprisePolicyHealthStatus? HealthStatus
         {
             get
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PowerPlatform
         }
 
         /// <summary> lockbox configuration. </summary>
-        public State? LockboxState
+        public EnterprisePolicyOnboardingState? LockboxState
         {
             get
             {

@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.PowerPlatform
 {
     /// <summary></summary>
-    public partial class PrivateLinkResource : IJsonModel<PowerPlatformPrivateLinkResourceData>
+    public partial class PowerPlatformPrivateLinkResource : IJsonModel<PowerPlatformPrivateLinkResourceData>
     {
         private static IJsonModel<PowerPlatformPrivateLinkResourceData> s_dataDeserializationInstance;
 

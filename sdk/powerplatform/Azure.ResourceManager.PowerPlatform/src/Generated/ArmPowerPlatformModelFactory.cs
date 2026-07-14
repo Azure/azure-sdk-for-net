@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Models.PatchTrackedResourceData"/> instance for mocking. </returns>
-        public static PatchTrackedResourceData PatchTrackedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation? location = default)
+        /// <returns> A new <see cref="Models.PowerPlatformTrackedResourcePatch"/> instance for mocking. </returns>
+        public static PowerPlatformTrackedResourcePatch PowerPlatformTrackedResourcePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation? location = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PatchTrackedResourceData(
+            return new PowerPlatformTrackedResourcePatch(
                 id,
                 name,
                 resourceType,
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <param name="identity"> The identity of the EnterprisePolicy. </param>
         /// <param name="kind"> The kind (type) of Enterprise Policy. </param>
         /// <returns> A new <see cref="PowerPlatform.EnterprisePolicyData"/> instance for mocking. </returns>
-        public static EnterprisePolicyData EnterprisePolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string systemId = default, PropertiesEncryption encryption = default, HealthStatus? healthStatus = default, State? lockboxState = default, IEnumerable<VirtualNetworkProperties> networkInjectionVirtualNetworks = default, EnterprisePolicyIdentity identity = default, EnterprisePolicyKind kind = default)
+        public static EnterprisePolicyData EnterprisePolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string systemId = default, EnterprisePolicyEncryptionProperties encryption = default, EnterprisePolicyHealthStatus? healthStatus = default, EnterprisePolicyOnboardingState? lockboxState = default, IEnumerable<VirtualNetworkProperties> networkInjectionVirtualNetworks = default, EnterprisePolicyIdentity identity = default, EnterprisePolicyKind kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -127,26 +127,26 @@ namespace Azure.ResourceManager.PowerPlatform.Models
 
         /// <param name="keyVault"> Key vault properties. </param>
         /// <param name="state"> The state of onboarding, which only appears in the response. </param>
-        /// <returns> A new <see cref="Models.PropertiesEncryption"/> instance for mocking. </returns>
-        public static PropertiesEncryption PropertiesEncryption(KeyVaultProperties keyVault = default, State? state = default)
+        /// <returns> A new <see cref="Models.EnterprisePolicyEncryptionProperties"/> instance for mocking. </returns>
+        public static EnterprisePolicyEncryptionProperties EnterprisePolicyEncryptionProperties(PowerPlatformKeyVaultProperties keyVault = default, EnterprisePolicyOnboardingState? state = default)
         {
-            return new PropertiesEncryption(keyVault, state, default);
+            return new EnterprisePolicyEncryptionProperties(keyVault, state, default);
         }
 
-        /// <param name="id"> Uri of KeyVault. </param>
+        /// <param name="vaultUri"> Uri of KeyVault. </param>
         /// <param name="key"> Identity of the secret that includes name and version. </param>
-        /// <returns> A new <see cref="Models.KeyVaultProperties"/> instance for mocking. </returns>
-        public static KeyVaultProperties KeyVaultProperties(string id = default, KeyProperties key = default)
+        /// <returns> A new <see cref="Models.PowerPlatformKeyVaultProperties"/> instance for mocking. </returns>
+        public static PowerPlatformKeyVaultProperties PowerPlatformKeyVaultProperties(Uri vaultUri = default, PowerPlatformKeyProperties key = default)
         {
-            return new KeyVaultProperties(id, key, default);
+            return new PowerPlatformKeyVaultProperties(vaultUri, key, default);
         }
 
         /// <param name="name"> The identifier of the key vault key used to encrypt data. </param>
         /// <param name="version"> The version of the identity which will be used to access key vault. </param>
-        /// <returns> A new <see cref="Models.KeyProperties"/> instance for mocking. </returns>
-        public static KeyProperties KeyProperties(string name = default, string version = default)
+        /// <returns> A new <see cref="Models.PowerPlatformKeyProperties"/> instance for mocking. </returns>
+        public static PowerPlatformKeyProperties PowerPlatformKeyProperties(string name = default, string version = default)
         {
-            return new KeyProperties(name, version, default);
+            return new PowerPlatformKeyProperties(name, version, default);
         }
 
         /// <param name="id"> Uri of the virtual network. </param>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <param name="tenantId"> The tenant id associated with the EnterprisePolicy. </param>
         /// <param name="type"> The type of identity used for the EnterprisePolicy. Currently, the only supported type is 'SystemAssigned', which implicitly creates an identity. </param>
         /// <returns> A new <see cref="Models.EnterprisePolicyIdentity"/> instance for mocking. </returns>
-        public static EnterprisePolicyIdentity EnterprisePolicyIdentity(string systemAssignedIdentityPrincipalId = default, string tenantId = default, ResourceIdentityType? @type = default)
+        public static EnterprisePolicyIdentity EnterprisePolicyIdentity(Guid? systemAssignedIdentityPrincipalId = default, Guid? tenantId = default, EnterprisePolicyIdentityType? @type = default)
         {
             return new EnterprisePolicyIdentity(systemAssignedIdentityPrincipalId, tenantId, @type, default);
         }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <param name="lockboxState"> lockbox configuration. </param>
         /// <param name="networkInjectionVirtualNetworks"> Network injection configuration. </param>
         /// <returns> A new <see cref="Models.EnterprisePolicyPatch"/> instance for mocking. </returns>
-        public static EnterprisePolicyPatch EnterprisePolicyPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation? location = default, EnterprisePolicyIdentity identity = default, EnterprisePolicyKind? kind = default, string systemId = default, PropertiesEncryption encryption = default, HealthStatus? healthStatus = default, State? lockboxState = default, IEnumerable<VirtualNetworkProperties> networkInjectionVirtualNetworks = default)
+        public static EnterprisePolicyPatch EnterprisePolicyPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation? location = default, EnterprisePolicyIdentity identity = default, EnterprisePolicyKind? kind = default, string systemId = default, EnterprisePolicyEncryptionProperties encryption = default, EnterprisePolicyHealthStatus? healthStatus = default, EnterprisePolicyOnboardingState? lockboxState = default, IEnumerable<VirtualNetworkProperties> networkInjectionVirtualNetworks = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <returns> A new <see cref="PowerPlatform.PowerPlatformPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static PowerPlatformPrivateEndpointConnectionData PowerPlatformPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PowerPlatformPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, PowerPlatformPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
+        public static PowerPlatformPrivateEndpointConnectionData PowerPlatformPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PowerPlatformPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, PowerPlatformPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new PowerPlatformPrivateEndpointConnectionData(
                 id,

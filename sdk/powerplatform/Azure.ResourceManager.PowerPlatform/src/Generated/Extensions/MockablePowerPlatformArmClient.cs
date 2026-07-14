@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.PowerPlatform.Mocking
             return new EnterprisePolicyResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PowerPlatformPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PowerPlatformPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual PowerPlatformPrivateEndpointConnectionResource GetPowerPlatformPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            PowerPlatformPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new PowerPlatformPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PowerPlatformPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkResource"/> object. </returns>
-        public virtual PrivateLinkResource GetPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PowerPlatformPrivateLinkResource"/> object. </returns>
+        public virtual PowerPlatformPrivateLinkResource GetPowerPlatformPrivateLinkResource(ResourceIdentifier id)
         {
-            PrivateLinkResource.ValidateResourceId(id);
-            return new PrivateLinkResource(Client, id);
+            PowerPlatformPrivateLinkResource.ValidateResourceId(id);
+            return new PowerPlatformPrivateLinkResource(Client, id);
         }
     }
 }

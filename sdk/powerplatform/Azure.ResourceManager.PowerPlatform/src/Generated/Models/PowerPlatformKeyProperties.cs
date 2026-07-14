@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PowerPlatform.Models
 {
     /// <summary> Url and version of the KeyVault Secret. </summary>
-    public partial class KeyProperties
+    public partial class PowerPlatformKeyProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KeyProperties"/>. </summary>
-        public KeyProperties()
+        /// <summary> Initializes a new instance of <see cref="PowerPlatformKeyProperties"/>. </summary>
+        public PowerPlatformKeyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerPlatformKeyProperties"/>. </summary>
         /// <param name="name"> The identifier of the key vault key used to encrypt data. </param>
         /// <param name="version"> The version of the identity which will be used to access key vault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyProperties(string name, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PowerPlatformKeyProperties(string name, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Version = version;

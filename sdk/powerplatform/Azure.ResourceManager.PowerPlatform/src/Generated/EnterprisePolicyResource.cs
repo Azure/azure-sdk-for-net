@@ -669,11 +669,11 @@ namespace Azure.ResourceManager.PowerPlatform
             }
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnections in the <see cref="EnterprisePolicyResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        /// <summary> Gets a collection of PowerPlatformPrivateEndpointConnections in the <see cref="EnterprisePolicyResource"/>. </summary>
+        /// <returns> An object representing collection of PowerPlatformPrivateEndpointConnections and their operations over a PowerPlatformPrivateEndpointConnectionResource. </returns>
+        public virtual PowerPlatformPrivateEndpointConnectionCollection GetPowerPlatformPrivateEndpointConnections()
         {
-            return GetCachedClient(client => new PrivateEndpointConnectionCollection(client, Id));
+            return GetCachedClient(client => new PowerPlatformPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Gets a private endpoint connection. </summary>
@@ -682,11 +682,11 @@ namespace Azure.ResourceManager.PowerPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PowerPlatformPrivateEndpointConnectionResource>> GetPowerPlatformPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetPowerPlatformPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a private endpoint connection. </summary>
@@ -695,31 +695,18 @@ namespace Azure.ResourceManager.PowerPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<PowerPlatformPrivateEndpointConnectionResource> GetPowerPlatformPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetPowerPlatformPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateLinkResources in the <see cref="EnterprisePolicyResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
-        public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
+        /// <summary> Gets a collection of PowerPlatformPrivateLinkResources in the <see cref="EnterprisePolicyResource"/>. </summary>
+        /// <returns> An object representing collection of PowerPlatformPrivateLinkResources and their operations over a PowerPlatformPrivateLinkResource. </returns>
+        public virtual PowerPlatformPrivateLinkResourceCollection GetPowerPlatformPrivateLinkResources()
         {
-            return GetCachedClient(client => new PrivateLinkResourceCollection(client, Id));
-        }
-
-        /// <summary> Gets the private link resources that need to be created for an EnterprisePolicy. </summary>
-        /// <param name="groupName"> The name of the private link resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-
-            return await GetPrivateLinkResources().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new PowerPlatformPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary> Gets the private link resources that need to be created for an EnterprisePolicy. </summary>
@@ -728,11 +715,24 @@ namespace Azure.ResourceManager.PowerPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateLinkResource> GetPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PowerPlatformPrivateLinkResource>> GetPowerPlatformPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            return GetPrivateLinkResources().Get(groupName, cancellationToken);
+            return await GetPowerPlatformPrivateLinkResources().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the private link resources that need to be created for an EnterprisePolicy. </summary>
+        /// <param name="groupName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PowerPlatformPrivateLinkResource> GetPowerPlatformPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            return GetPowerPlatformPrivateLinkResources().Get(groupName, cancellationToken);
         }
     }
 }

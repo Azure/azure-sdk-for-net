@@ -17,7 +17,7 @@ using Azure.ResourceManager.PowerPlatform;
 namespace Azure.ResourceManager.PowerPlatform.Models
 {
     /// <summary> Definition of the account. </summary>
-    public partial class PowerPlatformAccountPatch : PatchTrackedResourceData, IJsonModel<PowerPlatformAccountPatch>
+    public partial class PowerPlatformAccountPatch : PowerPlatformTrackedResourcePatch, IJsonModel<PowerPlatformAccountPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

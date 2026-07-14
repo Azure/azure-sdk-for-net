@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <param name="tenantId"> The tenant id associated with the EnterprisePolicy. </param>
         /// <param name="type"> The type of identity used for the EnterprisePolicy. Currently, the only supported type is 'SystemAssigned', which implicitly creates an identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnterprisePolicyIdentity(string systemAssignedIdentityPrincipalId, string tenantId, ResourceIdentityType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnterprisePolicyIdentity(Guid? systemAssignedIdentityPrincipalId, Guid? tenantId, EnterprisePolicyIdentityType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SystemAssignedIdentityPrincipalId = systemAssignedIdentityPrincipalId;
             TenantId = tenantId;
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         }
 
         /// <summary> The principal id of EnterprisePolicy identity. </summary>
-        public string SystemAssignedIdentityPrincipalId { get; }
+        public Guid? SystemAssignedIdentityPrincipalId { get; }
 
         /// <summary> The tenant id associated with the EnterprisePolicy. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
 
         /// <summary> The type of identity used for the EnterprisePolicy. Currently, the only supported type is 'SystemAssigned', which implicitly creates an identity. </summary>
-        public ResourceIdentityType? Type { get; set; }
+        public EnterprisePolicyIdentityType? Type { get; set; }
     }
 }

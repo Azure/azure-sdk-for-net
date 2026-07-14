@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.PowerPlatform.Models
 {
     /// <summary> Definition of the EnterprisePolicy. </summary>
-    public partial class EnterprisePolicyPatch : PatchTrackedResourceData
+    public partial class EnterprisePolicyPatch : PowerPlatformTrackedResourcePatch
     {
         /// <summary> Initializes a new instance of <see cref="EnterprisePolicyPatch"/>. </summary>
         public EnterprisePolicyPatch()
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         }
 
         /// <summary> The encryption settings for a configuration store. </summary>
-        public PropertiesEncryption Encryption
+        public EnterprisePolicyEncryptionProperties Encryption
         {
             get
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         }
 
         /// <summary> The health status of the resource. </summary>
-        public HealthStatus? HealthStatus
+        public EnterprisePolicyHealthStatus? HealthStatus
         {
             get
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         }
 
         /// <summary> lockbox configuration. </summary>
-        public State? LockboxState
+        public EnterprisePolicyOnboardingState? LockboxState
         {
             get
             {

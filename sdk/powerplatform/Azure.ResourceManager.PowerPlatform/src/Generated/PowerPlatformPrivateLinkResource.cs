@@ -17,11 +17,11 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PowerPlatform
 {
     /// <summary>
-    /// A class representing a PrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EnterprisePolicyResource"/> using the GetPrivateLinkResources method.
+    /// A class representing a PowerPlatformPrivateLinkResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PowerPlatformPrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EnterprisePolicyResource"/> using the GetPowerPlatformPrivateLinkResources method.
     /// </summary>
-    public partial class PrivateLinkResource : ArmResource
+    public partial class PowerPlatformPrivateLinkResource : ArmResource
     {
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResources _privateLinkResourcesRestClient;
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.PowerPlatform
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.PowerPlatform/enterprisePolicies/privateLinkResources";
 
-        /// <summary> Initializes a new instance of PrivateLinkResource for mocking. </summary>
-        protected PrivateLinkResource()
+        /// <summary> Initializes a new instance of PowerPlatformPrivateLinkResource for mocking. </summary>
+        protected PowerPlatformPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerPlatformPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateLinkResource(ArmClient client, PowerPlatformPrivateLinkResourceData data) : this(client, data.Id)
+        internal PowerPlatformPrivateLinkResource(ArmClient client, PowerPlatformPrivateLinkResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerPlatformPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PowerPlatformPrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string privateLinkResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string powerPlatformPrivateLinkResourceApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PowerPlatform", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, privateLinkResourceApiVersion ?? "2020-10-30-preview");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, powerPlatformPrivateLinkResourceApiVersion ?? "2020-10-30-preview");
             ValidateResourceId(id);
         }
 
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.PowerPlatform
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateLinkResource"/>. </description>
+        /// <description> <see cref="PowerPlatformPrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PowerPlatformPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkResource.Get");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PowerPlatformPrivateLinkResource.Get");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PowerPlatform
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PowerPlatformPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.PowerPlatform
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateLinkResource"/>. </description>
+        /// <description> <see cref="PowerPlatformPrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PowerPlatformPrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkResource.Get");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PowerPlatformPrivateLinkResource.Get");
             scope.Start();
             try
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.PowerPlatform
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PowerPlatformPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -14,18 +14,18 @@ using Azure.ResourceManager.PowerPlatform;
 namespace Azure.ResourceManager.PowerPlatform.Models
 {
     /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
-    public partial class PatchTrackedResourceData : ResourceData
+    public partial class PowerPlatformTrackedResourcePatch : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PatchTrackedResourceData"/>. </summary>
-        public PatchTrackedResourceData()
+        /// <summary> Initializes a new instance of <see cref="PowerPlatformTrackedResourcePatch"/>. </summary>
+        public PowerPlatformTrackedResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PatchTrackedResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerPlatformTrackedResourcePatch"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PatchTrackedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal PowerPlatformTrackedResourcePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             Location = location;

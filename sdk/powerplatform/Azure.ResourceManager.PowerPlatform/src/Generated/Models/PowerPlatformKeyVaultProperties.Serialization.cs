@@ -13,52 +13,52 @@ using Azure.ResourceManager.PowerPlatform;
 
 namespace Azure.ResourceManager.PowerPlatform.Models
 {
-    /// <summary> The encryption settings for a configuration store. </summary>
-    public partial class PropertiesEncryption : IJsonModel<PropertiesEncryption>
+    /// <summary> Settings concerning key vault encryption for a configuration store. </summary>
+    public partial class PowerPlatformKeyVaultProperties : IJsonModel<PowerPlatformKeyVaultProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PropertiesEncryption PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PowerPlatformKeyVaultProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropertiesEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PowerPlatformKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePropertiesEncryption(document.RootElement, options);
+                        return DeserializePowerPlatformKeyVaultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PropertiesEncryption)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PowerPlatformKeyVaultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropertiesEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PowerPlatformKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPowerPlatformContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PropertiesEncryption)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PowerPlatformKeyVaultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PropertiesEncryption>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PowerPlatformKeyVaultProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PropertiesEncryption IPersistableModel<PropertiesEncryption>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PowerPlatformKeyVaultProperties IPersistableModel<PowerPlatformKeyVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PropertiesEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PowerPlatformKeyVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PropertiesEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PowerPlatformKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropertiesEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PowerPlatformKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropertiesEncryption)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PowerPlatformKeyVaultProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(KeyVault))
+            if (Optional.IsDefined(VaultUri))
             {
-                writer.WritePropertyName("keyVault"u8);
-                writer.WriteObjectValue(KeyVault, options);
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(VaultUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(State))
+            if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WritePropertyName("key"u8);
+                writer.WriteObjectValue(Key, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +103,50 @@ namespace Azure.ResourceManager.PowerPlatform.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PropertiesEncryption IJsonModel<PropertiesEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PowerPlatformKeyVaultProperties IJsonModel<PowerPlatformKeyVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PropertiesEncryption JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PowerPlatformKeyVaultProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropertiesEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PowerPlatformKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropertiesEncryption)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PowerPlatformKeyVaultProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePropertiesEncryption(document.RootElement, options);
+            return DeserializePowerPlatformKeyVaultProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PropertiesEncryption DeserializePropertiesEncryption(JsonElement element, ModelReaderWriterOptions options)
+        internal static PowerPlatformKeyVaultProperties DeserializePowerPlatformKeyVaultProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            KeyVaultProperties keyVault = default;
-            State? state = default;
+            Uri vaultUri = default;
+            PowerPlatformKeyProperties key = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("keyVault"u8))
+                if (prop.NameEquals("id"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keyVault = KeyVaultProperties.DeserializeKeyVaultProperties(prop.Value, options);
+                    vaultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (prop.NameEquals("state"u8))
+                if (prop.NameEquals("key"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new State(prop.Value.GetString());
+                    key = PowerPlatformKeyProperties.DeserializePowerPlatformKeyProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PropertiesEncryption(keyVault, state, additionalBinaryDataProperties);
+            return new PowerPlatformKeyVaultProperties(vaultUri, key, additionalBinaryDataProperties);
         }
     }
 }

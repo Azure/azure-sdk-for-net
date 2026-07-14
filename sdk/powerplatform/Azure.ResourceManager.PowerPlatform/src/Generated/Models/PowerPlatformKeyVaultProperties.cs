@@ -11,31 +11,31 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PowerPlatform.Models
 {
     /// <summary> Settings concerning key vault encryption for a configuration store. </summary>
-    public partial class KeyVaultProperties
+    public partial class PowerPlatformKeyVaultProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
-        public KeyVaultProperties()
+        /// <summary> Initializes a new instance of <see cref="PowerPlatformKeyVaultProperties"/>. </summary>
+        public PowerPlatformKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
-        /// <param name="id"> Uri of KeyVault. </param>
+        /// <summary> Initializes a new instance of <see cref="PowerPlatformKeyVaultProperties"/>. </summary>
+        /// <param name="vaultUri"> Uri of KeyVault. </param>
         /// <param name="key"> Identity of the secret that includes name and version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultProperties(string id, KeyProperties key, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PowerPlatformKeyVaultProperties(Uri vaultUri, PowerPlatformKeyProperties key, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
+            VaultUri = vaultUri;
             Key = key;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Uri of KeyVault. </summary>
-        public string Id { get; set; }
+        public Uri VaultUri { get; set; }
 
         /// <summary> Identity of the secret that includes name and version. </summary>
-        public KeyProperties Key { get; set; }
+        public PowerPlatformKeyProperties Key { get; set; }
     }
 }

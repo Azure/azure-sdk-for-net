@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <summary> Initializes a new instance of <see cref="PropertiesLockbox"/>. </summary>
         /// <param name="state"> lockbox configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PropertiesLockbox(State? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PropertiesLockbox(EnterprisePolicyOnboardingState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> lockbox configuration. </summary>
-        public State? State { get; set; }
+        public EnterprisePolicyOnboardingState? State { get; set; }
     }
 }

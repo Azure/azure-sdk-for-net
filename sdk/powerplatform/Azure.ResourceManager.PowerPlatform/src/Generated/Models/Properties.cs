@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <param name="networkInjection"> Settings concerning network injection. </param>
         /// <param name="healthStatus"> The health status of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Properties(string systemId, PropertiesLockbox lockbox, PropertiesEncryption encryption, PropertiesNetworkInjection networkInjection, HealthStatus? healthStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Properties(string systemId, PropertiesLockbox lockbox, EnterprisePolicyEncryptionProperties encryption, PropertiesNetworkInjection networkInjection, EnterprisePolicyHealthStatus? healthStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SystemId = systemId;
             Lockbox = lockbox;
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         internal PropertiesLockbox Lockbox { get; set; }
 
         /// <summary> The encryption settings for a configuration store. </summary>
-        public PropertiesEncryption Encryption { get; set; }
+        public EnterprisePolicyEncryptionProperties Encryption { get; set; }
 
         /// <summary> Settings concerning network injection. </summary>
         internal PropertiesNetworkInjection NetworkInjection { get; set; }
 
         /// <summary> The health status of the resource. </summary>
-        public HealthStatus? HealthStatus { get; set; }
+        public EnterprisePolicyHealthStatus? HealthStatus { get; set; }
 
         /// <summary> lockbox configuration. </summary>
-        public State? LockboxState
+        public EnterprisePolicyOnboardingState? LockboxState
         {
             get
             {

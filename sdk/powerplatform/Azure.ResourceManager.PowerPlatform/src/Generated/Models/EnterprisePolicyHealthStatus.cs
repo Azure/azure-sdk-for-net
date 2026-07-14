@@ -12,7 +12,7 @@ using Azure.ResourceManager.PowerPlatform;
 namespace Azure.ResourceManager.PowerPlatform.Models
 {
     /// <summary> The health status of the resource. </summary>
-    public readonly partial struct HealthStatus : IEquatable<HealthStatus>
+    public readonly partial struct EnterprisePolicyHealthStatus : IEquatable<EnterprisePolicyHealthStatus>
     {
         private readonly string _value;
         /// <summary> Undetermined. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <summary> Unhealthy. </summary>
         private const string UnhealthyValue = "Unhealthy";
 
-        /// <summary> Initializes a new instance of <see cref="HealthStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnterprisePolicyHealthStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HealthStatus(string value)
+        public EnterprisePolicyHealthStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         }
 
         /// <summary> Undetermined. </summary>
-        public static HealthStatus Undetermined { get; } = new HealthStatus(UndeterminedValue);
+        public static EnterprisePolicyHealthStatus Undetermined { get; } = new EnterprisePolicyHealthStatus(UndeterminedValue);
 
         /// <summary> Healthy. </summary>
-        public static HealthStatus Healthy { get; } = new HealthStatus(HealthyValue);
+        public static EnterprisePolicyHealthStatus Healthy { get; } = new EnterprisePolicyHealthStatus(HealthyValue);
 
         /// <summary> Warning. </summary>
-        public static HealthStatus Warning { get; } = new HealthStatus(WarningValue);
+        public static EnterprisePolicyHealthStatus Warning { get; } = new EnterprisePolicyHealthStatus(WarningValue);
 
         /// <summary> Unhealthy. </summary>
-        public static HealthStatus Unhealthy { get; } = new HealthStatus(UnhealthyValue);
+        public static EnterprisePolicyHealthStatus Unhealthy { get; } = new EnterprisePolicyHealthStatus(UnhealthyValue);
 
-        /// <summary> Determines if two <see cref="HealthStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EnterprisePolicyHealthStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(HealthStatus left, HealthStatus right) => left.Equals(right);
+        public static bool operator ==(EnterprisePolicyHealthStatus left, EnterprisePolicyHealthStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="HealthStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EnterprisePolicyHealthStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(HealthStatus left, HealthStatus right) => !left.Equals(right);
+        public static bool operator !=(EnterprisePolicyHealthStatus left, EnterprisePolicyHealthStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="HealthStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EnterprisePolicyHealthStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthStatus(string value) => new HealthStatus(value);
+        public static implicit operator EnterprisePolicyHealthStatus(string value) => new EnterprisePolicyHealthStatus(value);
 
-        /// <summary> Converts a string to a <see cref="HealthStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EnterprisePolicyHealthStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HealthStatus?(string value) => value == null ? null : new HealthStatus(value);
+        public static implicit operator EnterprisePolicyHealthStatus?(string value) => value == null ? null : new EnterprisePolicyHealthStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HealthStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is EnterprisePolicyHealthStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(HealthStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EnterprisePolicyHealthStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

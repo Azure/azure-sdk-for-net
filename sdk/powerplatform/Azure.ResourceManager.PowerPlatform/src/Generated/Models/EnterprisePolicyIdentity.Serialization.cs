@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.PowerPlatform.Models
             if (options.Format != "W" && Optional.IsDefined(SystemAssignedIdentityPrincipalId))
             {
                 writer.WritePropertyName("systemAssignedIdentityPrincipalId"u8);
-                writer.WriteStringValue(SystemAssignedIdentityPrincipalId);
+                writer.WriteStringValue(SystemAssignedIdentityPrincipalId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(Type))
             {
@@ -131,20 +131,28 @@ namespace Azure.ResourceManager.PowerPlatform.Models
             {
                 return null;
             }
-            string systemAssignedIdentityPrincipalId = default;
-            string tenantId = default;
-            ResourceIdentityType? @type = default;
+            Guid? systemAssignedIdentityPrincipalId = default;
+            Guid? tenantId = default;
+            EnterprisePolicyIdentityType? @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("systemAssignedIdentityPrincipalId"u8))
                 {
-                    systemAssignedIdentityPrincipalId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemAssignedIdentityPrincipalId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -153,7 +161,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToResourceIdentityType();
+                    @type = prop.Value.GetString().ToEnterprisePolicyIdentityType();
                     continue;
                 }
                 if (options.Format != "W")

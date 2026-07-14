@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
             {
                 return null;
             }
-            State? state = default;
+            EnterprisePolicyOnboardingState? state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                     {
                         continue;
                     }
-                    state = new State(prop.Value.GetString());
+                    state = new EnterprisePolicyOnboardingState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

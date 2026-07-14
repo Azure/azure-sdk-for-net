@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.PowerPlatform.Models
             }
             string systemId = default;
             PropertiesLockbox lockbox = default;
-            PropertiesEncryption encryption = default;
+            EnterprisePolicyEncryptionProperties encryption = default;
             PropertiesNetworkInjection networkInjection = default;
-            HealthStatus? healthStatus = default;
+            EnterprisePolicyHealthStatus? healthStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                     {
                         continue;
                     }
-                    encryption = PropertiesEncryption.DeserializePropertiesEncryption(prop.Value, options);
+                    encryption = EnterprisePolicyEncryptionProperties.DeserializeEnterprisePolicyEncryptionProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("networkInjection"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                     {
                         continue;
                     }
-                    healthStatus = new HealthStatus(prop.Value.GetString());
+                    healthStatus = new EnterprisePolicyHealthStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
