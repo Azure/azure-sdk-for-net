@@ -14,6 +14,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -89,11 +90,11 @@ namespace Azure.Generator.Provisioning.Providers
             return new CSharpType(typeof(ProvisionableConstruct));
         }
 
-        private static bool TryResolveTypeProviderByName(string name, out TypeProvider provider)
+        private static bool TryResolveTypeProviderByName(string name, [NotNullWhen(true)] out TypeProvider? provider)
         {
             provider = ProvisioningGenerator.Instance.TypeFactory.CSharpTypeMap.Values
                 .OfType<TypeProvider>()
-                .FirstOrDefault(p => string.Equals(p.Name, name, StringComparison.Ordinal))!;
+                .FirstOrDefault(p => string.Equals(p.Name, name, StringComparison.Ordinal));
             return provider != null;
         }
 
