@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         /// <returns> A new <see cref="Models.PreviewAlertRuleRequest"/> instance for mocking. </returns>
         public static PreviewAlertRuleRequest PreviewAlertRuleRequest(AzureLocation location = default, TimeSpan timespan = default, LogAlertRule scheduledQueryRuleProperties = default)
         {
-            return new PreviewAlertRuleRequest(location, new PreviewAlertRuleRequestProperties(timespan, scheduledQueryRuleProperties, null), additionalBinaryDataProperties: null);
+            return new PreviewAlertRuleRequest(location, default, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -44,21 +44,20 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new LogAlertRule(tags, location, kind, new LogAlertRuleProperties(
-                description,
-                displayName,
-                severity,
-                enabled,
-                (scopes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                evaluationFrequency,
-                windowSize,
-                overrideQueryTimeRange,
-                (targetResourceTypes ?? new ChangeTrackingList<string>()).ToList(),
-                new LogAlertRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<LogAlertRuleCondition>()).ToList(), null),
-                null), additionalBinaryDataProperties: null);
+            return new LogAlertRule(tags ?? new ChangeTrackingDictionary<string, string>(), location, kind, criteriaAllOf is null ? default : new LogAlertRuleProperties(
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                new LogAlertRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<LogAlertRuleCondition>()).ToList(), default),
+                default), default);
         }
 
-        /// <summary> A condition of the scheduled query rule. </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. </param>
         /// <param name="query"> KQL log query alert. </param>
         /// <param name="timeAggregation"> Aggregation type. Relevant and required only for rules of the kind LogAlert. </param>
@@ -82,17 +81,16 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                 timeAggregation,
                 metricMeasureColumn,
                 resourceIdColumn,
-                dimensions.ToList(),
+                (dimensions ?? new ChangeTrackingList<LogAlertRuleDimension>()).ToList(),
                 @operator,
                 threshold,
                 alertSensitivity,
                 ignoreDataBefore,
                 failingPeriods,
                 metricName,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Dimension splitting and filtering definition. </summary>
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="operator"> Operator for dimension values. </param>
         /// <param name="values"> List of dimension values. </param>
@@ -101,20 +99,26 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new LogAlertRuleDimension(name, @operator, values.ToList(), additionalBinaryDataProperties: null);
+            return new LogAlertRuleDimension(name, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> The PreviewAlertRuleResponse. </summary>
+        /// <param name="numberOfEvaluationPeriods"> The number of aggregated lookback points. The lookback time window is calculated based on the aggregation granularity (windowSize) and the selected number of aggregated points. Default value is 1. </param>
+        /// <param name="minFailingPeriodsToAlert"> The number of violations to trigger an alert. Should be smaller or equal to numberOfEvaluationPeriods. Default value is 1. </param>
+        /// <returns> A new <see cref="Models.LogAlertRuleConditionFailingPeriods"/> instance for mocking. </returns>
+        public static LogAlertRuleConditionFailingPeriods LogAlertRuleConditionFailingPeriods(long? numberOfEvaluationPeriods = default, long? minFailingPeriodsToAlert = default)
+        {
+            return new LogAlertRuleConditionFailingPeriods(numberOfEvaluationPeriods, minFailingPeriodsToAlert, default);
+        }
+
         /// <param name="rulePreviewResults"> An array of rule preview results. </param>
         /// <returns> A new <see cref="Models.PreviewAlertRuleResponse"/> instance for mocking. </returns>
         public static PreviewAlertRuleResponse PreviewAlertRuleResponse(IEnumerable<RulePreviewResult> rulePreviewResults = default)
         {
             rulePreviewResults ??= new ChangeTrackingList<RulePreviewResult>();
 
-            return new PreviewAlertRuleResponse(rulePreviewResults.ToList(), additionalBinaryDataProperties: null);
+            return new PreviewAlertRuleResponse((rulePreviewResults ?? new ChangeTrackingList<RulePreviewResult>()).ToList(), default);
         }
 
-        /// <summary> A rule preview result containing a dimension combination and an array of evaluations. </summary>
         /// <param name="dimensionCombination"> The list of dimensions for the evaluation. </param>
         /// <param name="evaluations"> An array of evaluations. </param>
         /// <returns> A new <see cref="Models.RulePreviewResult"/> instance for mocking. </returns>
@@ -123,19 +127,17 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
             dimensionCombination ??= new ChangeTrackingList<RulePreviewDimensionNameAndValue>();
             evaluations ??= new ChangeTrackingList<RulePreviewEvaluation>();
 
-            return new RulePreviewResult(dimensionCombination.ToList(), evaluations.ToList(), additionalBinaryDataProperties: null);
+            return new RulePreviewResult((dimensionCombination ?? new ChangeTrackingList<RulePreviewDimensionNameAndValue>()).ToList(), (evaluations ?? new ChangeTrackingList<RulePreviewEvaluation>()).ToList(), default);
         }
 
-        /// <summary> Dimension name and value. </summary>
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="value"> Value of the dimension. </param>
         /// <returns> A new <see cref="Models.RulePreviewDimensionNameAndValue"/> instance for mocking. </returns>
         public static RulePreviewDimensionNameAndValue RulePreviewDimensionNameAndValue(string name = default, string value = default)
         {
-            return new RulePreviewDimensionNameAndValue(name, value, additionalBinaryDataProperties: null);
+            return new RulePreviewDimensionNameAndValue(name, value, default);
         }
 
-        /// <summary> An evaluation of the alert rule. </summary>
         /// <param name="evaluationOn"> The time when the evaluation was performed. </param>
         /// <param name="alertState"> The state of the alert after the evaluation. </param>
         /// <param name="evaluatedPeriods"> An array of evaluated periods. </param>
@@ -145,10 +147,9 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         {
             evaluatedPeriods ??= new ChangeTrackingList<RulePreviewEvaluatedPeriod>();
 
-            return new RulePreviewEvaluation(evaluationOn, alertState, evaluatedPeriods.ToList(), thresholdMet, additionalBinaryDataProperties: null);
+            return new RulePreviewEvaluation(evaluationOn, alertState, (evaluatedPeriods ?? new ChangeTrackingList<RulePreviewEvaluatedPeriod>()).ToList(), thresholdMet, default);
         }
 
-        /// <summary> Details of the evaluated period. </summary>
         /// <param name="timestamp"> The timestamp of the evaluated period. </param>
         /// <param name="highThreshold"> The high threshold value for the evaluation period. </param>
         /// <param name="lowThreshold"> The low threshold value for the evaluation period. </param>
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                 lowThreshold,
                 metricValue,
                 thresholdMet,
-                additionalBinaryDataProperties: null);
+                default);
         }
     }
 }

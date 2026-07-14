@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PreviewAlertRule
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, true);
-            uri.AppendPath("/providers/microsoft.AlertsManagement/previewAlertRule", false);
+            uri.AppendPath("/providers/Microsoft.AlertsManagement/previewAlertRule", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
