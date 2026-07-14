@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Compute
         {
         }
 
-        /// <summary> Gets or sets the ColocationStatus. </summary>
+        /// <summary> Gets the ColocationStatus. </summary>
         public InstanceViewStatus ColocationStatus
         {
             get
@@ -30,25 +30,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _colocationStatus;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _colocationStatus, value);
-            }
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> Id
         {
             get
             {
                 Initialize();
                 return _id;
-            }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
             }
         }
 

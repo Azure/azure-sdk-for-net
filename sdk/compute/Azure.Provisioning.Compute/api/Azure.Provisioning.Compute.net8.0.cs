@@ -452,8 +452,8 @@ namespace Azure.Provisioning.Compute
     public partial class ComputeSubResourceDataWithColocationStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ComputeSubResourceDataWithColocationStatus() { }
-        public Azure.Provisioning.Compute.InstanceViewStatus ColocationStatus { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.InstanceViewStatus ColocationStatus { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ComputeWriteableSubResourceData : Azure.Provisioning.Primitives.ProvisionableConstruct
