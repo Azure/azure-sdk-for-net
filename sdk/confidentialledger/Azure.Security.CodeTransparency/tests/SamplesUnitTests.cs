@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using Azure.Security.CodeTransparency.Receipt;
 using NUnit.Framework;
 
 namespace Azure.Security.CodeTransparency.Tests

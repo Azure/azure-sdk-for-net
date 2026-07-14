@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Array of PhysicalPartitionId objects. </summary>
         [WirePath("physicalPartitionIds")]
-        public IList<CosmosDBPhysicalPartitionId> PhysicalPartitionIds { get; }
+        public IList<CosmosDBPhysicalPartitionId> PhysicalPartitionIds { get; } = new ChangeTrackingList<CosmosDBPhysicalPartitionId>();
     }
 }
