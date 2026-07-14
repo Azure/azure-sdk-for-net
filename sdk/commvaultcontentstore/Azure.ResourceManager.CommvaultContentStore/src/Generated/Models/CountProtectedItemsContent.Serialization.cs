@@ -9,64 +9,72 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
+using Azure.Core;
 using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary> Restore resource response for a Protected Item. </summary>
-    public partial class RestoreProtectionItemResponse : IJsonModel<RestoreProtectionItemResponse>
+    /// <summary> Request to count protected items for the provided CCA resource IDs across subscriptions. </summary>
+    public partial class CountProtectedItemsContent : IJsonModel<CountProtectedItemsContent>
     {
+        /// <summary> Initializes a new instance of <see cref="CountProtectedItemsContent"/> for deserialization. </summary>
+        internal CountProtectedItemsContent()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RestoreProtectionItemResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CountProtectedItemsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CountProtectedItemsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRestoreProtectionItemResponse(document.RootElement, options);
+                        return DeserializeCountProtectedItemsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestoreProtectionItemResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CountProtectedItemsContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CountProtectedItemsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RestoreProtectionItemResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CountProtectedItemsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RestoreProtectionItemResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CountProtectedItemsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RestoreProtectionItemResponse IPersistableModel<RestoreProtectionItemResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CountProtectedItemsContent IPersistableModel<CountProtectedItemsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RestoreProtectionItemResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CountProtectedItemsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RestoreProtectionItemResponse"/> from. </param>
-        internal static RestoreProtectionItemResponse FromResponse(Response response)
+        /// <param name="countProtectedItemsContent"> The <see cref="CountProtectedItemsContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CountProtectedItemsContent countProtectedItemsContent)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRestoreProtectionItemResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            if (countProtectedItemsContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(countProtectedItemsContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RestoreProtectionItemResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CountProtectedItemsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,31 +85,23 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CountProtectedItemsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreProtectionItemResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CountProtectedItemsContent)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            writer.WritePropertyName("resourceIds"u8);
+            writer.WriteStartArray();
+            foreach (ResourceIdentifier item in ResourceIds)
             {
-                writer.WritePropertyName("taskId"u8);
-                writer.WriteNumberValue(TaskId);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("jobIds"u8);
-                writer.WriteStartArray();
-                foreach (string item in JobIds)
+                if (item == null)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
+                    writer.WriteNullValue();
+                    continue;
                 }
-                writer.WriteEndArray();
+                writer.WriteStringValue(item);
             }
+            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -121,42 +121,36 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RestoreProtectionItemResponse IJsonModel<RestoreProtectionItemResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CountProtectedItemsContent IJsonModel<CountProtectedItemsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RestoreProtectionItemResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CountProtectedItemsContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestoreProtectionItemResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CountProtectedItemsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreProtectionItemResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CountProtectedItemsContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRestoreProtectionItemResponse(document.RootElement, options);
+            return DeserializeCountProtectedItemsContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RestoreProtectionItemResponse DeserializeRestoreProtectionItemResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static CountProtectedItemsContent DeserializeCountProtectedItemsContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int taskId = default;
-            IReadOnlyList<string> jobIds = default;
+            IList<ResourceIdentifier> resourceIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("taskId"u8))
+                if (prop.NameEquals("resourceIds"u8))
                 {
-                    taskId = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("jobIds"u8))
-                {
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -165,10 +159,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
-                    jobIds = array;
+                    resourceIds = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +170,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestoreProtectionItemResponse(taskId, jobIds, additionalBinaryDataProperties);
+            return new CountProtectedItemsContent(resourceIds, additionalBinaryDataProperties);
         }
     }
 }

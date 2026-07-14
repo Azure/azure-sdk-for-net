@@ -12,16 +12,16 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The properties of RestoreProtectionItemRequest. </summary>
-    public partial class RestoreProtectionItemRequest
+    public partial class RestoreProtectionItemContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RestoreProtectionItemRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreProtectionItemContent"/>. </summary>
         /// <param name="inPlaceRestore"> Check whether inplace or out of place restore. </param>
         /// <param name="vmInfoList"> List of information on VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInfoList"/> is null. </exception>
-        public RestoreProtectionItemRequest(bool inPlaceRestore, IEnumerable<VmInfo> vmInfoList)
+        public RestoreProtectionItemContent(bool inPlaceRestore, IEnumerable<VmInfo> vmInfoList)
         {
             Argument.AssertNotNull(vmInfoList, nameof(vmInfoList));
 
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             VmDestinationInfo = new VmDestinationInfo(vmInfoList);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestoreProtectionItemRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreProtectionItemContent"/>. </summary>
         /// <param name="inPlaceRestore"> Check whether inplace or out of place restore. </param>
         /// <param name="restoreType"> Type of Restore. </param>
         /// <param name="toTime"> Time to restore. </param>
         /// <param name="vmDestinationInfo"> The vm destination details of the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreProtectionItemRequest(bool inPlaceRestore, RestoreType? restoreType, string toTime, VmDestinationInfo vmDestinationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestoreProtectionItemContent(bool inPlaceRestore, RestoreType? restoreType, string toTime, VmDestinationInfo vmDestinationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InPlaceRestore = inPlaceRestore;
             RestoreType = restoreType;

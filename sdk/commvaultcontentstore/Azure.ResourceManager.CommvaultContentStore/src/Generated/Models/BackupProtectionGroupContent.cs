@@ -13,16 +13,16 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The properties of BackupProtectionGroupRequest. </summary>
-    public partial class BackupProtectionGroupRequest
+    public partial class BackupProtectionGroupContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BackupProtectionGroupRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupProtectionGroupContent"/>. </summary>
         /// <param name="vmList"> The vm list details. </param>
         /// <param name="backupOptions"> The backup options for the VM backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmList"/> or <paramref name="backupOptions"/> is null. </exception>
-        public BackupProtectionGroupRequest(IEnumerable<VmListItem> vmList, BackupOptions backupOptions)
+        public BackupProtectionGroupContent(IEnumerable<VmListItem> vmList, BackupConfig backupOptions)
         {
             Argument.AssertNotNull(vmList, nameof(vmList));
             Argument.AssertNotNull(backupOptions, nameof(backupOptions));
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             BackupOptions = backupOptions;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupProtectionGroupRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupProtectionGroupContent"/>. </summary>
         /// <param name="vmList"> The vm list details. </param>
         /// <param name="backupOptions"> The backup options for the VM backup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupProtectionGroupRequest(IList<VmListItem> vmList, BackupOptions backupOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupProtectionGroupContent(IList<VmListItem> vmList, BackupConfig backupOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmList = vmList;
             BackupOptions = backupOptions;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public IList<VmListItem> VmList { get; }
 
         /// <summary> The backup options for the VM backup. </summary>
-        public BackupOptions BackupOptions { get; }
+        public BackupConfig BackupOptions { get; }
     }
 }

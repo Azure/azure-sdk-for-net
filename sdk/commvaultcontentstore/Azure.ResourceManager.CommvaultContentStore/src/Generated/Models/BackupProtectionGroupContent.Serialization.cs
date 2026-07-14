@@ -14,67 +14,67 @@ using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary> Request to count protected items for the provided CCA resource IDs across subscriptions. </summary>
-    public partial class CountProtectedItemsRequest : IJsonModel<CountProtectedItemsRequest>
+    /// <summary> The properties of BackupProtectionGroupRequest. </summary>
+    public partial class BackupProtectionGroupContent : IJsonModel<BackupProtectionGroupContent>
     {
-        /// <summary> Initializes a new instance of <see cref="CountProtectedItemsRequest"/> for deserialization. </summary>
-        internal CountProtectedItemsRequest()
+        /// <summary> Initializes a new instance of <see cref="BackupProtectionGroupContent"/> for deserialization. </summary>
+        internal BackupProtectionGroupContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CountProtectedItemsRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BackupProtectionGroupContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CountProtectedItemsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupProtectionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCountProtectedItemsRequest(document.RootElement, options);
+                        return DeserializeBackupProtectionGroupContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CountProtectedItemsRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupProtectionGroupContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CountProtectedItemsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupProtectionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CountProtectedItemsRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupProtectionGroupContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CountProtectedItemsRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BackupProtectionGroupContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CountProtectedItemsRequest IPersistableModel<CountProtectedItemsRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BackupProtectionGroupContent IPersistableModel<BackupProtectionGroupContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CountProtectedItemsRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BackupProtectionGroupContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="countProtectedItemsRequest"> The <see cref="CountProtectedItemsRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CountProtectedItemsRequest countProtectedItemsRequest)
+        /// <param name="backupProtectionGroupContent"> The <see cref="BackupProtectionGroupContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BackupProtectionGroupContent backupProtectionGroupContent)
         {
-            if (countProtectedItemsRequest == null)
+            if (backupProtectionGroupContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(countProtectedItemsRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(backupProtectionGroupContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CountProtectedItemsRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BackupProtectionGroupContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,23 +85,20 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CountProtectedItemsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupProtectionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CountProtectedItemsRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupProtectionGroupContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("resourceIds"u8);
+            writer.WritePropertyName("vmList"u8);
             writer.WriteStartArray();
-            foreach (ResourceIdentifier item in ResourceIds)
+            foreach (VmListItem item in VmList)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStringValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("backupOptions"u8);
+            writer.WriteObjectValue(BackupOptions, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -121,48 +118,47 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CountProtectedItemsRequest IJsonModel<CountProtectedItemsRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BackupProtectionGroupContent IJsonModel<BackupProtectionGroupContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CountProtectedItemsRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BackupProtectionGroupContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CountProtectedItemsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupProtectionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CountProtectedItemsRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupProtectionGroupContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCountProtectedItemsRequest(document.RootElement, options);
+            return DeserializeBackupProtectionGroupContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CountProtectedItemsRequest DeserializeCountProtectedItemsRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static BackupProtectionGroupContent DeserializeBackupProtectionGroupContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ResourceIdentifier> resourceIds = default;
+            IList<VmListItem> vmList = default;
+            BackupConfig backupOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("resourceIds"u8))
+                if (prop.NameEquals("vmList"u8))
                 {
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    List<VmListItem> array = new List<VmListItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new ResourceIdentifier(item.GetString()));
-                        }
+                        array.Add(VmListItem.DeserializeVmListItem(item, options));
                     }
-                    resourceIds = array;
+                    vmList = array;
+                    continue;
+                }
+                if (prop.NameEquals("backupOptions"u8))
+                {
+                    backupOptions = BackupConfig.DeserializeBackupConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -170,7 +166,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CountProtectedItemsRequest(resourceIds, additionalBinaryDataProperties);
+            return new BackupProtectionGroupContent(vmList, backupOptions, additionalBinaryDataProperties);
         }
     }
 }
