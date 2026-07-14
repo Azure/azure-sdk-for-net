@@ -1,0 +1,4 @@
+directory: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/OperationalInsights
+commit: 1b123b550fd98f1c038694e43653415d1d1d67da
+repo: ArcturusZhang/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json
