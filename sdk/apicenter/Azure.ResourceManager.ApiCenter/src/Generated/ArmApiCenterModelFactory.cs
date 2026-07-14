@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="isRestore"> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </param>
+        /// <param name="isServiceUpdateRestore"> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </param>
         /// <returns> A new <see cref="Models.ApiCenterServicePatch"/> instance for mocking. </returns>
-        public static ApiCenterServicePatch ApiCenterServicePatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, bool? isRestore = default)
+        public static ApiCenterServicePatch ApiCenterServicePatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, bool? isServiceUpdateRestore = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ApiCenterServicePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), isRestore is null ? default : new ServiceUpdateProperties(isRestore, default), default);
+            return new ApiCenterServicePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), isServiceUpdateRestore is null ? default : new ServiceUpdateProperties(isServiceUpdateRestore, default), default);
         }
 
         /// <param name="assignedTo"> An entity the metadata schema is requested for. </param>

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         internal ServiceUpdateProperties Properties { get; set; }
 
         /// <summary> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </summary>
-        public bool? IsRestore
+        public bool? IsServiceUpdateRestore
         {
             get
             {

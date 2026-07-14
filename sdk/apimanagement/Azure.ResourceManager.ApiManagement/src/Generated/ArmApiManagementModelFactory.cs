@@ -2367,7 +2367,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                managementApiUri is null && legacyApi is null && enableClientCertificate is null && disableGateway is null && minApiVersion is null && restore is null && isZoneRedundant is null ? default : new ApiManagementServiceProperties(
+                managementApiUri is null && legacyApi is null && minApiVersion is null ? default : new ApiManagementServiceProperties(
                     default,
                     default,
                     default,
@@ -2388,19 +2388,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     default,
                     default,
                     default,
-                    enableClientCertificate,
                     default,
                     default,
-                    disableGateway,
+                    default,
+                    default,
                     default,
                     new ApiVersionConstraint(minApiVersion, default),
-                    restore,
                     default,
                     default,
                     default,
                     default,
                     default,
-                    isZoneRedundant,
+                    default,
+                    default,
                     default,
                     default,
                     default),
@@ -2888,21 +2888,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
         /// <param name="isRedirectEnabled"> Redirect Anonymous users to the Sign-In page. </param>
         /// <param name="termsOfService"> Terms of service contract properties. </param>
-        /// <param name="isSubscriptionDelegationEnabled"> Enable or disable delegation for subscriptions. </param>
-        /// <param name="isUserRegistrationDelegationEnabled"> Enable or disable delegation for user registration. </param>
+        /// <param name="isIsSubscriptionsSubscriptionDelegationEnabled"> Enable or disable delegation for subscriptions. </param>
+        /// <param name="isIsUserRegistrationUserRegistrationDelegationEnabled"> Enable or disable delegation for user registration. </param>
         /// <returns> A new <see cref="Models.PortalSettingsContractData"/> instance for mocking. </returns>
-        public static PortalSettingsContractData PortalSettingsContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri uri = default, string validationKey = default, bool? isRedirectEnabled = default, TermsOfServiceProperties termsOfService = default, bool? isSubscriptionDelegationEnabled = default, bool? isUserRegistrationDelegationEnabled = default)
+        public static PortalSettingsContractData PortalSettingsContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri uri = default, string validationKey = default, bool? isRedirectEnabled = default, TermsOfServiceProperties termsOfService = default, bool? isIsSubscriptionsSubscriptionDelegationEnabled = default, bool? isIsUserRegistrationUserRegistrationDelegationEnabled = default)
         {
             return new PortalSettingsContractData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                uri is null && validationKey is null && isSubscriptionDelegationEnabled is null && isUserRegistrationDelegationEnabled is null && isRedirectEnabled is null && termsOfService is null ? default : new PortalSettingsContractProperties(
+                uri is null && validationKey is null && isIsSubscriptionsSubscriptionDelegationEnabled is null && isIsUserRegistrationUserRegistrationDelegationEnabled is null && isRedirectEnabled is null && termsOfService is null ? default : new PortalSettingsContractProperties(
                     uri,
                     validationKey,
-                    new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled, default),
-                    new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, default),
+                    new SubscriptionDelegationSettingProperties(isIsSubscriptionsSubscriptionDelegationEnabled, default),
+                    new RegistrationDelegationSettingProperties(isIsUserRegistrationUserRegistrationDelegationEnabled, default),
                     isRedirectEnabled,
                     termsOfService,
                     default),
@@ -4164,20 +4164,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="enableBasicAuth"> Enable or disable Basic authentication method. </param>
         /// <param name="delegation"> The developer portal delegation settings. </param>
         /// <param name="csp"> The developer portal Content Security Policy (CSP) settings. </param>
-        /// <param name="require"> Redirect anonymous users to the sign-in page. </param>
+        /// <param name="signinRequire"> Redirect anonymous users to the sign-in page. </param>
         /// <param name="signupTermsOfService"> Terms of service settings. </param>
         /// <param name="corsAllowedOrigins"> Allowed origins, e.g. `https://trusted.com`. </param>
         /// <returns> A new <see cref="ApiManagement.PortalConfigContractData"/> instance for mocking. </returns>
-        public static PortalConfigContractData PortalConfigContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? enableBasicAuth = default, PortalConfigDelegationProperties delegation = default, PortalConfigCspProperties csp = default, bool? require = default, PortalConfigTermsOfServiceProperties signupTermsOfService = default, IEnumerable<string> corsAllowedOrigins = default)
+        public static PortalConfigContractData PortalConfigContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? enableBasicAuth = default, PortalConfigDelegationProperties delegation = default, PortalConfigCspProperties csp = default, bool? signinRequire = default, PortalConfigTermsOfServiceProperties signupTermsOfService = default, IEnumerable<string> corsAllowedOrigins = default)
         {
             return new PortalConfigContractData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                enableBasicAuth is null && require is null && signupTermsOfService is null && delegation is null && corsAllowedOrigins is null && csp is null ? default : new PortalConfigProperties(
+                enableBasicAuth is null && signinRequire is null && signupTermsOfService is null && delegation is null && corsAllowedOrigins is null && csp is null ? default : new PortalConfigProperties(
                     enableBasicAuth,
-                    new PortalConfigPropertiesSignin(require, default),
+                    new PortalConfigPropertiesSignin(signinRequire, default),
                     new PortalConfigPropertiesSignup(signupTermsOfService, default),
                     delegation,
                     new PortalConfigCorsProperties((corsAllowedOrigins ?? new ChangeTrackingList<string>()).ToList(), default),

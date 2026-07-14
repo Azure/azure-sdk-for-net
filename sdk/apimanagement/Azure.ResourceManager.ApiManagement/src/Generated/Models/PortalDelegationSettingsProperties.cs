@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Enable or disable delegation for subscriptions. </summary>
         [WirePath("subscriptions.enabled")]
-        public bool? IsSubscriptionDelegationEnabled
+        public bool? IsSubscriptionsSubscriptionDelegationEnabled
         {
             get
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Enable or disable delegation for user registration. </summary>
         [WirePath("userRegistration.enabled")]
-        public bool? IsUserRegistrationDelegationEnabled
+        public bool? IsUserRegistrationUserRegistrationDelegationEnabled
         {
             get
             {

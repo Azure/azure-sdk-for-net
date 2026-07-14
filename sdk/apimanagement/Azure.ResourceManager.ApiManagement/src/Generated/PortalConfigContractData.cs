@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Redirect anonymous users to the sign-in page. </summary>
         [WirePath("properties.signin.require")]
-        public bool? Require
+        public bool? SigninRequire
         {
             get
             {
-                return Properties is null ? default : Properties.Require;
+                return Properties is null ? default : Properties.SigninRequire;
             }
             set
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new PortalConfigProperties();
                 }
-                Properties.Require = value;
+                Properties.SigninRequire = value;
             }
         }
 
