@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Artifact streaming speeds up the cold-start of containers on a node through on-demand image loading. To use this feature, container images must also enable artifact streaming on ACR. If not specified, the default is false. </summary>
         [WirePath("artifactStreamingProfile.enabled")]
-        public bool? IsArtifactStreamingEnabled
+        public bool? IsArtifactStreamingProfileArtifactStreamingEnabled
         {
             get
             {

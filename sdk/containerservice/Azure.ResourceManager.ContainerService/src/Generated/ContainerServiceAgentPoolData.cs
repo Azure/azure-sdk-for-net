@@ -971,11 +971,11 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Whether to disable OutboundNAT in windows nodes. The default value is false. Outbound NAT can only be disabled if the cluster outboundType is NAT Gateway and the Windows agent pool does not have node public IP enabled. </summary>
         [WirePath("properties.windowsProfile.disableOutboundNat")]
-        public bool? IsOutboundNatDisabled
+        public bool? IsWindowsProfileOutboundNatDisabled
         {
             get
             {
-                return Properties is null ? default : Properties.IsOutboundNatDisabled;
+                return Properties is null ? default : Properties.IsWindowsProfileOutboundNatDisabled;
             }
             set
             {
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.IsOutboundNatDisabled = value;
+                Properties.IsWindowsProfileOutboundNatDisabled = value;
             }
         }
 
@@ -1007,11 +1007,11 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Artifact streaming speeds up the cold-start of containers on a node through on-demand image loading. To use this feature, container images must also enable artifact streaming on ACR. If not specified, the default is false. </summary>
         [WirePath("properties.artifactStreamingProfile.enabled")]
-        public bool? IsArtifactStreamingEnabled
+        public bool? IsArtifactStreamingProfileArtifactStreamingEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.IsArtifactStreamingEnabled;
+                return Properties is null ? default : Properties.IsArtifactStreamingProfileArtifactStreamingEnabled;
             }
             set
             {
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.IsArtifactStreamingEnabled = value;
+                Properties.IsArtifactStreamingProfileArtifactStreamingEnabled = value;
             }
         }
 

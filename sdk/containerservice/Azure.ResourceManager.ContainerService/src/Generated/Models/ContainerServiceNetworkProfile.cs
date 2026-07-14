@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Enable Static Egress Gateway addon. Indicates if Static Egress Gateway addon is enabled or not. </summary>
         [WirePath("staticEgressGatewayProfile.enabled")]
-        public bool? IsStaticEgressGatewayAddonEnabled
+        public bool? IsStaticEgressGatewayProfileStaticEgressGatewayAddonEnabled
         {
             get
             {

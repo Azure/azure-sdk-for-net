@@ -53,9 +53,27 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("blobCSIDriver")]
         internal ManagedClusterStorageProfileBlobCsiDriver BlobCsiDriver { get; set; }
 
+        /// <summary> Whether to enable AzureDisk CSI Driver. The default value is true. </summary>
+        [WirePath("diskCSIDriver.enabled")]
+        public bool? IsDiskCsiDriverDiskCsiDriverEnabled
+        {
+            get
+            {
+                return DiskCsiDriver is null ? default : DiskCsiDriver.IsDiskCsiDriverEnabled;
+            }
+            set
+            {
+                if (DiskCsiDriver is null)
+                {
+                    DiskCsiDriver = new ManagedClusterStorageProfileDiskCsiDriver();
+                }
+                DiskCsiDriver.IsDiskCsiDriverEnabled = value;
+            }
+        }
+
         /// <summary> Whether to enable AzureFile CSI Driver. The default value is true. </summary>
         [WirePath("fileCSIDriver.enabled")]
-        public bool? IsFileCsiDriverEnabled
+        public bool? IsFileCsiDriverFileCsiDriverEnabled
         {
             get
             {
@@ -73,7 +91,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to enable Snapshot Controller. The default value is true. </summary>
         [WirePath("snapshotController.enabled")]
-        public bool? IsSnapshotControllerEnabled
+        public bool? IsSnapshotControllerSnapshotControllerEnabled
         {
             get
             {
@@ -91,7 +109,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to enable AzureBlob CSI Driver. The default value is false. </summary>
         [WirePath("blobCSIDriver.enabled")]
-        public bool? IsBlobCsiDriverEnabled
+        public bool? IsBlobCsiDriverBlobCsiDriverEnabled
         {
             get
             {

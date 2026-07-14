@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Indicates the enablement of Advanced Networking observability functionalities on clusters. </summary>
         [WirePath("observability.enabled")]
-        public bool? IsObservabilityEnabled
+        public bool? IsObservabilityObservabilityEnabled
         {
             get
             {

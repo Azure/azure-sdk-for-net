@@ -844,11 +844,11 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Whether to enable cost analysis. The Managed Cluster sku.tier must be set to 'Standard' or 'Premium' to enable this feature. Enabling this will add Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal. If not specified, the default is false. For more information see aka.ms/aks/docs/cost-analysis. </summary>
         [WirePath("properties.metricsProfile.costAnalysis.enabled")]
-        public bool? IsCostAnalysisEnabled
+        public bool? IsMetricsProfileCostAnalysisCostAnalysisEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.IsCostAnalysisEnabled;
+                return Properties is null ? default : Properties.IsMetricsProfileCostAnalysisCostAnalysisEnabled;
             }
             set
             {
@@ -856,17 +856,17 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsCostAnalysisEnabled = value;
+                Properties.IsMetricsProfileCostAnalysisCostAnalysisEnabled = value;
             }
         }
 
         /// <summary> Whether to enable AI toolchain operator to the cluster. Indicates if AI toolchain operator  enabled or not. </summary>
         [WirePath("properties.aiToolchainOperatorProfile.enabled")]
-        public bool? IsAIToolchainOperatorEnabled
+        public bool? IsAiToolchainOperatorProfileAIToolchainOperatorEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.IsAIToolchainOperatorEnabled;
+                return Properties is null ? default : Properties.IsAiToolchainOperatorProfileAIToolchainOperatorEnabled;
             }
             set
             {
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsAIToolchainOperatorEnabled = value;
+                Properties.IsAiToolchainOperatorProfileAIToolchainOperatorEnabled = value;
             }
         }
 

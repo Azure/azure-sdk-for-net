@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to disable OutboundNAT in windows nodes. The default value is false. Outbound NAT can only be disabled if the cluster outboundType is NAT Gateway and the Windows agent pool does not have node public IP enabled. </summary>
         [WirePath("windowsProfile.disableOutboundNat")]
-        public bool? IsOutboundNatDisabled
+        public bool? IsWindowsProfileOutboundNatDisabled
         {
             get
             {

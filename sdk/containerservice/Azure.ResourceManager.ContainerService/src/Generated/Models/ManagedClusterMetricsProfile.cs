@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to enable cost analysis. The Managed Cluster sku.tier must be set to 'Standard' or 'Premium' to enable this feature. Enabling this will add Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal. If not specified, the default is false. For more information see aka.ms/aks/docs/cost-analysis. </summary>
         [WirePath("costAnalysis.enabled")]
-        public bool? IsCostAnalysisEnabled
+        public bool? IsCostAnalysisCostAnalysisEnabled
         {
             get
             {

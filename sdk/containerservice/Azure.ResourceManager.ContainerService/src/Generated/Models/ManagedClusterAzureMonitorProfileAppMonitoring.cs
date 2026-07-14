@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Indicates if Application Monitoring Auto-instrumentation is enabled or not. </summary>
         [WirePath("autoInstrumentation.enabled")]
-        public bool? IsAppMonitoringAutoInstrumentationEnabled
+        public bool? IsAutoInstrumentationAppMonitoringAutoInstrumentationEnabled
         {
             get
             {

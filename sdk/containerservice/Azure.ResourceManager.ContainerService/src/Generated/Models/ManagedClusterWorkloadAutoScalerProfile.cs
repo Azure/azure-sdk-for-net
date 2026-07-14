@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to enable KEDA. </summary>
         [WirePath("keda.enabled")]
-        public bool? IsKedaEnabled
+        public bool? IsKedaKedaEnabled
         {
             get
             {

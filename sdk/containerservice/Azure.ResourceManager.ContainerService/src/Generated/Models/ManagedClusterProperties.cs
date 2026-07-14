@@ -419,11 +419,11 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to enable cost analysis. The Managed Cluster sku.tier must be set to 'Standard' or 'Premium' to enable this feature. Enabling this will add Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal. If not specified, the default is false. For more information see aka.ms/aks/docs/cost-analysis. </summary>
         [WirePath("metricsProfile.costAnalysis.enabled")]
-        public bool? IsCostAnalysisEnabled
+        public bool? IsMetricsProfileCostAnalysisCostAnalysisEnabled
         {
             get
             {
-                return MetricsProfile is null ? default : MetricsProfile.IsCostAnalysisEnabled;
+                return MetricsProfile is null ? default : MetricsProfile.IsCostAnalysisCostAnalysisEnabled;
             }
             set
             {
@@ -431,13 +431,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     MetricsProfile = new ManagedClusterMetricsProfile();
                 }
-                MetricsProfile.IsCostAnalysisEnabled = value;
+                MetricsProfile.IsCostAnalysisCostAnalysisEnabled = value;
             }
         }
 
         /// <summary> Whether to enable AI toolchain operator to the cluster. Indicates if AI toolchain operator  enabled or not. </summary>
         [WirePath("aiToolchainOperatorProfile.enabled")]
-        public bool? IsAIToolchainOperatorEnabled
+        public bool? IsAiToolchainOperatorProfileAIToolchainOperatorEnabled
         {
             get
             {

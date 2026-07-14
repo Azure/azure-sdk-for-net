@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to enable workload identity. </summary>
         [WirePath("workloadIdentity.enabled")]
-        public bool? IsWorkloadIdentityEnabled
+        public bool? IsWorkloadIdentityWorkloadIdentityEnabled
         {
             get
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to enable image integrity. The default value is false. </summary>
         [WirePath("imageIntegrity.enabled")]
-        public bool? IsImageIntegrityEnabled
+        public bool? IsImageIntegrityImageIntegrityEnabled
         {
             get
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to enable Node Restriction. </summary>
         [WirePath("nodeRestriction.enabled")]
-        public bool? IsNodeRestrictionEnabled
+        public bool? IsNodeRestrictionNodeRestrictionEnabled
         {
             get
             {
