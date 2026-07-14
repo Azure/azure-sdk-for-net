@@ -3,14 +3,9 @@
 
 #nullable disable
 
-using Azure.Provisioning.Expressions;
-using Azure.Provisioning.Primitives;
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.Provisioning.Redis
 {
-    [CodeGenType("Redis")]
-    public partial class RedisResource
+    public partial class RedisCacheAccessPolicyAssignment
     {
         public static partial class ResourceVersions
         {
@@ -46,19 +41,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_08_01 = "2023-08-01";
             /// <summary> API version "2024-03-01". </summary>
             public static readonly string V2024_03_01 = "2024-03-01";
-        }
-
-        // The TypeSpec provisioning generator does not emit custom action helpers yet.
-        // Preserve the shipped Redis GetKeys() convenience API until action generation is supported.
-        /// <summary>
-        /// Get access keys for this RedisResource resource.
-        /// </summary>
-        /// <returns>The keys for this RedisResource resource.</returns>
-        public RedisAccessKeys GetKeys()
-        {
-            RedisAccessKeys keys = new();
-            ((IBicepValue)keys).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
-            return keys;
         }
     }
 }
