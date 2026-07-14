@@ -106,7 +106,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> enabled. </summary>
         [WirePath("properties.isEnabled")]
-        public bool? IsEnabled
+        public bool? BarIsEnabled
         {
             get
             {

@@ -237,11 +237,6 @@ namespace Azure.Generator.Management.Utilities
         {
             var immediateParentPropertyName = GetPropertyName(immediateParentProperty);
 
-            if (innerProperty.Type.Equals(typeof(bool)) || innerProperty.Type.Equals(typeof(bool?)))
-            {
-                return innerProperty.Name.Equals("Enabled", StringComparison.Ordinal) ? $"{immediateParentPropertyName}{innerProperty.Name}" : innerProperty.Name;
-            }
-
             if (innerProperty.Name.Equals("Id", StringComparison.Ordinal))
                 return $"{immediateParentPropertyName}{innerProperty.Name}";
 
