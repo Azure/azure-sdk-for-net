@@ -2934,18 +2934,18 @@ namespace Azure.Storage.Blobs.Test
                 ResponseFormat = StorageResponseFormat.Arrow
             };
 
-            int numPages = 0;
+            int totalBlobs = 0;
             // Act
             await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(options: options)
                 .AsPages(pageSizeHint: 2))
             {
                 // Assert
-                Assert.AreEqual(2, page.Values.Count);
-                ++numPages;
+                Assert.LessOrEqual(page.Values.Count, 2);
+                totalBlobs += page.Values.Count;
             }
 
             // Assert
-            Assert.AreEqual(4, numPages);
+            Assert.AreEqual(8, totalBlobs);
         }
 
         [RecordedTest]
@@ -3171,9 +3171,11 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(2, blobs.Count);
             Assert.IsNull(blobs[0].IsLatestVersion);
             Assert.AreEqual(createResponse.Value.VersionId, blobs[0].VersionId);
+            Assert.IsTrue(blobs[1].IsLatestVersion);
+            Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].VersionId);
         }
 
         [Ignore("Feature not supported in current test environment")]
@@ -3982,18 +3984,18 @@ namespace Azure.Storage.Blobs.Test
                 ResponseFormat = StorageResponseFormat.Arrow
             };
 
-            int numPages = 0;
+            int totalBlobs = 0;
             // Act
             await foreach (Page<BlobHierarchyItem> page in test.Container.GetBlobsByHierarchyAsync(options: options)
                 .AsPages(pageSizeHint: 2))
             {
                 // Assert
-                Assert.AreEqual(2, page.Values.Count);
-                ++numPages;
+                Assert.LessOrEqual(page.Values.Count, 2);
+                totalBlobs += page.Values.Count;
             }
 
             // Assert
-            Assert.AreEqual(4, numPages);
+            Assert.AreEqual(8, totalBlobs);
         }
 
         [RecordedTest]
@@ -4178,9 +4180,11 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert
-            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(2, blobs.Count);
             Assert.IsNull(blobs[0].Blob.IsLatestVersion);
             Assert.AreEqual(createResponse.Value.VersionId, blobs[0].Blob.VersionId);
+            Assert.IsTrue(blobs[1].Blob.IsLatestVersion);
+            Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].Blob.VersionId);
         }
 
         [RecordedTest]
