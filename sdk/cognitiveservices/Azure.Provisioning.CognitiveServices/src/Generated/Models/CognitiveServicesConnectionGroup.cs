@@ -11,18 +11,18 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesConnectionGroup
     {
         /// <summary> Azure. </summary>
-        Azure,
+        Azure = 0,
         /// <summary> AzureAI. </summary>
-        AzureAI,
+        AzureAI = 1,
         /// <summary> Database. </summary>
-        Database,
+        Database = 2,
         /// <summary> NoSQL. </summary>
-        NoSQL,
+        NoSQL = 3,
         /// <summary> File. </summary>
-        File,
+        File = 4,
         /// <summary> GenericProtocol. </summary>
-        GenericProtocol,
+        GenericProtocol = 5,
         /// <summary> ServicesAndApps. </summary>
-        ServicesAndApps
+        ServicesAndApps = 6
     }
 }

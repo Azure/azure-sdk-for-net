@@ -11,16 +11,16 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CapabilityHostProvisioningState
     {
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 0,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 1,
         /// <summary> Canceled. </summary>
-        Canceled,
+        Canceled = 2,
         /// <summary> Creating. </summary>
-        Creating,
+        Creating = 3,
         /// <summary> Updating. </summary>
-        Updating,
+        Updating = 4,
         /// <summary> Deleting. </summary>
-        Deleting
+        Deleting = 5
     }
 }

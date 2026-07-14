@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CognitiveServices
     internal enum RuleType
     {
         /// <summary> FQDN. </summary>
-        FQDN,
+        FQDN = 0,
         /// <summary> PrivateEndpoint. </summary>
-        PrivateEndpoint,
+        PrivateEndpoint = 1,
         /// <summary> ServiceTag. </summary>
-        ServiceTag
+        ServiceTag = 2
     }
 }

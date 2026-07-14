@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
     public enum AbusePenaltyAction
     {
         /// <summary> Throttle. </summary>
-        Throttle,
+        Throttle = 0,
         /// <summary> Block. </summary>
-        Block
+        Block = 1
     }
 }

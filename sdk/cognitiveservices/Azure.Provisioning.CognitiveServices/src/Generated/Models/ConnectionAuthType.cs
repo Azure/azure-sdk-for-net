@@ -11,42 +11,42 @@ namespace Azure.Provisioning.CognitiveServices
     internal enum ConnectionAuthType
     {
         /// <summary> PAT. </summary>
-        PAT,
+        PAT = 0,
         /// <summary> ManagedIdentity. </summary>
-        ManagedIdentity,
+        ManagedIdentity = 1,
         /// <summary> UsernamePassword. </summary>
-        UsernamePassword,
+        UsernamePassword = 2,
         /// <summary> None. </summary>
-        None,
+        None = 3,
         /// <summary> SAS. </summary>
-        SAS,
+        SAS = 4,
         /// <summary> AccountKey. </summary>
-        AccountKey,
+        AccountKey = 5,
         /// <summary> ServicePrincipal. </summary>
-        ServicePrincipal,
+        ServicePrincipal = 6,
         /// <summary> AccessKey. </summary>
-        AccessKey,
+        AccessKey = 7,
         /// <summary> ApiKey. </summary>
-        ApiKey,
+        ApiKey = 8,
         /// <summary> CustomKeys. </summary>
-        CustomKeys,
+        CustomKeys = 9,
         /// <summary> OAuth2. </summary>
-        OAuth2,
+        OAuth2 = 10,
         /// <summary> AAD. </summary>
-        AAD,
+        AAD = 11,
         /// <summary> DelegatedSAS. </summary>
-        DelegatedSAS,
+        DelegatedSAS = 12,
         /// <summary> ProjectManagedIdentity. </summary>
-        ProjectManagedIdentity,
+        ProjectManagedIdentity = 13,
         /// <summary> AccountManagedIdentity. </summary>
-        AccountManagedIdentity,
+        AccountManagedIdentity = 14,
         /// <summary> UserEntraToken. </summary>
-        UserEntraToken,
+        UserEntraToken = 15,
         /// <summary> AgentUserImpersonation. </summary>
-        AgentUserImpersonation,
+        AgentUserImpersonation = 16,
         /// <summary> AgenticIdentityToken. </summary>
-        AgenticIdentityToken,
+        AgenticIdentityToken = 17,
         /// <summary> AgenticUser. </summary>
-        AgenticUser
+        AgenticUser = 18
     }
 }

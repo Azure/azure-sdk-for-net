@@ -14,12 +14,12 @@ namespace Azure.Provisioning.CognitiveServices
     {
         /// <summary> Route requests to minimize cost while meeting performance requirements. </summary>
         [DataMember(Name = "cost")]
-        Cost,
+        Cost = 0,
         /// <summary> Balance cost and quality when routing requests across models. </summary>
         [DataMember(Name = "balanced")]
-        Balanced,
+        Balanced = 1,
         /// <summary> Route requests to maximize quality regardless of cost. </summary>
         [DataMember(Name = "quality")]
-        Quality
+        Quality = 2
     }
 }

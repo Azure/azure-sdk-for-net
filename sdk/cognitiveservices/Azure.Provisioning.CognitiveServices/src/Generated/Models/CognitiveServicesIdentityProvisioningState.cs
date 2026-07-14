@@ -11,16 +11,16 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesIdentityProvisioningState
     {
         /// <summary> Identity is being created. </summary>
-        Creating,
+        Creating = 0,
         /// <summary> Identity is being updated. </summary>
-        Updating,
+        Updating = 1,
         /// <summary> Identity has been successfully provisioned. </summary>
-        Succeeded,
+        Succeeded = 2,
         /// <summary> Identity provisioning has failed. </summary>
-        Failed,
+        Failed = 3,
         /// <summary> Identity provisioning has been canceled. </summary>
-        Canceled,
+        Canceled = 4,
         /// <summary> Identity is being deleted. </summary>
-        Deleting
+        Deleting = 5
     }
 }

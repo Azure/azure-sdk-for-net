@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesIdentityManagementType
     {
         /// <summary> Platform-managed identity. </summary>
-        System,
+        System = 0,
         /// <summary> User-managed identity. </summary>
-        User,
+        User = 1,
         /// <summary> No identity. </summary>
-        None
+        None = 2
     }
 }

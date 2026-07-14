@@ -11,14 +11,14 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesIdentityKind
     {
         /// <summary> Represents a class identity, used for agentic applications. </summary>
-        AgentBlueprint,
+        AgentBlueprint = 0,
         /// <summary> Represents an instance identity. </summary>
-        AgentInstance,
+        AgentInstance = 1,
         /// <summary> Represents an agentic instance identity with user-like traits. </summary>
-        AgenticUser,
+        AgenticUser = 2,
         /// <summary> Represents a classic managed identity. </summary>
-        Managed,
+        Managed = 3,
         /// <summary> No identity. </summary>
-        None
+        None = 4
     }
 }

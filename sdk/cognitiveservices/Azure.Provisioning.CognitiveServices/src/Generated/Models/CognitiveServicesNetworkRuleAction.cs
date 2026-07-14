@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesNetworkRuleAction
     {
         /// <summary> Allow. </summary>
-        Allow,
+        Allow = 0,
         /// <summary> Deny. </summary>
-        Deny
+        Deny = 1
     }
 }

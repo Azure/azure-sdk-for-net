@@ -11,16 +11,16 @@ namespace Azure.Provisioning.CognitiveServices
     public enum RaiPolicyContentSource
     {
         /// <summary> Prompt. </summary>
-        Prompt,
+        Prompt = 0,
         /// <summary> Completion. </summary>
-        Completion,
+        Completion = 1,
         /// <summary> PreToolCall. </summary>
-        PreToolCall,
+        PreToolCall = 2,
         /// <summary> PostToolCall. </summary>
-        PostToolCall,
+        PostToolCall = 3,
         /// <summary> PreRun. </summary>
-        PreRun,
+        PreRun = 4,
         /// <summary> PostRun. </summary>
-        PostRun
+        PostRun = 5
     }
 }

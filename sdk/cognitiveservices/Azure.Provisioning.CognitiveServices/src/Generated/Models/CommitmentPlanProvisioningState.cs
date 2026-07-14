@@ -11,18 +11,18 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CommitmentPlanProvisioningState
     {
         /// <summary> Accepted. </summary>
-        Accepted,
+        Accepted = 0,
         /// <summary> Creating. </summary>
-        Creating,
+        Creating = 1,
         /// <summary> Deleting. </summary>
-        Deleting,
+        Deleting = 2,
         /// <summary> Moving. </summary>
-        Moving,
+        Moving = 3,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 4,
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 5,
         /// <summary> Canceled. </summary>
-        Canceled
+        Canceled = 6
     }
 }

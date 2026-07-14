@@ -11,12 +11,12 @@ namespace Azure.Provisioning.CognitiveServices
     public enum ServiceTagOutboundRuleCategory
     {
         /// <summary> Required. </summary>
-        Required,
+        Required = 0,
         /// <summary> Recommended. </summary>
-        Recommended,
+        Recommended = 1,
         /// <summary> UserDefined. </summary>
-        UserDefined,
+        UserDefined = 2,
         /// <summary> Dependency. </summary>
-        Dependency
+        Dependency = 3
     }
 }

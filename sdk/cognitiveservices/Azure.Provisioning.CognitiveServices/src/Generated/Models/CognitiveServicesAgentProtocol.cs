@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesAgentProtocol
     {
         /// <summary> Agent protocol (aka Active). </summary>
-        Agent,
+        Agent = 0,
         /// <summary> Agent2Agent standard. </summary>
-        A2A,
+        A2A = 1,
         /// <summary> OpenAI-compatible. </summary>
-        Responses
+        Responses = 2
     }
 }

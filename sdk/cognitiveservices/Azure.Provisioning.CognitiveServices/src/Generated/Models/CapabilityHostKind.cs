@@ -11,6 +11,6 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CapabilityHostKind
     {
         /// <summary> Agents. </summary>
-        Agents
+        Agents = 0
     }
 }

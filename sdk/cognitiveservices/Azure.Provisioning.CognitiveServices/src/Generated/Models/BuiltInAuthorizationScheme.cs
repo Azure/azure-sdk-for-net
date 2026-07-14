@@ -11,12 +11,12 @@ namespace Azure.Provisioning.CognitiveServices
     internal enum BuiltInAuthorizationScheme
     {
         /// <summary> Standard AzureML RBAC. </summary>
-        Default,
+        Default = 0,
         /// <summary> Claim-based, requires membership in the tenant. </summary>
-        OrganizationScope,
+        OrganizationScope = 1,
         /// <summary> Channels-specific (AzureBotService) authorization. </summary>
-        Channels,
+        Channels = 2,
         /// <summary> Custom scheme defined by the application author. </summary>
-        Custom
+        Custom = 3
     }
 }

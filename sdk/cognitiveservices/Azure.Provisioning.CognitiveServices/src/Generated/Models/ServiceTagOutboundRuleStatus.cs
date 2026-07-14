@@ -11,14 +11,14 @@ namespace Azure.Provisioning.CognitiveServices
     public enum ServiceTagOutboundRuleStatus
     {
         /// <summary> Inactive. </summary>
-        Inactive,
+        Inactive = 0,
         /// <summary> Active. </summary>
-        Active,
+        Active = 1,
         /// <summary> Provisioning. </summary>
-        Provisioning,
+        Provisioning = 2,
         /// <summary> Deleting. </summary>
-        Deleting,
+        Deleting = 3,
         /// <summary> Failed. </summary>
-        Failed
+        Failed = 4
     }
 }

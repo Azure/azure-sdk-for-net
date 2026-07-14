@@ -14,9 +14,9 @@ namespace Azure.Provisioning.CognitiveServices
     {
         /// <summary> MicrosoftCognitiveServices. </summary>
         [DataMember(Name = "Microsoft.CognitiveServices")]
-        MicrosoftCognitiveServices,
+        MicrosoftCognitiveServices = 0,
         /// <summary> MicrosoftKeyVault. </summary>
         [DataMember(Name = "Microsoft.KeyVault")]
-        MicrosoftKeyVault
+        MicrosoftKeyVault = 1
     }
 }

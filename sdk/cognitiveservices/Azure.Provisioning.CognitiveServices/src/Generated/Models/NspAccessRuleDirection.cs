@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
     public enum NspAccessRuleDirection
     {
         /// <summary> Inbound. </summary>
-        Inbound,
+        Inbound = 0,
         /// <summary> Outbound. </summary>
-        Outbound
+        Outbound = 1
     }
 }

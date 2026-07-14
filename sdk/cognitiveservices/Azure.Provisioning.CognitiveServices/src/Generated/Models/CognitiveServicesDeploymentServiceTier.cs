@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesDeploymentServiceTier
     {
         /// <summary> Default service tier meaning the request will be processed with the standard pricing and performance for the selected model. </summary>
-        Default,
+        Default = 0,
         /// <summary> Priority service tier meaning the request will be processed with higher pricing and performance for the selected model. </summary>
-        Priority
+        Priority = 1
     }
 }

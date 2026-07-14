@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesFirewallSku
     {
         /// <summary> Standard. </summary>
-        Standard,
+        Standard = 0,
         /// <summary> Basic. </summary>
-        Basic
+        Basic = 1
     }
 }

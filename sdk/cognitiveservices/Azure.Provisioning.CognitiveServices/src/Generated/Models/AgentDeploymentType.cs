@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CognitiveServices
     internal enum AgentDeploymentType
     {
         /// <summary> The underlying infra is managed by the platform in the deployer's subscription. </summary>
-        Managed,
+        Managed = 0,
         /// <summary> The underlying infra is owned by the platform. </summary>
-        Hosted,
+        Hosted = 1,
         /// <summary> The underlying infra is provisioned by the deployer (BYO). </summary>
-        Custom
+        Custom = 2
     }
 }

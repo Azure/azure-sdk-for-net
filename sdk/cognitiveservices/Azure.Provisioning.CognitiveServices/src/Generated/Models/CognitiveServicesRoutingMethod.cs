@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesRoutingMethod
     {
         /// <summary> Priority. </summary>
-        Priority,
+        Priority = 0,
         /// <summary> Weighted. </summary>
-        Weighted,
+        Weighted = 1,
         /// <summary> Performance. </summary>
-        Performance
+        Performance = 2
     }
 }

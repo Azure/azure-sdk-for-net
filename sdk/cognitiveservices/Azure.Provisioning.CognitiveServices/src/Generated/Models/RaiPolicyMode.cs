@@ -13,13 +13,13 @@ namespace Azure.Provisioning.CognitiveServices
     public enum RaiPolicyMode
     {
         /// <summary> Default. </summary>
-        Default,
+        Default = 0,
         /// <summary> Deferred. </summary>
-        Deferred,
+        Deferred = 1,
         /// <summary> Blocking. </summary>
-        Blocking,
+        Blocking = 2,
         /// <summary> AsynchronousFilter. </summary>
         [DataMember(Name = "Asynchronous_filter")]
-        AsynchronousFilter
+        AsynchronousFilter = 3
     }
 }

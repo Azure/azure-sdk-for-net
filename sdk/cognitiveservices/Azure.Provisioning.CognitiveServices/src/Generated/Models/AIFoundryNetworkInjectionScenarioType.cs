@@ -14,9 +14,9 @@ namespace Azure.Provisioning.CognitiveServices
     {
         /// <summary> None. </summary>
         [DataMember(Name = "none")]
-        None,
+        None = 0,
         /// <summary> Agent. </summary>
         [DataMember(Name = "agent")]
-        Agent
+        Agent = 1
     }
 }

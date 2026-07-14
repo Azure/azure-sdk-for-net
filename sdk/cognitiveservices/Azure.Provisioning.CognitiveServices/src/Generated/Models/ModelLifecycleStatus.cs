@@ -11,16 +11,16 @@ namespace Azure.Provisioning.CognitiveServices
     internal enum ModelLifecycleStatus
     {
         /// <summary> Legacy state. Replaced with GenerallyAvailable going forward. </summary>
-        Stable,
+        Stable = 0,
         /// <summary> Model is in preview and may be subject to changes. </summary>
-        Preview,
+        Preview = 1,
         /// <summary> Model is generally available for production use. </summary>
-        GenerallyAvailable,
+        GenerallyAvailable = 2,
         /// <summary> Model is being deprecated and will be removed in the future. Only customers with existing deployments can create new deployments with this model. </summary>
-        Deprecating,
+        Deprecating = 3,
         /// <summary> Model has been deprecated, also known as retired, and is no longer supported. Inference calls to deployments of models in this lifecycle state will return 410 errors. </summary>
-        Deprecated,
+        Deprecated = 4,
         /// <summary> Model is a legacy version that is no longer recommended for use. Customers should migrate to newer models. Check replacementConfig for upgrade information. </summary>
-        Legacy
+        Legacy = 5
     }
 }

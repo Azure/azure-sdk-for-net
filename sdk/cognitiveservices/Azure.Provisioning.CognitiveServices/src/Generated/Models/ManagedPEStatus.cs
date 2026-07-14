@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CognitiveServices
     public enum ManagedPEStatus
     {
         /// <summary> Inactive. </summary>
-        Inactive,
+        Inactive = 0,
         /// <summary> Active. </summary>
-        Active,
+        Active = 1,
         /// <summary> NotApplicable. </summary>
-        NotApplicable
+        NotApplicable = 2
     }
 }

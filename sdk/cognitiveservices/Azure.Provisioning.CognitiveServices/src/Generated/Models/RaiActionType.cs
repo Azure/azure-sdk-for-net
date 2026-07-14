@@ -13,18 +13,18 @@ namespace Azure.Provisioning.CognitiveServices
     public enum RaiActionType
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> Blocking. </summary>
         [DataMember(Name = "BLOCKING")]
-        Blocking,
+        Blocking = 1,
         /// <summary> Annotating. </summary>
         [DataMember(Name = "ANNOTATING")]
-        Annotating,
+        Annotating = 2,
         /// <summary> Hitl. </summary>
         [DataMember(Name = "HITL")]
-        Hitl,
+        Hitl = 3,
         /// <summary> Retry. </summary>
         [DataMember(Name = "RETRY")]
-        Retry
+        Retry = 4
     }
 }

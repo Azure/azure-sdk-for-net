@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesDeploymentState
     {
         /// <summary> The deployment is running and accepting inference requests. </summary>
-        Running,
+        Running = 0,
         /// <summary> The deployment is paused and not accepting inference requests. </summary>
-        Paused
+        Paused = 1
     }
 }

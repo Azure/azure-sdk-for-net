@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesAccountDeploymentScaleType
     {
         /// <summary> Standard. </summary>
-        Standard,
+        Standard = 0,
         /// <summary> Manual. </summary>
-        Manual
+        Manual = 1
     }
 }

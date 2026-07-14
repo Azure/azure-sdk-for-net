@@ -11,20 +11,20 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesAgentDeploymentState
     {
         /// <summary> The deployment is starting. </summary>
-        Starting,
+        Starting = 0,
         /// <summary> The deployment started/is operational. </summary>
-        Running,
+        Running = 1,
         /// <summary> The deployment is being stopped. </summary>
-        Stopping,
+        Stopping = 2,
         /// <summary> The deployment was stopped. </summary>
-        Stopped,
+        Stopped = 3,
         /// <summary> The deployment failed. </summary>
-        Failed,
+        Failed = 4,
         /// <summary> The deployment is being deleted. </summary>
-        Deleting,
+        Deleting = 5,
         /// <summary> The deployment was deleted. </summary>
-        Deleted,
+        Deleted = 6,
         /// <summary> The deployment is being updated. </summary>
-        Updating
+        Updating = 7
     }
 }

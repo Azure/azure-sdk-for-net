@@ -11,16 +11,16 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesManagedNetworkProvisioningState
     {
         /// <summary> Deferred. </summary>
-        Deferred,
+        Deferred = 0,
         /// <summary> Updating. </summary>
-        Updating,
+        Updating = 1,
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 2,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 3,
         /// <summary> Deleting. </summary>
-        Deleting,
+        Deleting = 4,
         /// <summary> Deleted. </summary>
-        Deleted
+        Deleted = 5
     }
 }

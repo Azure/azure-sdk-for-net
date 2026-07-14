@@ -11,12 +11,12 @@ namespace Azure.Provisioning.CognitiveServices
     public enum ServiceAccountHostingModel
     {
         /// <summary> Web. </summary>
-        Web,
+        Web = 0,
         /// <summary> ConnectedContainer. </summary>
-        ConnectedContainer,
+        ConnectedContainer = 1,
         /// <summary> DisconnectedContainer. </summary>
-        DisconnectedContainer,
+        DisconnectedContainer = 2,
         /// <summary> ProvisionedWeb. </summary>
-        ProvisionedWeb
+        ProvisionedWeb = 3
     }
 }

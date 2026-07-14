@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CognitiveServices
     public enum ManagedPERequirement
     {
         /// <summary> Required. </summary>
-        Required,
+        Required = 0,
         /// <summary> NotRequired. </summary>
-        NotRequired,
+        NotRequired = 1,
         /// <summary> NotApplicable. </summary>
-        NotApplicable
+        NotApplicable = 2
     }
 }

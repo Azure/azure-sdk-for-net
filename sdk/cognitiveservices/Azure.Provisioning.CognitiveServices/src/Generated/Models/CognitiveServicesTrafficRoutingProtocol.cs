@@ -11,6 +11,6 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesTrafficRoutingProtocol
     {
         /// <summary> Percentage based routing. </summary>
-        FixedRatio
+        FixedRatio = 0
     }
 }

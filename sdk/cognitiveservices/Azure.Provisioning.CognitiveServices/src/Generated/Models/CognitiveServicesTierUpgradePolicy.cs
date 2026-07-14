@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesTierUpgradePolicy
     {
         /// <summary> OnceUpgradeIsAvailable. </summary>
-        OnceUpgradeIsAvailable,
+        OnceUpgradeIsAvailable = 0,
         /// <summary> NoAutoUpgrade. </summary>
-        NoAutoUpgrade
+        NoAutoUpgrade = 1
     }
 }

@@ -11,16 +11,16 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesAgenticApplicationProvisioningState
     {
         /// <summary> The application was successfully provisioned. </summary>
-        Succeeded,
+        Succeeded = 0,
         /// <summary> The application provisioning failed. </summary>
-        Failed,
+        Failed = 1,
         /// <summary> The application provisioning was canceled. </summary>
-        Canceled,
+        Canceled = 2,
         /// <summary> The application is being created. </summary>
-        Creating,
+        Creating = 3,
         /// <summary> The application is being updated. </summary>
-        Updating,
+        Updating = 4,
         /// <summary> The application is being deleted. </summary>
-        Deleting
+        Deleting = 5
     }
 }

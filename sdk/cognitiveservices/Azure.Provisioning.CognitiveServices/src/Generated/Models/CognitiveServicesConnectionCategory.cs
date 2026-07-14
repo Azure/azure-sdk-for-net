@@ -13,255 +13,255 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesConnectionCategory
     {
         /// <summary> PythonFeed. </summary>
-        PythonFeed,
+        PythonFeed = 0,
         /// <summary> ContainerRegistry. </summary>
-        ContainerRegistry,
+        ContainerRegistry = 1,
         /// <summary> Git. </summary>
-        Git,
+        Git = 2,
         /// <summary> S3. </summary>
-        S3,
+        S3 = 3,
         /// <summary> Snowflake. </summary>
-        Snowflake,
+        Snowflake = 4,
         /// <summary> AzureKeyVault. </summary>
-        AzureKeyVault,
+        AzureKeyVault = 105,
         /// <summary> AzureSqlDB. </summary>
         [DataMember(Name = "AzureSqlDb")]
-        AzureSqlDB,
+        AzureSqlDB = 5,
         /// <summary> AzureSynapseAnalytics. </summary>
-        AzureSynapseAnalytics,
+        AzureSynapseAnalytics = 6,
         /// <summary> AzureMySqlDB. </summary>
         [DataMember(Name = "AzureMySqlDb")]
-        AzureMySqlDB,
+        AzureMySqlDB = 7,
         /// <summary> AzurePostgresDB. </summary>
         [DataMember(Name = "AzurePostgresDb")]
-        AzurePostgresDB,
+        AzurePostgresDB = 8,
         /// <summary> AdlsGen2. </summary>
         [DataMember(Name = "ADLSGen2")]
-        AdlsGen2,
+        AdlsGen2 = 9,
         /// <summary> AzureContainerAppEnvironment. </summary>
-        AzureContainerAppEnvironment,
+        AzureContainerAppEnvironment = 106,
         /// <summary> Redis. </summary>
-        Redis,
+        Redis = 10,
         /// <summary> ApiKey. </summary>
-        ApiKey,
+        ApiKey = 11,
         /// <summary> AzureOpenAI. </summary>
-        AzureOpenAI,
+        AzureOpenAI = 12,
         /// <summary> AIServices. </summary>
-        AIServices,
+        AIServices = 13,
         /// <summary> CognitiveSearch. </summary>
-        CognitiveSearch,
+        CognitiveSearch = 14,
         /// <summary> CognitiveService. </summary>
-        CognitiveService,
+        CognitiveService = 15,
         /// <summary> CustomKeys. </summary>
-        CustomKeys,
+        CustomKeys = 16,
         /// <summary> AzureBlob. </summary>
-        AzureBlob,
+        AzureBlob = 17,
         /// <summary> AzureStorageAccount. </summary>
-        AzureStorageAccount,
+        AzureStorageAccount = 107,
         /// <summary> AzureOneLake. </summary>
-        AzureOneLake,
+        AzureOneLake = 18,
         /// <summary> CosmosDB. </summary>
         [DataMember(Name = "CosmosDb")]
-        CosmosDB,
+        CosmosDB = 19,
         /// <summary> CosmosDBMongoDBApi. </summary>
         [DataMember(Name = "CosmosDbMongoDbApi")]
-        CosmosDBMongoDBApi,
+        CosmosDBMongoDBApi = 20,
         /// <summary> AzureDataExplorer. </summary>
-        AzureDataExplorer,
+        AzureDataExplorer = 21,
         /// <summary> AzureMariaDB. </summary>
         [DataMember(Name = "AzureMariaDb")]
-        AzureMariaDB,
+        AzureMariaDB = 22,
         /// <summary> AzureDatabricksDeltaLake. </summary>
-        AzureDatabricksDeltaLake,
+        AzureDatabricksDeltaLake = 23,
         /// <summary> AzureSqlMI. </summary>
         [DataMember(Name = "AzureSqlMi")]
-        AzureSqlMI,
+        AzureSqlMI = 24,
         /// <summary> AzureTableStorage. </summary>
-        AzureTableStorage,
+        AzureTableStorage = 25,
         /// <summary> AmazonRdsForOracle. </summary>
-        AmazonRdsForOracle,
+        AmazonRdsForOracle = 26,
         /// <summary> AmazonRdsForSqlServer. </summary>
-        AmazonRdsForSqlServer,
+        AmazonRdsForSqlServer = 27,
         /// <summary> AmazonRedshift. </summary>
-        AmazonRedshift,
+        AmazonRedshift = 28,
         /// <summary> Db2. </summary>
-        Db2,
+        Db2 = 29,
         /// <summary> Drill. </summary>
-        Drill,
+        Drill = 30,
         /// <summary> GoogleBigQuery. </summary>
-        GoogleBigQuery,
+        GoogleBigQuery = 31,
         /// <summary> Greenplum. </summary>
-        Greenplum,
+        Greenplum = 32,
         /// <summary> Hbase. </summary>
-        Hbase,
+        Hbase = 33,
         /// <summary> Hive. </summary>
-        Hive,
+        Hive = 34,
         /// <summary> Impala. </summary>
-        Impala,
+        Impala = 35,
         /// <summary> Informix. </summary>
-        Informix,
+        Informix = 36,
         /// <summary> MariaDB. </summary>
         [DataMember(Name = "MariaDb")]
-        MariaDB,
+        MariaDB = 37,
         /// <summary> MicrosoftAccess. </summary>
-        MicrosoftAccess,
+        MicrosoftAccess = 38,
         /// <summary> MySql. </summary>
-        MySql,
+        MySql = 39,
         /// <summary> Netezza. </summary>
-        Netezza,
+        Netezza = 40,
         /// <summary> Oracle. </summary>
-        Oracle,
+        Oracle = 41,
         /// <summary> Phoenix. </summary>
-        Phoenix,
+        Phoenix = 42,
         /// <summary> PostgreSql. </summary>
-        PostgreSql,
+        PostgreSql = 43,
         /// <summary> Presto. </summary>
-        Presto,
+        Presto = 44,
         /// <summary> SapOpenHub. </summary>
-        SapOpenHub,
+        SapOpenHub = 45,
         /// <summary> SapBw. </summary>
-        SapBw,
+        SapBw = 46,
         /// <summary> SapHana. </summary>
-        SapHana,
+        SapHana = 47,
         /// <summary> SapTable. </summary>
-        SapTable,
+        SapTable = 48,
         /// <summary> Spark. </summary>
-        Spark,
+        Spark = 49,
         /// <summary> SqlServer. </summary>
-        SqlServer,
+        SqlServer = 50,
         /// <summary> Sybase. </summary>
-        Sybase,
+        Sybase = 51,
         /// <summary> Teradata. </summary>
-        Teradata,
+        Teradata = 52,
         /// <summary> Vertica. </summary>
-        Vertica,
+        Vertica = 53,
         /// <summary> Pinecone. </summary>
-        Pinecone,
+        Pinecone = 54,
         /// <summary> Databricks. </summary>
-        Databricks,
+        Databricks = 108,
         /// <summary> Cassandra. </summary>
-        Cassandra,
+        Cassandra = 55,
         /// <summary> Couchbase. </summary>
-        Couchbase,
+        Couchbase = 56,
         /// <summary> MongoDBV2. </summary>
         [DataMember(Name = "MongoDbV2")]
-        MongoDBV2,
+        MongoDBV2 = 57,
         /// <summary> MongoDBAtlas. </summary>
         [DataMember(Name = "MongoDbAtlas")]
-        MongoDBAtlas,
+        MongoDBAtlas = 58,
         /// <summary> AmazonS3Compatible. </summary>
-        AmazonS3Compatible,
+        AmazonS3Compatible = 59,
         /// <summary> FileServer. </summary>
-        FileServer,
+        FileServer = 60,
         /// <summary> FtpServer. </summary>
-        FtpServer,
+        FtpServer = 61,
         /// <summary> GoogleCloudStorage. </summary>
-        GoogleCloudStorage,
+        GoogleCloudStorage = 62,
         /// <summary> Hdfs. </summary>
-        Hdfs,
+        Hdfs = 63,
         /// <summary> OracleCloudStorage. </summary>
-        OracleCloudStorage,
+        OracleCloudStorage = 64,
         /// <summary> Sftp. </summary>
-        Sftp,
+        Sftp = 65,
         /// <summary> GenericHttp. </summary>
-        GenericHttp,
+        GenericHttp = 66,
         /// <summary> ODataRest. </summary>
-        ODataRest,
+        ODataRest = 67,
         /// <summary> Odbc. </summary>
-        Odbc,
+        Odbc = 68,
         /// <summary> GenericRest. </summary>
-        GenericRest,
+        GenericRest = 69,
         /// <summary> RemoteTool. </summary>
-        RemoteTool,
+        RemoteTool = 109,
         /// <summary> AmazonMws. </summary>
-        AmazonMws,
+        AmazonMws = 70,
         /// <summary> Concur. </summary>
-        Concur,
+        Concur = 71,
         /// <summary> Dynamics. </summary>
-        Dynamics,
+        Dynamics = 72,
         /// <summary> DynamicsAx. </summary>
-        DynamicsAx,
+        DynamicsAx = 73,
         /// <summary> DynamicsCrm. </summary>
-        DynamicsCrm,
+        DynamicsCrm = 74,
         /// <summary> GoogleAdWords. </summary>
-        GoogleAdWords,
+        GoogleAdWords = 75,
         /// <summary> Hubspot. </summary>
-        Hubspot,
+        Hubspot = 76,
         /// <summary> Jira. </summary>
-        Jira,
+        Jira = 77,
         /// <summary> Magento. </summary>
-        Magento,
+        Magento = 78,
         /// <summary> Marketo. </summary>
-        Marketo,
+        Marketo = 79,
         /// <summary> Office365. </summary>
-        Office365,
+        Office365 = 80,
         /// <summary> Eloqua. </summary>
-        Eloqua,
+        Eloqua = 81,
         /// <summary> Responsys. </summary>
-        Responsys,
+        Responsys = 82,
         /// <summary> OracleServiceCloud. </summary>
-        OracleServiceCloud,
+        OracleServiceCloud = 83,
         /// <summary> PayPal. </summary>
-        PayPal,
+        PayPal = 84,
         /// <summary> QuickBooks. </summary>
-        QuickBooks,
+        QuickBooks = 85,
         /// <summary> Salesforce. </summary>
-        Salesforce,
+        Salesforce = 86,
         /// <summary> SalesforceServiceCloud. </summary>
-        SalesforceServiceCloud,
+        SalesforceServiceCloud = 87,
         /// <summary> SalesforceMarketingCloud. </summary>
-        SalesforceMarketingCloud,
+        SalesforceMarketingCloud = 88,
         /// <summary> SapCloudForCustomer. </summary>
-        SapCloudForCustomer,
+        SapCloudForCustomer = 89,
         /// <summary> SapEcc. </summary>
-        SapEcc,
+        SapEcc = 90,
         /// <summary> ServiceNow. </summary>
-        ServiceNow,
+        ServiceNow = 91,
         /// <summary> SharePointOnlineList. </summary>
-        SharePointOnlineList,
+        SharePointOnlineList = 92,
         /// <summary> Shopify. </summary>
-        Shopify,
+        Shopify = 93,
         /// <summary> Square. </summary>
-        Square,
+        Square = 94,
         /// <summary> WebTable. </summary>
-        WebTable,
+        WebTable = 95,
         /// <summary> Xero. </summary>
-        Xero,
+        Xero = 96,
         /// <summary> Zoho. </summary>
-        Zoho,
+        Zoho = 97,
         /// <summary> GenericContainerRegistry. </summary>
-        GenericContainerRegistry,
+        GenericContainerRegistry = 98,
         /// <summary> Elasticsearch. </summary>
-        Elasticsearch,
+        Elasticsearch = 99,
         /// <summary> AppInsights. </summary>
-        AppInsights,
+        AppInsights = 110,
         /// <summary> AppConfig. </summary>
-        AppConfig,
+        AppConfig = 111,
         /// <summary> OpenAI. </summary>
-        OpenAI,
+        OpenAI = 100,
         /// <summary> Serp. </summary>
-        Serp,
+        Serp = 101,
         /// <summary> BingLLMSearch. </summary>
-        BingLLMSearch,
+        BingLLMSearch = 102,
         /// <summary> Serverless. </summary>
-        Serverless,
+        Serverless = 103,
         /// <summary> ManagedOnlineEndpoint. </summary>
-        ManagedOnlineEndpoint,
+        ManagedOnlineEndpoint = 104,
         /// <summary> ApiManagement. </summary>
-        ApiManagement,
+        ApiManagement = 112,
         /// <summary> ModelGateway. </summary>
-        ModelGateway,
+        ModelGateway = 113,
         /// <summary> GroundingWithBingSearch. </summary>
-        GroundingWithBingSearch,
+        GroundingWithBingSearch = 114,
         /// <summary> GroundingWithCustomSearch. </summary>
-        GroundingWithCustomSearch,
+        GroundingWithCustomSearch = 115,
         /// <summary> Sharepoint. </summary>
-        Sharepoint,
+        Sharepoint = 116,
         /// <summary> MicrosoftFabric. </summary>
-        MicrosoftFabric,
+        MicrosoftFabric = 117,
         /// <summary> PowerPlatformEnvironment. </summary>
-        PowerPlatformEnvironment,
+        PowerPlatformEnvironment = 118,
         /// <summary> RemoteA2A. </summary>
-        RemoteA2A
+        RemoteA2A = 119
     }
 }

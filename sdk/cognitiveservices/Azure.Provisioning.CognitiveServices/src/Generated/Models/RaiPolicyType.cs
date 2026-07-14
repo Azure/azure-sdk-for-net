@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
     public enum RaiPolicyType
     {
         /// <summary> UserManaged. </summary>
-        UserManaged,
+        UserManaged = 0,
         /// <summary> SystemManaged. </summary>
-        SystemManaged
+        SystemManaged = 1
     }
 }

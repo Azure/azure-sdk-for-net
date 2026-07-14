@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesManagedNetworkStatus
     {
         /// <summary> Inactive. </summary>
-        Inactive,
+        Inactive = 0,
         /// <summary> Active. </summary>
-        Active
+        Active = 1
     }
 }

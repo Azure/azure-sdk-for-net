@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CognitiveServices
     public enum DeploymentModelVersionUpgradeOption
     {
         /// <summary> OnceNewDefaultVersionAvailable. </summary>
-        OnceNewDefaultVersionAvailable,
+        OnceNewDefaultVersionAvailable = 0,
         /// <summary> OnceCurrentVersionExpired. </summary>
-        OnceCurrentVersionExpired,
+        OnceCurrentVersionExpired = 1,
         /// <summary> NoAutoUpgrade. </summary>
-        NoAutoUpgrade
+        NoAutoUpgrade = 2
     }
 }

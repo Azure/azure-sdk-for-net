@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesIsolationMode
     {
         /// <summary> Disabled. </summary>
-        Disabled,
+        Disabled = 0,
         /// <summary> AllowInternetOutbound. </summary>
-        AllowInternetOutbound,
+        AllowInternetOutbound = 1,
         /// <summary> AllowOnlyApprovedOutbound. </summary>
-        AllowOnlyApprovedOutbound
+        AllowOnlyApprovedOutbound = 2
     }
 }

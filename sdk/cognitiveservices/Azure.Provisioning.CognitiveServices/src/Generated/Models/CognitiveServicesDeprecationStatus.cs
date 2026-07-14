@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
     internal enum CognitiveServicesDeprecationStatus
     {
         /// <summary> Planned. </summary>
-        Planned,
+        Planned = 0,
         /// <summary> Tentative. </summary>
-        Tentative
+        Tentative = 1
     }
 }

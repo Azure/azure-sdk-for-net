@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CognitiveServices
     public enum RaiPolicyContentLevel
     {
         /// <summary> Low. </summary>
-        Low,
+        Low = 0,
         /// <summary> Medium. </summary>
-        Medium,
+        Medium = 1,
         /// <summary> High. </summary>
-        High
+        High = 2
     }
 }

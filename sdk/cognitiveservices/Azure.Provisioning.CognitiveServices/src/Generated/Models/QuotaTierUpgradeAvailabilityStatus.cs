@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
     public enum QuotaTierUpgradeAvailabilityStatus
     {
         /// <summary> Available. </summary>
-        Available,
+        Available = 0,
         /// <summary> NotAvailable. </summary>
-        NotAvailable
+        NotAvailable = 1
     }
 }

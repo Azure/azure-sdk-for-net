@@ -11,14 +11,14 @@ namespace Azure.Provisioning.CognitiveServices
     public enum CognitiveServicesSkuTier
     {
         /// <summary> Free. </summary>
-        Free,
+        Free = 0,
         /// <summary> Basic. </summary>
-        Basic,
+        Basic = 1,
         /// <summary> Standard. </summary>
-        Standard,
+        Standard = 2,
         /// <summary> Premium. </summary>
-        Premium,
+        Premium = 3,
         /// <summary> Enterprise. </summary>
-        Enterprise
+        Enterprise = 4
     }
 }

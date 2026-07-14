@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CognitiveServices
     public enum TrustedServicesByPassSelection
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> AzureServices. </summary>
-        AzureServices
+        AzureServices = 1
     }
 }
