@@ -11,10 +11,10 @@ namespace Azure.Provisioning.BotService
     public enum BotMsaAppType
     {
         /// <summary> UserAssignedMSI. </summary>
-        UserAssignedMSI,
+        UserAssignedMSI = 0,
         /// <summary> SingleTenant. </summary>
-        SingleTenant,
+        SingleTenant = 1,
         /// <summary> MultiTenant. </summary>
-        MultiTenant
+        MultiTenant = 2
     }
 }

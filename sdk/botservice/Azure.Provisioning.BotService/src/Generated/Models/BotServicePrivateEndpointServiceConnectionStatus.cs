@@ -11,10 +11,10 @@ namespace Azure.Provisioning.BotService
     public enum BotServicePrivateEndpointServiceConnectionStatus
     {
         /// <summary> Pending. </summary>
-        Pending,
+        Pending = 0,
         /// <summary> Approved. </summary>
-        Approved,
+        Approved = 1,
         /// <summary> Rejected. </summary>
-        Rejected
+        Rejected = 2
     }
 }

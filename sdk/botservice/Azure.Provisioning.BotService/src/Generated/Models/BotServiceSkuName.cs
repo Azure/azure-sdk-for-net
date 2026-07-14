@@ -11,8 +11,8 @@ namespace Azure.Provisioning.BotService
     public enum BotServiceSkuName
     {
         /// <summary> F0. </summary>
-        F0,
+        F0 = 0,
         /// <summary> S1. </summary>
-        S1
+        S1 = 1
     }
 }

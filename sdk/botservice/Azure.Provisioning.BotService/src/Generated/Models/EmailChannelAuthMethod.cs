@@ -14,9 +14,9 @@ namespace Azure.Provisioning.BotService
     {
         /// <summary> Basic authentication. </summary>
         [DataMember(Name = "0")]
-        Password,
+        Password = 0,
         /// <summary> Modern authentication. </summary>
         [DataMember(Name = "1")]
-        Graph
+        Graph = 1
     }
 }

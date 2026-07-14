@@ -21,9 +21,9 @@ namespace Azure.Provisioning.BotService
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private BicepDictionary<string> _tags;
-        private BicepValue<AzureLocation> _location;
         private BotProperties _properties;
+        private BicepValue<AzureLocation> _location;
+        private BicepDictionary<string> _tags;
         private BotServiceSku _sku;
         private BicepValue<BotServiceKind> _kind;
         private BicepValue<ETag> _eTag;
@@ -71,18 +71,18 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets or sets the Tags. </summary>
-        public BicepDictionary<string> Tags
+        /// <summary> Gets or sets the Properties. </summary>
+        public BotProperties Properties
         {
             get
             {
                 Initialize();
-                return _tags;
+                return _properties;
             }
             set
             {
                 Initialize();
-                _tags.Assign(value);
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -101,18 +101,18 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        public BotProperties Properties
+        /// <summary> Gets or sets the Tags. </summary>
+        public BicepDictionary<string> Tags
         {
             get
             {
                 Initialize();
-                return _properties;
+                return _tags;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _properties, value);
+                _tags.Assign(value);
             }
         }
 
@@ -178,9 +178,9 @@ namespace Azure.Provisioning.BotService
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<BotProperties>(nameof(Properties), new string[] { "properties" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
+            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _sku = DefineModelProperty<BotServiceSku>(nameof(Sku), new string[] { "sku" });
             _kind = DefineProperty<BotServiceKind>(nameof(Kind), new string[] { "kind" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
@@ -204,7 +204,7 @@ namespace Azure.Provisioning.BotService
         /// <summary> Get the requirements for naming this resource. </summary>
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 24, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period);
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(2, 64, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period);
 
         /// <summary></summary>
         public static partial class ResourceVersions

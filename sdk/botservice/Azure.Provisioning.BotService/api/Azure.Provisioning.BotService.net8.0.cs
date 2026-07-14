@@ -358,6 +358,11 @@ namespace Azure.Provisioning.BotService
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class Dynamics365OmnichannelChannel : Azure.Provisioning.BotService.BotChannelProperties
+    {
+        public Dynamics365OmnichannelChannel() { }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class EmailChannel : Azure.Provisioning.BotService.BotChannelProperties
     {
         public EmailChannel() { }
@@ -504,11 +509,6 @@ namespace Azure.Provisioning.BotService
         public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.NetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
         public Azure.Provisioning.BicepList<string> PhoneNumbers { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.BotService.BotServiceNspAccessRuleSubscription> Subscriptions { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class OmniChannel : Azure.Provisioning.BotService.BotChannelProperties
-    {
-        public OmniChannel() { }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class OutlookChannel : Azure.Provisioning.BotService.BotChannelProperties

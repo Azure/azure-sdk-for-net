@@ -11,10 +11,10 @@ namespace Azure.Provisioning.BotService
     public enum BotServicePublicNetworkAccess
     {
         /// <summary> Enabled. </summary>
-        Enabled,
+        Enabled = 0,
         /// <summary> Disabled. </summary>
-        Disabled,
+        Disabled = 1,
         /// <summary> SecuredByPerimeter. </summary>
-        SecuredByPerimeter
+        SecuredByPerimeter = 2
     }
 }

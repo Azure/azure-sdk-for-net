@@ -11,8 +11,8 @@ namespace Azure.Provisioning.BotService
     public enum BotServiceSkuTier
     {
         /// <summary> Free. </summary>
-        Free,
+        Free = 0,
         /// <summary> Standard. </summary>
-        Standard
+        Standard = 1
     }
 }

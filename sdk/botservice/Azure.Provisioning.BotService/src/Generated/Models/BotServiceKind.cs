@@ -14,18 +14,18 @@ namespace Azure.Provisioning.BotService
     {
         /// <summary> Sdk. </summary>
         [DataMember(Name = "sdk")]
-        Sdk,
+        Sdk = 0,
         /// <summary> Designer. </summary>
         [DataMember(Name = "designer")]
-        Designer,
+        Designer = 1,
         /// <summary> Bot. </summary>
         [DataMember(Name = "bot")]
-        Bot,
+        Bot = 2,
         /// <summary> Function. </summary>
         [DataMember(Name = "function")]
-        Function,
+        Function = 3,
         /// <summary> Azurebot. </summary>
         [DataMember(Name = "azurebot")]
-        Azurebot
+        Azurebot = 4
     }
 }

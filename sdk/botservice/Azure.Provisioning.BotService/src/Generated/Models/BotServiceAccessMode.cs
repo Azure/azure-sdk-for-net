@@ -11,10 +11,10 @@ namespace Azure.Provisioning.BotService
     public enum BotServiceAccessMode
     {
         /// <summary> Enforced. </summary>
-        Enforced,
+        Enforced = 0,
         /// <summary> Learning. </summary>
-        Learning,
+        Learning = 1,
         /// <summary> Audit. </summary>
-        Audit
+        Audit = 2
     }
 }
