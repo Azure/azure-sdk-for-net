@@ -110,9 +110,9 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class with a
-        /// pre-built connection. Intended for unit tests that supply a mocked
-        /// <see cref="ServiceBusConnection"/>; not meant for application use.
+        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class using a
+        /// pre-built connection. This constructor is intended for unit tests that supply a
+        /// mocked <see cref="ServiceBusConnection"/> and is not meant for application use.
         /// </summary>
         /// <param name="connection">The connection to use for the client.</param>
         internal ServiceBusClient(ServiceBusConnection connection)
@@ -660,6 +660,11 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        // The public overloads expose IAsyncEnumerable<string> rather than AsyncPageable<string>.
+        // AsyncPageable is the idiomatic shape for HTTP endpoints, where each page carries an
+        // HTTP Response that callers surface via AsPages(). This operation runs over AMQP and has
+        // no Response to expose, so IAsyncEnumerable is the preferred streaming form for the AMQP
+        // libraries and matches existing prior art (for example ServiceBusRuleManager.GetRulesAsync).
         private async IAsyncEnumerable<string> GetMessageSessionsCoreAsync(
             string entityPath,
             DateTimeOffset lastUpdatedTime,

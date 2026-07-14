@@ -441,7 +441,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 await using var client = new ServiceBusClient(
                     TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
 
-                var beforeSend = DateTimeOffset.UtcNow.AddSeconds(-5);
+                var beforeSend = DateTimeOffset.UtcNow.AddMinutes(-1);
                 var sessionId = "time-filter-session";
 
                 await using var sender = client.CreateSender(scope.QueueName);
@@ -456,15 +456,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                     await receiver.SetSessionStateAsync(new BinaryData("updated-state"));
                 }
 
-                var result = new List<string>();
+                // Query with a timestamp BEFORE the state update: the session's state was
+                // updated after this time, so it must be returned.
+                var updatedAfterPast = new List<string>();
                 await foreach (var s in client.GetMessageSessionsAsync(
                     scope.QueueName, beforeSend))
                 {
-                    result.Add(s);
+                    updatedAfterPast.Add(s);
                 }
 
-                Assert.IsNotNull(result);
-                Assert.That(result, Does.Contain(sessionId));
+                Assert.That(updatedAfterPast, Does.Contain(sessionId));
+
+                // Discriminating case: query with a FUTURE timestamp. No session's state was
+                // updated after a future time, so the result must be empty -- even though the
+                // session still has an active message. If the service ignored the filter, the
+                // active session would be returned here (as it is under the MaxValue no-filter
+                // overload), and this assertion would fail. This is what proves the
+                // sessionStateUpdatedAfter filter is actually applied.
+                var updatedAfterFuture = new List<string>();
+                await foreach (var s in client.GetMessageSessionsAsync(
+                    scope.QueueName, DateTimeOffset.UtcNow.AddHours(1)))
+                {
+                    updatedAfterFuture.Add(s);
+                }
+
+                Assert.That(updatedAfterFuture, Is.Empty);
             }
         }
     }

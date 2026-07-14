@@ -1631,12 +1631,27 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             // No associated link name -- this is an entity-level operation.
             // Convert DateTimeOffset to UTC DateTime for AMQP timestamp encoding.
+            // DateTimeOffset.MaxValue is the all-sessions sentinel (matches the AMQP contract
+            // and Java's MAXDATE). Do NOT change it to MinValue: the encoder would send a
+            // negative, pre-epoch timestamp that the service does not interpret as "all sessions."
             amqpRequestMessage.Map[ManagementConstants.Properties.LastUpdatedTime] = lastUpdatedTime.UtcDateTime;
             amqpRequestMessage.Map[ManagementConstants.Properties.Skip] = skip;
             amqpRequestMessage.Map[ManagementConstants.Properties.Top] = top;
 
             var amqpResponseMessage = await ExecuteRequest(timeout, amqpRequestMessage).ConfigureAwait(false);
 
+            return ParseGetMessageSessionsResponse(amqpResponseMessage);
+        }
+
+        /// <summary>
+        /// Parses the management response for the get-message-sessions operation into a list of
+        /// session IDs. Extracted from <see cref="GetMessageSessionsInternal"/> so the parsing and
+        /// validation branches can be unit tested without a live AMQP round-trip.
+        /// </summary>
+        /// <param name="amqpResponseMessage">The management response to parse.</param>
+        /// <returns>The session IDs for the page, or an empty list when no (more) sessions match.</returns>
+        internal static IReadOnlyList<string> ParseGetMessageSessionsResponse(AmqpResponseMessage amqpResponseMessage)
+        {
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
             {
                 // 200 OK with no map body or no 'sessions-ids' key is a contract violation:
@@ -1694,9 +1709,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 // The service currently returns 204 NoContent (with com.microsoft:session-not-found)
                 // for empty results, which the branch above handles. This 404 + message-not-found
-                // catch is a cross-SDK safety net (JS and Python carry the same guard). Other 404
-                // conditions (e.g., entity not found) fall through to the exception below so callers
-                // can distinguish "no sessions" from "queue doesn't exist".
+                // catch is a defensive safety net in case the service signals an empty result as a
+                // 404 instead; it is harmless because the NoContent branch already covers empty. Other
+                // 404 conditions (e.g., entity not found) fall through to the exception below so
+                // callers can distinguish "no sessions" from "queue doesn't exist".
                 return Array.Empty<string>();
             }
 

@@ -10,6 +10,7 @@ using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
 using Moq;
 using NUnit.Framework;
@@ -480,6 +481,161 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                     It.IsAny<bool>(),
                     It.IsAny<CancellationToken>()),
                 Times.Once());
+        }
+
+        /// <summary>
+        ///   Builds a management <see cref="AmqpResponseMessage"/> for the get-message-sessions
+        ///   operation so the parsing branches can be exercised without a live AMQP round-trip.
+        /// </summary>
+        private static AmqpResponseMessage CreateGetSessionsResponse(
+            AmqpResponseStatusCode statusCode,
+            object sessionIdsValue = null,
+            bool includeSessionIdsKey = true,
+            bool omitMapBody = false,
+            AmqpSymbol? errorCondition = null)
+        {
+            AmqpMessage message;
+            if (omitMapBody)
+            {
+                // A non-map value body causes AmqpResponseMessage.Map to be null.
+                message = AmqpMessage.Create(new AmqpValue { Value = "not-a-map" });
+            }
+            else
+            {
+                var body = new AmqpMap();
+                if (includeSessionIdsKey)
+                {
+                    body[ManagementConstants.Properties.SessionIds] = sessionIdsValue;
+                }
+                message = AmqpMessage.Create(new AmqpValue { Value = body });
+            }
+
+            message.ApplicationProperties.Map[ManagementConstants.Response.StatusCode] = (int)statusCode;
+            if (errorCondition.HasValue)
+            {
+                message.ApplicationProperties.Map[ManagementConstants.Response.ErrorCondition] = errorCondition.Value;
+            }
+
+            return AmqpResponseMessage.CreateResponse(message);
+        }
+
+        [Test]
+        public void ParseGetMessageSessionsResponseReturnsSessionIdsFromStringArray()
+        {
+            var response = CreateGetSessionsResponse(
+                AmqpResponseStatusCode.OK, new[] { "session-1", "session-2" });
+
+            var result = AmqpReceiver.ParseGetMessageSessionsResponse(response);
+
+            Assert.That(result, Is.EqualTo(new[] { "session-1", "session-2" }));
+        }
+
+        [Test]
+        public void ParseGetMessageSessionsResponseReturnsSessionIdsFromObjectArray()
+        {
+            var response = CreateGetSessionsResponse(
+                AmqpResponseStatusCode.OK, new object[] { "session-1", "session-2" });
+
+            var result = AmqpReceiver.ParseGetMessageSessionsResponse(response);
+
+            Assert.That(result, Is.EqualTo(new[] { "session-1", "session-2" }));
+        }
+
+        [Test]
+        public void ParseGetMessageSessionsResponseReturnsEmptyForNoContent()
+        {
+            var response = CreateGetSessionsResponse(AmqpResponseStatusCode.NoContent);
+
+            var result = AmqpReceiver.ParseGetMessageSessionsResponse(response);
+
+            Assert.That(result, Is.Empty);
+        }
+
+        [Test]
+        public void ParseGetMessageSessionsResponseReturnsEmptyForMessageNotFound()
+        {
+            var response = CreateGetSessionsResponse(
+                AmqpResponseStatusCode.NotFound,
+                errorCondition: AmqpClientConstants.MessageNotFoundError);
+
+            var result = AmqpReceiver.ParseGetMessageSessionsResponse(response);
+
+            Assert.That(result, Is.Empty);
+        }
+
+        [Test]
+        public void ParseGetMessageSessionsResponseThrowsForMissingMapBody()
+        {
+            var response = CreateGetSessionsResponse(AmqpResponseStatusCode.OK, omitMapBody: true);
+
+            Assert.That(
+                () => AmqpReceiver.ParseGetMessageSessionsResponse(response),
+                Throws.InstanceOf<ServiceBusException>());
+        }
+
+        [Test]
+        public void ParseGetMessageSessionsResponseThrowsForMissingSessionIdsKey()
+        {
+            var response = CreateGetSessionsResponse(
+                AmqpResponseStatusCode.OK, includeSessionIdsKey: false);
+
+            Assert.That(
+                () => AmqpReceiver.ParseGetMessageSessionsResponse(response),
+                Throws.InstanceOf<ServiceBusException>());
+        }
+
+        [Test]
+        public void ParseGetMessageSessionsResponseThrowsForUnexpectedPayloadType()
+        {
+            var response = CreateGetSessionsResponse(AmqpResponseStatusCode.OK, sessionIdsValue: 42);
+
+            Assert.That(
+                () => AmqpReceiver.ParseGetMessageSessionsResponse(response),
+                Throws.InstanceOf<ServiceBusException>());
+        }
+
+        [Test]
+        public void ParseGetMessageSessionsResponseThrowsForEmptySessionIdInStringArray()
+        {
+            var response = CreateGetSessionsResponse(
+                AmqpResponseStatusCode.OK, new[] { "session-1", "" });
+
+            Assert.That(
+                () => AmqpReceiver.ParseGetMessageSessionsResponse(response),
+                Throws.InstanceOf<ServiceBusException>());
+        }
+
+        [Test]
+        public void ParseGetMessageSessionsResponseThrowsForNonStringInObjectArray()
+        {
+            var response = CreateGetSessionsResponse(
+                AmqpResponseStatusCode.OK, new object[] { "session-1", 5 });
+
+            Assert.That(
+                () => AmqpReceiver.ParseGetMessageSessionsResponse(response),
+                Throws.InstanceOf<ServiceBusException>());
+        }
+
+        [Test]
+        public void ParseGetMessageSessionsResponseThrowsForNotFoundWithoutMessageNotFound()
+        {
+            var response = CreateGetSessionsResponse(
+                AmqpResponseStatusCode.NotFound,
+                errorCondition: new AmqpSymbol("com.microsoft:entity-not-found"));
+
+            Assert.That(
+                () => AmqpReceiver.ParseGetMessageSessionsResponse(response),
+                Throws.InstanceOf<Exception>());
+        }
+
+        [Test]
+        public void ParseGetMessageSessionsResponseThrowsForOtherStatusCode()
+        {
+            var response = CreateGetSessionsResponse(AmqpResponseStatusCode.InternalServerError);
+
+            Assert.That(
+                () => AmqpReceiver.ParseGetMessageSessionsResponse(response),
+                Throws.InstanceOf<Exception>());
         }
 
         private AmqpReceiver CreateReceiver() =>
