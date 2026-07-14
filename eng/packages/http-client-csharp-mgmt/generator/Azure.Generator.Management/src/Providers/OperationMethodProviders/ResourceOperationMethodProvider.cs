@@ -228,7 +228,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected virtual MethodSignature CreateSignature()
         {
-            return new MethodSignature(
+            var generatedSignature = new MethodSignature(
                 _methodName,
                 _description,
                 GetMethodModifiers(),
@@ -240,6 +240,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.GenericParameterConstraints,
                 _convenienceMethod.Signature.ExplicitInterface,
                 _convenienceMethod.Signature.NonDocumentComment);
+            return OperationMethodParameterHelper.ApplyPartialMethodCustomization(_enclosingType, generatedSignature);
         }
 
         private MethodSignatureModifiers GetMethodModifiers()
@@ -263,7 +264,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private TryExpression BuildTryExpression()
         {
-            var cancellationTokenParameter = KnownParameters.CancellationTokenParameter;
+            var cancellationTokenParameter = OperationMethodParameterHelper.GetCancellationTokenParameter(_signature.Parameters);
 
             var requestMethod = _restClient.GetRequestMethodByOperation(_serviceMethod.Operation);
             var tryStatements = new List<MethodBodyStatement>

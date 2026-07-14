@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Management.Utilities
 {
@@ -125,6 +126,23 @@ namespace Azure.Generator.Management.Utilities
 
             return [.. requiredParameters, .. optionalParameters];
         }
+
+        public static MethodSignature ApplyPartialMethodCustomization(TypeProvider enclosingType, MethodSignature generatedSignature)
+        {
+            if (generatedSignature.ReturnType is null ||
+                !PartialMethodCustomization.TryFindCustomSignature(enclosingType, generatedSignature.Name, generatedSignature.Parameters, out var customSignature))
+            {
+                return generatedSignature;
+            }
+
+            var implementationParameters = PartialMethodCustomization.RenameAndCloneParameters(generatedSignature.Parameters, customSignature!.Parameters, removeDefaults: true);
+            var partialSignature = PartialMethodCustomization.BuildPartialSignature(customSignature, implementationParameters, generatedSignature.ReturnType);
+            partialSignature.Update(modifiers: partialSignature.Modifiers | (generatedSignature.Modifiers & MethodSignatureModifiers.Async));
+            return partialSignature;
+        }
+
+        public static ParameterProvider GetCancellationTokenParameter(IReadOnlyList<ParameterProvider> parameters)
+            => parameters.FirstOrDefault(p => p.Type.Equals(typeof(System.Threading.CancellationToken))) ?? KnownParameters.CancellationTokenParameter;
 
         private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, CSharpType? type = null, ParameterValidationType? validation = null, bool preserveWireInfo = true)
             => new(

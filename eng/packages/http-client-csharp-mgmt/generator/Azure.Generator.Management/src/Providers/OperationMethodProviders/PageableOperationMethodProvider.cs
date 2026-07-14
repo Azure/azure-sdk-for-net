@@ -123,7 +123,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             // Generate return description for pageable methods
             FormattableString returnDescription = $"A collection of {_actualItemType:C} that may take multiple service requests to iterate over.";
 
-            return new MethodSignature(
+            var generatedSignature = new MethodSignature(
                 _methodName,
                 _convenienceMethod.Signature.Description,
                 _convenienceMethod.Signature.Modifiers,
@@ -135,6 +135,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.GenericParameterConstraints,
                 _convenienceMethod.Signature.ExplicitInterface,
                 _convenienceMethod.Signature.NonDocumentComment);
+            return OperationMethodParameterHelper.ApplyPartialMethodCustomization(_enclosingType, generatedSignature);
         }
 
         protected MethodBodyStatement[] BuildBodyStatements()
@@ -145,7 +146,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var diagnosticScope = ResourceHelpers.GetDiagnosticScope(_enclosingType, _methodName, _isAsync);
 
             var collectionResultOfT = collectionResult.Type;
-            statements.Add(ResourceMethodSnippets.CreateRequestContext(KnownParameters.CancellationTokenParameter, out var contextVariable));
+            statements.Add(ResourceMethodSnippets.CreateRequestContext(OperationMethodParameterHelper.GetCancellationTokenParameter(_signature.Parameters), out var contextVariable));
 
             var requestMethod = _restClientInfo.RestClientProvider.GetRequestMethodByOperation(_method.Operation);
 

@@ -260,6 +260,85 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_PartialMethodCustomizationRenamesOperationParameters()
+        {
+            const string customization = """
+                namespace Azure
+                {
+                    public class WaitUntil {}
+                }
+
+                namespace Azure.ResourceManager
+                {
+                    public class ArmOperation<T> {}
+                }
+
+                namespace Samples
+                {
+                    using Azure;
+                    using Azure.ResourceManager;
+                    using System.Threading;
+                    using System.Threading.Tasks;
+
+                    public partial class ResponseTypeCollection
+                    {
+                        public virtual partial ArmOperation<ResponseTypeResource> CreateOrUpdate(WaitUntil waitUntil, string responseTypeName, ResponseTypeData resourceInfo, CancellationToken operationCancellationToken = default);
+                        public virtual partial Task<ArmOperation<ResponseTypeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string asyncResponseTypeName, ResponseTypeData asyncResourceInfo, CancellationToken asyncOperationCancellationToken = default);
+                    }
+
+                    public class ResponseTypeResource {}
+                    public class ResponseTypeData {}
+                }
+                """;
+            var (client, models) = InputResourceData.ClientWithResource();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [client],
+                customizationSources: [customization]);
+
+            var collection = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceCollectionClientProvider>()
+                .Single();
+            var createOrUpdateMethod = collection.Methods.Single(m => m.Signature.Name == "CreateOrUpdate");
+
+            Assert.That(createOrUpdateMethod.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Partial), Is.True);
+            Assert.That(createOrUpdateMethod.Signature.Parameters.Select(p => p.Name), Is.EqualTo(new[]
+            {
+                "waitUntil",
+                "responseTypeName",
+                "resourceInfo",
+                "operationCancellationToken"
+            }));
+            Assert.That(createOrUpdateMethod.Signature.Parameters[^1].DefaultValue, Is.Null);
+
+            var bodyStatements = createOrUpdateMethod.BodyStatements?.ToDisplayString();
+            Assert.That(bodyStatements, Is.Not.Null);
+            Assert.That(bodyStatements, Does.Contain("responseTypeName"));
+            Assert.That(bodyStatements, Does.Contain("resourceInfo"));
+            Assert.That(bodyStatements, Does.Contain("operationCancellationToken"));
+            Assert.That(bodyStatements, Does.Not.Contain("testName"));
+
+            var createOrUpdateAsyncMethod = collection.Methods.Single(m => m.Signature.Name == "CreateOrUpdateAsync");
+            Assert.That(createOrUpdateAsyncMethod.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Partial), Is.True);
+            Assert.That(createOrUpdateAsyncMethod.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async), Is.True);
+            Assert.That(createOrUpdateAsyncMethod.Signature.Parameters.Select(p => p.Name), Is.EqualTo(new[]
+            {
+                "waitUntil",
+                "asyncResponseTypeName",
+                "asyncResourceInfo",
+                "asyncOperationCancellationToken"
+            }));
+            Assert.That(createOrUpdateAsyncMethod.Signature.Parameters[^1].DefaultValue, Is.Null);
+
+            var asyncBodyStatements = createOrUpdateAsyncMethod.BodyStatements?.ToDisplayString();
+            Assert.That(asyncBodyStatements, Is.Not.Null);
+            Assert.That(asyncBodyStatements, Does.Contain("asyncResponseTypeName"));
+            Assert.That(asyncBodyStatements, Does.Contain("asyncResourceInfo"));
+            Assert.That(asyncBodyStatements, Does.Contain("asyncOperationCancellationToken"));
+            Assert.That(asyncBodyStatements, Does.Not.Contain("testName"));
+        }
+
+        [TestCase]
         public void Verify_PutBodyParameterIsRequiredEvenWhenOptionalInSpec()
         {
             var (client, models) = InputResourceData.ClientWithResourceOptionalBody();
