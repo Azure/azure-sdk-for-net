@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         /// <param name="location"> The location of the rule resource. </param>
         /// <param name="timespan"> Specifies the timespan of the preview in ISO 8601 duration format. </param>
         /// <param name="scheduledQueryRuleProperties"> The properties of the alert rule to preview. </param>
-        /// <returns> A new <see cref="Models.PreviewAlertRuleRequest"/> instance for mocking. </returns>
-        public static PreviewAlertRuleRequest PreviewAlertRuleRequest(AzureLocation location = default, TimeSpan timespan = default, LogAlertRule scheduledQueryRuleProperties = default)
+        /// <returns> A new <see cref="Models.PreviewAlertRuleContent"/> instance for mocking. </returns>
+        public static PreviewAlertRuleContent PreviewAlertRuleContent(AzureLocation location = default, TimeSpan timespan = default, LogAlertRule scheduledQueryRuleProperties = default)
         {
-            return new PreviewAlertRuleRequest(location, default, default);
+            return new PreviewAlertRuleContent(location, default, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         }
 
         /// <param name="rulePreviewResults"> An array of rule preview results. </param>
-        /// <returns> A new <see cref="Models.PreviewAlertRuleResponse"/> instance for mocking. </returns>
-        public static PreviewAlertRuleResponse PreviewAlertRuleResponse(IEnumerable<RulePreviewResult> rulePreviewResults = default)
+        /// <returns> A new <see cref="Models.PreviewAlertRuleResult"/> instance for mocking. </returns>
+        public static PreviewAlertRuleResult PreviewAlertRuleResult(IEnumerable<RulePreviewResult> rulePreviewResults = default)
         {
             rulePreviewResults ??= new ChangeTrackingList<RulePreviewResult>();
 
-            return new PreviewAlertRuleResponse((rulePreviewResults ?? new ChangeTrackingList<RulePreviewResult>()).ToList(), default);
+            return new PreviewAlertRuleResult((rulePreviewResults ?? new ChangeTrackingList<RulePreviewResult>()).ToList(), default);
         }
 
         /// <param name="dimensionCombination"> The list of dimensions for the evaluation. </param>
@@ -141,29 +141,29 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         /// <param name="evaluationOn"> The time when the evaluation was performed. </param>
         /// <param name="alertState"> The state of the alert after the evaluation. </param>
         /// <param name="evaluatedPeriods"> An array of evaluated periods. </param>
-        /// <param name="thresholdMet"> Indicates whether the threshold was met for this evaluation. </param>
+        /// <param name="isThresholdMet"> Indicates whether the threshold was met for this evaluation. </param>
         /// <returns> A new <see cref="Models.RulePreviewEvaluation"/> instance for mocking. </returns>
-        public static RulePreviewEvaluation RulePreviewEvaluation(DateTimeOffset? evaluationOn = default, AlertState? alertState = default, IEnumerable<RulePreviewEvaluatedPeriod> evaluatedPeriods = default, bool? thresholdMet = default)
+        public static RulePreviewEvaluation RulePreviewEvaluation(DateTimeOffset? evaluationOn = default, AlertState? alertState = default, IEnumerable<RulePreviewEvaluatedPeriod> evaluatedPeriods = default, bool? isThresholdMet = default)
         {
             evaluatedPeriods ??= new ChangeTrackingList<RulePreviewEvaluatedPeriod>();
 
-            return new RulePreviewEvaluation(evaluationOn, alertState, (evaluatedPeriods ?? new ChangeTrackingList<RulePreviewEvaluatedPeriod>()).ToList(), thresholdMet, default);
+            return new RulePreviewEvaluation(evaluationOn, alertState, (evaluatedPeriods ?? new ChangeTrackingList<RulePreviewEvaluatedPeriod>()).ToList(), isThresholdMet, default);
         }
 
         /// <param name="timestamp"> The timestamp of the evaluated period. </param>
         /// <param name="highThreshold"> The high threshold value for the evaluation period. </param>
         /// <param name="lowThreshold"> The low threshold value for the evaluation period. </param>
         /// <param name="metricValue"> The metric value for the evaluation period. </param>
-        /// <param name="thresholdMet"> Indicates whether the threshold was met during the evaluation period. </param>
+        /// <param name="isThresholdMet"> Indicates whether the threshold was met during the evaluation period. </param>
         /// <returns> A new <see cref="Models.RulePreviewEvaluatedPeriod"/> instance for mocking. </returns>
-        public static RulePreviewEvaluatedPeriod RulePreviewEvaluatedPeriod(DateTimeOffset? timestamp = default, double? highThreshold = default, double? lowThreshold = default, double? metricValue = default, bool? thresholdMet = default)
+        public static RulePreviewEvaluatedPeriod RulePreviewEvaluatedPeriod(DateTimeOffset? timestamp = default, double? highThreshold = default, double? lowThreshold = default, double? metricValue = default, bool? isThresholdMet = default)
         {
             return new RulePreviewEvaluatedPeriod(
                 timestamp,
                 highThreshold,
                 lowThreshold,
                 metricValue,
-                thresholdMet,
+                isThresholdMet,
                 default);
         }
     }

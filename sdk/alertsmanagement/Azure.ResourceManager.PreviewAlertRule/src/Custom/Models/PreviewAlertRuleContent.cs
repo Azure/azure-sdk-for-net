@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
     //
     // `client.tsp` applies `@@Legacy.flattenProperty(PreviewAlertRuleRequest.properties, "csharp")`
     // so the inner `Timespan` (required) and `ScheduledQueryRuleProperties` (optional)
-    // surface directly on `PreviewAlertRuleRequest`. The C# MPG generator's implicit-flatten
+    // surface directly on `PreviewAlertRuleContent`. The C# MPG generator's implicit-flatten
     // however emits the complex `ScheduledQueryRuleProperties` projection as a **getter-only**
     // delegation to the (now-internal) `Properties` envelope, even though the inner property
     // is `{ get; set; }`. This leaves the model effectively unconstructible for the common
@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
     // the generator emits writable projections for flattened complex properties, this
     // small re-exposure restores the standard `{ get; set; }` shape so callers can write:
     //
-    //   new PreviewAlertRuleRequest(location, timespan)
+    //   new PreviewAlertRuleContent(location, timespan)
     //   {
     //       ScheduledQueryRuleProperties = new LogAlertRule(location) { ... }
     //   }
     [CodeGenSuppress(nameof(ScheduledQueryRuleProperties))]
-    public partial class PreviewAlertRuleRequest
+    public partial class PreviewAlertRuleContent
     {
         /// <summary> The properties of the alert rule to preview. </summary>
         public LogAlertRule ScheduledQueryRuleProperties

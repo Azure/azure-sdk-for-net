@@ -11,22 +11,22 @@ using Azure.ResourceManager.PreviewAlertRule;
 
 namespace Azure.ResourceManager.PreviewAlertRule.Models
 {
-    /// <summary> The PreviewAlertRuleResponse. </summary>
-    public partial class PreviewAlertRuleResponse
+    /// <summary> The PreviewAlertRuleResult. </summary>
+    public partial class PreviewAlertRuleResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PreviewAlertRuleResponse"/>. </summary>
-        internal PreviewAlertRuleResponse()
+        /// <summary> Initializes a new instance of <see cref="PreviewAlertRuleResult"/>. </summary>
+        internal PreviewAlertRuleResult()
         {
             RulePreviewResults = new ChangeTrackingList<RulePreviewResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PreviewAlertRuleResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreviewAlertRuleResult"/>. </summary>
         /// <param name="rulePreviewResults"> An array of rule preview results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PreviewAlertRuleResponse(IList<RulePreviewResult> rulePreviewResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PreviewAlertRuleResult(IList<RulePreviewResult> rulePreviewResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RulePreviewResults = rulePreviewResults;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

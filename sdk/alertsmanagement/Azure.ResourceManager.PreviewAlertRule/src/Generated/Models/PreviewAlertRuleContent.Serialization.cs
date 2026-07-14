@@ -14,67 +14,67 @@ using Azure.ResourceManager.PreviewAlertRule;
 
 namespace Azure.ResourceManager.PreviewAlertRule.Models
 {
-    /// <summary> The PreviewAlertRuleRequest. </summary>
-    public partial class PreviewAlertRuleRequest : IJsonModel<PreviewAlertRuleRequest>
+    /// <summary> The PreviewAlertRuleContent. </summary>
+    public partial class PreviewAlertRuleContent : IJsonModel<PreviewAlertRuleContent>
     {
-        /// <summary> Initializes a new instance of <see cref="PreviewAlertRuleRequest"/> for deserialization. </summary>
-        internal PreviewAlertRuleRequest()
+        /// <summary> Initializes a new instance of <see cref="PreviewAlertRuleContent"/> for deserialization. </summary>
+        internal PreviewAlertRuleContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PreviewAlertRuleRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PreviewAlertRuleContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PreviewAlertRuleRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PreviewAlertRuleContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePreviewAlertRuleRequest(document.RootElement, options);
+                        return DeserializePreviewAlertRuleContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PreviewAlertRuleRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreviewAlertRuleContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PreviewAlertRuleRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PreviewAlertRuleContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPreviewAlertRuleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PreviewAlertRuleRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreviewAlertRuleContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PreviewAlertRuleRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PreviewAlertRuleContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PreviewAlertRuleRequest IPersistableModel<PreviewAlertRuleRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PreviewAlertRuleContent IPersistableModel<PreviewAlertRuleContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PreviewAlertRuleRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PreviewAlertRuleContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="previewAlertRuleRequest"> The <see cref="PreviewAlertRuleRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PreviewAlertRuleRequest previewAlertRuleRequest)
+        /// <param name="previewAlertRuleContent"> The <see cref="PreviewAlertRuleContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PreviewAlertRuleContent previewAlertRuleContent)
         {
-            if (previewAlertRuleRequest == null)
+            if (previewAlertRuleContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(previewAlertRuleRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(previewAlertRuleContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PreviewAlertRuleRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PreviewAlertRuleContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PreviewAlertRuleRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PreviewAlertRuleContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreviewAlertRuleRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PreviewAlertRuleContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PreviewAlertRuleRequest IJsonModel<PreviewAlertRuleRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PreviewAlertRuleContent IJsonModel<PreviewAlertRuleContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PreviewAlertRuleRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PreviewAlertRuleContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PreviewAlertRuleRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PreviewAlertRuleContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreviewAlertRuleRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PreviewAlertRuleContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePreviewAlertRuleRequest(document.RootElement, options);
+            return DeserializePreviewAlertRuleContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PreviewAlertRuleRequest DeserializePreviewAlertRuleRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static PreviewAlertRuleContent DeserializePreviewAlertRuleContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PreviewAlertRuleRequest(location, properties, additionalBinaryDataProperties);
+            return new PreviewAlertRuleContent(location, properties, additionalBinaryDataProperties);
         }
     }
 }

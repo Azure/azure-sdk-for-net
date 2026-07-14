@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PreviewAlertRule.Models
 {
-    /// <summary> The PreviewAlertRuleRequest. </summary>
-    public partial class PreviewAlertRuleRequest
+    /// <summary> The PreviewAlertRuleContent. </summary>
+    public partial class PreviewAlertRuleContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PreviewAlertRuleRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreviewAlertRuleContent"/>. </summary>
         /// <param name="location"> The location of the rule resource. </param>
         /// <param name="timespan"> Specifies the timespan of the preview in ISO 8601 duration format. </param>
-        public PreviewAlertRuleRequest(AzureLocation location, TimeSpan timespan)
+        public PreviewAlertRuleContent(AzureLocation location, TimeSpan timespan)
         {
 
             Location = location;
             Properties = new PreviewAlertRuleRequestProperties(timespan);
         }
 
-        /// <summary> Initializes a new instance of <see cref="PreviewAlertRuleRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreviewAlertRuleContent"/>. </summary>
         /// <param name="location"> The location of the rule resource. </param>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PreviewAlertRuleRequest(AzureLocation location, PreviewAlertRuleRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PreviewAlertRuleContent(AzureLocation location, PreviewAlertRuleRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Properties = properties;

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Mocking
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PreviewAlertRuleResponse>> PreviewAlertRuleAsync(ResourceIdentifier scope, PreviewAlertRuleRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PreviewAlertRuleResult>> PreviewAlertRuleAsync(ResourceIdentifier scope, PreviewAlertRuleContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.PreviewAlertRule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PreviewAlertRulesRestClient.CreatePreviewAlertRuleRequest(scope.ToString(), PreviewAlertRuleRequest.ToRequestContent(content), context);
+                HttpMessage message = PreviewAlertRulesRestClient.CreatePreviewAlertRuleRequest(scope.ToString(), PreviewAlertRuleContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PreviewAlertRuleResponse> response = Response.FromValue(PreviewAlertRuleResponse.FromResponse(result), result);
+                Response<PreviewAlertRuleResult> response = Response.FromValue(PreviewAlertRuleResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Mocking
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<PreviewAlertRuleResponse> PreviewAlertRule(ResourceIdentifier scope, PreviewAlertRuleRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<PreviewAlertRuleResult> PreviewAlertRule(ResourceIdentifier scope, PreviewAlertRuleContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.PreviewAlertRule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PreviewAlertRulesRestClient.CreatePreviewAlertRuleRequest(scope.ToString(), PreviewAlertRuleRequest.ToRequestContent(content), context);
+                HttpMessage message = PreviewAlertRulesRestClient.CreatePreviewAlertRuleRequest(scope.ToString(), PreviewAlertRuleContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PreviewAlertRuleResponse> response = Response.FromValue(PreviewAlertRuleResponse.FromResponse(result), result);
+                Response<PreviewAlertRuleResult> response = Response.FromValue(PreviewAlertRuleResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

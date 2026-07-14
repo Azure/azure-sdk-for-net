@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ThresholdMet))
+            if (Optional.IsDefined(IsThresholdMet))
             {
                 writer.WritePropertyName("thresholdMet"u8);
-                writer.WriteBooleanValue(ThresholdMet.Value);
+                writer.WriteBooleanValue(IsThresholdMet.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
             DateTimeOffset? evaluationOn = default;
             AlertState? alertState = default;
             IList<RulePreviewEvaluatedPeriod> evaluatedPeriods = default;
-            bool? thresholdMet = default;
+            bool? isThresholdMet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                     {
                         continue;
                     }
-                    thresholdMet = prop.Value.GetBoolean();
+                    isThresholdMet = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RulePreviewEvaluation(evaluationOn, alertState, evaluatedPeriods ?? new ChangeTrackingList<RulePreviewEvaluatedPeriod>(), thresholdMet, additionalBinaryDataProperties);
+            return new RulePreviewEvaluation(evaluationOn, alertState, evaluatedPeriods ?? new ChangeTrackingList<RulePreviewEvaluatedPeriod>(), isThresholdMet, additionalBinaryDataProperties);
         }
     }
 }

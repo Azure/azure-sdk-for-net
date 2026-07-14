@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         /// <param name="evaluationOn"> The time when the evaluation was performed. </param>
         /// <param name="alertState"> The state of the alert after the evaluation. </param>
         /// <param name="evaluatedPeriods"> An array of evaluated periods. </param>
-        /// <param name="thresholdMet"> Indicates whether the threshold was met for this evaluation. </param>
+        /// <param name="isThresholdMet"> Indicates whether the threshold was met for this evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RulePreviewEvaluation(DateTimeOffset? evaluationOn, AlertState? alertState, IList<RulePreviewEvaluatedPeriod> evaluatedPeriods, bool? thresholdMet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RulePreviewEvaluation(DateTimeOffset? evaluationOn, AlertState? alertState, IList<RulePreviewEvaluatedPeriod> evaluatedPeriods, bool? isThresholdMet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EvaluationOn = evaluationOn;
             AlertState = alertState;
             EvaluatedPeriods = evaluatedPeriods;
-            ThresholdMet = thresholdMet;
+            IsThresholdMet = isThresholdMet;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         public IList<RulePreviewEvaluatedPeriod> EvaluatedPeriods { get; }
 
         /// <summary> Indicates whether the threshold was met for this evaluation. </summary>
-        public bool? ThresholdMet { get; }
+        public bool? IsThresholdMet { get; }
     }
 }

@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         /// <param name="highThreshold"> The high threshold value for the evaluation period. </param>
         /// <param name="lowThreshold"> The low threshold value for the evaluation period. </param>
         /// <param name="metricValue"> The metric value for the evaluation period. </param>
-        /// <param name="thresholdMet"> Indicates whether the threshold was met during the evaluation period. </param>
+        /// <param name="isThresholdMet"> Indicates whether the threshold was met during the evaluation period. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RulePreviewEvaluatedPeriod(DateTimeOffset? timestamp, double? highThreshold, double? lowThreshold, double? metricValue, bool? thresholdMet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RulePreviewEvaluatedPeriod(DateTimeOffset? timestamp, double? highThreshold, double? lowThreshold, double? metricValue, bool? isThresholdMet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             HighThreshold = highThreshold;
             LowThreshold = lowThreshold;
             MetricValue = metricValue;
-            ThresholdMet = thresholdMet;
+            IsThresholdMet = isThresholdMet;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         public double? MetricValue { get; }
 
         /// <summary> Indicates whether the threshold was met during the evaluation period. </summary>
-        public bool? ThresholdMet { get; }
+        public bool? IsThresholdMet { get; }
     }
 }

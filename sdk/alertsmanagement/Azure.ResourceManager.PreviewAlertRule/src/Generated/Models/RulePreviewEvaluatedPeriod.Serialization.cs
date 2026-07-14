@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                 writer.WritePropertyName("metricValue"u8);
                 writer.WriteNumberValue(MetricValue.Value);
             }
-            if (Optional.IsDefined(ThresholdMet))
+            if (Optional.IsDefined(IsThresholdMet))
             {
                 writer.WritePropertyName("thresholdMet"u8);
-                writer.WriteBooleanValue(ThresholdMet.Value);
+                writer.WriteBooleanValue(IsThresholdMet.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
             double? highThreshold = default;
             double? lowThreshold = default;
             double? metricValue = default;
-            bool? thresholdMet = default;
+            bool? isThresholdMet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                     {
                         continue;
                     }
-                    thresholdMet = prop.Value.GetBoolean();
+                    isThresholdMet = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                 highThreshold,
                 lowThreshold,
                 metricValue,
-                thresholdMet,
+                isThresholdMet,
                 additionalBinaryDataProperties);
         }
     }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PreviewAlertRule
         /// Retrieves the results of a simulated historical execution of an alert rule
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePreviewAlertRuleArmClient.PreviewAlertRuleAsync(ResourceIdentifier, PreviewAlertRuleRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePreviewAlertRuleArmClient.PreviewAlertRuleAsync(ResourceIdentifier, PreviewAlertRuleContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PreviewAlertRule
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<PreviewAlertRuleResponse>> PreviewAlertRuleAsync(this ArmClient client, ResourceIdentifier scope, PreviewAlertRuleRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<PreviewAlertRuleResult>> PreviewAlertRuleAsync(this ArmClient client, ResourceIdentifier scope, PreviewAlertRuleContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PreviewAlertRule
         /// Retrieves the results of a simulated historical execution of an alert rule
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePreviewAlertRuleArmClient.PreviewAlertRule(ResourceIdentifier, PreviewAlertRuleRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePreviewAlertRuleArmClient.PreviewAlertRule(ResourceIdentifier, PreviewAlertRuleContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PreviewAlertRule
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<PreviewAlertRuleResponse> PreviewAlertRule(this ArmClient client, ResourceIdentifier scope, PreviewAlertRuleRequest content, CancellationToken cancellationToken = default)
+        public static Response<PreviewAlertRuleResult> PreviewAlertRule(this ArmClient client, ResourceIdentifier scope, PreviewAlertRuleContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
