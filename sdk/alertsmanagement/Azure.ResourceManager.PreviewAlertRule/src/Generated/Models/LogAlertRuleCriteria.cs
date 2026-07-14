@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
         }
 
         /// <summary> A list of conditions to evaluate against the specified scopes. </summary>
-        public IList<LogAlertRuleCondition> AllOf { get; } = new ChangeTrackingList<LogAlertRuleCondition>();
+        public IList<LogAlertRuleCondition> AllOf { get; }
     }
 }
