@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning;
@@ -22,6 +23,8 @@ namespace Azure.Provisioning.ContainerRegistry
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private WebhookProperties _properties;
+        private BicepValue<Uri> _serviceUri;
+        private BicepDictionary<string> _customHeaders;
         private ResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Creates a new ContainerRegistryWebhook. </summary>
@@ -108,6 +111,36 @@ namespace Azure.Provisioning.ContainerRegistry
             {
                 Initialize();
                 AssignOrReplace(ref _properties, value);
+            }
+        }
+
+        /// <summary> Gets or sets the ServiceUri. </summary>
+        public BicepValue<Uri> ServiceUri
+        {
+            get
+            {
+                Initialize();
+                return _serviceUri;
+            }
+            set
+            {
+                Initialize();
+                _serviceUri.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the CustomHeaders. </summary>
+        public BicepDictionary<string> CustomHeaders
+        {
+            get
+            {
+                Initialize();
+                return _customHeaders;
+            }
+            set
+            {
+                Initialize();
+                _customHeaders.Assign(value);
             }
         }
 
@@ -200,6 +233,8 @@ namespace Azure.Provisioning.ContainerRegistry
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<WebhookProperties>(nameof(Properties), new string[] { "properties" });
+            _serviceUri = DefineProperty<Uri>(nameof(ServiceUri), new string[] { "properties", "serviceUri" }, isRequired: true);
+            _customHeaders = DefineDictionaryProperty<string>(nameof(CustomHeaders), new string[] { "properties", "customHeaders" });
             _parent = DefineResource<ContainerRegistryService>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

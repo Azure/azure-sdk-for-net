@@ -69,6 +69,15 @@ model ItemProperties {
   attributes?: ItemAttributes;
 }
 
+/** Properties accepted only when creating or updating an item. */
+model ItemPropertiesCreateParameters extends ItemProperties {
+  /** The service URI used by the item. */
+  serviceUri: string;
+
+  /** Custom headers sent by the item. */
+  customHeaders?: Record<string>;
+}
+
 /** Parameters to create or update an item. */
 model ItemCreateOrUpdateParameters {
   /** Tags assigned to the item. */
@@ -76,7 +85,8 @@ model ItemCreateOrUpdateParameters {
   tags?: Record<string>;
 
   /** Properties of the item. */
-  properties: ItemProperties;
+  @Azure.ClientGenerator.Core.Legacy.flattenProperty
+  properties: ItemPropertiesCreateParameters;
 }
 
 #suppress "@azure-tools/typespec-azure-resource-manager/no-resource-delete-operation" "Test resource"

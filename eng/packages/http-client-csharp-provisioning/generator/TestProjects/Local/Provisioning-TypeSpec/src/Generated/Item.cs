@@ -21,6 +21,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private SystemData _systemData;
         private ItemProperties _properties;
         private BicepDictionary<string> _tags;
+        private BicepValue<string> _serviceUri;
+        private BicepDictionary<string> _customHeaders;
         private ResourceReference<ConfigurationStore> _parent;
 
         /// <summary> Creates a new Item. </summary>
@@ -92,6 +94,36 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 _tags.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the ServiceUri. </summary>
+        public BicepValue<string> ServiceUri
+        {
+            get
+            {
+                Initialize();
+                return _serviceUri;
+            }
+            set
+            {
+                Initialize();
+                _serviceUri.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the CustomHeaders. </summary>
+        public BicepDictionary<string> CustomHeaders
+        {
+            get
+            {
+                Initialize();
+                return _customHeaders;
+            }
+            set
+            {
+                Initialize();
+                _customHeaders.Assign(value);
             }
         }
 
@@ -187,6 +219,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ItemProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
+            _serviceUri = DefineProperty<string>(nameof(ServiceUri), new string[] { "properties", "serviceUri" }, isRequired: true);
+            _customHeaders = DefineDictionaryProperty<string>(nameof(CustomHeaders), new string[] { "properties", "customHeaders" });
             _parent = DefineResource<ConfigurationStore>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

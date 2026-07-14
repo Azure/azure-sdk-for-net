@@ -16,6 +16,8 @@ namespace Azure.Generator.Provisioning
     /// </summary>
     public class ProvisioningInputLibrary : ManagementInputLibrary
     {
+        private const string FlattenPropertyDecoratorName = "Azure.ResourceManager.@flattenProperty";
+
         private IReadOnlyList<ProvisioningResourceProjection>? _resourceProjections;
         private Dictionary<InputModelType, List<ProvisioningResourceProjection>>? _resourceProjectionsByModel;
         private IReadOnlyList<InputModelType>? _reachableModels;
@@ -117,7 +119,15 @@ namespace Azure.Generator.Provisioning
 
             foreach (var resource in resourceProjections)
             {
-                queue.Enqueue((resource.ResourceModel, resource.WritableScopes.Count > 0));
+                var isSettable = resource.WritableScopes.Count > 0;
+                queue.Enqueue((resource.ResourceModel, isSettable));
+                foreach (var (property, _, isFlattenedContainer) in GetCreateBodyProperties(resource))
+                {
+                    if (!isFlattenedContainer)
+                    {
+                        queue.Enqueue((property.Type, isSettable && !property.IsReadOnly));
+                    }
+                }
             }
 
             while (queue.Count > 0)
@@ -211,6 +221,69 @@ namespace Azure.Generator.Provisioning
             foreach (var derived in model.DiscriminatedSubtypes.Values)
             {
                 queue.Enqueue((derived, isSettable));
+            }
+        }
+
+        internal static IEnumerable<(InputModelProperty Property, string[] BicepPath, bool IsFlattenedContainer)> GetCreateBodyProperties(
+            ProvisioningResourceProjection projection)
+        {
+            var createMethod = projection.Methods
+                .FirstOrDefault(method => method.Kind == ResourceOperationKind.Create)?.InputMethod;
+            if (createMethod == null)
+            {
+                yield break;
+            }
+
+            foreach (var parameter in createMethod.Parameters)
+            {
+                if (parameter.Location != InputRequestLocation.Body || parameter.Type is not InputModelType bodyModel)
+                {
+                    continue;
+                }
+
+                foreach (var property in GetBodyProperties(bodyModel, null))
+                {
+                    yield return property;
+                }
+            }
+        }
+
+        internal static bool IsFlattenedProperty(InputModelProperty property)
+            => property.Decorators.Any(decorator => decorator.Name == FlattenPropertyDecoratorName);
+
+        private static IEnumerable<(InputModelProperty Property, string[] BicepPath, bool IsFlattenedContainer)> GetBodyProperties(
+            InputModelType model,
+            string[]? basePath)
+        {
+            var chain = new Stack<InputModelType>();
+            chain.Push(model);
+            var baseModel = model.BaseModel;
+            while (baseModel != null)
+            {
+                chain.Push(baseModel);
+                baseModel = baseModel.BaseModel;
+            }
+
+            foreach (var current in chain)
+            {
+                foreach (var property in current.Properties)
+                {
+                    var serializedName = property.SerializedName ?? property.Name;
+                    var bicepPath = basePath != null
+                        ? [.. basePath, serializedName]
+                        : new[] { serializedName };
+                    var isFlattenedContainer = property.Type is InputModelType && IsFlattenedProperty(property);
+
+                    yield return (property, bicepPath, isFlattenedContainer);
+
+                    if (isFlattenedContainer && property.Type is InputModelType propertyModel)
+                    {
+                        foreach (var nestedProperty in GetBodyProperties(propertyModel, bicepPath))
+                        {
+                            yield return nestedProperty;
+                        }
+                    }
+                }
             }
         }
 

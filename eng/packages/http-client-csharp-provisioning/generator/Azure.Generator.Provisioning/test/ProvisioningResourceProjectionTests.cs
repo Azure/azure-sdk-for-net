@@ -533,6 +533,72 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void CreateBodyOnlyFlattenedPropertiesAreAddedToResource()
+        {
+            var existingProperty = CreateProperty("ExistingValue");
+            var resourcePropertiesModel = CreateModel("WidgetProperties", [existingProperty]);
+            var resourcePropertiesProperty = CreateProperty("Properties", type: resourcePropertiesModel);
+            ApplyFlattenDecorator(resourcePropertiesProperty);
+            var resourceModel = CreateModel("Widget", [resourcePropertiesProperty]);
+
+            var serviceUriProperty = CreateProperty("ServiceUri", isRequired: true, serializedName: "serviceUri");
+            var customHeadersProperty = CreateProperty("CustomHeaders", serializedName: "customHeaders");
+            var duplicateExistingProperty = CreateProperty("ExistingValue", serializedName: "existingValue");
+            var settingsValueProperty = CreateProperty("Value");
+            var settingsModel = CreateModel("CreateOnlySettings", [settingsValueProperty]);
+            var settingsProperty = CreateProperty("Settings", type: settingsModel, serializedName: "settings");
+            var createPropertiesModel = CreateModel(
+                "WidgetPropertiesCreateParameters",
+                [serviceUriProperty, customHeadersProperty, duplicateExistingProperty, settingsProperty]);
+            var createPropertiesProperty = CreateProperty("Properties", type: createPropertiesModel);
+            ApplyFlattenDecorator(createPropertiesProperty);
+            var createBodyModel = CreateModel("WidgetCreateParameters", [createPropertiesProperty]);
+
+            var writableResource = CreateMetadata(
+                resourceModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup, createBodyModel)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () =>
+                [
+                    resourceModel,
+                    resourcePropertiesModel,
+                    createBodyModel,
+                    createPropertiesModel,
+                    settingsModel
+                ]);
+            var provider = CreateResourceProvider(writableResource);
+
+            var serviceUriInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(serviceUriProperty);
+            var customHeadersInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(customHeadersProperty);
+            var duplicateExistingInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(duplicateExistingProperty);
+            var settingsInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(settingsProperty);
+
+            Assert.That(serviceUriInfo, Is.Not.Null);
+            Assert.That(serviceUriInfo!.BicepPath, Is.EqualTo(new[] { "properties", "serviceUri" }));
+            Assert.That(serviceUriInfo.IsOutput, Is.False);
+            Assert.That(serviceUriInfo.IsSettable, Is.True);
+            Assert.That(serviceUriInfo.IsRequired, Is.True);
+            Assert.That(customHeadersInfo, Is.Not.Null);
+            Assert.That(customHeadersInfo!.BicepPath, Is.EqualTo(new[] { "properties", "customHeaders" }));
+            Assert.That(customHeadersInfo.IsRequired, Is.False);
+            Assert.That(duplicateExistingInfo, Is.Null);
+            Assert.That(settingsInfo, Is.Not.Null);
+            Assert.That(settingsInfo!.BicepPath, Is.EqualTo(new[] { "properties", "settings" }));
+            Assert.That(ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(settingsModel), Is.True);
+            Assert.That(provider.Properties.Select(property => property.Name), Does.Contain("ServiceUri"));
+            Assert.That(provider.Properties.Select(property => property.Name), Does.Contain("CustomHeaders"));
+            Assert.That(provider.Properties.Select(property => property.Name), Does.Contain("Settings"));
+        }
+
+        [Test]
         public void ReadOnlyResourceConstructorIsInternal()
         {
             var model = CreateModel("ReadOnlyWidget");
@@ -702,10 +768,28 @@ namespace Azure.Generator.Provisioning.Tests
                 new InputSerializationOptions(),
                 false);
 
-        private static ResourceMethod CreateMethod(ResourceOperationKind kind, ResourceScope scope)
+        private static ResourceMethod CreateMethod(ResourceOperationKind kind, ResourceScope scope, InputModelType? bodyModel = null)
         {
             var path = RequestPathPattern.GetFromScope(scope, new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}"));
             var methodName = $"{kind}Widget";
+            InputMethodParameter[] parameters = bodyModel == null
+                ? []
+                :
+                [
+                    new InputMethodParameter(
+                        name: "body",
+                        summary: null,
+                        doc: "Request body.",
+                        type: bodyModel,
+                        isRequired: true,
+                        isReadOnly: false,
+                        isApiVersion: false,
+                        defaultValue: null,
+                        scope: InputParameterScope.Method,
+                        access: null,
+                        location: InputRequestLocation.Body,
+                        serializedName: "body")
+                ];
             var operation = new InputOperation(
                 methodName,
                 null,
@@ -732,7 +816,7 @@ namespace Azure.Generator.Provisioning.Tests
                 null,
                 null,
                 operation,
-                [],
+                parameters,
                 new InputServiceMethodResponse(null, null),
                 null,
                 false,
@@ -803,6 +887,16 @@ namespace Azure.Generator.Provisioning.Tests
         {
             var discriminatedSubtypes = (IDictionary<string, InputModelType>)baseModel.DiscriminatedSubtypes;
             discriminatedSubtypes[derivedModel.DiscriminatorValue!] = derivedModel;
+        }
+
+        private static void ApplyFlattenDecorator(InputModelProperty property)
+        {
+            var decorator = new InputDecoratorInfo(
+                "Azure.ResourceManager.@flattenProperty",
+                new Dictionary<string, BinaryData>());
+            typeof(InputModelProperty)
+                .GetProperty(nameof(InputModelProperty.Decorators), BindingFlags.Public | BindingFlags.Instance)!
+                .SetValue(property, new[] { decorator });
         }
 
         private static ProvisioningResourceProvider CreateResourceProvider(ArmResourceMetadata metadata)
