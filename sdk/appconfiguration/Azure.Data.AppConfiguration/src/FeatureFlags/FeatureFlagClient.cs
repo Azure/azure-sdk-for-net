@@ -280,12 +280,12 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Gets a list of feature flag labels that match the options specified in the passed-in <see cref="SettingLabelSelector"/>.
+        /// Gets a list of feature flag labels that match the options specified in the passed-in <see cref="FeatureFlagLabelSelector"/>.
         /// </summary>
         /// <param name="selector">Set of options for selecting the <see cref="SettingLabel"/> entities to retrieve.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection containing the retrieved feature flag <see cref="SettingLabel"/> entities.</returns>
-        public virtual AsyncPageable<SettingLabel> GetLabelsAsync(SettingLabelSelector selector, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SettingLabel> GetLabelsAsync(FeatureFlagLabelSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var name = selector.NameFilter;
@@ -302,12 +302,12 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Gets a list of feature flag labels that match the options specified in the passed-in <see cref="SettingLabelSelector"/>.
+        /// Gets a list of feature flag labels that match the options specified in the passed-in <see cref="FeatureFlagLabelSelector"/>.
         /// </summary>
         /// <param name="selector">Set of options for selecting the <see cref="SettingLabel"/> entities to retrieve.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection containing the retrieved feature flag <see cref="SettingLabel"/> entities.</returns>
-        public virtual Pageable<SettingLabel> GetLabels(SettingLabelSelector selector, CancellationToken cancellationToken = default)
+        public virtual Pageable<SettingLabel> GetLabels(FeatureFlagLabelSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var name = selector.NameFilter;
@@ -425,8 +425,14 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
                 MatchConditions matchConditions = new MatchConditions { IfNoneMatch = ETag.All };
-                return await PutFeatureFlagAsync(flag.Name, flag, flag.Label, null, matchConditions, cancellationToken).ConfigureAwait(false);
+                Response response = await PutFeatureFlagAsync(flag.Name, flag, flag.Label, null, matchConditions, context).ConfigureAwait(false);
+                return response.Status switch
+                {
+                    200 or 201 => Response.FromValue((FeatureFlag)response, response),
+                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
+                };
             }
             catch (Exception e)
             {
@@ -452,8 +458,14 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
                 MatchConditions matchConditions = new MatchConditions { IfNoneMatch = ETag.All };
-                return PutFeatureFlag(flag.Name, flag, flag.Label, null, matchConditions, cancellationToken);
+                Response response = PutFeatureFlag(flag.Name, flag, flag.Label, null, matchConditions, context);
+                return response.Status switch
+                {
+                    200 or 201 => Response.FromValue((FeatureFlag)response, response),
+                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
+                };
             }
             catch (Exception e)
             {
@@ -511,8 +523,14 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
                 MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.Etag } : default;
-                return await PutFeatureFlagAsync(flag.Name, flag, flag.Label, null, matchConditions, cancellationToken).ConfigureAwait(false);
+                Response response = await PutFeatureFlagAsync(flag.Name, flag, flag.Label, null, matchConditions, context).ConfigureAwait(false);
+                return response.Status switch
+                {
+                    200 or 201 => Response.FromValue((FeatureFlag)response, response),
+                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
+                };
             }
             catch (Exception e)
             {
@@ -542,8 +560,14 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
                 MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = flag.Etag } : default;
-                return PutFeatureFlag(flag.Name, flag, flag.Label, null, matchConditions, cancellationToken);
+                Response response = PutFeatureFlag(flag.Name, flag, flag.Label, null, matchConditions, context);
+                return response.Status switch
+                {
+                    200 or 201 => Response.FromValue((FeatureFlag)response, response),
+                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
+                };
             }
             catch (Exception e)
             {
@@ -596,7 +620,14 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                return await DeleteFeatureFlagAsync(name, label, null, requestOptions?.IfMatch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+                Response response = await DeleteFeatureFlagAsync(name, label, null, requestOptions?.IfMatch, context).ConfigureAwait(false);
+                return response.Status switch
+                {
+                    200 => response,
+                    204 => response,
+                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
+                };
             }
             catch (Exception e)
             {
@@ -613,7 +644,14 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                return DeleteFeatureFlag(name, label, null, requestOptions?.IfMatch, cancellationToken.ToRequestContext());
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+                Response response = DeleteFeatureFlag(name, label, null, requestOptions?.IfMatch, context);
+                return response.Status switch
+                {
+                    200 => response,
+                    204 => response,
+                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
+                };
             }
             catch (Exception e)
             {
@@ -639,7 +677,14 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                return await DeleteFeatureFlagAsync(name, label, null, ifMatch: default, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+                Response response = await DeleteFeatureFlagAsync(name, label, null, ifMatch: default, context).ConfigureAwait(false);
+                return response.Status switch
+                {
+                    200 => response,
+                    204 => response,
+                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
+                };
             }
             catch (Exception e)
             {
@@ -665,7 +710,14 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                return DeleteFeatureFlag(name, label, null, ifMatch: default, cancellationToken.ToRequestContext());
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+                Response response = DeleteFeatureFlag(name, label, null, ifMatch: default, context);
+                return response.Status switch
+                {
+                    200 => response,
+                    204 => response,
+                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
+                };
             }
             catch (Exception e)
             {
@@ -753,7 +805,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => Response.FromValue((FeatureFlag)response, response),
                     304 => new NoBodyResponse<FeatureFlag>(response),
-                    _ => throw new RequestFailedException(response)
+                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
                 };
             }
             catch (Exception e)
@@ -782,7 +834,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => Response.FromValue((FeatureFlag)response, response),
                     304 => new NoBodyResponse<FeatureFlag>(response),
-                    _ => throw new RequestFailedException(response)
+                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
                 };
             }
             catch (Exception e)
@@ -809,8 +861,13 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                Response result = await GetFeatureFlagAsync(name, label, @select: default, null, acceptDatetime: default, matchConditions: default, tags: default, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-                return Response.FromValue((FeatureFlag)result, result);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+                Response response = await GetFeatureFlagAsync(name, label, @select: default, null, acceptDatetime: default, matchConditions: default, tags: default, context).ConfigureAwait(false);
+                return response.Status switch
+                {
+                    200 => Response.FromValue((FeatureFlag)response, response),
+                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
+                };
             }
             catch (Exception e)
             {
@@ -836,8 +893,13 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                Response result = GetFeatureFlag(name, label, @select: default, null, acceptDatetime: default, matchConditions: default, tags: default, cancellationToken.ToRequestContext());
-                return Response.FromValue((FeatureFlag)result, result);
+                RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+                Response response = GetFeatureFlag(name, label, @select: default, null, acceptDatetime: default, matchConditions: default, tags: default, context);
+                return response.Status switch
+                {
+                    200 => Response.FromValue((FeatureFlag)response, response),
+                    _ => throw new RequestFailedException(response, null, new FeatureFlagRequestFailedDetailsParser())
+                };
             }
             catch (Exception e)
             {
@@ -853,6 +915,39 @@ namespace Azure.Data.AppConfiguration
             IEnumerable<string> select = selector.Fields.Split();
 
             return (selector.NameFilter, selector.LabelFilter, acceptDatetime, select, selector.TagsFilter);
+        }
+
+        private static RequestContext CreateRequestContext(ErrorOptions errorOptions, CancellationToken cancellationToken)
+        {
+            return new RequestContext()
+            {
+                ErrorOptions = errorOptions,
+                CancellationToken = cancellationToken
+            };
+        }
+
+        private class FeatureFlagRequestFailedDetailsParser : RequestFailedDetailsParser
+        {
+            private const string TroubleshootingMessage =
+                "For troubleshooting information, see https://aka.ms/azsdk/net/appconfiguration/troubleshoot.";
+            public override bool TryParse(Response response, out ResponseError error, out IDictionary<string, string> data)
+            {
+                switch (response.Status)
+                {
+                    case 409:
+                        error = new ResponseError(null, $"The feature flag is read only. {TroubleshootingMessage}");
+                        data = null;
+                        return true;
+                    case 412:
+                        error = new ResponseError(null, $"Feature flag was already present. {TroubleshootingMessage}");
+                        data = null;
+                        return true;
+                    default:
+                        error = new ResponseError(null, TroubleshootingMessage);
+                        data = null;
+                        return true;
+                }
+            }
         }
     }
 }

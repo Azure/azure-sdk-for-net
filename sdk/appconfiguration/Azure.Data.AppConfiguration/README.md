@@ -267,15 +267,15 @@ var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential
 client.DeleteFeatureFlag("some_feature");
 ```
 
-### Retrieve labels by resource type
+### Retrieve feature flag labels
 
-Retrieve labels associated with a specific resource type by setting `SettingLabelSelector.ResourceType`. Use `SettingLabelResourceType.FeatureFlag` to retrieve only labels used by feature flags, or `SettingLabelResourceType.KeyValue` for labels used by key-value settings.
+Retrieve the labels associated with feature flags by calling `GetLabels` with a `FeatureFlagLabelSelector`. The `FeatureFlagClient` only returns labels that are associated with feature flags.
 
 ```C# Snippet:GetLabelsByResourceType
 string endpoint = "<endpoint>";
-var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
-// Only retrieve labels that are associated with feature flags.
-var selector = new SettingLabelSelector { ResourceType = SettingLabelResourceType.FeatureFlag };
+var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
+// The FeatureFlagClient only retrieves labels that are associated with feature flags.
+var selector = new FeatureFlagLabelSelector();
 foreach (SettingLabel label in client.GetLabels(selector))
 {
     Console.WriteLine($"Label: {label.Name}");

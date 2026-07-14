@@ -878,7 +878,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             FeatureFlagClient service = CreateFeatureFlagTestService(mockTransport);
 
-            var query = new SettingLabelSelector();
+            var query = new FeatureFlagLabelSelector();
 
             await foreach (SettingLabel label in service.GetLabelsAsync(query, CancellationToken.None))
             {
