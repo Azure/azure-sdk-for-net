@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> The resource ids used for the request. </summary>
-        public IList<ResourceIdentifier> Ids { get; }
+        public IList<ResourceIdentifier> Ids { get; } = new ChangeTrackingList<ResourceIdentifier>();
     }
 }

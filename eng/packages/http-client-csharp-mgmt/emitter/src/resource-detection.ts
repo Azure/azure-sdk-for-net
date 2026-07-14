@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import {
+import type {
   CodeModel,
   CSharpEmitterContext,
   InputClient,
   InputModelType
-} from "@typespec/http-client-csharp";
+} from "./code-model-types.js";
 import {
   NonResourceMethod,
   ResourceMetadata,

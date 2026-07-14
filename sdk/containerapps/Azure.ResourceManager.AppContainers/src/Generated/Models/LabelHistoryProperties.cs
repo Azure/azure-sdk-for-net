@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> List of label history records. </summary>
         [WirePath("records")]
-        public IReadOnlyList<LabelHistoryRecordItem> Records { get; }
+        public IReadOnlyList<LabelHistoryRecordItem> Records { get; } = new ChangeTrackingList<LabelHistoryRecordItem>();
     }
 }

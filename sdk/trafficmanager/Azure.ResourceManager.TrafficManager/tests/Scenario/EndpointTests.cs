@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         public async Task GetTest()
         {
             ExternalEndpointTrafficManagerEndpointCollection endpointCollection = await GetEndpointCollection();
-            ExternalEndpointTrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(EndpointTypeEnum, EndpointName1);
+            ExternalEndpointTrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(EndpointName1);
 
             Assert.IsNotNull(endpointResource);
             Assert.IsTrue(endpointResource.HasData);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
             // Get the endpoint via collection and delete it
             ExternalEndpointTrafficManagerEndpointCollection endpointCollection = await GetEndpointCollection();
-            ExternalEndpointTrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(EndpointTypeEnum, EndpointName1);
+            ExternalEndpointTrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(EndpointName1);
             Assert.IsNotNull(endpointResource);
 
             // Delete the endpoint
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         public async Task UpdateTest()
         {
             ExternalEndpointTrafficManagerEndpointCollection endpointCollection = await GetEndpointCollection();
-            ExternalEndpointTrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(EndpointTypeEnum, EndpointName1);
+            ExternalEndpointTrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(EndpointName1);
             endpointResource.Data.Target = NewEndpointTarget;
 
-            await endpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, EndpointTypeEnum, EndpointName1, endpointResource.Data);
+            await endpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, EndpointName1, endpointResource.Data);
 
-            endpointResource = await endpointCollection.GetAsync(EndpointTypeEnum, EndpointName1);
+            endpointResource = await endpointCollection.GetAsync(EndpointName1);
 
             Assert.IsNotNull(endpointResource);
             Assert.IsTrue(endpointResource.HasData);
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
             ExternalEndpointTrafficManagerEndpointCollection endpointCollection = await GetEndpointCollection();
 
-            await endpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, EndpointTypeEnum, NewEndpointName, newEndpointData);
+            await endpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, NewEndpointName, newEndpointData);
 
-            ExternalEndpointTrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(EndpointTypeEnum, NewEndpointName);
+            ExternalEndpointTrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(NewEndpointName);
 
             Assert.IsNotNull(endpointResource);
             Assert.IsTrue(endpointResource.HasData);
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         {
             ExternalEndpointTrafficManagerEndpointCollection endpointCollection = await GetEndpointCollection();
 
-            ExternalEndpointTrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(EndpointTypeEnum, EndpointName1);
+            ExternalEndpointTrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(EndpointName1);
             endpointResource.Data.Target = NewEndpointTarget;
 
-            await endpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, EndpointTypeEnum, endpointResource.Data.Name, endpointResource.Data);
+            await endpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, endpointResource.Data.Name, endpointResource.Data);
 
-            endpointResource = await endpointCollection.GetAsync(EndpointTypeEnum, EndpointName1);
+            endpointResource = await endpointCollection.GetAsync(EndpointName1);
 
             Assert.AreEqual(NewEndpointTarget, endpointResource.Data.Target);
         }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         {
             ExternalEndpointTrafficManagerEndpointCollection endpointCollection = await GetEndpointCollection();
 
-            ExternalEndpointTrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(EndpointTypeEnum, EndpointName1);
+            ExternalEndpointTrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(EndpointName1);
 
             Assert.IsNotNull(endpointResource);
             Assert.IsTrue(endpointResource.HasData);
@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
             if (expected)
             {
-                Assert.IsTrue(await endpointCollection.ExistsAsync(EndpointTypeEnum, EndpointName1));
+                Assert.IsTrue(await endpointCollection.ExistsAsync(EndpointName1));
             }
             else
             {
-                Assert.IsFalse(await endpointCollection.ExistsAsync(EndpointTypeEnum, EndpointName1));
+                Assert.IsFalse(await endpointCollection.ExistsAsync(EndpointName1));
             }
         }
     }

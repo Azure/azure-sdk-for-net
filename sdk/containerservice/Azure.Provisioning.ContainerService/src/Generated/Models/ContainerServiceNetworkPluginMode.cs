@@ -14,6 +14,6 @@ namespace Azure.Provisioning.ContainerService
     {
         /// <summary> Used with networkPlugin=azure, pods are given IPs from the PodCIDR address space but use Azure Routing Domains rather than Kubenet's method of route tables. For more information visit https://aka.ms/aks/azure-cni-overlay. </summary>
         [DataMember(Name = "overlay")]
-        Overlay
+        Overlay = 0
     }
 }

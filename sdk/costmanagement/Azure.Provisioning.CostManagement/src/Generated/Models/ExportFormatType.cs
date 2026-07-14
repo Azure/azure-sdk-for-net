@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CostManagement
     public enum ExportFormatType
     {
         /// <summary> Csv. </summary>
-        Csv,
+        Csv = 0,
         /// <summary> Parquet. </summary>
-        Parquet
+        Parquet = 1
     }
 }

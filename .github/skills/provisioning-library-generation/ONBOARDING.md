@@ -58,6 +58,23 @@ sdk\{service}\Azure.Provisioning.{Service}\
   tests\Azure.Provisioning.{Service}.Tests.csproj
 ```
 
+Use a minimal `src\Azure.Provisioning.{Service}.csproj` and inherit repository defaults. Do **not** add `<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>` or `<LangVersion>12</LangVersion>` unless the package has an explicit, reviewed need to override the defaults:
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Azure.Provisioning.{Service} simplifies declarative resource provisioning in .NET.</Description>
+    <Version>1.0.0-beta.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Provisioning" />
+  </ItemGroup>
+
+</Project>
+```
+
 Use a temporary `tsp-location.yaml` that points to the spec PR commit:
 
 ```yaml
@@ -122,6 +139,7 @@ Confirm the package files contain the expected first-release metadata:
 
 - `CHANGELOG.md` has `1.0.0-beta.1 (Unreleased)`.
 - `src\Azure.Provisioning.{Service}.csproj` has version `1.0.0-beta.1`.
+- `src\Azure.Provisioning.{Service}.csproj` does not override repository defaults like `TargetFrameworks` or `LangVersion`.
 - The solution includes both `src` and `tests` projects.
 
 ## 8. Run final checks

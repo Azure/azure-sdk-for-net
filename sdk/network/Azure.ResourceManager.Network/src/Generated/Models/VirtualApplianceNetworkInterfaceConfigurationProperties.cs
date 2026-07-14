@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Gets the VirtualApplianceNetworkInterfaceIPConfigurations. </summary>
         [WirePath("ipConfigurations")]
-        public IList<VirtualApplianceIPConfiguration> VirtualApplianceNetworkInterfaceIPConfigurations { get; }
+        public IList<VirtualApplianceIPConfiguration> VirtualApplianceNetworkInterfaceIPConfigurations { get; } = new ChangeTrackingList<VirtualApplianceIPConfiguration>();
     }
 }
