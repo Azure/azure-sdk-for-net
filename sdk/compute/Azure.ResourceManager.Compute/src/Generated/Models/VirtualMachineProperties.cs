@@ -321,11 +321,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Indicates if zone movement is enabled. By default isEnabled is set to false i.e VM can't be moved from one zone to another. </summary>
-        public bool? IsEnabled
+        public bool? IsResiliencyProfileZoneMovementEnabled
         {
             get
             {
-                return ResiliencyProfile is null ? default : ResiliencyProfile.IsEnabled;
+                return ResiliencyProfile is null ? default : ResiliencyProfile.IsZoneMovementEnabled;
             }
             set
             {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     ResiliencyProfile = new ResiliencyProfile();
                 }
-                ResiliencyProfile.IsEnabled = value;
+                ResiliencyProfile.IsZoneMovementEnabled = value;
             }
         }
     }

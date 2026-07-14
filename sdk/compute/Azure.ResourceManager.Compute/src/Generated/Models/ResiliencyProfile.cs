@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ZoneMovement ZoneMovement { get; set; }
 
         /// <summary> Indicates if zone movement is enabled. By default isEnabled is set to false i.e VM can't be moved from one zone to another. </summary>
-        public bool? IsEnabled
+        public bool? IsZoneMovementEnabled
         {
             get
             {

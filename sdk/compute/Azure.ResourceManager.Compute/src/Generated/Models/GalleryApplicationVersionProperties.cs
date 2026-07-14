@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ReplicationStatus ReplicationStatus { get; }
 
         /// <summary> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </summary>
-        public bool? AllowDeletionOfReplicatedLocations
+        public bool? SafetyAllowDeletionOfReplicatedLocations
         {
             get
             {

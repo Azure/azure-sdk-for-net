@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </summary>
-        public bool? IsSoftDeleteEnabled
+        public bool? IsSoftDeletePolicySoftDeleteEnabled
         {
             get
             {

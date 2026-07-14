@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal AutomaticSkuMigrationPolicy AutomaticSkuMigrationPolicy { get; set; }
 
         /// <summary> Specifies whether automatic SKU migration should be enabled on the virtual machine scale set. The default value is false. </summary>
-        public bool? IsAutomaticSkuMigrationPolicyEnabled
+        public bool? IsAutomaticSkuMigrationPolicyAutomaticSkuMigrationPolicyEnabled
         {
             get
             {

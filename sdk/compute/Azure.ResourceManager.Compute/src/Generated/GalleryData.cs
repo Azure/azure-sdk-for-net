@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </summary>
-        public bool? IsSoftDeleteEnabled
+        public bool? IsSoftDeletePolicySoftDeleteEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.IsSoftDeleteEnabled;
+                return Properties is null ? default : Properties.IsSoftDeletePolicySoftDeleteEnabled;
             }
             set
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new GalleryProperties();
                 }
-                Properties.IsSoftDeleteEnabled = value;
+                Properties.IsSoftDeletePolicySoftDeleteEnabled = value;
             }
         }
     }

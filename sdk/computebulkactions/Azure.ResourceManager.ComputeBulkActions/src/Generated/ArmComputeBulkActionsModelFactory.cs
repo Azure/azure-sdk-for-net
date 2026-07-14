@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 default);
         }
 
-        /// <param name="isRedeployAutomaticallyApproved"> Specifies Redeploy Scheduled Event related configurations. </param>
-        /// <param name="isRebootAutomaticallyApproved"> Specifies Reboot Scheduled Event related configurations. </param>
+        /// <param name="isUserInitiatedRedeployRedeployAutomaticallyApproved"> Specifies Redeploy Scheduled Event related configurations. </param>
+        /// <param name="isUserInitiatedRebootRebootAutomaticallyApproved"> Specifies Reboot Scheduled Event related configurations. </param>
         /// <param name="scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph"> The configuration parameters used while creating eventGridAndResourceGraph Scheduled Event setting. </param>
-        /// <param name="isAllInstancesDownAutomaticallyApproved"> Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true. </param>
+        /// <param name="isAllInstancesDownAllInstancesDownAutomaticallyApproved"> Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true. </param>
         /// <returns> A new <see cref="Models.ComputeBulkActionsScheduledEventsPolicy"/> instance for mocking. </returns>
-        public static ComputeBulkActionsScheduledEventsPolicy ComputeBulkActionsScheduledEventsPolicy(bool? isRedeployAutomaticallyApproved = default, bool? isRebootAutomaticallyApproved = default, ComputeBulkActionsEventGridAndResourceGraph scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = default, bool? isAllInstancesDownAutomaticallyApproved = default)
+        public static ComputeBulkActionsScheduledEventsPolicy ComputeBulkActionsScheduledEventsPolicy(bool? isUserInitiatedRedeployRedeployAutomaticallyApproved = default, bool? isUserInitiatedRebootRebootAutomaticallyApproved = default, ComputeBulkActionsEventGridAndResourceGraph scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = default, bool? isAllInstancesDownAllInstancesDownAutomaticallyApproved = default)
         {
-            return new ComputeBulkActionsScheduledEventsPolicy(isRedeployAutomaticallyApproved is null ? default : new UserInitiatedRedeploy(isRedeployAutomaticallyApproved, default), isRebootAutomaticallyApproved is null ? default : new UserInitiatedReboot(isRebootAutomaticallyApproved, default), scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph is null ? default : new ScheduledEventsAdditionalPublishingTargets(scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph, default), isAllInstancesDownAutomaticallyApproved is null ? default : new AllInstancesDown(isAllInstancesDownAutomaticallyApproved, default), default);
+            return new ComputeBulkActionsScheduledEventsPolicy(isUserInitiatedRedeployRedeployAutomaticallyApproved is null ? default : new UserInitiatedRedeploy(isUserInitiatedRedeployRedeployAutomaticallyApproved, default), isUserInitiatedRebootRebootAutomaticallyApproved is null ? default : new UserInitiatedReboot(isUserInitiatedRebootRebootAutomaticallyApproved, default), scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph is null ? default : new ScheduledEventsAdditionalPublishingTargets(scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph, default), isAllInstancesDownAllInstancesDownAutomaticallyApproved is null ? default : new AllInstancesDown(isAllInstancesDownAllInstancesDownAutomaticallyApproved, default), default);
         }
 
         /// <param name="isEnabled"> Specifies if event grid and resource graph is enabled for Scheduled event related configurations. </param>

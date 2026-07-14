@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
         public AllInstancesDown AllInstancesDown { get; set; }
 
         /// <summary> Specifies Reboot Scheduled Event related configurations. </summary>
-        public bool? AutomaticallyApprove
+        public bool? UserInitiatedRebootAutomaticallyApprove
         {
             get
             {

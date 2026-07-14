@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
         public OperationRecoverySettings OperationRecoverySettings { get; set; }
 
         /// <summary> Specifies whether resilient VM creation should be enabled on the virtual machine scale set. The default value is false. </summary>
-        public bool? ResilientVmCreationPolicyEnabled
+        public bool? ResilientVmCreationEnabled
         {
             get
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies whether resilient VM deletion should be enabled on the virtual machine scale set. The default value is false. </summary>
-        public bool? ResilientVmDeletionPolicyEnabled
+        public bool? ResilientVmDeletionEnabled
         {
             get
             {

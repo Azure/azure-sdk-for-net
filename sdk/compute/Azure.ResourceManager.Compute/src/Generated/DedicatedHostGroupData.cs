@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The flag that enables or disables a capability to have UltraSSD Enabled Virtual Machines on Dedicated Hosts of the Dedicated Host Group. For the Virtual Machines to be UltraSSD Enabled, UltraSSDEnabled flag for the resource needs to be set true as well. The value is defaulted to 'false' when not provided. Please refer to https://docs.microsoft.com/en-us/azure/virtual-machines/disks-enable-ultra-ssd for more details on Ultra SSD feature. <b>Note:</b> The ultraSSDEnabled setting can only be enabled for Host Groups that are created as zonal. Minimum api-version: 2022-03-01. </summary>
-        public bool? UltraSsdEnabled
+        public bool? AdditionalCapabilitiesUltraSsdEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.UltraSsdEnabled;
+                return Properties is null ? default : Properties.AdditionalCapabilitiesUltraSsdEnabled;
             }
             set
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new DedicatedHostGroupProperties();
                 }
-                Properties.UltraSsdEnabled = value;
+                Properties.AdditionalCapabilitiesUltraSsdEnabled = value;
             }
         }
     }

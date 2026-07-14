@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </summary>
-        public bool? AllowDeletionOfReplicatedLocations
+        public bool? SafetyAllowDeletionOfReplicatedLocations
         {
             get
             {
-                return Properties is null ? default : Properties.AllowDeletionOfReplicatedLocations;
+                return Properties is null ? default : Properties.SafetyAllowDeletionOfReplicatedLocations;
             }
             set
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new GalleryScriptVersionProperties();
                 }
-                Properties.AllowDeletionOfReplicatedLocations = value;
+                Properties.SafetyAllowDeletionOfReplicatedLocations = value;
             }
         }
     }
