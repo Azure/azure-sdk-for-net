@@ -11,20 +11,20 @@ namespace Azure.Provisioning.StandbyPool
     public enum PoolVirtualMachineState
     {
         /// <summary> The virtual machine is up and running. </summary>
-        Running,
+        Running = 0,
         /// <summary> The virtual machine is creating. </summary>
-        Creating,
+        Creating = 1,
         /// <summary> The virtual machine is starting. </summary>
-        Starting,
+        Starting = 2,
         /// <summary> The virtual machine is deleting. </summary>
-        Deleting,
+        Deleting = 3,
         /// <summary> The virtual machine has released the lease on the underlying hardware and is powered off. </summary>
-        Deallocated,
+        Deallocated = 4,
         /// <summary> The virtual machine is releasing the lease on the underlying hardware and is powered off. </summary>
-        Deallocating,
+        Deallocating = 5,
         /// <summary> The virtual machine has released the lease on the underlying hardware and is powered off. Memory contents of the VM are stored in the OS disk. When started again, applications and processes that were previously running in your VM resume from the state prior to hibernation. </summary>
-        Hibernated,
+        Hibernated = 6,
         /// <summary> The virtual machine is hibernating. </summary>
-        Hibernating
+        Hibernating = 7
     }
 }

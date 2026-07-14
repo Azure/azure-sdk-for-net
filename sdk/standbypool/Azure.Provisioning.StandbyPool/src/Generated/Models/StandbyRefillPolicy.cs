@@ -14,6 +14,6 @@ namespace Azure.Provisioning.StandbyPool
     {
         /// <summary> A refill policy that standby pool is automatically refilled to maintain maxReadyCapacity. </summary>
         [DataMember(Name = "always")]
-        Always
+        Always = 0
     }
 }

@@ -14,9 +14,9 @@ namespace Azure.Provisioning.StandbyPool
     {
         /// <summary> StandbyPool is in healthy state. </summary>
         [DataMember(Name = "HealthState/healthy")]
-        Healthy,
+        Healthy = 0,
         /// <summary> StandbyPool is in degraded state. </summary>
         [DataMember(Name = "HealthState/degraded")]
-        Degraded
+        Degraded = 1
     }
 }

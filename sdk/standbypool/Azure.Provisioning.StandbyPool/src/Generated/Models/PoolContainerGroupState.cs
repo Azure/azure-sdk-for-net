@@ -11,10 +11,10 @@ namespace Azure.Provisioning.StandbyPool
     public enum PoolContainerGroupState
     {
         /// <summary> The container group is up and running. </summary>
-        Running,
+        Running = 0,
         /// <summary> The container group is creating. </summary>
-        Creating,
+        Creating = 1,
         /// <summary> The container group is deleting. </summary>
-        Deleting
+        Deleting = 2
     }
 }

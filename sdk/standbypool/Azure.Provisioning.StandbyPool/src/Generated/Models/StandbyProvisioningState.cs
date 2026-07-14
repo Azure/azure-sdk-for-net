@@ -11,12 +11,12 @@ namespace Azure.Provisioning.StandbyPool
     public enum StandbyProvisioningState
     {
         /// <summary> Resource has been created. </summary>
-        Succeeded,
+        Succeeded = 0,
         /// <summary> Resource creation failed. </summary>
-        Failed,
+        Failed = 1,
         /// <summary> Resource creation was canceled. </summary>
-        Canceled,
+        Canceled = 2,
         /// <summary> Resource is being deleted. </summary>
-        Deleting
+        Deleting = 3
     }
 }
