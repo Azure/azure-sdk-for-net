@@ -356,7 +356,7 @@ namespace Azure.Generator.Management.Providers
                 return new ArrayResponseOperationMethodProvider(this, parameterMappings, clientInfo, method, isAsync, methodName, explicitResourceClient, scopeParameter: scopeParameter);
             }
 
-            return new ResourceOperationMethodProvider(this, parameterMappings, clientInfo, method, isAsync, methodName, explicitResourceClient: explicitResourceClient, scopeParameter: scopeParameter);
+        return new ResourceOperationMethodProvider(this, parameterMappings, clientInfo, method, ResourceOperationKind.Action, isAsync, methodName, explicitResourceClient: explicitResourceClient, scopeParameter: scopeParameter);
         }
 
         public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)

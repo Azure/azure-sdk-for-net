@@ -342,7 +342,7 @@ The review body should contain:
 - Scope: <packages/files reviewed>
 - Classification: <onboarding/regeneration/compatibility-only/docs-tests-only/CI-fix-only>
 - CI: <pass/fail/pending/not applicable>
-- Schema and metadata: <pass/fail/not applicable>
+- Schema and metadata correctness: <pass/fail/not applicable>
 - Compatibility: <pass/fail/not applicable>
 - Tests/snippets/docs: <pass/fail/not applicable>
 

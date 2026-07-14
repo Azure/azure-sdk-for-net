@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The CreateAsyncResponse. </summary>
-    internal partial class CreateAsyncResponse : IJsonModel<CreateAsyncResponse>
+    public partial class CreateAsyncResponse : IJsonModel<CreateAsyncResponse>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

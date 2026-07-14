@@ -24,11 +24,13 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary> Initializes a new instance of ProjectEvaluators. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ProjectEvaluators(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ProjectEvaluators(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -36,6 +38,9 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Returns the available versions for the specified evaluator.
@@ -55,9 +60,19 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetVersions(string name, string @type, int? limit, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.GetVersions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new ProjectEvaluatorsGetVersionsCollectionResult(this, name, @type, limit, options);
+                return new ProjectEvaluatorsGetVersionsCollectionResult(this, name, @type, limit, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -78,9 +93,19 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetVersionsAsync(string name, string @type, int? limit, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.GetVersions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new ProjectEvaluatorsGetVersionsAsyncCollectionResult(this, name, @type, limit, options);
+                return new ProjectEvaluatorsGetVersionsAsyncCollectionResult(this, name, @type, limit, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Returns the available versions for the specified evaluator. </summary>
@@ -130,7 +155,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetLatestVersions(string @type, int? limit, RequestOptions options)
         {
-            return new ProjectEvaluatorsGetLatestVersionsCollectionResult(this, @type, limit, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.GetLatestVersions");
+            scope.Start();
+            try
+            {
+                return new ProjectEvaluatorsGetLatestVersionsCollectionResult(this, @type, limit, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -148,7 +183,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetLatestVersionsAsync(string @type, int? limit, RequestOptions options)
         {
-            return new ProjectEvaluatorsGetLatestVersionsAsyncCollectionResult(this, @type, limit, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.GetLatestVersions");
+            scope.Start();
+            try
+            {
+                return new ProjectEvaluatorsGetLatestVersionsAsyncCollectionResult(this, @type, limit, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists the latest version of each evaluator. </summary>
@@ -190,11 +235,21 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetVersion(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.GetVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetVersionRequest(name, version, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetVersionRequest(name, version, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -214,11 +269,21 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetVersionAsync(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.GetVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateGetVersionRequest(name, version, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetVersionRequest(name, version, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the specified evaluator version, returning 404 if it does not exist. </summary>
@@ -272,11 +337,21 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteVersion(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.DeleteVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateDeleteVersionRequest(name, version, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDeleteVersionRequest(name, version, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -296,11 +371,21 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteVersionAsync(string name, string version, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.DeleteVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using PipelineMessage message = CreateDeleteVersionRequest(name, version, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDeleteVersionRequest(name, version, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Removes the specified evaluator version. Returns 204 whether the version existed or not. </summary>
@@ -350,11 +435,21 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateVersion(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.CreateVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateVersionRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateCreateVersionRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -374,11 +469,21 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateVersionAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.CreateVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateVersionRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateCreateVersionRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new evaluator version with an auto-incremented version identifier. </summary>
@@ -433,12 +538,22 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateVersion(string name, string version, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.UpdateVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateVersionRequest(name, version, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateUpdateVersionRequest(name, version, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -459,12 +574,22 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> UpdateVersionAsync(string name, string version, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.UpdateVersion");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(version, nameof(version));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateVersionRequest(name, version, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateUpdateVersionRequest(name, version, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -484,8 +609,18 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult StartPendingUpload(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.StartPendingUpload");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -505,8 +640,18 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> StartPendingUploadAsync(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.StartPendingUpload");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Initiates a new pending upload or retrieves an existing one for the specified evaluator version. </summary>
@@ -552,8 +697,18 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetCredential(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateGetCredentialRequest(name, version, content, foundryFeatures, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.GetCredential");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetCredentialRequest(name, version, content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -573,8 +728,18 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetCredentialAsync(string name, string version, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateGetCredentialRequest(name, version, content, foundryFeatures, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectEvaluators.GetCredential");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateGetCredentialRequest(name, version, content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves SAS credentials for accessing the storage account associated with the specified evaluator version. </summary>

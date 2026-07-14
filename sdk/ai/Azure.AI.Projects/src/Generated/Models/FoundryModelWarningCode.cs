@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary> Warning code for model artifacts. </summary>
     [Experimental("AAIP001")]
-    internal readonly partial struct FoundryModelWarningCode : IEquatable<FoundryModelWarningCode>
+    public readonly partial struct FoundryModelWarningCode : IEquatable<FoundryModelWarningCode>
     {
         private readonly string _value;
         /// <summary> Runtime dependent artifact warning. </summary>
