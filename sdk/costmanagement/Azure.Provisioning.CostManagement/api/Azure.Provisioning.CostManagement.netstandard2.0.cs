@@ -481,21 +481,21 @@ namespace Azure.Provisioning.CostManagement
     public partial class ExportRun : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ExportRun() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } set { } }
-        public Azure.Provisioning.CostManagement.ExportRunErrorDetails Error { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ExportRunExecutionType> ExecutionType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> FileName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
+        public Azure.Provisioning.CostManagement.ExportRunErrorDetails Error { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ExportRunExecutionType> ExecutionType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> FileName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> ManifestFile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ManifestFile { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ProcessingEndOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ProcessingStartOn { get { throw null; } set { } }
-        public Azure.Provisioning.CostManagement.CommonExportProperties RunSettings { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ExportRunExecutionStatus> Status { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SubmittedBy { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SubmittedOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ProcessingEndOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ProcessingStartOn { get { throw null; } }
+        public Azure.Provisioning.CostManagement.CommonExportProperties RunSettings { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ExportRunExecutionStatus> Status { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SubmittedBy { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SubmittedOn { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }

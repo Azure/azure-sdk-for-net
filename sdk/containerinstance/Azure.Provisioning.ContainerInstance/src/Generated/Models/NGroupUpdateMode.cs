@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerInstance
     public enum NGroupUpdateMode
     {
         /// <summary> Manual. </summary>
-        Manual,
+        Manual = 0,
         /// <summary> Rolling. </summary>
-        Rolling
+        Rolling = 1
     }
 }

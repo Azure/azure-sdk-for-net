@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Cdn
     public enum OriginAuthenticationType
     {
         /// <summary> SystemAssignedIdentity. </summary>
-        SystemAssignedIdentity,
+        SystemAssignedIdentity = 0,
         /// <summary> UserAssignedIdentity. </summary>
-        UserAssignedIdentity
+        UserAssignedIdentity = 1
     }
 }
