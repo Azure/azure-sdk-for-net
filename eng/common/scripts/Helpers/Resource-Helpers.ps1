@@ -297,7 +297,8 @@ function Remove-WormStorageAccounts() {
   [CmdletBinding(SupportsShouldProcess = $True)]
   param(
     [string]$GroupPrefix,
-    [switch]$CI
+    [switch]$CI,
+    [bool]$CheckPrefix = $true
   )
 
   $ErrorActionPreference = 'Stop'
@@ -306,9 +307,13 @@ function Remove-WormStorageAccounts() {
   # DO NOT REMOVE THIS
   # We call this script from live test pipelines as well, and a string mismatch/error could blow away
   # some static storage accounts we rely on
-  if (!$groupPrefix -or ($CI -and (!$GroupPrefix.StartsWith('rg-') -and !$GroupPrefix.StartsWith('SSS3PT_rg-')))) {
+  # Note: Prefix Check is optional and can be disabled by setting `-CheckPrefix $false` for situations were prefix isn't standardized
+  if ($CheckPrefix){
+      if (!$groupPrefix -or ($CI -and (!$GroupPrefix.StartsWith('rg-') -and !$GroupPrefix.StartsWith('SSS3PT_rg-')))) {
     throw "The -GroupPrefix parameter must not be empty, or must start with 'rg-' or 'SSS3PT_rg-' in CI contexts"
+    }
   }
+
 
   $groups = Get-AzResourceGroup | Where-Object { $_.ResourceGroupName.StartsWith($GroupPrefix) } | Where-Object { $_.ProvisioningState -ne 'Deleting' }
 
