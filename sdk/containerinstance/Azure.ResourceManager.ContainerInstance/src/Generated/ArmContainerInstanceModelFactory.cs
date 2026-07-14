@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 location,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
-                containers is null && containerGroupOSType is null && diagnosticsLogAnalytics is null && encryptionProperties is null && initContainers is null && confidentialComputeCcePolicy is null && containerGroupProfile is null && isCreatedFromStandbyPool is null ? default : new ContainerGroupPropertiesProperties(
+                containers is null && containerGroupOSType is null && diagnosticsLogAnalytics is null && encryptionProperties is null && initContainers is null && confidentialComputeCcePolicy is null && containerGroupProfile is null ? default : new ContainerGroupPropertiesProperties(
                     default,
                     default,
                     (containers ?? new ChangeTrackingList<ContainerInstanceContainer>()).ToList(),
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     default,
                     containerGroupProfile,
                     default,
-                    isCreatedFromStandbyPool,
+                    default,
                     default),
                 default);
         }

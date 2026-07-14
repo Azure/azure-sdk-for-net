@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         internal AllInstancesDown AllInstancesDown { get; set; }
 
         /// <summary> Specifies Redeploy Scheduled Event related configurations. </summary>
-        public bool? IsAutomaticallyApprovedForRedeploy
+        public bool? IsUserInitiatedRedeployAutomaticallyApprovedForRedeploy
         {
             get
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Specifies Reboot Scheduled Event related configurations. </summary>
-        public bool? IsAutomaticallyApprovedForReboot
+        public bool? IsUserInitiatedRebootAutomaticallyApprovedForReboot
         {
             get
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true. </summary>
-        public bool? IsAutomaticallyApprovedForAllInstancesDown
+        public bool? IsAllInstancesDownAutomaticallyApprovedForAllInstancesDown
         {
             get
             {

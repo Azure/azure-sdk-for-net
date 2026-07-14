@@ -331,14 +331,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 default);
         }
 
-        /// <param name="isAutomaticallyApprovedForRedeploy"> Specifies Redeploy Scheduled Event related configurations. </param>
-        /// <param name="isAutomaticallyApprovedForReboot"> Specifies Reboot Scheduled Event related configurations. </param>
+        /// <param name="isUserInitiatedRedeployAutomaticallyApprovedForRedeploy"> Specifies Redeploy Scheduled Event related configurations. </param>
+        /// <param name="isUserInitiatedRebootAutomaticallyApprovedForReboot"> Specifies Reboot Scheduled Event related configurations. </param>
         /// <param name="scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph"> The configuration parameters used while creating eventGridAndResourceGraph Scheduled Event setting. </param>
-        /// <param name="isAutomaticallyApprovedForAllInstancesDown"> Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true. </param>
+        /// <param name="isAllInstancesDownAutomaticallyApprovedForAllInstancesDown"> Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true. </param>
         /// <returns> A new <see cref="Models.ScheduledEventsPolicy"/> instance for mocking. </returns>
-        public static ScheduledEventsPolicy ScheduledEventsPolicy(bool? isAutomaticallyApprovedForRedeploy = default, bool? isAutomaticallyApprovedForReboot = default, EventGridAndResourceGraph scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = default, bool? isAutomaticallyApprovedForAllInstancesDown = default)
+        public static ScheduledEventsPolicy ScheduledEventsPolicy(bool? isUserInitiatedRedeployAutomaticallyApprovedForRedeploy = default, bool? isUserInitiatedRebootAutomaticallyApprovedForReboot = default, EventGridAndResourceGraph scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = default, bool? isAllInstancesDownAutomaticallyApprovedForAllInstancesDown = default)
         {
-            return new ScheduledEventsPolicy(isAutomaticallyApprovedForRedeploy is null ? default : new UserInitiatedRedeploy(isAutomaticallyApprovedForRedeploy, default), isAutomaticallyApprovedForReboot is null ? default : new UserInitiatedReboot(isAutomaticallyApprovedForReboot, default), scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph is null ? default : new ScheduledEventsAdditionalPublishingTargets(scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph, default), isAutomaticallyApprovedForAllInstancesDown is null ? default : new AllInstancesDown(isAutomaticallyApprovedForAllInstancesDown, default), default);
+            return new ScheduledEventsPolicy(isUserInitiatedRedeployAutomaticallyApprovedForRedeploy is null ? default : new UserInitiatedRedeploy(isUserInitiatedRedeployAutomaticallyApprovedForRedeploy, default), isUserInitiatedRebootAutomaticallyApprovedForReboot is null ? default : new UserInitiatedReboot(isUserInitiatedRebootAutomaticallyApprovedForReboot, default), scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph is null ? default : new ScheduledEventsAdditionalPublishingTargets(scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph, default), isAllInstancesDownAutomaticallyApprovedForAllInstancesDown is null ? default : new AllInstancesDown(isAllInstancesDownAutomaticallyApprovedForAllInstancesDown, default), default);
         }
 
         /// <param name="enable"> Specifies if event grid and resource graph is enabled for Scheduled event related configurations. </param>

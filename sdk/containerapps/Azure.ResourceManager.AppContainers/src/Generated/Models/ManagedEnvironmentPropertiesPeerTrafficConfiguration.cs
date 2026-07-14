@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Boolean indicating whether the peer traffic encryption is enabled. </summary>
         [WirePath("encryption.enabled")]
-        public bool? IsEnabled
+        public bool? IsEncryptionEnabled
         {
             get
             {

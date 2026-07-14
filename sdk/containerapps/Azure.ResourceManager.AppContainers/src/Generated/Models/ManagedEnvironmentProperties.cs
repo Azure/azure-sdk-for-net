@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Boolean indicating whether the mutual TLS authentication is enabled. </summary>
         [WirePath("peerAuthentication.mtls.enabled")]
-        public bool? IsMtlsEnabled
+        public bool? IsPeerAuthenticationMtlsMtlsEnabled
         {
             get
             {
-                return PeerAuthentication is null ? default : PeerAuthentication.IsMtlsEnabled;
+                return PeerAuthentication is null ? default : PeerAuthentication.IsMtlsMtlsEnabled;
             }
             set
             {
@@ -235,17 +235,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     PeerAuthentication = new ManagedEnvironmentPropertiesPeerAuthentication();
                 }
-                PeerAuthentication.IsMtlsEnabled = value;
+                PeerAuthentication.IsMtlsMtlsEnabled = value;
             }
         }
 
         /// <summary> Boolean indicating whether the peer traffic encryption is enabled. </summary>
         [WirePath("peerTrafficConfiguration.encryption.enabled")]
-        public bool? IsEnabled
+        public bool? IsPeerTrafficConfigurationEncryptionEnabled
         {
             get
             {
-                return PeerTrafficConfiguration is null ? default : PeerTrafficConfiguration.IsEnabled;
+                return PeerTrafficConfiguration is null ? default : PeerTrafficConfiguration.IsEncryptionEnabled;
             }
             set
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     PeerTrafficConfiguration = new ManagedEnvironmentPropertiesPeerTrafficConfiguration();
                 }
-                PeerTrafficConfiguration.IsEnabled = value;
+                PeerTrafficConfiguration.IsEncryptionEnabled = value;
             }
         }
 

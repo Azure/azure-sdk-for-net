@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Auto configure the ASP.NET Core Data Protection feature. </summary>
         [WirePath("dotnet.autoConfigureDataProtection")]
-        public bool? AutoConfigureDataProtection
+        public bool? DotnetAutoConfigureDataProtection
         {
             get
             {
