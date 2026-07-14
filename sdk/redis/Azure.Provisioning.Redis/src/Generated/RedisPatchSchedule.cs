@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Redis
         private SystemData _systemData;
         private RedisPatchScheduleSettings _properties;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<Redis> _parent;
+        private ResourceReference<RedisResource> _parent;
 
         /// <summary> Creates a new RedisPatchSchedule. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -90,7 +90,7 @@ namespace Azure.Provisioning.Redis
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public Redis Parent
+        public RedisResource Parent
         {
             get
             {
@@ -130,7 +130,7 @@ namespace Azure.Provisioning.Redis
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<RedisPatchScheduleSettings>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<Redis>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<RedisResource>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

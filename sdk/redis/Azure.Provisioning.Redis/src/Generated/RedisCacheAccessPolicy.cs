@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Redis
         private BicepValue<string> _name;
         private SystemData _systemData;
         private RedisCacheAccessPolicyProperties _properties;
-        private ResourceReference<Redis> _parent;
+        private ResourceReference<RedisResource> _parent;
 
         /// <summary> Creates a new RedisCacheAccessPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -80,7 +80,7 @@ namespace Azure.Provisioning.Redis
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public Redis Parent
+        public RedisResource Parent
         {
             get
             {
@@ -145,7 +145,7 @@ namespace Azure.Provisioning.Redis
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<RedisCacheAccessPolicyProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<Redis>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<RedisResource>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

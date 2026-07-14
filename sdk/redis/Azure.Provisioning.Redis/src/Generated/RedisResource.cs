@@ -15,7 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Redis
 {
     /// <summary> A single Redis item in List or Get Operation. </summary>
-    public partial class Redis : ProvisionableResource
+    public partial class RedisResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -29,7 +29,7 @@ namespace Azure.Provisioning.Redis
         /// <summary> Creates a new Redis. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public Redis(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Cache/redis", resourceVersion ?? "2024-11-01")
+        public RedisResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Cache/redis", resourceVersion ?? "2024-11-01")
         {
         }
 
@@ -516,9 +516,9 @@ namespace Azure.Provisioning.Redis
         /// <summary> Creates a reference to an existing Redis. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static Redis FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static RedisResource FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            Redis result = new Redis(bicepIdentifier, resourceVersion);
+            RedisResource result = new RedisResource(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
