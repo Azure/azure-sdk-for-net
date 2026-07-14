@@ -181,6 +181,7 @@ public class BicepValue<T> : BicepValue
         IPAddress a => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(a, Format)),
         ETag e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, Format)),
         ResourceIdentifier i => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(i, Format)),
+        BinaryData b => BicepTypeMapping.ToBicep(b),
         AzureLocation azureLocation => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(azureLocation, Format)),
         ResourceType rt => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(rt, Format)),
         Enum e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, Format)),

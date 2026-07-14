@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Text.Json;
 using System.Xml;
 using Azure.Core;
 
@@ -76,6 +78,80 @@ internal static class BicepTypeMapping
             ValueType ee => ee.ToString()!,
             _ => throw new InvalidOperationException($"Cannot convert {value} to a literal Bicep string.")
         };
+
+    /// <summary>
+    /// Convert a <see cref="BinaryData"/> value containing JSON into a Bicep expression.
+    /// </summary>
+    /// <param name="value">The <see cref="BinaryData"/> value.</param>
+    /// <returns>The corresponding Bicep expression.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when the value is not valid JSON.
+    /// </exception>
+    public static BicepExpression ToBicep(BinaryData value)
+    {
+        try
+        {
+            using JsonDocument document = JsonDocument.Parse(value.ToString());
+            return ToBicep(document.RootElement);
+        }
+        catch (JsonException ex)
+        {
+            throw new InvalidOperationException("Cannot convert BinaryData to a Bicep expression. Only BinaryData values containing valid JSON are supported.", ex);
+        }
+    }
+
+    private static BicepExpression ToBicep(JsonElement element) =>
+        element.ValueKind switch
+        {
+            JsonValueKind.Object => new ObjectExpression(GetObjectProperties(element)),
+            JsonValueKind.Array => BicepSyntax.Array(GetArrayValues(element)),
+            JsonValueKind.String => BicepSyntax.Value(element.GetString()!),
+            JsonValueKind.Number => ToBicepNumber(element),
+            JsonValueKind.True => BicepSyntax.Value(true),
+            JsonValueKind.False => BicepSyntax.Value(false),
+            JsonValueKind.Null => BicepSyntax.Null(),
+            _ => throw new InvalidOperationException($"Cannot convert JSON {element.ValueKind} to a Bicep expression.")
+        };
+
+    private static PropertyExpression[] GetObjectProperties(JsonElement element)
+    {
+        List<PropertyExpression> properties = [];
+        foreach (JsonProperty property in element.EnumerateObject())
+        {
+            properties.Add(new PropertyExpression(property.Name, ToBicep(property.Value)));
+        }
+        return [.. properties];
+    }
+
+    private static BicepExpression[] GetArrayValues(JsonElement element)
+    {
+        List<BicepExpression> values = [];
+        foreach (JsonElement item in element.EnumerateArray())
+        {
+            values.Add(ToBicep(item));
+        }
+        return [.. values];
+    }
+
+    private static BicepExpression ToBicepNumber(JsonElement element)
+    {
+        if (element.TryGetInt32(out int intValue))
+        {
+            return BicepSyntax.Value(intValue);
+        }
+        if (element.TryGetInt64(out long longValue))
+        {
+            return BicepSyntax.Value(longValue);
+        }
+        if (element.TryGetDouble(out double doubleValue) &&
+            !double.IsNaN(doubleValue) &&
+            !double.IsInfinity(doubleValue))
+        {
+            return BicepSyntax.Value(doubleValue);
+        }
+
+        return BicepFunction.ParseJson(BicepSyntax.Value(element.GetRawText())).Compile();
+    }
 
     /// <summary>
     /// Get the value of an enum.  This is either the name of the enum value or
