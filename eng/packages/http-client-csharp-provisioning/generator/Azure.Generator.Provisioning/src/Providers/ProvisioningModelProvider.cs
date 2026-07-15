@@ -53,26 +53,10 @@ namespace Azure.Generator.Provisioning.Providers
                 // into ProvisionableConstruct. A custom base type is therefore an explicit migration
                 // compatibility decision and must take precedence over the generator's default base.
                 // Any properties duplicated by that compatibility base are suppressed in custom code
-                // with CodeGenSuppress rather than inferred here.
-                var customBaseType = CustomCodeView.BaseType;
-                if (string.IsNullOrEmpty(customBaseType.Namespace))
-                {
-                    // The base ModelProvider resolver creates every input model while searching for
-                    // an unqualified type. Provisioning cannot do that because its settable analysis
-                    // intentionally covers only reachable models. Resolve only the requested model so
-                    // same-namespace custom code remains concise without materializing unrelated types.
-                    var inputBaseModel = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.Models
-                        .FirstOrDefault(model => string.Equals(model.Name, customBaseType.Name, StringComparison.Ordinal));
-                    var baseProvider = inputBaseModel == null
-                        ? null
-                        : ProvisioningGenerator.Instance.TypeFactory.CreateModel(inputBaseModel);
-                    if (baseProvider != null)
-                    {
-                        return baseProvider.Type;
-                    }
-                }
-
-                return customBaseType;
+                // with CodeGenSuppress rather than inferred here. InputNamespace contains only
+                // provisioning-reachable models, so the base resolver can safely resolve an
+                // unqualified custom base without materializing unrelated input models.
+                return base.BuildBaseType();
             }
 
             // Derived discriminated types inherit from their base model type.

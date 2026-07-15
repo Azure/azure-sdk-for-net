@@ -21,6 +21,8 @@ namespace Azure.Generator.Provisioning
         private IReadOnlyList<InputModelType>? _reachableModels;
         private IReadOnlyList<InputEnumType>? _reachableEnums;
         private Dictionary<InputModelType, bool>? _modelSettableUsage;
+        private InputNamespace? _provisioningInputNamespace;
+        private bool _isBuildingProvisioningInput;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProvisioningInputLibrary"/> class.
@@ -30,30 +32,44 @@ namespace Azure.Generator.Provisioning
         {
         }
 
+        /// <inheritdoc/>
+        public override InputNamespace InputNamespace
+        {
+            get
+            {
+                if (_provisioningInputNamespace != null)
+                {
+                    return _provisioningInputNamespace;
+                }
+
+                var inputNamespace = base.InputNamespace;
+                if (_isBuildingProvisioningInput)
+                {
+                    // Reachability starts from ArmProviderSchema, whose management-plane
+                    // initialization reads InputNamespace. Return the complete namespace during
+                    // that initialization so the schema can discover every resource and operation.
+                    return inputNamespace;
+                }
+
+                EnsureProvisioningInput();
+                _provisioningInputNamespace = new InputNamespace(
+                    inputNamespace.Name,
+                    inputNamespace.ApiVersions,
+                    inputNamespace.Constants,
+                    _reachableEnums!,
+                    _reachableModels!,
+                    inputNamespace.RootClients,
+                    inputNamespace.Auth);
+                return _provisioningInputNamespace;
+            }
+        }
+
         internal IReadOnlyList<ProvisioningResourceProjection> ResourceProjections
         {
             get
             {
                 EnsureProvisioningInput();
                 return _resourceProjections!;
-            }
-        }
-
-        internal IReadOnlyList<InputModelType> ReachableModels
-        {
-            get
-            {
-                EnsureProvisioningInput();
-                return _reachableModels!;
-            }
-        }
-
-        internal IReadOnlyList<InputEnumType> ReachableEnums
-        {
-            get
-            {
-                EnsureProvisioningInput();
-                return _reachableEnums!;
             }
         }
 
@@ -79,18 +95,26 @@ namespace Azure.Generator.Provisioning
             if (_resourceProjections != null && _modelSettableUsage != null)
                 return;
 
-            var resourceProjections = _resourceProjections
-                ?? ProvisioningResourceProjection.Create(ArmProviderSchema.Resources);
-            var resourceProjectionsByModel = _resourceProjectionsByModel ?? resourceProjections
-                .GroupBy(projection => projection.ResourceModel)
-                .ToDictionary(group => group.Key, group => group.ToList());
-            var (reachableModels, reachableEnums, modelSettableUsage) = CollectReachableTypes(resourceProjections, resourceProjectionsByModel);
+            try
+            {
+                _isBuildingProvisioningInput = true;
+                var resourceProjections = _resourceProjections
+                    ?? ProvisioningResourceProjection.Create(ArmProviderSchema.Resources);
+                var resourceProjectionsByModel = _resourceProjectionsByModel ?? resourceProjections
+                    .GroupBy(projection => projection.ResourceModel)
+                    .ToDictionary(group => group.Key, group => group.ToList());
+                var (reachableModels, reachableEnums, modelSettableUsage) = CollectReachableTypes(resourceProjections, resourceProjectionsByModel);
 
-            _resourceProjections = resourceProjections;
-            _resourceProjectionsByModel = resourceProjectionsByModel;
-            _reachableModels = reachableModels;
-            _reachableEnums = reachableEnums;
-            _modelSettableUsage = modelSettableUsage;
+                _resourceProjections = resourceProjections;
+                _resourceProjectionsByModel = resourceProjectionsByModel;
+                _reachableModels = reachableModels;
+                _reachableEnums = reachableEnums;
+                _modelSettableUsage = modelSettableUsage;
+            }
+            finally
+            {
+                _isBuildingProvisioningInput = false;
+            }
         }
 
         /// <summary>
@@ -154,6 +178,10 @@ namespace Azure.Generator.Provisioning
                 case InputModelType model:
                     if (resourceProjectionInfosByModel.TryGetValue(model, out var resources))
                     {
+                        if (outputVisited.Add(model))
+                        {
+                            models.Add(model);
+                        }
                         var isResourceSettable = resources.Any(r => r.WritableScopes.Count > 0);
                         var isSettable = item.IsSettable || isResourceSettable;
                         modelSettableUsage[model] = isSettable || (modelSettableUsage.TryGetValue(model, out var existingResourceUsage) && existingResourceUsage);
