@@ -2747,7 +2747,8 @@ namespace Azure.AI.VoiceLive
         {
             V2025_10_01 = 1,
             V2026_01_01_PREVIEW = 2,
-            V2026_07_15 = 3,
+            V2026_04_10 = 3,
+            V2026_07_15 = 4,
         }
     }
     public abstract partial class VoiceLiveContentPart : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.VoiceLiveContentPart>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.VoiceLiveContentPart>
@@ -2982,7 +2983,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.VoiceLiveFunctionDefinition VoiceLiveFunctionDefinition(string name = null, string description = null, System.BinaryData parameters = null) { throw null; }
         public static Azure.AI.VoiceLive.VoiceLiveMcpServerDefinition VoiceLiveMcpServerDefinition(string serverLabel = null, System.Uri serverUrl = null, string authorization = null, System.Collections.Generic.IDictionary<string, string> headers = null, System.Collections.Generic.IEnumerable<string> allowedTools = null, System.BinaryData requireApproval = null) { throw null; }
         public static Azure.AI.VoiceLive.VoiceLiveMcpTool VoiceLiveMcpTool(string name = null, string description = null, System.BinaryData inputSchema = null, System.BinaryData annotations = null) { throw null; }
-        public static Azure.AI.VoiceLive.VoiceLiveSessionOptions VoiceLiveSessionOptions(string model = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.InteractionModality> modalities = null, Azure.AI.VoiceLive.AnimationOptions animation = null, Azure.AI.VoiceLive.VoiceProvider voice = null, string instructions = null, int? inputAudioSamplingRate = default(int?), Azure.AI.VoiceLive.InputAudioFormat? inputAudioFormat = default(Azure.AI.VoiceLive.InputAudioFormat?), Azure.AI.VoiceLive.OutputAudioFormat? outputAudioFormat = default(Azure.AI.VoiceLive.OutputAudioFormat?), Azure.AI.VoiceLive.AudioNoiseReduction inputAudioNoiseReduction = null, Azure.AI.VoiceLive.AudioEchoCancellation inputAudioEchoCancellation = null, Azure.AI.VoiceLive.AvatarConfiguration avatar = null, Azure.AI.VoiceLive.AudioInputTranscriptionOptions inputAudioTranscription = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.AudioTimestampType> outputAudioTimestampTypes = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.VoiceLiveToolDefinition> tools = null, Azure.AI.VoiceLive.ToolChoiceOption toolChoice = null, bool? parallelToolCalls = default(bool?), float? temperature = default(float?), Azure.AI.VoiceLive.MaxResponseOutputTokensOption maxResponseOutputTokens = null, Azure.AI.VoiceLive.ReasoningEffort? reasoningEffort = default(Azure.AI.VoiceLive.ReasoningEffort?), System.BinaryData interimResponse = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.SessionIncludeOption> include = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.BinaryData turnDetection = null) { throw null; }
+        public static Azure.AI.VoiceLive.VoiceLiveSessionOptions VoiceLiveSessionOptions(string model = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.InteractionModality> modalities = null, Azure.AI.VoiceLive.AnimationOptions animation = null, Azure.AI.VoiceLive.VoiceProvider voice = null, string instructions = null, int? inputAudioSamplingRate = default(int?), Azure.AI.VoiceLive.InputAudioFormat? inputAudioFormat = default(Azure.AI.VoiceLive.InputAudioFormat?), Azure.AI.VoiceLive.OutputAudioFormat? outputAudioFormat = default(Azure.AI.VoiceLive.OutputAudioFormat?), Azure.AI.VoiceLive.AudioNoiseReduction inputAudioNoiseReduction = null, Azure.AI.VoiceLive.AudioEchoCancellation inputAudioEchoCancellation = null, Azure.AI.VoiceLive.AvatarConfiguration avatar = null, Azure.AI.VoiceLive.AudioInputTranscriptionOptions inputAudioTranscription = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.AudioTimestampType> outputAudioTimestampTypes = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.VoiceLiveToolDefinition> tools = null, Azure.AI.VoiceLive.ToolChoiceOption toolChoice = null, bool? allowParallelToolCalls = default(bool?), float? temperature = default(float?), Azure.AI.VoiceLive.MaxResponseOutputTokensOption maxResponseOutputTokens = null, Azure.AI.VoiceLive.ReasoningEffort? reasoningEffort = default(Azure.AI.VoiceLive.ReasoningEffort?), System.BinaryData interimResponse = null, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.SessionIncludeOption> include = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.BinaryData turnDetection = null) { throw null; }
         public static Azure.AI.VoiceLive.VoiceLiveSessionOptions VoiceLiveSessionOptions(string model, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.InteractionModality> modalities, Azure.AI.VoiceLive.AnimationOptions animation, Azure.AI.VoiceLive.VoiceProvider voice, string instructions, int? inputAudioSamplingRate, Azure.AI.VoiceLive.InputAudioFormat? inputAudioFormat, Azure.AI.VoiceLive.OutputAudioFormat? outputAudioFormat, Azure.AI.VoiceLive.AudioNoiseReduction inputAudioNoiseReduction, Azure.AI.VoiceLive.AudioEchoCancellation inputAudioEchoCancellation, Azure.AI.VoiceLive.AvatarConfiguration avatar, Azure.AI.VoiceLive.AudioInputTranscriptionOptions inputAudioTranscription, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.AudioTimestampType> outputAudioTimestampTypes, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.VoiceLiveToolDefinition> tools, Azure.AI.VoiceLive.ToolChoiceOption toolChoice, float? temperature, Azure.AI.VoiceLive.MaxResponseOutputTokensOption maxResponseOutputTokens, System.BinaryData turnDetection) { throw null; }
         public static Azure.AI.VoiceLive.VoiceLiveSessionOptions VoiceLiveSessionOptions(string model, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.InteractionModality> modalities, Azure.AI.VoiceLive.AnimationOptions animation, Azure.AI.VoiceLive.VoiceProvider voice, string instructions, int? inputAudioSamplingRate, Azure.AI.VoiceLive.InputAudioFormat? inputAudioFormat, Azure.AI.VoiceLive.OutputAudioFormat? outputAudioFormat, Azure.AI.VoiceLive.AudioNoiseReduction inputAudioNoiseReduction, Azure.AI.VoiceLive.AudioEchoCancellation inputAudioEchoCancellation, Azure.AI.VoiceLive.AvatarConfiguration avatar, Azure.AI.VoiceLive.AudioInputTranscriptionOptions inputAudioTranscription, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.AudioTimestampType> outputAudioTimestampTypes, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.VoiceLiveToolDefinition> tools, Azure.AI.VoiceLive.ToolChoiceOption toolChoice, float? temperature, Azure.AI.VoiceLive.MaxResponseOutputTokensOption maxResponseOutputTokens, Azure.AI.VoiceLive.ReasoningEffort? reasoningEffort, System.BinaryData interimResponse, System.Collections.Generic.IEnumerable<Azure.AI.VoiceLive.SessionIncludeOption> include, System.Collections.Generic.IDictionary<string, string> metadata, System.BinaryData turnDetection) { throw null; }
         public static Azure.AI.VoiceLive.VoiceLiveToolDefinition VoiceLiveToolDefinition(string type = null) { throw null; }
@@ -3038,6 +3039,7 @@ namespace Azure.AI.VoiceLive
     public partial class VoiceLiveSessionOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.VoiceLiveSessionOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.VoiceLiveSessionOptions>
     {
         public VoiceLiveSessionOptions() { }
+        public bool? AllowParallelToolCalls { get { throw null; } set { } }
         public Azure.AI.VoiceLive.AnimationOptions Animation { get { throw null; } set { } }
         public Azure.AI.VoiceLive.AvatarConfiguration Avatar { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.SessionIncludeOption> Include { get { throw null; } }
@@ -3054,7 +3056,6 @@ namespace Azure.AI.VoiceLive
         public string Model { get { throw null; } set { } }
         public Azure.AI.VoiceLive.OutputAudioFormat? OutputAudioFormat { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.AudioTimestampType> OutputAudioTimestampTypes { get { throw null; } }
-        public bool? ParallelToolCalls { get { throw null; } set { } }
         public Azure.AI.VoiceLive.ReasoningEffort? ReasoningEffort { get { throw null; } set { } }
         public float? Temperature { get { throw null; } set { } }
         public Azure.AI.VoiceLive.ToolChoiceOption ToolChoice { get { throw null; } set { } }
@@ -3074,9 +3075,10 @@ namespace Azure.AI.VoiceLive
     public partial class VoiceLiveSessionResponse : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.VoiceLiveSessionResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.VoiceLiveSessionResponse>
     {
         public VoiceLiveSessionResponse() { }
+        public bool? AllowParallelToolCalls { get { throw null; } set { } }
         public Azure.AI.VoiceLive.AnimationOptions Animation { get { throw null; } set { } }
         public Azure.AI.VoiceLive.AvatarConfiguration Avatar { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpiresAt { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.SessionIncludeOption> Include { get { throw null; } }
         public Azure.AI.VoiceLive.AudioEchoCancellation InputAudioEchoCancellation { get { throw null; } set { } }
@@ -3092,7 +3094,6 @@ namespace Azure.AI.VoiceLive
         public string Model { get { throw null; } set { } }
         public Azure.AI.VoiceLive.OutputAudioFormat? OutputAudioFormat { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.AudioTimestampType> OutputAudioTimestampTypes { get { throw null; } }
-        public bool? ParallelToolCalls { get { throw null; } set { } }
         public Azure.AI.VoiceLive.ReasoningEffort? ReasoningEffort { get { throw null; } set { } }
         public float? Temperature { get { throw null; } set { } }
         public Azure.AI.VoiceLive.ToolChoiceOption ToolChoice { get { throw null; } }

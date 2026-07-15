@@ -22,6 +22,7 @@ namespace Azure.AI.VoiceLive
             {
                 ServiceVersion.V2025_10_01 => "2025-10-01",
                 ServiceVersion.V2026_01_01_PREVIEW => "2026-01-01-preview",
+                ServiceVersion.V2026_04_10 => "2026-04-10",
                 ServiceVersion.V2026_07_15 => "2026-07-15",
                 _ => throw new NotSupportedException()
             };
@@ -42,9 +43,13 @@ namespace Azure.AI.VoiceLive
             /// </summary>
             V2026_01_01_PREVIEW = 2,
             /// <summary>
+            /// 2026-04-10 version.
+            /// </summary>
+            V2026_04_10 = 3,
+            /// <summary>
             /// 2026-07-15 version.
             /// </summary>
-            V2026_07_15 = 3
+            V2026_07_15 = 4
         }
 
         /// <summary>
