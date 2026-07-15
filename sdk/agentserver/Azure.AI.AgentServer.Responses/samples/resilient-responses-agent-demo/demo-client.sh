@@ -56,6 +56,12 @@ ENDPOINT="${ENDPOINT:-https://<account>.services.ai.azure.com/api/projects/<proj
 API_VERSION="${API_VERSION:-v1}"
 MODEL="${MODEL:-gpt-5.4-nano}"
 SESSION_FILE=".demo-session"
+# Well-known file holding the id of the CURRENTLY in-flight response. The stream
+# renderer writes it the instant the id is captured (mid-stream), so a `crash`
+# fired from ANOTHER terminal — while `start` is still streaming — can read the
+# live response id and steer-crash the exact task that is running. Cleared by
+# `reset` and whenever a new `start` begins.
+ACTIVE_RID_FILE=".demo-session.active"
 # Deployed agent name (used by `logs` and the post-crash recovery watch).
 AGENT_NAME="${AGENT_NAME:-resilient-responses-agent-demo-dotnet}"
 
@@ -97,6 +103,17 @@ load_session() {
     if [[ -f "$SESSION_FILE" ]]; then
         # shellcheck disable=SC1090
         source "$SESSION_FILE"
+    fi
+    # Cross-terminal in-flight id: if this process's own session file has no
+    # RESPONSE_ID yet (e.g. `crash` in a second terminal while `start` is still
+    # streaming in the first — `start` only writes RESPONSE_ID to the session
+    # file when its stream ENDS), adopt the live id the streaming renderer
+    # published to the shared active-id file. This is what lets a concurrent
+    # crash target the exact in-flight response.
+    if [[ -z "${RESPONSE_ID:-}" && -f "$ACTIVE_RID_FILE" ]]; then
+        local _live
+        _live=$(cat "$ACTIVE_RID_FILE" 2>/dev/null | tr -d '[:space:]')
+        [[ -n "$_live" ]] && RESPONSE_ID="$_live"
     fi
 }
 
@@ -169,6 +186,11 @@ stream_sse() {
     local extra_header="${2:-}"
     local method="${3:-GET}"
     local post_body="${4:-}"
+    # When "1", the renderer publishes the captured in-flight response id to the
+    # shared ACTIVE_RID_FILE the instant it sees it, so a `crash` in another
+    # terminal can read it mid-stream. Only new-response POSTs (start/steer) set
+    # this; reconnect/status/crash do not (they must not clobber the live id).
+    local publish_active="${5:-}"
     ensure_token
 
     local hdrs=(-H "Authorization: Bearer $TOKEN"
@@ -182,9 +204,14 @@ stream_sse() {
     # renderer prints the last sequence number AND the discovered response
     # id (if the stream came from POST /responses) to sidecar files we read
     # back into LAST_SEQUENCE_NUMBER / RESPONSE_ID.
-    local seq_file=".demo-session.lastseq"
-    local id_file=".demo-session.rid"
-    local hdr_file=".demo-session.hdr"
+    # Sidecars are PID-private (.$$) because commands run concurrently in
+    # SEPARATE terminals from the SAME directory (start streaming here, crash
+    # there, logs elsewhere). A fixed sidecar name let a concurrent `crash`
+    # rm/overwrite the streaming `start`'s id file, so `start` then reported
+    # "Failed to dispatch (no response.id captured)" even though it had one.
+    local seq_file=".demo-session.lastseq.$$"
+    local id_file=".demo-session.rid.$$"
+    local hdr_file=".demo-session.hdr.$$"
     rm -f "$seq_file" "$id_file" "$hdr_file"
 
     STREAM_RESULT="ok"
@@ -201,6 +228,8 @@ from datetime import datetime, timezone
 
 SEQ_FILE = '$seq_file'
 ID_FILE = '$id_file'
+ACTIVE_FILE = '$ACTIVE_RID_FILE'
+PUBLISH_ACTIVE = '$publish_active' == '1'
 
 def _ts():
     # UTC ISO-8601 (matches the server log clock) for correlating client-side
@@ -217,6 +246,17 @@ def _save_seq(n):
 def _save_id(rid):
     try:
         with open(ID_FILE, 'w') as f:
+            f.write(str(rid))
+    except Exception:
+        pass
+
+def _publish_active(rid):
+    # Publish the live in-flight id to the shared active-id file so a `crash`
+    # in another terminal can read it mid-stream and steer-crash this exact run.
+    if not PUBLISH_ACTIVE:
+        return
+    try:
+        with open(ACTIVE_FILE, 'w') as f:
             f.write(str(rid))
     except Exception:
         pass
@@ -258,6 +298,7 @@ for raw in iter(sys.stdin.readline, ''):
                 rid = resp.get('id')
                 if rid:
                     _save_id(rid)
+                    _publish_active(rid)
                     _id_saved = True
                     sys.stdout.write('\033[36m\u25b6 response_id=' + str(rid) + '\033[0m\n')
                     sys.stdout.flush()
@@ -343,6 +384,7 @@ cmd_start() {
     PREV_RESPONSE_ID=""
     LAST_SEQUENCE_NUMBER="0"
     save_session
+    rm -f "$ACTIVE_RID_FILE"   # drop any stale live id from a prior run
     ensure_token
 
     echo -e "${GREEN}Starting a fresh research response${RESET}"
@@ -366,9 +408,15 @@ print(json.dumps({
     # POST with stream=true returns SSE; pipe through stream_sse which
     # extracts response_id from the first response.created event,
     # renders the rest, and persists LAST_SEQUENCE_NUMBER on exit.
+    # publish_active=1 → the live id is written to ACTIVE_RID_FILE the moment
+    # it is captured, so a `crash` in ANOTHER terminal can steer-crash this run.
     echo ""
     echo -e "${BOLD}Streaming. ${DIM}Use Ctrl-C to detach; reconnect later with './demo-client.sh stream'.${RESET}"
-    stream_sse "${ENDPOINT}/responses?api-version=${API_VERSION}" "" POST "$body"
+    stream_sse "${ENDPOINT}/responses?api-version=${API_VERSION}" "" POST "$body" 1
+    # This run is no longer "in flight" from THIS process's view; the id now
+    # lives in the session file. (A crash in another terminal that already read
+    # it will still target it fine.)
+    rm -f "$ACTIVE_RID_FILE"
     if [[ -z "${RESPONSE_ID:-}" ]]; then
         echo -e "${RED}Failed to dispatch (no response.id captured from SSE).${RESET}"
         exit 1
@@ -437,8 +485,10 @@ print(json.dumps({
     echo ""
     echo -e "${BOLD}Streaming the steered turn.${RESET}"
     # POST returns SSE (stream=true) — stream_sse captures the new
-    # response_id from the first response.created event.
-    stream_sse "${ENDPOINT}/responses?api-version=${API_VERSION}" "" POST "$body"
+    # response_id from the first response.created event. publish_active=1 so a
+    # concurrent `crash` targets the STEERED turn (the now-in-flight run).
+    stream_sse "${ENDPOINT}/responses?api-version=${API_VERSION}" "" POST "$body" 1
+    rm -f "$ACTIVE_RID_FILE"
     if [[ -z "${RESPONSE_ID:-}" ]]; then
         echo -e "${RED}Failed to steer (no response.id captured from SSE).${RESET}"
         RESPONSE_ID="$PREV_RESPONSE_ID"
@@ -584,22 +634,29 @@ cmd_crash() {
 
     echo -e "${RED}Triggering container crash via input=\"crash\"${RESET}"
     echo -e "${CYAN}▶ agent_session_id=${SESSION_ID}${RESET} ${DIM}(same sandbox as the running response)${RESET}"
-    if [[ -n "${RESPONSE_ID:-}" ]]; then
-        echo -e "${DIM}Active response to recover: ${RESPONSE_ID}${RESET}"
-    else
-        echo -e "${YELLOW}⚠ No active response in this session — the crash will restart an idle${RESET}"
-        echo -e "${YELLOW}  sandbox with nothing to recover. Run './demo-client.sh start' first,${RESET}"
-        echo -e "${YELLOW}  then './demo-client.sh crash' from another terminal, to see recovery.${RESET}"
-    fi
-    echo -e "${DIM}(requires DEMO_MODE=1 on the server)${RESET}"
 
-    # Capture the ORIGINAL in-flight response id BEFORE the crash POST — the
-    # crash's own POST returns a throwaway response that always ends `failed`
-    # (the demo crash branch emits response.failed then exits), and stream_sse
-    # would overwrite RESPONSE_ID with it. The run we want to watch recover is
-    # the one that was already streaming on this sandbox.
+    # Capture the in-flight response id (from THIS session file or the shared
+    # active-id file a streaming `start` in another terminal published) — purely
+    # informational so we can preserve it and drive the recovery watch.
     local target_rid="${RESPONSE_ID:-}"
+    if [[ -n "$target_rid" ]]; then
+        echo -e "${DIM}Active response to recover: ${target_rid}${RESET}"
+    else
+        echo -e "${YELLOW}⚠ No active response captured in this session — the crash will restart${RESET}"
+        echo -e "${YELLOW}  the sandbox but there may be nothing in flight to recover. Run${RESET}"
+        echo -e "${YELLOW}  './demo-client.sh start' first, then crash from another terminal.${RESET}"
+    fi
+    echo -e "${DIM}Firing a same-sandbox streaming 'crash' (agent_session_id pins one${RESET}"
+    echo -e "${DIM}sandbox), so the crash sentinel Exit(137)s the SAME process running the${RESET}"
+    echo -e "${DIM}in-flight response — dropping its connection mid-flight so recovery kicks${RESET}"
+    echo -e "${DIM}in. (requires DEMO_MODE=1 on the server)${RESET}"
 
+    # Mirror the battery's fire_crash: a STREAMING bare crash POST pinned to the
+    # session (NOT a previous_response_id steer). A steered "crash" is delivered
+    # as a follow-up turn that only runs AFTER the current turn finishes, so it
+    # never interrupts the in-flight run. A bare same-session crash hits the
+    # crash sentinel in the live process and Exit(137)s it, killing the in-flight
+    # run too → the platform reclaims the lease and the task recovers.
     local body
     body=$(python3 -c "
 import json, sys
@@ -612,14 +669,25 @@ print(json.dumps({
     'background': True,
 }))
 " "$SESSION_ID")
-    # The crash POST is pinned to the same sandbox running the response, so
-    # its Environment.Exit(137) kills THAT container. The stream drops when
-    # the connection breaks — that is the client↔container disconnect you
-    # recover from with './demo-client.sh stream'.
-    stream_sse "${ENDPOINT}/responses?api-version=${API_VERSION}" "" POST "$body"
 
-    # Restore the original response id (stream_sse just clobbered it with the
-    # crash response's id) so 'stream'/'status' still target the real run.
+    # Fire-and-forget streaming POST. The sandbox Exit(137)s ~300ms later, so the
+    # connection is expected to drop mid-flight — a short timeout + tolerated
+    # error IS the crash signal. We do NOT use stream_sse here (it would clobber
+    # the in-flight RESPONSE_ID with the crash response's throwaway id).
+    ensure_token
+    local crash_sid
+    crash_sid=$(curl -sS -N -m 20 -D - -o /dev/null \
+        -H "Authorization: Bearer ${TOKEN}" \
+        -H "Content-Type: application/json" \
+        -H "Foundry-Features: HostedAgents=V1Preview" \
+        -X POST --data "$body" \
+        "${ENDPOINT}/responses?api-version=${API_VERSION}" 2>/dev/null \
+        | grep -i '^x-agent-session-id:' | tail -1 | tr -d '\r' | awk '{print $2}')
+    if [[ -n "$crash_sid" && "$crash_sid" != "$SESSION_ID" ]]; then
+        echo -e "${YELLOW}⚠ crash routed to session ${crash_sid} != pinned ${SESSION_ID}${RESET}" >&2
+    fi
+
+    # Keep RESPONSE_ID pointing at the real run so 'stream'/'status' still work.
     if [[ -n "$target_rid" ]]; then
         RESPONSE_ID="$target_rid"
         save_session
@@ -686,7 +754,7 @@ cmd_logs() {
 }
 
 cmd_reset() {
-    rm -f "$SESSION_FILE"
+    rm -f "$SESSION_FILE" "$ACTIVE_RID_FILE" .demo-session.rid.* .demo-session.lastseq.* .demo-session.hdr.*
     echo -e "${DIM}Cleared ${SESSION_FILE}.${RESET}"
 }
 
