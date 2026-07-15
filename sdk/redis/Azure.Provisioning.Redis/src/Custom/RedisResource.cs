@@ -15,8 +15,11 @@ namespace Azure.Provisioning.Redis
     [CodeGenType("Redis")]
     public partial class RedisResource
     {
+        // The TypeSpec model is named RedisResource, but the provisioning generator emits Redis by default.
+        // Preserve the shipped RedisResource type name with CodeGenType and keep compatibility members here.
         public static partial class ResourceVersions
         {
+            // Preserve historical GA API versions that shipped from the reflection-based provisioning generator.
             /// <summary> API version "2014-04-01". </summary>
             public static readonly string V2014_04_01 = "2014-04-01";
             /// <summary> API version "2015-03-01". </summary>
@@ -82,6 +85,8 @@ namespace Azure.Provisioning.Redis
         /// Gets the private endpoint connection data models.
         /// This compatibility property is preserved for the previous generated model shape. Use <see cref="PrivateEndpointConnectionResources"/> instead.
         /// </summary>
+        // The new generator models private endpoint connections as child resources. Keep the old flattened
+        // data-model list as an obsolete compatibility API for callers compiled against Azure.Provisioning.Redis 1.1.0.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is deprecated and it will be removed in a future version. Please use PrivateEndpointConnectionResources instead.")]
         public BicepList<RedisPrivateEndpointConnectionData> PrivateEndpointConnections

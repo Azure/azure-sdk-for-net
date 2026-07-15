@@ -19,6 +19,8 @@ namespace Azure.Provisioning.Redis
     [Obsolete("This type is deprecated and it will be removed in a future version. Please use RedisPrivateEndpointConnection instead.")]
     public partial class RedisPrivateEndpointConnectionData : ProvisionableConstruct
     {
+        // The TypeSpec provisioning generator now emits RedisPrivateEndpointConnection as a child resource.
+        // Preserve the old data model type for source and binary compatibility with Azure.Provisioning.Redis 1.1.0.
         private BicepValue<ResourceIdentifier> _privateEndpointId;
         private RedisPrivateLinkServiceConnectionState _redisPrivateLinkServiceConnectionState;
         private BicepValue<RedisPrivateEndpointConnectionProvisioningState> _redisProvisioningState;

@@ -9,6 +9,7 @@ namespace Azure.Provisioning.Redis
     {
         public static partial class ResourceVersions
         {
+            // Preserve historical GA API versions that shipped from the reflection-based provisioning generator.
             /// <summary> API version "2019-07-01". </summary>
             public static readonly string V2019_07_01 = "2019-07-01";
             /// <summary> API version "2020-06-01". </summary>

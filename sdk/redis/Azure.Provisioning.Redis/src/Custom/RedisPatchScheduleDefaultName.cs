@@ -14,6 +14,8 @@ namespace Azure.Provisioning.Redis
     [Obsolete("This type is deprecated and it will be removed in a future version.")]
     public enum RedisPatchScheduleDefaultName
     {
+        // This orphan enum was emitted by the reflection-based provisioning generator even though no public member used it.
+        // Preserve it as a hidden obsolete type to maintain binary compatibility.
         /// <summary>
         /// default.
         /// </summary>
