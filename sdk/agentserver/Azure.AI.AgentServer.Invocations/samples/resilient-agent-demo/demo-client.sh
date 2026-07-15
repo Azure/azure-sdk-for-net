@@ -52,6 +52,29 @@ MAGENTA='\033[35m'
 BLUE='\033[34m'
 RESET='\033[0m'
 
+# ── Command timing ──────────────────────────────────────────────────────────
+# Every command prints when it was triggered and when it ended (with elapsed
+# wall-clock), so a start/crash/recover run has clear start/stop markers even
+# across terminals. Timestamps are UTC ISO-8601 (matches the server log clock
+# from `azd ai agent monitor`), so client actions line up with server lines.
+
+_now_iso() { date -u +%Y-%m-%dT%H:%M:%SZ; }
+
+# Emitted at process exit (registered by the dispatch trap) so the end banner
+# prints even when a command exits early (e.g. missing session, usage error).
+_CMD_LABEL=""
+_CMD_START_EPOCH=""
+_print_end_banner() {
+    local rc=$?
+    [[ -z "$_CMD_LABEL" ]] && return 0
+    local end_epoch elapsed
+    end_epoch=$(date -u +%s)
+    elapsed=$(( end_epoch - ${_CMD_START_EPOCH:-end_epoch} ))
+    echo -e "${DIM}──────────────────────────────────────────────────────────────${RESET}" >&2
+    echo -e "${DIM}⏹ ${_CMD_LABEL} ended  @ $(_now_iso)  (elapsed ${elapsed}s, exit ${rc})${RESET}" >&2
+    _CMD_LABEL=""  # guard against double-print
+}
+
 # ── Session state ─────────────────────────────────────────────────────────────
 
 load_session() {
@@ -516,6 +539,7 @@ cmd_crash() {
         -d '{"message": "crash"}' \
         "${ENDPOINT}/invocations?api-version=${API_VERSION}&agent_session_id=${SESSION_ID}")
     echo -e "${DIM}Response: ${response}${RESET}"
+    echo -e "${DIM}  ✖ crash fired @ $(_now_iso) (session ${SESSION_ID})${RESET}"
     echo ""
     echo -e "${YELLOW}The container will exit. The platform's nanny worker brings it back${RESET}"
     echo -e "${YELLOW}within ~1 min on its own (no client ingress needed) and the resilient${RESET}"
@@ -610,6 +634,17 @@ Three-terminal workflow:
               ./demo-client.sh steer "fusion energy"         # mid-run pivot
 EOF
 }
+
+case "${1:-}" in
+    start|stream|steer|crash|cancel|status|logs|reset)
+        # Print a triggered/ended banner (with elapsed) around every real
+        # command. The EXIT trap guarantees the end banner even on early exit.
+        _CMD_LABEL="command '${1:-}'"
+        _CMD_START_EPOCH=$(date -u +%s)
+        trap _print_end_banner EXIT
+        echo -e "${DIM}▶ ${_CMD_LABEL} triggered @ $(_now_iso)${RESET}" >&2
+        ;;
+esac
 
 case "${1:-}" in
     start)   shift; cmd_start "${1:-}" ;;
