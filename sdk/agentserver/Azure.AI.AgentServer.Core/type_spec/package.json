@@ -1,0 +1,11 @@
+{
+  "name": "foundry-state-store-typespec",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Local TypeSpec contract + C# model generation for the Foundry State Storage wire API.",
+  "devDependencies": {
+    "@typespec/compiler": "1.13.0",
+    "@typespec/http": "1.13.0",
+    "@typespec/http-client-csharp": "1.0.0-alpha.20260707.5"
+  }
+}
