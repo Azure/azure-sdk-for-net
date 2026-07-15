@@ -158,6 +158,42 @@ source-of-truth design. Items are grouped by the Python package they land in.
 
 ---
 
+### PY-7 — Responses `demo-client.sh` interactive crash can't target the in-flight run across terminals
+
+- **Observation:** `agent_session_id` pinning (PY-6) is necessary but **not sufficient** for the
+  *interactive* `demo-client.sh` flow, where `start` streams in one terminal and `crash` runs as a
+  **separate process in another terminal**. Pinning makes the crash hit the right *sandbox*, but the
+  script must first hand the live response id between processes, and that plumbing is broken:
+  1. `cmd_start` only persists `RESPONSE_ID` to `.demo-session` **when the stream ends**, so a
+     concurrent `crash` sees no active id and reports "No active response" — it never targets the
+     run that is actually streaming.
+  2. The `stream_sse` sidecar temp files use **fixed names** shared by all concurrent invocations in
+     the same directory, so the second terminal's command `rm`/overwrites the streaming `start`'s id
+     file, yielding "Failed to dispatch (no response.id captured)".
+  These bugs are invisible to the battery (`fire_crash` runs in-process and reads the session id from
+  the response header directly — no file handoff), which is exactly why PY-6's battery verification
+  passed while the interactive demo still failed for users. **Likely present in the Python responses
+  demo-client.sh** too (same shape as the pre-fix .NET script).
+- **Also:** do **not** implement the interactive crash as a `previous_response_id` steer. A steered
+  "crash" is delivered as a follow-up turn that only runs **after** the current turn finishes, so it
+  never interrupts the in-flight run (confirmed on .NET). The reliable crash is a **bare** streaming
+  `POST /responses` `input="crash"` pinned via `agent_session_id` only — it hits the crash sentinel
+  in the live process and `exit(137)`s it, dropping the in-flight stream so the lease is reclaimed
+  and the run recovers.
+- **.NET (target, done):** the renderer publishes the live id to a shared `.demo-session.active` the
+  instant it is captured and `load_session` falls back to it; sidecars are PID-private (`.$$`); and
+  `cmd_crash` fires a bare same-session streaming crash (no `previous_response_id`). Verified live:
+  crash fired mid phase 1 → in-flight stream dropped → server logged `CRASH triggered` on the same
+  task chain → same response recovered post-restart to `status=completed` (12 items). Reference
+  commit (.NET, branch `001-tasks-streaming-primitives`): `4d8ed30b29e`.
+- **Action:** if the Python responses `demo-client.sh` is meant to be run interactively across
+  terminals, port the same three fixes — (1) publish the in-flight id to a shared active-id file
+  mid-stream and read it back on `crash`; (2) make the SSE sidecar temp files process-private; (3)
+  ensure the interactive `crash` is a bare `agent_session_id`-pinned crash, not a
+  `previous_response_id` steer.
+
+---
+
 ## Already reconciled (no action — recorded for context)
 
 The following were previously open and have since been implemented on Python (its "spec 037"
