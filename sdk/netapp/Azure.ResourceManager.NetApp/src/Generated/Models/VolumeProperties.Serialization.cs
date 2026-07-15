@@ -251,11 +251,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("ldapEnabled"u8);
                 writer.WriteBooleanValue(IsLdapEnabled.Value);
             }
-            if (Optional.IsDefined(LdapServerType))
-            {
-                writer.WritePropertyName("ldapServerType"u8);
-                writer.WriteStringValue(LdapServerType.Value.ToString());
-            }
             if (Optional.IsDefined(IsCoolAccessEnabled))
             {
                 writer.WritePropertyName("coolAccess"u8);
@@ -386,11 +381,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("isLargeVolume"u8);
                 writer.WriteBooleanValue(IsLargeVolume.Value);
             }
-            if (Optional.IsDefined(LargeVolumeType))
-            {
-                writer.WritePropertyName("largeVolumeType"u8);
-                writer.WriteStringValue(LargeVolumeType.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(OriginatingResourceId))
             {
                 writer.WritePropertyName("originatingResourceId"u8);
@@ -401,10 +391,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("inheritedSizeInBytes"u8);
                 writer.WriteNumberValue(InheritedSizeInBytes.Value);
             }
-            if (Optional.IsDefined(Language))
+            if (Optional.IsDefined(BreakthroughModeOld))
             {
-                writer.WritePropertyName("language"u8);
-                writer.WriteStringValue(Language.Value.ToString());
+                writer.WritePropertyName("breakthroughModeOld"u8);
+                writer.WriteStringValue(BreakthroughModeOld.Value.ToString());
             }
             if (Optional.IsDefined(BreakthroughMode))
             {
@@ -486,7 +476,6 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppEncryptionKeySource? encryptionKeySource = default;
             ResourceIdentifier keyVaultPrivateEndpointResourceId = default;
             bool? isLdapEnabled = default;
-            NetAppLdapServerType? ldapServerType = default;
             bool? isCoolAccessEnabled = default;
             int? coolnessPeriod = default;
             CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default;
@@ -510,10 +499,9 @@ namespace Azure.ResourceManager.NetApp.Models
             EnableNetAppSubvolume? enableSubvolumes = default;
             string provisionedAvailabilityZone = default;
             bool? isLargeVolume = default;
-            LargeVolumeType? largeVolumeType = default;
             ResourceIdentifier originatingResourceId = default;
             long? inheritedSizeInBytes = default;
-            NetAppVolumeLanguage? language = default;
+            BreakthroughMode? breakthroughModeOld = default;
             BreakthroughMode? breakthroughMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -802,15 +790,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     isLdapEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("ldapServerType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ldapServerType = new NetAppLdapServerType(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("coolAccess"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -1026,15 +1005,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     isLargeVolume = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("largeVolumeType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    largeVolumeType = new LargeVolumeType(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("originatingResourceId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -1054,13 +1024,13 @@ namespace Azure.ResourceManager.NetApp.Models
                     inheritedSizeInBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("language"u8))
+                if (prop.NameEquals("breakthroughModeOld"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    language = new NetAppVolumeLanguage(prop.Value.GetString());
+                    breakthroughModeOld = new BreakthroughMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("breakthroughMode"u8))
@@ -1111,7 +1081,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 encryptionKeySource,
                 keyVaultPrivateEndpointResourceId,
                 isLdapEnabled,
-                ldapServerType,
                 isCoolAccessEnabled,
                 coolnessPeriod,
                 coolAccessRetrievalPolicy,
@@ -1135,10 +1104,9 @@ namespace Azure.ResourceManager.NetApp.Models
                 enableSubvolumes,
                 provisionedAvailabilityZone,
                 isLargeVolume,
-                largeVolumeType,
                 originatingResourceId,
                 inheritedSizeInBytes,
-                language,
+                breakthroughModeOld,
                 breakthroughMode,
                 additionalBinaryDataProperties);
         }
