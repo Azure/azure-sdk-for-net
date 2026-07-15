@@ -14,7 +14,6 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -50,19 +49,12 @@ namespace Azure.Generator.Provisioning.Providers
         {
             if (CustomCodeView?.BaseType != null)
             {
-                var customBaseType = CustomCodeView.BaseType;
-                if (TryResolveCustomBaseTypeProvider(customBaseType, out var provider))
-                {
-                    return provider.Type;
-                }
-
-                if (ProvisioningGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(customBaseType, out var mappedProvider)
-                    && mappedProvider != null)
-                {
-                    return mappedProvider.Type;
-                }
-
-                return customBaseType;
+                // Provisioning intentionally flattens non-discriminated TypeSpec model inheritance
+                // into ProvisionableConstruct. A custom base type is therefore an explicit migration
+                // compatibility decision and must take precedence over the generator's default base.
+                // Any properties duplicated by that compatibility base are suppressed in custom code
+                // with CodeGenSuppress rather than inferred here.
+                return CustomCodeView.BaseType;
             }
 
             // Derived discriminated types inherit from their base model type.
@@ -73,37 +65,6 @@ namespace Azure.Generator.Provisioning.Providers
                     return baseProvider.Type;
             }
             return new CSharpType(typeof(ProvisionableConstruct));
-        }
-
-        private static bool TryResolveCustomBaseTypeProvider(CSharpType customBaseType, [NotNullWhen(true)] out TypeProvider? provider)
-        {
-            provider = null;
-            if (!string.IsNullOrEmpty(customBaseType.Namespace))
-            {
-                return false;
-            }
-
-            if (TryResolveTypeProviderByName(customBaseType.Name, out provider))
-            {
-                return true;
-            }
-
-            foreach (var model in ProvisioningGenerator.Instance.InputLibrary.InputNamespace.Models
-                .Where(model => string.Equals(model.Name, customBaseType.Name, StringComparison.Ordinal)
-                    || string.Equals(model.Name.ToIdentifierName(), customBaseType.Name, StringComparison.Ordinal)))
-            {
-                ProvisioningGenerator.Instance.TypeFactory.CreateModel(model);
-            }
-
-            return TryResolveTypeProviderByName(customBaseType.Name, out provider);
-        }
-
-        private static bool TryResolveTypeProviderByName(string name, [NotNullWhen(true)] out TypeProvider? provider)
-        {
-            provider = ProvisioningGenerator.Instance.TypeFactory.CSharpTypeMap.Values
-                .OfType<TypeProvider>()
-                .FirstOrDefault(p => string.Equals(p.Name, name, StringComparison.Ordinal));
-            return provider != null;
         }
 
         /// <inheritdoc/>
@@ -128,18 +89,10 @@ namespace Azure.Generator.Provisioning.Providers
         {
             var properties = new List<PropertyProvider>();
             var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            var customBasePropertyNames = new HashSet<string>(StringComparer.Ordinal);
-            var customBaseWireNames = new HashSet<string>(StringComparer.Ordinal);
-            if (CustomCodeView?.BaseType != null
-                && TryResolveCustomBaseTypeProvider(CustomCodeView.BaseType, out var customBaseProvider))
-            {
-                AddBaseProperties(customBaseProvider, customBasePropertyNames, customBaseWireNames, []);
-            }
 
             // Collect properties from the model and its base chain.
             // Non-discriminated models use ProvisionableConstruct as C# base (not the TypeSpec base),
-            // so inherited properties must be explicitly collected here. If custom code supplies the base type,
-            // skip inherited properties already exposed by that base type.
+            // so inherited properties must be explicitly collected here.
             var model = _inputModel;
             while (model != null)
             {
@@ -147,7 +100,6 @@ namespace Azure.Generator.Provisioning.Providers
                 {
                     if (prop.IsDiscriminator) continue;
                     if (!seen.Add(prop.Name)) continue;
-                    if (ShouldSkipCustomBaseProperty(prop, customBasePropertyNames, customBaseWireNames)) continue;
 
                     var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(prop, this);
                     if (property != null)
@@ -158,56 +110,6 @@ namespace Azure.Generator.Provisioning.Providers
                 model = model.BaseModel;
             }
             return [.. properties];
-        }
-
-        private static void AddBaseProperties(
-            TypeProvider provider,
-            HashSet<string> propertyNames,
-            HashSet<string> wireNames,
-            HashSet<TypeProvider> visited)
-        {
-            if (!visited.Add(provider))
-            {
-                return;
-            }
-
-            foreach (var property in provider.Properties.Concat(provider.CustomCodeView?.Properties ?? []))
-            {
-                propertyNames.Add(property.Name);
-                if (property is ProvisioningPropertyProvider provisioningProperty)
-                {
-                    foreach (var segment in provisioningProperty.BicepPath)
-                    {
-                        wireNames.Add(segment);
-                    }
-                }
-                else if (!string.IsNullOrEmpty(property.WireInfo?.SerializedName))
-                {
-                    wireNames.Add(property.WireInfo.SerializedName);
-                }
-            }
-
-            if (provider.BaseType != null
-                && ProvisioningGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(provider.BaseType, out var baseProvider)
-                && baseProvider != null)
-            {
-                AddBaseProperties(baseProvider, propertyNames, wireNames, visited);
-            }
-        }
-
-        private static bool ShouldSkipCustomBaseProperty(
-            InputModelProperty property,
-            HashSet<string> customBasePropertyNames,
-            HashSet<string> customBaseWireNames)
-        {
-            if (customBasePropertyNames.Count == 0 && customBaseWireNames.Count == 0)
-            {
-                return false;
-            }
-
-            var propertyName = property.Name.ToIdentifierName();
-            var wireName = property.SerializedName ?? property.Name;
-            return customBasePropertyNames.Contains(propertyName) || customBaseWireNames.Contains(wireName);
         }
 
         protected override ConstructorProvider[] BuildConstructors()
