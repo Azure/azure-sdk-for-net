@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Hardened receipt verification to reject empty inclusion-proof collections.
+
 ### Other Changes
 
 ## 1.0.0-beta.10 (2026-07-14)
