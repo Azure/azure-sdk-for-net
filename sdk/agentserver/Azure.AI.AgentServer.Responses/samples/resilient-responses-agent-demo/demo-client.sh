@@ -70,6 +70,8 @@ save_session() {
         echo "RESPONSE_ID=\"${RESPONSE_ID:-}\""
         echo "PREV_RESPONSE_ID=\"${PREV_RESPONSE_ID:-}\""
         echo "LAST_SEQUENCE_NUMBER=\"${LAST_SEQUENCE_NUMBER:-0}\""
+        echo "SESSION_ID=\"${SESSION_ID:-}\""
+        echo "INVOCATION_ID=\"${INVOCATION_ID:-}\""
     } > "$SESSION_FILE"
 }
 
@@ -132,14 +134,18 @@ stream_sse() {
     # back into LAST_SEQUENCE_NUMBER / RESPONSE_ID.
     local seq_file=".demo-session.lastseq"
     local id_file=".demo-session.rid"
-    rm -f "$seq_file" "$id_file"
+    local hdr_file=".demo-session.hdr"
+    rm -f "$seq_file" "$id_file" "$hdr_file"
 
     STREAM_RESULT="ok"
     local curl_args=("${hdrs[@]}")
     if [[ "$method" == "POST" ]]; then
         curl_args+=(-X POST -H "Content-Type: application/json" --data "$post_body")
     fi
-    curl -sS -N "${curl_args[@]}" "$url" 2>/dev/null | python3 -u -c "
+    # -D dumps the response headers (incl. x-agent-session-id / x-agent-invocation-id,
+    # which the platform returns on every /responses call) while the SSE body streams
+    # to the renderer pipe. We read the session id back out afterwards.
+    curl -sS -N -D "$hdr_file" "${curl_args[@]}" "$url" 2>/dev/null | python3 -u -c "
 import json, sys, os, signal
 
 SEQ_FILE = '$seq_file'
@@ -189,13 +195,16 @@ for raw in iter(sys.stdin.readline, ''):
             seq = payload.get('sequence_number')
             if isinstance(seq, int):
                 _last = seq
-            # Extract response id from the first lifecycle event we see.
+            # Extract response id from the first lifecycle event we see, and
+            # surface it immediately (rather than only after the stream ends).
             if not _id_saved:
                 resp = payload.get('response') or {}
                 rid = resp.get('id')
                 if rid:
                     _save_id(rid)
                     _id_saved = True
+                    sys.stdout.write('\033[36m\u25b6 response_id=' + str(rid) + '\033[0m\n')
+                    sys.stdout.flush()
             t = payload.get('type', current_event)
             if t == 'response.output_text.delta':
                 sys.stdout.write(payload.get('delta', ''))
@@ -229,6 +238,21 @@ print()
     if [[ -f "$seq_file" ]]; then
         LAST_SEQUENCE_NUMBER=$(cat "$seq_file" 2>/dev/null || echo "0")
         rm -f "$seq_file"
+    fi
+    # Capture the platform session/invocation ids from the response headers.
+    if [[ -f "$hdr_file" ]]; then
+        local sid inv
+        sid=$(grep -i '^x-agent-session-id:' "$hdr_file" | tail -1 | tr -d '\r' | awk '{print $2}')
+        inv=$(grep -i '^x-agent-invocation-id:' "$hdr_file" | tail -1 | tr -d '\r' | awk '{print $2}')
+        if [[ -n "$sid" ]]; then
+            SESSION_ID="$sid"
+            echo -e "${CYAN}\u25b6 agent_session_id=${sid}${RESET}"
+        fi
+        if [[ -n "$inv" ]]; then
+            INVOCATION_ID="$inv"
+            echo -e "${DIM}  agent_invocation_id=${inv}${RESET}"
+        fi
+        rm -f "$hdr_file"
     fi
     save_session
     if [[ "$rc" -ne 0 && "$rc" -ne 130 ]]; then
@@ -399,6 +423,8 @@ cmd_status() {
     echo "  RESPONSE_ID:          ${RESPONSE_ID:-<none>}"
     echo "  PREV_RESPONSE_ID:     ${PREV_RESPONSE_ID:-<none>}"
     echo "  LAST_SEQUENCE_NUMBER: ${LAST_SEQUENCE_NUMBER:-0}"
+    echo "  SESSION_ID:           ${SESSION_ID:-<none>}"
+    echo "  INVOCATION_ID:        ${INVOCATION_ID:-<none>}"
     echo ""
     if [[ -n "${RESPONSE_ID:-}" ]]; then
         ensure_token
@@ -411,7 +437,13 @@ cmd_status() {
 }
 
 cmd_logs() {
-    azd ai agent monitor resilient-responses-agent-demo-dotnet --follow "$@"
+    load_session
+    local args=(resilient-responses-agent-demo-dotnet --follow)
+    if [[ -n "${SESSION_ID:-}" ]]; then
+        args+=(--session-id "$SESSION_ID")
+        echo -e "${DIM}Streaming logs for agent_session_id=${SESSION_ID}${RESET}"
+    fi
+    azd ai agent monitor "${args[@]}" "$@"
 }
 
 cmd_reset() {
