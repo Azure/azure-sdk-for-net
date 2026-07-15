@@ -183,7 +183,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var name = selector.NameFilter;
-            List<SettingLabelFields> fields = selector.Fields?.Count > 0
+            List<FeatureFlagLabelFields> fields = selector.Fields?.Count > 0
                 ? [.. selector.Fields]
                 : null;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
@@ -205,7 +205,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(selector, nameof(selector));
             var name = selector.NameFilter;
-            List<SettingLabelFields> fields = selector.Fields?.Count > 0
+            List<FeatureFlagLabelFields> fields = selector.Fields?.Count > 0
                 ? [.. selector.Fields]
                 : null;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
@@ -807,7 +807,7 @@ namespace Azure.Data.AppConfiguration
         // hand-authored here (mirroring the generated builder) to target the shared "/labels"
         // endpoint. The resourceType is always set to "ff" so this client only returns labels
         // associated with feature flags.
-        private HttpMessage CreateGetLabelsRequest(string name, string acceptDatetime, IEnumerable<SettingLabelFields> @select, RequestContext context)
+        private HttpMessage CreateGetLabelsRequest(string name, string acceptDatetime, IEnumerable<FeatureFlagLabelFields> @select, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -820,7 +820,7 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("name", name, true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<SettingLabelFields> changeTrackingList && changeTrackingList.IsUndefined))
+            if (@select != null && !(@select is ChangeTrackingList<FeatureFlagLabelFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
             }

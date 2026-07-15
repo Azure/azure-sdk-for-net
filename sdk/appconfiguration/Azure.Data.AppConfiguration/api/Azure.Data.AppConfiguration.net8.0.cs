@@ -411,11 +411,27 @@ namespace Azure.Data.AppConfiguration
         public string Name { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, object> Parameters { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FeatureFlagLabelFields : System.IEquatable<Azure.Data.AppConfiguration.FeatureFlagLabelFields>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FeatureFlagLabelFields(string value) { throw null; }
+        public static Azure.Data.AppConfiguration.FeatureFlagLabelFields Name { get { throw null; } }
+        public bool Equals(Azure.Data.AppConfiguration.FeatureFlagLabelFields other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Data.AppConfiguration.FeatureFlagLabelFields left, Azure.Data.AppConfiguration.FeatureFlagLabelFields right) { throw null; }
+        public static implicit operator Azure.Data.AppConfiguration.FeatureFlagLabelFields (string value) { throw null; }
+        public static implicit operator Azure.Data.AppConfiguration.FeatureFlagLabelFields? (string value) { throw null; }
+        public static bool operator !=(Azure.Data.AppConfiguration.FeatureFlagLabelFields left, Azure.Data.AppConfiguration.FeatureFlagLabelFields right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class FeatureFlagLabelSelector
     {
         public FeatureFlagLabelSelector() { }
         public System.DateTimeOffset? AcceptDateTime { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Data.AppConfiguration.SettingLabelFields> Fields { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Data.AppConfiguration.FeatureFlagLabelFields> Fields { get { throw null; } }
         public string NameFilter { get { throw null; } set { } }
     }
     public partial class FeatureFlagSelector
