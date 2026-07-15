@@ -125,7 +125,7 @@ def main():
         "container_restart_attach": txt.count("monitor attach"),
         "taskmanager_starting": len(re.findall(r"TaskManager starting", txt)),
         "reclaimed_stale_task": len(re.findall(r"[Rr]eclaim.*stale|stale task", txt)),
-        "recovered_task_active": len(re.findall(r"Recovered task is now active|Recovered task|now active", txt)),
+        "recovered_task_active": len(re.findall(r"Recovered task .* \(recovery #\d+\)", txt)),
         "is_recovery_true": len(re.findall(r"is_recovery[ =:]+True|recovery", txt)),
         "generation_increment": len(re.findall(r"generation", txt)),
         "exit_137": len(re.findall(r"137|SIGKILL|_exit", txt)),

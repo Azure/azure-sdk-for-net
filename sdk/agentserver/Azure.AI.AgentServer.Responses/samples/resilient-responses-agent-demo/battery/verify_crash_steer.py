@@ -82,7 +82,7 @@ def main():
     startups = len(set(re.findall(r"AgentServerHost started", txt)))
     host_starting = re.findall(r"AgentServerHost starting on", txt)
     worker_instances = sorted(set(re.findall(r"instance=(worker-\d+-[a-f0-9]+-\d+)", txt)))
-    reclaim = len(re.findall(r"[Rr]eclaim|stale task|now active|Recovered task", txt))
+    reclaim = len(re.findall(r"Reclaimed stale task|Recovered task .* \(recovery #\d+\)", txt))
     is_recovery = len(re.findall(r"is_recovery|recovered|recovery", txt))
     exit137 = len(re.findall(r"exit.*137|137.*exit|os\._exit|SIGKILL|Container restart", txt))
     # restart proven by a 2nd distinct container generation OR explicit reclaim (log-capture based,

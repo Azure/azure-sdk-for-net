@@ -568,7 +568,7 @@ def case_crash_recovery(d: Path, combo: dict, stream: bool) -> dict:
     time.sleep(2)
     # Recovery evidence. On a SINGLE sandbox a mid-run crash + a completed
     # terminal is itself proof the resilient run recovered (it could not finish on
-    # a dead sandbox). The "Reclaimed stale task / Recovered task is now active"
+    # a dead sandbox). The "Reclaimed stale task / Recovered task (recovery #N)"
     # markers are corroborating evidence, but on restart they land in whichever
     # session slice reconnects first — so we grep BOTH the target session log and
     # the crash request's session log.
@@ -579,7 +579,7 @@ def case_crash_recovery(d: Path, combo: dict, stream: bool) -> dict:
     (d / "crash_session.log").write_text(crash_log)
     both = txt + "\n" + crash_log
     reclaim = len(re.findall(r"Reclaimed stale task", both))
-    recovered = len(re.findall(r"Recovered task .* is now active", both))
+    recovered = len(re.findall(r"Recovered task .* \(recovery #\d+\)", both))
     recov.update(
         {
             "reclaim_markers": reclaim,
@@ -672,7 +672,7 @@ def case_steering_crash(d: Path, combo: dict) -> dict:
     (d / "crash_session.log").write_text(crash_log)
     both = txt + "\n" + crash_log
     reclaim = len(re.findall(r"Reclaimed stale task", both))
-    recovered = len(re.findall(r"Recovered task .* is now active", both))
+    recovered = len(re.findall(r"Recovered task .* \(recovery #\d+\)", both))
     return {
         "ok": status == "completed",
         "terminal": status,
@@ -817,7 +817,7 @@ def case_oversized_crash_recovery(d: Path, combo: dict) -> dict:
     time.sleep(2)
     txt = (d / "server.continuous.log").read_text() if (d / "server.continuous.log").exists() else ""
     reclaim = len(re.findall(r"Reclaimed stale task", txt))
-    recovered = len(re.findall(r"Recovered task .* is now active", txt))
+    recovered = len(re.findall(r"Recovered task .* \(recovery #\d+\)", txt))
     # Diagnose the resilient-task create. Oversized (>threshold) inputs spill to a
     # task ``attachments`` entry. The hosted task-store offloads ANY attachment to
     # an AzureML dataset blob store (POST .../datasets/.../startPendingUpload),
