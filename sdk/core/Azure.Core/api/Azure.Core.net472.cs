@@ -1228,6 +1228,7 @@ namespace Azure.Identity
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public static partial class AzureAuthorityHosts
     {
+        public static System.Uri AzureBleuCloud { get { throw null; } }
         public static System.Uri AzureChina { get { throw null; } }
         [System.ObsoleteAttribute("Microsoft Cloud Germany was closed on October 29th, 2021.")]
         public static System.Uri AzureGermany { get { throw null; } }

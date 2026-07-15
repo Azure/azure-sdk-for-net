@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `AzureAuthorityHosts.AzureBleuCloud` (`https://login.sovcloud-identity.fr/`), the Microsoft Entra authority host for Bleu Cloud, the national partner cloud for France.
+
 ### Breaking Changes
 
 ### Bugs Fixed
