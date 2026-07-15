@@ -14,9 +14,8 @@ namespace Azure.AI.AgentServer.Activity.Internal;
 /// 4. A generated UUID
 /// </summary>
 /// <remarks>
-/// The Activity protocol adds the request header as a session ID source
-/// (priority 2) compared to the Invocations protocol, which does not
-/// check the header.
+/// The request header (priority 2) is accepted as a session ID source in addition to the
+/// query parameter and environment variable.
 /// </remarks>
 internal static class ActivitySessionIdResolver
 {

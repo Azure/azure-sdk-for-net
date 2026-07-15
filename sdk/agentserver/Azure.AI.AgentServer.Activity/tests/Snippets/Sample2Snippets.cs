@@ -19,42 +19,42 @@ namespace Azure.AI.AgentServer.Activity.Tests.Snippets
     {
         public void WelcomeAndCommands(string[] args)
         {
-            var host = ActivityServer.Create();
-            var app = host.AgentApp;
-
-            #region Snippet:Activity_Sample2_Welcome
-
-            // Greet members as they join the conversation.
-            app.OnConversationUpdate(ConversationUpdateEvents.MembersAdded, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
-            {
-                foreach (var member in turnContext.Activity.MembersAdded ?? [])
+            ActivityServer.Run(
+                (AgentApplication app) =>
                 {
-                    // Skip the bot itself, which also appears in MembersAdded.
-                    if (member.Id != turnContext.Activity.Recipient?.Id)
+                    #region Snippet:Activity_Sample2_Welcome
+
+                    // Greet members as they join the conversation.
+                    app.OnConversationUpdate(ConversationUpdateEvents.MembersAdded, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
                     {
-                        await turnContext.SendActivityAsync($"Welcome, {member.Name}!", cancellationToken: cancellationToken);
-                    }
-                }
-            });
+                        foreach (var member in turnContext.Activity.MembersAdded ?? [])
+                        {
+                            // Skip the bot itself, which also appears in MembersAdded.
+                            if (member.Id != turnContext.Activity.Recipient?.Id)
+                            {
+                                await turnContext.SendActivityAsync($"Welcome, {member.Name}!", cancellationToken: cancellationToken);
+                            }
+                        }
+                    });
 
-            #endregion
+                    #endregion
 
-            #region Snippet:Activity_Sample2_Command
+                    #region Snippet:Activity_Sample2_Command
 
-            // Handle a keyword command before the general message handler.
-            app.OnMessage("/help", async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
-            {
-                await turnContext.SendActivityAsync("Send me any message and I'll echo it back.", cancellationToken: cancellationToken);
-            });
+                    // Handle a keyword command before the general message handler.
+                    app.OnMessage("/help", async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
+                    {
+                        await turnContext.SendActivityAsync("Send me any message and I'll echo it back.", cancellationToken: cancellationToken);
+                    });
 
-            app.OnActivity(ActivityTypes.Message, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
-            {
-                await turnContext.SendActivityAsync($"Echo: {turnContext.Activity.Text}", cancellationToken: cancellationToken);
-            });
+                    app.OnActivity(ActivityTypes.Message, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
+                    {
+                        await turnContext.SendActivityAsync($"Echo: {turnContext.Activity.Text}", cancellationToken: cancellationToken);
+                    });
 
-            #endregion
-
-            host.Run(args);
+                    #endregion
+                },
+                args);
         }
     }
 }

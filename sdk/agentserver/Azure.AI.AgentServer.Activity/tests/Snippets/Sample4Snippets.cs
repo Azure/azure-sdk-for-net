@@ -2,6 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Activity;
+using Microsoft.Agents.Builder;
+using Microsoft.Agents.Builder.App;
+using Microsoft.Agents.Builder.State;
+using Microsoft.Agents.Core.Models;
 using Microsoft.Agents.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -21,12 +25,14 @@ namespace Azure.AI.AgentServer.Activity.Tests.Snippets
 
             // Override just the storage backend; the host builds the rest of the stack from the
             // environment. Leave Storage unset to use the default in-memory store.
-            var host = ActivityServer.Create(options =>
-            {
-                options.Storage = new MemoryStorage();
-            });
-
-            host.Run(args);
+            ActivityServer.Run(
+                (AgentApplication app) =>
+                    app.OnActivity(ActivityTypes.Message, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
+                    {
+                        await turnContext.SendActivityAsync($"Echo: {turnContext.Activity.Text}", cancellationToken: cancellationToken);
+                    }),
+                args,
+                configureOptions: options => options.Storage = new MemoryStorage());
 
             #endregion
         }
@@ -38,15 +44,20 @@ namespace Azure.AI.AgentServer.Activity.Tests.Snippets
             // Register additional services (a custom adapter, authorization, channel-service
             // factory, ...) before the Microsoft 365 Agents SDK defaults are added. Anything
             // registered here takes precedence over the SDK defaults.
-            var host = ActivityServer.Create(options =>
-            {
-                options.ConfigureServices = services =>
+            ActivityServer.Run(
+                (AgentApplication app) =>
+                    app.OnActivity(ActivityTypes.Message, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
+                    {
+                        await turnContext.SendActivityAsync($"Echo: {turnContext.Activity.Text}", cancellationToken: cancellationToken);
+                    }),
+                args,
+                configureOptions: options =>
                 {
-                    services.AddSingleton<IStorage, MemoryStorage>();
-                };
-            });
-
-            host.Run(args);
+                    options.ConfigureServices = services =>
+                    {
+                        services.AddSingleton<IStorage, MemoryStorage>();
+                    };
+                });
 
             #endregion
         }

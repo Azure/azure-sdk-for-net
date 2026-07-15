@@ -1,79 +1,176 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.AI.AgentServer.Activity.Internal;
+using Azure.AI.AgentServer.Core;
 using Microsoft.Agents.Builder.App;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Azure.AI.AgentServer.Activity;
 
 /// <summary>
-/// Entry point for creating an Activity protocol host.
+/// One-line entry point for running an Activity protocol server. Each overload creates the Core host builder,
+/// registers the Activity protocol, builds, and runs (wiring OpenTelemetry, health probes, and the
+/// Foundry middleware for you).
 /// </summary>
 /// <remarks>
-/// <para>A single factory selects one of three mutually-exclusive construction modes:</para>
-/// <list type="number">
-///   <item>
-///     <b>Build the M365 stack (default).</b> <see cref="Create()"/> initializes the Microsoft 365
-///     Agents SDK from the environment and exposes the built <see cref="AgentApplication"/> as
-///     <see cref="ActivityServerHost.AgentApp"/>. Register handlers on it with
-///     <c>app.OnActivity(...)</c> / <c>app.OnConversationUpdate(...)</c>.
-///   </item>
-///   <item>
-///     <b>Inject a pre-built <see cref="AgentApplication"/>.</b> <see cref="Create(AgentApplication)"/>
-///     hosts an application you built yourself, as-is.
-///   </item>
-///   <item>
-///     <b>Custom request handler.</b> <see cref="Create(RequestDelegate)"/> lets you own the request
-///     pipeline entirely; the M365 SDK is not initialized and
-///     <see cref="ActivityServerHost.AgentApp"/> is unavailable.
-///   </item>
+/// <para>Pick the overload that matches how your agent is constructed:</para>
+/// <list type="bullet">
+///   <item><see cref="Run{TAgent}(string[], Action{ActivityServerOptions}, Action{AgentHostBuilder})"/>
+///     — host a Microsoft 365 Agents SDK <see cref="AgentApplication"/> <b>by type</b> (handlers
+///     registered in its constructor). The fastest path to a working server.</item>
+///   <item><see cref="Run(Func{IServiceProvider, AgentApplication}, string[], Action{ActivityServerOptions}, Action{AgentHostBuilder})"/>
+///     — host an application created by a <b>factory</b> with access to the service provider.</item>
+///   <item><see cref="Run(AgentApplication, string[], Action{ActivityServerOptions}, Action{AgentHostBuilder})"/>
+///     — host a <b>pre-built</b> application instance as-is.</item>
+///   <item><see cref="Run(Action{AgentApplication}, string[], Action{ActivityServerOptions}, Action{AgentHostBuilder})"/>
+///     — build the stack and register handlers <b>inline</b> on the application (no agent class
+///     required).</item>
+///   <item><see cref="Run(RequestDelegate, string[], Action{AgentHostBuilder})"/> — own the request
+///     pipeline entirely; the Microsoft 365 Agents SDK is not initialized.</item>
 /// </list>
 /// </remarks>
 public static class ActivityServer
 {
     /// <summary>
-    /// Creates a host that builds the Microsoft 365 Agents SDK stack from the environment and
-    /// exposes the built <see cref="AgentApplication"/> as <see cref="ActivityServerHost.AgentApp"/>.
+    /// Builds and runs an Activity protocol server using the specified Microsoft 365 Agents SDK
+    /// <typeparamref name="TAgent"/> — the fastest path to a working server, one line of code.
     /// </summary>
-    /// <returns>A configured <see cref="ActivityServerHost"/>.</returns>
-    public static ActivityServerHost Create() => Create(configureOptions: null);
-
-    /// <summary>
-    /// Creates a host that builds the M365 stack, applying <paramref name="configureOptions"/>
-    /// (for example to select the digital-worker outbound-auth model).
-    /// </summary>
-    /// <param name="configureOptions">Optional callback to configure <see cref="ActivityServerOptions"/>.</param>
-    /// <returns>A configured <see cref="ActivityServerHost"/>.</returns>
-    public static ActivityServerHost Create(Action<ActivityServerOptions>? configureOptions)
+    /// <typeparam name="TAgent">The <see cref="AgentApplication"/> implementation to host. Its
+    /// handlers are registered in its constructor.</typeparam>
+    /// <param name="args">Optional command-line arguments forwarded to the host builder.</param>
+    /// <param name="configureOptions">Optional callback to configure <see cref="ActivityServerOptions"/>
+    /// (for example to select the digital-worker outbound-auth model or override storage).</param>
+    /// <param name="configure">Optional callback to further configure the <see cref="AgentHostBuilder"/>
+    /// (register services, configure tracing/shutdown) before the server runs.</param>
+    public static void Run<TAgent>(
+        string[]? args = null,
+        Action<ActivityServerOptions>? configureOptions = null,
+        Action<AgentHostBuilder>? configure = null)
+        where TAgent : AgentApplication
     {
-        var options = new ActivityServerOptions();
-        configureOptions?.Invoke(options);
-        var agentApp = ActivityStack.CreateAgentApplication(options);
-        return new ActivityServerHost(agentApp, options);
+        var builder = AgentHost.CreateBuilder(args);
+        builder.AddActivity<TAgent>(configureOptions);
+        configure?.Invoke(builder);
+        builder.Build().Run();
     }
 
     /// <summary>
-    /// Creates a host that hosts a pre-built Microsoft 365 Agents SDK
-    /// <see cref="AgentApplication"/> as-is.
+    /// Builds and runs an Activity protocol server using a factory delegate that creates the
+    /// Microsoft 365 Agents SDK <see cref="AgentApplication"/>. Use this when you need full control
+    /// over how the application is constructed while still having access to the
+    /// <see cref="IServiceProvider"/>.
+    /// </summary>
+    /// <param name="factory">A factory that receives the service provider and returns an
+    /// <see cref="AgentApplication"/>.</param>
+    /// <param name="args">Optional command-line arguments forwarded to the host builder.</param>
+    /// <param name="configureOptions">Optional callback to configure <see cref="ActivityServerOptions"/>.</param>
+    /// <param name="configure">Optional callback to further configure the <see cref="AgentHostBuilder"/>.</param>
+    public static void Run(
+        Func<IServiceProvider, AgentApplication> factory,
+        string[]? args = null,
+        Action<ActivityServerOptions>? configureOptions = null,
+        Action<AgentHostBuilder>? configure = null)
+    {
+        ArgumentNullException.ThrowIfNull(factory);
+
+        var builder = AgentHost.CreateBuilder(args);
+        builder.AddActivity(factory, configureOptions);
+        configure?.Invoke(builder);
+        builder.Build().Run();
+    }
+
+    /// <summary>
+    /// Builds and runs an Activity protocol server hosting a pre-built Microsoft 365 Agents SDK
+    /// <see cref="AgentApplication"/> as-is (with its handlers already registered).
     /// </summary>
     /// <param name="agentApp">The application to host.</param>
-    /// <returns>A configured <see cref="ActivityServerHost"/>.</returns>
-    public static ActivityServerHost Create(AgentApplication agentApp)
+    /// <param name="args">Optional command-line arguments forwarded to the host builder.</param>
+    /// <param name="configureOptions">Optional callback to configure <see cref="ActivityServerOptions"/>.</param>
+    /// <param name="configure">Optional callback to further configure the <see cref="AgentHostBuilder"/>.</param>
+    public static void Run(
+        AgentApplication agentApp,
+        string[]? args = null,
+        Action<ActivityServerOptions>? configureOptions = null,
+        Action<AgentHostBuilder>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(agentApp);
-        return new ActivityServerHost(agentApp, new ActivityServerOptions());
+
+        var builder = AgentHost.CreateBuilder(args);
+        builder.AddActivity(agentApp, configureOptions);
+        configure?.Invoke(builder);
+        builder.Build().Run();
     }
 
     /// <summary>
-    /// Creates a host that owns the request pipeline entirely. The M365 SDK is not initialized;
-    /// the supplied delegate receives each inbound <c>POST /activity/messages</c> request.
+    /// Builds the Microsoft 365 Agents SDK stack from the environment, lets you register handlers
+    /// <b>inline</b> on the created <see cref="AgentApplication"/> (no agent class required), and
+    /// runs the server.
+    /// </summary>
+    /// <param name="configureAgent">Callback that receives the created <see cref="AgentApplication"/>
+    /// to register handlers on (for example <c>app.OnActivity(...)</c>).</param>
+    /// <param name="args">Optional command-line arguments forwarded to the host builder.</param>
+    /// <param name="configureOptions">Optional callback to configure <see cref="ActivityServerOptions"/>.</param>
+    /// <param name="configure">Optional callback to further configure the <see cref="AgentHostBuilder"/>.</param>
+    public static void Run(
+        Action<AgentApplication> configureAgent,
+        string[]? args = null,
+        Action<ActivityServerOptions>? configureOptions = null,
+        Action<AgentHostBuilder>? configure = null)
+    {
+        ArgumentNullException.ThrowIfNull(configureAgent);
+
+        var options = new ActivityServerOptions();
+        configureOptions?.Invoke(options);
+
+        var agentApp = ActivityStack.CreateAgentApplication(options);
+        configureAgent(agentApp);
+
+        var builder = AgentHost.CreateBuilder(args);
+        builder.AddActivity(agentApp, configureOptions);
+        configure?.Invoke(builder);
+        builder.Build().Run();
+    }
+
+    /// <summary>
+    /// Builds and runs an Activity protocol server that owns the request pipeline entirely. The
+    /// Microsoft 365 Agents SDK is not initialized; the supplied delegate receives each inbound
+    /// <c>POST /activity/messages</c> (and <c>/api/messages</c>) request.
     /// </summary>
     /// <param name="requestHandler">The request handler that processes inbound activities.</param>
-    /// <returns>A configured <see cref="ActivityServerHost"/>.</returns>
-    public static ActivityServerHost Create(RequestDelegate requestHandler)
+    /// <param name="args">Optional command-line arguments forwarded to the host builder.</param>
+    /// <param name="configure">Optional callback to further configure the <see cref="AgentHostBuilder"/>.</param>
+    public static void Run(
+        RequestDelegate requestHandler,
+        string[]? args = null,
+        Action<AgentHostBuilder>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(requestHandler);
-        return new ActivityServerHost(requestHandler);
+
+        var builder = AgentHost.CreateBuilder(args);
+
+        // Custom-handler mode: register only the Activity package services (for the session-id /
+        // baggage stamping) and map the custom delegate; the M365 SDK stack is not initialized.
+        builder.Services.AddActivityServerServices();
+        builder.RegisterProtocol("Activity", endpoints => MapCustomEndpoints(endpoints, requestHandler));
+
+        configure?.Invoke(builder);
+        builder.Build().Run();
+    }
+
+    private static void MapCustomEndpoints(IEndpointRouteBuilder endpoints, RequestDelegate requestHandler)
+    {
+        foreach (var path in FoundryActivityEndpointRouteBuilderExtensions.ActivityPaths)
+        {
+            endpoints.MapPost(path, async (HttpContext context, ActivityEndpointHandler endpointHandler) =>
+            {
+                endpointHandler.StampSessionAndBaggage(context);
+                await requestHandler(context).ConfigureAwait(false);
+            }).AddEndpointFilter<ActivityErrorSourceFilter>();
+        }
     }
 }

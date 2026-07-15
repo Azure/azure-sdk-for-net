@@ -2,6 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Activity;
+using Microsoft.Agents.Builder;
+using Microsoft.Agents.Builder.App;
+using Microsoft.Agents.Builder.State;
+using Microsoft.Agents.Core.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Activity.Tests.Snippets
@@ -18,13 +22,16 @@ namespace Azure.AI.AgentServer.Activity.Tests.Snippets
             #region Snippet:Activity_Sample3_DigitalWorker
 
             // Select the digital-worker outbound-auth model: the blueprint identity performs a
-            // federated-identity (FMI) token exchange to obtain an agentic user token.
-            var host = ActivityServer.Create(options =>
-            {
-                options.DigitalWorker = true;
-            });
-
-            host.Run(args);
+            // federated-identity (FMI) token exchange to obtain an agentic user token. Register
+            // your handlers inline; the option is applied via configureOptions.
+            ActivityServer.Run(
+                (AgentApplication app) =>
+                    app.OnActivity(ActivityTypes.Message, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
+                    {
+                        await turnContext.SendActivityAsync($"Echo: {turnContext.Activity.Text}", cancellationToken: cancellationToken);
+                    }),
+                args,
+                configureOptions: options => options.DigitalWorker = true);
 
             #endregion
         }

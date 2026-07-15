@@ -30,8 +30,7 @@ namespace Azure.AI.AgentServer.Activity.Tests.Snippets
             });
 
             // Host the pre-built AgentApplication as-is.
-            var host = ActivityServer.Create(app);
-            host.Run(args);
+            ActivityServer.Run(app, args);
 
             #endregion
         }

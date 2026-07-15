@@ -10,15 +10,19 @@ namespace Azure.AI.AgentServer.Activity;
 /// Extension methods for <see cref="IServiceCollection"/> to register
 /// the Activity API server SDK services.
 /// </summary>
-public static class ActivityServerServiceCollectionExtensions
+internal static class ActivityServerServiceCollectionExtensions
 {
     /// <summary>
-    /// Registers the Activity API server SDK services into the dependency injection container.
+    /// Registers the Activity package's shared services (options, tracing/baggage helper, the
+    /// request-time endpoint handler, and the startup logger) into the dependency injection
+    /// container. This is an internal building block used by <see cref="FoundryActivityHostingExtensions"/>
+    /// and <see cref="ActivityServer"/>; callers use <c>AddFoundryActivity()</c> /
+    /// <c>AddActivityServer()</c> instead.
     /// </summary>
     /// <param name="services">The service collection to add services to.</param>
     /// <param name="configure">Optional callback to configure <see cref="ActivityServerOptions"/>.</param>
     /// <returns>The service collection for chaining.</returns>
-    public static IServiceCollection AddActivityServer(
+    public static IServiceCollection AddActivityServerServices(
         this IServiceCollection services,
         Action<ActivityServerOptions>? configure = null)
     {
@@ -33,6 +37,9 @@ public static class ActivityServerServiceCollectionExtensions
 
         // Register the tracing/baggage helper as a singleton (virtual → mockable).
         services.TryAddSingleton<ActivityProtocolActivitySource>();
+
+        // Register the request-time endpoint handler shared by every hosting entry point.
+        services.TryAddSingleton<Internal.ActivityEndpointHandler>();
 
         // Log startup configuration when the host starts.
         services.AddHostedService<Internal.ActivityStartupLogger>();

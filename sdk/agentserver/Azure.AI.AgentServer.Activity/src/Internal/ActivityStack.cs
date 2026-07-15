@@ -45,6 +45,12 @@ internal static class ActivityStack
     /// SDK's <c>CloudAdapter</c> (and its background activity service) are available from the
     /// application's dependency-injection container.
     /// </summary>
+    /// <remarks>
+    /// Safe to call whether or not the caller has already run <c>builder.AddAgent&lt;TAgent&gt;()</c>:
+    /// the Microsoft 365 Agents SDK registers its defaults only when a service is not already
+    /// present, and the Foundry substitutions below use <c>RemoveAll</c> + add so the Foundry (or
+    /// caller-supplied) connection provider wins regardless of registration order.
+    /// </remarks>
     /// <param name="services">The host service collection.</param>
     /// <param name="options">The activity server options (supplies optional service overrides).</param>
     public static void RegisterM365Services(IServiceCollection services, ActivityServerOptions options)
@@ -58,11 +64,12 @@ internal static class ActivityStack
 
         // Let the caller register overrides first. AddAgentCore only registers its defaults when a
         // service is not already present, so anything registered here (custom adapter, channel
-        // factory, authorization, ...) takes precedence over the SDK defaults below.
+        // factory, ...) takes precedence over the SDK defaults below.
         options.ConfigureServices?.Invoke(services);
 
         // Storage backend for the SDK turn state: the caller-supplied instance, else an in-memory
-        // store. TryAdd respects an override registered via ConfigureServices as well.
+        // store. TryAdd respects any override the caller already registered (for example the
+        // canonical M365 `services.AddSingleton<IStorage, MemoryStorage>()`).
         if (options.Storage is not null)
         {
             services.TryAddSingleton(options.Storage);
@@ -70,25 +77,24 @@ internal static class ActivityStack
 
         services.TryAddSingleton<IStorage, MemoryStorage>();
 
-        // Outbound-auth connection provider: the caller-supplied instance, else the Foundry
-        // connections. Registering it before AddAgentCore makes the SDK skip its default
-        // (ConfigurationConnections).
-        if (options.Connections is not null)
-        {
-            services.TryAddSingleton(options.Connections);
-        }
-
         // Register AgentApplicationOptions and the core M365 adapter services
         // (IConnections, IChannelServiceClientFactory, CloudAdapter/IAgentHttpAdapter, and the
-        // background HostedActivityService that drains normal-delivery turns).
+        // background HostedActivityService that drains normal-delivery turns). These are no-ops if
+        // the caller already ran `builder.AddAgent<TAgent>()`.
         services.AddAgentApplicationOptions();
         services.AddAgentCore<CloudAdapter>();
 
-        // When the caller did not supply their own connections, substitute the Foundry connections
-        // that acquire Bot Connector tokens via the container's managed identity / FMI exchange.
-        if (options.Connections is null)
+        // Substitute the outbound-auth connection provider. RemoveAll + add (rather than TryAdd or
+        // Replace) guarantees the Foundry/caller provider wins even when AddAgentCore already
+        // registered the SDK default (ConfigurationConnections).
+        services.RemoveAll<IConnections>();
+        if (options.Connections is not null)
         {
-            services.Replace(ServiceDescriptor.Singleton<IConnections, FoundryConnections>());
+            services.AddSingleton(options.Connections);
+        }
+        else
+        {
+            services.AddSingleton<IConnections, FoundryConnections>();
         }
     }
 

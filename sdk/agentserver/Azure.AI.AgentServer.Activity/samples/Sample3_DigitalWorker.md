@@ -6,16 +6,19 @@ Select it by setting `DigitalWorker` on the options.
 
 ```C# Snippet:Activity_Sample3_DigitalWorker
 // Select the digital-worker outbound-auth model: the blueprint identity performs a
-// federated-identity (FMI) token exchange to obtain an agentic user token.
-var host = ActivityServer.Create(options =>
-{
-    options.DigitalWorker = true;
-});
-
-host.Run(args);
+// federated-identity (FMI) token exchange to obtain an agentic user token. Register
+// your handlers inline; the option is applied via configureOptions.
+ActivityServer.Run(
+    (AgentApplication app) =>
+        app.OnActivity(ActivityTypes.Message, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
+        {
+            await turnContext.SendActivityAsync($"Echo: {turnContext.Activity.Text}", cancellationToken: cancellationToken);
+        }),
+    args,
+    configureOptions: options => options.DigitalWorker = true);
 ```
 
-Register handlers on `host.AgentApp` exactly as in [Getting Started](Sample1_GettingStarted.md); only the outbound-auth model differs.
+Register handlers inline on the `AgentApplication` exactly as in [Getting Started](Sample1_GettingStarted.md); only the outbound-auth model differs (set via `configureOptions`).
 
 | Model | Identity source | Scope |
 |---|---|---|

@@ -19,17 +19,12 @@ namespace Azure.AI.AgentServer.Activity.Internal;
 ///
 /// The M365 adapter's ConnectorClient calls <c>IConnections.GetTokenProvider()</c>
 /// → gets our provider → calls <c>GetAccessTokenAsync()</c> → gets correct token
-/// → reply to Teams succeeds (no 401).
+/// → reply to Teams.
 /// </summary>
 internal sealed class FoundryConnections : IConnections
 {
     private readonly ILogger _logger;
     private readonly FoundryAccessTokenProvider _tokenProvider;
-
-    /// <summary>Exposed for diagnostics logging.</summary>
-    public string? ClientId { get; }
-    /// <summary>Exposed for diagnostics logging.</summary>
-    public string? Scope { get; }
 
     public FoundryConnections(ILogger<FoundryConnections> logger, IConfiguration configuration)
     {
@@ -39,55 +34,50 @@ internal sealed class FoundryConnections : IConnections
         var tenantId = configuration[ConnectionEnvironment.TenantId] ?? "";
         var scope = configuration[ConnectionEnvironment.Scope0] ?? "";
 
-        _logger.LogInformation(
-            "[FoundryConnections] Initialized | clientId={ClientId} | tenantId={TenantId} | scope_from_config={Scope}",
-            clientId.Length > 8 ? clientId[..8] + "..." : clientId,
-            tenantId.Length > 8 ? tenantId[..8] + "..." : tenantId,
-            scope);
-
-        // If no scope from env, default to botframework (simple mode)
+        // If no scope from env, default to botframework (simple mode).
         if (string.IsNullOrEmpty(scope))
         {
             scope = ConnectionEnvironment.BotConnectorScope;
-            _logger.LogInformation("[FoundryConnections] No SCOPES__0 env var — defaulting to: {Scope}", scope);
         }
 
-        ClientId = clientId;
-        Scope = scope;
-
-        _logger.LogInformation("[FoundryConnections] Final config | ClientId={ClientId} | Scope={Scope}", ClientId, Scope);
+        // Single init log (not per-turn); routine per-call resolution is logged at Debug below.
+        _logger.LogInformation(
+            "[FoundryConnections] Initialized | clientId={ClientId} | tenantId={TenantId} | scope={Scope}",
+            clientId.Length > 8 ? clientId[..8] + "..." : clientId,
+            tenantId.Length > 8 ? tenantId[..8] + "..." : tenantId,
+            scope);
 
         _tokenProvider = new FoundryAccessTokenProvider(clientId, tenantId, scope, logger);
     }
 
     public IAccessTokenProvider GetConnection(string name)
     {
-        _logger.LogInformation("[FoundryConnections] GetConnection(name={Name})", name);
+        _logger.LogDebug("[FoundryConnections] GetConnection(name={Name})", name);
         return _tokenProvider;
     }
 
     public IAccessTokenProvider GetDefaultConnection()
     {
-        _logger.LogInformation("[FoundryConnections] GetDefaultConnection()");
+        _logger.LogDebug("[FoundryConnections] GetDefaultConnection()");
         return _tokenProvider;
     }
 
     public bool TryGetConnection(string name, out IAccessTokenProvider connection)
     {
-        _logger.LogInformation("[FoundryConnections] TryGetConnection(name={Name})", name);
+        _logger.LogDebug("[FoundryConnections] TryGetConnection(name={Name})", name);
         connection = _tokenProvider;
         return true;
     }
 
     public IAccessTokenProvider GetTokenProvider(ClaimsIdentity claimsIdentity, string serviceUrl)
     {
-        _logger.LogInformation("[FoundryConnections] GetTokenProvider(serviceUrl={ServiceUrl})", serviceUrl);
+        _logger.LogDebug("[FoundryConnections] GetTokenProvider(serviceUrl={ServiceUrl})", serviceUrl);
         return _tokenProvider;
     }
 
     public IAccessTokenProvider GetTokenProvider(ClaimsIdentity claimsIdentity, IActivity activity)
     {
-        _logger.LogInformation("[FoundryConnections] GetTokenProvider(activity.Type={Type})", activity?.Type);
+        _logger.LogDebug("[FoundryConnections] GetTokenProvider(activity.Type={Type})", activity?.Type);
         return _tokenProvider;
     }
 }
@@ -106,6 +96,11 @@ internal sealed class FoundryAccessTokenProvider : IAccessTokenProvider
     private readonly string _scope;
     private readonly ILogger _logger;
 
+    // A single credential instance is reused across calls so its internal token cache is effective
+    // (constructing a new ManagedIdentityCredential per call would defeat that cache). Lazily built
+    // so an unset client id in local development fails at token-acquisition time, not at DI resolve.
+    private readonly Lazy<ManagedIdentityCredential> _credential;
+
     /// <summary>
     /// Connection settings exposed for the M365 SDK internals.
     /// </summary>
@@ -117,8 +112,10 @@ internal sealed class FoundryAccessTokenProvider : IAccessTokenProvider
         _tenantId = tenantId;
         _scope = scope;
         _logger = logger;
+        _credential = new Lazy<ManagedIdentityCredential>(
+            () => new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedClientId(_clientId)));
 
-        _logger.LogInformation("[FoundryAccessTokenProvider] Created | clientId={ClientId} | scope={Scope}",
+        _logger.LogDebug("[FoundryAccessTokenProvider] Created | clientId={ClientId} | scope={Scope}",
             clientId.Length > 8 ? clientId[..8] + "..." : clientId, scope);
 
         // Create connection settings
@@ -126,13 +123,10 @@ internal sealed class FoundryAccessTokenProvider : IAccessTokenProvider
         {
             ClientId = clientId,
             TenantId = tenantId,
-            Authority = $"https://login.microsoftonline.com/{tenantId}",
+            Authority = ConnectionEnvironment.AuthorityFor(tenantId),
             Scopes = new List<string> { scope },
         };
         ConnectionSettings = new ImmutableConnectionSettings(baseSettings);
-
-        _logger.LogInformation("[FoundryAccessTokenProvider] ConnectionSettings.Scopes={Scopes}",
-            string.Join(",", ConnectionSettings.Scopes ?? new List<string>()));
     }
 
     /// <summary>Concrete ConnectionSettingsBase for creating ImmutableConnectionSettings.</summary>
@@ -143,15 +137,6 @@ internal sealed class FoundryAccessTokenProvider : IAccessTokenProvider
         IList<string> scopes,
         bool forceRefresh)
     {
-        _logger.LogInformation(
-            "[FoundryToken] GetAccessTokenAsync called | resourceUrl={ResourceUrl} | scopes_param=[{Scopes}] | forceRefresh={ForceRefresh}",
-            resourceUrl,
-            scopes != null && scopes.Count > 0 ? string.Join(",", scopes) : "(empty)",
-            forceRefresh);
-
-        _logger.LogInformation("[FoundryToken] Using managed identity clientId={ClientId}",
-            _clientId.Length > 8 ? _clientId[..8] + "..." : _clientId);
-
         // Determine the token scope:
         // 1. If adapter passed scopes, use the first one
         // 2. Otherwise use our configured scope (from env or default)
@@ -159,26 +144,22 @@ internal sealed class FoundryAccessTokenProvider : IAccessTokenProvider
         if (scopes != null && scopes.Count > 0 && !string.IsNullOrEmpty(scopes[0]))
         {
             tokenScope = scopes[0];
-            _logger.LogInformation("[FoundryToken] Using scope from adapter parameter: {Scope}", tokenScope);
         }
         else
         {
             tokenScope = _scope;
-            _logger.LogInformation("[FoundryToken] No scopes from adapter — using configured scope: {Scope}", tokenScope);
         }
 
-        _logger.LogInformation("[FoundryToken] FINAL token request: clientId={ClientId} | scope={Scope}",
-            _clientId.Length > 8 ? _clientId[..8] + "..." : _clientId, tokenScope);
+        _logger.LogDebug(
+            "[FoundryToken] Acquiring token | clientId={ClientId} | scope={Scope} | forceRefresh={ForceRefresh}",
+            _clientId.Length > 8 ? _clientId[..8] + "..." : _clientId, tokenScope, forceRefresh);
 
         try
         {
-            var credential = new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedClientId(_clientId));
-            _logger.LogInformation("[FoundryToken] ManagedIdentityCredential created, calling GetTokenAsync...");
-
-            var tokenResult = await credential.GetTokenAsync(
+            var tokenResult = await _credential.Value.GetTokenAsync(
                 new Azure.Core.TokenRequestContext(new[] { tokenScope })).ConfigureAwait(false);
 
-            _logger.LogInformation("[FoundryToken] Token acquired successfully | expiresOn={ExpiresOn} | tokenLength={Length}",
+            _logger.LogDebug("[FoundryToken] Token acquired | expiresOn={ExpiresOn} | tokenLength={Length}",
                 tokenResult.ExpiresOn, tokenResult.Token?.Length ?? 0);
 
             return tokenResult.Token!;
@@ -201,6 +182,6 @@ internal sealed class FoundryAccessTokenProvider : IAccessTokenProvider
 
     public Azure.Core.TokenCredential GetTokenCredential()
     {
-        return new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedClientId(_clientId));
+        return _credential.Value;
     }
 }

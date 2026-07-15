@@ -25,7 +25,7 @@ public class ActivityServerServiceCollectionExtensionsTests
     {
         var services = NewServices();
 
-        var result = services.AddActivityServer();
+        var result = services.AddActivityServerServices();
 
         Assert.That(result, Is.SameAs(services));
     }
@@ -34,7 +34,7 @@ public class ActivityServerServiceCollectionExtensionsTests
     public void AddActivityServer_RegistersActivityProtocolActivitySource()
     {
         var services = NewServices();
-        services.AddActivityServer();
+        services.AddActivityServerServices();
 
         using var provider = services.BuildServiceProvider();
 
@@ -45,7 +45,7 @@ public class ActivityServerServiceCollectionExtensionsTests
     public void AddActivityServer_RegistersStartupLogger_AsHostedService()
     {
         var services = NewServices();
-        services.AddActivityServer();
+        services.AddActivityServerServices();
 
         using var provider = services.BuildServiceProvider();
         var hostedServices = provider.GetServices<IHostedService>();
@@ -57,7 +57,7 @@ public class ActivityServerServiceCollectionExtensionsTests
     public void AddActivityServer_WithoutConfigure_DefaultsDigitalWorkerFalse()
     {
         var services = NewServices();
-        services.AddActivityServer();
+        services.AddActivityServerServices();
 
         using var provider = services.BuildServiceProvider();
         var options = provider.GetRequiredService<IOptions<ActivityServerOptions>>().Value;
@@ -69,7 +69,7 @@ public class ActivityServerServiceCollectionExtensionsTests
     public void AddActivityServer_WithConfigure_AppliesOptions()
     {
         var services = NewServices();
-        services.AddActivityServer(o => o.DigitalWorker = true);
+        services.AddActivityServerServices(o => o.DigitalWorker = true);
 
         using var provider = services.BuildServiceProvider();
         var options = provider.GetRequiredService<IOptions<ActivityServerOptions>>().Value;
@@ -84,8 +84,8 @@ public class ActivityServerServiceCollectionExtensionsTests
 
         Assert.That(() =>
         {
-            services.AddActivityServer();
-            services.AddActivityServer();
+            services.AddActivityServerServices();
+            services.AddActivityServerServices();
             using var provider = services.BuildServiceProvider();
             _ = provider.GetService<ActivityProtocolActivitySource>();
         }, Throws.Nothing);

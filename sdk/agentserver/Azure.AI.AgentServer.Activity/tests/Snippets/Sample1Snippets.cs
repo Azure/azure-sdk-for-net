@@ -22,21 +22,21 @@ namespace Azure.AI.AgentServer.Activity.Tests.Snippets
             #region Snippet:Activity_Sample1_EchoAgent
 
             // Build the host (initializes the Microsoft 365 Agents SDK stack from the environment)
-            // and capture the underlying AgentApplication to register handlers on.
-            var host = ActivityServer.Create();
-            var app = host.AgentApp;
-
-            // Echo the user's message back.
-            app.OnActivity(ActivityTypes.Message, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
-            {
-                var userText = turnContext.Activity.Text ?? string.Empty;
-                if (!string.IsNullOrWhiteSpace(userText))
+            // and register handlers inline on the AgentApplication — no agent class required.
+            ActivityServer.Run(
+                (AgentApplication app) =>
                 {
-                    await turnContext.SendActivityAsync($"Echo: {userText}", cancellationToken: cancellationToken);
-                }
-            });
-
-            host.Run(args);
+                    // Echo the user's message back.
+                    app.OnActivity(ActivityTypes.Message, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
+                    {
+                        var userText = turnContext.Activity.Text ?? string.Empty;
+                        if (!string.IsNullOrWhiteSpace(userText))
+                        {
+                            await turnContext.SendActivityAsync($"Echo: {userText}", cancellationToken: cancellationToken);
+                        }
+                    });
+                },
+                args);
 
             #endregion
         }

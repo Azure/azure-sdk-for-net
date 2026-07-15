@@ -1,6 +1,6 @@
 # Sample 4: Customize the Build
 
-The default `ActivityServer.Create(...)` path builds the whole Microsoft 365 Agents SDK stack from the environment, but every piece is overridable through `ActivityServerOptions`. Leave a property unset to use the built-in default.
+The default `ActivityServer.Run(...)` path builds the whole Microsoft 365 Agents SDK stack from the environment, but every piece is overridable through `ActivityServerOptions` (passed via `configureOptions`). Leave a property unset to use the built-in default.
 
 | Option | Overrides |
 |---|---|
@@ -16,12 +16,14 @@ The default in-memory store is fine for local development, but conversation stat
 ```C# Snippet:Activity_Sample4_Storage
 // Override just the storage backend; the host builds the rest of the stack from the
 // environment. Leave Storage unset to use the default in-memory store.
-var host = ActivityServer.Create(options =>
-{
-    options.Storage = new MemoryStorage();
-});
-
-host.Run(args);
+ActivityServer.Run(
+    (AgentApplication app) =>
+        app.OnActivity(ActivityTypes.Message, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
+        {
+            await turnContext.SendActivityAsync($"Echo: {turnContext.Activity.Text}", cancellationToken: cancellationToken);
+        }),
+    args,
+    configureOptions: options => options.Storage = new MemoryStorage());
 ```
 
 ## Register additional services
@@ -32,15 +34,20 @@ host.Run(args);
 // Register additional services (a custom adapter, authorization, channel-service
 // factory, ...) before the Microsoft 365 Agents SDK defaults are added. Anything
 // registered here takes precedence over the SDK defaults.
-var host = ActivityServer.Create(options =>
-{
-    options.ConfigureServices = services =>
+ActivityServer.Run(
+    (AgentApplication app) =>
+        app.OnActivity(ActivityTypes.Message, async (ITurnContext turnContext, ITurnState turnState, CancellationToken cancellationToken) =>
+        {
+            await turnContext.SendActivityAsync($"Echo: {turnContext.Activity.Text}", cancellationToken: cancellationToken);
+        }),
+    args,
+    configureOptions: options =>
     {
-        services.AddSingleton<IStorage, MemoryStorage>();
-    };
-});
-
-host.Run(args);
+        options.ConfigureServices = services =>
+        {
+            services.AddSingleton<IStorage, MemoryStorage>();
+        };
+    });
 ```
 
 ## Next steps

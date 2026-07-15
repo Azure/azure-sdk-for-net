@@ -43,11 +43,11 @@ public class FoundryConnectionsTests
         var connections = provider.GetRequiredService<IConnections>();
 
         Assert.That(connections, Is.InstanceOf<FoundryConnections>());
-        var foundry = (FoundryConnections)connections;
+        var settings = connections.GetDefaultConnection().ConnectionSettings;
         Assert.Multiple(() =>
         {
-            Assert.That(foundry.ClientId, Is.EqualTo("11112222-3333-4444-5555-666677778888"));
-            Assert.That(foundry.Scope, Is.EqualTo(ConnectionEnvironment.BotConnectorScope));
+            Assert.That(settings.ClientId, Is.EqualTo("11112222-3333-4444-5555-666677778888"));
+            Assert.That(settings.Scopes, Does.Contain(ConnectionEnvironment.BotConnectorScope));
         });
     }
 
@@ -62,7 +62,8 @@ public class FoundryConnectionsTests
 
         var foundry = (FoundryConnections)provider.GetRequiredService<IConnections>();
 
-        Assert.That(foundry.Scope, Is.EqualTo(ConnectionEnvironment.BotConnectorScope));
+        Assert.That(foundry.GetDefaultConnection().ConnectionSettings.Scopes,
+            Does.Contain(ConnectionEnvironment.BotConnectorScope));
     }
 
     [Test]

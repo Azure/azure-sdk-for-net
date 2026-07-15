@@ -21,16 +21,16 @@ namespace Azure.AI.AgentServer.Activity.Tests.Snippets
             // Own the request pipeline entirely: the Microsoft 365 Agents SDK is not initialized.
             // The delegate receives each inbound POST /activity/messages request. The parsed
             // activity is available at request.HttpContext for custom processing.
-            var host = ActivityServer.Create(async (HttpContext context) =>
-            {
-                using var reader = new StreamReader(context.Request.Body);
-                var body = await reader.ReadToEndAsync();
+            ActivityServer.Run(
+                async (HttpContext context) =>
+                {
+                    using var reader = new StreamReader(context.Request.Body);
+                    var body = await reader.ReadToEndAsync();
 
-                context.Response.StatusCode = StatusCodes.Status200OK;
-                await context.Response.WriteAsync($"Received {body.Length} bytes.");
-            });
-
-            host.Run(args);
+                    context.Response.StatusCode = StatusCodes.Status200OK;
+                    await context.Response.WriteAsync($"Received {body.Length} bytes.");
+                },
+                args);
 
             #endregion
         }
