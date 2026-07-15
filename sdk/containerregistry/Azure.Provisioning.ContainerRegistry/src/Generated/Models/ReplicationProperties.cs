@@ -10,7 +10,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry
 {
-    /// <summary> The properties of a replication. </summary>
     internal partial class ReplicationProperties : ProvisionableConstruct
     {
         private BicepValue<ContainerRegistryProvisioningState> _provisioningState;

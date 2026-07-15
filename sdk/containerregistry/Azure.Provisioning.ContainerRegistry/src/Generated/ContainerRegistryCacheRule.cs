@@ -20,7 +20,11 @@ namespace Azure.Provisioning.ContainerRegistry
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private CacheRuleProperties _properties;
+        private BicepValue<ResourceIdentifier> _credentialSetResourceId;
+        private BicepValue<string> _sourceRepository;
+        private BicepValue<string> _targetRepository;
+        private BicepValue<DateTimeOffset> _createdOn;
+        private BicepValue<ContainerRegistryProvisioningState> _provisioningState;
         private ResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Creates a new ContainerRegistryCacheRule. </summary>
@@ -65,18 +69,68 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal CacheRuleProperties Properties
+        /// <summary> Gets or sets the CredentialSetResourceId. </summary>
+        public BicepValue<ResourceIdentifier> CredentialSetResourceId
         {
             get
             {
                 Initialize();
-                return _properties;
+                return _credentialSetResourceId;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _properties, value);
+                _credentialSetResourceId.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the SourceRepository. </summary>
+        public BicepValue<string> SourceRepository
+        {
+            get
+            {
+                Initialize();
+                return _sourceRepository;
+            }
+            set
+            {
+                Initialize();
+                _sourceRepository.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the TargetRepository. </summary>
+        public BicepValue<string> TargetRepository
+        {
+            get
+            {
+                Initialize();
+                return _targetRepository;
+            }
+            set
+            {
+                Initialize();
+                _targetRepository.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the CreatedOn. </summary>
+        public BicepValue<DateTimeOffset> CreatedOn
+        {
+            get
+            {
+                Initialize();
+                return _createdOn;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
+        {
+            get
+            {
+                Initialize();
+                return _provisioningState;
             }
         }
 
@@ -95,83 +149,6 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets or sets the CredentialSetResourceId. </summary>
-        public BicepValue<ResourceIdentifier> CredentialSetResourceId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CredentialSetResourceId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CacheRuleProperties();
-                }
-                Properties.CredentialSetResourceId = value;
-            }
-        }
-
-        /// <summary> Gets or sets the SourceRepository. </summary>
-        public BicepValue<string> SourceRepository
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SourceRepository;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CacheRuleProperties();
-                }
-                Properties.SourceRepository = value;
-            }
-        }
-
-        /// <summary> Gets or sets the TargetRepository. </summary>
-        public BicepValue<string> TargetRepository
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TargetRepository;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CacheRuleProperties();
-                }
-                Properties.TargetRepository = value;
-            }
-        }
-
-        /// <summary> Gets the CreatedOn. </summary>
-        public BicepValue<DateTimeOffset> CreatedOn
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new CacheRuleProperties();
-                }
-                return Properties.CreatedOn;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new CacheRuleProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ContainerRegistryCacheRule. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -179,7 +156,11 @@ namespace Azure.Provisioning.ContainerRegistry
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<CacheRuleProperties>(nameof(Properties), new string[] { "properties" });
+            _credentialSetResourceId = DefineProperty<ResourceIdentifier>(nameof(CredentialSetResourceId), new string[] { "properties", "credentialSetResourceId" });
+            _sourceRepository = DefineProperty<string>(nameof(SourceRepository), new string[] { "properties", "sourceRepository" });
+            _targetRepository = DefineProperty<string>(nameof(TargetRepository), new string[] { "properties", "targetRepository" });
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "properties", "creationDate" }, isOutput: true);
+            _provisioningState = DefineProperty<ContainerRegistryProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
             _parent = DefineResource<ContainerRegistryService>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

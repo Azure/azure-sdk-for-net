@@ -20,7 +20,19 @@ namespace Azure.Provisioning.ContainerRegistry
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private ConnectedRegistryProperties _properties;
+        private BicepValue<ContainerRegistryProvisioningState> _provisioningState;
+        private BicepValue<ConnectedRegistryMode> _mode;
+        private BicepValue<string> _version;
+        private BicepValue<ConnectedRegistryConnectionState> _connectionState;
+        private BicepValue<DateTimeOffset> _lastActivityOn;
+        private ActivationProperties _activation;
+        private ConnectedRegistryParent _connectedRegistryParent;
+        private BicepList<ResourceIdentifier> _clientTokenIds;
+        private ConnectedRegistryLoginServer _loginServer;
+        private ConnectedRegistryLogging _logging;
+        private BicepList<ConnectedRegistryStatusDetail> _statusDetails;
+        private BicepList<string> _notificationsList;
+        private GarbageCollectionProperties _garbageCollection;
         private ResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Creates a new ConnectedRegistry. </summary>
@@ -65,18 +77,168 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal ConnectedRegistryProperties Properties
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
         {
             get
             {
                 Initialize();
-                return _properties;
+                return _provisioningState;
+            }
+        }
+
+        /// <summary> Gets or sets the Mode. </summary>
+        public BicepValue<ConnectedRegistryMode> Mode
+        {
+            get
+            {
+                Initialize();
+                return _mode;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _properties, value);
+                _mode.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the Version. </summary>
+        public BicepValue<string> Version
+        {
+            get
+            {
+                Initialize();
+                return _version;
+            }
+        }
+
+        /// <summary> Gets the ConnectionState. </summary>
+        public BicepValue<ConnectedRegistryConnectionState> ConnectionState
+        {
+            get
+            {
+                Initialize();
+                return _connectionState;
+            }
+        }
+
+        /// <summary> Gets the LastActivityOn. </summary>
+        public BicepValue<DateTimeOffset> LastActivityOn
+        {
+            get
+            {
+                Initialize();
+                return _lastActivityOn;
+            }
+        }
+
+        /// <summary> Gets the Activation. </summary>
+        internal ActivationProperties Activation
+        {
+            get
+            {
+                Initialize();
+                return _activation;
+            }
+        }
+
+        /// <summary> Gets or sets the ConnectedRegistryParent. </summary>
+        public ConnectedRegistryParent ConnectedRegistryParent
+        {
+            get
+            {
+                Initialize();
+                return _connectedRegistryParent;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _connectedRegistryParent, value);
+            }
+        }
+
+        /// <summary> Gets or sets the ClientTokenIds. </summary>
+        public BicepList<ResourceIdentifier> ClientTokenIds
+        {
+            get
+            {
+                Initialize();
+                return _clientTokenIds;
+            }
+            set
+            {
+                Initialize();
+                _clientTokenIds.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the LoginServer. </summary>
+        public ConnectedRegistryLoginServer LoginServer
+        {
+            get
+            {
+                Initialize();
+                return _loginServer;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _loginServer, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Logging. </summary>
+        public ConnectedRegistryLogging Logging
+        {
+            get
+            {
+                Initialize();
+                return _logging;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _logging, value);
+            }
+        }
+
+        /// <summary> Gets the StatusDetails. </summary>
+        public BicepList<ConnectedRegistryStatusDetail> StatusDetails
+        {
+            get
+            {
+                Initialize();
+                return _statusDetails;
+            }
+        }
+
+        /// <summary> Gets or sets the NotificationsList. </summary>
+        public BicepList<string> NotificationsList
+        {
+            get
+            {
+                Initialize();
+                return _notificationsList;
+            }
+            set
+            {
+                Initialize();
+                _notificationsList.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the GarbageCollection. </summary>
+        public GarbageCollectionProperties GarbageCollection
+        {
+            get
+            {
+                Initialize();
+                return _garbageCollection;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _garbageCollection, value);
             }
         }
 
@@ -95,200 +257,12 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConnectedRegistryProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets or sets the Mode. </summary>
-        public BicepValue<ConnectedRegistryMode> Mode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Mode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConnectedRegistryProperties();
-                }
-                Properties.Mode = value;
-            }
-        }
-
-        /// <summary> Gets the Version. </summary>
-        public BicepValue<string> Version
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConnectedRegistryProperties();
-                }
-                return Properties.Version;
-            }
-        }
-
-        /// <summary> Gets the ConnectionState. </summary>
-        public BicepValue<ConnectedRegistryConnectionState> ConnectionState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConnectedRegistryProperties();
-                }
-                return Properties.ConnectionState;
-            }
-        }
-
-        /// <summary> Gets the LastActivityOn. </summary>
-        public BicepValue<DateTimeOffset> LastActivityOn
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConnectedRegistryProperties();
-                }
-                return Properties.LastActivityOn;
-            }
-        }
-
-        /// <summary> Gets or sets the ConnectedRegistryParent. </summary>
-        public ConnectedRegistryParent ConnectedRegistryParent
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConnectedRegistryParent;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConnectedRegistryProperties();
-                }
-                Properties.ConnectedRegistryParent = value;
-            }
-        }
-
-        /// <summary> Gets or sets the ClientTokenIds. </summary>
-        public BicepList<ResourceIdentifier> ClientTokenIds
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ClientTokenIds;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConnectedRegistryProperties();
-                }
-                Properties.ClientTokenIds = value;
-            }
-        }
-
-        /// <summary> Gets or sets the LoginServer. </summary>
-        public ConnectedRegistryLoginServer LoginServer
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LoginServer;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConnectedRegistryProperties();
-                }
-                Properties.LoginServer = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Logging. </summary>
-        public ConnectedRegistryLogging Logging
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Logging;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConnectedRegistryProperties();
-                }
-                Properties.Logging = value;
-            }
-        }
-
-        /// <summary> Gets the StatusDetails. </summary>
-        public BicepList<ConnectedRegistryStatusDetail> StatusDetails
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConnectedRegistryProperties();
-                }
-                return Properties.StatusDetails;
-            }
-        }
-
-        /// <summary> Gets or sets the NotificationsList. </summary>
-        public BicepList<string> NotificationsList
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NotificationsList;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConnectedRegistryProperties();
-                }
-                Properties.NotificationsList = value;
-            }
-        }
-
-        /// <summary> Gets or sets the GarbageCollection. </summary>
-        public GarbageCollectionProperties GarbageCollection
-        {
-            get
-            {
-                return Properties is null ? default : Properties.GarbageCollection;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConnectedRegistryProperties();
-                }
-                Properties.GarbageCollection = value;
-            }
-        }
-
         /// <summary> Gets the Status. </summary>
         public BicepValue<ConnectedRegistryActivationStatus> ActivationStatus
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new ConnectedRegistryProperties();
-                }
-                return Properties.ActivationStatus;
+                return Activation.Status;
             }
         }
 
@@ -299,7 +273,19 @@ namespace Azure.Provisioning.ContainerRegistry
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<ConnectedRegistryProperties>(nameof(Properties), new string[] { "properties" });
+            _provisioningState = DefineProperty<ContainerRegistryProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
+            _mode = DefineProperty<ConnectedRegistryMode>(nameof(Mode), new string[] { "properties", "mode" }, isRequired: true);
+            _version = DefineProperty<string>(nameof(Version), new string[] { "properties", "version" }, isOutput: true);
+            _connectionState = DefineProperty<ConnectedRegistryConnectionState>(nameof(ConnectionState), new string[] { "properties", "connectionState" }, isOutput: true);
+            _lastActivityOn = DefineProperty<DateTimeOffset>(nameof(LastActivityOn), new string[] { "properties", "lastActivityTime" }, isOutput: true);
+            _activation = DefineModelProperty<ActivationProperties>(nameof(Activation), new string[] { "properties", "activation" }, isOutput: true);
+            _connectedRegistryParent = DefineModelProperty<ConnectedRegistryParent>(nameof(ConnectedRegistryParent), new string[] { "properties", "parent" }, isRequired: true);
+            _clientTokenIds = DefineListProperty<ResourceIdentifier>(nameof(ClientTokenIds), new string[] { "properties", "clientTokenIds" });
+            _loginServer = DefineModelProperty<ConnectedRegistryLoginServer>(nameof(LoginServer), new string[] { "properties", "loginServer" });
+            _logging = DefineModelProperty<ConnectedRegistryLogging>(nameof(Logging), new string[] { "properties", "logging" });
+            _statusDetails = DefineListProperty<ConnectedRegistryStatusDetail>(nameof(StatusDetails), new string[] { "properties", "statusDetails" }, isOutput: true);
+            _notificationsList = DefineListProperty<string>(nameof(NotificationsList), new string[] { "properties", "notificationsList" });
+            _garbageCollection = DefineModelProperty<GarbageCollectionProperties>(nameof(GarbageCollection), new string[] { "properties", "garbageCollection" });
             _parent = DefineResource<ContainerRegistryService>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

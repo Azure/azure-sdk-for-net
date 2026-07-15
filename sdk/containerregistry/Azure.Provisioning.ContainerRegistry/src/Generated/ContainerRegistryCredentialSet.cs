@@ -20,8 +20,11 @@ namespace Azure.Provisioning.ContainerRegistry
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private CredentialSetProperties _properties;
         private ManagedServiceIdentity _identity;
+        private BicepValue<string> _loginServer;
+        private BicepList<ContainerRegistryAuthCredential> _authCredentials;
+        private BicepValue<DateTimeOffset> _createdOn;
+        private BicepValue<ContainerRegistryProvisioningState> _provisioningState;
         private ResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Creates a new ContainerRegistryCredentialSet. </summary>
@@ -66,21 +69,6 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal CredentialSetProperties Properties
-        {
-            get
-            {
-                Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
-            }
-        }
-
         /// <summary> Gets or sets the Identity. </summary>
         public ManagedServiceIdentity Identity
         {
@@ -93,6 +81,56 @@ namespace Azure.Provisioning.ContainerRegistry
             {
                 Initialize();
                 AssignOrReplace(ref _identity, value);
+            }
+        }
+
+        /// <summary> Gets or sets the LoginServer. </summary>
+        public BicepValue<string> LoginServer
+        {
+            get
+            {
+                Initialize();
+                return _loginServer;
+            }
+            set
+            {
+                Initialize();
+                _loginServer.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the AuthCredentials. </summary>
+        public BicepList<ContainerRegistryAuthCredential> AuthCredentials
+        {
+            get
+            {
+                Initialize();
+                return _authCredentials;
+            }
+            set
+            {
+                Initialize();
+                _authCredentials.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the CreatedOn. </summary>
+        public BicepValue<DateTimeOffset> CreatedOn
+        {
+            get
+            {
+                Initialize();
+                return _createdOn;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
+        {
+            get
+            {
+                Initialize();
+                return _provisioningState;
             }
         }
 
@@ -111,66 +149,6 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets or sets the LoginServer. </summary>
-        public BicepValue<string> LoginServer
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LoginServer;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CredentialSetProperties();
-                }
-                Properties.LoginServer = value;
-            }
-        }
-
-        /// <summary> Gets or sets the AuthCredentials. </summary>
-        public BicepList<ContainerRegistryAuthCredential> AuthCredentials
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AuthCredentials;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CredentialSetProperties();
-                }
-                Properties.AuthCredentials = value;
-            }
-        }
-
-        /// <summary> Gets the CreatedOn. </summary>
-        public BicepValue<DateTimeOffset> CreatedOn
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new CredentialSetProperties();
-                }
-                return Properties.CreatedOn;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new CredentialSetProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ContainerRegistryCredentialSet. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -178,8 +156,11 @@ namespace Azure.Provisioning.ContainerRegistry
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<CredentialSetProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
+            _loginServer = DefineProperty<string>(nameof(LoginServer), new string[] { "properties", "loginServer" });
+            _authCredentials = DefineListProperty<ContainerRegistryAuthCredential>(nameof(AuthCredentials), new string[] { "properties", "authCredentials" });
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "properties", "creationDate" }, isOutput: true);
+            _provisioningState = DefineProperty<ContainerRegistryProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
             _parent = DefineResource<ContainerRegistryService>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

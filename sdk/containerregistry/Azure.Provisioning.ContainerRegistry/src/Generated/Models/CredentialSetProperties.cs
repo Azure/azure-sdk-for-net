@@ -11,7 +11,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry
 {
-    /// <summary> The properties of a credential set resource. </summary>
     internal partial class CredentialSetProperties : ProvisionableConstruct
     {
         private BicepValue<string> _loginServer;

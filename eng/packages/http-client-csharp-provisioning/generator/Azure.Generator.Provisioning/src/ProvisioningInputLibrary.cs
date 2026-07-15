@@ -23,6 +23,7 @@ namespace Azure.Generator.Provisioning
         private IReadOnlyList<InputModelType>? _reachableModels;
         private IReadOnlyList<InputEnumType>? _reachableEnums;
         private Dictionary<InputModelType, bool>? _modelSettableUsage;
+        private HashSet<InputModelType>? _flattenedResourcePropertyModels;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProvisioningInputLibrary"/> class.
@@ -76,9 +77,15 @@ namespace Azure.Generator.Provisioning
             return _modelSettableUsage!.ContainsKey(model);
         }
 
+        internal bool IsFlattenedResourcePropertyModel(InputModelType model)
+        {
+            EnsureProvisioningInput();
+            return _flattenedResourcePropertyModels!.Contains(model);
+        }
+
         private void EnsureProvisioningInput()
         {
-            if (_resourceProjections != null && _modelSettableUsage != null)
+            if (_resourceProjections != null && _modelSettableUsage != null && _flattenedResourcePropertyModels != null)
                 return;
 
             var resourceProjections = _resourceProjections
@@ -93,6 +100,43 @@ namespace Azure.Generator.Provisioning
             _reachableModels = reachableModels;
             _reachableEnums = reachableEnums;
             _modelSettableUsage = modelSettableUsage;
+            _flattenedResourcePropertyModels = CollectFlattenedResourcePropertyModels(resourceProjections);
+        }
+
+        private static HashSet<InputModelType> CollectFlattenedResourcePropertyModels(
+            IReadOnlyList<ProvisioningResourceProjection> resourceProjections)
+        {
+            var result = new HashSet<InputModelType>();
+            foreach (var resource in resourceProjections)
+            {
+                CollectFlattenedPropertyModels(resource.ResourceModel, result);
+            }
+            return result;
+        }
+
+        private static void CollectFlattenedPropertyModels(InputModelType model, HashSet<InputModelType> result)
+        {
+            var chain = new Stack<InputModelType>();
+            chain.Push(model);
+            var baseModel = model.BaseModel;
+            while (baseModel != null)
+            {
+                chain.Push(baseModel);
+                baseModel = baseModel.BaseModel;
+            }
+
+            foreach (var current in chain)
+            {
+                foreach (var property in current.Properties)
+                {
+                    if (property.Type is InputModelType propertyModel
+                        && IsFlattenedProperty(property)
+                        && result.Add(propertyModel))
+                    {
+                        CollectFlattenedPropertyModels(propertyModel, result);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -121,12 +165,15 @@ namespace Azure.Generator.Provisioning
             {
                 var isSettable = resource.WritableScopes.Count > 0;
                 queue.Enqueue((resource.ResourceModel, isSettable));
-                foreach (var (property, _, isFlattenedContainer) in GetCreateBodyProperties(resource))
+                var createBodyModel = GetCreateBodyModel(resource);
+                if (createBodyModel == null)
                 {
-                    if (!isFlattenedContainer)
-                    {
-                        queue.Enqueue((property.Type, isSettable && !property.IsReadOnly));
-                    }
+                    continue;
+                }
+
+                foreach (var (property, _) in GetProvisioningProperties(createBodyModel))
+                {
+                    queue.Enqueue((property.Type, isSettable && !property.IsReadOnly));
                 }
             }
 
@@ -224,36 +271,32 @@ namespace Azure.Generator.Provisioning
             }
         }
 
-        internal static IEnumerable<(InputModelProperty Property, string[] BicepPath, bool IsFlattenedContainer)> GetCreateBodyProperties(
-            ProvisioningResourceProjection projection)
+        internal static InputModelType? GetCreateBodyModel(ProvisioningResourceProjection projection)
         {
             var createMethod = projection.Methods
                 .FirstOrDefault(method => method.Kind == ResourceOperationKind.Create)?.InputMethod;
             if (createMethod == null)
             {
-                yield break;
+                return null;
             }
 
             foreach (var parameter in createMethod.Parameters)
             {
-                if (parameter.Location != InputRequestLocation.Body || parameter.Type is not InputModelType bodyModel)
+                if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType bodyModel)
                 {
-                    continue;
-                }
-
-                foreach (var property in GetBodyProperties(bodyModel, null))
-                {
-                    yield return property;
+                    return bodyModel;
                 }
             }
+
+            return null;
         }
 
         internal static bool IsFlattenedProperty(InputModelProperty property)
             => property.Decorators.Any(decorator => decorator.Name == FlattenPropertyDecoratorName);
 
-        private static IEnumerable<(InputModelProperty Property, string[] BicepPath, bool IsFlattenedContainer)> GetBodyProperties(
+        internal static IEnumerable<(InputModelProperty Property, string[] BicepPath)> GetProvisioningProperties(
             InputModelType model,
-            string[]? basePath)
+            string[]? basePath = null)
         {
             var chain = new Stack<InputModelType>();
             chain.Push(model);
@@ -264,25 +307,36 @@ namespace Azure.Generator.Provisioning
                 baseModel = baseModel.BaseModel;
             }
 
+            var flattenedProperties = new List<(InputModelType Model, string[] BicepPath)>();
             foreach (var current in chain)
             {
                 foreach (var property in current.Properties)
                 {
+                    if (property.IsDiscriminator)
+                    {
+                        continue;
+                    }
+
                     var serializedName = property.SerializedName ?? property.Name;
                     var bicepPath = basePath != null
                         ? [.. basePath, serializedName]
                         : new[] { serializedName };
-                    var isFlattenedContainer = property.Type is InputModelType && IsFlattenedProperty(property);
 
-                    yield return (property, bicepPath, isFlattenedContainer);
-
-                    if (isFlattenedContainer && property.Type is InputModelType propertyModel)
+                    if (property.Type is InputModelType propertyModel && IsFlattenedProperty(property))
                     {
-                        foreach (var nestedProperty in GetBodyProperties(propertyModel, bicepPath))
-                        {
-                            yield return nestedProperty;
-                        }
+                        flattenedProperties.Add((propertyModel, bicepPath));
+                        continue;
                     }
+
+                    yield return (property, bicepPath);
+                }
+            }
+
+            foreach (var (propertyModel, bicepPath) in flattenedProperties)
+            {
+                foreach (var nestedProperty in GetProvisioningProperties(propertyModel, bicepPath))
+                {
+                    yield return nestedProperty;
                 }
             }
         }

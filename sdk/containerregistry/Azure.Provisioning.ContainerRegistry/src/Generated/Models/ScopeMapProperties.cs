@@ -11,7 +11,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry
 {
-    /// <summary> The properties of a scope map. </summary>
     internal partial class ScopeMapProperties : ProvisionableConstruct
     {
         private BicepValue<string> _description;

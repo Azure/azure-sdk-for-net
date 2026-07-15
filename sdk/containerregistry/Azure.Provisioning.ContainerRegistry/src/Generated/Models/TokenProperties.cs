@@ -12,7 +12,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry
 {
-    /// <summary> The properties of a token. </summary>
     internal partial class TokenProperties : ProvisionableConstruct
     {
         private BicepValue<DateTimeOffset> _createdOn;

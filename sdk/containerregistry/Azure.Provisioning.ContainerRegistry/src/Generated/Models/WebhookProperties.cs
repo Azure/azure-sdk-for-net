@@ -10,7 +10,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry
 {
-    /// <summary> The properties of a webhook. </summary>
     internal partial class WebhookProperties : ProvisionableConstruct
     {
         private BicepValue<ContainerRegistryWebhookStatus> _status;

@@ -61,14 +61,6 @@ namespace Azure.Generator.Provisioning.Providers
         /// <see cref="IProvisioningPropertyInfo.GetProvisioningPropertyInfo"/>.
         /// </summary>
         private readonly Dictionary<InputModelProperty, ResourcePropertyInfo> _propertyLookup;
-        /// <summary>
-        /// Serialized property paths that are writable in the create request body model.
-        /// When the resource model is output-only (e.g., a ProxyResource with a separate create body),
-        /// its properties may be marked readOnly even though the create body accepts them as input.
-        /// This set is used during <see cref="_allProperties"/> construction to avoid incorrectly
-        /// marking such properties as output-only.
-        /// </summary>
-        private readonly HashSet<string> _createBodyWritablePropertyPaths;
 
         private FieldProvider? _parentField;
         private PropertyProvider? _parentProperty;
@@ -117,8 +109,11 @@ namespace Azure.Generator.Provisioning.Providers
                 ? projection.ApiVersions.Last()
                 : null;
             _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(projection.ResourceModel);
-            _createBodyWritablePropertyPaths = BuildCreateBodyWritablePropertyPaths();
-            _allProperties = CollectAllProperties();
+            var resourceProperties = CollectAllProperties(projection.ResourceModel);
+            var createBodyModel = ProvisioningInputLibrary.GetCreateBodyModel(projection);
+            _allProperties = createBodyModel == null
+                ? resourceProperties
+                : CombineProperties(resourceProperties, CollectAllProperties(createBodyModel));
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);
         }
 
@@ -132,8 +127,9 @@ namespace Azure.Generator.Provisioning.Providers
             _resourceProjection = null;
             _defaultApiVersion = null;
             _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(inputModel);
-            _createBodyWritablePropertyPaths = [];
-            _allProperties = CollectAllProperties();
+            _allProperties = inputModel.DiscriminatorValue != null
+                ? CollectOwnProperties()
+                : CollectAllProperties(inputModel);
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);
         }
 
@@ -386,87 +382,48 @@ namespace Azure.Generator.Provisioning.Providers
 
         // ── Property collection ──────────────────────────────────────
 
-        /// <summary>
-        /// Builds a set of serialized property paths that are writable in the create request body.
-        /// When the resource model is output-only (e.g., ProxyResource with separate create body),
-        /// its properties may be marked readOnly even though the create body has them as writable.
-        /// </summary>
-        private HashSet<string> BuildCreateBodyWritablePropertyPaths()
+        private List<ResourcePropertyInfo> CollectAllProperties(InputModelType model)
         {
-            var result = new HashSet<string>(StringComparer.Ordinal);
-            if (_resourceProjection == null) return result;
-
-            foreach (var (property, bicepPath, _) in ProvisioningInputLibrary.GetCreateBodyProperties(_resourceProjection))
-            {
-                if (!property.IsReadOnly)
-                {
-                    result.Add(GetPathKey(bicepPath));
-                }
-            }
-
-            return result;
-        }
-
-        private List<ResourcePropertyInfo> CollectAllProperties()
-        {
-            // Derived discriminated resources only collect their own properties
-            if (_inputModel.DiscriminatorValue != null)
-                return CollectOwnProperties();
-
             var result = new List<ResourcePropertyInfo>();
             var seen = new HashSet<string>(StringComparer.Ordinal);
 
-            // Collect from the base chain first (top-most ancestor → immediate base),
-            // then from the resource model itself. This ensures inherited ARM common
-            // properties (name, location, tags) appear before leaf-defined properties
-            // (e.g., the "properties" bag), which controls the Bicep emission order.
-            var chain = new Stack<InputModelType>();
-            chain.Push(_inputModel);
-            var baseModel = _inputModel.BaseModel;
-            while (baseModel != null)
+            foreach (var (property, bicepPath) in ProvisioningInputLibrary.GetProvisioningProperties(model))
             {
-                chain.Push(baseModel);
-                baseModel = baseModel.BaseModel;
-            }
-
-            foreach (var model in chain)
-            {
-                CollectPropertiesFromModel(model, result, seen, basePath: null);
-            }
-
-            CollectFlattenedPropertyPaths(_inputModel, seen, basePath: null);
-
-            if (_resourceProjection != null)
-            {
-                foreach (var (property, bicepPath, isFlattenedContainer) in ProvisioningInputLibrary.GetCreateBodyProperties(_resourceProjection))
-                {
-                    if (!isFlattenedContainer)
-                    {
-                        CollectProperty(property, result, seen, bicepPath);
-                    }
-                }
+                CollectProperty(property, result, seen, bicepPath);
             }
 
             return result;
         }
 
-        private void CollectPropertiesFromModel(
-            InputModelType model,
-            List<ResourcePropertyInfo> result,
-            HashSet<string> seen,
-            string[]? basePath)
+        private static List<ResourcePropertyInfo> CombineProperties(
+            List<ResourcePropertyInfo> resourceProperties,
+            List<ResourcePropertyInfo> createBodyProperties)
         {
-            foreach (var prop in model.Properties)
+            var result = new List<ResourcePropertyInfo>(resourceProperties);
+            var propertiesByPath = resourceProperties
+                .Select((property, index) => (Path: GetPathKey(property.BicepPath), Index: index))
+                .ToDictionary(item => item.Path, item => item.Index, StringComparer.Ordinal);
+
+            foreach (var createBodyProperty in createBodyProperties)
             {
-                if (prop.IsDiscriminator) continue;
+                var path = GetPathKey(createBodyProperty.BicepPath);
+                if (propertiesByPath.TryGetValue(path, out var resourcePropertyIndex))
+                {
+                    var resourceProperty = result[resourcePropertyIndex];
+                    result[resourcePropertyIndex] = resourceProperty with
+                    {
+                        IsOutput = resourceProperty.IsOutput && createBodyProperty.IsOutput,
+                        IsSettable = resourceProperty.IsSettable || createBodyProperty.IsSettable,
+                        IsRequired = resourceProperty.IsRequired || createBodyProperty.IsRequired
+                    };
+                    continue;
+                }
 
-                var serializedName = prop.SerializedName ?? prop.Name;
-                var bicepPath = basePath != null
-                    ? [.. basePath, serializedName]
-                    : new[] { serializedName };
-
-                CollectProperty(prop, result, seen, bicepPath);
+                propertiesByPath.Add(path, result.Count);
+                result.Add(createBodyProperty);
             }
+
+            return result;
         }
 
         private void CollectProperty(
@@ -490,7 +447,7 @@ namespace Azure.Generator.Provisioning.Providers
             // ARM resource name metadata is the root wire property exactly named "name".
             // Keep this comparison case-sensitive so unrelated body properties like "Name" are not treated as metadata.
             var isResourceName = bicepPath.Length == 1 && serializedName == "name";
-            var isOutput = (prop.IsReadOnly && !isResourceName && !_createBodyWritablePropertyPaths.Contains(GetPathKey(bicepPath)))
+            var isOutput = (prop.IsReadOnly && !isResourceName)
                 || (bicepPath.Length == 1 && OutputOnlyProperties.Contains(serializedName));
             // Read-only resources are referenced through FromExisting, so Name must remain settable.
             // Other non-output properties are settable only when the resource has a writable scope.
@@ -519,36 +476,6 @@ namespace Azure.Generator.Provisioning.Providers
             }
 
             result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isSettable, isRequired, defaultValue, typeOverride));
-        }
-
-        private static void CollectFlattenedPropertyPaths(InputModelType model, HashSet<string> seen, string[]? basePath)
-        {
-            var chain = new Stack<InputModelType>();
-            chain.Push(model);
-            var baseModel = model.BaseModel;
-            while (baseModel != null)
-            {
-                chain.Push(baseModel);
-                baseModel = baseModel.BaseModel;
-            }
-
-            foreach (var current in chain)
-            {
-                foreach (var property in current.Properties)
-                {
-                    var serializedName = property.SerializedName ?? property.Name;
-                    var bicepPath = basePath != null
-                        ? [.. basePath, serializedName]
-                        : new[] { serializedName };
-
-                    seen.Add(GetPathKey(bicepPath));
-                    if (property.Type is InputModelType propertyModel
-                        && ProvisioningInputLibrary.IsFlattenedProperty(property))
-                    {
-                        CollectFlattenedPropertyPaths(propertyModel, seen, bicepPath);
-                    }
-                }
-            }
         }
 
         private static string GetPathKey(string[] bicepPath) => string.Join('\0', bicepPath);

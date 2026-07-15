@@ -10,7 +10,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
-    /// <summary> Properties of an item. </summary>
     internal partial class ItemProperties : ProvisionableConstruct
     {
         private BicepValue<string> _value;

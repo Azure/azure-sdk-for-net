@@ -12,7 +12,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry
 {
-    /// <summary> The properties of a cache rule. </summary>
     internal partial class CacheRuleProperties : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _credentialSetResourceId;

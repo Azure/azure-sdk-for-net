@@ -20,7 +20,11 @@ namespace Azure.Provisioning.ContainerRegistry
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private ScopeMapProperties _properties;
+        private BicepValue<string> _description;
+        private BicepValue<string> _scopeMapType;
+        private BicepValue<DateTimeOffset> _createdOn;
+        private BicepValue<ContainerRegistryProvisioningState> _provisioningState;
+        private BicepList<string> _actions;
         private ResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Creates a new ScopeMap. </summary>
@@ -65,18 +69,63 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal ScopeMapProperties Properties
+        /// <summary> Gets or sets the Description. </summary>
+        public BicepValue<string> Description
         {
             get
             {
                 Initialize();
-                return _properties;
+                return _description;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _properties, value);
+                _description.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the ScopeMapType. </summary>
+        public BicepValue<string> ScopeMapType
+        {
+            get
+            {
+                Initialize();
+                return _scopeMapType;
+            }
+        }
+
+        /// <summary> Gets the CreatedOn. </summary>
+        public BicepValue<DateTimeOffset> CreatedOn
+        {
+            get
+            {
+                Initialize();
+                return _createdOn;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
+        {
+            get
+            {
+                Initialize();
+                return _provisioningState;
+            }
+        }
+
+        /// <summary> Gets or sets the Actions. </summary>
+        public BicepList<string> Actions
+        {
+            get
+            {
+                Initialize();
+                return _actions;
+            }
+            set
+            {
+                Initialize();
+                _actions.Assign(value);
             }
         }
 
@@ -95,79 +144,6 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets or sets the Description. </summary>
-        public BicepValue<string> Description
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Description;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ScopeMapProperties();
-                }
-                Properties.Description = value;
-            }
-        }
-
-        /// <summary> Gets the ScopeMapType. </summary>
-        public BicepValue<string> ScopeMapType
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ScopeMapProperties();
-                }
-                return Properties.ScopeMapType;
-            }
-        }
-
-        /// <summary> Gets the CreatedOn. </summary>
-        public BicepValue<DateTimeOffset> CreatedOn
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ScopeMapProperties();
-                }
-                return Properties.CreatedOn;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ScopeMapProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets or sets the Actions. </summary>
-        public BicepList<string> Actions
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Actions;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ScopeMapProperties();
-                }
-                Properties.Actions = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ScopeMap. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -175,7 +151,11 @@ namespace Azure.Provisioning.ContainerRegistry
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<ScopeMapProperties>(nameof(Properties), new string[] { "properties" });
+            _description = DefineProperty<string>(nameof(Description), new string[] { "properties", "description" });
+            _scopeMapType = DefineProperty<string>(nameof(ScopeMapType), new string[] { "properties", "type" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "properties", "creationDate" }, isOutput: true);
+            _provisioningState = DefineProperty<ContainerRegistryProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
+            _actions = DefineListProperty<string>(nameof(Actions), new string[] { "properties", "actions" }, isRequired: true);
             _parent = DefineResource<ContainerRegistryService>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

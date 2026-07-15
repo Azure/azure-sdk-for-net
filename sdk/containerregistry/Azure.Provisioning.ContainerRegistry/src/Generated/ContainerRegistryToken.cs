@@ -20,7 +20,11 @@ namespace Azure.Provisioning.ContainerRegistry
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private TokenProperties _properties;
+        private BicepValue<DateTimeOffset> _createdOn;
+        private BicepValue<ContainerRegistryProvisioningState> _provisioningState;
+        private BicepValue<ResourceIdentifier> _scopeMapId;
+        private ContainerRegistryTokenCredentials _credentials;
+        private BicepValue<ContainerRegistryTokenStatus> _status;
         private ResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Creates a new ContainerRegistryToken. </summary>
@@ -65,18 +69,68 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal TokenProperties Properties
+        /// <summary> Gets the CreatedOn. </summary>
+        public BicepValue<DateTimeOffset> CreatedOn
         {
             get
             {
                 Initialize();
-                return _properties;
+                return _createdOn;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
+        {
+            get
+            {
+                Initialize();
+                return _provisioningState;
+            }
+        }
+
+        /// <summary> Gets or sets the ScopeMapId. </summary>
+        public BicepValue<ResourceIdentifier> ScopeMapId
+        {
+            get
+            {
+                Initialize();
+                return _scopeMapId;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _properties, value);
+                _scopeMapId.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Credentials. </summary>
+        public ContainerRegistryTokenCredentials Credentials
+        {
+            get
+            {
+                Initialize();
+                return _credentials;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _credentials, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Status. </summary>
+        public BicepValue<ContainerRegistryTokenStatus> Status
+        {
+            get
+            {
+                Initialize();
+                return _status;
+            }
+            set
+            {
+                Initialize();
+                _status.Assign(value);
             }
         }
 
@@ -95,83 +149,6 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets the CreatedOn. </summary>
-        public BicepValue<DateTimeOffset> CreatedOn
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new TokenProperties();
-                }
-                return Properties.CreatedOn;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new TokenProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets or sets the ScopeMapId. </summary>
-        public BicepValue<ResourceIdentifier> ScopeMapId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ScopeMapId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new TokenProperties();
-                }
-                Properties.ScopeMapId = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Credentials. </summary>
-        public ContainerRegistryTokenCredentials Credentials
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Credentials;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new TokenProperties();
-                }
-                Properties.Credentials = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Status. </summary>
-        public BicepValue<ContainerRegistryTokenStatus> Status
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Status;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new TokenProperties();
-                }
-                Properties.Status = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ContainerRegistryToken. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -179,7 +156,11 @@ namespace Azure.Provisioning.ContainerRegistry
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<TokenProperties>(nameof(Properties), new string[] { "properties" });
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "properties", "creationDate" }, isOutput: true);
+            _provisioningState = DefineProperty<ContainerRegistryProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
+            _scopeMapId = DefineProperty<ResourceIdentifier>(nameof(ScopeMapId), new string[] { "properties", "scopeMapId" });
+            _credentials = DefineModelProperty<ContainerRegistryTokenCredentials>(nameof(Credentials), new string[] { "properties", "credentials" });
+            _status = DefineProperty<ContainerRegistryTokenStatus>(nameof(Status), new string[] { "properties", "status" });
             _parent = DefineResource<ContainerRegistryService>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

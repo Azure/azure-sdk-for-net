@@ -535,7 +535,7 @@ namespace Azure.Generator.Provisioning.Tests
         [Test]
         public void CreateBodyOnlyFlattenedPropertiesAreAddedToResource()
         {
-            var existingProperty = CreateProperty("ExistingValue");
+            var existingProperty = CreateProperty("ExistingValue", isReadOnly: true);
             var resourcePropertiesModel = CreateModel("WidgetProperties", [existingProperty]);
             var resourcePropertiesProperty = CreateProperty("Properties", type: resourcePropertiesModel);
             ApplyFlattenDecorator(resourcePropertiesProperty);
@@ -578,6 +578,7 @@ namespace Azure.Generator.Provisioning.Tests
 
             var serviceUriInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(serviceUriProperty);
             var customHeadersInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(customHeadersProperty);
+            var existingInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(existingProperty);
             var duplicateExistingInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(duplicateExistingProperty);
             var settingsInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(settingsProperty);
 
@@ -589,6 +590,9 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(customHeadersInfo, Is.Not.Null);
             Assert.That(customHeadersInfo!.BicepPath, Is.EqualTo(new[] { "properties", "customHeaders" }));
             Assert.That(customHeadersInfo.IsRequired, Is.False);
+            Assert.That(existingInfo, Is.Not.Null);
+            Assert.That(existingInfo!.IsOutput, Is.False);
+            Assert.That(existingInfo.IsSettable, Is.True);
             Assert.That(duplicateExistingInfo, Is.Null);
             Assert.That(settingsInfo, Is.Not.Null);
             Assert.That(settingsInfo!.BicepPath, Is.EqualTo(new[] { "properties", "settings" }));

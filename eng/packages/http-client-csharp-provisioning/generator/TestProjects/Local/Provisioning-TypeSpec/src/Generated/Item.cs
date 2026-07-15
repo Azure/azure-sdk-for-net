@@ -19,8 +19,11 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private ItemProperties _properties;
         private BicepDictionary<string> _tags;
+        private BicepValue<string> _value;
+        private BicepValue<string> _contentType;
+        private BicepValue<string> _nullableValue;
+        private ItemAttributes _attributes;
         private BicepValue<string> _serviceUri;
         private BicepDictionary<string> _customHeaders;
         private ResourceReference<ConfigurationStore> _parent;
@@ -67,21 +70,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal ItemProperties Properties
-        {
-            get
-            {
-                Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
-            }
-        }
-
         /// <summary> Gets or sets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
@@ -94,6 +82,66 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 _tags.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Value. </summary>
+        public BicepValue<string> Value
+        {
+            get
+            {
+                Initialize();
+                return _value;
+            }
+            set
+            {
+                Initialize();
+                _value.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the ContentType. </summary>
+        public BicepValue<string> ContentType
+        {
+            get
+            {
+                Initialize();
+                return _contentType;
+            }
+            set
+            {
+                Initialize();
+                _contentType.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the NullableValue. </summary>
+        public BicepValue<string> NullableValue
+        {
+            get
+            {
+                Initialize();
+                return _nullableValue;
+            }
+            set
+            {
+                Initialize();
+                _nullableValue.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Attributes. </summary>
+        public ItemAttributes Attributes
+        {
+            get
+            {
+                Initialize();
+                return _attributes;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _attributes, value);
             }
         }
 
@@ -142,74 +190,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets or sets the Value. </summary>
-        public BicepValue<string> Value
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Value;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ItemProperties();
-                }
-                Properties.Value = value;
-            }
-        }
-
-        /// <summary> Gets or sets the ContentType. </summary>
-        public BicepValue<string> ContentType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ContentType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ItemProperties();
-                }
-                Properties.ContentType = value;
-            }
-        }
-
-        /// <summary> Gets or sets the NullableValue. </summary>
-        public BicepValue<string> NullableValue
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NullableValue;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ItemProperties();
-                }
-                Properties.NullableValue = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Attributes. </summary>
-        public ItemAttributes Attributes
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Attributes;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ItemProperties();
-                }
-                Properties.Attributes = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for Item. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -217,8 +197,11 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<ItemProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
+            _value = DefineProperty<string>(nameof(Value), new string[] { "properties", "value" });
+            _contentType = DefineProperty<string>(nameof(ContentType), new string[] { "properties", "contentType" });
+            _nullableValue = DefineProperty<string>(nameof(NullableValue), new string[] { "properties", "nullableValue" });
+            _attributes = DefineModelProperty<ItemAttributes>(nameof(Attributes), new string[] { "properties", "attributes" });
             _serviceUri = DefineProperty<string>(nameof(ServiceUri), new string[] { "properties", "serviceUri" }, isRequired: true);
             _customHeaders = DefineDictionaryProperty<string>(nameof(CustomHeaders), new string[] { "properties", "customHeaders" });
             _parent = DefineResource<ConfigurationStore>("Parent", new string[] { "parent" }, isRequired: true);

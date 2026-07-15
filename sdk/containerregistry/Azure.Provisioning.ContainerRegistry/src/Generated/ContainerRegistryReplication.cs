@@ -21,7 +21,10 @@ namespace Azure.Provisioning.ContainerRegistry
         private SystemData _systemData;
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
-        private ReplicationProperties _properties;
+        private BicepValue<ContainerRegistryProvisioningState> _provisioningState;
+        private ContainerRegistryResourceStatus _status;
+        private BicepValue<bool> _isRegionEndpointEnabled;
+        private BicepValue<ContainerRegistryZoneRedundancy> _zoneRedundancy;
         private ResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Creates a new ContainerRegistryReplication. </summary>
@@ -96,18 +99,53 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal ReplicationProperties Properties
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
         {
             get
             {
                 Initialize();
-                return _properties;
+                return _provisioningState;
+            }
+        }
+
+        /// <summary> Gets the Status. </summary>
+        public ContainerRegistryResourceStatus Status
+        {
+            get
+            {
+                Initialize();
+                return _status;
+            }
+        }
+
+        /// <summary> Gets or sets the IsRegionEndpointEnabled. </summary>
+        public BicepValue<bool> IsRegionEndpointEnabled
+        {
+            get
+            {
+                Initialize();
+                return _isRegionEndpointEnabled;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _properties, value);
+                _isRegionEndpointEnabled.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the ZoneRedundancy. </summary>
+        public BicepValue<ContainerRegistryZoneRedundancy> ZoneRedundancy
+        {
+            get
+            {
+                Initialize();
+                return _zoneRedundancy;
+            }
+            set
+            {
+                Initialize();
+                _zoneRedundancy.Assign(value);
             }
         }
 
@@ -126,62 +164,6 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ReplicationProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets the Status. </summary>
-        public ContainerRegistryResourceStatus Status
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Status;
-            }
-        }
-
-        /// <summary> Gets or sets the IsRegionEndpointEnabled. </summary>
-        public BicepValue<bool> IsRegionEndpointEnabled
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsRegionEndpointEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ReplicationProperties();
-                }
-                Properties.IsRegionEndpointEnabled = value;
-            }
-        }
-
-        /// <summary> Gets or sets the ZoneRedundancy. </summary>
-        public BicepValue<ContainerRegistryZoneRedundancy> ZoneRedundancy
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ZoneRedundancy;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ReplicationProperties();
-                }
-                Properties.ZoneRedundancy = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ContainerRegistryReplication. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -191,7 +173,10 @@ namespace Azure.Provisioning.ContainerRegistry
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
-            _properties = DefineModelProperty<ReplicationProperties>(nameof(Properties), new string[] { "properties" });
+            _provisioningState = DefineProperty<ContainerRegistryProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
+            _status = DefineModelProperty<ContainerRegistryResourceStatus>(nameof(Status), new string[] { "properties", "status" }, isOutput: true);
+            _isRegionEndpointEnabled = DefineProperty<bool>(nameof(IsRegionEndpointEnabled), new string[] { "properties", "regionEndpointEnabled" });
+            _zoneRedundancy = DefineProperty<ContainerRegistryZoneRedundancy>(nameof(ZoneRedundancy), new string[] { "properties", "zoneRedundancy" });
             _parent = DefineResource<ContainerRegistryService>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

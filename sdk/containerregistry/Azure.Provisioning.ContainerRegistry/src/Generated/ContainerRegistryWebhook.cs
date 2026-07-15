@@ -22,7 +22,10 @@ namespace Azure.Provisioning.ContainerRegistry
         private SystemData _systemData;
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
-        private WebhookProperties _properties;
+        private BicepValue<ContainerRegistryWebhookStatus> _status;
+        private BicepValue<string> _scope;
+        private BicepList<ContainerRegistryWebhookAction> _actions;
+        private BicepValue<ContainerRegistryProvisioningState> _provisioningState;
         private BicepValue<Uri> _serviceUri;
         private BicepDictionary<string> _customHeaders;
         private ResourceReference<ContainerRegistryService> _parent;
@@ -99,18 +102,58 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal WebhookProperties Properties
+        /// <summary> Gets or sets the Status. </summary>
+        public BicepValue<ContainerRegistryWebhookStatus> Status
         {
             get
             {
                 Initialize();
-                return _properties;
+                return _status;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _properties, value);
+                _status.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Scope. </summary>
+        public BicepValue<string> Scope
+        {
+            get
+            {
+                Initialize();
+                return _scope;
+            }
+            set
+            {
+                Initialize();
+                _scope.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Actions. </summary>
+        public BicepList<ContainerRegistryWebhookAction> Actions
+        {
+            get
+            {
+                Initialize();
+                return _actions;
+            }
+            set
+            {
+                Initialize();
+                _actions.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
+        {
+            get
+            {
+                Initialize();
+                return _provisioningState;
             }
         }
 
@@ -159,70 +202,6 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets or sets the Status. </summary>
-        public BicepValue<ContainerRegistryWebhookStatus> Status
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Status;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new WebhookProperties();
-                }
-                Properties.Status = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Scope. </summary>
-        public BicepValue<string> Scope
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Scope;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new WebhookProperties();
-                }
-                Properties.Scope = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Actions. </summary>
-        public BicepList<ContainerRegistryWebhookAction> Actions
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Actions;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new WebhookProperties();
-                }
-                Properties.Actions = value;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new WebhookProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ContainerRegistryWebhook. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -232,7 +211,10 @@ namespace Azure.Provisioning.ContainerRegistry
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
-            _properties = DefineModelProperty<WebhookProperties>(nameof(Properties), new string[] { "properties" });
+            _status = DefineProperty<ContainerRegistryWebhookStatus>(nameof(Status), new string[] { "properties", "status" });
+            _scope = DefineProperty<string>(nameof(Scope), new string[] { "properties", "scope" });
+            _actions = DefineListProperty<ContainerRegistryWebhookAction>(nameof(Actions), new string[] { "properties", "actions" }, isRequired: true);
+            _provisioningState = DefineProperty<ContainerRegistryProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
             _serviceUri = DefineProperty<Uri>(nameof(ServiceUri), new string[] { "properties", "serviceUri" }, isRequired: true);
             _customHeaders = DefineDictionaryProperty<string>(nameof(CustomHeaders), new string[] { "properties", "customHeaders" });
             _parent = DefineResource<ContainerRegistryService>("Parent", new string[] { "parent" }, isRequired: true);
