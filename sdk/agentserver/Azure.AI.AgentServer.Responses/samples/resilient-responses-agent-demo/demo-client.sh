@@ -251,8 +251,8 @@ def _save_id(rid):
         pass
 
 def _publish_active(rid):
-    # Publish the live in-flight id to the shared active-id file so a `crash`
-    # in another terminal can read it mid-stream and steer-crash this exact run.
+    # Publish the live in-flight id to the shared active-id file so a crash
+    # command in another terminal can read it mid-stream and recover this run.
     if not PUBLISH_ACTIVE:
         return
     try:
