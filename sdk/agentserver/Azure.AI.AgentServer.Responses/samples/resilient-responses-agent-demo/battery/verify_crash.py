@@ -89,9 +89,11 @@ def main():
     cap.start()
     time.sleep(3)
 
-    # 3. fire crash (kills the single container instance -> takes target handler down)
-    log("firing crash (os._exit(137)) ...")
-    crash = rs.fire_crash()
+    # 3. fire crash pinned to the TARGET run's session so it kills the SAME
+    #    sandbox (one agent_session_id == one sandbox). An unpinned crash could
+    #    land on a different sandbox and leave this run untouched.
+    log(f"firing crash (os._exit(137)) pinned to session={sid} ...")
+    crash = rs.fire_crash(sid)
     (d / "crash.json").write_text(json.dumps(crash, indent=2))
 
     # 4. keep capturing across the restart + recovery window
@@ -140,10 +142,15 @@ def main():
 
     # DETERMINISTIC recovery proof (independent of log capture): we streamed the run until it was
     # actively producing output (items_done >= 1), then hard-killed the lease-holding process with
-    # os._exit(137). The ONLY mechanism that can subsequently drive that killed streaming run to a
-    # `completed` terminal is cross-process task recovery (a different worker reclaims the lease and
-    # resumes). So a confirmed crash + pre-crash progress + terminal==completed proves recovery.
-    crash_fired = crash.get("err") is None
+    # os._exit(137) PINNED to the target run's session (so the crash hits the SAME sandbox). The ONLY
+    # mechanism that can subsequently drive that killed streaming run to a `completed` terminal is
+    # cross-process task recovery (a different worker reclaims the lease and resumes). So a confirmed
+    # crash on the TARGET session + pre-crash progress + terminal==completed proves recovery.
+    crash_session = crash.get("crash_session")
+    # The crash must have landed on the target run's sandbox; otherwise a run that merely completed
+    # normally on an untouched sandbox would masquerade as "recovered".
+    crash_hit_target = bool(crash_session) and crash_session == sid
+    crash_fired = crash.get("err") is None and crash_hit_target
     recovered_functional = crash_fired and p["items_done"] >= 1 and terminal == "completed"
     recovered = (
         recovered_functional
@@ -160,7 +167,8 @@ def main():
         "session": sid,
         "pre_crash_items_done": p["items_done"],
         "reconnect_terminal": terminal,
-        "crash_session": crash.get("session_id"),
+        "crash_session": crash_session,
+        "crash_hit_target": crash_hit_target,
         "markers": markers,
         "worker_instances": worker_instances,
         "taskmanager_instances": taskmgr_instances,
@@ -171,6 +179,7 @@ def main():
     (d / "verdict.json").write_text(json.dumps(verdict, indent=2))
     log("\n===== CRASH-RECOVERY VERDICT =====")
     log(f"  reconnect terminal     : {terminal}")
+    log(f"  crash hit target sess  : {crash_hit_target} (crash={crash_session} target={sid})")
     log(f"  distinct worker insts  : {worker_instances}")
     log(f"  reclaimed_stale_task   : {markers['reclaimed_stale_task']}")
     log(f"  recovered_task_active  : {markers['recovered_task_active']}")

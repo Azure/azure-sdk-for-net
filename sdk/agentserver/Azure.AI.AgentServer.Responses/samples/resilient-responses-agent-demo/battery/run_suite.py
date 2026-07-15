@@ -76,10 +76,15 @@ def url(path: str = "") -> str:
     return f"{ENDPOINT_BASE}{path}{sep}api-version={API_VERSION}"
 
 
-def body(input_text: str, *, store: bool, background: bool, stream: bool, prev: str | None = None) -> dict:
+def body(input_text: str, *, store: bool, background: bool, stream: bool, prev: str | None = None,
+         session_id: str | None = None) -> dict:
     b = {"model": MODEL, "input": input_text, "store": store, "background": background, "stream": stream}
     if prev:
         b["previous_response_id"] = prev
+    if session_id:
+        # One agent_session_id == one sandbox. Pinning it routes this request to
+        # the SAME sandbox as the run that reported this session id.
+        b["agent_session_id"] = session_id
     return b
 
 
@@ -257,16 +262,21 @@ def cancel(rid: str) -> dict:
         return {"status_code": r.status_code, "json": {"_raw": r.text}}
 
 
-def fire_crash() -> dict:
-    """Crash the (single) hosted sandbox via a streaming 'crash' request.
+def fire_crash(session_id: str | None = None) -> dict:
+    """Crash the sandbox running the target resilient task via a streaming 'crash'.
 
-    Hosted agents run a single sandbox, so this reliably kills the sandbox
-    running the in-flight resilient task. ``os._exit(137)`` drops the streaming
-    connection mid-flight, which we detect as the positive "sandbox went down"
-    signal. The platform restores the sandbox within ~2 min and the resilient
-    task recovers.
+    One ``agent_session_id`` == one sandbox on the platform. Pass ``session_id``
+    (the value the target run reported via the ``x-agent-session-id`` header) so
+    this crash request is pinned to the SAME sandbox as that run — otherwise an
+    unpinned ``POST /responses`` gets a fresh auto-generated session and may land
+    on a DIFFERENT sandbox, leaving the target run untouched (a run that simply
+    completes normally would then masquerade as a "recovered" run).
+
+    ``os._exit(137)`` drops the streaming connection mid-flight, which we detect
+    as the positive "sandbox went down" signal. The platform restores the
+    sandbox within ~2 min and the resilient task recovers.
     """
-    b = body("crash", store=True, background=True, stream=True)
+    b = body("crash", store=True, background=True, stream=True, session_id=session_id)
     dropped = False
     sid = None
     err = None
@@ -534,8 +544,8 @@ def case_crash_recovery(d: Path, combo: dict, stream: bool) -> dict:
     cap = ContinuousLogCapture(sid, d / "server.continuous.log")
     cap.start()
     time.sleep(3)
-    log(f"  crashing the single sandbox via streaming 'crash' (rid={rid}) ...")
-    crash = fire_crash()
+    log(f"  crashing the sandbox running the target task via streaming 'crash' (rid={rid}, session={sid}) ...")
+    crash = fire_crash(sid)
     (d / "crash.json").write_text(json.dumps(crash, indent=2))
     log(f"  sandbox_dropped={crash.get('sandbox_dropped')}; waiting {RESTART_WAIT_S}s for restore + recovery ...")
     time.sleep(RESTART_WAIT_S)
@@ -644,8 +654,8 @@ def case_steering_crash(d: Path, combo: dict) -> dict:
     cap = ContinuousLogCapture(sid, d / "server.continuous.log")
     cap.start()
     time.sleep(3)
-    log("  crashing the single sandbox via streaming 'crash' after steer ...")
-    crash = fire_crash()
+    log("  crashing the sandbox running the target task via streaming 'crash' after steer ...")
+    crash = fire_crash(sid)
     (d / "crash.json").write_text(json.dumps(crash, indent=2))
     log(f"  sandbox_dropped={crash.get('sandbox_dropped')}; waiting {RESTART_WAIT_S}s for restore + recovery ...")
     time.sleep(RESTART_WAIT_S)
