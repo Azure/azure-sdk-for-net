@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Confluent
         {
             TryGetApiVersion(ResourceType, out string confluentConnectorApiVersion);
             _connectorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
-            _connectorResourcesRestClient = new ConnectorResources(_connectorResourcesClientDiagnostics, Pipeline, Endpoint, confluentConnectorApiVersion ?? "2025-08-18-preview");
+            _connectorResourcesRestClient = new ConnectorResources(_connectorResourcesClientDiagnostics, Pipeline, Endpoint, confluentConnectorApiVersion ?? "2026-06-02-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
