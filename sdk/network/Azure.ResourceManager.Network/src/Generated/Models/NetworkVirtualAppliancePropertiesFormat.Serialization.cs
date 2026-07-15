@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InternetIngressPublicIps))
+            if (Optional.IsCollectionDefined(InternetIngressPublicIPs))
             {
                 writer.WritePropertyName("internetIngressPublicIps"u8);
                 writer.WriteStartArray();
-                foreach (InternetIngressPublicIpsProperties item in InternetIngressPublicIps)
+                foreach (InternetIngressPublicIpsProperties item in InternetIngressPublicIPs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIpAddress);
+                writer.WriteStringValue(PrivateIPAddress);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics = default;
             NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile = default;
             IList<VirtualApplianceAdditionalNicProperties> additionalNics = default;
-            IList<InternetIngressPublicIpsProperties> internetIngressPublicIps = default;
+            IList<InternetIngressPublicIpsProperties> internetIngressPublicIPs = default;
             IReadOnlyList<WritableSubResource> virtualApplianceSites = default;
             IReadOnlyList<WritableSubResource> virtualApplianceConnections = default;
             IReadOnlyList<WritableSubResource> inboundSecurityRules = default;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Network.Models
             VirtualApplianceDelegationProperties delegation = default;
             PartnerManagedResourceProperties partnerManagedResource = default;
             IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations = default;
-            string privateIpAddress = default;
+            string privateIPAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(InternetIngressPublicIpsProperties.DeserializeInternetIngressPublicIpsProperties(item, options));
                     }
-                    internetIngressPublicIps = array;
+                    internetIngressPublicIPs = array;
                     continue;
                 }
                 if (prop.NameEquals("virtualApplianceSites"u8))
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("privateIpAddress"u8))
                 {
-                    privateIpAddress = prop.Value.GetString();
+                    privateIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Network.Models
                 virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>(),
                 networkProfile,
                 additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>(),
-                internetIngressPublicIps ?? new ChangeTrackingList<InternetIngressPublicIpsProperties>(),
+                internetIngressPublicIPs ?? new ChangeTrackingList<InternetIngressPublicIpsProperties>(),
                 virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>(),
                 inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>(),
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Network.Models
                 delegation,
                 partnerManagedResource,
                 nvaInterfaceConfigurations ?? new ChangeTrackingList<NvaInterfaceConfigurationsProperties>(),
-                privateIpAddress,
+                privateIPAddress,
                 additionalBinaryDataProperties);
         }
     }

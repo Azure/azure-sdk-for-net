@@ -20,46 +20,6 @@ namespace Azure.ResourceManager.NetApp
     /// <summary> NetApp Elastic Snapshot under an Elastic Volume. </summary>
     public partial class NetAppElasticSnapshotData : ResourceData, IJsonModel<NetAppElasticSnapshotData>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppElasticSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNetAppElasticSnapshotData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetAppElasticSnapshotData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppElasticSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetAppElasticSnapshotData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetAppElasticSnapshotData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppElasticSnapshotData IPersistableModel<NetAppElasticSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetAppElasticSnapshotData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetAppElasticSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
         /// <param name="netAppElasticSnapshotData"> The <see cref="NetAppElasticSnapshotData"/> to serialize into <see cref="RequestContent"/>. </param>
         internal static RequestContent ToRequestContent(NetAppElasticSnapshotData netAppElasticSnapshotData)
         {
@@ -75,15 +35,6 @@ namespace Azure.ResourceManager.NetApp
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeNetAppElasticSnapshotData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetAppElasticSnapshotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -116,23 +67,6 @@ namespace Azure.ResourceManager.NetApp
 #endif
                 }
             }
-        }
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppElasticSnapshotData IJsonModel<NetAppElasticSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetAppElasticSnapshotData)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppElasticSnapshotData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(NetAppElasticSnapshotData)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetAppElasticSnapshotData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>

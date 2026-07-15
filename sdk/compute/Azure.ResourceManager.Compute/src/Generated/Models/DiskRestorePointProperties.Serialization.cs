@@ -165,6 +165,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("logicalSectorSize"u8);
                 writer.WriteNumberValue(LogicalSectorSize.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(SnapshotAccessState))
+            {
+                writer.WritePropertyName("snapshotAccessState"u8);
+                writer.WriteStringValue(SnapshotAccessState.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -225,6 +230,7 @@ namespace Azure.ResourceManager.Compute.Models
             AzureLocation? sourceResourceLocation = default;
             DiskSecurityProfile securityProfile = default;
             int? logicalSectorSize = default;
+            SnapshotAccessState? snapshotAccessState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -378,6 +384,15 @@ namespace Azure.ResourceManager.Compute.Models
                     logicalSectorSize = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("snapshotAccessState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    snapshotAccessState = new SnapshotAccessState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -402,6 +417,7 @@ namespace Azure.ResourceManager.Compute.Models
                 sourceResourceLocation,
                 securityProfile,
                 logicalSectorSize,
+                snapshotAccessState,
                 additionalBinaryDataProperties);
         }
     }

@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the TargetDedicatedNodes. </summary>
+        /// <summary> Gets the TargetDedicatedNodes. </summary>
         public BicepValue<int> TargetDedicatedNodes
         {
             get
@@ -34,14 +34,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _targetDedicatedNodes;
             }
-            set
-            {
-                Initialize();
-                _targetDedicatedNodes.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the TargetLowPriorityNodes. </summary>
+        /// <summary> Gets the TargetLowPriorityNodes. </summary>
         public BicepValue<int> TargetLowPriorityNodes
         {
             get
@@ -49,14 +44,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _targetLowPriorityNodes;
             }
-            set
-            {
-                Initialize();
-                _targetLowPriorityNodes.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ResizeTimeout. </summary>
+        /// <summary> Gets the ResizeTimeout. </summary>
         public BicepValue<TimeSpan> ResizeTimeout
         {
             get
@@ -64,14 +54,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _resizeTimeout;
             }
-            set
-            {
-                Initialize();
-                _resizeTimeout.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the NodeDeallocationOption. </summary>
+        /// <summary> Gets the NodeDeallocationOption. </summary>
         public BicepValue<BatchNodeDeallocationOption> NodeDeallocationOption
         {
             get
@@ -79,14 +64,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _nodeDeallocationOption;
             }
-            set
-            {
-                Initialize();
-                _nodeDeallocationOption.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
+        /// <summary> Gets the StartOn. </summary>
         public BicepValue<DateTimeOffset> StartOn
         {
             get
@@ -94,25 +74,15 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _startOn;
             }
-            set
-            {
-                Initialize();
-                _startOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Errors. </summary>
+        /// <summary> Gets the Errors. </summary>
         public BicepList<BatchResizeError> Errors
         {
             get
             {
                 Initialize();
                 return _errors;
-            }
-            set
-            {
-                Initialize();
-                _errors.Assign(value);
             }
         }
 
@@ -126,6 +96,10 @@ namespace Azure.Provisioning.Batch
             _nodeDeallocationOption = DefineProperty<BatchNodeDeallocationOption>(nameof(NodeDeallocationOption), new string[] { "nodeDeallocationOption" });
             _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" });
             _errors = DefineListProperty<BatchResizeError>(nameof(Errors), new string[] { "errors" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchResizeOperationStatus that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(DisassociateCloudServicePublicIPContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("publicIpArmId"u8);
-            writer.WriteStringValue(PublicIpArmId);
+            writer.WriteStringValue(PublicIPArmId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            ResourceIdentifier publicIpArmId = default;
+            ResourceIdentifier publicIPArmId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("publicIpArmId"u8))
                 {
-                    publicIpArmId = new ResourceIdentifier(prop.Value.GetString());
+                    publicIPArmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DisassociateCloudServicePublicIPContent(publicIpArmId, additionalBinaryDataProperties);
+            return new DisassociateCloudServicePublicIPContent(publicIPArmId, additionalBinaryDataProperties);
         }
     }
 }

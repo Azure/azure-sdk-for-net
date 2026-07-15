@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Automation
 {
+    /// <summary></summary>
     public partial class AutomationCredentialResource : IJsonModel<AutomationCredentialData>
     {
-        private static AutomationCredentialData s_dataDeserializationInstance;
-        private static AutomationCredentialData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AutomationCredentialData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AutomationCredentialData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AutomationCredentialData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutomationCredentialData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomationCredentialData>)Data).Write(writer, options);
 
-        AutomationCredentialData IJsonModel<AutomationCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationCredentialData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutomationCredentialData IJsonModel<AutomationCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AutomationCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationCredentialData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AutomationCredentialData IPersistableModel<AutomationCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationCredentialData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<AutomationCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationCredentialData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutomationCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

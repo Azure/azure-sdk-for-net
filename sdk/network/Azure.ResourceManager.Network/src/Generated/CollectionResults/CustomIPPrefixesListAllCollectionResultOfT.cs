@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 CustomIpPrefixListResult result = CustomIpPrefixListResult.FromResponse(response);
-                yield return Page<CustomIPPrefixData>.FromValues((IReadOnlyList<CustomIPPrefixData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CustomIPPrefixData>.FromValues((IReadOnlyList<CustomIPPrefixData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

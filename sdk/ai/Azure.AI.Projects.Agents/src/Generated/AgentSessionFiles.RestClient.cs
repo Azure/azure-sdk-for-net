@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
-        internal PipelineMessage CreateUploadSessionFileRequest(string agentName, string agentSessionId, string path, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateUploadRequest(string agentName, string agentSessionId, string path, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -43,7 +43,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDownloadSessionFileRequest(string agentName, string agentSessionId, string path, RequestOptions options)
+        internal PipelineMessage CreateDownloadRequest(string agentName, string agentSessionId, string path, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -104,7 +104,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDeleteSessionFileRequest(string agentName, string agentSessionId, string path, bool? recursive, RequestOptions options)
+        internal PipelineMessage CreateDeleteRequest(string agentName, string agentSessionId, string path, bool? recursive, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);

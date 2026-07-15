@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Base model for a manual dispatch payload.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InvokeAgentResponsesApiDispatchPayload"/> and <see cref="InvokeAgentInvocationsApiDispatchPayload"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentResponsesApiDispatchPayload"/> and <see cref="AgentInvocationsApiDispatchPayload"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRoutineDispatchPayload))]
     public abstract partial class RoutineDispatchPayload : IJsonModel<RoutineDispatchPayload>
@@ -127,9 +127,9 @@ namespace Azure.AI.Projects
                 switch (discriminator.GetString())
                 {
                     case "invoke_agent_responses_api":
-                        return InvokeAgentResponsesApiDispatchPayload.DeserializeInvokeAgentResponsesApiDispatchPayload(element, options);
+                        return AgentResponsesApiDispatchPayload.DeserializeAgentResponsesApiDispatchPayload(element, options);
                     case "invoke_agent_invocations_api":
-                        return InvokeAgentInvocationsApiDispatchPayload.DeserializeInvokeAgentInvocationsApiDispatchPayload(element, options);
+                        return AgentInvocationsApiDispatchPayload.DeserializeAgentInvocationsApiDispatchPayload(element, options);
                 }
             }
             return UnknownRoutineDispatchPayload.DeserializeUnknownRoutineDispatchPayload(element, options);

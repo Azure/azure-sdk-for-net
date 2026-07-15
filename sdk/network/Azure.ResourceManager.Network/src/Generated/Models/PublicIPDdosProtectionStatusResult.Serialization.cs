@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -83,15 +84,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(PublicIPDdosProtectionStatusResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(PublicIpAddressId))
+            if (Optional.IsDefined(PublicIPAddressId))
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
-                writer.WriteStringValue(PublicIpAddressId);
+                writer.WriteStringValue(PublicIPAddressId);
             }
-            if (Optional.IsDefined(PublicIpAddress))
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
-                writer.WriteStringValue(PublicIpAddress);
+                writer.WriteStringValue(PublicIPAddress.ToString());
             }
             if (Optional.IsDefined(IsWorkloadProtected))
             {
@@ -145,8 +146,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            ResourceIdentifier publicIpAddressId = default;
-            string publicIpAddress = default;
+            ResourceIdentifier publicIPAddressId = default;
+            IPAddress publicIPAddress = default;
             WorkloadProtectedFlag? isWorkloadProtected = default;
             ResourceIdentifier ddosProtectionPlanId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -158,12 +159,16 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    publicIpAddressId = new ResourceIdentifier(prop.Value.GetString());
+                    publicIPAddressId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicIpAddress"u8))
                 {
-                    publicIpAddress = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicIPAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("isWorkloadProtected"u8))
@@ -189,7 +194,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PublicIPDdosProtectionStatusResult(publicIpAddressId, publicIpAddress, isWorkloadProtected, ddosProtectionPlanId, additionalBinaryDataProperties);
+            return new PublicIPDdosProtectionStatusResult(publicIPAddressId, publicIPAddress, isWorkloadProtected, ddosProtectionPlanId, additionalBinaryDataProperties);
         }
     }
 }

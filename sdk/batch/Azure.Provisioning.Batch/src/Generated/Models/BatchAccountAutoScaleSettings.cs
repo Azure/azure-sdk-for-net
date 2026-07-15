@@ -58,6 +58,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _formula = DefineProperty<string>(nameof(Formula), new string[] { "formula" }, isRequired: true);
             _evaluationInterval = DefineProperty<TimeSpan>(nameof(EvaluationInterval), new string[] { "evaluationInterval" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchAccountAutoScaleSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

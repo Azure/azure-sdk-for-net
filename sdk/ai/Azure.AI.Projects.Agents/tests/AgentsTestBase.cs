@@ -328,7 +328,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             {
                 Name = "fabric-iq",
                 Description = "Test Fabric IQ",
-                RequireApproval = BinaryData.FromObjectAsJson("never"),
+                RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
             },
             ToolType.ReminderPreview => new ReminderPreviewToolboxTool()
             {
@@ -345,7 +345,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     {
         try
         {
-            await client.DeleteToolboxAsync(name);
+            await client.DeleteAsync(name);
         }
         catch (ClientResultException e)
         {
@@ -389,7 +389,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         {
             await DeleteToolboxMayBe(toolboxClient, name);
         }
-        HashSet<string> delete = [.. await toolboxClient.GetToolboxesAsync().Select(x => x.Name).Where(x => x.StartsWith(TOOLBOX)).ToListAsync()];
+        HashSet<string> delete = [.. await toolboxClient.GetAllAsync().Select(x => x.Name).Where(x => x.StartsWith(TOOLBOX)).ToListAsync()];
         foreach (string record in delete)
         {
             await DeleteToolboxMayBe(toolboxClient, record);

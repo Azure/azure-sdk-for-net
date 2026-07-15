@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class CustomHostNameDnsRecordTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this CustomHostNameDnsRecordType value) => value switch
         {
             CustomHostNameDnsRecordType.CName => "CName",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CustomHostNameDnsRecordType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static CustomHostNameDnsRecordType ToCustomHostNameDnsRecordType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CName")) return CustomHostNameDnsRecordType.CName;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "A")) return CustomHostNameDnsRecordType.A;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CName"))
+            {
+                return CustomHostNameDnsRecordType.CName;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "A"))
+            {
+                return CustomHostNameDnsRecordType.A;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CustomHostNameDnsRecordType value.");
         }
     }

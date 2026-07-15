@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NextHopIpAddress))
+            if (Optional.IsCollectionDefined(NextHopIPAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
                 writer.WriteStartArray();
-                foreach (string item in NextHopIpAddress)
+                foreach (string item in NextHopIPAddress)
                 {
                     if (item == null)
                     {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Network.Models
             EffectiveRouteSource? source = default;
             EffectiveRouteState? state = default;
             IReadOnlyList<string> addressPrefix = default;
-            IList<string> nextHopIpAddress = default;
+            IReadOnlyList<string> nextHopIPAddress = default;
             RouteNextHopType? nextHopType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    nextHopIpAddress = array;
+                    nextHopIPAddress = array;
                     continue;
                 }
                 if (prop.NameEquals("nextHopType"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Network.Models
                 source,
                 state,
                 addressPrefix ?? new ChangeTrackingList<string>(),
-                nextHopIpAddress ?? new ChangeTrackingList<string>(),
+                nextHopIPAddress ?? new ChangeTrackingList<string>(),
                 nextHopType,
                 additionalBinaryDataProperties);
         }

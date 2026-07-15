@@ -58,6 +58,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isRequired: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupSubnetId that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

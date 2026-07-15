@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Resources;

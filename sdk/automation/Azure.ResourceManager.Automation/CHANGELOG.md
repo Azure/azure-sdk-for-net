@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated the package generation from Swagger/AutoRest to TypeSpec.
+
 ## 1.1.2 (2026-04-20)
 
 ### Other Changes

@@ -47,6 +47,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _events = DefineListProperty<ContainerEvent>(nameof(Events), new string[] { "events" }, isOutput: true);
             _state = DefineProperty<string>(nameof(State), new string[] { "state" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupInstanceView that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

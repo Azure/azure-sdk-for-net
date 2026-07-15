@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         [Ignore("Temporarily ignored until the new IoT Hub SDK is released. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60235.")]
         [TestCase(null)]
-        [TestCase(false)]
+        [TestCase(false, Ignore = "Needs re-recording because generated PATCH now wraps tag updates in a properties payload.")]
         [TestCase(true)]
         public async Task AddRemoveTag(bool? useTagResource)
         {

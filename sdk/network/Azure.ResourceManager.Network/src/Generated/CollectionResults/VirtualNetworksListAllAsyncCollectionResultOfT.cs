@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 VirtualNetworkListResult result = VirtualNetworkListResult.FromResponse(response);
-                yield return Page<VirtualNetworkData>.FromValues((IReadOnlyList<VirtualNetworkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualNetworkData>.FromValues((IReadOnlyList<VirtualNetworkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

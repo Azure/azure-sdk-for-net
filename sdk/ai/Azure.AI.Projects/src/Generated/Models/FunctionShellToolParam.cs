@@ -13,18 +13,34 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="FunctionShellToolParam"/>. </summary>
         public FunctionShellToolParam() : base(ToolType.Shell)
         {
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionShellToolParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="environment"></param>
-        internal FunctionShellToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FunctionShellToolParamEnvironment environment) : base(@type, additionalBinaryDataProperties)
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        internal FunctionShellToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FunctionShellToolParamEnvironment environment, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             Environment = environment;
+            Name = name;
+            Description = description;
+            ToolConfigs = toolConfigs;
         }
 
         /// <summary> Gets or sets the Environment. </summary>
         public FunctionShellToolParamEnvironment Environment { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Description { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

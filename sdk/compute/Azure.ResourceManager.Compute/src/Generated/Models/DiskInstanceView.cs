@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="storageAlignmentStatus"> Specifies the storage alignment status for the disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskInstanceView(string name, IReadOnlyList<DiskEncryptionSettings> encryptionSettings, IReadOnlyList<InstanceViewStatus> statuses, StorageAlignmentStatus? storageAlignmentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskInstanceView(string name, IReadOnlyList<DiskEncryptionSettings> encryptionSettings, IReadOnlyList<InstanceViewStatus> statuses, ComputeStorageAlignmentStatus? storageAlignmentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             EncryptionSettings = encryptionSettings;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.Compute.Models
         public IReadOnlyList<InstanceViewStatus> Statuses { get; }
 
         /// <summary> Specifies the storage alignment status for the disk. </summary>
-        public StorageAlignmentStatus? StorageAlignmentStatus { get; }
+        public ComputeStorageAlignmentStatus? StorageAlignmentStatus { get; }
     }
 }

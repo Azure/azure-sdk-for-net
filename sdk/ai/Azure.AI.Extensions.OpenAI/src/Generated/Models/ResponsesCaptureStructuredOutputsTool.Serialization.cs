@@ -76,8 +76,29 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(ResponsesCaptureStructuredOutputsTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(ToolConfigs))
+            {
+                writer.WritePropertyName("tool_configs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ToolConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("outputs"u8);
-            writer.WriteObjectValue(Outputs, options);
+            writer.WriteObjectValue(OutputDefinition, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -107,7 +128,10 @@ namespace Azure.AI.Extensions.OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResponsesStructuredOutputDefinition outputs = default;
+            string name = default;
+            string description = default;
+            IDictionary<string, ToolConfig> toolConfigs = default;
+            ResponsesStructuredOutputDefinition outputDefinition = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -115,9 +139,33 @@ namespace Azure.AI.Extensions.OpenAI
                     @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("tool_configs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                    }
+                    toolConfigs = dictionary;
+                    continue;
+                }
                 if (prop.NameEquals("outputs"u8))
                 {
-                    outputs = ResponsesStructuredOutputDefinition.DeserializeResponsesStructuredOutputDefinition(prop.Value, options);
+                    outputDefinition = ResponsesStructuredOutputDefinition.DeserializeResponsesStructuredOutputDefinition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +173,13 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesCaptureStructuredOutputsTool(@type, additionalBinaryDataProperties, outputs);
+            return new ResponsesCaptureStructuredOutputsTool(
+                @type,
+                additionalBinaryDataProperties,
+                name,
+                description,
+                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
+                outputDefinition);
         }
     }
 }

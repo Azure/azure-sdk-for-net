@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Hci.Vm
                     yield break;
                 }
                 GalleryImageListResult result = GalleryImageListResult.FromResponse(response);
-                yield return Page<HciVmGalleryImageData>.FromValues((IReadOnlyList<HciVmGalleryImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HciVmGalleryImageData>.FromValues((IReadOnlyList<HciVmGalleryImageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

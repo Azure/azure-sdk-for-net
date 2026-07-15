@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 RuleSetListResult result = RuleSetListResult.FromResponse(response);
-                yield return Page<FrontDoorRuleSetData>.FromValues((IReadOnlyList<FrontDoorRuleSetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<FrontDoorRuleSetData>.FromValues((IReadOnlyList<FrontDoorRuleSetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

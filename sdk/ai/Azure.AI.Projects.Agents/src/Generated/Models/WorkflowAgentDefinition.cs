@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The workflow agent definition. </summary>
+    [Experimental("AAIP001")]
     public partial class WorkflowAgentDefinition : ProjectsAgentDefinition
     {
         /// <summary> Initializes a new instance of <see cref="WorkflowAgentDefinition"/>. </summary>

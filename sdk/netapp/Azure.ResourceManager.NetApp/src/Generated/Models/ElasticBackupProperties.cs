@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -19,19 +18,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticBackupProperties"/>. </summary>
-        /// <param name="elasticVolumeResourceId"> ResourceId used to identify the Elastic Volume. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="elasticVolumeResourceId"/> is null. </exception>
-        public ElasticBackupProperties(ResourceIdentifier elasticVolumeResourceId)
-        {
-            Argument.AssertNotNull(elasticVolumeResourceId, nameof(elasticVolumeResourceId));
-
-            ElasticVolumeResourceId = elasticVolumeResourceId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ElasticBackupProperties"/>. </summary>
-        /// <param name="createdOn"> The creation date of the backup. </param>
-        /// <param name="snapshotCreationOn"> The snapshot creation date of the backup. </param>
-        /// <param name="completionOn"> The completion date of the backup. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="size"> Size of backup in bytes. </param>
         /// <param name="label"> Label for backup. </param>
@@ -43,11 +29,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="elasticBackupPolicyResourceId"> ResourceId used to identify the elastic backup policy. </param>
         /// <param name="volumeSize"> Specifies if the backup is for a large volume. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticBackupProperties(DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, NetAppProvisioningState? provisioningState, long? size, string label, ElasticBackupType? backupType, string failureReason, ResourceIdentifier elasticVolumeResourceId, ElasticBackupSnapshotUsage? snapshotUsage, ResourceIdentifier elasticSnapshotResourceId, ResourceIdentifier elasticBackupPolicyResourceId, ElasticBackupVolumeSize? volumeSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticBackupProperties(NetAppProvisioningState? provisioningState, long? size, string label, ElasticBackupType? backupType, string failureReason, ResourceIdentifier elasticVolumeResourceId, ElasticBackupSnapshotUsage? snapshotUsage, ResourceIdentifier elasticSnapshotResourceId, ResourceIdentifier elasticBackupPolicyResourceId, ElasticBackupVolumeSize? volumeSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CreatedOn = createdOn;
-            SnapshotCreationOn = snapshotCreationOn;
-            CompletionOn = completionOn;
             ProvisioningState = provisioningState;
             Size = size;
             Label = label;
@@ -60,44 +43,5 @@ namespace Azure.ResourceManager.NetApp.Models
             VolumeSize = volumeSize;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The creation date of the backup. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-
-        /// <summary> The snapshot creation date of the backup. </summary>
-        public DateTimeOffset? SnapshotCreationOn { get; }
-
-        /// <summary> The completion date of the backup. </summary>
-        public DateTimeOffset? CompletionOn { get; }
-
-        /// <summary> Azure lifecycle management. </summary>
-        public NetAppProvisioningState? ProvisioningState { get; }
-
-        /// <summary> Size of backup in bytes. </summary>
-        public long? Size { get; }
-
-        /// <summary> Label for backup. </summary>
-        public string Label { get; set; }
-
-        /// <summary> Type of backup Manual or Scheduled. </summary>
-        public ElasticBackupType? BackupType { get; }
-
-        /// <summary> Failure reason. </summary>
-        public string FailureReason { get; }
-
-        /// <summary> ResourceId used to identify the Elastic Volume. </summary>
-        public ResourceIdentifier ElasticVolumeResourceId { get; set; }
-
-        /// <summary> Manual backup using an already existing snapshot. This will always be CreateNewSnapshot for scheduled backups and UseExistingSnapshot/CreateNewSnapshot for manual backups. </summary>
-        public ElasticBackupSnapshotUsage? SnapshotUsage { get; set; }
-
-        /// <summary> ResourceId used to identify the elastic snapshot resource. This is required when an existing snapshot needs to be used for creating a manual backup. </summary>
-        public ResourceIdentifier ElasticSnapshotResourceId { get; set; }
-
-        /// <summary> ResourceId used to identify the elastic backup policy. </summary>
-        public ResourceIdentifier ElasticBackupPolicyResourceId { get; }
-
-        /// <summary> Specifies if the backup is for a large volume. </summary>
-        public ElasticBackupVolumeSize? VolumeSize { get; }
     }
 }

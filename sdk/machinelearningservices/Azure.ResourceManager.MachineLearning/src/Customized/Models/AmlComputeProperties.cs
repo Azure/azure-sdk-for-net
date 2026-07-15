@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class AmlComputeProperties
     {
         // Customized: restore legacy property name; TypeSpec rename is not applied to this generated property declaration.
+        /// <summary> Collection of errors encountered by various compute nodes during node setup. </summary>
         [WirePath("errors")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyList<MachineLearningError> Errors { get; }

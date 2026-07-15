@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     yield break;
                 }
                 L2IsolationDomainsListResult result = L2IsolationDomainsListResult.FromResponse(response);
-                yield return Page<NetworkFabricL2IsolationDomainData>.FromValues((IReadOnlyList<NetworkFabricL2IsolationDomainData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkFabricL2IsolationDomainData>.FromValues((IReadOnlyList<NetworkFabricL2IsolationDomainData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

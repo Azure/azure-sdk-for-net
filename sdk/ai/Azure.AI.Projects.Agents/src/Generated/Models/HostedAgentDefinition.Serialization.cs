@@ -76,16 +76,6 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(HostedAgentDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Tools))
-            {
-                writer.WritePropertyName("tools"u8);
-                writer.WriteStartArray();
-                foreach (ProjectsAgentTool item in Tools)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             writer.WritePropertyName("cpu"u8);
             writer.WriteStringValue(Cpu);
             writer.WritePropertyName("memory"u8);
@@ -161,7 +151,6 @@ namespace Azure.AI.Projects.Agents
             ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<ProjectsAgentTool> tools = default;
             string cpu = default;
             string memory = default;
             IDictionary<string, string> environmentVariables = default;
@@ -183,20 +172,6 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("tools"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ProjectsAgentTool> array = new List<ProjectsAgentTool>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ProjectsAgentTool.DeserializeProjectsAgentTool(item, options));
-                    }
-                    tools = array;
                     continue;
                 }
                 if (prop.NameEquals("cpu"u8))
@@ -280,7 +255,6 @@ namespace Azure.AI.Projects.Agents
                 kind,
                 contentFilterConfiguration,
                 additionalBinaryDataProperties,
-                tools ?? new ChangeTrackingList<ProjectsAgentTool>(),
                 cpu,
                 memory,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),

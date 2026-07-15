@@ -130,7 +130,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            RoutineTriggerType @type = default;
+            RoutineTriggerKind @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string provider = default;
             string eventName = default;
@@ -139,7 +139,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new RoutineTriggerType(prop.Value.GetString());
+                    @type = new RoutineTriggerKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provider"u8))

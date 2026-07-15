@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> IP configurations for virtual network gateway. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IList<VirtualNetworkGatewayIPConfiguration> IpConfigurations
+        public IList<VirtualNetworkGatewayIPConfiguration> IPConfigurations
         {
             get
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VirtualNetworkGatewayPropertiesFormat();
                 }
-                return Properties.IpConfigurations;
+                return Properties.IPConfigurations;
             }
         }
 
@@ -147,11 +147,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Whether private IP needs to be enabled on this gateway for connections or not. </summary>
         [WirePath("properties.enablePrivateIpAddress")]
-        public bool? EnablePrivateIpAddress
+        public bool? EnablePrivateIPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.EnablePrivateIpAddress;
+                return Properties is null ? default : Properties.EnablePrivateIPAddress;
             }
             set
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VirtualNetworkGatewayPropertiesFormat();
                 }
-                Properties.EnablePrivateIpAddress = value;
+                Properties.EnablePrivateIPAddress = value;
             }
         }
 

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         internal VpnSiteLinkProperties(VpnLinkProviderProperties linkProperties, string ipAddress, string fqdn, VpnLinkBgpSettings bgpProperties, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LinkProperties = linkProperties;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             Fqdn = fqdn;
             BgpProperties = bgpProperties;
             ProvisioningState = provisioningState;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The ip-address for the vpn-site-link. </summary>
         [WirePath("ipAddress")]
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
 
         /// <summary> FQDN of vpn-site-link. </summary>
         [WirePath("fqdn")]

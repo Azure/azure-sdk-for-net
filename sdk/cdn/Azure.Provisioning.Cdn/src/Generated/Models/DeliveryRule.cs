@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Cdn
             _order = DefineProperty<int>(nameof(Order), new string[] { "order" }, isRequired: true);
             _conditions = DefineListProperty<DeliveryRuleCondition>(nameof(Conditions), new string[] { "conditions" });
             _actions = DefineListProperty<DeliveryRuleAction>(nameof(Actions), new string[] { "actions" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DeliveryRule that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

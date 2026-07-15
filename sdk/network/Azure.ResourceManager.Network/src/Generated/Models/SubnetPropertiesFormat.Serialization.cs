@@ -139,31 +139,31 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IpConfigurations))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (NetworkIPConfiguration item in IpConfigurations)
+                foreach (NetworkIPConfiguration item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IpConfigurationProfiles))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurationProfiles))
             {
                 writer.WritePropertyName("ipConfigurationProfiles"u8);
                 writer.WriteStartArray();
-                foreach (NetworkIPConfigurationProfile item in IpConfigurationProfiles)
+                foreach (NetworkIPConfigurationProfile item in IPConfigurationProfiles)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpAllocations))
+            if (Optional.IsCollectionDefined(IPAllocations))
             {
                 writer.WritePropertyName("ipAllocations"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in IpAllocations)
+                foreach (NetworkSubResource item in IPAllocations)
                 {
                     writer.WriteObjectValue(item, options);
                 }

@@ -1,16 +1,18 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2026-07-15)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version to 2026-05-15-preview.
+- Added `ArtifactSigningCertificateProfileResource.RevokeCertificates` to revoke multiple certificates in a single request.
+- Added `ProgramType` property to `CertificateProfileProperties`.
 
 ### Other Changes
 
-## 1.0.1 (2026-06-02)
+- Deprecated `ArtifactSigningCertificateProfileResource.RevokeCertificate`. Use `RevokeCertificates` instead.
+
+## 1.0.1 (2026-05-15)
 
 ### Other Changes
 

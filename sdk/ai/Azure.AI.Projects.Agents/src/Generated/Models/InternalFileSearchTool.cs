@@ -17,6 +17,7 @@ namespace OpenAI
         public InternalFileSearchTool(IEnumerable<string> vectorStoreIds) : base(ToolType.FileSearch)
         {
             VectorStoreIds = vectorStoreIds.ToList();
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalFileSearchTool"/>. </summary>
@@ -26,12 +27,18 @@ namespace OpenAI
         /// <param name="maxNumResults"> The maximum number of results to return. This number should be between 1 and 50 inclusive. </param>
         /// <param name="rankingOptions"> Ranking options for search. </param>
         /// <param name="filters"></param>
-        internal InternalFileSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> vectorStoreIds, long? maxNumResults, InternalRankingOptions rankingOptions, BinaryData filters) : base(@type, additionalBinaryDataProperties)
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        internal InternalFileSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> vectorStoreIds, long? maxNumResults, InternalRankingOptions rankingOptions, BinaryData filters, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             VectorStoreIds = vectorStoreIds;
             MaxNumResults = maxNumResults;
             RankingOptions = rankingOptions;
             Filters = filters;
+            Name = name;
+            Description = description;
+            ToolConfigs = toolConfigs;
         }
 
         /// <summary> The IDs of the vector stores to search. </summary>
@@ -83,5 +90,14 @@ namespace OpenAI
         /// </para>
         /// </summary>
         public BinaryData Filters { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Description { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

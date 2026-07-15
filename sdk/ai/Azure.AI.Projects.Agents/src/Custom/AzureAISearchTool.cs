@@ -24,6 +24,7 @@ public partial class AzureAISearchTool
         Argument.AssertNotNull(options, nameof(options));
 
         Options = options;
+        ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
     }
 
     internal AzureAISearchTool()

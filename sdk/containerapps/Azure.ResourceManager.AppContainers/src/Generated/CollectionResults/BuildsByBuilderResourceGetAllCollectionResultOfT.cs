@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 BuildList result = BuildList.FromResponse(response);
-                yield return Page<BuildData>.FromValues((IReadOnlyList<BuildData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BuildData>.FromValues((IReadOnlyList<BuildData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
