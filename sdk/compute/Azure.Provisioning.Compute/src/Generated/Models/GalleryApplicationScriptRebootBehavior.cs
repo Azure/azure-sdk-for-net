@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum GalleryApplicationScriptRebootBehavior
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> Rerun. </summary>
-        Rerun
+        Rerun = 1
     }
 }

@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum ComputeEncryptionType
     {
         /// <summary> Disk is encrypted at rest with Platform managed key. It is the default encryption type. This is not a valid encryption type for disk encryption sets. </summary>
-        EncryptionAtRestWithPlatformKey,
+        EncryptionAtRestWithPlatformKey = 0,
         /// <summary> Disk is encrypted at rest with Customer managed key that can be changed and revoked by a customer. </summary>
-        EncryptionAtRestWithCustomerKey,
+        EncryptionAtRestWithCustomerKey = 1,
         /// <summary> Disk is encrypted at rest with 2 layers of encryption. One of the keys is Customer managed and the other key is Platform managed. </summary>
-        EncryptionAtRestWithPlatformAndCustomerKeys
+        EncryptionAtRestWithPlatformAndCustomerKeys = 2
     }
 }

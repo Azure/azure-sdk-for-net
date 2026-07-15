@@ -13,12 +13,12 @@ namespace Azure.Provisioning.Compute
     public enum VirtualMachineScaleSetScaleInRule
     {
         /// <summary> Default. </summary>
-        Default,
+        Default = 0,
         /// <summary> OldestVm. </summary>
         [DataMember(Name = "OldestVM")]
-        OldestVm,
+        OldestVm = 1,
         /// <summary> NewestVm. </summary>
         [DataMember(Name = "NewestVM")]
-        NewestVm
+        NewestVm = 2
     }
 }

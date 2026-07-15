@@ -13,18 +13,18 @@ namespace Azure.Provisioning.Compute
     public enum DiskSecurityType
     {
         /// <summary> Trusted Launch provides security features such as secure boot and virtual Trusted Platform Module (vTPM). </summary>
-        TrustedLaunch,
+        TrustedLaunch = 0,
         /// <summary> Indicates Confidential VM disk with only VM guest state encrypted. </summary>
         [DataMember(Name = "ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey")]
-        ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey,
+        ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey = 1,
         /// <summary> Indicates Confidential VM disk with both OS disk and VM guest state encrypted with a platform managed key. </summary>
         [DataMember(Name = "ConfidentialVM_DiskEncryptedWithPlatformKey")]
-        ConfidentialVmDiskEncryptedWithPlatformKey,
+        ConfidentialVmDiskEncryptedWithPlatformKey = 2,
         /// <summary> Indicates Confidential VM disk with both OS disk and VM guest state encrypted with a customer managed key. </summary>
         [DataMember(Name = "ConfidentialVM_DiskEncryptedWithCustomerKey")]
-        ConfidentialVmDiskEncryptedWithCustomerKey,
+        ConfidentialVmDiskEncryptedWithCustomerKey = 3,
         /// <summary> Indicates Confidential VM disk with a ephemeral vTPM. vTPM state is not persisted across VM reboots. </summary>
         [DataMember(Name = "ConfidentialVM_NonPersistedTPM")]
-        ConfidentialVmNonPersistedTPM
+        ConfidentialVmNonPersistedTPM = 4
     }
 }
