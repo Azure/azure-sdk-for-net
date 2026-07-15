@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure;
 using System.ClientModel.Primitives;
+using Azure;
 
 namespace Azure.AI.AgentServer.Optimization;
 
@@ -16,9 +16,9 @@ public partial class AgentOptimizationClient
     /// <summary>
     /// Resolves a <see cref="CandidateDeployConfig"/> using a priority waterfall:
     /// <list type="number">
-    /// <item><description><b>API</b> — calls <c>GetCandidateConfigFlat</c> using
+    /// <item><description><b>API</b> ï¿½ calls <c>GetCandidateConfigFlat</c> using
     /// the client's configured endpoint and credential pipeline.</description></item>
-    /// <item><description><b>Env var</b> — reads <c>OPTIMIZATION_CONFIG</c> as
+    /// <item><description><b>Env var</b> ï¿½ reads <c>OPTIMIZATION_CONFIG</c> as
     /// inline JSON and deserializes it.</description></item>
     /// </list>
     /// Returns a <see cref="Response{T}"/> wrapping the resolved config so callers

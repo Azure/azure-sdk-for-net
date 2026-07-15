@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
-
 namespace Routes
 {
-    [ModelReaderWriterBuildable(typeof(ExpandParameters))]
-    public partial class RoutesContext : ModelReaderWriterContext
+    public static partial class RoutesModelFactory
     {
+        public static ExpandParameters ExpandParameters(string @field = default, string value = default) => throw null;
     }
 }
