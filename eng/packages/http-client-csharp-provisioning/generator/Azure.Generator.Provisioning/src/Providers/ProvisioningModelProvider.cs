@@ -54,7 +54,25 @@ namespace Azure.Generator.Provisioning.Providers
                 // compatibility decision and must take precedence over the generator's default base.
                 // Any properties duplicated by that compatibility base are suppressed in custom code
                 // with CodeGenSuppress rather than inferred here.
-                return CustomCodeView.BaseType;
+                var customBaseType = CustomCodeView.BaseType;
+                if (string.IsNullOrEmpty(customBaseType.Namespace))
+                {
+                    // The base ModelProvider resolver creates every input model while searching for
+                    // an unqualified type. Provisioning cannot do that because its settable analysis
+                    // intentionally covers only reachable models. Resolve only the requested model so
+                    // same-namespace custom code remains concise without materializing unrelated types.
+                    var inputBaseModel = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.Models
+                        .FirstOrDefault(model => string.Equals(model.Name, customBaseType.Name, StringComparison.Ordinal));
+                    var baseProvider = inputBaseModel == null
+                        ? null
+                        : ProvisioningGenerator.Instance.TypeFactory.CreateModel(inputBaseModel);
+                    if (baseProvider != null)
+                    {
+                        return baseProvider.Type;
+                    }
+                }
+
+                return customBaseType;
             }
 
             // Derived discriminated types inherit from their base model type.
