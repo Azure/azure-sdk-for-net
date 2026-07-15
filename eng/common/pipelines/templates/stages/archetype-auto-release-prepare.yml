@@ -56,7 +56,7 @@ stages:
 
           - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
 
-          - task: PowerShell@2
+          - task: AzureCLI@2
             name: resolve
             displayName: Determine releasable packages
             env:
@@ -65,8 +65,10 @@ stages:
               # Map the secret token to env so it is not written to the task command line.
               GH_TOKEN: $(GH_TOKEN)
             inputs:
-              pwsh: true
-              filePath: $(System.DefaultWorkingDirectory)/eng/common/scripts/Resolve-AutoReleasePackages.ps1
+              azureSubscription: opensource-api-connection
+              scriptType: pscore
+              scriptLocation: scriptPath
+              scriptPath: $(System.DefaultWorkingDirectory)/eng/common/scripts/Resolve-AutoReleasePackages.ps1
               arguments: >
                 -CommitSha "$(Build.SourceVersion)"
                 -RepoId "$(Build.Repository.Name)"
