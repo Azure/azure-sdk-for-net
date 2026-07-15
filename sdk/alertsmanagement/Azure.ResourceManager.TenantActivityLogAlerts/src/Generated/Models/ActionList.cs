@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         }
 
         /// <summary> The list of the Action Groups. </summary>
-        public IList<TenantActivityLogAlertActionGroup> ActionGroups { get; }
+        public IList<TenantActivityLogAlertActionGroup> ActionGroups { get; } = new ChangeTrackingList<TenantActivityLogAlertActionGroup>();
     }
 }

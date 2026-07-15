@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
         }
 
         /// <summary> The list of Activity Log Alert rule conditions. </summary>
-        public IList<TenantActivityLogAlertAnyOfOrLeafCondition> AllOf { get; }
+        public IList<TenantActivityLogAlertAnyOfOrLeafCondition> AllOf { get; } = new ChangeTrackingList<TenantActivityLogAlertAnyOfOrLeafCondition>();
     }
 }
