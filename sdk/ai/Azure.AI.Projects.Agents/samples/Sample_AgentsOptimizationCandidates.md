@@ -37,6 +37,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MOD
 var anotherModelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME2");
 AgentAdministrationClientOptions options = new();
 options.AddPolicy(new FeaturePolicy("AgentsOptimization=V2Preview"), PipelinePosition.PerCall);
+options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
 AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential(), options: options);
 AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
 ```
@@ -51,7 +52,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a prompt agent, who always give wrong answers."
 };
 ProjectsAgentVersion agentVersion = agentsClient.CreateAgentVersion(
-    agentName: "myAgent",
+    agentName: "myAgent1",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 ```
@@ -64,7 +65,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a prompt agent, who always give wrong answers."
 };
 ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
-    agentName: "myAgent",
+    agentName: "cs-e2e-tests-client",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 ```
@@ -138,6 +139,7 @@ private OptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
   - `model_search_space` - the models considered during Agent optimization.
   - `model` - the model used by Hosted Agent, for Declarative Agent, the model from definition is being used. For more information about optimizing Hosted Agents please see the [document](https://learn.microsoft.com/azure/foundry/agents/how-to/make-agent-optimizer-ready).
 In his example we will try to optimize all four: model, system prompt, tool description and a skill.
+**Note:** For optimization of declarative Agent, the `OptimizationConfig` is optional; `system_prompt`, `tools` and `model` parameters are automatically detected. `skills` optimization is only available for Hosted Agents. Here we provide `OptimizationConfig` for demonstration purposes only.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateOptimizationJob_AgentsOptimizationCandidates_Sync

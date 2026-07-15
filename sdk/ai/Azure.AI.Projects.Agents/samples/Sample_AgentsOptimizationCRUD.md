@@ -135,6 +135,7 @@ private OptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
   - `EvalModel` - used for Agent evaluation.
   - `model_search_space` - the models considered during Agent optimization.
   - `model` - the model used by Hosted Agent, for Declarative Agent, the model from definition is being used. For more information about optimizing Hosted Agents please see the [document](https://learn.microsoft.com/azure/foundry/agents/how-to/make-agent-optimizer-ready).
+**Note:** For optimization of declarative Agent, the `OptimizationConfig` is optional; `system_prompt`, `tools` and `model` parameters are automatically detected. `skills` optimization is only available for Hosted Agents. Here we provide `OptimizationConfig` for demonstration purposes only.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateOptimizationJob_AgentsOptimization_Sync
@@ -283,7 +284,7 @@ Console.WriteLine($"The job {cancelledJob.Id} was cancelled.");
 Synchronous sample:
 ```C# Snippet:Sample_ListOptimizationJobs_AgentsOptimization_Sync
 Console.WriteLine("Listing optimization jobs:");
-foreach (OptimizationJob oneJob in jobsClient.GetAll())
+foreach (OptimizationJobListItem oneJob in jobsClient.GetAll())
 {
     Console.WriteLine($"    Job: {oneJob.Id}, Status: {oneJob.Status}.");
 }
@@ -292,7 +293,7 @@ foreach (OptimizationJob oneJob in jobsClient.GetAll())
 Asynchronous sample:
 ```C# Snippet:Sample_ListOptimizationJobs_AgentsOptimization_Async
 Console.WriteLine("Listing optimization jobs:");
-await foreach (OptimizationJob oneJob in jobsClient.GetAllAsync())
+await foreach (OptimizationJobListItem oneJob in jobsClient.GetAllAsync())
 {
     Console.WriteLine($"    Job: {oneJob.Id}, Status: {oneJob.Status}.");
 }

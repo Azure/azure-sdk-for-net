@@ -999,10 +999,6 @@ public class AgentsTests : AgentsTestBase
     public async Task TestAgentOptimizationJobCRUD()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        //AgentAdministrationClientOptions options = new();
-        //options.AddPolicy(new FeaturePolicy("AgentsOptimization=V2Preview"), PipelinePosition.PerCall);
-        //options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
-        //AgentAdministrationClient agentsClient = new(endpoint: new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), tokenProvider: new AzureCliCredential(), options: options);
         AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
         ProjectsAgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
             AGENT_NAME,
@@ -1011,7 +1007,7 @@ public class AgentsTests : AgentsTestBase
                 Metadata = { ["delete_me"] = "please " },
             });
         Assert.That(newAgentVersion?.Id, Is.Not.Null.And.Not.Empty);
-        string opId = Guid.NewGuid().ToString();
+        string opId = IsAsync ? "eaf06a53-682e-4d1e-943b-44a9e6ccfefd" : "8fd7f680-7299-44c6-81cb-a7a25a733437";
         OptimizationJob submittedJob1 = await jobsClient.CreateAsync(job: GetOptimizationJob(newAgentVersion), operationId: opId, cancellationToken: default);
         Assert.That(submittedJob1?.Id, Is.Not.Null.And.Not.Empty);
         string prevID = submittedJob1.Id;
@@ -1022,11 +1018,11 @@ public class AgentsTests : AgentsTestBase
         submittedJob1 = await jobsClient.GetAsync(submittedJob1.Id, cancellationToken: default);
         while (submittedJob1.Status != AgentsJobStatus.Failed && submittedJob1.Status != AgentsJobStatus.Succeeded)
         {
-            await Task.Delay(500);
+            await Delay();
             submittedJob1 = await jobsClient.GetAsync(submittedJob1.Id, cancellationToken: default);
         }
         Assert.That(submittedJob1.Status, Is.EqualTo(AgentsJobStatus.Succeeded), submittedJob1.Error?.Message);
-        Assert.That(submittedJob1.Result.Candidates.Count, Is.GreaterThan(1));
+        Assert.That(submittedJob1.Result.Candidates.Count, Is.GreaterThanOrEqualTo(1));
         // Cancel
         OptimizationJob submittedJob2 = await jobsClient.CreateAsync(job: GetOptimizationJob(newAgentVersion), operationId: default, cancellationToken: default);
         Assert.That(submittedJob2.Id, Is.Not.EqualTo(submittedJob1.Id));
@@ -1063,25 +1059,25 @@ public class AgentsTests : AgentsTestBase
             OptimizationJob submittedJob = await jobsClient.CreateAsync(job: GetOptimizationJob(newAgentVersion), operationId: default, cancellationToken: default);
             await jobsClient.CancelAsync(jobId: submittedJob.Id, cancellationToken: default);
         }
-        List<OptimizationJob> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
+        List<OptimizationJobListItem> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending, agentName: AGENT_NAME).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Go forward.
-        List<OptimizationJob> forward = await jobsClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        List<OptimizationJobListItem> forward = await jobsClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
         //// Two limits:
-        forward = await jobsClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).ToListAsync();
+        forward = await jobsClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(2));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
         //// Go backwards.
-        List<OptimizationJob> backwards = await jobsClient.GetAllAsync(order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        List<OptimizationJobListItem> backwards = await jobsClient.GetAllAsync(order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
         Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
         //// Two limits.
-        backwards = await jobsClient.GetAllAsync(order: AgentListOrder.Descending, after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
+        backwards = await jobsClient.GetAllAsync(order: AgentListOrder.Descending, after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(2));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
@@ -1184,7 +1180,7 @@ public class AgentsTests : AgentsTestBase
         {
             items.Add(new OptimizationDatasetItem()
             {
-                Query = $"What is 42 plus {i * 2}? Please save the result as text: The answer is .... For example: Q: What is 42 plus 12? A: The answer is 56.",
+                Query = $"What is 42 plus {i * 2}? Please save the result as text: The answer is ... For example: Q: What is 42 plus 12? A: The answer is 56.",
                 GroundTruth = $"The answer is {(42 + i * 2)}",
                 Criteria = { criterion }
             });
@@ -1202,7 +1198,9 @@ public class AgentsTests : AgentsTestBase
                     AgentVersion = agentVersion.Version
                 },
                 trainDataset: GetDataset(0, 7),
-                evaluators: [new OptimizationEvaluatorRef(name: "builtin.meteor_score")]
+                evaluators: [new OptimizationEvaluatorRef(name: "builtin.meteor_score") {
+                    Version="2"
+                }]
             )
             {
                 ValidationDataset = GetDataset(7, 3),

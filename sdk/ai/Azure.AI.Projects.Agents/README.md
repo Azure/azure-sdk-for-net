@@ -519,6 +519,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MOD
 var anotherModelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME2");
 AgentAdministrationClientOptions options = new();
 options.AddPolicy(new FeaturePolicy("AgentsOptimization=V2Preview"), PipelinePosition.PerCall);
+options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
 AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential(), options: options);
 AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
 ```

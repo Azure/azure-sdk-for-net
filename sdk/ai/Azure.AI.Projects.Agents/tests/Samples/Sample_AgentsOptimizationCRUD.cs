@@ -169,7 +169,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         #endregion
         #region Snippet:Sample_ListOptimizationJobs_AgentsOptimization_Async
         Console.WriteLine("Listing optimization jobs:");
-        await foreach (OptimizationJob oneJob in jobsClient.GetAllAsync())
+        await foreach (OptimizationJobListItem oneJob in jobsClient.GetAllAsync())
         {
             Console.WriteLine($"    Job: {oneJob.Id}, Status: {oneJob.Status}.");
         }
@@ -277,7 +277,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         #endregion
         #region Snippet:Sample_ListOptimizationJobs_AgentsOptimization_Sync
         Console.WriteLine("Listing optimization jobs:");
-        foreach (OptimizationJob oneJob in jobsClient.GetAll())
+        foreach (OptimizationJobListItem oneJob in jobsClient.GetAll())
         {
             Console.WriteLine($"    Job: {oneJob.Id}, Status: {oneJob.Status}.");
         }

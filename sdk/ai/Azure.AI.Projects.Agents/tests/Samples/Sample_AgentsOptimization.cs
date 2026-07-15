@@ -247,7 +247,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
             Instructions = "You are a prompt agent, who always give wrong answers."
         };
         ProjectsAgentVersion agentVersion = agentsClient.CreateAgentVersion(
-            agentName: "myAgent",
+            agentName: "myAgent1",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion

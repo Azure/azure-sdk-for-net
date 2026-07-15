@@ -304,7 +304,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Delete the specific version of the ModelVersion. The service returns 200 OK if the ModelVersion was deleted successfully or if the ModelVersion does not exist.
+        /// [Protocol Method] Removes the specified model version. Returns 200 whether the version existed or not.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -338,7 +338,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Delete the specific version of the ModelVersion. The service returns 200 OK if the ModelVersion was deleted successfully or if the ModelVersion does not exist.
+        /// [Protocol Method] Removes the specified model version. Returns 200 whether the version existed or not.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -371,7 +371,7 @@ namespace Azure.AI.Projects
             }
         }
 
-        /// <summary> Delete the specific version of the ModelVersion. The service returns 200 OK if the ModelVersion was deleted successfully or if the ModelVersion does not exist. </summary>
+        /// <summary> Removes the specified model version. Returns 200 whether the version existed or not. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the ModelVersion to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -386,7 +386,7 @@ namespace Azure.AI.Projects
             return DeleteModelVersion(name, version, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Delete the specific version of the ModelVersion. The service returns 200 OK if the ModelVersion was deleted successfully or if the ModelVersion does not exist. </summary>
+        /// <summary> Removes the specified model version. Returns 200 whether the version existed or not. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the ModelVersion to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -402,7 +402,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Update an existing ModelVersion with the given version id
+        /// [Protocol Method] Updates an existing model version identified by its version ID.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -438,7 +438,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Update an existing ModelVersion with the given version id
+        /// [Protocol Method] Updates an existing model version identified by its version ID.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -658,7 +658,7 @@ namespace Azure.AI.Projects
         /// <summary> Initiates a new pending upload or retrieves an existing one for the specified model version. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
-        /// <param name="pendingUploadRequest"></param>
+        /// <param name="pendingUploadRequest"> The pending upload request request body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
@@ -677,7 +677,7 @@ namespace Azure.AI.Projects
         /// <summary> Initiates a new pending upload or retrieves an existing one for the specified model version. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
-        /// <param name="pendingUploadRequest"></param>
+        /// <param name="pendingUploadRequest"> The pending upload request request body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
@@ -768,7 +768,7 @@ namespace Azure.AI.Projects
         /// <summary> Retrieves temporary credentials for accessing the storage backing the specified model version. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
-        /// <param name="credentialRequest"></param>
+        /// <param name="credentialRequest"> The credential request request body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
@@ -787,7 +787,7 @@ namespace Azure.AI.Projects
         /// <summary> Retrieves temporary credentials for accessing the storage backing the specified model version. </summary>
         /// <param name="name"> Name of the model. </param>
         /// <param name="version"> Version of the model. </param>
-        /// <param name="credentialRequest"></param>
+        /// <param name="credentialRequest"> The credential request request body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>

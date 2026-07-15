@@ -9,6 +9,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed listing of Agent Optimization Jobs.
 
 ### Other Changes
 
