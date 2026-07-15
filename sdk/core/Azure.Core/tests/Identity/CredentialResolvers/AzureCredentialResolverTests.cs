@@ -3,7 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
@@ -130,20 +134,205 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
             Assert.IsInstanceOf<ChainedTokenCredential>(provider);
         }
 
-        [TestCase("AzureCliCredential")]
-        [TestCase("AzurePowerShellCredential")]
-        [TestCase("AzureDeveloperCliCredential")]
-        [TestCase("VisualStudioCredential")]
-        [TestCase("VisualStudioCodeCredential")]
-        [TestCase("EnvironmentCredential")]
-        [TestCase("WorkloadIdentityCredential")]
-        [TestCase("ManagedIdentityCredential")]
-        [TestCase("InteractiveBrowserCredential")]
-        [TestCase("BrokerCredential")]
-        public void TryResolve_KnownSingleSource_ProducesDefaultAzureCredential(string source)
+        [Test]
+        public void TryResolve_ChainedTokenCredential_EntriesAreChained()
         {
-            // Single-source dispatch goes through DefaultAzureCredential, which preserves
-            // env-var defaults, the broker reflection hop, and other existing behavior.
+            // Each entry in a resolver-built chain must be constructed with
+            // IsChainedCredential=true so a transient failure surfaces as
+            // CredentialUnavailableException and ChainedTokenCredential falls
+            // through to the next entry instead of aborting on the first one.
+            var section = BuildSection(new Dictionary<string, string>
+            {
+                ["MyClient:Credential:CredentialSource"] = "ChainedTokenCredential",
+                ["MyClient:Credential:Sources:0:CredentialSource"] = "AzureCliCredential",
+                ["MyClient:Credential:Sources:1:CredentialSource"] = "AzurePowerShellCredential",
+                ["MyClient:Credential:Sources:2:CredentialSource"] = "AzureDeveloperCliCredential",
+            });
+
+            var resolver = new AzureCredentialResolver();
+            Assert.IsTrue(resolver.TryResolve(section, out var provider));
+
+            TokenCredential[] sources = GetChainSources((ChainedTokenCredential)provider);
+            Assert.AreEqual(3, sources.Length);
+            foreach (TokenCredential source in sources)
+            {
+                Assert.IsTrue(GetIsChained(source), $"{source.GetType().Name} should be constructed as a chained credential");
+            }
+        }
+
+        [Test]
+        public void TryResolve_ChainedTokenCredential_CustomSourceResolvedByThirdPartyResolver()
+        {
+            // A source AzureCredentialResolver doesn't recognize is handed to the
+            // active resolver chain so a third-party resolver can contribute the
+            // chain entry — and it receives the chained signal.
+            IConfiguration config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["MyClient:Credential:CredentialSource"] = "ChainedTokenCredential",
+                    ["MyClient:Credential:Sources:0:CredentialSource"] = "AzureCliCredential",
+                    ["MyClient:Credential:Sources:1:CredentialSource"] = "MyCustomCredential",
+                })
+                .Build();
+
+            CredentialSettings settings = config.GetAzureCredentialSettings("MyClient:Credential", new FakeCustomResolver());
+
+            Assert.IsNotNull(settings);
+            Assert.IsInstanceOf<ChainedTokenCredential>(settings.TokenProvider);
+
+            TokenCredential[] sources = GetChainSources((ChainedTokenCredential)settings.TokenProvider);
+            Assert.AreEqual(2, sources.Length);
+            Assert.IsInstanceOf<AzureCliCredential>(sources[0]);
+
+            FakeCustomCredential custom = sources[1] as FakeCustomCredential;
+            Assert.IsNotNull(custom, "Third-party resolver should have contributed the second chain entry");
+            Assert.IsTrue(custom.IsChained, "Custom chain entry should have been marked chained");
+        }
+
+        [Test]
+        public void TryResolve_ChainedTokenCredential_UnclaimedCustomSource_ReturnsFalse()
+        {
+            // No resolver claims the custom source and no chain callback is
+            // available (single-arg overload), so the whole chain defers.
+            var section = BuildSection(new Dictionary<string, string>
+            {
+                ["MyClient:Credential:CredentialSource"] = "ChainedTokenCredential",
+                ["MyClient:Credential:Sources:0:CredentialSource"] = "AzureCliCredential",
+                ["MyClient:Credential:Sources:1:CredentialSource"] = "MyCustomCredential",
+            });
+
+            var resolver = new AzureCredentialResolver();
+            Assert.IsFalse(resolver.TryResolve(section, out var provider));
+            Assert.IsNull(provider);
+        }
+
+        [Test]
+        public void TryResolve_ChainedTokenCredential_CustomSource_DoesNotCollideWithStandalone()
+        {
+            // The same custom source resolved standalone (not chained) and inside
+            // a chain (chained) must not collide in the resolver engine's cache —
+            // the chained overlay must be part of the section's cache key.
+            IConfiguration config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Standalone:CredentialSource"] = "MyCustomCredential",
+                    ["Chain:CredentialSource"] = "ChainedTokenCredential",
+                    ["Chain:Sources:0:CredentialSource"] = "MyCustomCredential",
+                })
+                .Build();
+
+            var custom = new FakeCustomResolver();
+
+            var standalone = config.GetAzureCredentialSettings("Standalone", custom).TokenProvider as FakeCustomCredential;
+            Assert.IsNotNull(standalone);
+            Assert.IsFalse(standalone.IsChained, "Standalone custom credential should not be chained");
+
+            CredentialSettings chain = config.GetAzureCredentialSettings("Chain", custom);
+            TokenCredential[] sources = GetChainSources((ChainedTokenCredential)chain.TokenProvider);
+            var chained = sources[0] as FakeCustomCredential;
+            Assert.IsNotNull(chained);
+            Assert.IsTrue(chained.IsChained, "Chained custom credential should be chained despite identical CredentialSource");
+        }
+
+        [Test]
+        public void TryResolve_ChainedTokenCredential_AzureEntryFlowsThroughResolverChain()
+        {
+            // An Azure source inside a chain is resolved through the active resolver
+            // chain, so a caller-supplied resolver ordered ahead of the built-in one
+            // can claim it. The unclaimed entry falls through to the built-in resolver.
+            IConfiguration config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["MyClient:Credential:CredentialSource"] = "ChainedTokenCredential",
+                    ["MyClient:Credential:Sources:0:CredentialSource"] = "AzureCliCredential",
+                    ["MyClient:Credential:Sources:1:CredentialSource"] = "EnvironmentCredential",
+                })
+                .Build();
+
+            CredentialSettings settings = config.GetAzureCredentialSettings("MyClient:Credential", new AzureCliOverrideResolver());
+
+            TokenCredential[] sources = GetChainSources((ChainedTokenCredential)settings.TokenProvider);
+            Assert.AreEqual(2, sources.Length);
+
+            var overridden = sources[0] as FakeCustomCredential;
+            Assert.IsNotNull(overridden, "Caller-supplied resolver should have claimed the AzureCli entry");
+            Assert.IsTrue(overridden.IsChained, "Claimed chain entry should be chained");
+            Assert.IsInstanceOf<EnvironmentCredential>(sources[1], "Unclaimed entry should be built by the built-in resolver");
+        }
+
+        private static TokenCredential[] GetChainSources(ChainedTokenCredential chain)
+        {
+            FieldInfo sourcesField = typeof(ChainedTokenCredential).GetField("_sources", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.IsNotNull(sourcesField, "ChainedTokenCredential._sources field not found via reflection");
+            return (TokenCredential[])sourcesField.GetValue(chain);
+        }
+
+        private static bool GetIsChained(TokenCredential credential)
+        {
+            FieldInfo field = credential.GetType().GetField("_isChainedCredential", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.IsNotNull(field, $"{credential.GetType().Name}._isChainedCredential field not found via reflection");
+            return (bool)field.GetValue(credential);
+        }
+
+        private sealed class FakeCustomResolver : CredentialResolver
+        {
+            public override bool TryResolve(IConfigurationSection credentialSection, out AuthenticationTokenProvider provider)
+            {
+                var settings = new CredentialSettings(credentialSection);
+                if (string.Equals(settings.CredentialSource, "MyCustomCredential", StringComparison.OrdinalIgnoreCase))
+                {
+                    bool chained = bool.TryParse(credentialSection["IsChainedCredential"], out bool c) && c;
+                    provider = new FakeCustomCredential(chained);
+                    return true;
+                }
+
+                provider = null;
+                return false;
+            }
+        }
+
+        private sealed class AzureCliOverrideResolver : CredentialResolver
+        {
+            public override bool TryResolve(IConfigurationSection credentialSection, out AuthenticationTokenProvider provider)
+            {
+                var settings = new CredentialSettings(credentialSection);
+                if (string.Equals(settings.CredentialSource, "AzureCliCredential", StringComparison.OrdinalIgnoreCase))
+                {
+                    bool chained = bool.TryParse(credentialSection["IsChainedCredential"], out bool c) && c;
+                    provider = new FakeCustomCredential(chained);
+                    return true;
+                }
+
+                provider = null;
+                return false;
+            }
+        }
+
+        private sealed class FakeCustomCredential : TokenCredential
+        {
+            public FakeCustomCredential(bool isChained) => IsChained = isChained;
+
+            public bool IsChained { get; }
+
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => default;
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => default;
+        }
+
+        [TestCase("AzureCliCredential", typeof(AzureCliCredential))]
+        [TestCase("AzurePowerShellCredential", typeof(AzurePowerShellCredential))]
+        [TestCase("AzureDeveloperCliCredential", typeof(AzureDeveloperCliCredential))]
+        [TestCase("VisualStudioCredential", typeof(VisualStudioCredential))]
+        [TestCase("VisualStudioCodeCredential", typeof(VisualStudioCodeCredential))]
+        [TestCase("visualstudiocode", typeof(VisualStudioCodeCredential))]
+        [TestCase("EnvironmentCredential", typeof(EnvironmentCredential))]
+        [TestCase("WorkloadIdentityCredential", typeof(WorkloadIdentityCredential))]
+        [TestCase("ManagedIdentityCredential", typeof(ManagedIdentityCredential))]
+        [TestCase("InteractiveBrowserCredential", typeof(InteractiveBrowserCredential))]
+        public void TryResolve_KnownSingleSource_ProducesConcreteCredential(string source, Type expectedType)
+        {
             var section = BuildSection(new Dictionary<string, string>
             {
                 ["MyClient:Credential:CredentialSource"] = source,
@@ -151,14 +340,43 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
 
             var resolver = new AzureCredentialResolver();
             Assert.IsTrue(resolver.TryResolve(section, out var provider), $"Resolver should claim {source}");
-            Assert.IsInstanceOf<DefaultAzureCredential>(provider);
+            Assert.IsInstanceOf(expectedType, provider);
+            Assert.IsNotInstanceOf<DefaultAzureCredential>(provider);
         }
 
         [Test]
-        public void Instance_ReturnsSameSingleton()
+        public void TryResolve_KnownSingleSource_IsNotChained()
         {
-            // Internal singleton is reused across all helper paths.
-            Assert.AreSame(AzureCredentialResolver.Instance, AzureCredentialResolver.Instance);
+            // A top-level single source is not part of a chain, so it must surface
+            // failures as AuthenticationFailedException (IsChainedCredential=false).
+            var section = BuildSection(new Dictionary<string, string>
+            {
+                ["MyClient:Credential:CredentialSource"] = "AzureCliCredential",
+            });
+
+            var resolver = new AzureCredentialResolver();
+            Assert.IsTrue(resolver.TryResolve(section, out var provider));
+            Assert.IsFalse(GetIsChained((TokenCredential)provider), "Top-level single source should not be chained");
+        }
+
+        [TestCase("BrokerCredential")]
+        [TestCase("broker")]
+        public void TryResolve_BrokerSource_DefersToBrokerResolver(string source)
+        {
+            var section = BuildSection(new Dictionary<string, string>
+            {
+                ["MyClient:Credential:CredentialSource"] = source,
+            });
+
+            var resolver = new AzureCredentialResolver();
+            Assert.IsFalse(resolver.TryResolve(section, out var provider), $"Resolver should defer {source}");
+            Assert.IsNull(provider);
+        }
+
+        [Test]
+        public void Default_ReturnsSameSingleton()
+        {
+            Assert.AreSame(AzureCredentialResolver.Default, AzureCredentialResolver.Default);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
 
             CredentialSettings cred = config.GetAzureCredentialSettings("MyClient:Credential");
             Assert.IsNotNull(cred);
-            Assert.IsInstanceOf<DefaultAzureCredential>(cred.TokenProvider);
+            Assert.IsInstanceOf<AzureCliCredential>(cred.TokenProvider);
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
 
             CredentialSettings cred = config.GetAzureCredentialSettings("MyClient:Credential", custom);
             Assert.IsNotNull(cred);
-            Assert.IsInstanceOf<DefaultAzureCredential>(cred.TokenProvider);
+            Assert.IsInstanceOf<AzureCliCredential>(cred.TokenProvider);
         }
 
         [Test]

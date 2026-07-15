@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.Versioning;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
@@ -11,18 +14,12 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Identity
 {
     /// <summary>
-    /// A <see cref="CredentialResolver"/> that produces Azure credentials
-    /// (<see cref="TokenCredential"/> instances) from an
-    /// <see cref="IConfigurationSection"/>. It dispatches on the
-    /// <c>CredentialSource</c> value of the supplied section and recognizes the
-    /// full set of Azure token-based credential sources (e.g.
-    /// <c>AzureCliCredential</c>, <c>ManagedIdentityCredential</c>,
-    /// <c>EnvironmentCredential</c>, <c>WorkloadIdentityCredential</c>,
-    /// <c>ChainedTokenCredential</c>, etc.). API-key sections
-    /// (<c>CredentialSource: ApiKeyCredential</c>) are intentionally NOT
-    /// claimed by this resolver — consuming clients that accept an API key are
-    /// expected to dispatch on <c>Credential.CredentialSource</c> themselves
-    /// at construction time and read <c>Credential.Key</c> directly.
+    /// A <see cref="CredentialResolver"/> that produces Azure
+    /// <see cref="TokenCredential"/> instances from an
+    /// <see cref="IConfigurationSection"/>, dispatching on the section's
+    /// <c>CredentialSource</c> value (e.g. <c>AzureCliCredential</c>,
+    /// <c>ManagedIdentityCredential</c>, <c>EnvironmentCredential</c>,
+    /// <c>WorkloadIdentityCredential</c>, <c>ChainedTokenCredential</c>).
     /// </summary>
     /// <remarks>
     /// Register this resolver explicitly via <see cref="ConfigurationExtensions.AddAzureCredentialResolver(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/>
@@ -37,10 +34,11 @@ namespace Azure.Identity
     public sealed class AzureCredentialResolver : CredentialResolver
     {
         /// <summary>
-        /// A shared singleton used by built-in helpers (e.g.
-        /// <see cref="ConfigurationExtensions.GetAzureCredentialSettings(IConfiguration, string)"/>).
+        /// A shared singleton suitable for standalone callers that want to
+        /// participate in the process-wide resolved-credential cache without
+        /// allocating a new resolver instance per call.
         /// </summary>
-        internal static AzureCredentialResolver Instance { get; } = new AzureCredentialResolver();
+        public static AzureCredentialResolver Default { get; } = new AzureCredentialResolver();
 
         /// <summary>
         /// Initializes a new instance of <see cref="AzureCredentialResolver"/>.
@@ -52,6 +50,27 @@ namespace Azure.Identity
         /// <inheritdoc />
         public override bool TryResolve(
             IConfigurationSection credentialSection,
+            [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+            => TryResolveInternal(credentialSection, ResolveThroughSelf, out provider);
+
+        /// <inheritdoc />
+        public override bool TryResolve(
+            IConfigurationSection credentialSection,
+            Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
+            [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            Argument.AssertNotNull(resolveChild, nameof(resolveChild));
+            return TryResolveInternal(credentialSection, resolveChild, out provider);
+        }
+
+        // resolveChild for the single-argument overload, which has no engine behind it:
+        // chain entries are resolved through this resolver alone.
+        private AuthenticationTokenProvider? ResolveThroughSelf(IConfigurationSection child)
+            => TryResolve(child, out AuthenticationTokenProvider? provider) ? provider : null;
+
+        private static bool TryResolveInternal(
+            IConfigurationSection credentialSection,
+            Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
             [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
         {
             if (credentialSection is null || !credentialSection.Exists())
@@ -68,32 +87,81 @@ namespace Azure.Identity
                 return false;
             }
 
-            // ApiKey is intentionally not claimed by this resolver — consuming
-            // libraries dispatch on Credential.CredentialSource themselves and
-            // read Credential.Key directly. Returning false here lets callers
-            // distinguish "no token credential available" from "credential not
-            // configured at all".
-            if (source == Constants.ApiKeyCredential)
+            if (source == Constants.ChainedTokenCredential)
+            {
+                return TryResolveChain(credentialSection, resolveChild, out provider);
+            }
+
+            // When the section is flagged as a chain entry (by TryResolveChain, via
+            // ChainedChildSection), build the credential with IsChainedCredential=true
+            // so transient failures surface as CredentialUnavailableException and the
+            // enclosing ChainedTokenCredential falls through to the next entry.
+            // ChainedTokenCredentialFactory handles every recognized source (including
+            // the broker reflection hop) with that flag set.
+            if (IsChainEntry(credentialSection))
+            {
+                provider = ChainedTokenCredentialFactory.CreateCredential(new DefaultAzureCredentialOptions(settings, credentialSection));
+                return true;
+            }
+
+            // Top-level single source: build the concrete credential directly through
+            // DefaultAzureCredentialFactory — the same helpers DefaultAzureCredential
+            // uses internally — so construction is identical but without the surrounding
+            // DefaultAzureCredential chain. Sources not listed here (ApiKey, Broker, and
+            // anything a third party owns) are deferred.
+            DefaultAzureCredentialFactory factory = new(new DefaultAzureCredentialOptions(settings, credentialSection));
+            provider = source switch
+            {
+                Constants.AzureCliCredential => factory.CreateAzureCliCredential(),
+                Constants.AzurePowerShellCredential => factory.CreateAzurePowerShellCredential(),
+                Constants.AzureDeveloperCliCredential => factory.CreateAzureDeveloperCliCredential(),
+                Constants.VisualStudioCredential => factory.CreateVisualStudioCredential(),
+                Constants.VisualStudioCodeCredential => factory.CreateVisualStudioCodeCredential(),
+                Constants.EnvironmentCredential => factory.CreateEnvironmentCredential(),
+                Constants.WorkloadIdentityCredential => factory.CreateWorkloadIdentityCredential(),
+                Constants.ManagedIdentityCredential => factory.CreateManagedIdentityCredential(isChained: false),
+                Constants.InteractiveBrowserCredential => factory.CreateInteractiveBrowserCredential(),
+                Constants.AzurePipelinesCredential => factory.CreateAzurePipelinesCredential(),
+                Constants.ManagedIdentityAsFederatedIdentityCredential => factory.CreateManagedIdentityAsFederatedIdentityCredential(),
+                _ => null,
+            };
+
+            return provider is not null;
+        }
+
+        private static bool IsChainEntry(IConfigurationSection section)
+            => bool.TryParse(section[nameof(TokenCredentialOptions.IsChainedCredential)], out bool isChained) && isChained;
+
+        private static bool TryResolveChain(
+            IConfigurationSection credentialSection,
+            Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild,
+            [NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            List<IConfigurationSection> children = credentialSection.GetSection("Sources").GetChildren().ToList();
+            if (children.Count == 0)
             {
                 provider = null;
                 return false;
             }
 
-            DefaultAzureCredentialOptions options = new(settings, credentialSection);
+            TokenCredential[] chain = new TokenCredential[children.Count];
 
-            if (source == Constants.ChainedTokenCredential)
+            for (int i = 0; i < children.Count; i++)
             {
-                provider = new ChainedTokenCredential(ChainedTokenCredentialFactory.CreateCredentialChain(options));
-                return true;
+                // Every entry is resolved through the active resolver chain, marked as a
+                // chain entry, so any registered CredentialResolver — this one, the broker
+                // resolver, or a third party — can claim it. Recognized Azure sources
+                // re-enter this resolver's chain-entry path above.
+                if (resolveChild(new ChainedChildSection(children[i])) is not TokenCredential resolved)
+                {
+                    provider = null;
+                    return false;
+                }
+
+                chain[i] = resolved;
             }
 
-            // Single-source dispatch goes through DefaultAzureCredential, which
-            // preserves env-var defaults, the Azure.Identity.Broker reflection
-            // hop for BrokerCredential, and all other existing single-source
-            // construction behavior. After AzureBrokerCredentialResolver ships
-            // (phase 3) and the chain factory is rewired (phase 3.5), this
-            // path will dispatch to per-source helpers directly.
-            provider = new DefaultAzureCredential(options);
+            provider = new ChainedTokenCredential(chain);
             return true;
         }
     }

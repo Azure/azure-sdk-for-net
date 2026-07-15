@@ -53,7 +53,7 @@ namespace Azure.Identity
             params CredentialResolver[] resolvers)
             where T : ClientSettings, new()
         {
-            CredentialResolver[] combined = [.. resolvers ?? [], AzureCredentialResolver.Instance];
+            CredentialResolver[] combined = [.. resolvers ?? [], AzureCredentialResolver.Default];
 
             ApplyAzureOpenAIDefaultScopeIfNeeded(configuration, sectionName);
 
@@ -83,7 +83,7 @@ namespace Azure.Identity
             Action<IConfigurationSection> configureOverrides)
             where T : ClientSettings, new()
         {
-            CredentialResolver[] combined = [.. resolvers ?? [], AzureCredentialResolver.Instance];
+            CredentialResolver[] combined = [.. resolvers ?? [], AzureCredentialResolver.Default];
 
             ApplyAzureOpenAIDefaultScopeIfNeeded(configuration, sectionName);
 
@@ -128,7 +128,7 @@ namespace Azure.Identity
             this IConfiguration configuration,
             string sectionName,
             params CredentialResolver[] resolvers)
-            => configuration.GetCredentialSettings(sectionName, [.. resolvers ?? [], AzureCredentialResolver.Instance]);
+            => configuration.GetCredentialSettings(sectionName, [.. resolvers ?? [], AzureCredentialResolver.Default]);
 
         /// <summary>
         /// Returns the <see cref="CredentialSettings"/> bound from the named credential section,
@@ -148,7 +148,7 @@ namespace Azure.Identity
             string sectionName,
             IEnumerable<CredentialResolver> resolvers,
             Action<IConfigurationSection> configureOverrides)
-            => configuration.GetCredentialSettings(sectionName, [.. resolvers ?? [], AzureCredentialResolver.Instance], configureOverrides);
+            => configuration.GetCredentialSettings(sectionName, [.. resolvers ?? [], AzureCredentialResolver.Default], configureOverrides);
 
         /// <summary>
         /// Registers <see cref="AzureCredentialResolver"/> in the service collection.
@@ -164,12 +164,12 @@ namespace Azure.Identity
             }
 
             // Register the static singleton instance so DI and the standalone
-            // helpers (which use AzureCredentialResolver.Instance directly) share
+            // helpers (which use AzureCredentialResolver.Default directly) share
             // the same resolver identity. SCM's CredentialCache keys entries by
             // (sectionHash, resolver reference), so sharing the instance lets both
             // paths reuse cached credentials when their bound sections are
             // content-identical. TryAddEnumerable dedupes by implementation type.
-            services.TryAddEnumerable(ServiceDescriptor.Singleton<CredentialResolver>(AzureCredentialResolver.Instance));
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<CredentialResolver>(AzureCredentialResolver.Default));
             return services;
         }
 
@@ -294,7 +294,7 @@ namespace Azure.Identity
             => AddAzureClientCore<TClient, TSettings>(host, sectionName, host.AddKeyedClient<TClient, TSettings>(key, sectionName, configureSettings));
 
         // Centralizes the Azure-flavored DI setup: registers the static
-        // AzureCredentialResolver.Instance and (when the section's endpoint
+        // AzureCredentialResolver.Default and (when the section's endpoint
         // matches the AzureOpenAI default-scope quirk) writes the default
         // scope directly to the credential section so subsequent reads of
         // the source configuration are consistent with the resolved credential.
