@@ -11,14 +11,14 @@ namespace Azure.Provisioning.Compute
     public enum GalleryScriptParameterType
     {
         /// <summary> String gallery script parameter type. </summary>
-        String,
+        String = 0,
         /// <summary> Int gallery script parameter type. </summary>
-        Int,
+        Int = 1,
         /// <summary> Double gallery script parameter type. </summary>
-        Double,
+        Double = 2,
         /// <summary> Boolean gallery script parameter type. </summary>
-        Boolean,
+        Boolean = 3,
         /// <summary> Enum gallery script parameter type. </summary>
-        Enum
+        Enum = 4
     }
 }

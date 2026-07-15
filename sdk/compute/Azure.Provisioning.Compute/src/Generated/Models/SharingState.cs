@@ -11,12 +11,12 @@ namespace Azure.Provisioning.Compute
     public enum SharingState
     {
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 0,
         /// <summary> InProgress. </summary>
-        InProgress,
+        InProgress = 1,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 2,
         /// <summary> Unknown. </summary>
-        Unknown
+        Unknown = 3
     }
 }

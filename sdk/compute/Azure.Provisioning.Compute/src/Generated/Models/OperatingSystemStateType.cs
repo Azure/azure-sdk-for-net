@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum OperatingSystemStateType
     {
         /// <summary> Generalized image. Needs to be provisioned during deployment time. </summary>
-        Generalized,
+        Generalized = 0,
         /// <summary> Specialized image. Contains already provisioned OS Disk. </summary>
-        Specialized
+        Specialized = 1
     }
 }
