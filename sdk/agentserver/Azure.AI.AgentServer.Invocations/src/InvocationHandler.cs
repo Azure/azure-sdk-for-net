@@ -103,9 +103,10 @@ public abstract class InvocationHandler
     /// independently; publishing both is recommended for tooling compatibility.
     /// <para>
     /// When overriding, you MUST set <see cref="HttpResponse.StatusCode"/>
-    /// explicitly. The base implementation sets 404; if you override and forget
-    /// to set a status, the response defaults to 200 with whatever body you wrote
-    /// (or empty).
+    /// explicitly. This method returns 404 by default; once you override it the
+    /// default no longer runs (unless the override calls <c>base.GetAsyncApiJsonAsync(...)</c>
+    /// / <c>base.GetAsyncApiYamlAsync(...)</c>), so if you forget to set a status the
+    /// response defaults to 200 with whatever body you wrote (or empty).
     /// </para>
     /// </remarks>
     /// <param name="request">The incoming HTTP request.</param>
@@ -134,9 +135,10 @@ public abstract class InvocationHandler
     /// independently; publishing both is recommended for tooling compatibility.
     /// <para>
     /// When overriding, you MUST set <see cref="HttpResponse.StatusCode"/>
-    /// explicitly. The base implementation sets 404; if you override and forget
-    /// to set a status, the response defaults to 200 with whatever body you wrote
-    /// (or empty).
+    /// explicitly. This method returns 404 by default; once you override it the
+    /// default no longer runs (unless the override calls <c>base.GetAsyncApiJsonAsync(...)</c>
+    /// / <c>base.GetAsyncApiYamlAsync(...)</c>), so if you forget to set a status the
+    /// response defaults to 200 with whatever body you wrote (or empty).
     /// </para>
     /// </remarks>
     /// <param name="request">The incoming HTTP request.</param>

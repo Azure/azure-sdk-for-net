@@ -104,6 +104,7 @@ AsyncAPI is the companion to OpenAPI for event-driven / streaming surfaces (e.g.
 public override async Task GetAsyncApiJsonAsync(
     HttpRequest request, HttpResponse response, CancellationToken cancellationToken)
 {
+    response.StatusCode = 200;
     response.ContentType = "application/json";
     await response.WriteAsync(_asyncApiJson, cancellationToken);
 }
