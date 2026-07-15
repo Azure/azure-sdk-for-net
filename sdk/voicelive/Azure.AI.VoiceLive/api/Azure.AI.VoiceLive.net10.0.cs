@@ -296,8 +296,8 @@ namespace Azure.AI.VoiceLive
     public partial class AzureRealtimeNativeVoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.AzureRealtimeNativeVoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzureRealtimeNativeVoice>
     {
         public AzureRealtimeNativeVoice(Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName name) { }
+        public string Kind { get { throw null; } }
         public Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName Name { get { throw null; } set { } }
-        public string Type { get { throw null; } }
         protected virtual Azure.AI.VoiceLive.AzureRealtimeNativeVoice JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.VoiceLive.AzureRealtimeNativeVoice PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
