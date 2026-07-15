@@ -20,6 +20,17 @@
 #      response to `status=cancelled` regardless of what the handler
 #      emits (B11 contract).
 #
+# SESSION AFFINITY (why crash/steer land on the SAME container):
+#   In the hosted platform one `agent_session_id` == one sandbox/container.
+#   This client generates a single session id up front and pins it on the
+#   BODY of every *new-response* POST (start, steer, crash) via the
+#   `agent_session_id` property — so they all route to the SAME sandbox.
+#   That is what makes `crash` kill the container running your response
+#   (and `steer` queue onto it). Operations on an EXISTING response
+#   (GET/stream, cancel, delete) need no session id — the platform routes
+#   them by `response_id`. The session id is persisted in .demo-session so
+#   it is shared across terminals, and is cleared ONLY by `reset`.
+#
 # Commands:
 #   ./demo-client.sh start "<topic>"   Dispatch + stream a fresh response (bg+stream)
 #   ./demo-client.sh stream            Reconnect to the active response (no fresh POST)
@@ -71,7 +82,6 @@ save_session() {
         echo "PREV_RESPONSE_ID=\"${PREV_RESPONSE_ID:-}\""
         echo "LAST_SEQUENCE_NUMBER=\"${LAST_SEQUENCE_NUMBER:-0}\""
         echo "SESSION_ID=\"${SESSION_ID:-}\""
-        echo "INVOCATION_ID=\"${INVOCATION_ID:-}\""
     } > "$SESSION_FILE"
 }
 
@@ -86,6 +96,22 @@ ensure_token() {
             echo -e "${RED}Failed to get Azure token. Run 'az login' first.${RESET}" >&2
             exit 1
         fi
+    fi
+}
+
+# Generate a client-side session id if we don't already have one. One
+# session id == one sandbox/container on the platform, so we create it
+# ONCE and pin it on every new-response POST (start/steer/crash) to keep
+# them on the same sandbox. Cleared only by `reset`.
+ensure_session_id() {
+    load_session
+    if [[ -z "${SESSION_ID:-}" ]]; then
+        if command -v uuidgen >/dev/null 2>&1; then
+            SESSION_ID="demo-$(uuidgen | tr '[:upper:]' '[:lower:]')"
+        else
+            SESSION_ID="demo-$(python3 -c 'import uuid; print(uuid.uuid4())')"
+        fi
+        save_session
     fi
 }
 
@@ -142,9 +168,9 @@ stream_sse() {
     if [[ "$method" == "POST" ]]; then
         curl_args+=(-X POST -H "Content-Type: application/json" --data "$post_body")
     fi
-    # -D dumps the response headers (incl. x-agent-session-id / x-agent-invocation-id,
-    # which the platform returns on every /responses call) while the SSE body streams
-    # to the renderer pipe. We read the session id back out afterwards.
+    # -D dumps the response headers (incl. x-agent-session-id, which the
+    # platform returns on every /responses call) while the SSE body streams
+    # to the renderer pipe. We use it to confirm sandbox affinity afterwards.
     curl -sS -N -D "$hdr_file" "${curl_args[@]}" "$url" 2>/dev/null | python3 -u -c "
 import json, sys, os, signal
 
@@ -239,18 +265,20 @@ print()
         LAST_SEQUENCE_NUMBER=$(cat "$seq_file" 2>/dev/null || echo "0")
         rm -f "$seq_file"
     fi
-    # Capture the platform session/invocation ids from the response headers.
+    # Confirm the platform routed us to the session we pinned. The server
+    # echoes the effective session in the x-agent-session-id header. For a
+    # POST we sent agent_session_id in the body, so this should match; for a
+    # bare GET/stream reconnect (no body) we adopt whatever the platform
+    # reports so `logs` still works.
     if [[ -f "$hdr_file" ]]; then
-        local sid inv
+        local sid
         sid=$(grep -i '^x-agent-session-id:' "$hdr_file" | tail -1 | tr -d '\r' | awk '{print $2}')
-        inv=$(grep -i '^x-agent-invocation-id:' "$hdr_file" | tail -1 | tr -d '\r' | awk '{print $2}')
         if [[ -n "$sid" ]]; then
-            SESSION_ID="$sid"
-            echo -e "${CYAN}\u25b6 agent_session_id=${sid}${RESET}"
-        fi
-        if [[ -n "$inv" ]]; then
-            INVOCATION_ID="$inv"
-            echo -e "${DIM}  agent_invocation_id=${inv}${RESET}"
+            if [[ -z "${SESSION_ID:-}" ]]; then
+                SESSION_ID="$sid"
+            elif [[ "$sid" != "$SESSION_ID" ]]; then
+                echo -e "${YELLOW}⚠ server session ${sid} != pinned ${SESSION_ID}${RESET}" >&2
+            fi
         fi
         rm -f "$hdr_file"
     fi
@@ -264,6 +292,7 @@ print()
 
 cmd_start() {
     local topic="${1:-Research the future of quantum computing}"
+    ensure_session_id          # pin one sandbox for the whole demo (only reset clears it)
     RESPONSE_ID=""
     PREV_RESPONSE_ID=""
     LAST_SEQUENCE_NUMBER="0"
@@ -271,6 +300,7 @@ cmd_start() {
     ensure_token
 
     echo -e "${GREEN}Starting a fresh research response${RESET}"
+    echo -e "${CYAN}▶ agent_session_id=${SESSION_ID}${RESET} ${DIM}(sandbox affinity — shared across terminals)${RESET}"
     echo -e "${DIM}Topic: ${topic}${RESET}"
 
     local body
@@ -279,11 +309,12 @@ import json, sys
 print(json.dumps({
     'model': '$MODEL',
     'input': sys.argv[1],
+    'agent_session_id': sys.argv[2],
     'stream': True,
     'store': True,
     'background': True,
 }))
-" "$topic")
+" "$topic" "$SESSION_ID")
 
     local response
     # POST with stream=true returns SSE; pipe through stream_sse which
@@ -329,10 +360,14 @@ cmd_steer() {
         echo -e "${RED}No active response to steer. Run './demo-client.sh start' first.${RESET}" >&2
         exit 1
     fi
+    if [[ -z "${SESSION_ID:-}" ]]; then
+        echo -e "${RED}No pinned session. Run './demo-client.sh start' first.${RESET}" >&2
+        exit 1
+    fi
     ensure_token
 
     echo -e "${YELLOW}Steering: queuing follow-up turn on response ${RESPONSE_ID}${RESET}"
-    echo -e "${DIM}New topic: ${topic}${RESET}"
+    echo -e "${DIM}Session: ${SESSION_ID} · New topic: ${topic}${RESET}"
 
     local body
     body=$(python3 -c "
@@ -341,11 +376,12 @@ print(json.dumps({
     'model': '$MODEL',
     'input': sys.argv[1],
     'previous_response_id': sys.argv[2],
+    'agent_session_id': sys.argv[3],
     'stream': True,
     'store': True,
     'background': True,
 }))
-" "$topic" "$RESPONSE_ID")
+" "$topic" "$RESPONSE_ID" "$SESSION_ID")
 
     PREV_RESPONSE_ID="$RESPONSE_ID"
     RESPONSE_ID=""
@@ -384,16 +420,33 @@ cmd_cancel() {
 
 cmd_crash() {
     load_session
+    if [[ -z "${SESSION_ID:-}" ]]; then
+        echo -e "${RED}No pinned session. Run './demo-client.sh start' first so the${RESET}" >&2
+        echo -e "${RED}crash lands on the SAME sandbox as your running response.${RESET}" >&2
+        exit 1
+    fi
     ensure_token
 
     echo -e "${RED}Triggering container crash via input=\"crash\"${RESET}"
+    echo -e "${CYAN}▶ agent_session_id=${SESSION_ID}${RESET} ${DIM}(same sandbox as the running response)${RESET}"
     echo -e "${DIM}(requires DEMO_MODE=1 on the server)${RESET}"
 
-    local body='{"model": "'"$MODEL"'", "input": "crash", "stream": true, "store": true, "background": true}'
-    # The crash POST returns SSE briefly (response.created + response.failed
-    # if our handler emits before exit) — pipe through stream_sse so we see
-    # whatever comes out before the container dies. The renderer's
-    # accumulated curl will then error out when the connection drops.
+    local body
+    body=$(python3 -c "
+import json, sys
+print(json.dumps({
+    'model': '$MODEL',
+    'input': 'crash',
+    'agent_session_id': sys.argv[1],
+    'stream': True,
+    'store': True,
+    'background': True,
+}))
+" "$SESSION_ID")
+    # The crash POST is pinned to the same sandbox running the response, so
+    # its Environment.Exit(137) kills THAT container. The stream drops when
+    # the connection breaks — that is the client↔container disconnect you
+    # recover from with './demo-client.sh stream'.
     stream_sse "${ENDPOINT}/responses?api-version=${API_VERSION}" "" POST "$body"
 
     echo ""
@@ -424,7 +477,6 @@ cmd_status() {
     echo "  PREV_RESPONSE_ID:     ${PREV_RESPONSE_ID:-<none>}"
     echo "  LAST_SEQUENCE_NUMBER: ${LAST_SEQUENCE_NUMBER:-0}"
     echo "  SESSION_ID:           ${SESSION_ID:-<none>}"
-    echo "  INVOCATION_ID:        ${INVOCATION_ID:-<none>}"
     echo ""
     if [[ -n "${RESPONSE_ID:-}" ]]; then
         ensure_token

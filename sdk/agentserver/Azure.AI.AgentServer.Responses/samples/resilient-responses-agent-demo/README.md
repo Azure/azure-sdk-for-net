@@ -108,17 +108,27 @@ prints the responses endpoint.
 Point it at your deployment with `ENDPOINT=…` (printed by `azd up`), or edit the
 default near the top of the script.
 
+### Session affinity (one session id == one sandbox)
+
+The platform runs each `agent_session_id` on its own sandbox/container. To make
+`crash` and `steer` land on the **same** container as your running response, the
+client generates one session id on `start` and pins it in the **body**
+(`agent_session_id`) of every new-response POST (`start`, `steer`, `crash`). The
+id is stored in `.demo-session` (shared across terminals) and is cleared **only**
+by `reset`. Operations on an existing response (`stream`/GET, `cancel`, `delete`)
+send no session id — the platform routes them by `response_id`.
+
 | Command | What it does |
 |---|---|
-| `./demo-client.sh start "<topic>"` | `POST /responses` with `{stream:true, store:true, background:true}` + the topic, then attaches to the SSE stream. Writes `response_id` to `.demo-session`. |
-| `./demo-client.sh stream` | Reattaches via `GET /responses/{id}?stream=true&starting_after=N`, skipping events already seen. |
-| `./demo-client.sh steer "<topic>"` | POSTs a new response with `previous_response_id` pointing at the active one — queued as a steering input; the agent winds down and re-enters with the new topic. |
-| `./demo-client.sh cancel` | `POST /responses/{id}/cancel` — the response transitions to `status=cancelled`. |
-| `./demo-client.sh crash` | POSTs `{"input":"crash"}` — the agent (`DEMO_MODE=1`) calls `Environment.Exit(137)`; the nanny worker restarts it; `stream` after picks up the recovered run. |
-| `./demo-client.sh delete` | `DELETE /responses/{id}`. |
-| `./demo-client.sh status` | Local session state + the server's current snapshot. |
-| `./demo-client.sh logs` | Tails container logs via `azd ai agent monitor --follow`. |
-| `./demo-client.sh reset` | Clears `.demo-session`. |
+| `./demo-client.sh start "<topic>"` | Generates + pins a client session id, then `POST /responses` with `{agent_session_id, stream:true, store:true, background:true}` + the topic, and attaches to the SSE stream. Writes `response_id` + `SESSION_ID` to `.demo-session`. |
+| `./demo-client.sh stream` | Reattaches via `GET /responses/{id}?stream=true&starting_after=N`, skipping events already seen (routed by `response_id`). |
+| `./demo-client.sh steer "<topic>"` | POSTs a new response with `previous_response_id` + the **same** `agent_session_id` — queued as a steering input on the same sandbox; the agent winds down and re-enters with the new topic. |
+| `./demo-client.sh cancel` | `POST /responses/{id}/cancel` — the response transitions to `status=cancelled` (routed by `response_id`). |
+| `./demo-client.sh crash` | POSTs `{"input":"crash", agent_session_id}` pinned to the **same** sandbox — the agent (`DEMO_MODE=1`) calls `Environment.Exit(137)`, breaking the client↔container connection. Run `stream` afterward to reconnect and watch the recovered run resume. |
+| `./demo-client.sh delete` | `DELETE /responses/{id}` (routed by `response_id`). |
+| `./demo-client.sh status` | Local session state (incl. `SESSION_ID`) + the server's current snapshot. |
+| `./demo-client.sh logs` | Tails container logs via `azd ai agent monitor --follow --session-id <SESSION_ID>`. |
+| `./demo-client.sh reset` | Clears `.demo-session` (the only command that drops the pinned session id). |
 
 ## Local iteration
 
