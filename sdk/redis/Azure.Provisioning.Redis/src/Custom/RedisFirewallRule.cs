@@ -3,9 +3,6 @@
 
 #nullable disable
 
-using System.ComponentModel;
-using Azure.Provisioning.Primitives;
-
 namespace Azure.Provisioning.Redis
 {
     public partial class RedisFirewallRule
@@ -45,10 +42,5 @@ namespace Azure.Provisioning.Redis
             /// <summary> API version "2024-03-01". </summary>
             public static readonly string V2024_03_01 = "2024-03-01";
         }
-
-        /// <summary> Get the requirements for naming this resource. </summary>
-        /// <returns> Naming requirements. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 256, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers);
     }
 }

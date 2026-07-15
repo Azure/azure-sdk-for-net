@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using System.Net;
 using Azure.Core;
 using Azure.Provisioning;
@@ -152,6 +153,11 @@ namespace Azure.Provisioning.Redis
 
         /// <summary> Define additional provisionable properties for RedisFirewallRule that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
+
+        /// <summary> Get the requirements for naming this resource. </summary>
+        /// <returns> Naming requirements. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 256, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers);
 
         /// <summary></summary>
         public static partial class ResourceVersions

@@ -517,6 +517,11 @@ namespace Azure.Provisioning.Redis
         /// <summary> Define additional provisionable properties for Redis that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
+        /// <summary> Get the requirements for naming this resource. </summary>
+        /// <returns> Naming requirements. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 63, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
+
         /// <summary> Creates a role assignment for a user-assigned identity that grants access to this Redis. </summary>
         /// <param name="role"> The role to grant. </param>
         /// <param name="identity"> The <see cref="UserAssignedIdentity"/>. </param>
