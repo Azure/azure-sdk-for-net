@@ -238,6 +238,39 @@ source-of-truth design. Items are grouped by the Python package they land in.
 
 ---
 
+### PY-9 — Responses `demo-client.sh` has no client-side timestamps to correlate with server log lines
+
+- **Observation:** the Python responses demo client
+  (`azure-ai-agentserver-responses/samples/resilient-responses-agent-demo/demo-client.sh`
+  @ `7c36e104`) prints **no timestamps** on any command — there is no triggered/ended banner,
+  no elapsed wall-clock, and no per-marker time on the recovery output (0 occurrences of any
+  timestamp/`date`/elapsed machinery; the invocations demo-client is the same). For a demo whose
+  entire point is the **timing** of crash → nanny restart → lease reclaim → recover → complete,
+  the user cannot line up what the client did against the `azd ai agent monitor` server log,
+  which *is* timestamped — so "the crash fired at X, the container came back at Y ~60s later" is
+  invisible from the client side.
+- **.NET (target, done):** the .NET responses `demo-client.sh` timestamps everything in **UTC
+  ISO-8601 to match the server log clock**:
+  1. `_now_iso()` → `date -u +%Y-%m-%dT%H:%M:%SZ`.
+  2. A dispatch banner `▶ command '<cmd>' triggered @ <iso>` and an `EXIT`-trap end banner
+     `⏹ <cmd> ended @ <iso> (elapsed <N>s, exit <rc>)` (prints even on early exit — missing
+     session, usage error, etc.), both to **stderr** so they never pollute the SSE body.
+  3. Every recovery-watch marker carries `@ $(_now_iso)` — `✖ crash fired`, `↻ container
+     restarted`, `⟳ Reclaimed stale task`, `✔ Recovered task`, and `● terminal status=…` — so
+     the client progression is directly comparable to the timestamped server log.
+  Reference commit (.NET, branch `001-tasks-streaming-primitives`): the timestamp banners +
+  per-marker times ship in the demo-client observability changes on this branch (same file as
+  PY-8's `c0d9db42478`).
+- **Action (UX / observability, low severity):** port the same UTC ISO-8601 timestamping to the
+  Python responses `demo-client.sh` — (1) a triggered banner + an exit-trap ended banner with
+  elapsed wall-clock, printed to stderr; (2) a `@ <iso>` stamp on each recovery marker — so client
+  actions can be correlated with the server log timeline. This pairs naturally with the `DEBUG_HTTP`
+  request tracer noted in PY-8; both are the same class of demo-client observability nicety and can
+  land together. The **invocations** demo-client should get the same timestamps if it is used
+  interactively. Not a correctness gap — purely diagnosability.
+
+---
+
 ## Already reconciled (no action — recorded for context)
 
 The following were previously open and have since been implemented on Python (its "spec 037"
