@@ -194,6 +194,50 @@ source-of-truth design. Items are grouped by the Python package they land in.
 
 ---
 
+### PY-8 — Responses `demo-client.sh` silently fires at a placeholder endpoint when `ENDPOINT` is unset (crash becomes a no-op)
+
+- **Observation:** the Python responses demo client
+  (`azure-ai-agentserver-responses/samples/resilient-responses-agent-demo/demo-client.sh`
+  @ `7c36e104`) resolves its endpoint as
+  `ENDPOINT="${ENDPOINT:-https://<account>.services.ai.azure.com/api/projects/<project>/…/endpoint/protocols}"`
+  (~L44) — a literal `<account>`/`<project>` **placeholder** default meant to be overridden by an
+  exported env var. There is **no** auto-discovery from the azd environment and **no** validation,
+  and every request path swallows transport errors with `2>/dev/null` (5 occurrences). So when a
+  user runs any command (notably `crash`) in a terminal that did **not** export `ENDPOINT`, the
+  request is sent to a non-existent host, curl's connection error is silently discarded, and the
+  command **looks like a no-op** — the crash never reaches the sandbox, nothing exits, and no
+  `x-agent-session-id` comes back. This is exactly the failure that was hit and fixed on the .NET
+  side, and the Python script has the identical shape.
+- **.NET (target, done):** the .NET responses `demo-client.sh` now figures the endpoint out itself,
+  the same way `azd up` does, and refuses to fire at a placeholder:
+  1. `_azd_responses_endpoint` prefers `azd env get-values` (the authoritative default-environment
+     source azd itself reads/writes) and falls back to parsing `./.azure/<env>/.env`
+     (`defaultEnvironment` from `./.azure/config.json`). It reads `AGENT_*_RESPONSES_ENDPOINT`,
+     strips the trailing `/responses?api-version=…` to get the protocol base the client appends to,
+     and lifts `api-version` out of the query string.
+  2. `ENDPOINT` is used verbatim only when the user explicitly exports a **non-placeholder** URL.
+  3. `_require_endpoint` (invoked from `ensure_token`, so every network command is guarded) aborts
+     with actionable guidance if the resolved value still contains `<account>`/`<project>`, so a
+     crash can never again be silently fired at a bogus host.
+  4. Fixed the placeholder default path to `…/endpoint/protocols/openai`.
+  Verified live: with `ENDPOINT` and `API_VERSION` unset, `./demo-client.sh status` auto-resolves
+  the real `…/protocols/openai` endpoint and returns live server data; a fresh `crash` in any
+  terminal (no exports) hits the pinned sandbox and drives the crash→restart→reclaim→recover→
+  `completed` progression. Reference commit (.NET, branch `001-tasks-streaming-primitives`):
+  `c0d9db42478`.
+- **Action:** port the same endpoint self-discovery + fail-fast guard to the Python responses
+  `demo-client.sh` — (1) resolve `AGENT_*_RESPONSES_ENDPOINT` from `azd env get-values` (fallback:
+  `./.azure/<env>/.env`) so no manual export is needed; (2) only honor an exported `ENDPOINT` when
+  it is a real URL; (3) refuse to send (with guidance) if the value is still a placeholder, so a
+  mis-run `crash` fails loudly instead of silently no-op'ing. **Optional UX:** the .NET script also
+  added a `DEBUG_HTTP` request tracer (prints method/URL/query/headers with the bearer redacted, the
+  JSON body, and the returned `x-agent-session-id` routing header) — useful for diagnosing exactly
+  which sandbox a crash routed to; the Python demo has no equivalent and could adopt it. The
+  **invocations** demo-client (`resilient-agent-demo`) shares the same placeholder-default shape and
+  should get the same treatment if it is run interactively.
+
+---
+
 ## Already reconciled (no action — recorded for context)
 
 The following were previously open and have since been implemented on Python (its "spec 037"
