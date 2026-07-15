@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum HostEndpointSettingsMode
     {
         /// <summary> Audit. </summary>
-        Audit,
+        Audit = 0,
         /// <summary> Enforce. </summary>
-        Enforce,
+        Enforce = 1,
         /// <summary> Disabled. </summary>
-        Disabled
+        Disabled = 2
     }
 }

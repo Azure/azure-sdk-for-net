@@ -14,9 +14,9 @@ namespace Azure.Provisioning.Compute
     {
         /// <summary> V20201101. </summary>
         [DataMember(Name = "2020-11-01")]
-        V20201101,
+        V20201101 = 0,
         /// <summary> V20221101. </summary>
         [DataMember(Name = "2022-11-01")]
-        V20221101
+        V20221101 = 1
     }
 }

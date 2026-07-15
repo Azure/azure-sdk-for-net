@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum ComputeDeleteOption
     {
         /// <summary> Delete. </summary>
-        Delete,
+        Delete = 0,
         /// <summary> Detach. </summary>
-        Detach
+        Detach = 1
     }
 }

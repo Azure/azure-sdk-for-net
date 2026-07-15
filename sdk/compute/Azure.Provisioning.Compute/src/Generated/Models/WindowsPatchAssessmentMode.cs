@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum WindowsPatchAssessmentMode
     {
         /// <summary> ImageDefault. </summary>
-        ImageDefault,
+        ImageDefault = 0,
         /// <summary> AutomaticByPlatform. </summary>
-        AutomaticByPlatform
+        AutomaticByPlatform = 1
     }
 }

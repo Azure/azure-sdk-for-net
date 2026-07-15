@@ -11,6 +11,6 @@ namespace Azure.Provisioning.Compute
     public enum PassName
     {
         /// <summary> OobeSystem. </summary>
-        OobeSystem
+        OobeSystem = 0
     }
 }

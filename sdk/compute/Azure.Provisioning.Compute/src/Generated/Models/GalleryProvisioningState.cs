@@ -11,16 +11,16 @@ namespace Azure.Provisioning.Compute
     public enum GalleryProvisioningState
     {
         /// <summary> Creating. </summary>
-        Creating,
+        Creating = 0,
         /// <summary> Updating. </summary>
-        Updating,
+        Updating = 1,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 2,
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 3,
         /// <summary> Deleting. </summary>
-        Deleting,
+        Deleting = 4,
         /// <summary> Migrating. </summary>
-        Migrating
+        Migrating = 5
     }
 }

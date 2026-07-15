@@ -11,12 +11,12 @@ namespace Azure.Provisioning.Compute
     public enum ResilientVmDeletionStatus
     {
         /// <summary> Enabled. </summary>
-        Enabled,
+        Enabled = 0,
         /// <summary> Disabled. </summary>
-        Disabled,
+        Disabled = 1,
         /// <summary> InProgress. </summary>
-        InProgress,
+        InProgress = 2,
         /// <summary> Failed. </summary>
-        Failed
+        Failed = 3
     }
 }
