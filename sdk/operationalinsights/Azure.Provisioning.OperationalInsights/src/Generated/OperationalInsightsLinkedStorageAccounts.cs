@@ -93,19 +93,6 @@ namespace Azure.Provisioning.OperationalInsights
             }
         }
 
-        /// <summary> Gets the DataSourceType. </summary>
-        public BicepValue<OperationalInsightsDataSourceType> DataSourceType
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new LinkedStorageAccountsProperties();
-                }
-                return Properties.DataSourceType;
-            }
-        }
-
         /// <summary> Gets or sets the StorageAccountIds. </summary>
         public BicepList<ResourceIdentifier> StorageAccountIds
         {
