@@ -14,7 +14,7 @@ namespace Azure.Provisioning.CognitiveServices
     // to infer duplicate properties from an arbitrary custom hierarchy.
     [CodeGenSuppress("KeyVaultProperties")]
     [CodeGenSuppress("KeySource")]
-    public partial class CognitiveServicesEncryptionScopeProperties : global::Azure.Provisioning.CognitiveServices.ServiceAccountEncryptionProperties
+    public partial class CognitiveServicesEncryptionScopeProperties : ServiceAccountEncryptionProperties
     {
     }
 }
