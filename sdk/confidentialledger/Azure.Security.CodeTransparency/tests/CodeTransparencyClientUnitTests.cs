@@ -438,7 +438,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 CcfReceiptVerifier.VerifyTransparentStatementReceipt(keys.Value.Keys[0], statement.Receipt, statement.SignedStatement));
 
-            StringAssert.Contains("At least one inclusion proof is required", exception.Message);
+            StringAssert.Contains("At least one inclusion proof is expected", exception.Message);
 #endif
         }
 
@@ -460,7 +460,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var exception = Assert.Throws<AggregateException>(() =>
                 CodeTransparencyClient.VerifyTransparentStatement(statement.TransparentStatement, verificationOptions, options));
 
-            StringAssert.Contains("At least one inclusion proof is required", exception.Message);
+            StringAssert.Contains("At least one inclusion proof is expected", exception.Message);
 #endif
         }
 
