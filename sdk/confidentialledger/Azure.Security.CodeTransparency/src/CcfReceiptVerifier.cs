@@ -113,7 +113,7 @@ namespace Azure.Security.CodeTransparency
             proofsReader.ReadStartArray();
             if (proofsReader.PeekState() == CborReaderState.EndArray)
             {
-                throw new InvalidOperationException("At least one inclusion proof is required");
+                throw new InvalidOperationException("At least one inclusion proof is expected");
             }
             while (proofsReader.PeekState() != CborReaderState.EndArray)
             {
