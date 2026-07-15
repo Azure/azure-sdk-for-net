@@ -171,7 +171,13 @@ signal.signal(signal.SIGINT, _handle_sigint)
 current_event = None
 current_data = []
 
-for raw in sys.stdin:
+# Read the SSE stream line-by-line with NO read-ahead buffering so deltas render
+# in the console the instant they arrive (and a mid-stream crash/drop is visible
+# immediately, not after a buffer drains). 'for line in sys.stdin' can use CPython's
+# internal read-ahead chunking; iter(readline, '') forces one prompt readline() per
+# line. Paired with curl -N (no curl output buffering) and python3 -u (unbuffered
+# stdout) + per-delta flush() below, this keeps end-to-end latency minimal.
+for raw in iter(sys.stdin.readline, ''):
     line = raw.rstrip('\n')
     if not line:
         if current_event and current_data:
