@@ -1,5 +1,5 @@
 directory: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/OperationalInsights
-commit: 39f1695deffbeec2bb9e597380161995a4338a57
-repo: ArcturusZhang/azure-rest-api-specs
+commit: 92ecd9ff5e986996dab18edbf7fac6739af61130
+repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
 additionalDirectories: 
