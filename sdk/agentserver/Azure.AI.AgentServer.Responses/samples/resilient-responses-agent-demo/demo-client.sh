@@ -48,13 +48,69 @@ set -uo pipefail
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
-# Point at your own hosted deployment. After `azd ai agent run`, the
-# endpoint is printed in the deploy output (…/agents/<name>/endpoint/protocols),
-# or read it from your azd env (AGENT_*_RESPONSES_ENDPOINT). Override via
-# the ENDPOINT env var instead of editing this default.
-ENDPOINT="${ENDPOINT:-https://<account>.services.ai.azure.com/api/projects/<project>/agents/resilient-responses-agent-demo-dotnet/endpoint/protocols}"
+# Point at your hosted deployment. Resolution order (highest priority first):
+#   1. The ENDPOINT env var, if you export a real URL (…/endpoint/protocols/openai).
+#   2. Auto-discovery from the azd environment: we read the default env name from
+#      ./.azure/config.json and pull AGENT_*_RESPONSES_ENDPOINT out of
+#      ./.azure/<env>/.env (written by `azd ai agent run`). That value looks like
+#      …/endpoint/protocols/openai/responses?api-version=v1 — we strip the
+#      "/responses?…" suffix to get the protocol base the client appends to, and
+#      lift api-version out of the query. This means you do NOT have to export
+#      anything in each new terminal.
+# If neither yields a real host the value keeps the <account>/<project>
+# placeholders below and _require_endpoint refuses to send (so a crash can never
+# be silently fired at a bogus host — the failure mode that made a crash look
+# like a no-op).
+_azd_responses_endpoint() {
+    # Prefer azd itself — the authoritative source azd up/deploy writes and reads.
+    # `azd env get-values` prints KEY="value" for the *default* environment, so we
+    # never have to guess which env is active. Fall back to parsing the on-disk
+    # ./.azure/<env>/.env only when the azd CLI is unavailable or not initialized.
+    local line=""
+    if command -v azd >/dev/null 2>&1; then
+        line=$(azd env get-values 2>/dev/null \
+            | grep -E '^AGENT_[A-Z0-9_]*_RESPONSES_ENDPOINT=' | head -1)
+    fi
+    if [[ -z "$line" ]]; then
+        local cfg=".azure/config.json" envname envfile
+        [[ -f "$cfg" ]] || return 0
+        envname=$(sed -n 's/.*"defaultEnvironment"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$cfg")
+        [[ -n "$envname" ]] || return 0
+        envfile=".azure/${envname}/.env"
+        [[ -f "$envfile" ]] || return 0
+        line=$(grep -E '^AGENT_[A-Z0-9_]*_RESPONSES_ENDPOINT=' "$envfile" | head -1)
+    fi
+    [[ -n "$line" ]] || return 0
+    printf '%s' "$line" | sed -E 's/^[^=]+=//; s/^"//; s/"$//'
+}
+
+if [[ -z "${ENDPOINT:-}" || "${ENDPOINT:-}" == *"<account>"* || "${ENDPOINT:-}" == *"<project>"* ]]; then
+    _resp_ep="$(_azd_responses_endpoint || true)"
+    if [[ -n "${_resp_ep:-}" ]]; then
+        case "$_resp_ep" in
+            *"api-version="*) API_VERSION="${API_VERSION:-$(printf '%s' "$_resp_ep" | sed -E 's/.*[?&]api-version=([^&]+).*/\1/')}" ;;
+        esac
+        ENDPOINT="${_resp_ep%%\?*}"        # drop query string
+        ENDPOINT="${ENDPOINT%/responses}"  # drop trailing /responses -> protocol base
+    fi
+fi
+ENDPOINT="${ENDPOINT:-https://<account>.services.ai.azure.com/api/projects/<project>/agents/resilient-responses-agent-demo-dotnet/endpoint/protocols/openai}"
 API_VERSION="${API_VERSION:-v1}"
 MODEL="${MODEL:-gpt-5.4-nano}"
+
+# Refuse to send if the endpoint was never configured (still a placeholder).
+# Called from ensure_token, so every network command is protected while local
+# (localhost) and azd `logs` paths — which never contain the placeholder — are not.
+_require_endpoint() {
+    if [[ "$ENDPOINT" == *"<account>"* || "$ENDPOINT" == *"<project>"* ]]; then
+        echo -e "${RED}✗ ENDPOINT is not configured — it still contains <account>/<project> placeholders.${RESET}" >&2
+        echo -e "${YELLOW}  Auto-discovery from ./.azure/<env>/.env found no AGENT_*_RESPONSES_ENDPOINT.${RESET}" >&2
+        echo -e "${YELLOW}  Fix either:${RESET}" >&2
+        echo -e "${YELLOW}    • export ENDPOINT=\"https://<acct>.services.ai.azure.com/api/projects/<proj>/agents/<name>/endpoint/protocols/openai\"${RESET}" >&2
+        echo -e "${YELLOW}    • or run 'azd env select <env>' / 'azd ai agent run' so .azure/<env>/.env has AGENT_*_RESPONSES_ENDPOINT${RESET}" >&2
+        exit 2
+    fi
+}
 # Request tracing: when DEBUG_HTTP=1 (default) every outbound request prints its
 # method, full URL (including query params), headers (Authorization redacted) and
 # JSON body before it is sent, and start/crash also print the returned
@@ -166,6 +222,7 @@ save_session() {
 }
 
 ensure_token() {
+    _require_endpoint
     if [[ "${LOCAL_NOAUTH:-0}" == "1" ]]; then
         TOKEN="local-noauth"
         return
