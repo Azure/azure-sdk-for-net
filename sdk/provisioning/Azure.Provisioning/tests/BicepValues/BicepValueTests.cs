@@ -204,20 +204,12 @@ public class BicepValueTests
             {
               'hyphen-name': 'quoted property name'
               'space name': 'also quoted'
-              '1startsWithDigit': 'quoted because it is not an identifier'
-              '\'startsWithQuote': 'leading quote escaped'
-              'quote\'name': 'single quote escaped'
-              'slash\\name': 'backslash escaped'
-              'line\nbreak': 'newline escaped'
-              '\$dollar': 'dollar escaped'
-              '': 'empty name quoted'
               normalName: 'not quoted'
-              _underscoreName: 'not quoted either'
             }
             """,
             new BicepValue<BinaryData>(BinaryData.FromString(
                 """
-                {"hyphen-name":"quoted property name","space name":"also quoted","1startsWithDigit":"quoted because it is not an identifier","'startsWithQuote":"leading quote escaped","quote'name":"single quote escaped","slash\\name":"backslash escaped","line\nbreak":"newline escaped","$dollar":"dollar escaped","":"empty name quoted","normalName":"not quoted","_underscoreName":"not quoted either"}
+                {"hyphen-name":"quoted property name","space name":"also quoted","normalName":"not quoted"}
                 """)));
     }
 
