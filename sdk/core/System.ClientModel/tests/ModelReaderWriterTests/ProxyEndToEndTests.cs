@@ -3,6 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Proxy.OpenAILike;
+using System.ClientModel.Tests.Proxy.OpenAILike.Mocks;
 using System.ClientModel.Tests.Proxy.ThirdPartyA;
 using System.ClientModel.Tests.Proxy.ThirdPartyB;
 using NUnit.Framework;
@@ -10,22 +11,38 @@ using NUnit.Framework;
 namespace System.ClientModel.Tests.ModelReaderWriterTests
 {
     /// <summary>
-    /// End-to-end demonstration of the OpenAI -> Foundry conditional-deserialization scenario:
-    /// a base "OpenAI-like" library, two independent third-party libraries each adding a subtype via
-    /// a conditional proxy, and a consumer that routes deserialization purely from the payload
-    /// discriminator. Asserts the concrete runtime type AND the owning assembly so we prove the
-    /// deserialization physically runs in the third-party DLL, not the base.
+    /// A <b>truly end-to-end</b> demonstration of the OpenAI -> Foundry conditional-deserialization
+    /// scenario. Unlike a bare <see cref="ModelReaderWriter"/> call, each test drives a real
+    /// <see cref="ResponseToolsClient"/> whose <see cref="ClientPipeline"/> uses a mock transport that
+    /// returns a canned response body — i.e. we register the proxy, mock the response, run a client
+    /// call, and verify the expected derived type comes back. Asserting the concrete runtime type AND
+    /// the owning assembly proves the deserialization physically ran in the third-party DLL, not the base.
     /// </summary>
     public class ProxyEndToEndTests
     {
-        private static ModelReaderWriterOptions CreateOptionsWithBothProxies()
-            => new ModelReaderWriterOptions("J").AddAzureTools().AddBingTools();
+        // Builds a client whose transport returns the given canned response body, with optional proxies registered.
+        private static ResponseToolsClient CreateClient(string cannedResponseJson, Action<ModelReaderWriterOptions>? registerProxies = null)
+        {
+            var mrwOptions = new ModelReaderWriterOptions("J");
+            registerProxies?.Invoke(mrwOptions);
+
+            var pipelineOptions = new ClientPipelineOptions
+            {
+                Transport = new CannedResponseTransport(cannedResponseJson)
+            };
+
+            return new ResponseToolsClient(pipelineOptions, mrwOptions);
+        }
+
+        private static void RegisterBothProxies(ModelReaderWriterOptions options)
+            => options.AddAzureTools().AddBingTools();
 
         [Test]
         public void FunctionTool_HandledByBase()
         {
-            var data = BinaryData.FromString("{\"type\":\"function\",\"function_name\":\"get_weather\"}");
-            ResponseTool tool = ModelReaderWriter.Read<ResponseTool>(data, CreateOptionsWithBothProxies())!;
+            ResponseToolsClient client = CreateClient("{\"type\":\"function\",\"function_name\":\"get_weather\"}", RegisterBothProxies);
+
+            ResponseTool tool = client.GetTool("t1");
 
             Assert.IsInstanceOf<FunctionTool>(tool);
             Assert.AreEqual(typeof(ResponseTool).Assembly, tool.GetType().Assembly);
@@ -35,8 +52,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void AzureSearch_RoutedToThirdPartyA()
         {
-            var data = BinaryData.FromString("{\"type\":\"azure_search\",\"index_name\":\"docs\"}");
-            ResponseTool tool = ModelReaderWriter.Read<ResponseTool>(data, CreateOptionsWithBothProxies())!;
+            ResponseToolsClient client = CreateClient("{\"type\":\"azure_search\",\"index_name\":\"docs\"}", RegisterBothProxies);
+
+            ResponseTool tool = client.GetTool("t2");
 
             Assert.IsInstanceOf<AzureSearchTool>(tool);
             Assert.AreEqual(typeof(AzureSearchTool).Assembly, tool.GetType().Assembly);
@@ -46,8 +64,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void BingGrounding_RoutedToThirdPartyB()
         {
-            var data = BinaryData.FromString("{\"type\":\"bing_grounding\",\"market\":\"en-US\"}");
-            ResponseTool tool = ModelReaderWriter.Read<ResponseTool>(data, CreateOptionsWithBothProxies())!;
+            ResponseToolsClient client = CreateClient("{\"type\":\"bing_grounding\",\"market\":\"en-US\"}", RegisterBothProxies);
+
+            ResponseTool tool = client.GetTool("t3");
 
             Assert.IsInstanceOf<BingGroundingTool>(tool);
             Assert.AreEqual(typeof(BingGroundingTool).Assembly, tool.GetType().Assembly);
@@ -57,8 +76,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void UnknownDiscriminator_FallsBackToBase()
         {
-            var data = BinaryData.FromString("{\"type\":\"web_search\"}");
-            ResponseTool tool = ModelReaderWriter.Read<ResponseTool>(data, CreateOptionsWithBothProxies())!;
+            ResponseToolsClient client = CreateClient("{\"type\":\"web_search\"}", RegisterBothProxies);
+
+            ResponseTool tool = client.GetTool("t4");
 
             Assert.IsInstanceOf<UnknownResponseTool>(tool);
             Assert.AreEqual(typeof(ResponseTool).Assembly, tool.GetType().Assembly);
@@ -67,10 +87,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void WithoutProxies_AzureSearchFallsBackToBase()
         {
-            var data = BinaryData.FromString("{\"type\":\"azure_search\",\"index_name\":\"docs\"}");
-            ResponseTool tool = ModelReaderWriter.Read<ResponseTool>(data, new ModelReaderWriterOptions("J"))!;
+            // No proxies registered — proves the proxy is what changes behavior.
+            ResponseToolsClient client = CreateClient("{\"type\":\"azure_search\",\"index_name\":\"docs\"}");
 
-            // Proves the proxy is what changes behavior: without it, the base cannot route azure_search.
+            ResponseTool tool = client.GetTool("t5");
+
             Assert.IsInstanceOf<UnknownResponseTool>(tool);
         }
     }
