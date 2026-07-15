@@ -748,6 +748,12 @@ namespace Azure.Provisioning.OperationalInsights
         CapacityReservation = 6,
         LACluster = 7,
     }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public enum RetentionInDaysAsDefaultState
+    {
+        True = 0,
+        False = 1,
+    }
     public partial class StorageInsight : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public StorageInsight(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -784,5 +790,11 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.StorageInsightState> State { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version.")]
+    public enum TotalRetentionInDaysAsDefaultState
+    {
+        True = 0,
+        False = 1,
     }
 }
