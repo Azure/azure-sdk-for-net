@@ -25,7 +25,7 @@ extends:
     # Shared mock/live builder; select the live tier (real Cli MCP).
     mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
     TestType: live
-    vallyRoot: tools/azsdk-cli/Azure.Sdk.Tools.Vally
+    vallyRoot: azsdk-evals
     evalGlobs:
       - 'evals/workflow-scenarios/live/*.eval.yaml'
     # Run each shard under AzureCLI@2 so the real MCP's DevOps calls are authenticated.
