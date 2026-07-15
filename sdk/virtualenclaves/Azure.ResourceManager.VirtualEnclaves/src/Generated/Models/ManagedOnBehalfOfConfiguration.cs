@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         }
 
         /// <summary> Managed-On-Behalf-Of broker resources. </summary>
-        public IReadOnlyList<MoboBrokerResource> MoboBrokerResources { get; }
+        public IReadOnlyList<MoboBrokerResource> MoboBrokerResources { get; } = new ChangeTrackingList<MoboBrokerResource>();
     }
 }

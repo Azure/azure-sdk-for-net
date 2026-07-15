@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the EvaluationOn. </summary>
+        /// <summary> Gets the EvaluationOn. </summary>
         public BicepValue<DateTimeOffset> EvaluationOn
         {
             get
@@ -32,14 +32,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _evaluationOn;
             }
-            set
-            {
-                Initialize();
-                _evaluationOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Results. </summary>
+        /// <summary> Gets the Results. </summary>
         public BicepValue<string> Results
         {
             get
@@ -47,14 +42,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _results;
             }
-            set
-            {
-                Initialize();
-                _results.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Error. </summary>
+        /// <summary> Gets the Error. </summary>
         public BicepValue<ResponseError> Error
         {
             get
@@ -62,18 +52,13 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _error;
             }
-            set
-            {
-                Initialize();
-                _error.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for BatchAccountPoolAutoScaleRun. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _evaluationOn = DefineProperty<DateTimeOffset>(nameof(EvaluationOn), new string[] { "evaluationTime" }, isRequired: true);
+            _evaluationOn = DefineProperty<DateTimeOffset>(nameof(EvaluationOn), new string[] { "evaluationTime" });
             _results = DefineProperty<string>(nameof(Results), new string[] { "results" });
             _error = DefineProperty<ResponseError>(nameof(Error), new string[] { "error" });
             DefineAdditionalProperties();

@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         }
 
         /// <summary> Array object to transfer and persist errors that originate from the Edge. </summary>
-        public IReadOnlyList<AssetEndpointProfileStatusError> Errors { get; }
+        public IReadOnlyList<AssetEndpointProfileStatusError> Errors { get; } = new ChangeTrackingList<AssetEndpointProfileStatusError>();
     }
 }

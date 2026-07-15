@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
@@ -372,7 +373,10 @@ namespace Azure.Generator.Management.Providers
             {
                 if (segment.IsConstant)
                 {
-                    formatBuilder.Append($"/{segment}");
+                    // Constant path segments can still contain braces from invalid route fragments like
+                    // "{name}?disambiguation_dummy"; escape them so they are emitted as literals rather
+                    // than C# interpolation holes in the generated resource identifier string.
+                    formatBuilder.Append($"/{EscapeFormatLiteral(segment.Value)}");
                 }
                 else
                 {
@@ -402,6 +406,9 @@ namespace Azure.Generator.Management.Providers
             };
 
             return new MethodProvider(signature, bodyStatements, this);
+
+            static string EscapeFormatLiteral(string value)
+                => value.Replace("{", "{{{{").Replace("}", "}}}}");
         }
 
         internal ResourceTypePattern ResourceType => _resourceMetadata.ResourceType;
@@ -453,9 +460,9 @@ namespace Azure.Generator.Management.Providers
                 else
                 {
                     var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true, false);
-                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, true, asyncMethodName, isFakeLro));
+                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, methodKind, true, asyncMethodName, isFakeLro));
                     var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false, false);
-                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, false, methodName, isFakeLro));
+                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, methodKind, false, methodName, isFakeLro));
                 }
             }
 
@@ -482,6 +489,13 @@ namespace Azure.Generator.Management.Providers
                         var isFakeLro = ResourceHelpers.ShouldMakeLro(tagUpdateMethod.Kind);
                         var parameterMappings = _operationContext.BuildParameterMapping(new RequestPathPattern(tagUpdateMethod.InputMethod.Operation.Path));
                         var tagUpdateMethodProvider = new UpdateOperationMethodProvider(this, parameterMappings, updateRestClientInfo, tagUpdateMethod.InputMethod, false, tagUpdateMethod.Kind, isFakeLro);
+                        MethodProvider tagUpdateMethodAsMethod = tagUpdateMethodProvider;
+
+                        if (!CanPopulateTagUpdateMethodArguments(tagUpdateMethodAsMethod.Signature, parameterMappings))
+                        {
+                            methods.AddRange(BuildGetChildResourceMethods());
+                            return [.. methods];
+                        }
 
                         methods.AddRange([
                             new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
@@ -501,7 +515,7 @@ namespace Azure.Generator.Management.Providers
             return [.. methods];
         }
 
-        private MethodProvider BuildResourceOperationMethod(InputServiceMethod method, RestClientInfo restClientInfo, bool isAsync, string? methodName, bool isFakeLro)
+        private MethodProvider BuildResourceOperationMethod(InputServiceMethod method, RestClientInfo restClientInfo, ResourceOperationKind methodKind, bool isAsync, string? methodName, bool isFakeLro)
         {
             // Check if the response body type is a list - if so, wrap it in a single-page pageable.
             // Long-running operations are excluded: an LRO returning an array is surfaced as
@@ -512,7 +526,33 @@ namespace Azure.Generator.Management.Providers
                 return new ArrayResponseOperationMethodProvider(this, _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path)), restClientInfo, method, isAsync, methodName);
             }
 
-            return new ResourceOperationMethodProvider(this, _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path)), restClientInfo, method, isAsync, methodName, forceLro: isFakeLro);
+        return new ResourceOperationMethodProvider(this, _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path)), restClientInfo, method, methodKind, isAsync, methodName, forceLro: isFakeLro);
+        }
+
+        private static bool CanPopulateTagUpdateMethodArguments(MethodSignature updateSignature, ParameterContextRegistry parameterMappings)
+        {
+            foreach (var parameter in updateSignature.Parameters)
+            {
+                if (parameter.Type.Equals(typeof(WaitUntil)) ||
+                    parameter.Type.Equals(typeof(CancellationToken)) ||
+                    parameter.Location == ParameterLocation.Body ||
+                    parameter.DefaultValue is not null)
+                {
+                    continue;
+                }
+
+                var serializedName = parameter.WireInfo?.SerializedName;
+                if (serializedName is not null &&
+                    parameterMappings.TryGetValue(serializedName, out var mapping) &&
+                    mapping.ContextualParameter is not null)
+                {
+                    continue;
+                }
+
+                return false;
+            }
+
+            return true;
         }
 
         private (bool IsPatch, ResourceMethod? UpdateMethod) PopulateUpdateMethod()

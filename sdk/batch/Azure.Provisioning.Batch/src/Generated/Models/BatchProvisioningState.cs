@@ -11,16 +11,16 @@ namespace Azure.Provisioning.Batch
     public enum BatchProvisioningState
     {
         /// <summary> The account is in an invalid state. </summary>
-        Invalid,
+        Invalid = 0,
         /// <summary> The account is being created. </summary>
-        Creating,
+        Creating = 1,
         /// <summary> The account is being deleted. </summary>
-        Deleting,
+        Deleting = 2,
         /// <summary> The account has been created and is ready for use. </summary>
-        Succeeded,
+        Succeeded = 3,
         /// <summary> The last operation for the account is failed. </summary>
-        Failed,
+        Failed = 4,
         /// <summary> The last operation for the account is cancelled. </summary>
-        Cancelled
+        Cancelled = 5
     }
 }

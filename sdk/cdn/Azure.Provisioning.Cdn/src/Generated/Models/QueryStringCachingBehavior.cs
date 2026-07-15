@@ -11,12 +11,12 @@ namespace Azure.Provisioning.Cdn
     public enum QueryStringCachingBehavior
     {
         /// <summary> IgnoreQueryString. </summary>
-        IgnoreQueryString,
+        IgnoreQueryString = 0,
         /// <summary> BypassCaching. </summary>
-        BypassCaching,
+        BypassCaching = 1,
         /// <summary> UseQueryString. </summary>
-        UseQueryString,
+        UseQueryString = 2,
         /// <summary> NotSet. </summary>
-        NotSet
+        NotSet = 3
     }
 }

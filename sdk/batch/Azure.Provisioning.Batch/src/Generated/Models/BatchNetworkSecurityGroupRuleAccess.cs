@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Batch
     public enum BatchNetworkSecurityGroupRuleAccess
     {
         /// <summary> Allow access. </summary>
-        Allow,
+        Allow = 0,
         /// <summary> Deny access. </summary>
-        Deny
+        Deny = 1
     }
 }
