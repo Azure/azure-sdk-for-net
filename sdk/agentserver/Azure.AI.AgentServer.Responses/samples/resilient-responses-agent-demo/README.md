@@ -124,10 +124,10 @@ send no session id — the platform routes them by `response_id`.
 | `./demo-client.sh stream` | Reattaches via `GET /responses/{id}?stream=true&starting_after=N`, skipping events already seen (routed by `response_id`). |
 | `./demo-client.sh steer "<topic>"` | POSTs a new response with `previous_response_id` + the **same** `agent_session_id` — queued as a steering input on the same sandbox; the agent winds down and re-enters with the new topic. |
 | `./demo-client.sh cancel` | `POST /responses/{id}/cancel` — the response transitions to `status=cancelled` (routed by `response_id`). |
-| `./demo-client.sh crash` | POSTs `{"input":"crash", agent_session_id}` pinned to the **same** sandbox — the agent (`DEMO_MODE=1`) calls `Environment.Exit(137)`, breaking the client↔container connection. Run `stream` afterward to reconnect and watch the recovered run resume. |
+| `./demo-client.sh crash` | POSTs `{"input":"crash", agent_session_id}` pinned to the **same** sandbox as your active response — the agent (`DEMO_MODE=1`) calls `Environment.Exit(137)`, killing that container. It then **watches recovery in-place**: it re-attaches `azd ai agent monitor` across the nanny restart and polls the response status, printing the `crash fired → container restarted → reclaimed stale task → recovered task → completed` progression and a `RECOVERY PROVEN` verdict. Append `--no-watch` to only fire the crash. (Requires an active response in the session; run `start` first.) |
 | `./demo-client.sh delete` | `DELETE /responses/{id}` (routed by `response_id`). |
 | `./demo-client.sh status` | Local session state (incl. `SESSION_ID`) + the server's current snapshot. |
-| `./demo-client.sh logs` | Tails container logs via `azd ai agent monitor --follow --session-id <SESSION_ID>`. |
+| `./demo-client.sh logs` | Tails container logs via `azd ai agent monitor --follow --session-id <SESSION_ID>`. **Note:** a single `--follow` attach does **not** follow the container across a crash/restart — the pre-crash monitor stream ends when the container dies and does not re-attach to the new container, so the post-restart `Reclaimed`/`Recovered` lines never appear here. To watch a full crash→recover cycle use `./demo-client.sh crash` (it re-attaches automatically). |
 | `./demo-client.sh reset` | Clears `.demo-session` (the only command that drops the pinned session id). |
 
 ## Local iteration

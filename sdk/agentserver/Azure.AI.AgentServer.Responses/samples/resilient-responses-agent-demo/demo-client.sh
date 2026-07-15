@@ -56,6 +56,8 @@ ENDPOINT="${ENDPOINT:-https://<account>.services.ai.azure.com/api/projects/<proj
 API_VERSION="${API_VERSION:-v1}"
 MODEL="${MODEL:-gpt-5.4-nano}"
 SESSION_FILE=".demo-session"
+# Deployed agent name (used by `logs` and the post-crash recovery watch).
+AGENT_NAME="${AGENT_NAME:-resilient-responses-agent-demo-dotnet}"
 
 # ── Colors ────────────────────────────────────────────────────────────────────
 
@@ -418,7 +420,116 @@ cmd_cancel() {
         "${ENDPOINT}/responses/${RESPONSE_ID}/cancel?api-version=${API_VERSION}" | python3 -m json.tool
 }
 
+# Fetch the server-side status for a response id. Echoes the status string
+# (e.g. queued/in_progress/completed/failed) or empty on error.
+_response_status() {
+    local rid="$1"
+    ensure_token
+    curl -sS \
+        -H "Authorization: Bearer ${TOKEN}" \
+        -H "Foundry-Features: HostedAgents=V1Preview" \
+        "${ENDPOINT}/responses/${rid}?api-version=${API_VERSION}" 2>/dev/null \
+        | python3 -c "
+import sys, json
+try:
+    print((json.load(sys.stdin) or {}).get('status') or '')
+except Exception:
+    print('')
+" 2>/dev/null
+}
+
+# Read-only recovery watch (NOT an SSE reconnect loop). After a crash we
+# respawn 'azd ai agent monitor' for the pinned session — a SINGLE monitor
+# attach does not reliably follow the container across the nanny restart, so
+# we re-attach in a loop and accumulate the pre-crash + post-restart logs into
+# one file. As each recovery marker first appears we print it, and we poll the
+# response status via GET until it reaches a terminal state. This is what
+# lets you actually SEE the crash → restart → reclaim → recover → completed
+# progression that a plain `logs` attach misses.
+_watch_recovery() {
+    local sid="$1" rid="$2"
+    local deadline=$(( $(date +%s) + 200 ))
+    local logf; logf="$(mktemp)"
+    local saw_crash=0 saw_reclaim=0 saw_recover=0 status="" pre_inst="" restart_seen=0
+
+    echo ""
+    echo -e "${BOLD}Watching recovery${RESET} ${DIM}(read-only: re-attaching monitor + polling status across the restart)${RESET}"
+    echo -e "${DIM}session=${sid}${RESET}"
+    [[ -n "$rid" ]] && echo -e "${DIM}response=${rid}${RESET}"
+
+    # capture the instance that is live BEFORE the crash so we can detect the
+    # distinct post-restart worker generation.
+    pre_inst=$(timeout 12 azd ai agent monitor "$AGENT_NAME" --session-id "$sid" 2>/dev/null \
+        | grep -oE 'instance=worker-[0-9]+-[a-f0-9]+-[0-9]+' | head -1 | sed 's/instance=//')
+    [[ -n "$pre_inst" ]] && echo -e "${DIM}pre-crash worker: ${pre_inst}${RESET}"
+
+    while (( $(date +%s) < deadline )); do
+        # one bounded monitor attach → append its buffer to the accumulator
+        timeout 12 azd ai agent monitor "$AGENT_NAME" --session-id "$sid" >>"$logf" 2>/dev/null
+
+        if [[ "$saw_crash" -eq 0 ]] && grep -q "CRASH triggered via input=crash" "$logf"; then
+            saw_crash=1; echo -e "  ${RED}✖ crash fired${RESET}  ${DIM}(CRASH triggered via input=crash — exiting in 300ms)${RESET}"
+        fi
+        # a distinct 2nd worker instance == the container was restarted by the nanny
+        if [[ "$restart_seen" -eq 0 ]]; then
+            local insts
+            insts=$(grep -oE 'instance=worker-[0-9]+-[a-f0-9]+-[0-9]+' "$logf" | sed 's/instance=//' | sort -u)
+            local distinct; distinct=$(echo "$insts" | grep -c .)
+            if { [[ -n "$pre_inst" ]] && echo "$insts" | grep -qv "^${pre_inst}$" && [[ "$distinct" -ge 2 ]]; } \
+               || { [[ -z "$pre_inst" ]] && [[ "$distinct" -ge 2 ]]; }; then
+                restart_seen=1
+                local newinst; newinst=$(echo "$insts" | grep -v "^${pre_inst}$" | head -1)
+                echo -e "  ${YELLOW}↻ container restarted${RESET}  ${DIM}new worker: ${newinst:-<new generation>}${RESET}"
+            fi
+        fi
+        if [[ "$saw_reclaim" -eq 0 ]] && grep -q "Reclaimed stale task" "$logf"; then
+            saw_reclaim=1
+            local rc; rc=$(grep -oE "Reclaimed stale task [^ ]+" "$logf" | head -1)
+            echo -e "  ${CYAN}⟳ ${rc:-reclaimed stale task}${RESET}"
+            # A stale-task lease can only be reclaimed by a DIFFERENT process,
+            # which necessarily means the crashed container was restarted.
+            if [[ "$restart_seen" -eq 0 ]]; then
+                restart_seen=1
+                echo -e "  ${YELLOW}↻ container restarted${RESET}  ${DIM}(inferred: stale lease reclaimed by a new process)${RESET}"
+            fi
+        fi
+        if [[ "$saw_recover" -eq 0 ]] && grep -qE "Recovered task .* \(recovery #[0-9]+\)" "$logf"; then
+            saw_recover=1
+            local rv; rv=$(grep -oE "Recovered task .* \(recovery #[0-9]+\)" "$logf" | head -1)
+            echo -e "  ${GREEN}✔ ${rv:-recovered task}${RESET}"
+        fi
+
+        if [[ -n "$rid" ]]; then
+            status=$(_response_status "$rid")
+            case "$status" in
+                completed|failed|cancelled|incomplete)
+                    echo -e "  ${GREEN}● terminal status=${status}${RESET}"
+                    break
+                    ;;
+            esac
+        fi
+        sleep 6
+    done
+
+    echo ""
+    echo -e "${BOLD}Recovery verdict${RESET}"
+    echo -e "  crash fired            : $([[ $saw_crash -eq 1 ]] && echo -e "${GREEN}yes${RESET}" || echo -e "${YELLOW}not seen in logs${RESET}")"
+    echo -e "  container restarted    : $([[ $restart_seen -eq 1 ]] && echo -e "${GREEN}yes${RESET}" || echo -e "${YELLOW}not observed${RESET}")"
+    echo -e "  task reclaimed         : $([[ $saw_reclaim -eq 1 ]] && echo -e "${GREEN}yes${RESET}" || echo -e "${YELLOW}no${RESET}")"
+    echo -e "  task recovered         : $([[ $saw_recover -eq 1 ]] && echo -e "${GREEN}yes${RESET}" || echo -e "${YELLOW}no${RESET}")"
+    echo -e "  response terminal      : ${status:-<none / no active response>}"
+    echo -e "${DIM}full captured log: ${logf}${RESET}"
+    if [[ -n "$rid" && "$status" == "completed" && ( $saw_reclaim -eq 1 || $saw_recover -eq 1 ) ]]; then
+        echo -e "${GREEN}✔ RECOVERY PROVEN — the crashed run resumed on a new container and completed.${RESET}"
+    elif [[ -z "$rid" ]]; then
+        echo -e "${YELLOW}Note: no in-flight response was active, so there was nothing to recover —${RESET}"
+        echo -e "${YELLOW}the crash only restarted an idle sandbox. Run 'start' first, then 'crash'.${RESET}"
+    fi
+}
+
 cmd_crash() {
+    local watch=1
+    if [[ "${1:-}" == "--no-watch" ]]; then watch=0; fi
     load_session
     if [[ -z "${SESSION_ID:-}" ]]; then
         echo -e "${RED}No pinned session. Run './demo-client.sh start' first so the${RESET}" >&2
@@ -429,7 +540,21 @@ cmd_crash() {
 
     echo -e "${RED}Triggering container crash via input=\"crash\"${RESET}"
     echo -e "${CYAN}▶ agent_session_id=${SESSION_ID}${RESET} ${DIM}(same sandbox as the running response)${RESET}"
+    if [[ -n "${RESPONSE_ID:-}" ]]; then
+        echo -e "${DIM}Active response to recover: ${RESPONSE_ID}${RESET}"
+    else
+        echo -e "${YELLOW}⚠ No active response in this session — the crash will restart an idle${RESET}"
+        echo -e "${YELLOW}  sandbox with nothing to recover. Run './demo-client.sh start' first,${RESET}"
+        echo -e "${YELLOW}  then './demo-client.sh crash' from another terminal, to see recovery.${RESET}"
+    fi
     echo -e "${DIM}(requires DEMO_MODE=1 on the server)${RESET}"
+
+    # Capture the ORIGINAL in-flight response id BEFORE the crash POST — the
+    # crash's own POST returns a throwaway response that always ends `failed`
+    # (the demo crash branch emits response.failed then exits), and stream_sse
+    # would overwrite RESPONSE_ID with it. The run we want to watch recover is
+    # the one that was already streaming on this sandbox.
+    local target_rid="${RESPONSE_ID:-}"
 
     local body
     body=$(python3 -c "
@@ -449,10 +574,25 @@ print(json.dumps({
     # recover from with './demo-client.sh stream'.
     stream_sse "${ENDPOINT}/responses?api-version=${API_VERSION}" "" POST "$body"
 
+    # Restore the original response id (stream_sse just clobbered it with the
+    # crash response's id) so 'stream'/'status' still target the real run.
+    if [[ -n "$target_rid" ]]; then
+        RESPONSE_ID="$target_rid"
+        save_session
+    fi
+
     echo ""
-    echo -e "${DIM}Container will exit shortly. Platform nanny restarts within ~1 min.${RESET}"
-    echo -e "${DIM}If you had an active response, './demo-client.sh stream' after restart will${RESET}"
-    echo -e "${DIM}reconnect and resume from the last completed phase.${RESET}"
+    echo -e "${DIM}Container will exit in ~300ms. Platform nanny restarts within ~1 min.${RESET}"
+
+    if [[ "$watch" -eq 1 ]]; then
+        # Actively monitor the logs + status across the restart and show the
+        # crash → restart → reclaim → recover → completed progression. Pass
+        # --no-watch to skip and just fire the crash.
+        _watch_recovery "$SESSION_ID" "$target_rid"
+    else
+        echo -e "${DIM}Skipping recovery watch (--no-watch). Use './demo-client.sh stream' to${RESET}"
+        echo -e "${DIM}reconnect to the recovered response after the restart.${RESET}"
+    fi
 }
 
 cmd_delete() {
@@ -490,11 +630,14 @@ cmd_status() {
 
 cmd_logs() {
     load_session
-    local args=(resilient-responses-agent-demo-dotnet --follow)
+    local args=("$AGENT_NAME" --follow)
     if [[ -n "${SESSION_ID:-}" ]]; then
         args+=(--session-id "$SESSION_ID")
         echo -e "${DIM}Streaming logs for agent_session_id=${SESSION_ID}${RESET}"
     fi
+    echo -e "${DIM}Note: a single monitor attach does not follow the container across a${RESET}"
+    echo -e "${DIM}crash/restart. To watch a full crash→recover cycle use './demo-client.sh crash'${RESET}"
+    echo -e "${DIM}(it re-attaches automatically and prints the recovery markers).${RESET}"
     azd ai agent monitor "${args[@]}" "$@"
 }
 
@@ -520,7 +663,9 @@ Usage:
   ./demo-client.sh steer "<topic>"   Queue a follow-up turn — agent winds down
                                      current turn at next checkpoint and switches
   ./demo-client.sh cancel            Operator cancel of the active response
-  ./demo-client.sh crash             Trigger demo-mode container crash
+  ./demo-client.sh crash             Trigger demo-mode crash, then watch recovery
+                                     (crash→restart→reclaim→recover→completed);
+                                     append --no-watch to only fire the crash
   ./demo-client.sh delete            DELETE /responses/{id}
   ./demo-client.sh status            Show local session info + server snapshot
   ./demo-client.sh logs              Stream container stdout/stderr via azd
@@ -529,7 +674,8 @@ Usage:
 Environment overrides:
   ENDPOINT     Foundry agent protocols endpoint (set to your deployment).
   API_VERSION  Default: v1.
-  MODEL        Default: gpt-4.1-mini.
+  MODEL        Default: gpt-5.4-nano.
+  AGENT_NAME   Deployed agent name (default: resilient-responses-agent-demo-dotnet).
 USAGE
 }
 
@@ -540,7 +686,7 @@ case "${1:-}" in
     stream)  cmd_stream ;;
     steer)   shift; cmd_steer "${1:-}" ;;
     cancel)  cmd_cancel ;;
-    crash)   cmd_crash ;;
+    crash)   shift; cmd_crash "${1:-}" ;;
     delete)  cmd_delete ;;
     status)  cmd_status ;;
     logs)    shift; cmd_logs "$@" ;;
