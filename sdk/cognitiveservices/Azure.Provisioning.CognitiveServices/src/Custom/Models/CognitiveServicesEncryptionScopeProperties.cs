@@ -3,10 +3,18 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.Provisioning.CognitiveServices
 {
-    public partial class CognitiveServicesEncryptionScopeProperties : ServiceAccountEncryptionProperties
+    // Provisioning intentionally flattens regular TypeSpec inheritance. This custom base
+    // restores the 1.2.0 CLR hierarchy for migration compatibility. The generator still
+    // sees the TypeSpec base properties while flattening, so suppress the members already
+    // supplied by ServiceAccountEncryptionProperties rather than teaching the generator
+    // to infer duplicate properties from an arbitrary custom hierarchy.
+    [CodeGenSuppress("KeyVaultProperties")]
+    [CodeGenSuppress("KeySource")]
+    public partial class CognitiveServicesEncryptionScopeProperties : global::Azure.Provisioning.CognitiveServices.ServiceAccountEncryptionProperties
     {
-        // Preserve the 1.2.0 base type while the generated TypeSpec model remains flattened by default.
     }
 }
