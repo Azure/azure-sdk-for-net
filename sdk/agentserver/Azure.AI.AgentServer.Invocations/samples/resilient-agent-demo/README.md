@@ -98,8 +98,8 @@ The platform routes requests to the right sandbox for you:
 Inside the container the framework reads the pinned session id from
 `FOUNDRY_AGENT_SESSION_ID` (`FoundryEnvironment.SessionId`); the handler uses it as
 the durable `TaskId` (one resilient task per session) and the invocation id as the
-per-turn `InputId`. See [`PARITY.md`](PARITY.md) for how this is simulated locally
-(where there is no platform proxy).
+per-turn `InputId`. Locally (where there is no platform proxy) the session id is
+synthesized so the same one-task-per-session model can be exercised offline.
 
 ## Endpoints
 
@@ -215,8 +215,7 @@ iteration.
 
 ## Parity with the Python demo
 
-See [`PARITY.md`](PARITY.md) for a behavior-by-behavior comparison against the
-Python `resilient-agent-demo`. Notable intentional divergences: NuGet package drop
-vs wheels; `FOUNDRY_HOSTING_ENVIRONMENT`-driven backend selection vs
-`AGENTSERVER_TASKS_BACKEND`; the offline synthetic-token model; and the deployed
-agent name `resilient-research-agent-dotnet`.
+This demo is ported from the Python `resilient-agent-demo`. Notable intentional
+divergences: NuGet package drop vs wheels; `FOUNDRY_HOSTING_ENVIRONMENT`-driven
+backend selection vs `AGENTSERVER_TASKS_BACKEND`; the offline synthetic-token
+model; and the deployed agent name `resilient-research-agent-dotnet`.

@@ -219,12 +219,12 @@ internal sealed class SteeringQueue<TOutput>
 /// <typeparam name="TOutput">The chain output type.</typeparam>
 internal sealed class QueuedInput<TOutput>
 {
-    public QueuedInput(JsonNode? slot, JsonObject? attachments, string inputId, bool inputIdSupplied, TaskRunState<TOutput> runState)
+    public QueuedInput(JsonNode? slot, JsonObject? attachments, string inputId, bool persistInputId, TaskRunState<TOutput> runState)
     {
         Slot = slot;
         Attachments = attachments;
         InputId = inputId;
-        InputIdSupplied = inputIdSupplied;
+        PersistInputId = persistInputId;
         RunState = runState;
     }
 
@@ -237,8 +237,8 @@ internal sealed class QueuedInput<TOutput>
     /// <summary>The input id assigned to this queued input.</summary>
     public string InputId { get; }
 
-    /// <summary>Whether the caller explicitly supplied input_id (gates advancing last_input_id).</summary>
-    public bool InputIdSupplied { get; }
+    /// <summary>Whether the framework advances the persisted <c>last_input_id</c> chain head to this input's id when its steered turn drains.</summary>
+    public bool PersistInputId { get; }
 
     /// <summary>The awaitable handle resolved when this input's steered turn completes.</summary>
     public TaskRunState<TOutput> RunState { get; }

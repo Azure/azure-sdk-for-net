@@ -1,6 +1,6 @@
 # Handler Implementation Guide
 
-> Developer guidance for implementing `ResponseHandler` — the single integration point for building Azure AI Responses API servers with this library.
+> Developer guidance for implementing response handlers — the single integration point for building Azure AI Responses API servers with this library.
 
 ---
 
@@ -10,7 +10,7 @@
 - [Getting Started](#getting-started)
 - [TextResponse](#textresponse)
 - [Server Registration](#server-registration)
-- [ResponseHandler](#responsehandler)
+- [Handler Signature](#handler-signature)
 - [ResponseEventStream](#responseeventstream)
   - [Method Naming Conventions](#method-naming-conventions)
   - [Setting Custom Metadata](#setting-custom-metadata)
@@ -23,7 +23,6 @@
   - [Reasoning Items](#reasoning-items)
   - [Multiple Output Items](#multiple-output-items)
   - [Other Tool Call Types](#other-tool-call-types)
-  - [MCP Terminal State](#mcp-terminal-state)
 - [Handling Input](#handling-input)
 - [Cancellation](#cancellation)
 - [Error Handling](#error-handling)
@@ -35,26 +34,52 @@
 - [RawBody Access](#rawbody-access)
 - [Configuration](#configuration)
   - [Distributed Tracing](#distributed-tracing)
-  - [TTL Eviction](#ttl-eviction)
   - [SSE Keep-Alive](#sse-keep-alive)
+- [Resilience](#resilience)
+  - [Mental Model](#mental-model)
+  - [The Recovery Loop](#the-recovery-loop)
+  - [What the Library Does](#what-the-library-does)
+  - [What the Handler Does](#what-the-handler-does)
+  - [Stream Checkpoints](#stream-checkpoints)
+  - [Item and Response `internal_metadata`](#item-and-response-internal_metadata)
+  - [Which metadata facility?](#which-metadata-facility)
+  - [Default Pattern (recovery-aware)](#default-pattern-recovery-aware)
+  - [Fallback Pattern (no opt-in)](#fallback-pattern-no-opt-in)
+  - [Upstream History Pattern](#upstream-history-pattern)
+  - [Watermark Pattern](#watermark-pattern)
+  - [Resumption Response Construction](#resumption-response-construction)
+  - [Recovery × Cancellation Composition](#recovery--cancellation-composition)
+  - [Configuration](#configuration-1)
+- [Steering API](#steering-api)
+  - [`ResponsesServerOptions.ResponseAcceptor`](#responsesserveroptionsresponseacceptor)
 - [Best Practices](#best-practices)
 - [Common Mistakes](#common-mistakes)
+- [See also](#see-also)
 
 ---
 
 ## Overview
 
-The library handles all protocol concerns — routing, serialization, SSE framing, `stream`/`background` mode negotiation, status lifecycle, and error shapes. You extend **one abstract class**: `ResponseHandler`. Your handler receives a `CreateResponse` request and yields SSE events via `IAsyncEnumerable<ResponseStreamEvent>`. The library wraps these events into the correct HTTP response format based on the client's requested mode.
+The library handles all protocol concerns — routing, serialization, SSE framing,
+`stream`/`background` mode negotiation, status lifecycle, and error shapes. You
+extend one handler class by overriding `ResponseHandler.CreateAsync`. Your
+handler receives a `CreateResponse` request and produces response events. The
+library wraps these events into the correct HTTP response format based on the
+client's requested mode.
 
 You do **not** need to think about:
+
 - Whether the client requested JSON or SSE streaming
 - Whether the response is running in the foreground or background
 - HTTP status codes, content types, or error envelopes
 - Sequence numbers or response IDs
 
-The library manages all of this. Your handler just yields events.
+The library manages all of this. Your handler just provides text or yields
+events.
 
-For most handlers, `TextResponse` eliminates even the event plumbing — you provide text (or a stream of tokens) and the library does the rest. For full control over every SSE event, use `ResponseEventStream`.
+For most handlers, `TextResponse` eliminates even the event plumbing — you
+provide text (or a stream of tokens) and the library does the rest. For full
+control over every SSE event, use `ResponseEventStream`.
 
 ---
 
@@ -98,7 +123,7 @@ That's it. One line starts a Kestrel host with OpenTelemetry, health checks, ide
 
 ## TextResponse
 
-A standalone convenience class for the most common case — returning a single text message. `TextResponse` implements `IAsyncEnumerable<ResponseStreamEvent>` and handles the full event lifecycle internally (created → in_progress → message → content → deltas → completed).
+A standalone convenience class for the most common case — returning a single text message. `TextResponse` implements `IAsyncEnumerable<ResponseStreamEvent>` and handles the full event lifecycle internally (`response.created` → `response.in_progress` → message/content events → `response.completed`).
 
 ### Complete Text
 
@@ -164,13 +189,15 @@ return new TextResponse(context, request,
 | You want minimal boilerplate | You need fine-grained delta control |
 | The focus of your handler is business logic, not event plumbing | You need to emit function calls, reasoning items, or tool calls |
 
+> **Note**: `TextResponse` handles all lifecycle events internally — the contract described in [ResponseEventStream](#responseeventstream) (created → output → terminal event) applies only when you use `ResponseEventStream` directly.
+
 ---
 
 ## Server Registration
 
-### Tier 1: One-Line Startup (Recommended)
+### Default: One-Line Startup (Recommended)
 
-The simplest way to start a Responses server is with the `Azure.AI.AgentServer.Core` package:
+The default way to register and run a handler is the `ResponsesServer.Run<THandler>()` one-liner:
 
 ```csharp
 using Azure.AI.AgentServer.Responses;
@@ -180,9 +207,9 @@ ResponsesServer.Run<MyHandler>(args);
 
 This creates a Kestrel host with OpenTelemetry, health checks, identity headers, and the Responses protocol endpoints — all in one line.
 
-### Tier 2: Builder Pattern
+### With Options / Builder Pattern
 
-For more control over the host configuration:
+For agents that need to configure services or host options before startup, use the builder pattern:
 
 ```csharp
 using Azure.AI.AgentServer.Responses;
@@ -193,9 +220,9 @@ var app = builder.Build();
 app.Run();
 ```
 
-### Tier 3: Manual Setup (Standalone)
+### Self-Hosting (Map into existing app)
 
-If you have an existing ASP.NET Core application, register Core middleware and protocol services directly. See the [Tier 3 self-hosting sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample9_Tier3SelfHosting.md) for a complete example with health checks and OpenTelemetry.
+If you have an existing ASP.NET Core application, register Core middleware and protocol services directly and map the Responses endpoints into that app. See the [Tier 3 self-hosting sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample9_Tier3SelfHosting.md) for a complete example with health checks and OpenTelemetry.
 
 #### Basic Setup
 
@@ -229,7 +256,7 @@ builder.Services.Configure<InMemoryProviderOptions>(opts =>
 app.MapResponsesServer();
 ```
 
-This maps five endpoints:
+The host maps five endpoints:
 - `POST /responses` — Create a response
 - `GET /responses/{responseId}` — Retrieve a response (JSON or SSE replay)
 - `POST /responses/{responseId}/cancel` — Cancel a response
@@ -240,7 +267,7 @@ This maps five endpoints:
 
 ### Custom Response Provider
 
-The server delegates state persistence, event streaming, and cancellation to three pluggable provider abstract classes. The default in-memory implementation works for single-instance deployments.
+The server delegates state persistence, event streaming, and cancellation to pluggable providers. The default in-memory implementation works for single-instance deployments; resilient deployments require a persistent provider.
 
 #### Provider Abstract Class Split
 
@@ -273,7 +300,7 @@ When deployed to Azure AI Foundry, durable persistence is enabled by default —
 
 ---
 
-## ResponseHandler
+## Handler Signature
 
 ```csharp
 public abstract class ResponseHandler
@@ -285,13 +312,20 @@ public abstract class ResponseHandler
 }
 ```
 
-| Parameter | Purpose |
-|---|---|
+| Parameter | Description |
+|-----------|-------------|
 | `request` | The deserialized `CreateResponse` body from the client (model, input, tools, instructions, etc.) |
-| `context` | Provides the response ID and ID generation helpers |
-| `cancellationToken` | Triggered on cancellation (explicit `/cancel` call or client disconnection for non-background) |
+| `context` | The handler-facing `ResponseContext` — request-scoped state, input/history helpers, forwarded headers, shutdown/recovery/steering flags, and durable conversation-chain metadata. |
+| `cancellationToken` | The cooperative cancellation signal for the current execution. It is triggered by explicit cancel, foreground client disconnect, shutdown, steering pressure, or certain pre-creation persistence failures. |
 
-Your handler is an `IAsyncEnumerable` — you `yield return` events one at a time. The library consumes them, assigns sequence numbers, manages the response lifecycle, and delivers them to the client.
+Handlers override `CreateAsync` and return an `IAsyncEnumerable<ResponseStreamEvent>`.
+Your handler can either:
+
+1. **Return a `TextResponse`** — the simplest approach for text-only responses.
+2. **Be an async iterator** — `yield return` events one at a time for full control.
+
+The library consumes the events, assigns sequence numbers, manages the response
+lifecycle, and delivers them to the client.
 
 ---
 
@@ -346,8 +380,41 @@ It provides:
 | Category | Methods / Properties |
 |---|---|
 | **Response** | `Response` — the underlying `Response` object. Set custom `Metadata` or `Instructions` before `EmitCreated()` |
+| **Internal metadata** | `InternalMetadata` — response-scoped, framework-internal string metadata persisted with snapshots and stripped from client payloads |
 | **Lifecycle** | `EmitCreated()`, `EmitInProgress()`, `EmitQueued()`, `EmitCompleted()`, `EmitFailed()`, `EmitIncomplete()` |
 | **Output factories** | `AddOutputItemMessage()`, `AddOutputItemFunctionCall()`, `AddOutputItemReasoningItem()`, `AddOutputItemCodeInterpreterCall()`, `AddOutputItemFileSearchCall()`, `AddOutputItemWebSearchCall()`, `AddOutputItemImageGenCall()`, `AddOutputItemMcpCall()`, `AddOutputItemCustomToolCall()`, `AddOutputItemStructuredOutputs()`, `AddOutputItemComputerCall()`, `AddOutputItemLocalShellCall()`, `AddOutputItemApplyPatchCall()`, `AddOutputItemMcpApprovalRequest()`, `AddOutputItemCompaction()`, and more |
+
+### Method Naming Conventions
+
+`ResponseEventStream` and its builders use a consistent naming scheme. Knowing the three prefixes tells you what any method does at a glance:
+
+#### Stream-level methods (`ResponseEventStream`)
+
+| Prefix | Example | Returns | Purpose |
+|--------|---------|---------|----------|
+| `Emit*` | `EmitCreated()`, `EmitCompleted()` | A single `ResponseStreamEvent` | Produce one response-lifecycle event |
+| `Add*` | `AddOutputItemMessage()`, `AddOutputItemFunctionCall(...)` | A **builder** object | Create a builder for step-by-step, fine-grained event emission |
+| `OutputItem*` | `OutputItemMessage(text)`, `OutputItemFunctionCall(...)` | `IEnumerable` or `IAsyncEnumerable` of events | **Convenience generator** — yields the complete output-item lifecycle in one call |
+
+#### Builder-level methods (e.g. `OutputItemMessageBuilder`)
+
+| Prefix | Example | Returns | Purpose |
+|--------|---------|---------|----------|
+| `Emit*` | `EmitAdded()`, `EmitDone()`, `EmitDelta(chunk)` | A single event | Produce one event in the builder's lifecycle |
+| `Add*` | `AddTextContent()`, `AddSummaryPart()` | A **child builder** | Create a nested content builder for sub-items |
+| *(content name)* | `TextContent(text)`, `Arguments(args)`, `SummaryPart(text)` | `IEnumerable` or `IAsyncEnumerable` of events | **Sub-item convenience** — yields the complete content-part lifecycle in one call |
+
+**Rule of thumb**: If a method returns a single event, it starts with `Emit`. If it returns a builder, it starts with `Add`. If it returns an enumerable of events, it's a convenience generator named after the content it produces.
+
+Every convenience generator has two overloads:
+
+| Overload | Signature pattern | Use when |
+|----------|-------------------|----------|
+| **Complete** | Takes a `string` → returns `IEnumerable<ResponseStreamEvent>` | You have the full value up-front |
+| **Streaming** | Takes an `IAsyncEnumerable<string>` → returns `IAsyncEnumerable<ResponseStreamEvent>` | You're receiving chunks from a model or service |
+
+> **Tip**: Start with `TextResponse`. If you need `ResponseEventStream`, start with convenience generators. Drop down to `Add*` builders only when you need fine-grained control (e.g., multiple content parts in one message, custom properties on the output item, or interleaving non-content work between events).
+
 
 ### Setting Custom Metadata
 
@@ -403,6 +470,7 @@ All violations are logged with handler type name and request ID for diagnostics.
 
 > **Note**: `TextResponse` handles all lifecycle events internally — the contract above applies only when you use `ResponseEventStream` directly.
 
+
 ### Builder Pattern
 
 Output is constructed through a **builder hierarchy** that enforces correct event ordering:
@@ -419,37 +487,6 @@ Each builder tracks its lifecycle state (`NotStarted` → `Added` → `Done`) an
 
 **Key rule**: Every builder that you start (`EmitAdded`) must be finished (`EmitDone`). Unfinished builders result in malformed responses.
 
-### Method Naming Conventions
-
-`ResponseEventStream` and its builders use a consistent naming scheme. Knowing the three prefixes tells you what any method does at a glance:
-
-#### Stream-level methods (`ResponseEventStream`)
-
-| Prefix | Example | Returns | Purpose |
-|--------|---------|---------|----------|
-| `Emit*` | `EmitCreated()`, `EmitCompleted()` | A single `ResponseStreamEvent` | Produce one response-lifecycle event |
-| `Add*` | `AddOutputItemMessage()`, `AddOutputItemFunctionCall(...)` | A **builder** object | Create a builder for step-by-step, fine-grained event emission |
-| `OutputItem*` | `OutputItemMessage(text)`, `OutputItemFunctionCall(...)` | `IEnumerable` or `IAsyncEnumerable` of events | **Convenience generator** — yields the complete output-item lifecycle in one call |
-
-#### Builder-level methods (e.g. `OutputItemMessageBuilder`)
-
-| Prefix | Example | Returns | Purpose |
-|--------|---------|---------|----------|
-| `Emit*` | `EmitAdded()`, `EmitDone()`, `EmitDelta(chunk)` | A single event | Produce one event in the builder's lifecycle |
-| `Add*` | `AddTextContent()`, `AddSummaryPart()` | A **child builder** | Create a nested content builder for sub-items |
-| *(content name)* | `TextContent(text)`, `Arguments(args)`, `SummaryPart(text)` | `IEnumerable` or `IAsyncEnumerable` of events | **Sub-item convenience** — yields the complete content-part lifecycle in one call |
-
-**Rule of thumb**: If a method returns a single event, it starts with `Emit`. If it returns a builder, it starts with `Add`. If it returns an enumerable of events, it's a convenience generator named after the content it produces.
-
-Every convenience generator has two overloads:
-
-| Overload | Signature pattern | Use when |
-|----------|-------------------|----------|
-| **Complete** | Takes a `string` → returns `IEnumerable<ResponseStreamEvent>` | You have the full value up-front |
-| **Streaming** | Takes an `IAsyncEnumerable<string>` → returns `IAsyncEnumerable<ResponseStreamEvent>` | You're receiving chunks from a model or service |
-
-> **Tip**: Start with convenience generators. Drop down to `Add*` builders only when you need fine-grained control (e.g., multiple content parts in one message, custom properties on the output item, or interleaving non-content work between events).
-
 ---
 
 ## ResponseContext
@@ -459,6 +496,7 @@ public class ResponseContext
 {
     public string ResponseId { get; }
     public bool IsShutdownRequested { get; set; }
+    public virtual CancellationToken Shutdown { get; }
     public virtual BinaryData? RawBody { get; }
     public virtual Task<IReadOnlyList<Item>> GetInputItemsAsync(bool resolveReferences = true, CancellationToken cancellationToken = default);
     public virtual Task<string> GetInputTextAsync(bool resolveReferences = true, CancellationToken cancellationToken = default);
@@ -470,6 +508,21 @@ public class ResponseContext
 ```
 
 Provides the library-generated response ID, shutdown signalling, access to resolved input and history items, forwarded client headers, and query parameters from the original request.
+
+For resilient and steerable deployments, the concrete runtime context also exposes the recovery/steering surface used later in this guide:
+
+| Member | Meaning |
+|---|---|
+| `IsRecovery` | `true` when this invocation re-enters after a crash. |
+| `PersistedResponse` | The last durable response snapshot from the prior lifetime, if any. |
+| `ConversationChainId` | Stable id shared across every turn/attempt of a conversation chain. |
+| `ConversationChainMetadata` | Durable, explicitly-flushed per-chain metadata. |
+| `IsSteeredTurn` | `true` on the drain re-entry that follows a steering input. |
+| `PendingInputCount` | Steering inputs queued behind the current turn. |
+| `ClientCancelled` | `true` when the client explicitly cancelled, distinct from shutdown. |
+| `Shutdown` | A dedicated `CancellationToken` signaled on graceful shutdown — separate from the handler's primary cancellation token, mirroring `TaskContext.Shutdown` and Python's `context.shutdown`. |
+| `ExitForRecoveryAsync()` | Defer the current turn for recovery instead of failing. |
+
 
 ### Input Items — `GetInputItemsAsync()`
 
@@ -598,9 +651,11 @@ Each output type can be emitted using either **convenience generators** (recomme
 
 ### Text Messages
 
-#### Using conveniences
+#### Using TextResponse (simplest)
 
-The simplest way to emit a text message — one call per output item:
+For text-only responses, prefer [`TextResponse`](#textresponse). When you need `ResponseEventStream`, the simplest stream-level approach is one convenience generator call per output item:
+
+#### Using convenience generators
 
 ```csharp
 var stream = new ResponseEventStream(context, request);
@@ -731,7 +786,7 @@ Both `RefusalContent` overloads follow the same pattern as `TextContent` — a `
 
 When your handler needs the client to execute a function (tool) and return the result.
 
-#### Using conveniences
+#### Using convenience generators
 
 ```csharp
 yield return stream.EmitCreated();
@@ -813,7 +868,7 @@ Function call outputs have no deltas — only `output_item.added` and `output_it
 
 Emit reasoning (chain-of-thought) before the main response.
 
-#### Using conveniences
+#### Using convenience generators
 
 ```csharp
 yield return stream.EmitCreated();
@@ -878,9 +933,9 @@ The library provides specialised builders for each tool call type. Each also has
 
 Each builder enforces its own lifecycle ordering — follow the method progression from left to right.
 
-### Simple Output Items (Add + Done)
+#### Convenience generators
 
-Many output item types have no intermediate SSE events — just `output_item.added` and `output_item.done`. For these, `ResponseEventStream` provides one-liner convenience generators that accept the domain-specific parameters, auto-generate the item ID, and yield the complete event pair:
+For simple output items that only need an added → done pair, convenience generators avoid the builder ceremony entirely. Many output item types have no intermediate SSE events — just `output_item.added` and `output_item.done`. For these, `ResponseEventStream` provides one-liner convenience generators that accept the domain-specific parameters, auto-generate the item ID, and yield the complete event pair:
 
 | Convenience Method | Description |
 |---|---|
@@ -987,11 +1042,63 @@ This complements the context-level helpers (`GetInputItemsAsync`, `GetInputTextA
 
 ## Cancellation
 
-The `CancellationToken` is triggered when:
-- A client calls `POST /responses/{id}/cancel` (background mode only)
-- A client disconnects the HTTP connection (non-background mode)
-- The server is shutting down (graceful shutdown)
-- Phase 1 persistence fails in background mode (storage unavailable before `response.created`)
+The handler observes cancellation through a `CancellationToken`, shutdown via the
+dedicated `context.Shutdown` token (and the `context.IsShutdownRequested` flag), and
+cause/steering flags on `ResponseContext`. `context.Shutdown` is a *separate* signal from
+the handler's primary `CancellationToken` — it mirrors the task-primitive
+`ctx.Shutdown` and the Python `context.shutdown` event, so a handler can `await` or link
+it to react to shutdown *specifically* rather than inferring it from a generic
+`OperationCanceledException`. These surfaces are cooperative: the framework asks the
+handler to wind down; the handler chooses whether to complete partial work, propagate
+cancellation, fail, or defer resilient background work for recovery.
+
+> **Never fail a handler purely because shutdown is happening.** On graceful shutdown a
+> well-behaved handler checkpoints and calls `ExitForRecoveryAsync()` (resilient
+> background) or emits `response.incomplete`; a handler that does nothing special is
+> automatically deferred for recovery (resilient background) or failed with
+> `grace_exhausted` (non-resilient) by the framework — it is *not* your job to manufacture
+> a `failed` terminal on shutdown. Always inspect `context.Shutdown` /
+> `context.IsShutdownRequested` before treating a cancellation as an error.
+
+| Cause | `CancellationToken` | `context.IsShutdownRequested` | `context.ClientCancelled` | Framework behaviour | What handler should do |
+|-------|:---:|:---:|:---:|---|---|
+| **Steering** | cancelled | false | false | If no terminal is emitted, the library treats the handler exit as failure. If a terminal is emitted, it is honoured. | Break the loop, close builders, emit `EmitCompleted()` for the superseded turn. |
+| **Client Cancel** | cancelled | false | true | Framework forces `cancelled` regardless of handler output. Output items are abandoned. | Return as soon as cleanup is done or let `OperationCanceledException` propagate. |
+| **Foreground disconnect** | cancelled | false | false | Treated as request cancellation for non-background work. | Stop promptly; normally let `OperationCanceledException` propagate. |
+| **Shutdown** | cancelled | true | false | Resilient background: `ExitForRecoveryAsync()` (or a passive exit) leaves the response `in_progress` for re-entry. Non-resilient: fails with `grace_exhausted` only after the grace window. | Observe `context.Shutdown`, checkpoint progress, then call `ExitForRecoveryAsync()` for resilient work; otherwise finish or emit `incomplete`. Never emit `failed` just because shutdown fired. |
+| **Shutdown + Client Cancel race** | cancelled | true | true | Each surface reflects its independent cause; cancellation status can win. | Inspect each surface as needed; resilient background handlers usually prefer `ExitForRecoveryAsync()`. |
+
+**Key status rules:**
+
+- `cancelled` is produced by the framework for explicit client cancellation; handlers should not manufacture it as a normal steering/shutdown outcome.
+- `incomplete` is handler-controlled; the framework does not infer truncation.
+- `ExitForRecoveryAsync()` is the graceful-shutdown recovery primitive for resilient background responses.
+
+### Default Pattern (handles cancel + shutdown)
+
+Most streaming handlers need to observe both the `CancellationToken` and the
+shutdown signal in their work loop. Treat cancellation as a wake-up signal for
+client cancel, disconnect, or steering; treat shutdown separately — observe
+`context.Shutdown` (or the `context.IsShutdownRequested` flag) — because resilient
+background handlers should defer to the next lifetime instead of producing a
+misleading terminal response.
+
+### Advanced Pattern (pre-entry steering, resilient shutdown recovery)
+
+For steerable + resilient handlers, the token may already be cancelled when the
+handler is entered: a newer turn may already be queued, or a client may already
+have cancelled. Check shutdown first, then inspect `context.ClientCancelled` and
+`context.PendingInputCount` to distinguish explicit cancel from steering. On a
+steering-only pre-entry, emitting `EmitCompleted()` lets the superseded turn end
+cleanly and the queued turn drain.
+
+### Metadata Usage in Cancellation
+
+`context.ConversationChainMetadata` is appropriate for lightweight progress
+signals that help on re-entry — for example a `last_processed_item_id`, a phase
+index, or a checkpoint reference. Do not store full conversation history, LLM
+outputs, or large framework checkpoints there; keep those in the upstream
+framework or your own store.
 
 ### TextResponse Handlers
 
@@ -1058,9 +1165,9 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 
 ### What the Library Does on Cancellation
 
-Let `OperationCanceledException` propagate — the server handles the winddown automatically:
+Let `OperationCanceledException` propagate for true cancellation — the server handles the winddown automatically:
 
-1. The library sets `CancelRequested = true` and fires the execution's `CancellationTokenSource`.
+1. The library records the cancellation cause and fires the execution's `CancellationTokenSource`.
 2. It waits up to **10 seconds** for the handler to wind down. If the handler doesn't cooperate in time, the cancel endpoint returns the response in its current state — the execution task continues in the background until it completes.
 3. Once the handler finishes (within or beyond the grace period), the response transitions to `cancelled` status and a `response.failed` terminal event is emitted and persisted.
 
@@ -1070,9 +1177,15 @@ You don't need to emit any terminal event on cancellation — just let `Operatio
 
 ### Graceful Shutdown
 
-When the host shuts down (e.g., `SIGTERM`, `IHost.StopAsync()`), `context.IsShutdownRequested` is set to `true` and the handler's `CancellationToken` is cancelled.
+When the host shuts down (e.g., `SIGTERM`, `IHost.StopAsync()`), the dedicated
+`context.Shutdown` token is signaled and `context.IsShutdownRequested` is set to `true`.
+The handler's primary `CancellationToken` is also cancelled so that a handler parked
+purely on that token still wakes.
 
-Use `context.IsShutdownRequested` to distinguish shutdown from explicit cancel or client disconnect and choose the appropriate terminal state for your scenario.
+Prefer observing `context.Shutdown` (or the `context.IsShutdownRequested` flag) to
+distinguish shutdown from an explicit cancel or client disconnect, and choose the
+appropriate terminal state for your scenario. Do **not** convert a raw cancellation into
+a `failed` terminal just because shutdown fired — check the shutdown surface first.
 
 **Option A — Emit `response.incomplete`** (clients can resume with `previous_response_id`):
 
@@ -1123,9 +1236,18 @@ builder.Services.Configure<HostOptions>(options =>
 });
 ```
 
-Internally, the library uses `ResponseExecutionTracker` (registered as an `IHostedService`) to coordinate shutdown. When the host stops, the tracker cancels all in-flight response executions and waits for them to complete within the shutdown timeout. This propagation chain is automatic — `context.IsShutdownRequested` and the handler's `CancellationToken` are both triggered by the tracker.
+Internally, the library uses `ResponseExecutionTracker` (registered as an `IHostedService`) to coordinate shutdown. When the host stops, the tracker signals shutdown to all in-flight response executions and waits for them to complete within the shutdown timeout. This propagation chain is automatic — `context.Shutdown`, `context.IsShutdownRequested`, and the handler's `CancellationToken` are all triggered by the tracker.
 
 **Client-side reconnection**: When a client receives `response.incomplete` (e.g., because the handler chose Option A above), it can resume by creating a new request with `previous_response_id` set to the incomplete response's ID. The new request continues from where the previous one stopped. This works only when `store=true` — ephemeral (`store=false`) responses cannot be resumed because they are not persisted.
+
+
+### Rules
+
+1. **MUST emit `response.created` before any early return** — the framework cannot persist or track a response until `EmitCreated()` is yielded.
+2. **MUST emit a terminal event** (`EmitCompleted()`, `EmitIncomplete()`, or `EmitFailed()`) in normal paths. If the handler exits without a terminal event, the framework forces `failed` status.
+3. **Do not treat steering as client cancellation** — for steering pressure, close builders and emit `EmitCompleted()` so the superseded turn has a valid terminal.
+4. **Client cancel is cooperative but status-forced** — clean up promptly; the framework produces `cancelled`.
+5. **Shutdown has a hard cutoff** — keep post-signal work short; resilient background handlers should checkpoint and call `ExitForRecoveryAsync()` if they cannot finish.
 
 ---
 
@@ -1347,6 +1469,9 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 |---|---|---|---|
 | `DefaultModel` | `string?` | `null` | Default model when `model` is omitted from `CreateResponse`. Falls back to `""` if null |
 | `DefaultFetchHistoryCount` | `int` | `100` | Maximum number of history items to resolve when `GetHistoryAsync()` is called. Controls the `limit` parameter passed to `ResponsesProvider.GetHistoryItemIdsAsync` |
+| `ResilientBackground` | `bool` | `false` | Opts background responses into crash-recoverable re-invocation when `store=true` and `background=true` |
+| `SteerableConversations` | `bool` | `false` | Allows a new turn to queue behind an active conversation and drain as a steered turn |
+| `ResponseAcceptor` | delegate | `null` | Optional hook for customizing the `queued` response returned to a POST that was queued behind an active steerable conversation |
 
 **Platform environment variables** (read once at startup via `FoundryEnvironment`):
 
@@ -1354,6 +1479,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 |---|---|---|
 | `SSE_KEEPALIVE_INTERVAL` | Disabled | Interval (in seconds) between SSE keep-alive comments. See [SSE Keep-Alive](#sse-keep-alive) |
 | `PORT` | `8088` | HTTP listen port for the Kestrel server |
+| `DEFAULT_FETCH_HISTORY_ITEM_COUNT` | `100` | Override for `DefaultFetchHistoryCount` |
 
 **In-memory provider options** (`InMemoryProviderOptions` — separate from `ResponsesServerOptions`):
 
@@ -1502,13 +1628,234 @@ The `X-Accel-Buffering: no` response header is automatically set on SSE streams 
 
 ---
 
+## Resilience
+
+The framework re-invokes your handler when the server crashes mid-response if
+`ResponsesServerOptions.ResilientBackground = true` and the request had
+`store=true, background=true`. What that re-invocation gives you, what you have
+to do to take advantage of it, and how clients reconcile a multi-attempt stream
+is the **recovery contract**.
+
+The deeper contract is in [`resilience-contract.md`](resilience-contract.md).
+This section is the developer how-to for the .NET surface.
+
+You can opt out of all of this and your response will still be correct (just
+potentially duplicative). You opt in when you want the recovered attempt to pick
+up where the crashed one left off instead of re-running the whole turn.
+
+### Mental Model
+
+Three layers, each owning a specific slice of state:
+
+| Layer | Owns | On crash recovery, surfaces / provides |
+|---|---|---|
+| **Library** (this SDK) | Persisted SSE event stream and selected response snapshots. The library persists the response object at `response.created`, at each successful `stream.Checkpoint()`, and at the terminal event. | Re-invokes the handler. Surfaces `context.IsRecovery`, `context.PersistedResponse`, `context.IsSteeredTurn`, `context.PendingInputCount`, and `context.ConversationChainMetadata`. Replays persisted events to reconnecting clients and rebuilds the `ResponseContext` with the same `ResponseId`. |
+| **Handler** (your code) | The decision about what was safely committed, plus side-effect watermarks in `context.ConversationChainMetadata`. | Decides the resumption point. Constructs the resumption response. Emits a fresh `response.in_progress` carrying it. Continues producing new output items. |
+| **Upstream framework** (Copilot SDK, LangGraph, your LLM client, or your store) | Conversational / graph / agent state that has to outlive a process death. | Provides its own resume facility that the handler calls. |
+
+You do **not** own response event resilience — that is the library. The library
+does **not** own conversational resilience — that is upstream. The handler glues
+them together.
+
+### The Recovery Loop
+
+When the server restarts after a crash and your handler is re-invoked:
+
+1. The library calls your handler with `context.IsRecovery == true`.
+2. You query upstream and your own `context.ConversationChainMetadata` watermarks to determine the **resumption point** — the most recent state you are confident is persisted.
+3. You build or select a **resumption response** reflecting only the output items you trust at that point. In-flight items from the crashed attempt are excluded.
+4. You construct `ResponseEventStream` from that resumption response when appropriate, or from the request for a fresh/naive restart.
+5. You emit `response.created` exactly as on a fresh attempt — the framework deduplicates the response-store write across recovery attempts.
+6. You emit `response.in_progress`. This event's response payload is the client-visible snapshot reset.
+7. You continue producing new output items and then emit your terminal event.
+
+The reset `in_progress` is important: reconnecting clients replace their partial
+in-progress view with that payload before applying later output events.
+
+### What the Library Does
+
+- Persists every SSE event in order. The recovered handler's duplicate `response.created` is suppressed on the durable stream so replay sees it exactly once.
+- Persists the response object at `response.created`, each successful `stream.Checkpoint()`, and terminal events.
+- Rebuilds `ResponseContext` on recovery with the same request-scoped data and the same `ResponseId`.
+- Surfaces flat recovery + steering classifiers on `ResponseContext`: `context.IsRecovery`, `context.PersistedResponse`, `context.IsSteeredTurn`, `context.PendingInputCount`, and `context.ConversationChainMetadata`.
+- Treats `response.in_progress` after recovery as a snapshot reset.
+- Replays persisted events to reconnecting clients using `starting_after` cursors.
+- Marks non-resilient interrupted responses as `failed` rather than re-invoking the handler.
+
+### What the Handler Does
+
+- Branches on `context.IsRecovery` to choose fresh-entry vs recovered-entry code paths.
+- Builds the resumption response from upstream state plus its own metadata watermarks, excluding in-flight items.
+- Emits `EmitCreated()` unconditionally and emits `EmitInProgress()` early in the recovered path so clients get a reset point.
+- Uses the upstream framework's native resume facility before repeating side-effecting work.
+- Watermarks any upstream side-effecting call by writing a small marker to `context.ConversationChainMetadata` before the call and clearing it after the upstream commit. Use `FlushAsync()` when the marker must survive a crash before the next lifecycle boundary.
+
+### Stream Checkpoints
+
+For resilient background responses, `ResponseEventStream.Checkpoint()` persists a
+snapshot of `stream.Response` at explicit, developer-chosen phase boundaries. A
+checkpoint writes the completed output items currently in the response, so a
+crashed attempt can resume from that boundary instead of re-running the whole
+turn.
+
+Semantics:
+
+- **Deterministic + developer-driven.** Checkpoints happen only where you yield one.
+- **Backpressured.** The handler is suspended at the yield until the provider write completes.
+- **No-op unless resilient background.** The signal is dropped outside `ResilientBackground=true`, `store=true`, `background=true`.
+- **Idempotent.** A byte-identical snapshot is skipped.
+- **Failures swallowed.** Provider errors are logged and recovery falls back to the previous snapshot.
+- **After terminal.** A checkpoint after a terminal event is dropped; the terminal write is authoritative.
+
+#### `context.PersistedResponse`
+
+On a recovered entry, `context.PersistedResponse` is the last durable response
+snapshot: the last checkpoint, or the `response.created` snapshot if no
+checkpoint ran. It is an entry-time recovery aid; read it at the start of a
+recovered invocation to decide where to resume.
+
+### Item and Response `internal_metadata`
+
+Internal metadata is a single-turn, platform-internal key/value bag that rides
+on output items and on the response, is persisted with the response, and is
+stripped before client-facing HTTP or SSE payloads. In .NET, response-level
+internal metadata is exposed as `stream.InternalMetadata`; item-level
+`internal_metadata` is also stripped from persisted payload trees before egress.
+Use internal metadata for lightweight per-turn watermarks, id mappings, or
+stale-message detection that should be recovered from `context.PersistedResponse`
+but never sent to clients.
+
+### Which metadata facility?
+
+| Facility | Scope / lifetime | Visible to client? | Use for |
+|---|---|---|---|
+| `ResponseObject.Metadata` | Single response; client-owned | **Yes** | Values the caller set and expects back on the response. |
+| `internal_metadata` | Single turn; framework-internal | **No** — stripped on egress | Per-turn bookkeeping you want persisted with the response for recovery. |
+| `context.ConversationChainMetadata` | Whole conversation chain; survives crash and spans turns | **No** | Cross-turn / cross-crash resume state: phase watermarks, turn counts, side-effect fences. |
+
+**Rule of thumb:** need it in a later turn or recovery →
+`ConversationChainMetadata`; need it only to reconstruct this response on crash
+recovery → `internal_metadata` plus `stream.Checkpoint()`; need it visible to the
+client → `ResponseObject.Metadata`.
+
+### Default Pattern (recovery-aware)
+
+A recovery-aware handler uses the same first events on fresh and recovered
+entries: `EmitCreated()` followed by `EmitInProgress()`. The difference is the
+stream seed. On recovery, seed from `context.PersistedResponse` or a resumption
+response built from upstream state. On fresh entry, seed from the incoming
+`CreateResponse` request.
+
+Then apply the cancellation contract from [Cancellation](#cancellation): check
+shutdown first, call `ExitForRecoveryAsync()` for resilient deferral, distinguish
+client cancellation with `context.ClientCancelled`, and treat steering pressure
+as a clean completed turn.
+
+### Fallback Pattern (no opt-in)
+
+A handler that does nothing recovery-specific still produces a correct response.
+The library accepts the duplicate `created` from re-entry, accepts a fresh
+`in_progress` reset, and accumulates the re-streamed content as the new
+authoritative view.
+
+The cost is UX and side effects: reconnecting clients may see a reset to empty
+and a full re-stream, and upstream side-effecting calls may be issued twice. If
+your upstream has resilient history that matters, adopt the recovery-aware
+pattern.
+
+### Upstream History Pattern (preferred when available)
+
+Many stateful upstream SDKs expose their persisted conversation log directly.
+When that API is available, use it as the source of truth for whether the prior
+attempt already sent this turn. Query history, compare, and send only if needed.
+This avoids the window between issuing an upstream call and writing a handler
+watermark.
+
+### Watermark Pattern (fallback when upstream exposes no persisted history)
+
+When the upstream SDK does not expose its committed log, stamp a small marker in
+`context.ConversationChainMetadata` before the side-effecting call and clear it
+after the upstream commit. The strict at-most-once pattern is:
+
+1. write marker;
+2. `FlushAsync()`;
+3. perform the side effect;
+4. clear marker;
+5. `FlushAsync()`.
+
+On recovery, a set marker means the prior attempt reached the upstream call;
+use the upstream resume facility instead of issuing the call again. A missing or
+false marker means no prior side effect is known.
+
+### Resumption Response Construction
+
+The resumption response is the `ResponseObject` you seed into
+`ResponseEventStream` on a recovered entry; its `Output` is the client-visible
+reset point. If you used framework checkpoints, `context.PersistedResponse`
+already contains the committed items and can be used as-is. If the snapshot or
+upstream view may include work that did not commit, trim it down to only the
+items you trust before resuming.
+
+Signals you can use to decide what to keep include upstream checkpoint state,
+item-level `internal_metadata`, response-level `internal_metadata`, and
+`context.ConversationChainMetadata` watermarks.
+
+### Recovery × Cancellation Composition
+
+The cancellation contract composes with recovery:
+
+- **Recovered entry + cancellation already signalled**: inspect the cause flags. Steering emits `completed`; explicit client cancel returns/propagates; shutdown uses `ExitForRecoveryAsync()`.
+- **Recovered entry + cancellation mid-stream**: break the loop, then check `context.Shutdown` / `context.IsShutdownRequested` before closing builders so shutdown can defer for recovery.
+- **Crash during recovery itself**: the same path runs again; each attempt recomputes a resumption response and emits a fresh reset `in_progress`.
+
+### Configuration
+
+| Option | Default | Description |
+|---|---|---|
+| `ResilientBackground` | `false` | Opt into crash-recoverable background responses. |
+| `SteerableConversations` | `false` | Multi-turn conversation steering; independent of resilience. |
+
+See the [Resilient Responses Developer Guide](resilient-responses-developer-guide.md)
+for the configuration matrix (`store` × `background` × `ResilientBackground`),
+the recovery + steering surface, and client-side reconciliation rules.
+
+---
+
+## Steering API
+
+Steering (`SteerableConversations = true`) lets a new turn arrive on an
+already-active conversation. The framework queues the new turn, cancels the
+in-progress turn via the handler's `CancellationToken`, and then re-invokes the
+handler to drain the queued input. The handler-facing surface is:
+
+- **`context.IsSteeredTurn`** — `true` on the drain re-entry that follows a steering input, not on the turn that was superseded.
+- **`context.PendingInputCount`** — live count of additional inputs queued behind the current turn.
+- **`ResponsesServerOptions.ResponseAcceptor`** — the hook that produces the `queued` response returned to the POST that was queued onto an already-active steerable conversation.
+
+### `ResponsesServerOptions.ResponseAcceptor`
+
+When a new turn is queued onto an active steerable conversation, the framework
+immediately returns a `status="queued"` response to that POST while the prior
+turn finishes. By default this is a minimal queued envelope; set
+`ResponseAcceptor` to customize it.
+
+- The framework ensures `status` defaults to `queued` if omitted.
+- If the hook throws, the framework logs a warning and falls back to the default queued envelope.
+- The hook is optional; omit it to use the default envelope.
+
+---
+
 ## Best Practices
 
-### 1. Always Emit Created First, Terminal Last
+### 1. Start with TextResponse
+
+Use `TextResponse` for text-only responses — it handles all lifecycle events automatically. Drop down to `ResponseEventStream` only when you need function calls, reasoning items, multiple outputs, or fine-grained event control.
+
+### 2. Always Emit Created First, Terminal Last
 
 Every `ResponseEventStream` handler must yield `stream.EmitCreated()` followed by `stream.EmitInProgress()` as its first two events, and exactly one terminal event (`EmitCompleted`, `EmitFailed`, or `EmitIncomplete`) as its last. The library validates this ordering. `TextResponse` handles this automatically.
 
-### 2. Use Small, Frequent Deltas
+### 3. Use Small, Frequent Deltas
 
 For streaming mode, smaller deltas create a more responsive UX. Don't buffer the entire response — stream it as it's generated:
 
@@ -1521,7 +1868,7 @@ foreach (var word in words)
 }
 ```
 
-### 3. Check Cancellation in Loops
+### 4. Check Cancellation in Loops
 
 Any long-running loop should check `cancellationToken`:
 
@@ -1533,18 +1880,18 @@ foreach (var item in largeCollection)
 }
 ```
 
-### 4. Pass CancellationToken to Async Calls
+### 5. Pass CancellationToken to Async Calls
 
 ```csharp
 var result = await httpClient.GetAsync(url, cancellationToken);
 var data = await database.QueryAsync(query, cancellationToken);
 ```
 
-### 5. Close Every Builder You Open
+### 6. Close Every Builder You Open
 
 Every builder follows `EmitAdded()` → work → `EmitDone()`. If you forget `EmitDone()`, the response will have incomplete output items.
 
-### 6. Use `await Task.CompletedTask` for Sync Handlers
+### 7. Use `await Task.CompletedTask` for Sync Handlers
 
 If your `ResponseEventStream` handler does no async work, the compiler requires at least one `await`. Use `await Task.CompletedTask` at the top:
 
@@ -1558,7 +1905,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(...)
 
 > **Tip**: `TextResponse` handlers that use `return new TextResponse(...)` don't need `await Task.CompletedTask` or `[EnumeratorCancellation]` — they use `return` instead of `yield return`.
 
-### 7. Register as Singleton for Stateless, Scoped for Stateful
+### 8. Register as Singleton for Stateless, Scoped for Stateful
 
 ```csharp
 // Stateless handler — one instance for the lifetime of the app
@@ -1568,9 +1915,13 @@ builder.Services.AddSingleton<ResponseHandler, MyHandler>();
 builder.Services.AddScoped<ResponseHandler, MyStatefulHandler>();
 ```
 
-### 8. Let the library Handle Mode Negotiation
+### 9. Prefer Convenience Generators Over Builders
 
-Never branch on `request.Stream` or `request.Background` in your handler. The library handles these concerns — your handler always produces the same event sequence regardless of mode.
+Start with `OutputItemMessage(...)` and other convenience generators. Drop down to `AddOutputItemMessage()` builders only when you need fine-grained control.
+
+### 10. Let the Library Handle Mode Negotiation
+
+You usually do not need to branch on `request.Stream` or `request.Background`. The library negotiates the wire mode and replays the same event sequence for streaming, non-streaming, and background callers. Emit one event sequence and let the framework adapt it; reach for mode-specific behaviour only if your application genuinely needs it.
 
 ---
 
@@ -1659,29 +2010,66 @@ yield return stream.EmitCompleted();
 
 ### Omitting Output Items from Terminal Response (Raw Events)
 
-When emitting raw events (without `ResponseEventStream` builders), each `response.*` event **fully replaces** the library's tracked `Response` with the event's embedded `Response`. If the terminal `response.completed` has empty output, accumulated `output_item.added/done` items are lost. Additionally, the handler **must** set the correct `Status` on the `Response` before yielding a terminal event — the library validates but never auto-sets terminal status.
+When emitting raw events (without `ResponseEventStream` builders), each `response.*` event **fully replaces** the library's tracked `ResponseObject` with the event's embedded `ResponseObject`. If the terminal `response.completed` has empty output, accumulated `output_item.added/done` items are lost. Additionally, the handler **must** set the correct `Status` on the `ResponseObject` before yielding a terminal event — the library validates but never auto-sets terminal status.
 
 ```csharp
 // ❌ Terminal response has empty output — items accumulated via output_item.added are lost
-var response = new Response(ctx.ResponseId, "test-model");
+var response = new ResponseObject(ctx.ResponseId, "test-model");
 yield return new ResponseCreatedEvent(0, response);
 yield return new ResponseOutputItemAddedEvent(0, 0, msg);
 yield return new ResponseCompletedEvent(0, response); // response.Output is still empty!
 
 // ❌ Status not set — library validates and emits response.failed
-var response = new Response(ctx.ResponseId, "test-model");
+var response = new ResponseObject(ctx.ResponseId, "test-model");
 yield return new ResponseCreatedEvent(0, response);
 yield return new ResponseCompletedEvent(0, response); // Status is still null!
 
 // ✅ Include output items and set Status in the terminal response
-var response = new Response(ctx.ResponseId, "test-model");
+var response = new ResponseObject(ctx.ResponseId, "test-model");
 yield return new ResponseCreatedEvent(0, response);
 yield return new ResponseOutputItemAddedEvent(0, 0, msg);
 
-var completedResponse = new Response(ctx.ResponseId, "test-model");
-completedResponse.Output.Add(msg); // Handler is source of truth
-completedResponse.SetCompleted();  // Sets Status, CompletedAt, OutputText
+var completedResponse = new ResponseObject(ctx.ResponseId, "test-model");
+completedResponse.Output.Add(msg);              // Handler is source of truth
+completedResponse.Status = ResponseStatus.Completed;
+completedResponse.CompletedAt = DateTimeOffset.UtcNow;
 yield return new ResponseCompletedEvent(0, completedResponse);
 ```
 
 **Note**: This only applies to raw event construction. When using `ResponseEventStream` builders (e.g., `stream.EmitCompleted()`), the library automatically includes all accumulated output items in the terminal response — no additional work is needed.
+
+### Expecting a Running Snapshot of the Prior Attempt's In-Flight State
+
+The library persists the response object at `response.created`, each
+`stream.Checkpoint()`, and terminal events — not continuously. Use
+`context.PersistedResponse` for the last durable snapshot, or build a resumption
+response from upstream state.
+
+### Calling Upstream Side-Effecting APIs on Recovery Without a Watermark
+
+If a recovered handler blindly calls an upstream side-effecting API again, it can
+duplicate messages, tool calls, or other effects in the upstream session. Prefer
+an upstream history check when available; otherwise use
+`context.ConversationChainMetadata` watermarks and `FlushAsync()` fences.
+
+### Emitting `response.created` Without `response.in_progress` on Recovery
+
+On recovery, `EmitInProgress()` is the client-visible reset point. Emit
+`EmitCreated()` unconditionally, then `EmitInProgress()` before any output items
+so reconnecting clients replace pre-crash partial state with the resumption
+response.
+
+### Storing Conversation History in `context.ConversationChainMetadata`
+
+Conversation-chain metadata is for small watermarks and references, not full
+conversation history or LLM outputs. Store bulk state in the upstream framework
+or your own backing store and keep only a session/checkpoint reference in
+`ConversationChainMetadata`.
+
+---
+
+## See also
+
+- [Resilience contract](resilience-contract.md) — normative per-row × per-path conformance contract.
+- [Resilient Responses Developer Guide](resilient-responses-developer-guide.md) — full .NET resilience guide and configuration matrix.
+- [Sample 19 — Resilient Streaming](../samples/Sample19_ResilientStreaming.md), [Sample 20 — Resilient Steering](../samples/Sample20_ResilientSteering.md), and [Sample 22 — Resilient Multi-turn](../samples/Sample22_ResilientMultiTurn.md) — worked resilient samples.

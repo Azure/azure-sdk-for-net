@@ -45,8 +45,8 @@
 ### Bugs Fixed
 
 ### Other Changes
-- Documented the .NET ↔ Python resilience parity analysis (CONVERGED) in
-  `docs/dotnet-python-parity-report.md`.
+- Retired the interim .NET ↔ Python resilience parity reports now that the port has
+  converged.
 
 ## 1.0.0-beta.6 (2026-06-28)
 

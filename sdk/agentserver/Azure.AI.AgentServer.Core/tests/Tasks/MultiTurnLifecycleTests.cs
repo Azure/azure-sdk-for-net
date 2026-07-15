@@ -33,9 +33,10 @@ public sealed class MultiTurnLifecycleTests
         var suspended = await host.WaitForStatusAsync("chain-1", "suspended", TimeSpan.FromSeconds(5));
         Assert.That(suspended.Status, Is.EqualTo("suspended"));
 
-        // Turn 2 against the same chain id resumes the chain. With input_id omitted, both turns'
-        // context.input_id default to the task_id (Python parity: input_id defaults to task_id when
-        // the caller omits it — no fabricated per-turn id).
+        // Turn 2 against the same chain id resumes the chain. With input_id omitted, each turn of a
+        // chain gets its OWN unique auto-generated per-turn input_id (FR-005: "per-turn
+        // auto-generated GUID for multi-turn unless supplied") — the two turns' ids differ and
+        // neither equals the chain's task_id.
         TaskRun<string> t2 = await host.Invoker.StartAsync<string, string>(
             "chat", "world", new RunOptions { TaskId = "chain-1" });
         Assert.That(await t2, Is.EqualTo("WORLD"));
@@ -45,21 +46,38 @@ public sealed class MultiTurnLifecycleTests
         Assert.That(entries[0].Mode, Is.EqualTo(EntryMode.Fresh));
         Assert.That(entries[1].Mode, Is.EqualTo(EntryMode.Resumed));
         Assert.That(entries[1].Input, Is.EqualTo("world"));
-        Assert.That(entries[0].InputId, Is.EqualTo("chain-1"));
-        Assert.That(entries[1].InputId, Is.EqualTo("chain-1"));
+        // Each turn observes a distinct, auto-generated per-turn input_id — never the task_id.
+        Assert.That(entries[0].InputId, Is.Not.Null.And.Not.Empty);
+        Assert.That(entries[1].InputId, Is.Not.Null.And.Not.Empty);
+        Assert.That(entries[0].InputId, Is.Not.EqualTo("chain-1"));
+        Assert.That(entries[1].InputId, Is.Not.EqualTo("chain-1"));
+        Assert.That(entries[1].InputId, Is.Not.EqualTo(entries[0].InputId));
     }
 
     [Test]
-    public async Task OmittedInputIdDoesNotPersistLastInputId()
+    public async Task OmittedInputIdGeneratesAndPersistsPerTurnLastInputId()
     {
         using var host = TaskTestHost.Create();
-        host.Builder.AddMultiTurnTask<string, string>("chat", (ctx, ct) => Task.FromResult(ctx.Input));
+        string? observedInputId = null;
+        host.Builder.AddMultiTurnTask<string, string>("chat", (ctx, ct) =>
+        {
+            observedInputId = ctx.InputId;
+            return Task.FromResult(ctx.Input);
+        });
 
-        // input_id omitted: context defaults to the task_id and last_input_id is NOT stamped
-        // (Python parity: framework extras write last_input_id only for a caller-supplied id).
-        await host.Invoker.StartAsync<string, string>("chat", "hi", new RunOptions { TaskId = "c-omit" });
+        // input_id omitted on a multi-turn chain: the framework auto-generates a unique per-turn
+        // input_id and stamps it as the chain's last_input_id (the chain head always advances),
+        // so a subsequent turn can pin it via ifLastInputId. The handle exposes the same id.
+        TaskRun<string> t1 = await host.Invoker.StartAsync<string, string>(
+            "chat", "hi", new RunOptions { TaskId = "c-omit" });
+        await t1;
         var suspended = await host.WaitForStatusAsync("c-omit", "suspended", TimeSpan.FromSeconds(5));
-        Assert.That(suspended.Payload[TaskWireKeys.PayloadLastInputId], Is.Null);
+
+        string? persisted = (string?)suspended.Payload[TaskWireKeys.PayloadLastInputId];
+        Assert.That(persisted, Is.Not.Null.And.Not.Empty);
+        Assert.That(persisted, Is.Not.EqualTo("c-omit"));
+        Assert.That(persisted, Is.EqualTo(observedInputId));
+        Assert.That(t1.InputId, Is.EqualTo(observedInputId));
     }
 
     [Test]

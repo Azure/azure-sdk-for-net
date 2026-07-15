@@ -157,8 +157,8 @@ Hosted defaults are set in [`azure.yaml`](azure.yaml); local defaults favor fast
 
 ## Parity with the Python demo
 
-See [`PARITY.md`](PARITY.md) for a behavior-by-behavior comparison against the
-Python `resilient-responses-agent-demo`. Notable intentional divergences:
+This demo is ported from the Python `resilient-responses-agent-demo`. Notable
+intentional divergences:
 
 - **Packaging:** NuGet package drop (this doc) vs Python wheels — same concept.
 - **Local backend selection:** `.NET` uses `FOUNDRY_HOSTING_ENVIRONMENT` unset;

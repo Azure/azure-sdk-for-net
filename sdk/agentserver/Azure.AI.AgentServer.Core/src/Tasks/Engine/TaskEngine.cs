@@ -100,13 +100,18 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 "RunOptions.IfLastInputId requires an explicit RunOptions.InputId.", nameof(options));
         }
 
-        // input_id is a caller-supplied chain/idempotency token; when omitted it defaults to the
-        // task_id for BOTH one-shot and multi-turn (Python parity: `TaskContext.input_id =
-        // input_id if input_id is not None else task_id`). It is NOT a fabricated per-turn id.
-        // `inputIdSupplied` gates whether the framework advances the persisted `last_input_id`
-        // (Python `_build_framework_extras` writes it only when the caller supplies input_id).
+        // Identity of the input within the task (spec FR-005):
+        //   * one-shot  → input_id defaults to task_id (1:1 — one input, one run).
+        //   * multi-turn→ each turn gets its OWN input_id: caller-supplied, else a unique
+        //                 auto-generated per-turn GUID. The chain head (last_input_id) advances
+        //                 every turn, so it is ALWAYS persisted for multi-turn (and can be read
+        //                 back from TaskRun.InputId / TaskContext.InputId). For one-shot the head
+        //                 is persisted only when the caller supplied an explicit input_id.
         bool inputIdSupplied = !string.IsNullOrEmpty(options?.InputId);
-        string inputId = options?.InputId ?? taskId;
+        string inputId = inputIdSupplied
+            ? options!.InputId!
+            : (multiTurn ? GenerateId("input") : taskId);
+        bool persistInputId = inputIdSupplied || multiTurn;
         TaskRecordValidation.ValidateInputId(inputId, taskId);
 
         // In-process convergence. One-shot: a second start on an in-flight task returns the same
@@ -125,7 +130,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             // A steerable chain queues a concurrent start as the next turn instead of rejecting it.
             if (existing.Steerable)
             {
-                return await EnqueueSteeringAsync<TInput, TOutput>(existing, input, inputId, inputIdSupplied, cancellationToken)
+                return await EnqueueSteeringAsync<TInput, TOutput>(existing, input, inputId, persistInputId, cancellationToken)
                     .ConfigureAwait(false);
             }
 
@@ -140,9 +145,9 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         }
 
         return multiTurn
-            ? await StartMultiTurnAsync<TInput, TOutput>(registration, name, taskId, inputId, inputIdSupplied, input, options, cancellationToken)
+            ? await StartMultiTurnAsync<TInput, TOutput>(registration, name, taskId, inputId, persistInputId, input, options, cancellationToken)
                 .ConfigureAwait(false)
-            : await StartOneShotAsync<TInput, TOutput>(registration, name, taskId, inputId, inputIdSupplied, input, cancellationToken)
+            : await StartOneShotAsync<TInput, TOutput>(registration, name, taskId, inputId, persistInputId, input, cancellationToken)
                 .ConfigureAwait(false);
     }
 
@@ -155,7 +160,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     }
 
     private async Task<TaskRun<TOutput>> StartOneShotAsync<TInput, TOutput>(
-        TaskRegistration registration, string name, string taskId, string inputId, bool inputIdSupplied, TInput input,
+        TaskRegistration registration, string name, string taskId, string inputId, bool persistInputId, TInput input,
         CancellationToken cancellationToken)
     {
         // Serialize + size-check input BEFORE network (FR-011); promotion keeps payload small.
@@ -171,10 +176,10 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         // carries `payload["metadata"] = {}` on create). A first metadata flush merges into this
         // object; its presence keeps the create-time record shape identical across runtimes.
         payload[TaskWireKeys.PayloadMetadata] = new JsonObject();
-        // Persist last_input_id only when the caller explicitly supplied input_id (Python parity:
-        // `_build_framework_extras` writes it only for a caller-supplied id). When omitted, input_id
-        // logically equals task_id and nothing is stamped.
-        if (inputIdSupplied)
+        // Persist last_input_id when the framework advances the chain head: for one-shot only when
+        // the caller supplied an explicit input_id (an omitted one-shot input_id logically equals
+        // the task_id and nothing is stamped).
+        if (persistInputId)
         {
             payload[TaskWireKeys.PayloadLastInputId] = inputId;
         }
@@ -280,7 +285,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     }
 
     private async Task<TaskRun<TOutput>> StartMultiTurnAsync<TInput, TOutput>(
-        TaskRegistration registration, string name, string taskId, string inputId, bool inputIdSupplied, TInput input,
+        TaskRegistration registration, string name, string taskId, string inputId, bool persistInputId, TInput input,
         RunOptions? options, CancellationToken cancellationToken)
     {
         // Serialize + size-check input BEFORE network (FR-011).
@@ -299,9 +304,9 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         bool recoveredSteeredTurn = false;
         if (current is null)
         {
-            // First turn of the chain: create the record. Persist last_input_id only when the caller
-            // supplied input_id (Python parity: _build_framework_extras writes it only for a
-            // caller-supplied id).
+            // First turn of the chain: create the record. A multi-turn turn always carries a
+            // per-turn input_id (caller-supplied or auto-generated), so the chain head is always
+            // stamped at create (persistInputId is always true for multi-turn).
             var payload = new JsonObject
             {
                 [TaskWireKeys.PayloadInput] = inputSlot,
@@ -311,7 +316,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
                 [TaskWireKeys.PayloadTurnStartedAt] = nowIso,
                 [TaskWireKeys.PayloadSchemaVersion] = TaskWireKeys.SchemaVersionValue,
             };
-            if (inputIdSupplied)
+            if (persistInputId)
             {
                 payload[TaskWireKeys.PayloadLastInputId] = inputId;
             }
@@ -430,7 +435,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         {
             if (entryMode == EntryMode.Resumed)
             {
-                await DriveTurnAsync(taskId, inputSlot, inputId, inputIdSupplied, attachments, nowIso, cancellationToken)
+                await DriveTurnAsync(taskId, inputSlot, inputId, persistInputId, attachments, nowIso, cancellationToken)
                     .ConfigureAwait(false);
             }
             else if (entryMode == EntryMode.Recovered)
@@ -465,7 +470,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     // Patches the next-turn input + ids + re-stamps _turn_started_at, clears the prior
     // turn's retry counter, and re-acquires the lease (→ in_progress) in one write.
     private Task<TaskRecord> DriveTurnAsync(
-        string taskId, JsonNode? inputSlot, string inputId, bool inputIdSupplied, JsonObject? attachments, string nowIso,
+        string taskId, JsonNode? inputSlot, string inputId, bool persistInputId, JsonObject? attachments, string nowIso,
         CancellationToken cancellationToken)
     {
         var payload = new JsonObject
@@ -474,9 +479,9 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             [TaskWireKeys.PayloadTurnStartedAt] = nowIso,
             [TaskWireKeys.PayloadRetryAttempt] = null,
         };
-        // Advance last_input_id only when the caller supplied input_id; otherwise the shallow-merge
-        // patch leaves the previously persisted value intact (Python parity).
-        if (inputIdSupplied)
+        // Advance last_input_id to this turn's id. A multi-turn resume always carries a per-turn
+        // input_id (caller-supplied or auto-generated), so the chain head advances every turn.
+        if (persistInputId)
         {
             payload[TaskWireKeys.PayloadLastInputId] = inputId;
         }
@@ -500,7 +505,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     // Serializes a steering input, queues it in-process, durably appends it to the
     // record's _steering.pending_inputs, then nudges the running turn to wind down.
     private async Task<TaskRun<TOutput>> EnqueueSteeringAsync<TInput, TOutput>(
-        IActiveRun existing, TInput input, string inputId, bool inputIdSupplied, CancellationToken cancellationToken)
+        IActiveRun existing, TInput input, string inputId, bool persistInputId, CancellationToken cancellationToken)
     {
         var run = (ActiveRun<TOutput>)existing;
         string taskId = run.TaskId;
@@ -520,7 +525,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
         TaskMetadata metadata = CreateMetadata(taskId);
         var runState = new TaskRunState<TOutput>(taskId, inputId, metadata, isQueued: true);
-        var queued = new QueuedInput<TOutput>(inputSlot, inputAttachments, inputId, inputIdSupplied, runState);
+        var queued = new QueuedInput<TOutput>(inputSlot, inputAttachments, inputId, persistInputId, runState);
 
         // A queued caller can cancel before promotion: drop the slot, re-persist the trimmed
         // queue, and resolve the handle as cancelled. If the slot was already promoted/drained,
@@ -620,7 +625,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         // re-reads from the store.
         var payload = BuildMetadataPayload(finishingMetadata);
         payload[TaskWireKeys.PayloadInput] = rawValue?.DeepClone();
-        if (queued.InputIdSupplied)
+        if (queued.PersistInputId)
         {
             payload[TaskWireKeys.PayloadLastInputId] = queued.InputId;
         }
@@ -649,7 +654,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
         // Return the head with its slot resolved to the raw value so the turn loop can deserialize
         // the input directly (the ref + attachment have already been consumed above).
-        return (new QueuedInput<TOutput>(rawValue, attachments: null, queued.InputId, queued.InputIdSupplied, queued.RunState), nowIso);
+        return (new QueuedInput<TOutput>(rawValue, attachments: null, queued.InputId, queued.PersistInputId, queued.RunState), nowIso);
     }
 
     // Orchestrates a multi-turn chain across drained steering turns: runs a turn, then either

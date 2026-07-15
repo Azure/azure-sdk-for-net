@@ -11,12 +11,15 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
     /// <summary>
-    /// Code snippets backing the resilient responses samples
+    /// Compile-guards backing the resilient responses samples
     /// (Sample19_ResilientStreaming.md, Sample20_ResilientSteering.md,
     /// Sample22_ResilientMultiTurn.md). These are compiled to prevent the public
     /// API surface used by those samples from silently drifting. Every member
     /// referenced here is confirmed against
-    /// <c>api/Azure.AI.AgentServer.Responses.net8.0.cs</c>.
+    /// <c>api/Azure.AI.AgentServer.Responses.net8.0.cs</c>. The regions are named
+    /// without the <c>Snippet:</c> prefix: the sample docs illustrate a fuller
+    /// hosting shape (<c>WebApplication</c> plus <c>using</c> context) than a
+    /// bare embedded snippet, so these guards are not injected into the markdown.
     /// </summary>
     [TestFixture]
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
@@ -46,7 +49,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         [Test]
         public void Register_ResilientBackground()
         {
-            #region Snippet:Responses_Sample19_RegisterResilientBackground
+            #region Sample19_RegisterResilientBackground
 
             var services = new ServiceCollection();
             services.AddLogging();
@@ -64,7 +67,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         [Test]
         public void Register_SteerableConversations()
         {
-            #region Snippet:Responses_Sample20_RegisterSteerableConversations
+            #region Sample20_RegisterSteerableConversations
 
             var services = new ServiceCollection();
             services.AddLogging();
@@ -84,7 +87,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         [Test]
         public void Register_SerialMultiTurn()
         {
-            #region Snippet:Responses_Sample22_RegisterSerialMultiTurn
+            #region Sample22_RegisterSerialMultiTurn
 
             var services = new ServiceCollection();
             services.AddLogging();
@@ -103,7 +106,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
             Assert.That(services, Is.Not.Empty);
         }
 
-        #region Snippet:Responses_Sample19_ResilientStreamingHandler
+        #region Sample19_ResilientStreamingHandler
 
         // Sample 19 — resilient streaming with handler-managed phase checkpoints.
         // Checkpoints are managed entirely via context.ConversationChainMetadata; the
@@ -190,7 +193,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         #endregion
 
-        #region Snippet:Responses_Sample20_ResilientSteeringHandler
+        #region Sample20_ResilientSteeringHandler
 
         // Sample 20 — steering composed with cancellation × recovery. A superseded turn
         // observes IsSteeredTurn on the re-entry and drains the enqueued input.
@@ -272,7 +275,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         #endregion
 
-        #region Snippet:Responses_Sample22_ResilientMultiTurnHandler
+        #region Sample22_ResilientMultiTurnHandler
 
         // Sample 22 — serial multi-turn (no steering). Durable per-conversation state is
         // written through a MetadataNamespace on the stable ConversationChainId.

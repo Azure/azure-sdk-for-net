@@ -86,19 +86,23 @@ internal sealed class ResponseExecutionTracker : IHostedService, IDisposable
     /// <inheritdoc/>
     /// <remarks>
     /// Graceful-shutdown grace window (US4 Path A/B): each in-flight execution is first signalled
-    /// (<c>IsShutdownRequested = true</c>) so a cooperative handler can observe the shutdown and either
+    /// — the dedicated <see cref="ResponseContext.Shutdown"/> token is triggered and
+    /// <c>IsShutdownRequested = true</c> — so a cooperative handler can observe the shutdown and either
     /// wind down to a natural terminal (Path A) or call <see cref="ResponseContext.ExitForRecoveryAsync"/>
-    /// to hand off to next-lifetime recovery. The handler's cancellation token is then cancelled to
+    /// to hand off to next-lifetime recovery. The handler's primary cancellation token is then cancelled to
     /// wake handlers parked at a safe boundary, and the framework waits for the background tasks to
     /// drain within the host's <c>HostOptions.ShutdownTimeout</c> — which serves as the grace window.
     /// If that window is exhausted with tasks still running, the process is terminated and any Row 1
     /// work resumes via the next-lifetime recovery scan (Path C fallback, FR-015).
     /// <para>
-    /// Known divergence (tracked for the .NET-vs-Python GAP review, code CR5-F2-SHUTDOWN-GRACE):
+    /// Remaining divergence from Python (grace-window timing, tracked as CR5-F2-SHUTDOWN-GRACE):
     /// Python exposes a distinct <c>shutdown_grace_period_seconds</c> during which handlers are only
-    /// signalled (not yet cancelled), letting a token-honouring handler mid-computation reach a natural
-    /// terminal before force-cancel. Here cancellation is immediate, so a token-honouring handler is
-    /// routed to Path B rather than completing within a pre-cancel grace window.
+    /// signalled via <c>context.shutdown</c> (the primary cancellation signal is <em>not</em> tripped),
+    /// letting a token-honouring handler mid-computation reach a natural terminal before force-cancel.
+    /// The dedicated <see cref="ResponseContext.Shutdown"/> token now provides the same observation
+    /// surface, but here the primary cancellation token is still cancelled immediately at shutdown
+    /// (not only after a pre-cancel grace window). Fully decoupling that timing changes foreground-
+    /// streaming and multiple e2e row-path semantics, so it is deferred pending review.
     /// </para>
     /// </remarks>
     public async Task StopAsync(CancellationToken cancellationToken)
@@ -106,7 +110,8 @@ internal sealed class ResponseExecutionTracker : IHostedService, IDisposable
         foreach (var execution in _executions.Values)
         {
             // All tracked executions are in-flight (completed ones are eagerly evicted).
-            // Signal shutdown BEFORE cancelling so handlers see IsShutdownRequested == true
+            // Signal shutdown BEFORE cancelling so handlers see the dedicated context.Shutdown
+            // token fired and IsShutdownRequested == true.
             execution.ShutdownRequested = true;
             if (execution.Context is not null)
             {

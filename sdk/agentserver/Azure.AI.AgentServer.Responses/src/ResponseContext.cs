@@ -30,11 +30,46 @@ public class ResponseContext
     /// <summary>Gets the unique response identifier.</summary>
     public string ResponseId { get; }
 
+    private readonly CancellationTokenSource _shutdownSignal = new();
+
     /// <summary>
-    /// Gets or sets whether the server is shutting down.
-    /// Handlers can use this to distinguish shutdown from explicit cancel or client disconnect.
+    /// Gets or sets whether the host is gracefully shutting down. Setting this to
+    /// <see langword="true"/> also signals <see cref="Shutdown"/>; setting it to
+    /// <see langword="false"/> has no effect (a shutdown signal cannot be withdrawn).
+    /// Handlers can use this (or the awaitable <see cref="Shutdown"/> token) to distinguish
+    /// graceful shutdown from an explicit client cancel or a client disconnect.
     /// </summary>
-    public bool IsShutdownRequested { get; set; }
+    public bool IsShutdownRequested
+    {
+        get => _shutdownSignal.IsCancellationRequested;
+        set
+        {
+            if (value && !_shutdownSignal.IsCancellationRequested)
+            {
+                try
+                {
+                    _shutdownSignal.Cancel();
+                }
+                catch (ObjectDisposedException)
+                {
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets a cancellation token that is signaled when the host begins a graceful shutdown.
+    /// This is a <em>dedicated</em> shutdown signal, kept separate from the handler's primary
+    /// cancellation token (the <c>cancellationToken</c> passed to the handler), mirroring the
+    /// task-primitive <c>TaskContext.Shutdown</c> and the Python <c>context.shutdown</c>
+    /// event. Handlers can <c>await</c> or link this token to react to shutdown specifically —
+    /// winding down to a natural terminal, emitting <c>response.incomplete</c>, or calling
+    /// <see cref="ExitForRecoveryAsync"/> — rather than inferring shutdown from a generic
+    /// <see cref="OperationCanceledException"/>. A handler must never convert a raw cancellation
+    /// into a <c>failed</c> terminal purely because shutdown is happening: check
+    /// <see cref="IsShutdownRequested"/> (or this token) first and defer for recovery instead.
+    /// </summary>
+    public virtual CancellationToken Shutdown => _shutdownSignal.Token;
 
     /// <summary>
     /// Gets the full raw JSON request body as a <see cref="BinaryData"/>.
