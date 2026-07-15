@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
             {
                 writer.WritePropertyName("virtualNetworks"u8);
                 writer.WriteStartArray();
-                foreach (VirtualNetworkProperties item in VirtualNetworks)
+                foreach (PowerPlatformVirtualNetworkProperties item in VirtualNetworks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
             {
                 return null;
             }
-            IList<VirtualNetworkProperties> virtualNetworks = default;
+            IList<PowerPlatformVirtualNetworkProperties> virtualNetworks = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                     {
                         continue;
                     }
-                    List<VirtualNetworkProperties> array = new List<VirtualNetworkProperties>();
+                    List<PowerPlatformVirtualNetworkProperties> array = new List<PowerPlatformVirtualNetworkProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkProperties.DeserializeVirtualNetworkProperties(item, options));
+                        array.Add(PowerPlatformVirtualNetworkProperties.DeserializePowerPlatformVirtualNetworkProperties(item, options));
                     }
                     virtualNetworks = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PropertiesNetworkInjection(virtualNetworks ?? new ChangeTrackingList<VirtualNetworkProperties>(), additionalBinaryDataProperties);
+            return new PropertiesNetworkInjection(virtualNetworks ?? new ChangeTrackingList<PowerPlatformVirtualNetworkProperties>(), additionalBinaryDataProperties);
         }
     }
 }

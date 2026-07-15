@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.PowerPlatform
     [ModelReaderWriterBuildable(typeof(PowerPlatformPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(PowerPlatformPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(PowerPlatformTrackedResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(PowerPlatformVirtualNetworkProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(Properties))]
@@ -46,7 +47,6 @@ namespace Azure.ResourceManager.PowerPlatform
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubnetProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(VirtualNetworkProperties))]
     public partial class AzureResourceManagerPowerPlatformContext : ModelReaderWriterContext
     {
     }

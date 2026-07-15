@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <param name="identity"> The identity of the EnterprisePolicy. </param>
         /// <param name="kind"> The kind (type) of Enterprise Policy. </param>
         /// <returns> A new <see cref="PowerPlatform.EnterprisePolicyData"/> instance for mocking. </returns>
-        public static EnterprisePolicyData EnterprisePolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string systemId = default, EnterprisePolicyEncryptionProperties encryption = default, EnterprisePolicyHealthStatus? healthStatus = default, EnterprisePolicyOnboardingState? lockboxState = default, IEnumerable<VirtualNetworkProperties> networkInjectionVirtualNetworks = default, EnterprisePolicyIdentity identity = default, EnterprisePolicyKind kind = default)
+        public static EnterprisePolicyData EnterprisePolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string systemId = default, EnterprisePolicyEncryptionProperties encryption = default, EnterprisePolicyHealthStatus? healthStatus = default, EnterprisePolicyOnboardingState? lockboxState = default, IEnumerable<PowerPlatformVirtualNetworkProperties> networkInjectionVirtualNetworks = default, EnterprisePolicyIdentity identity = default, EnterprisePolicyKind kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                     systemId,
                     new PropertiesLockbox(lockboxState, default),
                     encryption,
-                    new PropertiesNetworkInjection((networkInjectionVirtualNetworks ?? new ChangeTrackingList<VirtualNetworkProperties>()).ToList(), default),
+                    new PropertiesNetworkInjection((networkInjectionVirtualNetworks ?? new ChangeTrackingList<PowerPlatformVirtualNetworkProperties>()).ToList(), default),
                     healthStatus,
                     default),
                 identity,
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.PowerPlatform.Models
 
         /// <param name="id"> Uri of the virtual network. </param>
         /// <param name="subnetName"> Subnet name. </param>
-        /// <returns> A new <see cref="Models.VirtualNetworkProperties"/> instance for mocking. </returns>
-        public static VirtualNetworkProperties VirtualNetworkProperties(string id = default, string subnetName = default)
+        /// <returns> A new <see cref="Models.PowerPlatformVirtualNetworkProperties"/> instance for mocking. </returns>
+        public static PowerPlatformVirtualNetworkProperties PowerPlatformVirtualNetworkProperties(ResourceIdentifier id = default, string subnetName = default)
         {
-            return new VirtualNetworkProperties(id, subnetName is null ? default : new SubnetProperties(subnetName, default), default);
+            return new PowerPlatformVirtualNetworkProperties(id, subnetName is null ? default : new SubnetProperties(subnetName, default), default);
         }
 
         /// <param name="systemAssignedIdentityPrincipalId"> The principal id of EnterprisePolicy identity. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <param name="lockboxState"> lockbox configuration. </param>
         /// <param name="networkInjectionVirtualNetworks"> Network injection configuration. </param>
         /// <returns> A new <see cref="Models.EnterprisePolicyPatch"/> instance for mocking. </returns>
-        public static EnterprisePolicyPatch EnterprisePolicyPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation? location = default, EnterprisePolicyIdentity identity = default, EnterprisePolicyKind? kind = default, string systemId = default, EnterprisePolicyEncryptionProperties encryption = default, EnterprisePolicyHealthStatus? healthStatus = default, EnterprisePolicyOnboardingState? lockboxState = default, IEnumerable<VirtualNetworkProperties> networkInjectionVirtualNetworks = default)
+        public static EnterprisePolicyPatch EnterprisePolicyPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation? location = default, EnterprisePolicyIdentity identity = default, EnterprisePolicyKind? kind = default, string systemId = default, EnterprisePolicyEncryptionProperties encryption = default, EnterprisePolicyHealthStatus? healthStatus = default, EnterprisePolicyOnboardingState? lockboxState = default, IEnumerable<PowerPlatformVirtualNetworkProperties> networkInjectionVirtualNetworks = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                     systemId,
                     new PropertiesLockbox(lockboxState, default),
                     encryption,
-                    new PropertiesNetworkInjection((networkInjectionVirtualNetworks ?? new ChangeTrackingList<VirtualNetworkProperties>()).ToList(), default),
+                    new PropertiesNetworkInjection((networkInjectionVirtualNetworks ?? new ChangeTrackingList<PowerPlatformVirtualNetworkProperties>()).ToList(), default),
                     healthStatus,
                     default));
         }

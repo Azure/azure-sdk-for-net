@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         /// <summary> Initializes a new instance of <see cref="PropertiesNetworkInjection"/>. </summary>
         public PropertiesNetworkInjection()
         {
-            VirtualNetworks = new ChangeTrackingList<VirtualNetworkProperties>();
+            VirtualNetworks = new ChangeTrackingList<PowerPlatformVirtualNetworkProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PropertiesNetworkInjection"/>. </summary>
         /// <param name="virtualNetworks"> Network injection configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PropertiesNetworkInjection(IList<VirtualNetworkProperties> virtualNetworks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PropertiesNetworkInjection(IList<PowerPlatformVirtualNetworkProperties> virtualNetworks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualNetworks = virtualNetworks;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Network injection configuration. </summary>
-        public IList<VirtualNetworkProperties> VirtualNetworks { get; } = new ChangeTrackingList<VirtualNetworkProperties>();
+        public IList<PowerPlatformVirtualNetworkProperties> VirtualNetworks { get; } = new ChangeTrackingList<PowerPlatformVirtualNetworkProperties>();
     }
 }

@@ -7,25 +7,26 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PowerPlatform.Models
 {
     /// <summary> Settings concerning the virtual network. </summary>
-    public partial class VirtualNetworkProperties
+    public partial class PowerPlatformVirtualNetworkProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkProperties"/>. </summary>
-        public VirtualNetworkProperties()
+        /// <summary> Initializes a new instance of <see cref="PowerPlatformVirtualNetworkProperties"/>. </summary>
+        public PowerPlatformVirtualNetworkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerPlatformVirtualNetworkProperties"/>. </summary>
         /// <param name="id"> Uri of the virtual network. </param>
         /// <param name="subnet"> Properties of a subnet. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkProperties(string id, SubnetProperties subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PowerPlatformVirtualNetworkProperties(ResourceIdentifier id, SubnetProperties subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Subnet = subnet;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         }
 
         /// <summary> Uri of the virtual network. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
 
         /// <summary> Properties of a subnet. </summary>
         internal SubnetProperties Subnet { get; set; }

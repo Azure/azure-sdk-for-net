@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
         }
 
         /// <summary> Network injection configuration. </summary>
-        public IList<VirtualNetworkProperties> NetworkInjectionVirtualNetworks
+        public IList<PowerPlatformVirtualNetworkProperties> NetworkInjectionVirtualNetworks
         {
             get
             {
