@@ -13,6 +13,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.Provisioning.Redis
 {
     [CodeGenType("Redis")]
+    [CodeGenSuppress("GetResourceNameRequirements")]
     public partial class RedisResource
     {
         public static partial class ResourceVersions
@@ -63,6 +64,11 @@ namespace Azure.Provisioning.Redis
             ((IBicepValue)keys).Expression = new FunctionCallExpression(new MemberExpression(new IdentifierExpression(BicepIdentifier), "listKeys"));
             return keys;
         }
+
+        /// <summary> Get the requirements for naming this resource. </summary>
+        /// <returns> Naming requirements. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 63, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 
         /// <summary> Gets the private endpoint connection resources. </summary>
         [CodeGenMember("PrivateEndpointConnections")]
