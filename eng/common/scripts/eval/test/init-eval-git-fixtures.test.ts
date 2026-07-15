@@ -111,7 +111,7 @@ describe("getEvalGitFixtures discovery", () => {
 // contain the Vally suite they skip.
 describe("Folder-level invariant for real git fixtures", () => {
   const repoRoot = path.resolve(here, "../../../../..");
-  const vallyRoot = path.join(repoRoot, "tools/azsdk-cli/Azure.Sdk.Tools.Vally");
+  const vallyRoot = path.join(repoRoot, "azsdk-evals");
   const vallyEvals = path.join(vallyRoot, "evals");
   const present = fs.existsSync(vallyEvals);
 
