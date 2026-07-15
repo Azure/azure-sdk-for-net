@@ -12,6 +12,7 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    /// <summary> Properties to update Azure Cosmos DB database accounts. </summary>
     internal partial class DatabaseAccountUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -228,6 +229,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </summary>
         [WirePath("enablePerRegionPerPartitionAutoscale")]
         public bool? EnablePerRegionPerPartitionAutoscale { get; set; }
+
+        /// <summary> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </summary>
+        [WirePath("enforceHierarchicalPartitionKeyIdLastLevel")]
+        public bool? IsHierarchicalPartitionKeyIdLastLevelEnforced { get; set; }
 
         /// <summary> Describes the version of the MongoDB account. </summary>
         [WirePath("apiProperties.serverVersion")]

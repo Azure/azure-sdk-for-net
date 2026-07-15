@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -689,6 +688,24 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        /// <summary> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </summary>
+        [WirePath("properties.enforceHierarchicalPartitionKeyIdLastLevel")]
+        public bool? IsHierarchicalPartitionKeyIdLastLevelEnforced
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsHierarchicalPartitionKeyIdLastLevelEnforced;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.IsHierarchicalPartitionKeyIdLastLevelEnforced = value;
+            }
+        }
+
         /// <summary> Describes the version of the MongoDB account. </summary>
         [WirePath("properties.apiProperties.serverVersion")]
         public CosmosDBServerVersion? ApiServerVersion
@@ -740,25 +757,6 @@ namespace Azure.ResourceManager.CosmosDB
                     Properties = new CosmosDBAccountProperties();
                 }
                 Properties.CapacityTotalThroughputLimit = value;
-            }
-        }
-
-        /// <summary> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </summary>
-        [CodeGenMember("EnforceHierarchicalPartitionKeyIdLastLevel")]
-        [WirePath("properties.enforceHierarchicalPartitionKeyIdLastLevel")]
-        public bool? IsHierarchicalPartitionKeyIdLastLevelEnforced
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsHierarchicalPartitionKeyIdLastLevelEnforced;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.IsHierarchicalPartitionKeyIdLastLevelEnforced = value;
             }
         }
     }

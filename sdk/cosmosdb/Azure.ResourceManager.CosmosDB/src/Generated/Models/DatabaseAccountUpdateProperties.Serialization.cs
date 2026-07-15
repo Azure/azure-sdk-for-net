@@ -14,6 +14,7 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    /// <summary> Properties to update Azure Cosmos DB database accounts. </summary>
     internal partial class DatabaseAccountUpdateProperties : IJsonModel<DatabaseAccountUpdateProperties>
     {
         /// <param name="data"> The data to parse. </param>

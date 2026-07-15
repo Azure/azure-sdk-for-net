@@ -13,6 +13,7 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    /// <summary> Properties to create and update Azure Cosmos DB database accounts. </summary>
     internal partial class DatabaseAccountCreateUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -21,8 +22,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="DatabaseAccountCreateUpdateProperties"/>. </summary>
         /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
         /// <param name="databaseAccountOfferType"> The offer type for the Cosmos DB database account. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
         public DatabaseAccountCreateUpdateProperties(IEnumerable<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType)
         {
+            Argument.AssertNotNull(locations, nameof(locations));
+
             Locations = locations.ToList();
             DatabaseAccountOfferType = databaseAccountOfferType;
             IPRules = new ChangeTrackingList<CosmosDBIPAddressOrRange>();
@@ -250,6 +254,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </summary>
         [WirePath("enablePerRegionPerPartitionAutoscale")]
         public bool? EnablePerRegionPerPartitionAutoscale { get; set; }
+
+        /// <summary> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </summary>
+        [WirePath("enforceHierarchicalPartitionKeyIdLastLevel")]
+        public bool? IsHierarchicalPartitionKeyIdLastLevelEnforced { get; set; }
 
         /// <summary> Describes the version of the MongoDB account. </summary>
         [WirePath("apiProperties.serverVersion")]

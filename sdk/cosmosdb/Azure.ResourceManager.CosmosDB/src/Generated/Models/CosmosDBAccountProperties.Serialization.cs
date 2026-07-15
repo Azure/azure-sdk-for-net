@@ -14,6 +14,7 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    /// <summary> Properties for the database account. </summary>
     internal partial class CosmosDBAccountProperties : IJsonModel<CosmosDBAccountProperties>
     {
         /// <param name="data"> The data to parse. </param>
