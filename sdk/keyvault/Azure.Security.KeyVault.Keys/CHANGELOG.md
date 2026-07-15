@@ -3,6 +3,10 @@
 ## 4.11.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added the `SecureWrapKey` and `SecureUnwrapKey` methods (and their async counterparts) to `CryptographyClient` for secure wrap/unwrap operations on Managed HSM keys ([#60933](https://github.com/Azure/azure-sdk-for-net/pull/60933)).
+- Added the `SecureKeyWrapAlgorithm` type, listing the algorithms supported by the secure wrap/unwrap operations.
+- Added the `SecureWrapResult` and `SecureUnwrapResult` model classes wrapping the results of `SecureWrapKey` and `SecureUnwrapKey`, respectively.
+- Added the `SecureWrapKey` and `SecureUnwrapKey` values to `KeyOperation`.
 
 ### Breaking Changes
 
