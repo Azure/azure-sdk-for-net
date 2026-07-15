@@ -69,6 +69,28 @@ RED='\033[31m'
 CYAN='\033[36m'
 RESET='\033[0m'
 
+# ── Command timing ──────────────────────────────────────────────────────────
+# Every command prints when it was triggered and when it ended (with elapsed
+# wall-clock), so a stream/crash/recover run has clear start/stop markers even
+# across terminals. Timestamps are UTC ISO-8601 (matches the server log clock).
+
+_now_iso() { date -u +%Y-%m-%dT%H:%M:%SZ; }
+
+# Emitted at process exit (registered by the dispatch trap) so the end banner
+# prints even when a command exits early (e.g. missing session, usage error).
+_CMD_LABEL=""
+_CMD_START_EPOCH=""
+_print_end_banner() {
+    local rc=$?
+    [[ -z "$_CMD_LABEL" ]] && return 0
+    local end_epoch elapsed
+    end_epoch=$(date -u +%s)
+    elapsed=$(( end_epoch - ${_CMD_START_EPOCH:-end_epoch} ))
+    echo -e "${DIM}──────────────────────────────────────────────────────────────${RESET}" >&2
+    echo -e "${DIM}⏹ ${_CMD_LABEL} ended  @ $(_now_iso)  (elapsed ${elapsed}s, exit ${rc})${RESET}" >&2
+    _CMD_LABEL=""  # guard against double-print
+}
+
 # ── Session state ─────────────────────────────────────────────────────────────
 
 load_session() {
@@ -175,9 +197,15 @@ stream_sse() {
     # to the renderer pipe. We use it to confirm sandbox affinity afterwards.
     curl -sS -N -D "$hdr_file" "${curl_args[@]}" "$url" 2>/dev/null | python3 -u -c "
 import json, sys, os, signal
+from datetime import datetime, timezone
 
 SEQ_FILE = '$seq_file'
 ID_FILE = '$id_file'
+
+def _ts():
+    # UTC ISO-8601 (matches the server log clock) for correlating client-side
+    # render time with server-side task telemetry.
+    return datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
 def _save_seq(n):
     try:
@@ -237,11 +265,27 @@ for raw in iter(sys.stdin.readline, ''):
             if t == 'response.output_text.delta':
                 sys.stdout.write(payload.get('delta', ''))
                 sys.stdout.flush()
+            elif t == 'response.output_item.added':
+                # Timestamp each output item as it begins rendering so the
+                # per-item cadence (and any post-crash gap) is visible.
+                idx = payload.get('output_index')
+                item = payload.get('item') or {}
+                itype = item.get('type') or 'item'
+                label = ('#' + str(idx)) if isinstance(idx, int) else ''
+                sys.stdout.write('\n\033[2m[' + _ts() + '] \u25b8 output item ' + label +
+                                 ' (' + str(itype) + ')\033[0m\n')
+                sys.stdout.flush()
+            elif t == 'response.output_item.done':
+                idx = payload.get('output_index')
+                label = ('#' + str(idx)) if isinstance(idx, int) else ''
+                sys.stdout.write('\n\033[2m[' + _ts() + '] \u2713 output item ' + label +
+                                 ' done\033[0m\n')
+                sys.stdout.flush()
             elif t in ('response.created', 'response.in_progress', 'response.completed',
                        'response.failed', 'response.cancelled', 'response.incomplete'):
                 resp = payload.get('response') or {}
                 status = resp.get('status') or t.split('.')[-1]
-                sys.stdout.write('\n\033[2m[' + t + ' status=' + str(status) + ']\033[0m\n')
+                sys.stdout.write('\n\033[2m[' + _ts() + '] [' + t + ' status=' + str(status) + ']\033[0m\n')
                 sys.stdout.flush()
         current_event = None
         current_data = []
@@ -468,7 +512,7 @@ _watch_recovery() {
         timeout 12 azd ai agent monitor "$AGENT_NAME" --session-id "$sid" >>"$logf" 2>/dev/null
 
         if [[ "$saw_crash" -eq 0 ]] && grep -q "CRASH triggered via input=crash" "$logf"; then
-            saw_crash=1; echo -e "  ${RED}✖ crash fired${RESET}  ${DIM}(CRASH triggered via input=crash — exiting in 300ms)${RESET}"
+            saw_crash=1; echo -e "  ${RED}✖ crash fired${RESET} ${DIM}@ $(_now_iso)${RESET} ${DIM}(CRASH triggered via input=crash — exiting in 300ms)${RESET}"
         fi
         # a distinct 2nd worker instance == the container was restarted by the nanny
         if [[ "$restart_seen" -eq 0 ]]; then
@@ -479,31 +523,31 @@ _watch_recovery() {
                || { [[ -z "$pre_inst" ]] && [[ "$distinct" -ge 2 ]]; }; then
                 restart_seen=1
                 local newinst; newinst=$(echo "$insts" | grep -v "^${pre_inst}$" | head -1)
-                echo -e "  ${YELLOW}↻ container restarted${RESET}  ${DIM}new worker: ${newinst:-<new generation>}${RESET}"
+                echo -e "  ${YELLOW}↻ container restarted${RESET} ${DIM}@ $(_now_iso)${RESET} ${DIM}new worker: ${newinst:-<new generation>}${RESET}"
             fi
         fi
         if [[ "$saw_reclaim" -eq 0 ]] && grep -q "Reclaimed stale task" "$logf"; then
             saw_reclaim=1
             local rc; rc=$(grep -oE "Reclaimed stale task [^ ]+" "$logf" | head -1)
-            echo -e "  ${CYAN}⟳ ${rc:-reclaimed stale task}${RESET}"
+            echo -e "  ${CYAN}⟳ ${rc:-reclaimed stale task}${RESET} ${DIM}@ $(_now_iso)${RESET}"
             # A stale-task lease can only be reclaimed by a DIFFERENT process,
             # which necessarily means the crashed container was restarted.
             if [[ "$restart_seen" -eq 0 ]]; then
                 restart_seen=1
-                echo -e "  ${YELLOW}↻ container restarted${RESET}  ${DIM}(inferred: stale lease reclaimed by a new process)${RESET}"
+                echo -e "  ${YELLOW}↻ container restarted${RESET} ${DIM}@ $(_now_iso)${RESET} ${DIM}(inferred: stale lease reclaimed by a new process)${RESET}"
             fi
         fi
         if [[ "$saw_recover" -eq 0 ]] && grep -qE "Recovered task .* \(recovery #[0-9]+\)" "$logf"; then
             saw_recover=1
             local rv; rv=$(grep -oE "Recovered task .* \(recovery #[0-9]+\)" "$logf" | head -1)
-            echo -e "  ${GREEN}✔ ${rv:-recovered task}${RESET}"
+            echo -e "  ${GREEN}✔ ${rv:-recovered task}${RESET} ${DIM}@ $(_now_iso)${RESET}"
         fi
 
         if [[ -n "$rid" ]]; then
             status=$(_response_status "$rid")
             case "$status" in
                 completed|failed|cancelled|incomplete)
-                    echo -e "  ${GREEN}● terminal status=${status}${RESET}"
+                    echo -e "  ${GREEN}● terminal status=${status}${RESET} ${DIM}@ $(_now_iso)${RESET}"
                     break
                     ;;
             esac
@@ -681,7 +725,19 @@ USAGE
 
 # ── Dispatch ──────────────────────────────────────────────────────────────────
 
-case "${1:-}" in
+CMD="${1:-}"
+case "$CMD" in
+    start|stream|steer|cancel|crash|delete|status|logs|reset)
+        # Print a triggered/ended banner (with elapsed) around every real
+        # command. The EXIT trap guarantees the end banner even on early exit.
+        _CMD_LABEL="command '${CMD}'"
+        _CMD_START_EPOCH=$(date -u +%s)
+        trap _print_end_banner EXIT
+        echo -e "${DIM}▶ ${_CMD_LABEL} triggered @ $(_now_iso)${RESET}" >&2
+        ;;
+esac
+
+case "$CMD" in
     start)   shift; cmd_start "${1:-}" ;;
     stream)  cmd_stream ;;
     steer)   shift; cmd_steer "${1:-}" ;;
