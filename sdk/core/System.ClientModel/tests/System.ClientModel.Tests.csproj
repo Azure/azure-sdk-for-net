@@ -49,9 +49,11 @@
     <Compile Remove="Proxy.EndToEnd.OpenAILike/**" />
     <Compile Remove="Proxy.EndToEnd.ThirdPartyA/**" />
     <Compile Remove="Proxy.EndToEnd.ThirdPartyB/**" />
+    <Compile Remove="Proxy.EndToEnd.App/**" />
     <None Remove="Proxy.EndToEnd.OpenAILike/**" />
     <None Remove="Proxy.EndToEnd.ThirdPartyA/**" />
     <None Remove="Proxy.EndToEnd.ThirdPartyB/**" />
+    <None Remove="Proxy.EndToEnd.App/**" />
   </ItemGroup>
 
 </Project>

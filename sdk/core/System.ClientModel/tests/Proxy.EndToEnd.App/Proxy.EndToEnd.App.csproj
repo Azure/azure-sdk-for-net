@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Runnable end-to-end demo for the MRW proxy: registers a proxy, mocks a response, calls a client, and verifies the expected derived type is returned.</Description>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestSupportProject>true</IsTestSupportProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\System.ClientModel.csproj" />
+    <ProjectReference Include="..\Proxy.EndToEnd.OpenAILike\Proxy.EndToEnd.OpenAILike.csproj" />
+    <ProjectReference Include="..\Proxy.EndToEnd.ThirdPartyA\Proxy.EndToEnd.ThirdPartyA.csproj" />
+    <ProjectReference Include="..\Proxy.EndToEnd.ThirdPartyB\Proxy.EndToEnd.ThirdPartyB.csproj" />
+  </ItemGroup>
+
+</Project>
