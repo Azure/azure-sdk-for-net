@@ -237,20 +237,20 @@ namespace Azure.ResourceManager.EventHubs.Tests
             // create with dual-stack (IPv4 + IPv6)
             EventHubsNamespaceData parameter = new EventHubsNamespaceData(DefaultLocation)
             {
-                IpAddressType = IpAddressType.DualStack
+                IPAddressType = EventHubIPAddressType.DualStack
             };
             EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameter)).Value;
             VerifyNamespaceProperties(eventHubNamespace, false);
-            Assert.AreEqual(IpAddressType.DualStack, eventHubNamespace.Data.IpAddressType);
+            Assert.AreEqual(EventHubIPAddressType.DualStack, eventHubNamespace.Data.IPAddressType);
 
             // re-fetch to confirm the value is persisted on the service
             eventHubNamespace = await namespaceCollection.GetAsync(namespaceName);
-            Assert.AreEqual(IpAddressType.DualStack, eventHubNamespace.Data.IpAddressType);
+            Assert.AreEqual(EventHubIPAddressType.DualStack, eventHubNamespace.Data.IPAddressType);
 
             // update to IPv4 via the (now synchronous in 2026-01-01) namespace PATCH and assert the round-trip
-            eventHubNamespace.Data.IpAddressType = IpAddressType.IPv4;
+            eventHubNamespace.Data.IPAddressType = EventHubIPAddressType.IPv4;
             eventHubNamespace = (await eventHubNamespace.UpdateAsync(eventHubNamespace.Data)).Value;
-            Assert.AreEqual(IpAddressType.IPv4, eventHubNamespace.Data.IpAddressType);
+            Assert.AreEqual(EventHubIPAddressType.IPv4, eventHubNamespace.Data.IPAddressType);
 
             await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
         }

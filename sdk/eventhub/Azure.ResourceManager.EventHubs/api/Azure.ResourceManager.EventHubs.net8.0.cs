@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.EventHubs
         public Azure.ResourceManager.EventHubs.Models.EventHubsEncryption Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDataReplicationProperties GeoDataReplication { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.EventHubs.Models.IpAddressType? IpAddressType { get { throw null; } set { } }
+        public Azure.ResourceManager.EventHubs.Models.EventHubIPAddressType? IPAddressType { get { throw null; } set { } }
         public bool? IsAutoInflateEnabled { get { throw null; } set { } }
         public bool? KafkaEnabled { get { throw null; } set { } }
         public int? MaximumThroughputUnits { get { throw null; } set { } }
@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent EventHubsNameAvailabilityContent(string name = null) { throw null; }
         public static Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult EventHubsNameAvailabilityResult(string message = null, bool? nameAvailable = default(bool?), Azure.ResourceManager.EventHubs.Models.EventHubsNameUnavailableReason? reason = default(Azure.ResourceManager.EventHubs.Models.EventHubsNameUnavailableReason?)) { throw null; }
         public static Azure.ResourceManager.EventHubs.EventHubsNamespaceData EventHubsNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EventHubs.Models.EventHubsSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion?), string provisioningState = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string serviceBusEndpoint = null, Azure.Core.ResourceIdentifier clusterArmId = null, string metricId = null, bool? isAutoInflateEnabled = default(bool?), Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccess?), int? maximumThroughputUnits = default(int?), bool? kafkaEnabled = default(bool?), bool? zoneRedundant = default(bool?), Azure.ResourceManager.EventHubs.Models.EventHubsEncryption encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData> privateEndpointConnections = null, bool? disableLocalAuth = default(bool?), string alternateName = null) { throw null; }
-        public static Azure.ResourceManager.EventHubs.EventHubsNamespaceData EventHubsNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion?), string provisioningState = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string serviceBusEndpoint = null, Azure.Core.ResourceIdentifier clusterArmId = null, string metricId = null, bool? isAutoInflateEnabled = default(bool?), Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccess?), int? maximumThroughputUnits = default(int?), bool? kafkaEnabled = default(bool?), bool? zoneRedundant = default(bool?), Azure.ResourceManager.EventHubs.Models.EventHubsEncryption encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData> privateEndpointConnections = null, bool? disableLocalAuth = default(bool?), string alternateName = null, Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDataReplicationProperties geoDataReplication = null, Azure.ResourceManager.EventHubs.Models.IpAddressType? ipAddressType = default(Azure.ResourceManager.EventHubs.Models.IpAddressType?), Azure.ResourceManager.EventHubs.Models.EventHubsConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default(Azure.ResourceManager.EventHubs.Models.EventHubsConfidentialComputeMode?), Azure.ResourceManager.EventHubs.Models.EventHubsSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.EventHubs.EventHubsNamespaceData EventHubsNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion?), string provisioningState = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string serviceBusEndpoint = null, Azure.Core.ResourceIdentifier clusterArmId = null, string metricId = null, bool? isAutoInflateEnabled = default(bool?), Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccess?), int? maximumThroughputUnits = default(int?), bool? kafkaEnabled = default(bool?), bool? zoneRedundant = default(bool?), Azure.ResourceManager.EventHubs.Models.EventHubsEncryption encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData> privateEndpointConnections = null, bool? disableLocalAuth = default(bool?), string alternateName = null, Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDataReplicationProperties geoDataReplication = null, Azure.ResourceManager.EventHubs.Models.EventHubIPAddressType? ipAddressType = default(Azure.ResourceManager.EventHubs.Models.EventHubIPAddressType?), Azure.ResourceManager.EventHubs.Models.EventHubsConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default(Azure.ResourceManager.EventHubs.Models.EventHubsConfidentialComputeMode?), Azure.ResourceManager.EventHubs.Models.EventHubsSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceFailover EventHubsNamespaceFailover(Azure.Core.AzureLocation? primaryLocation = default(Azure.Core.AzureLocation?), bool? isForced = default(bool?)) { throw null; }
         public static Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDataReplicationProperties EventHubsNamespaceGeoDataReplicationProperties(int? maxReplicationLagDurationInSeconds = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceReplicaLocation> locations = null) { throw null; }
         public static Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceReplicaLocation EventHubsNamespaceReplicaLocation(string locationName = null, Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDRRoleType? roleType = default(Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDRRoleType?), string replicaState = null, Azure.Core.ResourceIdentifier clusterArmId = null) { throw null; }
@@ -979,6 +979,23 @@ namespace Azure.ResourceManager.EventHubs.Models
         Creating = 6,
         Deleting = 7,
         Renaming = 8,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EventHubIPAddressType : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubIPAddressType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EventHubIPAddressType(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.EventHubIPAddressType DualStack { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.EventHubIPAddressType IPv4 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.EventHubIPAddressType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.EventHubIPAddressType left, Azure.ResourceManager.EventHubs.Models.EventHubIPAddressType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.EventHubIPAddressType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.EventHubIPAddressType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubIPAddressType left, Azure.ResourceManager.EventHubs.Models.EventHubIPAddressType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class EventHubsAccessKeys : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeys>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeys>
     {
@@ -1838,23 +1855,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static implicit operator Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion left, Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IpAddressType : System.IEquatable<Azure.ResourceManager.EventHubs.Models.IpAddressType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IpAddressType(string value) { throw null; }
-        public static Azure.ResourceManager.EventHubs.Models.IpAddressType DualStack { get { throw null; } }
-        public static Azure.ResourceManager.EventHubs.Models.IpAddressType IPv4 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EventHubs.Models.IpAddressType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.IpAddressType left, Azure.ResourceManager.EventHubs.Models.IpAddressType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EventHubs.Models.IpAddressType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.EventHubs.Models.IpAddressType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.IpAddressType left, Azure.ResourceManager.EventHubs.Models.IpAddressType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class NetworkRuleSetListResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.NetworkRuleSetListResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.NetworkRuleSetListResult>
