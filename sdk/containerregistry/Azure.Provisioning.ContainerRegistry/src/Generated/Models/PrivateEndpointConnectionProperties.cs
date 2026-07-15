@@ -11,6 +11,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry
 {
+    /// <summary> The properties of a private endpoint connection. </summary>
     internal partial class PrivateEndpointConnectionProperties : ProvisionableConstruct
     {
         private PrivateEndpoint _privateEndpoint;

@@ -25,25 +25,9 @@ namespace Azure.Provisioning.ContainerRegistry
         private SystemData _systemData;
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
+        private RegistryProperties _properties;
         private ContainerRegistrySku _sku;
         private ManagedServiceIdentity _identity;
-        private BicepValue<string> _loginServer;
-        private BicepValue<DateTimeOffset> _createdOn;
-        private BicepValue<ContainerRegistryProvisioningState> _provisioningState;
-        private ContainerRegistryResourceStatus _status;
-        private BicepValue<bool> _isAdminUserEnabled;
-        private ContainerRegistryNetworkRuleSet _networkRuleSet;
-        private ContainerRegistryPolicies _policies;
-        private ContainerRegistryEncryption _encryption;
-        private BicepValue<bool> _isDataEndpointEnabled;
-        private BicepList<string> _dataEndpointHostNames;
-        private BicepList<ContainerRegistryPrivateEndpointConnection> _privateEndpointConnections;
-        private BicepValue<ContainerRegistryPublicNetworkAccess> _publicNetworkAccess;
-        private BicepValue<ContainerRegistryNetworkRuleBypassOption> _networkRuleBypassOptions;
-        private BicepValue<bool> _isNetworkRuleBypassAllowedForTasks;
-        private BicepValue<ContainerRegistryZoneRedundancy> _zoneRedundancy;
-        private BicepValue<bool> _isAnonymousPullEnabled;
-        private BicepValue<ContainerRegistryRoleAssignmentMode> _roleAssignmentMode;
 
         /// <summary> Creates a new ContainerRegistryService. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -117,6 +101,21 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
+        /// <summary> Gets or sets the Properties. </summary>
+        internal RegistryProperties Properties
+        {
+            get
+            {
+                Initialize();
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
+            }
+        }
+
         /// <summary> Gets or sets the Sku. </summary>
         public ContainerRegistrySku Sku
         {
@@ -152,8 +151,11 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _loginServer;
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                return Properties.LoginServer;
             }
         }
 
@@ -162,8 +164,11 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _createdOn;
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                return Properties.CreatedOn;
             }
         }
 
@@ -172,8 +177,11 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _provisioningState;
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                return Properties.ProvisioningState;
             }
         }
 
@@ -182,8 +190,7 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -192,13 +199,15 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _isAdminUserEnabled;
+                return Properties is null ? default : Properties.IsAdminUserEnabled;
             }
             set
             {
-                Initialize();
-                _isAdminUserEnabled.Assign(value);
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.IsAdminUserEnabled = value;
             }
         }
 
@@ -207,13 +216,15 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _networkRuleSet;
+                return Properties is null ? default : Properties.NetworkRuleSet;
             }
             set
             {
-                Initialize();
-                AssignOrReplace(ref _networkRuleSet, value);
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.NetworkRuleSet = value;
             }
         }
 
@@ -222,13 +233,15 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _policies;
+                return Properties is null ? default : Properties.Policies;
             }
             set
             {
-                Initialize();
-                AssignOrReplace(ref _policies, value);
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.Policies = value;
             }
         }
 
@@ -237,13 +250,15 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _encryption;
+                return Properties is null ? default : Properties.Encryption;
             }
             set
             {
-                Initialize();
-                AssignOrReplace(ref _encryption, value);
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.Encryption = value;
             }
         }
 
@@ -252,13 +267,15 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _isDataEndpointEnabled;
+                return Properties is null ? default : Properties.IsDataEndpointEnabled;
             }
             set
             {
-                Initialize();
-                _isDataEndpointEnabled.Assign(value);
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.IsDataEndpointEnabled = value;
             }
         }
 
@@ -267,8 +284,11 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _dataEndpointHostNames;
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                return Properties.DataEndpointHostNames;
             }
         }
 
@@ -277,8 +297,11 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _privateEndpointConnections;
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                return Properties.PrivateEndpointConnections;
             }
         }
 
@@ -287,13 +310,15 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _publicNetworkAccess;
+                return Properties is null ? default : Properties.PublicNetworkAccess;
             }
             set
             {
-                Initialize();
-                _publicNetworkAccess.Assign(value);
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -302,13 +327,15 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _networkRuleBypassOptions;
+                return Properties is null ? default : Properties.NetworkRuleBypassOptions;
             }
             set
             {
-                Initialize();
-                _networkRuleBypassOptions.Assign(value);
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.NetworkRuleBypassOptions = value;
             }
         }
 
@@ -317,13 +344,15 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _isNetworkRuleBypassAllowedForTasks;
+                return Properties is null ? default : Properties.IsNetworkRuleBypassAllowedForTasks;
             }
             set
             {
-                Initialize();
-                _isNetworkRuleBypassAllowedForTasks.Assign(value);
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.IsNetworkRuleBypassAllowedForTasks = value;
             }
         }
 
@@ -332,13 +361,15 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _zoneRedundancy;
+                return Properties is null ? default : Properties.ZoneRedundancy;
             }
             set
             {
-                Initialize();
-                _zoneRedundancy.Assign(value);
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.ZoneRedundancy = value;
             }
         }
 
@@ -347,13 +378,15 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _isAnonymousPullEnabled;
+                return Properties is null ? default : Properties.IsAnonymousPullEnabled;
             }
             set
             {
-                Initialize();
-                _isAnonymousPullEnabled.Assign(value);
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.IsAnonymousPullEnabled = value;
             }
         }
 
@@ -362,13 +395,15 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                Initialize();
-                return _roleAssignmentMode;
+                return Properties is null ? default : Properties.RoleAssignmentMode;
             }
             set
             {
-                Initialize();
-                _roleAssignmentMode.Assign(value);
+                if (Properties is null)
+                {
+                    Properties = new RegistryProperties();
+                }
+                Properties.RoleAssignmentMode = value;
             }
         }
 
@@ -381,25 +416,9 @@ namespace Azure.Provisioning.ContainerRegistry
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
+            _properties = DefineModelProperty<RegistryProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<ContainerRegistrySku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _loginServer = DefineProperty<string>(nameof(LoginServer), new string[] { "properties", "loginServer" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "properties", "creationDate" }, isOutput: true);
-            _provisioningState = DefineProperty<ContainerRegistryProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
-            _status = DefineModelProperty<ContainerRegistryResourceStatus>(nameof(Status), new string[] { "properties", "status" }, isOutput: true);
-            _isAdminUserEnabled = DefineProperty<bool>(nameof(IsAdminUserEnabled), new string[] { "properties", "adminUserEnabled" });
-            _networkRuleSet = DefineModelProperty<ContainerRegistryNetworkRuleSet>(nameof(NetworkRuleSet), new string[] { "properties", "networkRuleSet" });
-            _policies = DefineModelProperty<ContainerRegistryPolicies>(nameof(Policies), new string[] { "properties", "policies" });
-            _encryption = DefineModelProperty<ContainerRegistryEncryption>(nameof(Encryption), new string[] { "properties", "encryption" });
-            _isDataEndpointEnabled = DefineProperty<bool>(nameof(IsDataEndpointEnabled), new string[] { "properties", "dataEndpointEnabled" });
-            _dataEndpointHostNames = DefineListProperty<string>(nameof(DataEndpointHostNames), new string[] { "properties", "dataEndpointHostNames" }, isOutput: true);
-            _privateEndpointConnections = DefineListProperty<ContainerRegistryPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "properties", "privateEndpointConnections" }, isOutput: true);
-            _publicNetworkAccess = DefineProperty<ContainerRegistryPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "properties", "publicNetworkAccess" });
-            _networkRuleBypassOptions = DefineProperty<ContainerRegistryNetworkRuleBypassOption>(nameof(NetworkRuleBypassOptions), new string[] { "properties", "networkRuleBypassOptions" });
-            _isNetworkRuleBypassAllowedForTasks = DefineProperty<bool>(nameof(IsNetworkRuleBypassAllowedForTasks), new string[] { "properties", "networkRuleBypassAllowedForTasks" });
-            _zoneRedundancy = DefineProperty<ContainerRegistryZoneRedundancy>(nameof(ZoneRedundancy), new string[] { "properties", "zoneRedundancy" });
-            _isAnonymousPullEnabled = DefineProperty<bool>(nameof(IsAnonymousPullEnabled), new string[] { "properties", "anonymousPullEnabled" });
-            _roleAssignmentMode = DefineProperty<ContainerRegistryRoleAssignmentMode>(nameof(RoleAssignmentMode), new string[] { "properties", "roleAssignmentMode" });
             DefineAdditionalProperties();
         }
 

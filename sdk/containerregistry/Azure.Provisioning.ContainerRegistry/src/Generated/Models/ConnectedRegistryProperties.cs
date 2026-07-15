@@ -12,6 +12,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry
 {
+    /// <summary> The properties of a connected registry. </summary>
     internal partial class ConnectedRegistryProperties : ProvisionableConstruct
     {
         private BicepValue<ContainerRegistryProvisioningState> _provisioningState;

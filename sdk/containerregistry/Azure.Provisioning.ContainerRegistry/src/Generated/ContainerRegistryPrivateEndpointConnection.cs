@@ -18,9 +18,7 @@ namespace Azure.Provisioning.ContainerRegistry
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private PrivateEndpoint _privateEndpoint;
-        private ContainerRegistryPrivateLinkServiceConnectionState _connectionState;
-        private BicepValue<ContainerRegistryProvisioningState> _provisioningState;
+        private PrivateEndpointConnectionProperties _properties;
         private ResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Creates a new ContainerRegistryPrivateEndpointConnection. </summary>
@@ -65,43 +63,18 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets or sets the PrivateEndpoint. </summary>
-        internal PrivateEndpoint PrivateEndpoint
+        /// <summary> Gets or sets the Properties. </summary>
+        internal PrivateEndpointConnectionProperties Properties
         {
             get
             {
                 Initialize();
-                return _privateEndpoint;
+                return _properties;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _privateEndpoint, value);
-            }
-        }
-
-        /// <summary> Gets or sets the ConnectionState. </summary>
-        public ContainerRegistryPrivateLinkServiceConnectionState ConnectionState
-        {
-            get
-            {
-                Initialize();
-                return _connectionState;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _connectionState, value);
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
-        {
-            get
-            {
-                Initialize();
-                return _provisioningState;
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -120,20 +93,50 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
+        /// <summary> Gets or sets the ConnectionState. </summary>
+        public ContainerRegistryPrivateLinkServiceConnectionState ConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.ConnectionState = value;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<ContainerRegistryProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get
             {
-                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+                return Properties is null ? default : Properties.PrivateEndpointId;
             }
             set
             {
-                if (PrivateEndpoint is null)
+                if (Properties is null)
                 {
-                    PrivateEndpoint = new PrivateEndpoint();
+                    Properties = new PrivateEndpointConnectionProperties();
                 }
-                PrivateEndpoint.Id = value;
+                Properties.PrivateEndpointId = value;
             }
         }
 
@@ -144,9 +147,7 @@ namespace Azure.Provisioning.ContainerRegistry
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _privateEndpoint = DefineModelProperty<PrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "properties", "privateEndpoint" });
-            _connectionState = DefineModelProperty<ContainerRegistryPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "properties", "privateLinkServiceConnectionState" });
-            _provisioningState = DefineProperty<ContainerRegistryProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
+            _properties = DefineModelProperty<PrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<ContainerRegistryService>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

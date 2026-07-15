@@ -18,9 +18,7 @@ namespace Azure.Provisioning.ContainerRegistry
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private BicepValue<string> _groupId;
-        private BicepList<string> _requiredMembers;
-        private BicepList<string> _requiredZoneNames;
+        private ContainerRegistryPrivateLinkResourceProperties _properties;
         private ResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Creates a new ContainerRegistryPrivateLinkResource. </summary>
@@ -65,33 +63,13 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets the GroupId. </summary>
-        public BicepValue<string> GroupId
+        /// <summary> Gets the Properties. </summary>
+        internal ContainerRegistryPrivateLinkResourceProperties Properties
         {
             get
             {
                 Initialize();
-                return _groupId;
-            }
-        }
-
-        /// <summary> Gets the RequiredMembers. </summary>
-        public BicepList<string> RequiredMembers
-        {
-            get
-            {
-                Initialize();
-                return _requiredMembers;
-            }
-        }
-
-        /// <summary> Gets the RequiredZoneNames. </summary>
-        public BicepList<string> RequiredZoneNames
-        {
-            get
-            {
-                Initialize();
-                return _requiredZoneNames;
+                return _properties;
             }
         }
 
@@ -110,6 +88,33 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
+        /// <summary> Gets the GroupId. </summary>
+        public BicepValue<string> GroupId
+        {
+            get
+            {
+                return Properties.GroupId;
+            }
+        }
+
+        /// <summary> Gets the RequiredMembers. </summary>
+        public BicepList<string> RequiredMembers
+        {
+            get
+            {
+                return Properties.RequiredMembers;
+            }
+        }
+
+        /// <summary> Gets the RequiredZoneNames. </summary>
+        public BicepList<string> RequiredZoneNames
+        {
+            get
+            {
+                return Properties.RequiredZoneNames;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ContainerRegistryPrivateLinkResource. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -117,9 +122,7 @@ namespace Azure.Provisioning.ContainerRegistry
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _groupId = DefineProperty<string>(nameof(GroupId), new string[] { "properties", "groupId" }, isOutput: true);
-            _requiredMembers = DefineListProperty<string>(nameof(RequiredMembers), new string[] { "properties", "requiredMembers" }, isOutput: true);
-            _requiredZoneNames = DefineListProperty<string>(nameof(RequiredZoneNames), new string[] { "properties", "requiredZoneNames" });
+            _properties = DefineModelProperty<ContainerRegistryPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<ContainerRegistryService>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

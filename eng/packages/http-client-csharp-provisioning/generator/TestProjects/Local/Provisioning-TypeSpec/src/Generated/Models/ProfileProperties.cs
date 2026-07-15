@@ -10,6 +10,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
+    /// <summary> Properties of a profile. </summary>
     internal partial class ProfileProperties : ProvisionableConstruct
     {
         private BicepValue<string> _description;

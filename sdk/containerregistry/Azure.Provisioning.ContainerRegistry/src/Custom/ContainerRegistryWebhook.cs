@@ -3,10 +3,38 @@
 
 #nullable disable
 
+using System;
+using Azure.Provisioning;
+
 namespace Azure.Provisioning.ContainerRegistry
 {
     public partial class ContainerRegistryWebhook
     {
+        private BicepValue<Uri> _serviceUri;
+        private BicepDictionary<string> _customHeaders;
+
+        /// <summary> Gets or sets the service URI for the webhook to post notifications. </summary>
+        public BicepValue<Uri> ServiceUri
+        {
+            get { Initialize(); return _serviceUri; }
+            set { Initialize(); _serviceUri.Assign(value); }
+        }
+
+        /// <summary> Gets or sets custom headers added to webhook notifications. </summary>
+        public BicepDictionary<string> CustomHeaders
+        {
+            get { Initialize(); return _customHeaders; }
+            set { Initialize(); _customHeaders.Assign(value); }
+        }
+
+        partial void DefineAdditionalProperties()
+        {
+            // The create body contains properties absent from the resource model. Remove this workaround
+            // when resource and create-body model graphs are recursively combined: https://github.com/Azure/azure-sdk-for-net/issues/61011.
+            _serviceUri = DefineProperty<Uri>(nameof(ServiceUri), new string[] { "properties", "serviceUri" }, isRequired: true);
+            _customHeaders = DefineDictionaryProperty<string>(nameof(CustomHeaders), new string[] { "properties", "customHeaders" });
+        }
+
         /// <summary></summary>
         public static partial class ResourceVersions
         {

@@ -61,6 +61,14 @@ namespace Azure.Generator.Provisioning.Providers
         /// <see cref="IProvisioningPropertyInfo.GetProvisioningPropertyInfo"/>.
         /// </summary>
         private readonly Dictionary<InputModelProperty, ResourcePropertyInfo> _propertyLookup;
+        /// <summary>
+        /// Serialized property names that are writable in the create/update request body model.
+        /// When the resource model is output-only (e.g., a ProxyResource with a separate create body),
+        /// its properties may be marked readOnly even though the create body accepts them as input.
+        /// This set is used during <see cref="_allProperties"/> construction to avoid incorrectly
+        /// marking such properties as output-only.
+        /// </summary>
+        private readonly HashSet<string> _createBodyWritableProperties;
 
         private FieldProvider? _parentField;
         private PropertyProvider? _parentProperty;
@@ -109,11 +117,8 @@ namespace Azure.Generator.Provisioning.Providers
                 ? projection.ApiVersions.Last()
                 : null;
             _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(projection.ResourceModel);
-            var resourceProperties = CollectAllProperties(projection.ResourceModel);
-            var createBodyModel = ProvisioningInputLibrary.GetCreateBodyModel(projection);
-            _allProperties = createBodyModel == null
-                ? resourceProperties
-                : CombineProperties(resourceProperties, CollectAllProperties(createBodyModel));
+            _createBodyWritableProperties = BuildCreateBodyWritableProperties();
+            _allProperties = CollectAllProperties();
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);
         }
 
@@ -127,9 +132,8 @@ namespace Azure.Generator.Provisioning.Providers
             _resourceProjection = null;
             _defaultApiVersion = null;
             _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(inputModel);
-            _allProperties = inputModel.DiscriminatorValue != null
-                ? CollectOwnProperties()
-                : CollectAllProperties(inputModel);
+            _createBodyWritableProperties = [];
+            _allProperties = CollectAllProperties();
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);
         }
 
@@ -382,103 +386,141 @@ namespace Azure.Generator.Provisioning.Providers
 
         // ── Property collection ──────────────────────────────────────
 
-        private List<ResourcePropertyInfo> CollectAllProperties(InputModelType model)
+        /// <summary>
+        /// Builds a set of serialized property names that are writable in the create/update request body.
+        /// When the resource model is output-only (e.g., ProxyResource with separate create body),
+        /// its properties may be marked readOnly even though the create body has them as writable.
+        /// </summary>
+        private HashSet<string> BuildCreateBodyWritableProperties()
         {
+            var result = new HashSet<string>(StringComparer.Ordinal);
+            if (_resourceProjection == null) return result;
+
+            var createMethod = _resourceProjection.Methods
+                .FirstOrDefault(m => m.Kind == ResourceOperationKind.Create)?.InputMethod;
+            if (createMethod == null) return result;
+
+            foreach (var parameter in createMethod.Parameters)
+            {
+                if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType bodyModel)
+                {
+                    CollectWritableProperties(bodyModel, result);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Collects serialized names of writable properties from a model and its base model chain.
+        /// </summary>
+        private static void CollectWritableProperties(InputModelType model, HashSet<string> result)
+        {
+            var current = model;
+            while (current != null)
+            {
+                foreach (var prop in current.Properties)
+                {
+                    if (!prop.IsReadOnly)
+                    {
+                        result.Add(prop.SerializedName ?? prop.Name);
+                    }
+                }
+                current = current.BaseModel;
+            }
+        }
+
+        private List<ResourcePropertyInfo> CollectAllProperties()
+        {
+            // Derived discriminated resources only collect their own properties
+            if (_inputModel.DiscriminatorValue != null)
+                return CollectOwnProperties();
+
             var result = new List<ResourcePropertyInfo>();
             var seen = new HashSet<string>(StringComparer.Ordinal);
 
-            foreach (var (property, bicepPath) in ProvisioningInputLibrary.GetProvisioningProperties(model))
+            // Collect from the base chain first (top-most ancestor → immediate base),
+            // then from the resource model itself. This ensures inherited ARM common
+            // properties (name, location, tags) appear before leaf-defined properties
+            // (e.g., the "properties" bag), which controls the Bicep emission order.
+            var chain = new Stack<InputModelType>();
+            chain.Push(_inputModel);
+            var baseModel = _inputModel.BaseModel;
+            while (baseModel != null)
             {
-                CollectProperty(property, result, seen, bicepPath);
+                chain.Push(baseModel);
+                baseModel = baseModel.BaseModel;
+            }
+
+            foreach (var model in chain)
+            {
+                CollectPropertiesFromModel(model, result, seen, basePath: null);
             }
 
             return result;
         }
 
-        private static List<ResourcePropertyInfo> CombineProperties(
-            List<ResourcePropertyInfo> resourceProperties,
-            List<ResourcePropertyInfo> createBodyProperties)
+        private void CollectPropertiesFromModel(
+            InputModelType model,
+            List<ResourcePropertyInfo> result,
+            HashSet<string> seen,
+            string[]? basePath)
         {
-            var result = new List<ResourcePropertyInfo>(resourceProperties);
-            var propertiesByPath = resourceProperties
-                .Select((property, index) => (Path: GetPathKey(property.BicepPath), Index: index))
-                .ToDictionary(item => item.Path, item => item.Index, StringComparer.Ordinal);
-
-            foreach (var createBodyProperty in createBodyProperties)
+            foreach (var prop in model.Properties)
             {
-                var path = GetPathKey(createBodyProperty.BicepPath);
-                if (propertiesByPath.TryGetValue(path, out var resourcePropertyIndex))
+                if (prop.IsDiscriminator) continue;
+
+                var serializedName = prop.SerializedName ?? prop.Name;
+
+                if (seen.Contains(serializedName)) continue;
+                seen.Add(serializedName);
+
+                // Skip "type" property and extension-resource language-level scope.
+                if (SkipProperties.Contains(serializedName)
+                    || (_resourceProjection?.IsExtensionResource == true
+                        && serializedName == "scope"))
                 {
-                    var resourceProperty = result[resourcePropertyIndex];
-                    result[resourcePropertyIndex] = resourceProperty with
-                    {
-                        IsOutput = resourceProperty.IsOutput && createBodyProperty.IsOutput,
-                        IsSettable = resourceProperty.IsSettable || createBodyProperty.IsSettable,
-                        IsRequired = resourceProperty.IsRequired || createBodyProperty.IsRequired
-                    };
                     continue;
                 }
 
-                propertiesByPath.Add(path, result.Count);
-                result.Add(createBodyProperty);
-            }
+                var bicepPath = basePath != null
+                    ? [.. basePath, serializedName]
+                    : new[] { serializedName };
 
-            return result;
+                // ARM resource name metadata is the wire property exactly named "name".
+                // Keep this comparison case-sensitive so unrelated body properties like "Name" are not treated as metadata.
+                var isResourceName = serializedName == "name";
+                var isOutput = (prop.IsReadOnly && !isResourceName && !_createBodyWritableProperties.Contains(serializedName))
+                    || OutputOnlyProperties.Contains(serializedName);
+                // Read-only resources are referenced through FromExisting, so Name must remain settable.
+                // Other non-output properties are settable only when the resource has a writable scope.
+                var isSettable = !isOutput && (_isSettableResource || isResourceName);
+                // Read-only resources should not require body properties that users cannot set.
+                // Metadata inputs such as resource name remain required even without writable scopes.
+                var isRequired = isResourceName || (prop.IsRequired && _isSettableResource);
+
+                var propertyName = prop.Name.ToIdentifierName();
+                // For singleton resources, the "name" property has one fixed default value and is not settable.
+                string? defaultValue = null;
+                if (isResourceName
+                    && _resourceProjection?.SingletonResourceName is string singletonResourceName)
+                {
+                    defaultValue = singletonResourceName;
+                    isSettable = false;
+                }
+                // Ensure "location" at the resource level always uses AzureLocation,
+                // even when the TypeSpec defines it as plain string.
+                // TODO - this is currently a workaround until we have a more reliable way to detect such violations from the spec level.
+                CSharpType? typeOverride = null;
+                if (basePath is null
+                    && serializedName == "location")
+                {
+                    typeOverride = new CSharpType(typeof(BicepValue<>), typeof(Azure.Core.AzureLocation));
+                }
+
+                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isSettable, isRequired, defaultValue, typeOverride));
+            }
         }
-
-        private void CollectProperty(
-            InputModelProperty prop,
-            List<ResourcePropertyInfo> result,
-            HashSet<string> seen,
-            string[] bicepPath)
-        {
-            var serializedName = prop.SerializedName ?? prop.Name;
-            if (!seen.Add(GetPathKey(bicepPath))) return;
-
-            // Skip resource envelope metadata that provisioning represents separately.
-            if (bicepPath.Length == 1
-                && (SkipProperties.Contains(serializedName)
-                    || (_resourceProjection?.IsExtensionResource == true
-                        && serializedName == "scope")))
-            {
-                return;
-            }
-
-            // ARM resource name metadata is the root wire property exactly named "name".
-            // Keep this comparison case-sensitive so unrelated body properties like "Name" are not treated as metadata.
-            var isResourceName = bicepPath.Length == 1 && serializedName == "name";
-            var isOutput = (prop.IsReadOnly && !isResourceName)
-                || (bicepPath.Length == 1 && OutputOnlyProperties.Contains(serializedName));
-            // Read-only resources are referenced through FromExisting, so Name must remain settable.
-            // Other non-output properties are settable only when the resource has a writable scope.
-            var isSettable = !isOutput && (_isSettableResource || isResourceName);
-            // Read-only resources should not require body properties that users cannot set.
-            // Metadata inputs such as resource name remain required even without writable scopes.
-            var isRequired = isResourceName || (prop.IsRequired && _isSettableResource);
-
-            var propertyName = prop.Name.ToIdentifierName();
-            // For singleton resources, the "name" property has one fixed default value and is not settable.
-            string? defaultValue = null;
-            if (isResourceName
-                && _resourceProjection?.SingletonResourceName is string singletonResourceName)
-            {
-                defaultValue = singletonResourceName;
-                isSettable = false;
-            }
-            // Ensure "location" at the resource level always uses AzureLocation,
-            // even when the TypeSpec defines it as plain string.
-            // TODO - this is currently a workaround until we have a more reliable way to detect such violations from the spec level.
-            CSharpType? typeOverride = null;
-            if (bicepPath.Length == 1
-                && serializedName == "location")
-            {
-                typeOverride = new CSharpType(typeof(BicepValue<>), typeof(Azure.Core.AzureLocation));
-            }
-
-            result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isSettable, isRequired, defaultValue, typeOverride));
-        }
-
-        private static string GetPathKey(string[] bicepPath) => string.Join('\0', bicepPath);
 
         // ── Method builders ──────────────────────────────────────────
 

@@ -11,6 +11,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry
 {
+    /// <summary> The properties of a container registry. </summary>
     internal partial class RegistryProperties : ProvisionableConstruct
     {
         private BicepValue<string> _loginServer;

@@ -118,12 +118,9 @@ namespace Azure.Generator.Provisioning
         /// <inheritdoc/>
         protected override IReadOnlyList<ModelProvider> ResolveFlattenTargetModels(InputModelType inputModel)
         {
-            if (TryGetResourcesByModel(inputModel, out _))
+            if (TryGetResourcesByModel(inputModel, out var resources))
             {
-                // Resource providers flatten their input models while collecting
-                // ResourcePropertyInfo, so the management flattening visitor must not
-                // flatten the same properties a second time.
-                return [];
+                return resources;
             }
 
             return ProvisioningGenerator.Instance.InputLibrary.IsModelReachable(inputModel)
@@ -169,10 +166,6 @@ namespace Azure.Generator.Provisioning
                 if (model is not null)
                 {
                     providers.Add(model);
-                    if (ProvisioningGenerator.Instance.InputLibrary.IsFlattenedResourcePropertyModel(inputModel))
-                    {
-                        ProvisioningGenerator.Instance.AddTypeToKeep(model);
-                    }
                     // CollectReachableTypes excludes models already backed by ArmProviderSchema.Resources,
                     // so this does not duplicate the pre-created resource providers added above.
                     // CreateModel can still return a resource provider here for discriminator-derived

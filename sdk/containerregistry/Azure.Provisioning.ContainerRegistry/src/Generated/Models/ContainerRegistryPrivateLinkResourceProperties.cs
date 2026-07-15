@@ -10,6 +10,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry
 {
+    /// <summary> Properties of a private link resource. </summary>
     internal partial class ContainerRegistryPrivateLinkResourceProperties : ProvisionableConstruct
     {
         private BicepValue<string> _groupId;

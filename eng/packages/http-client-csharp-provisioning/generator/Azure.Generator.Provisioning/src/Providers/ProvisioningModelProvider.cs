@@ -43,11 +43,7 @@ namespace Azure.Generator.Provisioning.Providers
             => Path.Combine("src", "Generated", "Models", $"{Name}.cs");
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
-            => (ProvisioningGenerator.Instance.InputLibrary.IsFlattenedResourcePropertyModel(_inputModel)
-                    ? TypeSignatureModifiers.Internal
-                    : TypeSignatureModifiers.Public)
-                | TypeSignatureModifiers.Partial
-                | TypeSignatureModifiers.Class;
+            => TypeSignatureModifiers.Public | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
 
         protected override CSharpType? BuildBaseType()
         {

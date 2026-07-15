@@ -19,8 +19,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private BicepValue<string> _description;
-        private ProfileSku _sku;
+        private ProfileProperties _properties;
         private ResourceReference<ConfigurationStore> _parent;
 
         /// <summary> Creates a new Profile. </summary>
@@ -65,33 +64,18 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets or sets the Description. </summary>
-        public BicepValue<string> Description
+        /// <summary> Gets or sets the Properties. </summary>
+        internal ProfileProperties Properties
         {
             get
             {
                 Initialize();
-                return _description;
+                return _properties;
             }
             set
             {
                 Initialize();
-                _description.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Sku. </summary>
-        internal ProfileSku Sku
-        {
-            get
-            {
-                Initialize();
-                return _sku;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _sku, value);
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -110,20 +94,37 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets or sets the Description. </summary>
+        public BicepValue<string> Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProfileProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> SkuName
         {
             get
             {
-                return Sku is null ? default : Sku.Name;
+                return Properties is null ? default : Properties.SkuName;
             }
             set
             {
-                if (Sku is null)
+                if (Properties is null)
                 {
-                    Sku = new ProfileSku();
+                    Properties = new ProfileProperties();
                 }
-                Sku.Name = value;
+                Properties.SkuName = value;
             }
         }
 
@@ -134,8 +135,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _description = DefineProperty<string>(nameof(Description), new string[] { "properties", "description" });
-            _sku = DefineModelProperty<ProfileSku>(nameof(Sku), new string[] { "properties", "sku" });
+            _properties = DefineModelProperty<ProfileProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<ConfigurationStore>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
