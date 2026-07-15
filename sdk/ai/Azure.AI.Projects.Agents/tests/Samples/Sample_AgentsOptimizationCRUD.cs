@@ -90,7 +90,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
 #endif
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("AgentsOptimization=V2Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
         #endregion
 
@@ -150,7 +150,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         }
         if (submittedJob1.Status == AgentsJobStatus.Failed)
         {
-            throw new InvalidOperationException($"The job {submittedJob1.Id} has failed. Code: {submittedJob1.Error.Code}, Message: {submittedJob1.Error.Message}");
+            throw new InvalidOperationException($"The job {submittedJob1.Id} has failed.");
         }
         #endregion
         #region Snippet:Sample_CancelOptimizationJob_AgentsOptimization_Async
@@ -199,7 +199,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
 #endif
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("AgentsOptimization=V2Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
 
         #region Snippet:Sample_CreateAgent_AgentsOptimization_Sync
@@ -258,7 +258,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         }
         if (submittedJob1.Status == AgentsJobStatus.Failed)
         {
-            throw new InvalidOperationException($"The job {submittedJob1.Id} has failed. Code: {submittedJob1.Error.Code}, Message: {submittedJob1.Error.Message}");
+            throw new InvalidOperationException($"The job {submittedJob1.Id} has failed.");
         }
         #endregion
         #region Snippet:Sample_CancelOptimizationJob_AgentsOptimization_Sync

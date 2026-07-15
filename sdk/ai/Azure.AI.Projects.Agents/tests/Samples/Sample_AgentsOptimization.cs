@@ -91,7 +91,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("AgentsOptimization=V2Preview"), PipelinePosition.PerCall);
         options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
         #endregion
 
@@ -134,7 +134,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
                             {new {
                                 name = "add two numbers",
                                 description = "Adds two numbers",
-                                body = "When asked calculate the sume of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
+                                body = "When asked calculate the sum of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
                             }}
                         )},
                         {"tools",  BinaryData.FromObjectAsJson(new[]{
@@ -191,7 +191,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
         }
         if (submittedJob.Status == AgentsJobStatus.Failed)
         {
-            throw new InvalidOperationException($"The job {submittedJob.Id} has failed. Code: {submittedJob.Error.Code}, Message: {submittedJob.Error.Message}");
+            throw new InvalidOperationException($"The job {submittedJob.Id} has failed.");
         }
         #endregion
         #region Snippet:Sample_ListCandidates_AgentsOptimizationCandidates
@@ -237,7 +237,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
 #endif
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("AgentsOptimization=V2Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
 
         #region Snippet:Sample_CreateAgent_AgentsOptimizationCandidates_Sync
@@ -278,7 +278,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
                             {new {
                                 name = "add two numbers",
                                 description = "Adds two numbers",
-                                body = "When asked calculate the sume of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
+                                body = "When asked calculate the sum of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
                             }}
                         )},
                         {"tools",  BinaryData.FromObjectAsJson(new[]{
@@ -335,7 +335,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
         }
         if (submittedJob.Status == AgentsJobStatus.Failed)
         {
-            throw new InvalidOperationException($"The job {submittedJob.Id} has failed. Code: {submittedJob.Error.Code}, Message: {submittedJob.Error.Message}");
+            throw new InvalidOperationException($"The job {submittedJob.Id} has failed.");
         }
         #endregion
         foreach (OptimizationCandidate candidate in submittedJob.Result.Candidates)

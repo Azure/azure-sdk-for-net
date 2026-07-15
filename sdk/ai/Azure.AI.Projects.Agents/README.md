@@ -520,11 +520,11 @@ var anotherModelDeploymentName = System.Environment.GetEnvironmentVariable("FOUN
 AgentAdministrationClientOptions options = new();
 options.AddPolicy(new FeaturePolicy("AgentsOptimization=V2Preview"), PipelinePosition.PerCall);
 options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
 ```
 
-Agent optimization job accepts optimization criteria, evaluators and several models as a parameter. It also accepts baselines used as an optimization staring point.
+Agent optimization job accepts optimization criteria, evaluators and several models as a parameter. It also accepts baselines used as an optimization starting point.
 Several models need to be defined for different purposes:
   - `OptimizationModel` - reads the Agent evaluation result and reason and creates the improved target description: system prompt, tool description or skill.
   - `EvalModel` - used for Agent evaluation.
@@ -559,7 +559,7 @@ OptimizationJob job = new()
                     {new {
                         name = "add two numbers",
                         description = "Adds two numbers",
-                        body = "When asked calculate the sume of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
+                        body = "When asked calculate the sum of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
                     }}
                 )},
                 {"tools",  BinaryData.FromObjectAsJson(new[]{

@@ -37,7 +37,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MOD
 var anotherModelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME2");
 AgentAdministrationClientOptions options = new();
 options.AddPolicy(new FeaturePolicy("AgentsOptimization=V2Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
 ```
 
@@ -67,7 +67,7 @@ ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 ```
 
-3. Create an optimization criterion based oof the groundedness.
+3. Create an optimization criterion based on the groundedness.
 
 ```C# Snippet:Sample_OptimizationCriterion_AgentsOptimization
 private readonly OptimizationDatasetCriterion _criterion = new(
@@ -219,7 +219,7 @@ while (submittedJob1.Status != AgentsJobStatus.Failed && submittedJob1.Status !=
 }
 if (submittedJob1.Status == AgentsJobStatus.Failed)
 {
-    throw new InvalidOperationException($"The job {submittedJob1.Id} has failed. Code: {submittedJob1.Error.Code}, Message: {submittedJob1.Error.Message}");
+    throw new InvalidOperationException($"The job {submittedJob1.Id} has failed.");
 }
 ```
 
@@ -241,7 +241,7 @@ while (submittedJob1.Status != AgentsJobStatus.Failed && submittedJob1.Status !=
 }
 if (submittedJob1.Status == AgentsJobStatus.Failed)
 {
-    throw new InvalidOperationException($"The job {submittedJob1.Id} has failed. Code: {submittedJob1.Error.Code}, Message: {submittedJob1.Error.Message}");
+    throw new InvalidOperationException($"The job {submittedJob1.Id} has failed.");
 }
 ```
 

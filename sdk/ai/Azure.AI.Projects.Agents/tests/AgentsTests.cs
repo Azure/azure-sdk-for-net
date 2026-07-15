@@ -2,23 +2,17 @@
 // Licensed under the MIT License.
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents.Tests.Samples;
-using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using NUnit.Framework.Legacy;
 using OpenAI.Responses;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 #pragma warning disable AAIP001
 namespace Azure.AI.Projects.Agents.Tests;
@@ -1007,7 +1001,7 @@ public class AgentsTests : AgentsTestBase
                 Metadata = { ["delete_me"] = "please " },
             });
         Assert.That(newAgentVersion?.Id, Is.Not.Null.And.Not.Empty);
-        string opId = IsAsync ? "eaf06a53-682e-4d1e-943b-44a9e6ccfefd" : "8fd7f680-7299-44c6-81cb-a7a25a733437";
+        string opId = IsAsync ? "eaf06a53-682e-5d1e-943b-44a9e6ccfeea" : "9fd7f680-7299-44c6-81cb-a7a25a733438";
         OptimizationJob submittedJob1 = await jobsClient.CreateAsync(job: GetOptimizationJob(newAgentVersion), operationId: opId, cancellationToken: default);
         Assert.That(submittedJob1?.Id, Is.Not.Null.And.Not.Empty);
         string prevID = submittedJob1.Id;
@@ -1173,7 +1167,7 @@ public class AgentsTests : AgentsTestBase
                 "result": <integer from 1 to 5>,
                 "reason": "<brief explanation for the score>"
             }
-            """
+            """.Replace("\r\n", "\n")
         );
         List <OptimizationDatasetItem> items = [];
         for (int i = start; i < start + itemNumber; i++)
@@ -1219,7 +1213,7 @@ public class AgentsTests : AgentsTestBase
                             {new {
                                 name = "add two numbers",
                                 description = "Adds two numbers",
-                                body = "When asked calculate the sume of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
+                                body = "When asked calculate the sum of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
                             }}
                         )},
                         { "tools",  BinaryData.FromObjectAsJson(new[]{

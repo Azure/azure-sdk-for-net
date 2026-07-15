@@ -38,7 +38,7 @@ var anotherModelDeploymentName = System.Environment.GetEnvironmentVariable("FOUN
 AgentAdministrationClientOptions options = new();
 options.AddPolicy(new FeaturePolicy("AgentsOptimization=V2Preview"), PipelinePosition.PerCall);
 options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
 ```
 
@@ -70,7 +70,7 @@ ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 ```
 
-3. Create an optimization criterion based oof the groundedness.
+3. Create an optimization criterion based on the groundedness.
 
 ```C# Snippet:Sample_OptimizationCriterion_AgentsOptimizationCandidates
 private readonly OptimizationDatasetCriterion _criterion = new(
@@ -169,7 +169,7 @@ OptimizationJob job = new()
                     {new {
                         name = "add two numbers",
                         description = "Adds two numbers",
-                        body = "When asked calculate the sume of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
+                        body = "When asked calculate the sum of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
                     }}
                 )},
                 {"tools",  BinaryData.FromObjectAsJson(new[]{
@@ -239,7 +239,7 @@ OptimizationJob job = new()
                     {new {
                         name = "add two numbers",
                         description = "Adds two numbers",
-                        body = "When asked calculate the sume of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
+                        body = "When asked calculate the sum of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
                     }}
                 )},
                 {"tools",  BinaryData.FromObjectAsJson(new[]{
@@ -300,7 +300,7 @@ while (submittedJob.Status != AgentsJobStatus.Failed && submittedJob.Status != A
 }
 if (submittedJob.Status == AgentsJobStatus.Failed)
 {
-    throw new InvalidOperationException($"The job {submittedJob.Id} has failed. Code: {submittedJob.Error.Code}, Message: {submittedJob.Error.Message}");
+    throw new InvalidOperationException($"The job {submittedJob.Id} has failed.");
 }
 ```
 
@@ -322,7 +322,7 @@ while (submittedJob.Status != AgentsJobStatus.Failed && submittedJob.Status != A
 }
 if (submittedJob.Status == AgentsJobStatus.Failed)
 {
-    throw new InvalidOperationException($"The job {submittedJob.Id} has failed. Code: {submittedJob.Error.Code}, Message: {submittedJob.Error.Message}");
+    throw new InvalidOperationException($"The job {submittedJob.Id} has failed.");
 }
 ```
 
