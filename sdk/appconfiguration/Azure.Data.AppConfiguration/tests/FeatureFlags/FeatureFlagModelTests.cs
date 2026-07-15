@@ -11,9 +11,8 @@ namespace Azure.Data.AppConfiguration.Tests
     {
         private static FeatureFlag CreateFullFeatureFlag()
         {
-            FeatureFlag flag = new FeatureFlag
+            FeatureFlag flag = new FeatureFlag(true)
             {
-                Enabled = true,
                 Description = "A fully populated feature flag.",
                 Conditions = new FeatureFlagConditions
                 {
