@@ -16,10 +16,8 @@ namespace Azure.Generator.Provisioning
     /// </summary>
     public class ProvisioningInputLibrary : ManagementInputLibrary
     {
+        private readonly ManagementInputLibrary _managementInputLibrary;
         private IReadOnlyList<ProvisioningResourceProjection>? _resourceProjections;
-        private Dictionary<InputModelType, List<ProvisioningResourceProjection>>? _resourceProjectionsByModel;
-        private IReadOnlyList<InputModelType>? _reachableModels;
-        private IReadOnlyList<InputEnumType>? _reachableEnums;
         private Dictionary<InputModelType, bool>? _modelSettableUsage;
         private InputNamespace? _provisioningInputNamespace;
         private bool _isBuildingProvisioningInput;
@@ -30,7 +28,11 @@ namespace Azure.Generator.Provisioning
         /// <param name="configPath">The generator configuration path.</param>
         public ProvisioningInputLibrary(string configPath) : base(configPath)
         {
+            _managementInputLibrary = new ManagementInputLibrary(configPath);
         }
+
+        /// <inheritdoc/>
+        public override ArmProviderSchema ArmProviderSchema => _managementInputLibrary.ArmProviderSchema;
 
         /// <inheritdoc/>
         public override InputNamespace InputNamespace
@@ -42,25 +44,42 @@ namespace Azure.Generator.Provisioning
                     return _provisioningInputNamespace;
                 }
 
-                var inputNamespace = base.InputNamespace;
+                var inputNamespace = _managementInputLibrary.InputNamespace;
                 if (_isBuildingProvisioningInput)
                 {
-                    // Reachability starts from ArmProviderSchema, whose management-plane
-                    // initialization reads InputNamespace. Return the complete namespace during
-                    // that initialization so the schema can discover every resource and operation.
+                    // Resource method deserialization currently resolves methods and clients through
+                    // the global generator input library. While the private management library builds
+                    // its schema, expose its complete namespace through this provisioning library so
+                    // those lookups use the same InputMethod and InputClient instances.
                     return inputNamespace;
                 }
 
-                EnsureProvisioningInput();
-                _provisioningInputNamespace = new InputNamespace(
-                    inputNamespace.Name,
-                    inputNamespace.ApiVersions,
-                    inputNamespace.Constants,
-                    _reachableEnums!,
-                    _reachableModels!,
-                    inputNamespace.RootClients,
-                    inputNamespace.Auth);
-                return _provisioningInputNamespace;
+                try
+                {
+                    _isBuildingProvisioningInput = true;
+                    var resourceProjections = _resourceProjections
+                        ?? ProvisioningResourceProjection.Create(ArmProviderSchema.Resources);
+                    var resourceProjectionsByModel = resourceProjections
+                        .GroupBy(projection => projection.ResourceModel)
+                        .ToDictionary(group => group.Key, group => group.ToList());
+                    var (reachableModels, reachableEnums, modelSettableUsage) = CollectReachableTypes(resourceProjections, resourceProjectionsByModel);
+
+                    _resourceProjections = resourceProjections;
+                    _modelSettableUsage = modelSettableUsage;
+                    _provisioningInputNamespace = new InputNamespace(
+                        inputNamespace.Name,
+                        inputNamespace.ApiVersions,
+                        inputNamespace.Constants,
+                        reachableEnums,
+                        reachableModels,
+                        inputNamespace.RootClients,
+                        inputNamespace.Auth);
+                    return _provisioningInputNamespace;
+                }
+                finally
+                {
+                    _isBuildingProvisioningInput = false;
+                }
             }
         }
 
@@ -68,14 +87,14 @@ namespace Azure.Generator.Provisioning
         {
             get
             {
-                EnsureProvisioningInput();
+                _ = InputNamespace;
                 return _resourceProjections!;
             }
         }
 
         internal bool IsModelSettable(InputModelType model)
         {
-            EnsureProvisioningInput();
+            _ = InputNamespace;
             if (_modelSettableUsage!.TryGetValue(model, out var isSettable))
             {
                 return isSettable;
@@ -86,35 +105,8 @@ namespace Azure.Generator.Provisioning
 
         internal bool IsModelReachable(InputModelType model)
         {
-            EnsureProvisioningInput();
+            _ = InputNamespace;
             return _modelSettableUsage!.ContainsKey(model);
-        }
-
-        private void EnsureProvisioningInput()
-        {
-            if (_resourceProjections != null && _modelSettableUsage != null)
-                return;
-
-            try
-            {
-                _isBuildingProvisioningInput = true;
-                var resourceProjections = _resourceProjections
-                    ?? ProvisioningResourceProjection.Create(ArmProviderSchema.Resources);
-                var resourceProjectionsByModel = _resourceProjectionsByModel ?? resourceProjections
-                    .GroupBy(projection => projection.ResourceModel)
-                    .ToDictionary(group => group.Key, group => group.ToList());
-                var (reachableModels, reachableEnums, modelSettableUsage) = CollectReachableTypes(resourceProjections, resourceProjectionsByModel);
-
-                _resourceProjections = resourceProjections;
-                _resourceProjectionsByModel = resourceProjectionsByModel;
-                _reachableModels = reachableModels;
-                _reachableEnums = reachableEnums;
-                _modelSettableUsage = modelSettableUsage;
-            }
-            finally
-            {
-                _isBuildingProvisioningInput = false;
-            }
         }
 
         /// <summary>

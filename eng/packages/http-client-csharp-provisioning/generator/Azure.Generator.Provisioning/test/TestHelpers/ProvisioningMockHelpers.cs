@@ -41,13 +41,24 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
                 inputNsModels,
                 inputNsClients,
                 new InputAuth(null, null));
+            var mockManagementInputLibrary = new Mock<ManagementInputLibrary>(_configFilePath) { CallBase = true };
+            mockManagementInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNamespace.Object);
             var mockInputLibrary = new Mock<ProvisioningInputLibrary>(_configFilePath);
-            mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNamespace.Object);
+            if (armProviderSchema is null)
+            {
+                mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNamespace.Object);
+            }
+            else
+            {
+                mockInputLibrary.Setup(p => p.InputNamespace).CallBase();
+            }
+            mockInputLibrary.Setup(p => p.ArmProviderSchema).Returns(() => mockManagementInputLibrary.Object.ArmProviderSchema);
+            typeof(ProvisioningInputLibrary)
+                .GetField("_managementInputLibrary", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(mockInputLibrary.Object, mockManagementInputLibrary.Object);
             if (armProviderSchema is not null)
             {
-                typeof(ManagementInputLibrary)
-                    .GetField("_providerSchema", BindingFlags.Instance | BindingFlags.NonPublic)!
-                    .SetValue(mockInputLibrary.Object, armProviderSchema());
+                mockManagementInputLibrary.Setup(p => p.ArmProviderSchema).Returns(armProviderSchema());
             }
 
             var loadMethod = typeof(Configuration).GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic);

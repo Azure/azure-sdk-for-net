@@ -115,7 +115,7 @@ namespace Azure.Generator.Provisioning.Primitives
 
             foreach (var resource in metadata)
             {
-                var key = (resource.ResourceType, resource.ResourceModel);
+                var key = (resource.ResourceType.SerializedResourceType, resource.ResourceModel);
                 if (!groups.TryGetValue(key, out var group))
                 {
                     group = [];
@@ -141,11 +141,11 @@ namespace Azure.Generator.Provisioning.Primitives
         private static string GetSameResourceType(IReadOnlyList<ArmResourceMetadata> metadata)
         {
             var resourceType = metadata[0].ResourceType;
-            if (metadata.Any(resource => !string.Equals(resource.ResourceType, resourceType, StringComparison.Ordinal)))
+            if (metadata.Any(resource => !resource.ResourceType.Equals(resourceType)))
             {
                 throw new InvalidOperationException("Collapsed provisioning resources must share the same resource type.");
             }
-            return resourceType;
+            return resourceType.SerializedResourceType;
         }
 
         private static T GetSameValueOrDefault<T>(IEnumerable<T> values, T defaultValue, IEqualityComparer<T>? comparer = null)

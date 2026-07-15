@@ -305,7 +305,7 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
 
         /// <summary> Gets the ARM provider schema containing all resource metadata and non-resource methods. </summary>
-        public ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
+        public virtual ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
 
         private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)> BuildResourceUpdateModelToResourceNameMap()
         {

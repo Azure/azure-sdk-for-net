@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -663,7 +664,7 @@ namespace Azure.Generator.Provisioning.Tests
             return new ArmResourceMetadata(
                 path,
                 resourceName ?? model.Name,
-                resourceType,
+                new ResourceTypePattern(resourceType),
                 model,
                 new ArmScopeInfo(scope, RequestPathPattern.GetFromScope(scope, path), null),
                 methods ?? [],
@@ -782,21 +783,20 @@ namespace Azure.Generator.Provisioning.Tests
 
         private static void RegisterResourceProjections(IReadOnlyList<ProvisioningResourceProjection> resourceProjections)
         {
-            var resourceProjectionsByModel = resourceProjections
-                .GroupBy(projection => projection.ResourceModel)
-                .ToDictionary(
-                    group => group.Key,
-                    group => group.ToList());
+            var inputLibrary = ProvisioningGenerator.Instance.InputLibrary;
+            Mock.Get(inputLibrary)
+                .Setup(library => library.InputNamespace)
+                .CallBase();
 
             typeof(ProvisioningInputLibrary)
                 .GetField("_resourceProjections", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(ProvisioningGenerator.Instance.InputLibrary, resourceProjections);
+                .SetValue(inputLibrary, resourceProjections);
             typeof(ProvisioningInputLibrary)
-                .GetField("_resourceProjectionsByModel", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(ProvisioningGenerator.Instance.InputLibrary, resourceProjectionsByModel);
+                .GetField("_provisioningInputNamespace", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(inputLibrary, null);
             typeof(ProvisioningInputLibrary)
                 .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(ProvisioningGenerator.Instance.InputLibrary, null);
+                .SetValue(inputLibrary, null);
         }
 
         private static void AddDiscriminatedSubtype(InputModelType baseModel, InputModelType derivedModel)
