@@ -147,39 +147,21 @@ namespace Azure.ResourceManager.Education
             }
         }
 
-        /// <summary> Gets the TotalBudgetCurrency. </summary>
-        public string TotalBudgetCurrency
+        /// <summary> Total budget. </summary>
+        public EducationAmount TotalBudget
         {
             get
             {
-                return Properties is null ? default : Properties.TotalBudgetCurrency;
+                return Properties is null ? default : Properties.TotalBudget;
             }
         }
 
-        /// <summary> Gets the TotalBudgetValue. </summary>
-        public float? TotalBudgetValue
+        /// <summary> Total allocated budget. </summary>
+        public EducationAmount TotalAllocatedBudget
         {
             get
             {
-                return Properties is null ? default : Properties.TotalBudgetValue;
-            }
-        }
-
-        /// <summary> Gets the TotalAllocatedBudgetCurrency. </summary>
-        public string TotalAllocatedBudgetCurrency
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TotalAllocatedBudgetCurrency;
-            }
-        }
-
-        /// <summary> Gets the TotalAllocatedBudgetValue. </summary>
-        public float? TotalAllocatedBudgetValue
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TotalAllocatedBudgetValue;
+                return Properties is null ? default : Properties.TotalAllocatedBudget;
             }
         }
     }
