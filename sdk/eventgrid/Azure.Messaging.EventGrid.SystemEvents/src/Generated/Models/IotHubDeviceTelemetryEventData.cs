@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Event data for Microsoft.Devices.DeviceTelemetry event. </summary>
-    public partial class IotHubDeviceTelemetryEventData : DeviceTelemetryEventProperties
+    internal partial class IotHubDeviceTelemetryEventData : DeviceTelemetryEventProperties
     {
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceTelemetryEventData"/>. </summary>
         /// <param name="body"> The content of the message from the device. </param>

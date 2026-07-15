@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.AdvancedMessageDeliveryStatusUpdated event. </summary>
-    public partial class AcsMessageDeliveryStatusUpdatedEventData : AcsMessageEventData
+    internal partial class AcsMessageDeliveryStatusUpdatedEventData : AcsMessageEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsMessageDeliveryStatusUpdatedEventData"/>. </summary>
         /// <param name="from"> The message sender. </param>

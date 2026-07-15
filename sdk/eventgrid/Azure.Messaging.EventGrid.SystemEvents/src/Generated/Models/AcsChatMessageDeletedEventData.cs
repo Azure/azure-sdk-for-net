@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatMessageDeleted event. </summary>
-    public partial class AcsChatMessageDeletedEventData : AcsChatMessageEventBaseProperties
+    internal partial class AcsChatMessageDeletedEventData : AcsChatMessageEventBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatMessageDeletedEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>

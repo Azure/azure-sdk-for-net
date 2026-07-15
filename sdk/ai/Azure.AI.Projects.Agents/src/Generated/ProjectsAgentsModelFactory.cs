@@ -3,7 +3,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -1912,26 +1911,6 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The CreateAgentVersionFromManifestRequest. </summary>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
-        /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
-        /// <returns> A new <see cref="Agents.CreateAgentVersionFromManifestRequest"/> instance for mocking. </returns>
-        public static CreateAgentVersionFromManifestRequest CreateAgentVersionFromManifestRequest(IDictionary<string, string> metadata = default, string description = default, string manifestId = default, IDictionary<string, BinaryData> parameterValues = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-            parameterValues ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new CreateAgentVersionFromManifestRequest(metadata, description, manifestId, parameterValues, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The PatchAgentOptions. </summary>
         /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
         /// <param name="agentCard"> Optional agent card for the agent. </param>
@@ -1939,15 +1918,6 @@ namespace Azure.AI.Projects.Agents
         public static PatchAgentOptions PatchAgentOptions(AgentEndpointConfiguration agentEndpoint = default, AgentCard agentCard = default)
         {
             return new PatchAgentOptions(agentEndpoint, agentCard, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The UpdateToolboxRequest. </summary>
-        /// <param name="name"> The name of the toolbox to update. </param>
-        /// <param name="defaultVersion"> The version identifier that the toolbox should point to. When set, the toolbox's default version will resolve to this version instead of the latest. </param>
-        /// <returns> A new <see cref="Agents.UpdateToolboxRequest"/> instance for mocking. </returns>
-        public static UpdateToolboxRequest UpdateToolboxRequest(string name = default, string defaultVersion = default)
-        {
-            return new UpdateToolboxRequest(name, defaultVersion, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"></param>

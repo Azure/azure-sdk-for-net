@@ -43,8 +43,7 @@ namespace Azure.AI.Translation.Document
         /// <summary> Configures logging for the client options. </summary>
         partial void ConfigureLogging();
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
+        internal enum ServiceVersion
         {
             /// <summary> V2024_05_01. </summary>
             V2024_05_01 = 1,

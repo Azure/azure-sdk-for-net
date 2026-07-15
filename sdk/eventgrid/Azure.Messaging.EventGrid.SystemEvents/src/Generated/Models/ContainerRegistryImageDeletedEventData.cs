@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerRegistry.ImageDeleted event. </summary>
-    public partial class ContainerRegistryImageDeletedEventData : ContainerRegistryEventData
+    internal partial class ContainerRegistryImageDeletedEventData : ContainerRegistryEventData
     {
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryImageDeletedEventData"/>. </summary>
         /// <param name="id"> The event ID. </param>

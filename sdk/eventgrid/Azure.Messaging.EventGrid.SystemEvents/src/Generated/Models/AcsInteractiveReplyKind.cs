@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Interactive reply kind. </summary>
-    public readonly partial struct AcsInteractiveReplyKind : IEquatable<AcsInteractiveReplyKind>
+    internal readonly partial struct AcsInteractiveReplyKind : IEquatable<AcsInteractiveReplyKind>
     {
         private readonly string _value;
         /// <summary> Messaged interactive reply type is ButtonReply. </summary>

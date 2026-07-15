@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.SnapshotModified event. </summary>
-    public partial class AppConfigurationSnapshotModifiedEventData : AppConfigurationSnapshotEventData
+    internal partial class AppConfigurationSnapshotModifiedEventData : AppConfigurationSnapshotEventData
     {
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotModifiedEventData"/>. </summary>
         /// <param name="name"> The name of the snapshot. </param>

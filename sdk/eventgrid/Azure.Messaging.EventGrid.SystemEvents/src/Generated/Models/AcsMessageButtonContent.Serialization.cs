@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Message Button Content. </summary>
-    public partial class AcsMessageButtonContent : IJsonModel<AcsMessageButtonContent>
+    internal partial class AcsMessageButtonContent : IJsonModel<AcsMessageButtonContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

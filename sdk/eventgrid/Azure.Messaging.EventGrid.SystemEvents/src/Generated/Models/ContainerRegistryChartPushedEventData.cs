@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerRegistry.ChartPushed event. </summary>
-    public partial class ContainerRegistryChartPushedEventData : ContainerRegistryArtifactEventData
+    internal partial class ContainerRegistryChartPushedEventData : ContainerRegistryArtifactEventData
     {
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryChartPushedEventData"/>. </summary>
         /// <param name="id"> The event ID. </param>

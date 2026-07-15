@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobUnassigned event. </summary>
-    public partial class AcsRouterJobUnassignedEventData : AcsRouterJobEventData
+    internal partial class AcsRouterJobUnassignedEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobUnassignedEventData"/>. </summary>
         internal AcsRouterJobUnassignedEventData()

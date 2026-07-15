@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerDeleted event. </summary>
     [JsonConverter(typeof(AcsRouterWorkerDeletedEventDataConverter))]
-    public partial class AcsRouterWorkerDeletedEventData : AcsRouterWorkerEventData, IJsonModel<AcsRouterWorkerDeletedEventData>
+    internal partial class AcsRouterWorkerDeletedEventData : AcsRouterWorkerEventData, IJsonModel<AcsRouterWorkerDeletedEventData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

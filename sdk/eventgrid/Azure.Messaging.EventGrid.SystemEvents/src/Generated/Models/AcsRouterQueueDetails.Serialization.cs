@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Router Queue Details. </summary>
-    public partial class AcsRouterQueueDetails : IJsonModel<AcsRouterQueueDetails>
+    internal partial class AcsRouterQueueDetails : IJsonModel<AcsRouterQueueDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

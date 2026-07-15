@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A memory item containing a procedure extracted from conversations. </summary>
-    public partial class ProceduralMemoryItem : MemoryOutputItem, IJsonModel<ProceduralMemoryItem>
+    internal partial class ProceduralMemoryItem : MemoryOutputItem, IJsonModel<ProceduralMemoryItem>
     {
         /// <summary> Initializes a new instance of <see cref="ProceduralMemoryItem"/> for deserialization. </summary>
         internal ProceduralMemoryItem()

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Message Interactive list reply content for a user to business message. </summary>
-    public partial class AcsMessageInteractiveListReplyContent
+    internal partial class AcsMessageInteractiveListReplyContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

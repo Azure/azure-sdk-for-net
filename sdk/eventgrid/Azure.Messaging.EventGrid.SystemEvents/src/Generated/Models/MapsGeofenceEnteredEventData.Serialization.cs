@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Maps.GeofenceEntered event. </summary>
     [JsonConverter(typeof(MapsGeofenceEnteredEventDataConverter))]
-    public partial class MapsGeofenceEnteredEventData : MapsGeofenceEventProperties, IJsonModel<MapsGeofenceEnteredEventData>
+    internal partial class MapsGeofenceEnteredEventData : MapsGeofenceEventProperties, IJsonModel<MapsGeofenceEnteredEventData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

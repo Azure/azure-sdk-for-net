@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all Router Worker events. </summary>
-    public partial class AcsRouterWorkerEventData : AcsRouterEventData
+    internal partial class AcsRouterWorkerEventData : AcsRouterEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerEventData"/>. </summary>
         internal AcsRouterWorkerEventData()

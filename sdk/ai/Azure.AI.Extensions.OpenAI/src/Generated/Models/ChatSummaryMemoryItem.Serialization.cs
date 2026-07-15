@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A memory item containing a summary extracted from conversations. </summary>
-    public partial class ChatSummaryMemoryItem : MemoryOutputItem, IJsonModel<ChatSummaryMemoryItem>
+    internal partial class ChatSummaryMemoryItem : MemoryOutputItem, IJsonModel<ChatSummaryMemoryItem>
     {
         /// <summary> Initializes a new instance of <see cref="ChatSummaryMemoryItem"/> for deserialization. </summary>
         internal ChatSummaryMemoryItem()

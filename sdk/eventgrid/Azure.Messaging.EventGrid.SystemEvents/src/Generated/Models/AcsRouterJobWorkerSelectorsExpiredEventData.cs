@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobWorkerSelectorsExpired event. </summary>
-    public partial class AcsRouterJobWorkerSelectorsExpiredEventData : AcsRouterJobEventData
+    internal partial class AcsRouterJobWorkerSelectorsExpiredEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobWorkerSelectorsExpiredEventData"/>. </summary>
         internal AcsRouterJobWorkerSelectorsExpiredEventData()

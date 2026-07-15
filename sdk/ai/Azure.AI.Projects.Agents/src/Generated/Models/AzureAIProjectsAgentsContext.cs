@@ -27,7 +27,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(AgentIdentity))]
     [ModelReaderWriterBuildable(typeof(AgentManifestOptions))]
     [ModelReaderWriterBuildable(typeof(AgentObjectVersions))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultSkill is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultSkillVersion is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultSkillVersion))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultSkillVersion is experimental and may change in future versions.
@@ -84,7 +83,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(ContainerNetworkPolicyParam))]
     [ModelReaderWriterBuildable(typeof(ContainerSkill))]
     [ModelReaderWriterBuildable(typeof(ContentFilterConfiguration))]
-    [ModelReaderWriterBuildable(typeof(CreateAgentVersionFromManifestRequest))]
     [ModelReaderWriterBuildable(typeof(CreateSessionRequest))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.CreateSkillVersionRequest is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CreateSkillVersionRequest))]
@@ -107,6 +105,7 @@ namespace Azure.AI.Projects.Agents
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.FabricIQPreviewTool is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.FabricIQPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FabricIQPreviewToolboxTool))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.FabricIQPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FileSearchToolboxTool))]
     [ModelReaderWriterBuildable(typeof(FixedRatioVersionSelectionRule))]
     [ModelReaderWriterBuildable(typeof(FoundryOpenAIError))]
@@ -195,7 +194,7 @@ namespace Azure.AI.Projects.Agents
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.OptimizationJob is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.OptimizationJobInputs is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(OptimizationJobInputs))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.OptimizationJobListItem is experimental and may change in future versions.
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.OptimizationJobInputs is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.OptimizationJobProgress is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(OptimizationJobProgress))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.OptimizationJobProgress is experimental and may change in future versions.
@@ -219,10 +218,12 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(ProjectWebSearchConfiguration))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.PromotionInfo is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(PromotionInfo))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.PromotionInfo is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(ProtocolVersionRecord))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ReminderPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ReminderPreviewToolboxTool))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ReminderPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponsesProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(SessionDirectoryEntry))]
     [ModelReaderWriterBuildable(typeof(SessionFileWriteResponse))]

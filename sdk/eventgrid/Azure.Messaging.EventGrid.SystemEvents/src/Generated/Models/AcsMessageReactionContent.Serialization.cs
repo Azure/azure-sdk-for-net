@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Message Reaction Content. </summary>
-    public partial class AcsMessageReactionContent : IJsonModel<AcsMessageReactionContent>
+    internal partial class AcsMessageReactionContent : IJsonModel<AcsMessageReactionContent>
     {
         /// <summary> Initializes a new instance of <see cref="AcsMessageReactionContent"/> for deserialization. </summary>
         internal AcsMessageReactionContent()

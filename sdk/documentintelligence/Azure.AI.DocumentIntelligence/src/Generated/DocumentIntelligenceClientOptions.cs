@@ -39,8 +39,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Configures logging for the client options. </summary>
         partial void ConfigureLogging();
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
+        internal enum ServiceVersion
         {
             /// <summary> The 2024-11-30 GA version of the DocumentIntelligence service. </summary>
             V2024_11_30 = 1

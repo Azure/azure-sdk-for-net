@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobCancelled event. </summary>
     [JsonConverter(typeof(AcsRouterJobCancelledEventDataConverter))]
-    public partial class AcsRouterJobCancelledEventData : AcsRouterJobEventData, IJsonModel<AcsRouterJobCancelledEventData>
+    internal partial class AcsRouterJobCancelledEventData : AcsRouterJobEventData, IJsonModel<AcsRouterJobCancelledEventData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

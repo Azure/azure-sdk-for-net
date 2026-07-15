@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.CallStarted event. </summary>
-    public partial class AcsCallStartedEventData : AcsCallingEventProperties
+    internal partial class AcsCallStartedEventData : AcsCallingEventProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsCallStartedEventData"/>. </summary>
         /// <param name="startedBy"> The call participant who initiated the call. </param>

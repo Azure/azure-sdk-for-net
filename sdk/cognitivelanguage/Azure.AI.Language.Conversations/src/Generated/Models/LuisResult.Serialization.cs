@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> It is the response from a LUIS Generally Available application. </summary>
-    public partial class LuisResult : IJsonModel<LuisResult>
+    internal partial class LuisResult : IJsonModel<LuisResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Message delivery status. </summary>
-    public readonly partial struct AcsMessageDeliveryStatus : IEquatable<AcsMessageDeliveryStatus>
+    internal readonly partial struct AcsMessageDeliveryStatus : IEquatable<AcsMessageDeliveryStatus>
     {
         private readonly string _value;
         /// <summary> Read. </summary>

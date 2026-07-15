@@ -36,8 +36,7 @@ namespace Azure.Data.SchemaRegistry
         /// <summary> Configures logging for the client options. </summary>
         partial void ConfigureLogging();
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
+        internal enum ServiceVersion
         {
             /// <summary> Azure Schema Registry 2021-10 Version. </summary>
             V2021_10 = 1,

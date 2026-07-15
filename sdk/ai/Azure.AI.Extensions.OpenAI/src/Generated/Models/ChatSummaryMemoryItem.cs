@@ -10,7 +10,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A memory item containing a summary extracted from conversations. </summary>
     [Experimental("AAIP001")]
-    public partial class ChatSummaryMemoryItem : MemoryOutputItem
+    internal partial class ChatSummaryMemoryItem : MemoryOutputItem
     {
         /// <summary> Initializes a new instance of <see cref="ChatSummaryMemoryItem"/>. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>

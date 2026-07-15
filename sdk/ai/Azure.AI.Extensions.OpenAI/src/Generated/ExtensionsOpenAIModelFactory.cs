@@ -1441,7 +1441,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// A single memory item stored in the memory store, containing content and metadata.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.UserProfileMemoryItem"/>, <see cref="OpenAI.ChatSummaryMemoryItem"/>, and <see cref="OpenAI.ProceduralMemoryItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UserProfileMemoryItem"/>, <see cref="ChatSummaryMemoryItem"/>, and <see cref="ProceduralMemoryItem"/>.
         /// </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
         /// <param name="updatedAt"> The last update time of the memory item. </param>
@@ -1458,60 +1458,6 @@ namespace Azure.AI.Extensions.OpenAI
                 scope,
                 content,
                 new MemoryItemKind(kind),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
-        /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
-        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
-        /// <param name="content"> The content of the memory. </param>
-        /// <returns> A new <see cref="OpenAI.UserProfileMemoryItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
-        {
-            return new UserProfileMemoryItem(
-                memoryId,
-                updatedAt,
-                scope,
-                content,
-                MemoryItemKind.UserProfile,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A memory item containing a summary extracted from conversations. </summary>
-        /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
-        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
-        /// <param name="content"> The content of the memory. </param>
-        /// <returns> A new <see cref="OpenAI.ChatSummaryMemoryItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
-        {
-            return new ChatSummaryMemoryItem(
-                memoryId,
-                updatedAt,
-                scope,
-                content,
-                MemoryItemKind.ChatSummary,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A memory item containing a procedure extracted from conversations. </summary>
-        /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
-        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
-        /// <param name="content"> The content of the memory. </param>
-        /// <returns> A new <see cref="OpenAI.ProceduralMemoryItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static ProceduralMemoryItem ProceduralMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
-        {
-            return new ProceduralMemoryItem(
-                memoryId,
-                updatedAt,
-                scope,
-                content,
-                MemoryItemKind.Procedural,
                 additionalBinaryDataProperties: null);
         }
 

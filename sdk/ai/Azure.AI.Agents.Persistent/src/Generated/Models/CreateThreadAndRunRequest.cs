@@ -151,7 +151,7 @@ namespace Azure.AI.Agents.Persistent
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="PersistentAgentsToolChoiceOptionMode"/>. </description>
+        /// <description> <see cref="Persistent.PersistentAgentsToolChoiceOptionMode"/>. </description>
         /// </item>
         /// <item>
         /// <description> <see cref="PersistentAgentsNamedToolChoice"/>. </description>
@@ -195,7 +195,7 @@ namespace Azure.AI.Agents.Persistent
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="PersistentAgentsResponseFormatMode"/>. </description>
+        /// <description> <see cref="Persistent.PersistentAgentsResponseFormatMode"/>. </description>
         /// </item>
         /// <item>
         /// <description> <see cref="InternalPersistentAgentsResponseFormat"/>. </description>

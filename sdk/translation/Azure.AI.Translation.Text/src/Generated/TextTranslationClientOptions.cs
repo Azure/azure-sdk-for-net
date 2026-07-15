@@ -39,8 +39,7 @@ namespace Azure.AI.Translation.Text
         /// <summary> Configures logging for the client options. </summary>
         partial void ConfigureLogging();
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
+        internal enum ServiceVersion
         {
             /// <summary> Version 3.0. </summary>
             V3_0 = 1,

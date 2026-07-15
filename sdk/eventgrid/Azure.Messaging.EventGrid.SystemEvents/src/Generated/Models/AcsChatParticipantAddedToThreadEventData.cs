@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadParticipantAdded event. </summary>
-    public partial class AcsChatParticipantAddedToThreadEventData : AcsChatEventInThreadBaseProperties
+    internal partial class AcsChatParticipantAddedToThreadEventData : AcsChatEventInThreadBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatParticipantAddedToThreadEventData"/>. </summary>
         /// <param name="threadId"> The chat thread id. </param>

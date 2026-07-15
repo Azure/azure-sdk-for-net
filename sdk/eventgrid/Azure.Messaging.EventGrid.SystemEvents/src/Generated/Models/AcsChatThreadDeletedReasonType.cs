@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Chat Thread Deletion Reason Type. </summary>
-    public readonly partial struct AcsChatThreadDeletedReasonType : IEquatable<AcsChatThreadDeletedReasonType>
+    internal readonly partial struct AcsChatThreadDeletedReasonType : IEquatable<AcsChatThreadDeletedReasonType>
     {
         private readonly string _value;
         /// <summary> DeletedByUser. </summary>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobClassified event. </summary>
-    public partial class AcsRouterJobClassifiedEventData : AcsRouterJobEventData
+    internal partial class AcsRouterJobClassifiedEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassifiedEventData"/>. </summary>
         /// <param name="queueDetails"> Router Job Queue Info. </param>

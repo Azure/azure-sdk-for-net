@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerDeleted event. </summary>
-    public partial class AcsRouterWorkerDeletedEventData : AcsRouterWorkerEventData
+    internal partial class AcsRouterWorkerDeletedEventData : AcsRouterWorkerEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerDeletedEventData"/>. </summary>
         internal AcsRouterWorkerDeletedEventData()

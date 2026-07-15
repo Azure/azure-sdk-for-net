@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerOfferRevoked event. </summary>
     [JsonConverter(typeof(AcsRouterWorkerOfferRevokedEventDataConverter))]
-    public partial class AcsRouterWorkerOfferRevokedEventData : AcsRouterWorkerEventData, IJsonModel<AcsRouterWorkerOfferRevokedEventData>
+    internal partial class AcsRouterWorkerOfferRevokedEventData : AcsRouterWorkerEventData, IJsonModel<AcsRouterWorkerOfferRevokedEventData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

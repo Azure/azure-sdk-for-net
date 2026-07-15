@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Message channel kind. </summary>
-    public readonly partial struct AcsMessageChannelKind : IEquatable<AcsMessageChannelKind>
+    internal readonly partial struct AcsMessageChannelKind : IEquatable<AcsMessageChannelKind>
     {
         private readonly string _value;
         /// <summary> Updated message channel type is WhatsApp. </summary>

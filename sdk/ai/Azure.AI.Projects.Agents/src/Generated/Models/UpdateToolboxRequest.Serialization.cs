@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The UpdateToolboxRequest. </summary>
-    public partial class UpdateToolboxRequest : IJsonModel<UpdateToolboxRequest>
+    internal partial class UpdateToolboxRequest : IJsonModel<UpdateToolboxRequest>
     {
         /// <summary> Initializes a new instance of <see cref="UpdateToolboxRequest"/> for deserialization. </summary>
         internal UpdateToolboxRequest()
