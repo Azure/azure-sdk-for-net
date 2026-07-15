@@ -17,7 +17,7 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         public FeatureFlagLabelSelector()
         {
-            Fields = new List<SettingLabelFields>();
+            Fields = new List<FeatureFlagLabelFields>();
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// A list of fields used to specify which fields are included in the returned resource(s).
         /// </summary>
-        public IList<SettingLabelFields> Fields { get; }
+        public IList<FeatureFlagLabelFields> Fields { get; }
 
         /// <summary>
         /// Indicates the point in time in the revision history of the selected <see cref="SettingLabel"/> entities to retrieve.
