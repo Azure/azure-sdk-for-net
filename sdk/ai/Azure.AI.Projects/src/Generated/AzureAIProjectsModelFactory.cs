@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
-using Azure.Core;
 
 namespace Azure.AI.Projects
 {
@@ -769,6 +768,482 @@ namespace Azure.AI.Projects
             return new ToolDescription(name, description, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
+        /// <returns> A new <see cref="Projects.BingGroundingTool"/> instance for mocking. </returns>
+        public static BingGroundingTool BingGroundingTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BingGroundingSearchToolParameters bingGrounding = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new BingGroundingTool(
+                ToolType.BingGrounding,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                toolConfigs,
+                bingGrounding);
+        }
+
+        /// <summary> Per-tool configuration that controls tool visibility and search behavior. </summary>
+        /// <param name="pin">
+        /// When true, the tool is always included in agent context and visible in `tools/list`.
+        /// When false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.
+        /// </param>
+        /// <param name="additionalSearchText">
+        /// Additional text indexed for tool_search. Supplements the native tool description
+        /// to improve discoverability. Does not alter `tools/list` output.
+        /// </param>
+        /// <returns> A new <see cref="Projects.ToolConfig"/> instance for mocking. </returns>
+        public static ToolConfig ToolConfig(bool? pin = default, string additionalSearchText = default)
+        {
+            return new ToolConfig(pin, additionalSearchText, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The bing grounding search tool parameters. </summary>
+        /// <param name="searchConfigurations">
+        /// The search configurations attached to this tool. There can be a maximum of 1
+        /// search configuration resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="Projects.BingGroundingSearchToolParameters"/> instance for mocking. </returns>
+        public static BingGroundingSearchToolParameters BingGroundingSearchToolParameters(IEnumerable<BingGroundingSearchConfiguration> searchConfigurations = default)
+        {
+            searchConfigurations ??= new ChangeTrackingList<BingGroundingSearchConfiguration>();
+
+            return new BingGroundingSearchToolParameters(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Search configuration for Bing Grounding. </summary>
+        /// <param name="projectConnectionId"> Project connection id for grounding with bing search. </param>
+        /// <param name="market"> The market where the results come from. </param>
+        /// <param name="setLang"> The language to use for user interface strings when calling Bing API. </param>
+        /// <param name="count"> The number of search results to return in the bing api response. </param>
+        /// <param name="freshness"> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </param>
+        /// <returns> A new <see cref="Projects.BingGroundingSearchConfiguration"/> instance for mocking. </returns>
+        public static BingGroundingSearchConfiguration BingGroundingSearchConfiguration(string projectConnectionId = default, string market = default, string setLang = default, long? count = default, string freshness = default)
+        {
+            return new BingGroundingSearchConfiguration(
+                projectConnectionId,
+                market,
+                setLang,
+                count,
+                freshness,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
+        /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>
+        /// <returns> A new <see cref="Projects.MicrosoftFabricPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(FabricDataAgentToolParameters fabricDataagentPreview = default)
+        {
+            return new MicrosoftFabricPreviewTool(ToolType.FabricDataagentPreview, additionalBinaryDataProperties: null, fabricDataagentPreview);
+        }
+
+        /// <summary> The fabric data agent tool parameters. </summary>
+        /// <param name="projectConnections">
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="Projects.FabricDataAgentToolParameters"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static FabricDataAgentToolParameters FabricDataAgentToolParameters(IEnumerable<ToolProjectConnection> projectConnections = default)
+        {
+            projectConnections ??= new ChangeTrackingList<ToolProjectConnection>();
+
+            return new FabricDataAgentToolParameters(projectConnections.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A project connection resource. </summary>
+        /// <param name="projectConnectionId"> A project connection in a ToolProjectConnectionList attached to this tool. </param>
+        /// <returns> A new <see cref="Projects.ToolProjectConnection"/> instance for mocking. </returns>
+        public static ToolProjectConnection ToolProjectConnection(string projectConnectionId = default)
+        {
+            return new ToolProjectConnection(projectConnectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
+        /// <param name="sharepointGroundingPreview"> The sharepoint grounding tool parameters. </param>
+        /// <returns> A new <see cref="Projects.SharepointPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SharepointPreviewTool SharepointPreviewTool(SharepointGroundingToolParameters sharepointGroundingPreview = default)
+        {
+            return new SharepointPreviewTool(ToolType.SharepointGroundingPreview, additionalBinaryDataProperties: null, sharepointGroundingPreview);
+        }
+
+        /// <summary> The sharepoint grounding tool parameters. </summary>
+        /// <param name="projectConnections">
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="Projects.SharepointGroundingToolParameters"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SharepointGroundingToolParameters SharepointGroundingToolParameters(IEnumerable<ToolProjectConnection> projectConnections = default)
+        {
+            projectConnections ??= new ChangeTrackingList<ToolProjectConnection>();
+
+            return new SharepointGroundingToolParameters(projectConnections.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="azureAiSearch"> The azure ai search index resource. </param>
+        /// <returns> A new <see cref="Projects.AzureAISearchTool"/> instance for mocking. </returns>
+        public static AzureAISearchTool AzureAISearchTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, AzureAISearchToolResource azureAiSearch = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new AzureAISearchTool(
+                ToolType.AzureAiSearch,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                toolConfigs,
+                azureAiSearch);
+        }
+
+        /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
+        /// <param name="indexes">
+        /// The indices attached to this agent. There can be a maximum of 1 index
+        /// resource attached to the agent.
+        /// </param>
+        /// <returns> A new <see cref="Projects.AzureAISearchToolResource"/> instance for mocking. </returns>
+        public static AzureAISearchToolResource AzureAISearchToolResource(IEnumerable<AISearchIndexResource> indexes = default)
+        {
+            indexes ??= new ChangeTrackingList<AISearchIndexResource>();
+
+            return new AzureAISearchToolResource(indexes.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A AI Search Index resource. </summary>
+        /// <param name="projectConnectionId"> An index connection ID in an IndexResource attached to this agent. </param>
+        /// <param name="indexName"> The name of an index in an IndexResource attached to this agent. </param>
+        /// <param name="queryType"> Type of query in an AIIndexResource attached to this agent. </param>
+        /// <param name="topK"> Number of documents to retrieve from search and present to the model. </param>
+        /// <param name="filter"> filter string for search resource. [Learn more here](https://learn.microsoft.com/azure/search/search-filters). </param>
+        /// <param name="indexAssetId"> Index asset id for search resource. </param>
+        /// <returns> A new <see cref="Projects.AISearchIndexResource"/> instance for mocking. </returns>
+        public static AISearchIndexResource AISearchIndexResource(string projectConnectionId = default, string indexName = default, AzureAISearchQueryType? queryType = default, int? topK = default, string filter = default, string indexAssetId = default)
+        {
+            return new AISearchIndexResource(
+                projectConnectionId,
+                indexName,
+                queryType,
+                topK,
+                filter,
+                indexAssetId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="openapi"> The openapi function definition. </param>
+        /// <returns> A new <see cref="Projects.OpenApiTool"/> instance for mocking. </returns>
+        public static OpenApiTool OpenApiTool(IDictionary<string, ToolConfig> toolConfigs = default, OpenApiFunctionDefinition openapi = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new OpenApiTool(ToolType.Openapi, additionalBinaryDataProperties: null, toolConfigs, openapi);
+        }
+
+        /// <summary> The input definition information for an openapi function. </summary>
+        /// <param name="name"> The name of the function to be called. </param>
+        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
+        /// <param name="spec"> The openapi function shape, described as a JSON Schema object. </param>
+        /// <param name="auth"> Open API authentication details. </param>
+        /// <param name="defaultParams"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
+        /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
+        /// <returns> A new <see cref="Projects.OpenApiFunctionDefinition"/> instance for mocking. </returns>
+        public static OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = default, string description = default, IDictionary<string, BinaryData> spec = default, OpenApiAuthDetails auth = default, IEnumerable<string> defaultParams = default, IEnumerable<OpenApiFunctionDefinitionFunction> functions = default)
+        {
+            spec ??= new ChangeTrackingDictionary<string, BinaryData>();
+            defaultParams ??= new ChangeTrackingList<string>();
+            functions ??= new ChangeTrackingList<OpenApiFunctionDefinitionFunction>();
+
+            return new OpenApiFunctionDefinition(
+                name,
+                description,
+                spec,
+                auth,
+                defaultParams.ToList(),
+                functions.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// authentication details for OpenApiFunctionDefinition
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.OpenApiAnonymousAuthDetails"/>, <see cref="Projects.OpenApiProjectConnectionAuthDetails"/>, and <see cref="Projects.OpenApiManagedAuthDetails"/>.
+        /// </summary>
+        /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
+        /// <returns> A new <see cref="Projects.OpenApiAuthDetails"/> instance for mocking. </returns>
+        public static OpenApiAuthDetails OpenApiAuthDetails(string @type = default)
+        {
+            return new UnknownOpenApiAuthDetails(new OpenApiAuthType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Security details for OpenApi anonymous authentication. </summary>
+        /// <returns> A new <see cref="Projects.OpenApiAnonymousAuthDetails"/> instance for mocking. </returns>
+        public static OpenApiAnonymousAuthDetails OpenApiAnonymousAuthDetails()
+        {
+            return new OpenApiAnonymousAuthDetails(OpenApiAuthType.Anonymous, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Security details for OpenApi project connection authentication. </summary>
+        /// <param name="securityScheme"> Project connection auth security details. </param>
+        /// <returns> A new <see cref="Projects.OpenApiProjectConnectionAuthDetails"/> instance for mocking. </returns>
+        public static OpenApiProjectConnectionAuthDetails OpenApiProjectConnectionAuthDetails(OpenApiProjectConnectionSecurityScheme securityScheme = default)
+        {
+            return new OpenApiProjectConnectionAuthDetails(OpenApiAuthType.ProjectConnection, additionalBinaryDataProperties: null, securityScheme);
+        }
+
+        /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
+        /// <param name="projectConnectionId"> Project connection id for Project Connection auth type. </param>
+        /// <returns> A new <see cref="Projects.OpenApiProjectConnectionSecurityScheme"/> instance for mocking. </returns>
+        public static OpenApiProjectConnectionSecurityScheme OpenApiProjectConnectionSecurityScheme(string projectConnectionId = default)
+        {
+            return new OpenApiProjectConnectionSecurityScheme(projectConnectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Security details for OpenApi managed_identity authentication. </summary>
+        /// <param name="securityScheme"> Connection auth security details. </param>
+        /// <returns> A new <see cref="Projects.OpenApiManagedAuthDetails"/> instance for mocking. </returns>
+        public static OpenApiManagedAuthDetails OpenApiManagedAuthDetails(OpenApiManagedSecurityScheme securityScheme = default)
+        {
+            return new OpenApiManagedAuthDetails(OpenApiAuthType.ManagedIdentity, additionalBinaryDataProperties: null, securityScheme);
+        }
+
+        /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
+        /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
+        /// <returns> A new <see cref="Projects.OpenApiManagedSecurityScheme"/> instance for mocking. </returns>
+        public static OpenApiManagedSecurityScheme OpenApiManagedSecurityScheme(string audience = default)
+        {
+            return new OpenApiManagedSecurityScheme(audience, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The OpenApiFunctionDefinitionFunction. </summary>
+        /// <param name="name"> The name of the function to be called. </param>
+        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
+        /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
+        /// <returns> A new <see cref="Projects.OpenApiFunctionDefinitionFunction"/> instance for mocking. </returns>
+        public static OpenApiFunctionDefinitionFunction OpenApiFunctionDefinitionFunction(string name = default, string description = default, IDictionary<string, BinaryData> parameters = default)
+        {
+            parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new OpenApiFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
+        /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
+        /// <returns> A new <see cref="Projects.BingCustomSearchPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(BingCustomSearchToolParameters bingCustomSearchPreview = default)
+        {
+            return new BingCustomSearchPreviewTool(ToolType.BingCustomSearchPreview, additionalBinaryDataProperties: null, bingCustomSearchPreview);
+        }
+
+        /// <summary> The bing custom search tool parameters. </summary>
+        /// <param name="searchConfigurations">
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="Projects.BingCustomSearchToolParameters"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BingCustomSearchToolParameters BingCustomSearchToolParameters(IEnumerable<BingCustomSearchConfiguration> searchConfigurations = default)
+        {
+            searchConfigurations ??= new ChangeTrackingList<BingCustomSearchConfiguration>();
+
+            return new BingCustomSearchToolParameters(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A bing custom search configuration. </summary>
+        /// <param name="projectConnectionId"> Project connection id for grounding with bing search. </param>
+        /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
+        /// <param name="market"> The market where the results come from. </param>
+        /// <param name="setLang"> The language to use for user interface strings when calling Bing API. </param>
+        /// <param name="count"> The number of search results to return in the bing api response. </param>
+        /// <param name="freshness"> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </param>
+        /// <returns> A new <see cref="Projects.BingCustomSearchConfiguration"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BingCustomSearchConfiguration BingCustomSearchConfiguration(string projectConnectionId = default, string instanceName = default, string market = default, string setLang = default, long? count = default, string freshness = default)
+        {
+            return new BingCustomSearchConfiguration(
+                projectConnectionId,
+                instanceName,
+                market,
+                setLang,
+                count,
+                freshness,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+        /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
+        /// <returns> A new <see cref="Projects.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(BrowserAutomationToolParameters browserAutomationPreview = default)
+        {
+            return new BrowserAutomationPreviewTool(ToolType.BrowserAutomationPreview, additionalBinaryDataProperties: null, browserAutomationPreview);
+        }
+
+        /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
+        /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
+        /// <returns> A new <see cref="Projects.BrowserAutomationToolParameters"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BrowserAutomationToolParameters BrowserAutomationToolParameters(BrowserAutomationToolConnectionParameters connection = default)
+        {
+            return new BrowserAutomationToolParameters(connection, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
+        /// <param name="projectConnectionId"> The ID of the project connection to your Azure Playwright resource. </param>
+        /// <returns> A new <see cref="Projects.BrowserAutomationToolConnectionParameters"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BrowserAutomationToolConnectionParameters BrowserAutomationToolConnectionParameters(string projectConnectionId = default)
+        {
+            return new BrowserAutomationToolConnectionParameters(projectConnectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="azureFunction"> The Azure Function Tool definition. </param>
+        /// <returns> A new <see cref="Projects.AzureFunctionTool"/> instance for mocking. </returns>
+        public static AzureFunctionTool AzureFunctionTool(IDictionary<string, ToolConfig> toolConfigs = default, AzureFunctionDefinition azureFunction = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new AzureFunctionTool(ToolType.AzureFunction, additionalBinaryDataProperties: null, toolConfigs, azureFunction);
+        }
+
+        /// <summary> The structure for keeping storage queue name and URI. </summary>
+        /// <param name="storageQueue"> Storage queue. </param>
+        /// <returns> A new <see cref="Projects.AzureFunctionBinding"/> instance for mocking. </returns>
+        public static AzureFunctionBinding AzureFunctionBinding(AzureFunctionStorageQueue storageQueue = default)
+        {
+            return new AzureFunctionBinding("storage_queue", storageQueue, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The structure for keeping storage queue name and URI. </summary>
+        /// <param name="queueServiceEndpoint"> URI to the Azure Storage Queue service allowing you to manipulate a queue. </param>
+        /// <param name="queueName"> The name of an Azure function storage queue. </param>
+        /// <returns> A new <see cref="Projects.AzureFunctionStorageQueue"/> instance for mocking. </returns>
+        public static AzureFunctionStorageQueue AzureFunctionStorageQueue(string queueServiceEndpoint = default, string queueName = default)
+        {
+            return new AzureFunctionStorageQueue(queueServiceEndpoint, queueName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A tool for capturing structured outputs. </summary>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="outputs"> The structured outputs to capture from the model. </param>
+        /// <returns> A new <see cref="Projects.CaptureStructuredOutputsTool"/> instance for mocking. </returns>
+        public static CaptureStructuredOutputsTool CaptureStructuredOutputsTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, StructuredOutputDefinition outputs = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new CaptureStructuredOutputsTool(
+                ToolType.CaptureStructuredOutputs,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                toolConfigs,
+                outputs);
+        }
+
+        /// <summary> A structured output that can be produced by the agent. </summary>
+        /// <param name="name"> The name of the structured output. </param>
+        /// <param name="description"> A description of the output to emit. Used by the model to determine when to emit the output. </param>
+        /// <param name="schema"> The JSON schema for the structured output. </param>
+        /// <param name="strict"> Whether to enforce strict validation. Default `true`. </param>
+        /// <returns> A new <see cref="Projects.StructuredOutputDefinition"/> instance for mocking. </returns>
+        public static StructuredOutputDefinition StructuredOutputDefinition(string name = default, string description = default, IDictionary<string, BinaryData> schema = default, bool? strict = default)
+        {
+            schema ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new StructuredOutputDefinition(name, description, schema, strict, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An agent implementing the A2A protocol. </summary>
+        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="agentCardPath">
+        /// The path to the agent card relative to the `base_url`.
+        /// If not provided, defaults to  `/.well-known/agent-card.json`
+        /// </param>
+        /// <param name="projectConnectionId">
+        /// The connection ID in the project for the A2A server.
+        /// The connection stores authentication and other connection details needed to connect to the A2A server.
+        /// </param>
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
+        /// <returns> A new <see cref="Projects.A2APreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static A2APreviewTool A2APreviewTool(Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
+        {
+            return new A2APreviewTool(
+                ToolType.A2aPreview,
+                additionalBinaryDataProperties: null,
+                baseUrl,
+                agentCardPath,
+                projectConnectionId,
+                sendCredentialsForAgentCard);
+        }
+
+        /// <summary> A WorkIQ server-side tool. </summary>
+        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
+        /// <returns> A new <see cref="Projects.WorkIQPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static WorkIQPreviewTool WorkIQPreviewTool(string projectConnectionId = default)
+        {
+            return new WorkIQPreviewTool(ToolType.WorkIqPreview, additionalBinaryDataProperties: null, projectConnectionId);
+        }
+
+        /// <summary> A FabricIQ server-side tool. </summary>
+        /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
+        /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
+        /// <param name="serverUrl"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
+        /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
+        /// <returns> A new <see cref="Projects.FabricIQPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static FabricIQPreviewTool FabricIQPreviewTool(string projectConnectionId = default, string serverLabel = default, Uri serverUrl = default, BinaryData requireApproval = default)
+        {
+            return new FabricIQPreviewTool(
+                ToolType.FabricIqPreview,
+                additionalBinaryDataProperties: null,
+                projectConnectionId,
+                serverLabel,
+                serverUrl,
+                requireApproval);
+        }
+
+        /// <summary> A tool for integrating memories into the agent. </summary>
+        /// <param name="memoryStoreName"> The name of the memory store to use. </param>
+        /// <param name="scope">
+        /// The namespace used to group and isolate memories, such as a user ID.
+        /// Limits which memories can be retrieved or updated.
+        /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
+        /// </param>
+        /// <param name="searchOptions"> Options for searching the memory store. </param>
+        /// <param name="updateDelay"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
+        /// <returns> A new <see cref="Projects.MemorySearchPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = default, string scope = default, MemorySearchResultOptions searchOptions = default, int? updateDelay = default)
+        {
+            return new MemorySearchPreviewTool(
+                ToolType.MemorySearchPreview,
+                additionalBinaryDataProperties: null,
+                memoryStoreName,
+                scope,
+                searchOptions,
+                updateDelay);
+        }
+
         /// <summary> Memory search options. </summary>
         /// <param name="maxMemories"> Maximum number of memory items to return. </param>
         /// <returns> A new <see cref="Memory.MemorySearchResultOptions"/> instance for mocking. </returns>
@@ -776,6 +1251,211 @@ namespace Azure.AI.Projects
         public static MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default)
         {
             return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ContainerNetworkPolicyDisabledParam. </summary>
+        /// <returns> A new <see cref="Projects.ContainerNetworkPolicyDisabledParam"/> instance for mocking. </returns>
+        public static ContainerNetworkPolicyDisabledParam ContainerNetworkPolicyDisabledParam()
+        {
+            return new ContainerNetworkPolicyDisabledParam(ContainerNetworkPolicyParamType.Disabled, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Web search. </summary>
+        /// <param name="filters"></param>
+        /// <param name="userLocation"></param>
+        /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="customSearchConfiguration">
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="Projects.WebSearchTool"/> instance for mocking. </returns>
+        public static WebSearchTool WebSearchTool(WebSearchToolFilters filters = default, WebSearchApproximateLocation userLocation = default, WebSearchToolSearchContextSize? searchContextSize = default, string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, WebSearchConfiguration customSearchConfiguration = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new WebSearchTool(
+                ToolType.WebSearch,
+                additionalBinaryDataProperties: null,
+                filters,
+                userLocation,
+                searchContextSize,
+                name,
+                description,
+                toolConfigs,
+                customSearchConfiguration);
+        }
+
+        /// <summary> The WebSearchToolFilters. </summary>
+        /// <param name="allowedDomains"></param>
+        /// <returns> A new <see cref="Projects.WebSearchToolFilters"/> instance for mocking. </returns>
+        public static WebSearchToolFilters WebSearchToolFilters(IEnumerable<string> allowedDomains = default)
+        {
+            allowedDomains ??= new ChangeTrackingList<string>();
+
+            return new WebSearchToolFilters(allowedDomains.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Web search approximate location. </summary>
+        /// <param name="country"></param>
+        /// <param name="region"></param>
+        /// <param name="city"></param>
+        /// <param name="timezone"></param>
+        /// <returns> A new <see cref="Projects.WebSearchApproximateLocation"/> instance for mocking. </returns>
+        public static WebSearchApproximateLocation WebSearchApproximateLocation(string country = default, string region = default, string city = default, string timezone = default)
+        {
+            return new WebSearchApproximateLocation(
+                "approximate",
+                country,
+                region,
+                city,
+                timezone,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A web search configuration for bing custom search. </summary>
+        /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
+        /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
+        /// <returns> A new <see cref="Projects.WebSearchConfiguration"/> instance for mocking. </returns>
+        public static WebSearchConfiguration WebSearchConfiguration(string projectConnectionId = default, string instanceName = default)
+        {
+            return new WebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Local shell tool. </summary>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <returns> A new <see cref="Projects.LocalShellToolParam"/> instance for mocking. </returns>
+        public static LocalShellToolParam LocalShellToolParam(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new LocalShellToolParam(ToolType.LocalShell, additionalBinaryDataProperties: null, name, description, toolConfigs);
+        }
+
+        /// <summary> Shell tool. </summary>
+        /// <param name="environment"></param>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <returns> A new <see cref="Projects.FunctionShellToolParam"/> instance for mocking. </returns>
+        public static FunctionShellToolParam FunctionShellToolParam(FunctionShellToolParamEnvironment environment = default, string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new FunctionShellToolParam(
+                ToolType.Shell,
+                additionalBinaryDataProperties: null,
+                environment,
+                name,
+                description,
+                toolConfigs);
+        }
+
+        /// <summary>
+        /// The FunctionShellToolParamEnvironment.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.FunctionShellToolParamEnvironmentLocalEnvironmentParam"/>, <see cref="Projects.FunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="ContainerAutoParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.FunctionShellToolParamEnvironment"/> instance for mocking. </returns>
+        public static FunctionShellToolParamEnvironment FunctionShellToolParamEnvironment(string @type = default)
+        {
+            return new UnknownFunctionShellToolParamEnvironment(new FunctionShellToolParamEnvironmentType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The FunctionShellToolParamEnvironmentLocalEnvironmentParam. </summary>
+        /// <param name="skills"> An optional list of skills. </param>
+        /// <returns> A new <see cref="Projects.FunctionShellToolParamEnvironmentLocalEnvironmentParam"/> instance for mocking. </returns>
+        public static FunctionShellToolParamEnvironmentLocalEnvironmentParam FunctionShellToolParamEnvironmentLocalEnvironmentParam(IEnumerable<LocalSkillParam> skills = default)
+        {
+            skills ??= new ChangeTrackingList<LocalSkillParam>();
+
+            return new FunctionShellToolParamEnvironmentLocalEnvironmentParam(FunctionShellToolParamEnvironmentType.Local, additionalBinaryDataProperties: null, skills.ToList());
+        }
+
+        /// <summary> The LocalSkillParam. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="description"> The description of the skill. </param>
+        /// <param name="path"> The path to the directory containing the skill. </param>
+        /// <returns> A new <see cref="Projects.LocalSkillParam"/> instance for mocking. </returns>
+        public static LocalSkillParam LocalSkillParam(string name = default, string description = default, string path = default)
+        {
+            return new LocalSkillParam(name, description, path, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The FunctionShellToolParamEnvironmentContainerReferenceParam. </summary>
+        /// <param name="containerId"> The ID of the referenced container. </param>
+        /// <returns> A new <see cref="Projects.FunctionShellToolParamEnvironmentContainerReferenceParam"/> instance for mocking. </returns>
+        public static FunctionShellToolParamEnvironmentContainerReferenceParam FunctionShellToolParamEnvironmentContainerReferenceParam(string containerId = default)
+        {
+            return new FunctionShellToolParamEnvironmentContainerReferenceParam(FunctionShellToolParamEnvironmentType.ContainerReference, additionalBinaryDataProperties: null, containerId);
+        }
+
+        /// <summary>
+        /// The ContainerSkill.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SkillReferenceParam"/> and <see cref="Projects.InlineSkillParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.ContainerSkill"/> instance for mocking. </returns>
+        public static ContainerSkill ContainerSkill(string @type = default)
+        {
+            return new UnknownContainerSkill(new ContainerSkillType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The SkillReferenceParam. </summary>
+        /// <param name="skillId"> The ID of the referenced skill. </param>
+        /// <param name="version"> Optional skill version. Use a positive integer or 'latest'. Omit for default. </param>
+        /// <returns> A new <see cref="Projects.SkillReferenceParam"/> instance for mocking. </returns>
+        public static SkillReferenceParam SkillReferenceParam(string skillId = default, string version = default)
+        {
+            return new SkillReferenceParam(ContainerSkillType.SkillReference, additionalBinaryDataProperties: null, skillId, version);
+        }
+
+        /// <summary> The InlineSkillParam. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="description"> The description of the skill. </param>
+        /// <param name="source"> Inline skill payload. </param>
+        /// <returns> A new <see cref="Projects.InlineSkillParam"/> instance for mocking. </returns>
+        public static InlineSkillParam InlineSkillParam(string name = default, string description = default, InlineSkillSourceParam source = default)
+        {
+            return new InlineSkillParam(ContainerSkillType.Inline, additionalBinaryDataProperties: null, name, description, source);
+        }
+
+        /// <summary> Inline skill payload. </summary>
+        /// <param name="data"> Base64-encoded skill zip bundle. </param>
+        /// <returns> A new <see cref="Projects.InlineSkillSourceParam"/> instance for mocking. </returns>
+        public static InlineSkillSourceParam InlineSkillSourceParam(string data = default)
+        {
+            return new InlineSkillSourceParam("base64", "application/zip", data, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Apply patch tool. </summary>
+        /// <returns> A new <see cref="Projects.ApplyPatchToolParam"/> instance for mocking. </returns>
+        public static ApplyPatchToolParam ApplyPatchToolParam()
+        {
+            return new ApplyPatchToolParam(ToolType.ApplyPatch, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Computer. </summary>
+        /// <returns> A new <see cref="Projects.ComputerTool"/> instance for mocking. </returns>
+        public static ComputerTool ComputerTool()
+        {
+            return new ComputerTool(ToolType.Computer, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Namespace. </summary>
+        /// <param name="name"> The namespace name used in tool calls (for example, `crm`). </param>
+        /// <param name="description"> A description of the namespace shown to the model. </param>
+        /// <param name="tools"> The function/custom tools available inside this namespace. </param>
+        /// <returns> A new <see cref="Projects.NamespaceToolParam"/> instance for mocking. </returns>
+        public static NamespaceToolParam NamespaceToolParam(string name = default, string description = default, IEnumerable<BinaryData> tools = default)
+        {
+            tools ??= new ChangeTrackingList<BinaryData>();
+
+            return new NamespaceToolParam(ToolType.Namespace, additionalBinaryDataProperties: null, name, description, tools.ToList());
         }
 
         /// <summary> Taxonomy category definition. </summary>
@@ -1753,6 +2433,412 @@ namespace Azure.AI.Projects
             return new DeleteMemoryStoreResponse("memory_store.deleted", name, isDeleted, additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// An item representing part of the context for the response to be
+        /// generated by the model. Can contain text, images, and audio inputs,
+        /// as well as previous assistant responses and tool call outputs.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ItemReferenceParam"/>, <see cref="Projects.InputItemOutputMessage"/>, <see cref="Projects.InputItemFileSearchToolCall"/>, <see cref="InputItemComputerToolCall"/>, <see cref="Projects.InputItemComputerCallOutputItemParam"/>, <see cref="Projects.InputItemWebSearchToolCall"/>, <see cref="Projects.InputItemFunctionToolCall"/>, <see cref="Projects.InputItemFunctionCallOutputItemParam"/>, <see cref="InputItemToolSearchCallItemParam"/>, <see cref="InputItemToolSearchOutputItemParam"/>, <see cref="Projects.InputItemReasoningItem"/>, <see cref="Projects.InputItemCompactionSummaryItemParam"/>, <see cref="Projects.InputItemImageGenToolCall"/>, <see cref="Projects.InputItemCodeInterpreterToolCall"/>, <see cref="InputItemLocalShellToolCall"/>, <see cref="Projects.InputItemLocalShellToolCallOutput"/>, <see cref="Projects.InputItemFunctionShellCallItemParam"/>, <see cref="Projects.InputItemFunctionShellCallOutputItemParam"/>, <see cref="Projects.InputItemApplyPatchToolCallItemParam"/>, <see cref="Projects.InputItemApplyPatchToolCallOutputItemParam"/>, <see cref="InputItemMcpListTools"/>, <see cref="Projects.InputItemMcpApprovalRequest"/>, <see cref="Projects.InputItemMcpApprovalResponse"/>, <see cref="Projects.InputItemMcpToolCall"/>, <see cref="Projects.InputItemCustomToolCallOutput"/>, and <see cref="Projects.InputItemCustomToolCall"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.InputItem"/> instance for mocking. </returns>
+        public static InputItem InputItem(string @type = default)
+        {
+            return new UnknownInputItem(new InputItemType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The InputContent.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.InputContentInputTextContent"/>, <see cref="Projects.InputContentInputImageContent"/>, and <see cref="Projects.InputContentInputFileContent"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.InputContent"/> instance for mocking. </returns>
+        public static InputContent InputContent(string @type = default)
+        {
+            return new UnknownInputContent(new InputContentType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input text. </summary>
+        /// <param name="text"> The text input to the model. </param>
+        /// <returns> A new <see cref="Projects.InputContentInputTextContent"/> instance for mocking. </returns>
+        public static InputContentInputTextContent InputContentInputTextContent(string text = default)
+        {
+            return new InputContentInputTextContent(InputContentType.InputText, additionalBinaryDataProperties: null, text);
+        }
+
+        /// <summary> Input image. </summary>
+        /// <param name="imageUrl"></param>
+        /// <param name="fileId"></param>
+        /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </param>
+        /// <returns> A new <see cref="Projects.InputContentInputImageContent"/> instance for mocking. </returns>
+        public static InputContentInputImageContent InputContentInputImageContent(Uri imageUrl = default, string fileId = default, ImageDetail detail = default)
+        {
+            return new InputContentInputImageContent(InputContentType.InputImage, additionalBinaryDataProperties: null, imageUrl, fileId, detail);
+        }
+
+        /// <summary> Input file. </summary>
+        /// <param name="fileId"></param>
+        /// <param name="filename"> The name of the file to be sent to the model. </param>
+        /// <param name="fileData"> The content of the file to be sent to the model. </param>
+        /// <param name="fileUrl"> The URL of the file to be sent to the model. </param>
+        /// <returns> A new <see cref="Projects.InputContentInputFileContent"/> instance for mocking. </returns>
+        public static InputContentInputFileContent InputContentInputFileContent(string fileId = default, string filename = default, string fileData = default, Uri fileUrl = default)
+        {
+            return new InputContentInputFileContent(
+                InputContentType.InputFile,
+                additionalBinaryDataProperties: null,
+                fileId,
+                filename,
+                fileData,
+                fileUrl);
+        }
+
+        /// <summary> Item reference. </summary>
+        /// <param name="id"> The ID of the item to reference. </param>
+        /// <returns> A new <see cref="Projects.ItemReferenceParam"/> instance for mocking. </returns>
+        public static ItemReferenceParam ItemReferenceParam(string id = default)
+        {
+            return new ItemReferenceParam(InputItemType.ItemReference, additionalBinaryDataProperties: null, id);
+        }
+
+        /// <summary> Output message. </summary>
+        /// <param name="id"> The unique ID of the output message. </param>
+        /// <param name="content"> The content of the output message. </param>
+        /// <param name="phase"></param>
+        /// <param name="status">
+        /// The status of the message input. One of `in_progress`, `completed`, or
+        ///   `incomplete`. Populated when input items are returned via API.
+        /// </param>
+        /// <returns> A new <see cref="Projects.InputItemOutputMessage"/> instance for mocking. </returns>
+        public static InputItemOutputMessage InputItemOutputMessage(string id = default, IEnumerable<OutputMessageContent> content = default, MessagePhase? phase = default, InputItemOutputMessageStatus status = default)
+        {
+            content ??= new ChangeTrackingList<OutputMessageContent>();
+
+            return new InputItemOutputMessage(
+                InputItemType.OutputMessage,
+                additionalBinaryDataProperties: null,
+                id,
+                "assistant",
+                content.ToList(),
+                phase,
+                status);
+        }
+
+        /// <summary>
+        /// The OutputMessageContent.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OutputMessageContentOutputTextContent"/> and <see cref="Projects.OutputMessageContentRefusalContent"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.OutputMessageContent"/> instance for mocking. </returns>
+        public static OutputMessageContent OutputMessageContent(string @type = default)
+        {
+            return new UnknownOutputMessageContent(new OutputMessageContentType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> File citation. </summary>
+        /// <param name="fileId"> The ID of the file. </param>
+        /// <param name="index"> The index of the file in the list of files. </param>
+        /// <param name="filename"> The filename of the file cited. </param>
+        /// <returns> A new <see cref="Projects.FileCitationBody"/> instance for mocking. </returns>
+        public static FileCitationBody FileCitationBody(string fileId = default, long index = default, string filename = default)
+        {
+            return new FileCitationBody(AnnotationType.FileCitation, additionalBinaryDataProperties: null, fileId, index, filename);
+        }
+
+        /// <summary> URL citation. </summary>
+        /// <param name="url"> The URL of the web resource. </param>
+        /// <param name="startIndex"> The index of the first character of the URL citation in the message. </param>
+        /// <param name="endIndex"> The index of the last character of the URL citation in the message. </param>
+        /// <param name="title"> The title of the web resource. </param>
+        /// <returns> A new <see cref="Projects.UrlCitationBody"/> instance for mocking. </returns>
+        public static UrlCitationBody UrlCitationBody(Uri url = default, long startIndex = default, long endIndex = default, string title = default)
+        {
+            return new UrlCitationBody(
+                AnnotationType.UrlCitation,
+                additionalBinaryDataProperties: null,
+                url,
+                startIndex,
+                endIndex,
+                title);
+        }
+
+        /// <summary> Container file citation. </summary>
+        /// <param name="containerId"> The ID of the container file. </param>
+        /// <param name="fileId"> The ID of the file. </param>
+        /// <param name="startIndex"> The index of the first character of the container file citation in the message. </param>
+        /// <param name="endIndex"> The index of the last character of the container file citation in the message. </param>
+        /// <param name="filename"> The filename of the container file cited. </param>
+        /// <returns> A new <see cref="Projects.ContainerFileCitationBody"/> instance for mocking. </returns>
+        public static ContainerFileCitationBody ContainerFileCitationBody(string containerId = default, string fileId = default, long startIndex = default, long endIndex = default, string filename = default)
+        {
+            return new ContainerFileCitationBody(
+                AnnotationType.ContainerFileCitation,
+                additionalBinaryDataProperties: null,
+                containerId,
+                fileId,
+                startIndex,
+                endIndex,
+                filename);
+        }
+
+        /// <summary> File path. </summary>
+        /// <param name="fileId"> The ID of the file. </param>
+        /// <param name="index"> The index of the file in the list of files. </param>
+        /// <returns> A new <see cref="Projects.FilePath"/> instance for mocking. </returns>
+        public static FilePath FilePath(string fileId = default, long index = default)
+        {
+            return new FilePath(AnnotationType.FilePath, additionalBinaryDataProperties: null, fileId, index);
+        }
+
+        /// <summary> Refusal. </summary>
+        /// <param name="refusal"> The refusal explanation from the model. </param>
+        /// <returns> A new <see cref="Projects.OutputMessageContentRefusalContent"/> instance for mocking. </returns>
+        public static OutputMessageContentRefusalContent OutputMessageContentRefusalContent(string refusal = default)
+        {
+            return new OutputMessageContentRefusalContent(OutputMessageContentType.Refusal, additionalBinaryDataProperties: null, refusal);
+        }
+
+        /// <summary> File search tool call. </summary>
+        /// <param name="id"> The unique ID of the file search tool call. </param>
+        /// <param name="status">
+        /// The status of the file search tool call. One of `in_progress`,
+        ///   `searching`, `incomplete` or `failed`,
+        /// </param>
+        /// <param name="queries"> The queries used to search for files. </param>
+        /// <param name="results"></param>
+        /// <returns> A new <see cref="Projects.InputItemFileSearchToolCall"/> instance for mocking. </returns>
+        public static InputItemFileSearchToolCall InputItemFileSearchToolCall(string id = default, InputItemFileSearchToolCallStatus status = default, IEnumerable<string> queries = default, IEnumerable<FileSearchToolCallResults> results = default)
+        {
+            queries ??= new ChangeTrackingList<string>();
+            results ??= new ChangeTrackingList<FileSearchToolCallResults>();
+
+            return new InputItemFileSearchToolCall(
+                InputItemType.FileSearchCall,
+                additionalBinaryDataProperties: null,
+                id,
+                status,
+                queries.ToList(),
+                results.ToList());
+        }
+
+        /// <summary> Click. </summary>
+        /// <param name="button"> Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`. </param>
+        /// <param name="x"> The x-coordinate where the click occurred. </param>
+        /// <param name="y"> The y-coordinate where the click occurred. </param>
+        /// <param name="keys"></param>
+        /// <returns> A new <see cref="Projects.ClickParam"/> instance for mocking. </returns>
+        public static ClickParam ClickParam(ClickButtonType button = default, long x = default, long y = default, IEnumerable<string> keys = default)
+        {
+            keys ??= new ChangeTrackingList<string>();
+
+            return new ClickParam(
+                ComputerActionType.Click,
+                additionalBinaryDataProperties: null,
+                button,
+                x,
+                y,
+                keys.ToList());
+        }
+
+        /// <summary> DoubleClick. </summary>
+        /// <param name="x"> The x-coordinate where the double click occurred. </param>
+        /// <param name="y"> The y-coordinate where the double click occurred. </param>
+        /// <param name="keys"></param>
+        /// <returns> A new <see cref="Projects.DoubleClickAction"/> instance for mocking. </returns>
+        public static DoubleClickAction DoubleClickAction(long x = default, long y = default, IEnumerable<string> keys = default)
+        {
+            keys ??= new ChangeTrackingList<string>();
+
+            return new DoubleClickAction(ComputerActionType.DoubleClick, additionalBinaryDataProperties: null, x, y, keys.ToList());
+        }
+
+        /// <summary> Drag. </summary>
+        /// <param name="path">
+        /// An array of coordinates representing the path of the drag action. Coordinates will appear as an array of objects, eg
+        ///   ```
+        ///   [
+        ///     { x: 100, y: 200 },
+        ///     { x: 200, y: 300 }
+        ///   ]
+        ///   ```
+        /// </param>
+        /// <param name="keys"></param>
+        /// <returns> A new <see cref="Projects.DragParam"/> instance for mocking. </returns>
+        public static DragParam DragParam(IEnumerable<CoordParam> path = default, IEnumerable<string> keys = default)
+        {
+            path ??= new ChangeTrackingList<CoordParam>();
+            keys ??= new ChangeTrackingList<string>();
+
+            return new DragParam(ComputerActionType.Drag, additionalBinaryDataProperties: null, path.ToList(), keys.ToList());
+        }
+
+        /// <summary> Coordinate. </summary>
+        /// <param name="x"> The x-coordinate. </param>
+        /// <param name="y"> The y-coordinate. </param>
+        /// <returns> A new <see cref="Projects.CoordParam"/> instance for mocking. </returns>
+        public static CoordParam CoordParam(long x = default, long y = default)
+        {
+            return new CoordParam(x, y, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> KeyPress. </summary>
+        /// <param name="keys"> The combination of keys the model is requesting to be pressed. This is an array of strings, each representing a key. </param>
+        /// <returns> A new <see cref="Projects.KeyPressAction"/> instance for mocking. </returns>
+        public static KeyPressAction KeyPressAction(IEnumerable<string> keys = default)
+        {
+            keys ??= new ChangeTrackingList<string>();
+
+            return new KeyPressAction(ComputerActionType.Keypress, additionalBinaryDataProperties: null, keys.ToList());
+        }
+
+        /// <summary> Move. </summary>
+        /// <param name="x"> The x-coordinate to move to. </param>
+        /// <param name="y"> The y-coordinate to move to. </param>
+        /// <param name="keys"></param>
+        /// <returns> A new <see cref="Projects.MoveParam"/> instance for mocking. </returns>
+        public static MoveParam MoveParam(long x = default, long y = default, IEnumerable<string> keys = default)
+        {
+            keys ??= new ChangeTrackingList<string>();
+
+            return new MoveParam(ComputerActionType.Move, additionalBinaryDataProperties: null, x, y, keys.ToList());
+        }
+
+        /// <summary> Screenshot. </summary>
+        /// <returns> A new <see cref="Projects.ScreenshotParam"/> instance for mocking. </returns>
+        public static ScreenshotParam ScreenshotParam()
+        {
+            return new ScreenshotParam(ComputerActionType.Screenshot, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Scroll. </summary>
+        /// <param name="x"> The x-coordinate where the scroll occurred. </param>
+        /// <param name="y"> The y-coordinate where the scroll occurred. </param>
+        /// <param name="scrollX"> The horizontal scroll distance. </param>
+        /// <param name="scrollY"> The vertical scroll distance. </param>
+        /// <param name="keys"></param>
+        /// <returns> A new <see cref="Projects.ScrollParam"/> instance for mocking. </returns>
+        public static ScrollParam ScrollParam(long x = default, long y = default, long scrollX = default, long scrollY = default, IEnumerable<string> keys = default)
+        {
+            keys ??= new ChangeTrackingList<string>();
+
+            return new ScrollParam(
+                ComputerActionType.Scroll,
+                additionalBinaryDataProperties: null,
+                x,
+                y,
+                scrollX,
+                scrollY,
+                keys.ToList());
+        }
+
+        /// <summary> Type. </summary>
+        /// <param name="text"> The text to type. </param>
+        /// <returns> A new <see cref="Projects.TypeParam"/> instance for mocking. </returns>
+        public static TypeParam TypeParam(string text = default)
+        {
+            return new TypeParam(ComputerActionType.Type, additionalBinaryDataProperties: null, text);
+        }
+
+        /// <summary> Wait. </summary>
+        /// <returns> A new <see cref="Projects.WaitParam"/> instance for mocking. </returns>
+        public static WaitParam WaitParam()
+        {
+            return new WaitParam(ComputerActionType.Wait, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A pending safety check for the computer call. </summary>
+        /// <param name="id"> The ID of the pending safety check. </param>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="Projects.ComputerCallSafetyCheckParam"/> instance for mocking. </returns>
+        public static ComputerCallSafetyCheckParam ComputerCallSafetyCheckParam(string id = default, string code = default, string message = default)
+        {
+            return new ComputerCallSafetyCheckParam(id, code, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Computer tool call output. </summary>
+        /// <param name="id"></param>
+        /// <param name="callId"> The ID of the computer tool call that produced the output. </param>
+        /// <param name="output"></param>
+        /// <param name="acknowledgedSafetyChecks"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="Projects.InputItemComputerCallOutputItemParam"/> instance for mocking. </returns>
+        public static InputItemComputerCallOutputItemParam InputItemComputerCallOutputItemParam(string id = default, string callId = default, ComputerScreenshotImage output = default, IEnumerable<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks = default, FunctionCallItemStatus? status = default)
+        {
+            acknowledgedSafetyChecks ??= new ChangeTrackingList<ComputerCallSafetyCheckParam>();
+
+            return new InputItemComputerCallOutputItemParam(
+                InputItemType.ComputerCallOutput,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                output,
+                acknowledgedSafetyChecks.ToList(),
+                status);
+        }
+
+        /// <summary> A computer screenshot image used with the computer use tool. </summary>
+        /// <param name="imageUrl"> The URL of the screenshot image. </param>
+        /// <param name="fileId"> The identifier of an uploaded file that contains the screenshot. </param>
+        /// <returns> A new <see cref="Projects.ComputerScreenshotImage"/> instance for mocking. </returns>
+        public static ComputerScreenshotImage ComputerScreenshotImage(Uri imageUrl = default, string fileId = default)
+        {
+            return new ComputerScreenshotImage("computer_screenshot", imageUrl, fileId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Web search tool call. </summary>
+        /// <param name="id"> The unique ID of the web search tool call. </param>
+        /// <param name="status"> The status of the web search tool call. </param>
+        /// <param name="action">
+        /// An object describing the specific action taken in this web search call.
+        ///   Includes details on how the model used the web (search, open_page, find_in_page).
+        /// </param>
+        /// <returns> A new <see cref="Projects.InputItemWebSearchToolCall"/> instance for mocking. </returns>
+        public static InputItemWebSearchToolCall InputItemWebSearchToolCall(string id = default, InputItemWebSearchToolCallStatus status = default, BinaryData action = default)
+        {
+            return new InputItemWebSearchToolCall(InputItemType.WebSearchCall, additionalBinaryDataProperties: null, id, status, action);
+        }
+
+        /// <summary> Function tool call. </summary>
+        /// <param name="id"> The unique ID of the function tool call. </param>
+        /// <param name="callId"> The unique ID of the function tool call generated by the model. </param>
+        /// <param name="namespace"> The namespace of the function to run. </param>
+        /// <param name="name"> The name of the function to run. </param>
+        /// <param name="arguments"> A JSON string of the arguments to pass to the function. </param>
+        /// <param name="status">
+        /// The status of the item. One of `in_progress`, `completed`, or
+        ///   `incomplete`. Populated when items are returned via API.
+        /// </param>
+        /// <returns> A new <see cref="Projects.InputItemFunctionToolCall"/> instance for mocking. </returns>
+        public static InputItemFunctionToolCall InputItemFunctionToolCall(string id = default, string callId = default, string @namespace = default, string name = default, string arguments = default, InputItemFunctionToolCallStatus? status = default)
+        {
+            return new InputItemFunctionToolCall(
+                InputItemType.FunctionCall,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                @namespace,
+                name,
+                arguments,
+                status);
+        }
+
+        /// <summary> Function tool call output. </summary>
+        /// <param name="id"></param>
+        /// <param name="callId"> The unique ID of the function tool call generated by the model. </param>
+        /// <param name="output"> Text, image, or file output of the function tool call. </param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="Projects.InputItemFunctionCallOutputItemParam"/> instance for mocking. </returns>
+        public static InputItemFunctionCallOutputItemParam InputItemFunctionCallOutputItemParam(string id = default, string callId = default, BinaryData output = default, FunctionCallItemStatus? status = default)
+        {
+            return new InputItemFunctionCallOutputItemParam(
+                InputItemType.FunctionCallOutput,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                output,
+                status);
+        }
+
         /// <summary> Input text. </summary>
         /// <param name="text"> The text input to the model. </param>
         /// <returns> A new <see cref="Projects.InputTextContentParam"/> instance for mocking. </returns>
@@ -1776,6 +2862,472 @@ namespace Azure.AI.Projects
                 fileData,
                 fileUri,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reasoning. </summary>
+        /// <param name="id"> The unique identifier of the reasoning content. </param>
+        /// <param name="encryptedContent"></param>
+        /// <param name="summary"> Reasoning summary content. </param>
+        /// <param name="content"> Reasoning text content. </param>
+        /// <param name="status">
+        /// The status of the item. One of `in_progress`, `completed`, or
+        ///   `incomplete`. Populated when items are returned via API.
+        /// </param>
+        /// <returns> A new <see cref="Projects.InputItemReasoningItem"/> instance for mocking. </returns>
+        public static InputItemReasoningItem InputItemReasoningItem(string id = default, string encryptedContent = default, IEnumerable<SummaryTextContent> summary = default, IEnumerable<ReasoningTextContent> content = default, InputItemReasoningItemStatus? status = default)
+        {
+            summary ??= new ChangeTrackingList<SummaryTextContent>();
+            content ??= new ChangeTrackingList<ReasoningTextContent>();
+
+            return new InputItemReasoningItem(
+                InputItemType.Reasoning,
+                additionalBinaryDataProperties: null,
+                id,
+                encryptedContent,
+                summary.ToList(),
+                content.ToList(),
+                status);
+        }
+
+        /// <summary> Summary text. </summary>
+        /// <param name="text"> A summary of the reasoning output from the model so far. </param>
+        /// <returns> A new <see cref="Projects.SummaryTextContent"/> instance for mocking. </returns>
+        public static SummaryTextContent SummaryTextContent(string text = default)
+        {
+            return new SummaryTextContent(MessageContentType.SummaryText, additionalBinaryDataProperties: null, text);
+        }
+
+        /// <summary>
+        /// A content part that makes up an input or output item.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SummaryTextContent"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.MessageContent"/> instance for mocking. </returns>
+        public static MessageContent MessageContent(string @type = default)
+        {
+            return new UnknownMessageContent(new MessageContentType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reasoning text. </summary>
+        /// <param name="text"> The reasoning text from the model. </param>
+        /// <returns> A new <see cref="Projects.ReasoningTextContent"/> instance for mocking. </returns>
+        public static ReasoningTextContent ReasoningTextContent(string text = default)
+        {
+            return new ReasoningTextContent("reasoning_text", text, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Compaction item. </summary>
+        /// <param name="id"></param>
+        /// <param name="encryptedContent"> The encrypted content of the compaction summary. </param>
+        /// <returns> A new <see cref="Projects.InputItemCompactionSummaryItemParam"/> instance for mocking. </returns>
+        public static InputItemCompactionSummaryItemParam InputItemCompactionSummaryItemParam(string id = default, string encryptedContent = default)
+        {
+            return new InputItemCompactionSummaryItemParam(InputItemType.Compaction, additionalBinaryDataProperties: null, id, encryptedContent);
+        }
+
+        /// <summary> Image generation call. </summary>
+        /// <param name="id"> The unique ID of the image generation call. </param>
+        /// <param name="status"> The status of the image generation call. </param>
+        /// <param name="result"></param>
+        /// <returns> A new <see cref="Projects.InputItemImageGenToolCall"/> instance for mocking. </returns>
+        public static InputItemImageGenToolCall InputItemImageGenToolCall(string id = default, InputItemImageGenToolCallStatus status = default, string result = default)
+        {
+            return new InputItemImageGenToolCall(InputItemType.ImageGenerationCall, additionalBinaryDataProperties: null, id, status, result);
+        }
+
+        /// <summary> Code interpreter tool call. </summary>
+        /// <param name="id"> The unique ID of the code interpreter tool call. </param>
+        /// <param name="status"> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </param>
+        /// <param name="containerId"> The ID of the container used to run the code. </param>
+        /// <param name="code"></param>
+        /// <param name="outputs"></param>
+        /// <returns> A new <see cref="Projects.InputItemCodeInterpreterToolCall"/> instance for mocking. </returns>
+        public static InputItemCodeInterpreterToolCall InputItemCodeInterpreterToolCall(string id = default, InputItemCodeInterpreterToolCallStatus status = default, string containerId = default, string code = default, IEnumerable<BinaryData> outputs = default)
+        {
+            outputs ??= new ChangeTrackingList<BinaryData>();
+
+            return new InputItemCodeInterpreterToolCall(
+                InputItemType.CodeInterpreterCall,
+                additionalBinaryDataProperties: null,
+                id,
+                status,
+                containerId,
+                code,
+                outputs.ToList());
+        }
+
+        /// <summary> Local shell call output. </summary>
+        /// <param name="id"> The unique ID of the local shell tool call generated by the model. </param>
+        /// <param name="output"> A JSON string of the output of the local shell tool call. </param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="Projects.InputItemLocalShellToolCallOutput"/> instance for mocking. </returns>
+        public static InputItemLocalShellToolCallOutput InputItemLocalShellToolCallOutput(string id = default, string output = default, InputItemLocalShellToolCallOutputStatus? status = default)
+        {
+            return new InputItemLocalShellToolCallOutput(InputItemType.LocalShellCallOutput, additionalBinaryDataProperties: null, id, output, status);
+        }
+
+        /// <summary> Shell tool call. </summary>
+        /// <param name="id"></param>
+        /// <param name="callId"> The unique ID of the shell tool call generated by the model. </param>
+        /// <param name="action"> The shell commands and limits that describe how to run the tool call. </param>
+        /// <param name="status"></param>
+        /// <param name="environment"></param>
+        /// <returns> A new <see cref="Projects.InputItemFunctionShellCallItemParam"/> instance for mocking. </returns>
+        public static InputItemFunctionShellCallItemParam InputItemFunctionShellCallItemParam(string id = default, string callId = default, FunctionShellActionParam action = default, FunctionShellCallItemStatus? status = default, FunctionShellCallItemParamEnvironment environment = default)
+        {
+            return new InputItemFunctionShellCallItemParam(
+                InputItemType.ShellCall,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                action,
+                status,
+                environment);
+        }
+
+        /// <summary> Shell action. </summary>
+        /// <param name="commands"> Ordered shell commands for the execution environment to run. </param>
+        /// <param name="timeoutMs"></param>
+        /// <param name="maxOutputLength"></param>
+        /// <returns> A new <see cref="Projects.FunctionShellActionParam"/> instance for mocking. </returns>
+        public static FunctionShellActionParam FunctionShellActionParam(IEnumerable<string> commands = default, long? timeoutMs = default, long? maxOutputLength = default)
+        {
+            commands ??= new ChangeTrackingList<string>();
+
+            return new FunctionShellActionParam(commands.ToList(), timeoutMs, maxOutputLength, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The environment to execute the shell commands in.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.FunctionShellCallItemParamEnvironmentLocalEnvironmentParam"/> and <see cref="Projects.FunctionShellCallItemParamEnvironmentContainerReferenceParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.FunctionShellCallItemParamEnvironment"/> instance for mocking. </returns>
+        public static FunctionShellCallItemParamEnvironment FunctionShellCallItemParamEnvironment(string @type = default)
+        {
+            return new UnknownFunctionShellCallItemParamEnvironment(new FunctionShellCallItemParamEnvironmentType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The FunctionShellCallItemParamEnvironmentLocalEnvironmentParam. </summary>
+        /// <param name="skills"> An optional list of skills. </param>
+        /// <returns> A new <see cref="Projects.FunctionShellCallItemParamEnvironmentLocalEnvironmentParam"/> instance for mocking. </returns>
+        public static FunctionShellCallItemParamEnvironmentLocalEnvironmentParam FunctionShellCallItemParamEnvironmentLocalEnvironmentParam(IEnumerable<LocalSkillParam> skills = default)
+        {
+            skills ??= new ChangeTrackingList<LocalSkillParam>();
+
+            return new FunctionShellCallItemParamEnvironmentLocalEnvironmentParam(FunctionShellCallItemParamEnvironmentType.Local, additionalBinaryDataProperties: null, skills.ToList());
+        }
+
+        /// <summary> The FunctionShellCallItemParamEnvironmentContainerReferenceParam. </summary>
+        /// <param name="containerId"> The ID of the referenced container. </param>
+        /// <returns> A new <see cref="Projects.FunctionShellCallItemParamEnvironmentContainerReferenceParam"/> instance for mocking. </returns>
+        public static FunctionShellCallItemParamEnvironmentContainerReferenceParam FunctionShellCallItemParamEnvironmentContainerReferenceParam(string containerId = default)
+        {
+            return new FunctionShellCallItemParamEnvironmentContainerReferenceParam(FunctionShellCallItemParamEnvironmentType.ContainerReference, additionalBinaryDataProperties: null, containerId);
+        }
+
+        /// <summary> Shell tool call output. </summary>
+        /// <param name="id"></param>
+        /// <param name="callId"> The unique ID of the shell tool call generated by the model. </param>
+        /// <param name="output"> Captured chunks of stdout and stderr output, along with their associated outcomes. </param>
+        /// <param name="status"></param>
+        /// <param name="maxOutputLength"></param>
+        /// <returns> A new <see cref="Projects.InputItemFunctionShellCallOutputItemParam"/> instance for mocking. </returns>
+        public static InputItemFunctionShellCallOutputItemParam InputItemFunctionShellCallOutputItemParam(string id = default, string callId = default, IEnumerable<FunctionShellCallOutputContentParam> output = default, FunctionShellCallItemStatus? status = default, long? maxOutputLength = default)
+        {
+            output ??= new ChangeTrackingList<FunctionShellCallOutputContentParam>();
+
+            return new InputItemFunctionShellCallOutputItemParam(
+                InputItemType.ShellCallOutput,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                output.ToList(),
+                status,
+                maxOutputLength);
+        }
+
+        /// <summary> Shell output content. </summary>
+        /// <param name="stdout"> Captured stdout output for the shell call. </param>
+        /// <param name="stderr"> Captured stderr output for the shell call. </param>
+        /// <param name="outcome"> The exit or timeout outcome associated with this shell call. </param>
+        /// <returns> A new <see cref="Projects.FunctionShellCallOutputContentParam"/> instance for mocking. </returns>
+        public static FunctionShellCallOutputContentParam FunctionShellCallOutputContentParam(string stdout = default, string stderr = default, FunctionShellCallOutputOutcomeParam outcome = default)
+        {
+            return new FunctionShellCallOutputContentParam(stdout, stderr, outcome, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Shell call outcome
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.FunctionShellCallOutputTimeoutOutcomeParam"/> and <see cref="Projects.FunctionShellCallOutputExitOutcomeParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.FunctionShellCallOutputOutcomeParam"/> instance for mocking. </returns>
+        public static FunctionShellCallOutputOutcomeParam FunctionShellCallOutputOutcomeParam(string @type = default)
+        {
+            return new UnknownFunctionShellCallOutputOutcomeParam(new FunctionShellCallOutputOutcomeParamType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Shell call timeout outcome. </summary>
+        /// <returns> A new <see cref="Projects.FunctionShellCallOutputTimeoutOutcomeParam"/> instance for mocking. </returns>
+        public static FunctionShellCallOutputTimeoutOutcomeParam FunctionShellCallOutputTimeoutOutcomeParam()
+        {
+            return new FunctionShellCallOutputTimeoutOutcomeParam(FunctionShellCallOutputOutcomeParamType.Timeout, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Shell call exit outcome. </summary>
+        /// <param name="exitCode"> The exit code returned by the shell process. </param>
+        /// <returns> A new <see cref="Projects.FunctionShellCallOutputExitOutcomeParam"/> instance for mocking. </returns>
+        public static FunctionShellCallOutputExitOutcomeParam FunctionShellCallOutputExitOutcomeParam(long exitCode = default)
+        {
+            return new FunctionShellCallOutputExitOutcomeParam(FunctionShellCallOutputOutcomeParamType.Exit, additionalBinaryDataProperties: null, exitCode);
+        }
+
+        /// <summary> Apply patch tool call. </summary>
+        /// <param name="id"></param>
+        /// <param name="callId"> The unique ID of the apply patch tool call generated by the model. </param>
+        /// <param name="status"> The status of the apply patch tool call. One of `in_progress` or `completed`. </param>
+        /// <param name="operation"> The specific create, delete, or update instruction for the apply_patch tool call. </param>
+        /// <returns> A new <see cref="Projects.InputItemApplyPatchToolCallItemParam"/> instance for mocking. </returns>
+        public static InputItemApplyPatchToolCallItemParam InputItemApplyPatchToolCallItemParam(string id = default, string callId = default, ApplyPatchCallStatusParam status = default, ApplyPatchOperationParam operation = default)
+        {
+            return new InputItemApplyPatchToolCallItemParam(
+                InputItemType.ApplyPatchCall,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                status,
+                operation);
+        }
+
+        /// <summary>
+        /// Apply patch operation
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ApplyPatchCreateFileOperationParam"/>, <see cref="Projects.ApplyPatchDeleteFileOperationParam"/>, and <see cref="Projects.ApplyPatchUpdateFileOperationParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.ApplyPatchOperationParam"/> instance for mocking. </returns>
+        public static ApplyPatchOperationParam ApplyPatchOperationParam(string @type = default)
+        {
+            return new UnknownApplyPatchOperationParam(new ApplyPatchOperationParamType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Apply patch create file operation. </summary>
+        /// <param name="path"> Path of the file to create relative to the workspace root. </param>
+        /// <param name="diff"> Unified diff content to apply when creating the file. </param>
+        /// <returns> A new <see cref="Projects.ApplyPatchCreateFileOperationParam"/> instance for mocking. </returns>
+        public static ApplyPatchCreateFileOperationParam ApplyPatchCreateFileOperationParam(string path = default, string diff = default)
+        {
+            return new ApplyPatchCreateFileOperationParam(ApplyPatchOperationParamType.CreateFile, additionalBinaryDataProperties: null, path, diff);
+        }
+
+        /// <summary> Apply patch delete file operation. </summary>
+        /// <param name="path"> Path of the file to delete relative to the workspace root. </param>
+        /// <returns> A new <see cref="Projects.ApplyPatchDeleteFileOperationParam"/> instance for mocking. </returns>
+        public static ApplyPatchDeleteFileOperationParam ApplyPatchDeleteFileOperationParam(string path = default)
+        {
+            return new ApplyPatchDeleteFileOperationParam(ApplyPatchOperationParamType.DeleteFile, additionalBinaryDataProperties: null, path);
+        }
+
+        /// <summary> Apply patch update file operation. </summary>
+        /// <param name="path"> Path of the file to update relative to the workspace root. </param>
+        /// <param name="diff"> Unified diff content to apply to the existing file. </param>
+        /// <returns> A new <see cref="Projects.ApplyPatchUpdateFileOperationParam"/> instance for mocking. </returns>
+        public static ApplyPatchUpdateFileOperationParam ApplyPatchUpdateFileOperationParam(string path = default, string diff = default)
+        {
+            return new ApplyPatchUpdateFileOperationParam(ApplyPatchOperationParamType.UpdateFile, additionalBinaryDataProperties: null, path, diff);
+        }
+
+        /// <summary> Apply patch tool call output. </summary>
+        /// <param name="id"></param>
+        /// <param name="callId"> The unique ID of the apply patch tool call generated by the model. </param>
+        /// <param name="status"> The status of the apply patch tool call output. One of `completed` or `failed`. </param>
+        /// <param name="output"></param>
+        /// <returns> A new <see cref="Projects.InputItemApplyPatchToolCallOutputItemParam"/> instance for mocking. </returns>
+        public static InputItemApplyPatchToolCallOutputItemParam InputItemApplyPatchToolCallOutputItemParam(string id = default, string callId = default, ApplyPatchCallOutputStatusParam status = default, string output = default)
+        {
+            return new InputItemApplyPatchToolCallOutputItemParam(
+                InputItemType.ApplyPatchCallOutput,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                status,
+                output);
+        }
+
+        /// <summary>
+        /// The RealtimeMCPError.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.RealtimeMCPProtocolError"/>, <see cref="Projects.RealtimeMCPToolExecutionError"/>, and <see cref="Projects.RealtimeMCPHTTPError"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.RealtimeMCPError"/> instance for mocking. </returns>
+        public static RealtimeMCPError RealtimeMCPError(string @type = default)
+        {
+            return new UnknownRealtimeMCPError(new RealtimeMcpErrorType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Realtime MCP protocol error. </summary>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="Projects.RealtimeMCPProtocolError"/> instance for mocking. </returns>
+        public static RealtimeMCPProtocolError RealtimeMCPProtocolError(long code = default, string message = default)
+        {
+            return new RealtimeMCPProtocolError(RealtimeMcpErrorType.ProtocolError, additionalBinaryDataProperties: null, code, message);
+        }
+
+        /// <summary> Realtime MCP tool execution error. </summary>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="Projects.RealtimeMCPToolExecutionError"/> instance for mocking. </returns>
+        public static RealtimeMCPToolExecutionError RealtimeMCPToolExecutionError(string message = default)
+        {
+            return new RealtimeMCPToolExecutionError(RealtimeMcpErrorType.ToolExecutionError, additionalBinaryDataProperties: null, message);
+        }
+
+        /// <summary> Realtime MCP HTTP error. </summary>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="Projects.RealtimeMCPHTTPError"/> instance for mocking. </returns>
+        public static RealtimeMCPHTTPError RealtimeMCPHTTPError(long code = default, string message = default)
+        {
+            return new RealtimeMCPHTTPError(RealtimeMcpErrorType.HttpError, additionalBinaryDataProperties: null, code, message);
+        }
+
+        /// <summary> MCP approval request. </summary>
+        /// <param name="id"> The unique ID of the approval request. </param>
+        /// <param name="serverLabel"> The label of the MCP server making the request. </param>
+        /// <param name="name"> The name of the tool to run. </param>
+        /// <param name="arguments"> A JSON string of arguments for the tool. </param>
+        /// <returns> A new <see cref="Projects.InputItemMcpApprovalRequest"/> instance for mocking. </returns>
+        public static InputItemMcpApprovalRequest InputItemMcpApprovalRequest(string id = default, string serverLabel = default, string name = default, string arguments = default)
+        {
+            return new InputItemMcpApprovalRequest(
+                InputItemType.McpApprovalRequest,
+                additionalBinaryDataProperties: null,
+                id,
+                serverLabel,
+                name,
+                arguments);
+        }
+
+        /// <summary> MCP approval response. </summary>
+        /// <param name="id"></param>
+        /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
+        /// <param name="approve"> Whether the request was approved. </param>
+        /// <param name="reason"></param>
+        /// <returns> A new <see cref="Projects.InputItemMcpApprovalResponse"/> instance for mocking. </returns>
+        public static InputItemMcpApprovalResponse InputItemMcpApprovalResponse(string id = default, string approvalRequestId = default, bool approve = default, string reason = default)
+        {
+            return new InputItemMcpApprovalResponse(
+                InputItemType.McpApprovalResponse,
+                additionalBinaryDataProperties: null,
+                id,
+                approvalRequestId,
+                approve,
+                reason);
+        }
+
+        /// <summary> MCP tool call. </summary>
+        /// <param name="id"> The unique ID of the tool call. </param>
+        /// <param name="serverLabel"> The label of the MCP server running the tool. </param>
+        /// <param name="name"> The name of the tool that was run. </param>
+        /// <param name="arguments"> A JSON string of the arguments passed to the tool. </param>
+        /// <param name="output"></param>
+        /// <param name="error"></param>
+        /// <param name="status"> The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`. </param>
+        /// <param name="approvalRequestId"></param>
+        /// <returns> A new <see cref="Projects.InputItemMcpToolCall"/> instance for mocking. </returns>
+        public static InputItemMcpToolCall InputItemMcpToolCall(string id = default, string serverLabel = default, string name = default, string arguments = default, string output = default, IDictionary<string, BinaryData> error = default, MCPToolCallStatus? status = default, string approvalRequestId = default)
+        {
+            error ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new InputItemMcpToolCall(
+                InputItemType.McpCall,
+                additionalBinaryDataProperties: null,
+                id,
+                serverLabel,
+                name,
+                arguments,
+                output,
+                error,
+                status,
+                approvalRequestId);
+        }
+
+        /// <summary> Custom tool call output. </summary>
+        /// <param name="id"> The unique ID of the custom tool call output in the OpenAI platform. </param>
+        /// <param name="callId"> The call ID, used to map this custom tool call output to a custom tool call. </param>
+        /// <param name="output">
+        /// The output from the custom tool call generated by your code.
+        ///   Can be a string or an list of output content.
+        /// </param>
+        /// <returns> A new <see cref="Projects.InputItemCustomToolCallOutput"/> instance for mocking. </returns>
+        public static InputItemCustomToolCallOutput InputItemCustomToolCallOutput(string id = default, string callId = default, BinaryData output = default)
+        {
+            return new InputItemCustomToolCallOutput(InputItemType.CustomToolCallOutput, additionalBinaryDataProperties: null, id, callId, output);
+        }
+
+        /// <summary>
+        /// The FunctionAndCustomToolCallOutput.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.FunctionAndCustomToolCallOutputInputTextContent"/>, <see cref="Projects.FunctionAndCustomToolCallOutputInputImageContent"/>, and <see cref="Projects.FunctionAndCustomToolCallOutputInputFileContent"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.FunctionAndCustomToolCallOutput"/> instance for mocking. </returns>
+        public static FunctionAndCustomToolCallOutput FunctionAndCustomToolCallOutput(string @type = default)
+        {
+            return new UnknownFunctionAndCustomToolCallOutput(new FunctionAndCustomToolCallOutputType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input text. </summary>
+        /// <param name="text"> The text input to the model. </param>
+        /// <returns> A new <see cref="Projects.FunctionAndCustomToolCallOutputInputTextContent"/> instance for mocking. </returns>
+        public static FunctionAndCustomToolCallOutputInputTextContent FunctionAndCustomToolCallOutputInputTextContent(string text = default)
+        {
+            return new FunctionAndCustomToolCallOutputInputTextContent(FunctionAndCustomToolCallOutputType.InputText, additionalBinaryDataProperties: null, text);
+        }
+
+        /// <summary> Input image. </summary>
+        /// <param name="imageUrl"></param>
+        /// <param name="fileId"></param>
+        /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </param>
+        /// <returns> A new <see cref="Projects.FunctionAndCustomToolCallOutputInputImageContent"/> instance for mocking. </returns>
+        public static FunctionAndCustomToolCallOutputInputImageContent FunctionAndCustomToolCallOutputInputImageContent(Uri imageUrl = default, string fileId = default, ImageDetail detail = default)
+        {
+            return new FunctionAndCustomToolCallOutputInputImageContent(FunctionAndCustomToolCallOutputType.InputImage, additionalBinaryDataProperties: null, imageUrl, fileId, detail);
+        }
+
+        /// <summary> Input file. </summary>
+        /// <param name="fileId"></param>
+        /// <param name="filename"> The name of the file to be sent to the model. </param>
+        /// <param name="fileData"> The content of the file to be sent to the model. </param>
+        /// <param name="fileUrl"> The URL of the file to be sent to the model. </param>
+        /// <returns> A new <see cref="Projects.FunctionAndCustomToolCallOutputInputFileContent"/> instance for mocking. </returns>
+        public static FunctionAndCustomToolCallOutputInputFileContent FunctionAndCustomToolCallOutputInputFileContent(string fileId = default, string filename = default, string fileData = default, Uri fileUrl = default)
+        {
+            return new FunctionAndCustomToolCallOutputInputFileContent(
+                FunctionAndCustomToolCallOutputType.InputFile,
+                additionalBinaryDataProperties: null,
+                fileId,
+                filename,
+                fileData,
+                fileUrl);
+        }
+
+        /// <summary> Custom tool call. </summary>
+        /// <param name="id"> The unique ID of the custom tool call in the OpenAI platform. </param>
+        /// <param name="callId"> An identifier used to map this custom tool call to a tool call output. </param>
+        /// <param name="namespace"> The namespace of the custom tool being called. </param>
+        /// <param name="name"> The name of the custom tool being called. </param>
+        /// <param name="input"> The input for the custom tool call generated by the model. </param>
+        /// <returns> A new <see cref="Projects.InputItemCustomToolCall"/> instance for mocking. </returns>
+        public static InputItemCustomToolCall InputItemCustomToolCall(string id = default, string callId = default, string @namespace = default, string name = default, string input = default)
+        {
+            return new InputItemCustomToolCall(
+                InputItemType.CustomToolCall,
+                additionalBinaryDataProperties: null,
+                id,
+                callId,
+                @namespace,
+                name,
+                input);
         }
 
         /// <summary> Memory search response. </summary>

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The structure for keeping storage queue name and URI. </summary>
-    internal partial class AzureFunctionBinding
+    public partial class AzureFunctionBinding
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

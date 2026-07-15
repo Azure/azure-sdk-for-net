@@ -9,7 +9,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> The ContainerAutoParam. </summary>
-    internal partial class ContainerAutoParam : FunctionShellToolParamEnvironment
+    public partial class ContainerAutoParam : FunctionShellToolParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="ContainerAutoParam"/>. </summary>
         public ContainerAutoParam() : base(FunctionShellToolParamEnvironmentType.ContainerAuto)

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Computer. </summary>
-    internal partial class ComputerTool : InternalTool, IJsonModel<ComputerTool>
+    public partial class ComputerTool : InternalTool, IJsonModel<ComputerTool>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

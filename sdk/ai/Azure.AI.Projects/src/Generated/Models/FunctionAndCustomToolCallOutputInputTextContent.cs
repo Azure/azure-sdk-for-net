@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Input text. </summary>
-    internal partial class FunctionAndCustomToolCallOutputInputTextContent : FunctionAndCustomToolCallOutput
+    public partial class FunctionAndCustomToolCallOutputInputTextContent : FunctionAndCustomToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputTextContent"/>. </summary>
         /// <param name="text"> The text input to the model. </param>

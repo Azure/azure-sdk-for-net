@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> File citation. </summary>
-    internal partial class FileCitationBody : InternalAnnotation, IJsonModel<FileCitationBody>
+    public partial class FileCitationBody : InternalAnnotation, IJsonModel<FileCitationBody>
     {
         /// <summary> Initializes a new instance of <see cref="FileCitationBody"/> for deserialization. </summary>
         internal FileCitationBody()

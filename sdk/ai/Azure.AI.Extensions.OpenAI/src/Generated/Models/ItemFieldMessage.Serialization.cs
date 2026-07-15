@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Message. </summary>
-    internal partial class ItemFieldMessage : ItemField, IJsonModel<ItemFieldMessage>
+    public partial class ItemFieldMessage : ItemField, IJsonModel<ItemFieldMessage>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldMessage"/> for deserialization. </summary>
         internal ItemFieldMessage()

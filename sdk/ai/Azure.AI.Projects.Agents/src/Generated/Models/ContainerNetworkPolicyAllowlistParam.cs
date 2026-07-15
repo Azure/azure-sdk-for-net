@@ -10,7 +10,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> The ContainerNetworkPolicyAllowlistParam. </summary>
-    internal partial class ContainerNetworkPolicyAllowlistParam : ContainerNetworkPolicyParam
+    public partial class ContainerNetworkPolicyAllowlistParam : ContainerNetworkPolicyParam
     {
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkPolicyAllowlistParam"/>. </summary>
         /// <param name="allowedDomains"> A list of allowed domains when type is `allowlist`. </param>

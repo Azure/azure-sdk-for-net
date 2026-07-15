@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Signals that the streamed input text content for the specified item is complete. </summary>
-    internal partial class ClientEventInputTextDone : ClientEvent
+    public partial class ClientEventInputTextDone : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputTextDone"/>. </summary>
         /// <param name="id"> The ID of the item whose text content has finished streaming. </param>

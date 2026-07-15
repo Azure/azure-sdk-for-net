@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Text Content. </summary>
-    internal partial class TextContent : InternalMessageContent
+    public partial class TextContent : InternalMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="TextContent"/>. </summary>
         /// <param name="text"></param>

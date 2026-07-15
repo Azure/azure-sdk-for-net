@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The ItemFieldToolSearchCall. </summary>
-    internal partial class ItemFieldToolSearchCall : ItemField
+    public partial class ItemFieldToolSearchCall : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldToolSearchCall"/>. </summary>
         /// <param name="id"> The unique ID of the tool search call item. </param>

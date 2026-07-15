@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// Indicates that the model should use a built-in tool to generate a response.
     /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
     /// </summary>
-    internal partial class ToolChoiceWebSearchPreview20250311 : InternalToolChoiceParam
+    public partial class ToolChoiceWebSearchPreview20250311 : InternalToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceWebSearchPreview20250311"/>. </summary>
         internal ToolChoiceWebSearchPreview20250311() : base("web_search_preview_2025_03_11")

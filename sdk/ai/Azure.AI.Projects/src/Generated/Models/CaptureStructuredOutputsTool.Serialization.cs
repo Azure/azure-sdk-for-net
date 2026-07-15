@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A tool for capturing structured outputs. </summary>
-    internal partial class CaptureStructuredOutputsTool : InternalTool, IJsonModel<CaptureStructuredOutputsTool>
+    public partial class CaptureStructuredOutputsTool : InternalTool, IJsonModel<CaptureStructuredOutputsTool>
     {
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/> for deserialization. </summary>
         internal CaptureStructuredOutputsTool()

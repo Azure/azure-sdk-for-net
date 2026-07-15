@@ -11,7 +11,7 @@ using Azure.AI.Projects.Memory;
 namespace Azure.AI.Projects
 {
     /// <summary> A tool for integrating memories into the agent. </summary>
-    internal partial class MemorySearchPreviewTool : InternalTool, IJsonModel<MemorySearchPreviewTool>
+    public partial class MemorySearchPreviewTool : InternalTool, IJsonModel<MemorySearchPreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="MemorySearchPreviewTool"/> for deserialization. </summary>
         internal MemorySearchPreviewTool()

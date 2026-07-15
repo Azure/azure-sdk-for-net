@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary> The fabric data agent tool parameters. </summary>
     [Experimental("AAIP001")]
-    internal partial class FabricDataAgentToolParameters
+    public partial class FabricDataAgentToolParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

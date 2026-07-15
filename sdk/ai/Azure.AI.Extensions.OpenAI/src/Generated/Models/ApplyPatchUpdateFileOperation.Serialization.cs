@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Apply patch update file operation. </summary>
-    internal partial class ApplyPatchUpdateFileOperation : InternalApplyPatchFileOperation, IJsonModel<ApplyPatchUpdateFileOperation>
+    public partial class ApplyPatchUpdateFileOperation : InternalApplyPatchFileOperation, IJsonModel<ApplyPatchUpdateFileOperation>
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchUpdateFileOperation"/> for deserialization. </summary>
         internal ApplyPatchUpdateFileOperation()

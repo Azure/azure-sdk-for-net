@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> The ContainerNetworkPolicyDomainSecretParam. </summary>
-    internal partial class ContainerNetworkPolicyDomainSecretParam : IJsonModel<ContainerNetworkPolicyDomainSecretParam>
+    public partial class ContainerNetworkPolicyDomainSecretParam : IJsonModel<ContainerNetworkPolicyDomainSecretParam>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkPolicyDomainSecretParam"/> for deserialization. </summary>
         internal ContainerNetworkPolicyDomainSecretParam()

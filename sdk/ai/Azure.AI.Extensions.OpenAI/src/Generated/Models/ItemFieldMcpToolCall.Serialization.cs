@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> MCP tool call. </summary>
-    internal partial class ItemFieldMcpToolCall : ItemField, IJsonModel<ItemFieldMcpToolCall>
+    public partial class ItemFieldMcpToolCall : ItemField, IJsonModel<ItemFieldMcpToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldMcpToolCall"/> for deserialization. </summary>
         internal ItemFieldMcpToolCall()

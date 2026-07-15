@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary> A bing custom search configuration. </summary>
     [Experimental("AAIP001")]
-    internal partial class BingCustomSearchConfiguration
+    public partial class BingCustomSearchConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

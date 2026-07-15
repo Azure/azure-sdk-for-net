@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The bing grounding search tool parameters. </summary>
-    internal partial class BingGroundingSearchToolParameters : IJsonModel<BingGroundingSearchToolParameters>
+    public partial class BingGroundingSearchToolParameters : IJsonModel<BingGroundingSearchToolParameters>
     {
         /// <summary> Initializes a new instance of <see cref="BingGroundingSearchToolParameters"/> for deserialization. </summary>
         internal BingGroundingSearchToolParameters()

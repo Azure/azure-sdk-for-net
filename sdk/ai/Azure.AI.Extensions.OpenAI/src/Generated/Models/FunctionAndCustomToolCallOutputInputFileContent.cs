@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Input file. </summary>
-    internal partial class FunctionAndCustomToolCallOutputInputFileContent : InternalFunctionAndCustomToolCallOutput
+    public partial class FunctionAndCustomToolCallOutputInputFileContent : InternalFunctionAndCustomToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputFileContent"/>. </summary>
         public FunctionAndCustomToolCallOutputInputFileContent() : base(FunctionAndCustomToolCallOutputType.InputFile)

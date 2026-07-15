@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
-    internal partial class BrowserAutomationToolParameters : IJsonModel<BrowserAutomationToolParameters>
+    public partial class BrowserAutomationToolParameters : IJsonModel<BrowserAutomationToolParameters>
     {
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolParameters"/> for deserialization. </summary>
         internal BrowserAutomationToolParameters()

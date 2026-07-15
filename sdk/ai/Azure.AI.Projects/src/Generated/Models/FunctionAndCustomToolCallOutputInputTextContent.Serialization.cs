@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Input text. </summary>
-    internal partial class FunctionAndCustomToolCallOutputInputTextContent : FunctionAndCustomToolCallOutput, IJsonModel<FunctionAndCustomToolCallOutputInputTextContent>
+    public partial class FunctionAndCustomToolCallOutputInputTextContent : FunctionAndCustomToolCallOutput, IJsonModel<FunctionAndCustomToolCallOutputInputTextContent>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputTextContent"/> for deserialization. </summary>
         internal FunctionAndCustomToolCallOutputInputTextContent()

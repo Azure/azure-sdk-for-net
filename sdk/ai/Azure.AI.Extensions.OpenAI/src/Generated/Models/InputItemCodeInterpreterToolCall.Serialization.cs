@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Code interpreter tool call. </summary>
-    internal partial class InputItemCodeInterpreterToolCall : InputItem, IJsonModel<InputItemCodeInterpreterToolCall>
+    public partial class InputItemCodeInterpreterToolCall : InputItem, IJsonModel<InputItemCodeInterpreterToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemCodeInterpreterToolCall"/> for deserialization. </summary>
         internal InputItemCodeInterpreterToolCall()

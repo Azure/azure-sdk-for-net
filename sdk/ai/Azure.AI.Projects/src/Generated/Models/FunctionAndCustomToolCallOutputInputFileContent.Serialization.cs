@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Input file. </summary>
-    internal partial class FunctionAndCustomToolCallOutputInputFileContent : FunctionAndCustomToolCallOutput, IJsonModel<FunctionAndCustomToolCallOutputInputFileContent>
+    public partial class FunctionAndCustomToolCallOutputInputFileContent : FunctionAndCustomToolCallOutput, IJsonModel<FunctionAndCustomToolCallOutputInputFileContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

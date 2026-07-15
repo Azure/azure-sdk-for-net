@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Function tool. </summary>
-    internal partial class ToolChoiceFunction : InternalToolChoiceParam, IJsonModel<ToolChoiceFunction>
+    public partial class ToolChoiceFunction : InternalToolChoiceParam, IJsonModel<ToolChoiceFunction>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunction"/> for deserialization. </summary>
         internal ToolChoiceFunction()

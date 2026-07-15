@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> The LocalSkillParam. </summary>
-    internal partial class LocalSkillParam : IJsonModel<LocalSkillParam>
+    public partial class LocalSkillParam : IJsonModel<LocalSkillParam>
     {
         /// <summary> Initializes a new instance of <see cref="LocalSkillParam"/> for deserialization. </summary>
         internal LocalSkillParam()

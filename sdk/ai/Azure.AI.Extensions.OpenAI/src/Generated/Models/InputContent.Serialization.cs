@@ -13,7 +13,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InputContentInputTextContent"/>, <see cref="InputContentInputImageContent"/>, and <see cref="InputContentInputFileContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownInputContent))]
-    internal abstract partial class InputContent : IJsonModel<InputContent>
+    public abstract partial class InputContent : IJsonModel<InputContent>
     {
         /// <summary> Initializes a new instance of <see cref="InputContent"/> for deserialization. </summary>
         internal InputContent()

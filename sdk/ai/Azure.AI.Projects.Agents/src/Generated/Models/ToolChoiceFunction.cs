@@ -9,7 +9,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> Function tool. </summary>
-    internal partial class ToolChoiceFunction : InternalToolChoiceParam
+    public partial class ToolChoiceFunction : InternalToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunction"/>. </summary>
         /// <param name="name"> The name of the function to call. </param>

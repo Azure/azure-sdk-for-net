@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
-    internal partial class BingCustomSearchPreviewTool : InternalTool, IJsonModel<BingCustomSearchPreviewTool>
+    public partial class BingCustomSearchPreviewTool : InternalTool, IJsonModel<BingCustomSearchPreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchPreviewTool"/> for deserialization. </summary>
         internal BingCustomSearchPreviewTool()

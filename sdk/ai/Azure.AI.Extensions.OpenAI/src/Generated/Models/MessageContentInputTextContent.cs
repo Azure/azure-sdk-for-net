@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Input text. </summary>
-    internal partial class MessageContentInputTextContent : InternalMessageContent
+    public partial class MessageContentInputTextContent : InternalMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentInputTextContent"/>. </summary>
         /// <param name="text"> The text input to the model. </param>

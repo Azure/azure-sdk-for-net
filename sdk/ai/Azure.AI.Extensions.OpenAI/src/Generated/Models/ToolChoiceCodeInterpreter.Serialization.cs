@@ -13,7 +13,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// Indicates that the model should use a built-in tool to generate a response.
     /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
     /// </summary>
-    internal partial class ToolChoiceCodeInterpreter : InternalToolChoiceParam, IJsonModel<ToolChoiceCodeInterpreter>
+    public partial class ToolChoiceCodeInterpreter : InternalToolChoiceParam, IJsonModel<ToolChoiceCodeInterpreter>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

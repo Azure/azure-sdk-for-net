@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Computer. </summary>
-    internal partial class ComputerTool : InternalTool
+    public partial class ComputerTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="ComputerTool"/>. </summary>
         public ComputerTool() : base(ToolType.Computer)

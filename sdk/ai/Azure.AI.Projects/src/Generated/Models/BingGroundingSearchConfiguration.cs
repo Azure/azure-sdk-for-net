@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Search configuration for Bing Grounding. </summary>
-    internal partial class BingGroundingSearchConfiguration
+    public partial class BingGroundingSearchConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

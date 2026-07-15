@@ -10,7 +10,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> Web search tool call. </summary>
-    internal partial class InputItemWebSearchToolCall : InputItem
+    public partial class InputItemWebSearchToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemWebSearchToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the web search tool call. </param>

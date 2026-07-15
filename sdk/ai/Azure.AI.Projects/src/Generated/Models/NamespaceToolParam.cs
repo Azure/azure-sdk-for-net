@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Namespace. </summary>
-    internal partial class NamespaceToolParam : InternalTool
+    public partial class NamespaceToolParam : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="NamespaceToolParam"/>. </summary>
         /// <param name="name"> The namespace name used in tool calls (for example, `crm`). </param>

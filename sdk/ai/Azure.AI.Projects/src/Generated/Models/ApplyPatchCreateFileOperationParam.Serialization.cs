@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Apply patch create file operation. </summary>
-    internal partial class ApplyPatchCreateFileOperationParam : ApplyPatchOperationParam, IJsonModel<ApplyPatchCreateFileOperationParam>
+    public partial class ApplyPatchCreateFileOperationParam : ApplyPatchOperationParam, IJsonModel<ApplyPatchCreateFileOperationParam>
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchCreateFileOperationParam"/> for deserialization. </summary>
         internal ApplyPatchCreateFileOperationParam()

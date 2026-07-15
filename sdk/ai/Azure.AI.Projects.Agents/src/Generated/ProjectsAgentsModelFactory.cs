@@ -3,7 +3,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -771,6 +770,46 @@ namespace Azure.AI.Projects.Agents
             return new MemorySearchToolOptions(maxMemories, additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// Network access policy for the container.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ContainerNetworkPolicyDisabledParam"/> and <see cref="OpenAI.ContainerNetworkPolicyAllowlistParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.ContainerNetworkPolicyParam"/> instance for mocking. </returns>
+        public static ContainerNetworkPolicyParam ContainerNetworkPolicyParam(string @type = default)
+        {
+            return new UnknownContainerNetworkPolicyParam(new ContainerNetworkPolicyParamType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ContainerNetworkPolicyDisabledParam. </summary>
+        /// <returns> A new <see cref="OpenAI.ContainerNetworkPolicyDisabledParam"/> instance for mocking. </returns>
+        public static ContainerNetworkPolicyDisabledParam ContainerNetworkPolicyDisabledParam()
+        {
+            return new ContainerNetworkPolicyDisabledParam(ContainerNetworkPolicyParamType.Disabled, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ContainerNetworkPolicyAllowlistParam. </summary>
+        /// <param name="allowedDomains"> A list of allowed domains when type is `allowlist`. </param>
+        /// <param name="domainSecrets"> Optional domain-scoped secrets for allowlisted domains. </param>
+        /// <returns> A new <see cref="OpenAI.ContainerNetworkPolicyAllowlistParam"/> instance for mocking. </returns>
+        public static ContainerNetworkPolicyAllowlistParam ContainerNetworkPolicyAllowlistParam(IEnumerable<string> allowedDomains = default, IEnumerable<ContainerNetworkPolicyDomainSecretParam> domainSecrets = default)
+        {
+            allowedDomains ??= new ChangeTrackingList<string>();
+            domainSecrets ??= new ChangeTrackingList<ContainerNetworkPolicyDomainSecretParam>();
+
+            return new ContainerNetworkPolicyAllowlistParam(ContainerNetworkPolicyParamType.Allowlist, additionalBinaryDataProperties: null, allowedDomains.ToList(), domainSecrets.ToList());
+        }
+
+        /// <summary> The ContainerNetworkPolicyDomainSecretParam. </summary>
+        /// <param name="domain"> The domain associated with the secret. </param>
+        /// <param name="name"> The name of the secret to inject for the domain. </param>
+        /// <param name="value"> The secret value to inject for the domain. </param>
+        /// <returns> A new <see cref="OpenAI.ContainerNetworkPolicyDomainSecretParam"/> instance for mocking. </returns>
+        public static ContainerNetworkPolicyDomainSecretParam ContainerNetworkPolicyDomainSecretParam(string domain = default, string name = default, string value = default)
+        {
+            return new ContainerNetworkPolicyDomainSecretParam(domain, name, value, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The WebSearchToolFilters. </summary>
         /// <param name="allowedDomains"></param>
         /// <returns> A new <see cref="OpenAI.WebSearchToolFilters"/> instance for mocking. </returns>
@@ -807,6 +846,130 @@ namespace Azure.AI.Projects.Agents
             return new ProjectWebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// The FunctionShellToolParamEnvironment.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.FunctionShellToolParamEnvironmentLocalEnvironmentParam"/>, <see cref="OpenAI.FunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="OpenAI.ContainerAutoParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.FunctionShellToolParamEnvironment"/> instance for mocking. </returns>
+        public static FunctionShellToolParamEnvironment FunctionShellToolParamEnvironment(string @type = default)
+        {
+            return new UnknownFunctionShellToolParamEnvironment(new FunctionShellToolParamEnvironmentType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The FunctionShellToolParamEnvironmentLocalEnvironmentParam. </summary>
+        /// <param name="skills"> An optional list of skills. </param>
+        /// <returns> A new <see cref="OpenAI.FunctionShellToolParamEnvironmentLocalEnvironmentParam"/> instance for mocking. </returns>
+        public static FunctionShellToolParamEnvironmentLocalEnvironmentParam FunctionShellToolParamEnvironmentLocalEnvironmentParam(IEnumerable<LocalSkillParam> skills = default)
+        {
+            skills ??= new ChangeTrackingList<LocalSkillParam>();
+
+            return new FunctionShellToolParamEnvironmentLocalEnvironmentParam(FunctionShellToolParamEnvironmentType.Local, additionalBinaryDataProperties: null, skills.ToList());
+        }
+
+        /// <summary> The LocalSkillParam. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="description"> The description of the skill. </param>
+        /// <param name="path"> The path to the directory containing the skill. </param>
+        /// <returns> A new <see cref="OpenAI.LocalSkillParam"/> instance for mocking. </returns>
+        public static LocalSkillParam LocalSkillParam(string name = default, string description = default, string path = default)
+        {
+            return new LocalSkillParam(name, description, path, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The FunctionShellToolParamEnvironmentContainerReferenceParam. </summary>
+        /// <param name="containerId"> The ID of the referenced container. </param>
+        /// <returns> A new <see cref="OpenAI.FunctionShellToolParamEnvironmentContainerReferenceParam"/> instance for mocking. </returns>
+        public static FunctionShellToolParamEnvironmentContainerReferenceParam FunctionShellToolParamEnvironmentContainerReferenceParam(string containerId = default)
+        {
+            return new FunctionShellToolParamEnvironmentContainerReferenceParam(FunctionShellToolParamEnvironmentType.ContainerReference, additionalBinaryDataProperties: null, containerId);
+        }
+
+        /// <summary> The ContainerAutoParam. </summary>
+        /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
+        /// <param name="memoryLimit"></param>
+        /// <param name="skills"> An optional list of skills referenced by id or inline data. </param>
+        /// <param name="networkPolicy"></param>
+        /// <returns> A new <see cref="OpenAI.ContainerAutoParam"/> instance for mocking. </returns>
+        public static ContainerAutoParam ContainerAutoParam(IEnumerable<string> fileIds = default, ContainerMemoryLimit? memoryLimit = default, IEnumerable<ContainerSkill> skills = default, ContainerNetworkPolicyParam networkPolicy = default)
+        {
+            fileIds ??= new ChangeTrackingList<string>();
+            skills ??= new ChangeTrackingList<ContainerSkill>();
+
+            return new ContainerAutoParam(
+                FunctionShellToolParamEnvironmentType.ContainerAuto,
+                additionalBinaryDataProperties: null,
+                fileIds.ToList(),
+                memoryLimit,
+                skills.ToList(),
+                networkPolicy);
+        }
+
+        /// <summary>
+        /// The ContainerSkill.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.SkillReferenceParam"/> and <see cref="OpenAI.InlineSkillParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.ContainerSkill"/> instance for mocking. </returns>
+        public static ContainerSkill ContainerSkill(string @type = default)
+        {
+            return new UnknownContainerSkill(new ContainerSkillType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The SkillReferenceParam. </summary>
+        /// <param name="skillId"> The ID of the referenced skill. </param>
+        /// <param name="version"> Optional skill version. Use a positive integer or 'latest'. Omit for default. </param>
+        /// <returns> A new <see cref="OpenAI.SkillReferenceParam"/> instance for mocking. </returns>
+        public static SkillReferenceParam SkillReferenceParam(string skillId = default, string version = default)
+        {
+            return new SkillReferenceParam(ContainerSkillType.SkillReference, additionalBinaryDataProperties: null, skillId, version);
+        }
+
+        /// <summary> The InlineSkillParam. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="description"> The description of the skill. </param>
+        /// <param name="source"> Inline skill payload. </param>
+        /// <returns> A new <see cref="OpenAI.InlineSkillParam"/> instance for mocking. </returns>
+        public static InlineSkillParam InlineSkillParam(string name = default, string description = default, InlineSkillSourceParam source = default)
+        {
+            return new InlineSkillParam(ContainerSkillType.Inline, additionalBinaryDataProperties: null, name, description, source);
+        }
+
+        /// <summary> Inline skill payload. </summary>
+        /// <param name="data"> Base64-encoded skill zip bundle. </param>
+        /// <returns> A new <see cref="OpenAI.InlineSkillSourceParam"/> instance for mocking. </returns>
+        public static InlineSkillSourceParam InlineSkillSourceParam(string data = default)
+        {
+            return new InlineSkillSourceParam("base64", "application/zip", data, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The input format for the custom tool. Default is unconstrained text.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.CustomTextFormatParam"/> and <see cref="OpenAI.CustomGrammarFormatParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.CustomToolParamFormat"/> instance for mocking. </returns>
+        public static CustomToolParamFormat CustomToolParamFormat(string @type = default)
+        {
+            return new UnknownCustomToolParamFormat(new CustomToolParamFormatType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Text format. </summary>
+        /// <returns> A new <see cref="OpenAI.CustomTextFormatParam"/> instance for mocking. </returns>
+        public static CustomTextFormatParam CustomTextFormatParam()
+        {
+            return new CustomTextFormatParam(CustomToolParamFormatType.Text, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Grammar format. </summary>
+        /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
+        /// <param name="definition"> The grammar definition. </param>
+        /// <returns> A new <see cref="OpenAI.CustomGrammarFormatParam"/> instance for mocking. </returns>
+        public static CustomGrammarFormatParam CustomGrammarFormatParam(GrammarSyntax1 syntax = default, string definition = default)
+        {
+            return new CustomGrammarFormatParam(CustomToolParamFormatType.Grammar, additionalBinaryDataProperties: null, syntax, definition);
+        }
+
         /// <summary> The EmptyModelParam. </summary>
         /// <returns> A new <see cref="OpenAI.EmptyModelParam"/> instance for mocking. </returns>
         public static EmptyModelParam EmptyModelParam()
@@ -822,6 +985,217 @@ namespace Azure.AI.Projects.Agents
         public static ToolSearchTool ToolSearchTool(ToolSearchExecutionKind? execution = default, string description = default, EmptyModelParam parameters = default)
         {
             return new ToolSearchTool(ToolType.ToolSearch, additionalBinaryDataProperties: null, execution, description, parameters);
+        }
+
+        /// <summary> Allowed tools. </summary>
+        /// <param name="mode">
+        /// Constrains the tools available to the model to a pre-defined set.
+        ///   `auto` allows the model to pick from among the allowed tools and generate a
+        ///   message.
+        ///   `required` requires the model to call one or more of the allowed tools.
+        /// </param>
+        /// <param name="tools">
+        /// A list of tool definitions that the model should be allowed to call.
+        ///   For the Responses API, the list of tool definitions might look like:
+        ///   ```json
+        ///   [
+        ///     { "type": "function", "name": "get_weather" },
+        ///     { "type": "mcp", "server_label": "deepwiki" },
+        ///     { "type": "image_generation" }
+        ///   ]
+        ///   ```
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ToolChoiceAllowed"/> instance for mocking. </returns>
+        public static ToolChoiceAllowed ToolChoiceAllowed(ToolChoiceAllowedMode mode = default, IEnumerable<IDictionary<string, BinaryData>> tools = default)
+        {
+            tools ??= new ChangeTrackingList<IDictionary<string, BinaryData>>();
+
+            return new ToolChoiceAllowed(ToolChoiceParamType.AllowedTools, additionalBinaryDataProperties: null, mode, tools.ToList());
+        }
+
+        /// <summary> Function tool. </summary>
+        /// <param name="name"> The name of the function to call. </param>
+        /// <returns> A new <see cref="OpenAI.ToolChoiceFunction"/> instance for mocking. </returns>
+        public static ToolChoiceFunction ToolChoiceFunction(string name = default)
+        {
+            return new ToolChoiceFunction(ToolChoiceParamType.Function, additionalBinaryDataProperties: null, name);
+        }
+
+        /// <summary> MCP tool. </summary>
+        /// <param name="serverLabel"> The label of the MCP server to use. </param>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="OpenAI.ToolChoiceMCP"/> instance for mocking. </returns>
+        public static ToolChoiceMCP ToolChoiceMCP(string serverLabel = default, string name = default)
+        {
+            return new ToolChoiceMCP(ToolChoiceParamType.Mcp, additionalBinaryDataProperties: null, serverLabel, name);
+        }
+
+        /// <summary> Custom tool. </summary>
+        /// <param name="name"> The name of the custom tool to call. </param>
+        /// <returns> A new <see cref="OpenAI.ToolChoiceCustom"/> instance for mocking. </returns>
+        public static ToolChoiceCustom ToolChoiceCustom(string name = default)
+        {
+            return new ToolChoiceCustom(ToolChoiceParamType.Custom, additionalBinaryDataProperties: null, name);
+        }
+
+        /// <summary> Specific apply patch tool choice. </summary>
+        /// <returns> A new <see cref="OpenAI.SpecificApplyPatchParam"/> instance for mocking. </returns>
+        public static SpecificApplyPatchParam SpecificApplyPatchParam()
+        {
+            return new SpecificApplyPatchParam(ToolChoiceParamType.ApplyPatch, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specific shell tool choice. </summary>
+        /// <returns> A new <see cref="OpenAI.SpecificFunctionShellParam"/> instance for mocking. </returns>
+        public static SpecificFunctionShellParam SpecificFunctionShellParam()
+        {
+            return new SpecificFunctionShellParam(ToolChoiceParamType.Shell, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Indicates that the model should use a built-in tool to generate a response.
+        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
+        /// </summary>
+        /// <returns> A new <see cref="OpenAI.ToolChoiceFileSearch"/> instance for mocking. </returns>
+        public static ToolChoiceFileSearch ToolChoiceFileSearch()
+        {
+            return new ToolChoiceFileSearch(ToolChoiceParamType.FileSearch, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Indicates that the model should use a built-in tool to generate a response.
+        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
+        /// </summary>
+        /// <returns> A new <see cref="OpenAI.ToolChoiceWebSearchPreview"/> instance for mocking. </returns>
+        public static ToolChoiceWebSearchPreview ToolChoiceWebSearchPreview()
+        {
+            return new ToolChoiceWebSearchPreview(ToolChoiceParamType.WebSearchPreview, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Indicates that the model should use a built-in tool to generate a response.
+        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
+        /// </summary>
+        /// <returns> A new <see cref="OpenAI.ToolChoiceComputerUsePreview"/> instance for mocking. </returns>
+        public static ToolChoiceComputerUsePreview ToolChoiceComputerUsePreview()
+        {
+            return new ToolChoiceComputerUsePreview(ToolChoiceParamType.ComputerUsePreview, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Indicates that the model should use a built-in tool to generate a response.
+        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
+        /// </summary>
+        /// <returns> A new <see cref="OpenAI.ToolChoiceWebSearchPreview20250311"/> instance for mocking. </returns>
+        public static ToolChoiceWebSearchPreview20250311 ToolChoiceWebSearchPreview20250311()
+        {
+            return new ToolChoiceWebSearchPreview20250311(ToolChoiceParamType.WebSearchPreview20250311, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Indicates that the model should use a built-in tool to generate a response.
+        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
+        /// </summary>
+        /// <returns> A new <see cref="OpenAI.ToolChoiceImageGeneration"/> instance for mocking. </returns>
+        public static ToolChoiceImageGeneration ToolChoiceImageGeneration()
+        {
+            return new ToolChoiceImageGeneration(ToolChoiceParamType.ImageGeneration, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Indicates that the model should use a built-in tool to generate a response.
+        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
+        /// </summary>
+        /// <returns> A new <see cref="OpenAI.ToolChoiceCodeInterpreter"/> instance for mocking. </returns>
+        public static ToolChoiceCodeInterpreter ToolChoiceCodeInterpreter()
+        {
+            return new ToolChoiceCodeInterpreter(ToolChoiceParamType.CodeInterpreter, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Indicates that the model should use a built-in tool to generate a response.
+        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
+        /// </summary>
+        /// <returns> A new <see cref="OpenAI.ToolChoiceComputer"/> instance for mocking. </returns>
+        public static ToolChoiceComputer ToolChoiceComputer()
+        {
+            return new ToolChoiceComputer(ToolChoiceParamType.Computer, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Indicates that the model should use a built-in tool to generate a response.
+        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
+        /// </summary>
+        /// <returns> A new <see cref="OpenAI.ToolChoiceComputerUse"/> instance for mocking. </returns>
+        public static ToolChoiceComputerUse ToolChoiceComputerUse()
+        {
+            return new ToolChoiceComputerUse(ToolChoiceParamType.ComputerUse, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// An object specifying the format that the model must output.
+        /// Configuring `{ "type": "json_schema" }` enables Structured Outputs,
+        /// which ensures the model will match your supplied JSON schema. Learn more in the
+        /// [Structured Outputs guide](/docs/guides/structured-outputs).
+        /// The default format is `{ "type": "text" }` with no additional options.
+        /// *Not recommended for gpt-4o and newer models:**
+        /// Setting to `{ "type": "json_object" }` enables the older JSON mode, which
+        /// ensures the message the model generates is valid JSON. Using `json_schema`
+        /// is preferred for models that support it.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.TextResponseFormatJsonSchema"/>, <see cref="OpenAI.TextResponseFormatConfigurationResponseFormatText"/>, and <see cref="OpenAI.TextResponseFormatConfigurationResponseFormatJsonObject"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.TextResponseFormatConfiguration"/> instance for mocking. </returns>
+        public static TextResponseFormatConfiguration TextResponseFormatConfiguration(string @type = default)
+        {
+            return new UnknownTextResponseFormatConfiguration(new TextResponseFormatConfigurationType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> JSON schema. </summary>
+        /// <param name="description">
+        /// A description of what the response format is for, used by the model to
+        ///   determine how to respond in the format.
+        /// </param>
+        /// <param name="name">
+        /// The name of the response format. Must be a-z, A-Z, 0-9, or contain
+        ///   underscores and dashes, with a maximum length of 64.
+        /// </param>
+        /// <param name="schema"></param>
+        /// <param name="strict"></param>
+        /// <returns> A new <see cref="OpenAI.TextResponseFormatJsonSchema"/> instance for mocking. </returns>
+        public static TextResponseFormatJsonSchema TextResponseFormatJsonSchema(string description = default, string name = default, ResponseFormatJsonSchemaSchema schema = default, bool? strict = default)
+        {
+            return new TextResponseFormatJsonSchema(
+                TextResponseFormatConfigurationType.JsonSchema,
+                additionalBinaryDataProperties: null,
+                description,
+                name,
+                schema,
+                strict);
+        }
+
+        /// <summary> JSON schema. </summary>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="OpenAI.ResponseFormatJsonSchemaSchema"/> instance for mocking. </returns>
+        public static ResponseFormatJsonSchemaSchema ResponseFormatJsonSchemaSchema(IDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new ResponseFormatJsonSchemaSchema(additionalProperties);
+        }
+
+        /// <summary> Text. </summary>
+        /// <returns> A new <see cref="OpenAI.TextResponseFormatConfigurationResponseFormatText"/> instance for mocking. </returns>
+        public static TextResponseFormatConfigurationResponseFormatText TextResponseFormatConfigurationResponseFormatText()
+        {
+            return new TextResponseFormatConfigurationResponseFormatText(TextResponseFormatConfigurationType.Text, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> JSON object. </summary>
+        /// <returns> A new <see cref="OpenAI.TextResponseFormatConfigurationResponseFormatJsonObject"/> instance for mocking. </returns>
+        public static TextResponseFormatConfigurationResponseFormatJsonObject TextResponseFormatConfigurationResponseFormatJsonObject()
+        {
+            return new TextResponseFormatConfigurationResponseFormatJsonObject(TextResponseFormatConfigurationType.JsonObject, additionalBinaryDataProperties: null);
         }
 
         /// <summary> An structured input that can participate in prompt template substitutions and tool argument binding. </summary>

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The bing custom search tool parameters. </summary>
-    internal partial class BingCustomSearchToolParameters : IJsonModel<BingCustomSearchToolParameters>
+    public partial class BingCustomSearchToolParameters : IJsonModel<BingCustomSearchToolParameters>
     {
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolParameters"/> for deserialization. </summary>
         internal BingCustomSearchToolParameters()

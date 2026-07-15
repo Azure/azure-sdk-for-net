@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum ClickButtonType
+    public enum ClickButtonType
     {
         /// <summary> Left. </summary>
         Left,

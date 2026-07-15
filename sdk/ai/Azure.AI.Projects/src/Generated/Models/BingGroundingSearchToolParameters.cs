@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.AI.Projects
 {
     /// <summary> The bing grounding search tool parameters. </summary>
-    internal partial class BingGroundingSearchToolParameters
+    public partial class BingGroundingSearchToolParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

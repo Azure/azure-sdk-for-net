@@ -850,6 +850,33 @@ namespace Azure.AI.VoiceLive
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Streams a delta of input text content into the specified item. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="id"> The ID of the item the text delta is being appended to. </param>
+        /// <param name="delta"> The text delta to append. </param>
+        /// <param name="contentIndex"> The index of the content part within the item the delta applies to. </param>
+        /// <returns> A new <see cref="VoiceLive.ClientEventInputTextDelta"/> instance for mocking. </returns>
+        public static ClientEventInputTextDelta ClientEventInputTextDelta(string eventId = default, string id = default, string delta = default, int? contentIndex = default)
+        {
+            return new ClientEventInputTextDelta(
+                ClientEventType.InputTextDelta,
+                eventId,
+                additionalBinaryDataProperties: null,
+                id,
+                delta,
+                contentIndex);
+        }
+
+        /// <summary> Signals that the streamed input text content for the specified item is complete. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="id"> The ID of the item whose text content has finished streaming. </param>
+        /// <param name="contentIndex"> The index of the content part within the item. </param>
+        /// <returns> A new <see cref="VoiceLive.ClientEventInputTextDone"/> instance for mocking. </returns>
+        public static ClientEventInputTextDone ClientEventInputTextDone(string eventId = default, string id = default, int? contentIndex = default)
+        {
+            return new ClientEventInputTextDone(ClientEventType.InputTextDone, eventId, additionalBinaryDataProperties: null, id, contentIndex);
+        }
+
         /// <summary>
         /// Base for any response item; discriminated by `type`.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.MessageItem"/>, <see cref="VoiceLive.FunctionCallItem"/>, and <see cref="VoiceLive.FunctionCallOutputItem"/>.
@@ -1004,6 +1031,14 @@ namespace Azure.AI.VoiceLive
                 callId,
                 output,
                 status);
+        }
+
+        /// <summary> Client request to clear the avatar output buffer. </summary>
+        /// <param name="eventId"></param>
+        /// <returns> A new <see cref="VoiceLive.ClientEventOutputAudioBufferClear"/> instance for mocking. </returns>
+        public static ClientEventOutputAudioBufferClear ClientEventOutputAudioBufferClear(string eventId = default)
+        {
+            return new ClientEventOutputAudioBufferClear(ClientEventType.OutputAudioBufferClear, eventId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Details for a cancelled response. </summary>

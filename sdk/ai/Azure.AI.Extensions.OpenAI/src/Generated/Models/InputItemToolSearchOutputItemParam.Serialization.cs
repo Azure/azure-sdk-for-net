@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The InputItemToolSearchOutputItemParam. </summary>
-    internal partial class InputItemToolSearchOutputItemParam : InputItem, IJsonModel<InputItemToolSearchOutputItemParam>
+    public partial class InputItemToolSearchOutputItemParam : InputItem, IJsonModel<InputItemToolSearchOutputItemParam>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemToolSearchOutputItemParam"/> for deserialization. </summary>
         internal InputItemToolSearchOutputItemParam()

@@ -11,7 +11,7 @@ namespace OpenAI
     /// Network access policy for the container.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerNetworkPolicyDisabledParam"/> and <see cref="ContainerNetworkPolicyAllowlistParam"/>.
     /// </summary>
-    internal abstract partial class ContainerNetworkPolicyParam
+    public abstract partial class ContainerNetworkPolicyParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

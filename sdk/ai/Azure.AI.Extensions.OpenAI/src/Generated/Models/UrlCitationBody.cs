@@ -9,7 +9,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> URL citation. </summary>
-    internal partial class UrlCitationBody : InternalAnnotation
+    public partial class UrlCitationBody : InternalAnnotation
     {
         /// <summary> Initializes a new instance of <see cref="UrlCitationBody"/>. </summary>
         /// <param name="url"> The URL of the web resource. </param>

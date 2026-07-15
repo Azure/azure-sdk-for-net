@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Image generation call. </summary>
-    internal partial class InputItemImageGenToolCall : InputItem, IJsonModel<InputItemImageGenToolCall>
+    public partial class InputItemImageGenToolCall : InputItem, IJsonModel<InputItemImageGenToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemImageGenToolCall"/> for deserialization. </summary>
         internal InputItemImageGenToolCall()

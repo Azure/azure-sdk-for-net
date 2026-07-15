@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> KeyPress. </summary>
-    internal partial class KeyPressAction : InternalComputerAction, IJsonModel<KeyPressAction>
+    public partial class KeyPressAction : InternalComputerAction, IJsonModel<KeyPressAction>
     {
         /// <summary> Initializes a new instance of <see cref="KeyPressAction"/> for deserialization. </summary>
         internal KeyPressAction()

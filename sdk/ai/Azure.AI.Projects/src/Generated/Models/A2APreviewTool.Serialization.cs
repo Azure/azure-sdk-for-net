@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> An agent implementing the A2A protocol. </summary>
-    internal partial class A2APreviewTool : InternalTool, IJsonModel<A2APreviewTool>
+    public partial class A2APreviewTool : InternalTool, IJsonModel<A2APreviewTool>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

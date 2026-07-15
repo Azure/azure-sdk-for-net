@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> URL citation. </summary>
-    internal partial class UrlCitationBody : InternalAnnotation, IJsonModel<UrlCitationBody>
+    public partial class UrlCitationBody : InternalAnnotation, IJsonModel<UrlCitationBody>
     {
         /// <summary> Initializes a new instance of <see cref="UrlCitationBody"/> for deserialization. </summary>
         internal UrlCitationBody()

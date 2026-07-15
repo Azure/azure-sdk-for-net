@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> File search tool call. </summary>
-    internal partial class ItemFieldFileSearchToolCall : ItemField, IJsonModel<ItemFieldFileSearchToolCall>
+    public partial class ItemFieldFileSearchToolCall : ItemField, IJsonModel<ItemFieldFileSearchToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldFileSearchToolCall"/> for deserialization. </summary>
         internal ItemFieldFileSearchToolCall()

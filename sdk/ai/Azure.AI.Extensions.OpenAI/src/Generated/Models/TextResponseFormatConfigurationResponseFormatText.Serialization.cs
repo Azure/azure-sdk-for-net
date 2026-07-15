@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Text. </summary>
-    internal partial class TextResponseFormatConfigurationResponseFormatText : TextResponseFormatConfiguration, IJsonModel<TextResponseFormatConfigurationResponseFormatText>
+    public partial class TextResponseFormatConfigurationResponseFormatText : TextResponseFormatConfiguration, IJsonModel<TextResponseFormatConfigurationResponseFormatText>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

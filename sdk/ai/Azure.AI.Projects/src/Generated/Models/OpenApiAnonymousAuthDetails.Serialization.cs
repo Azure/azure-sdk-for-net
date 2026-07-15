@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Security details for OpenApi anonymous authentication. </summary>
-    internal partial class OpenApiAnonymousAuthDetails : OpenApiAuthDetails, IJsonModel<OpenApiAnonymousAuthDetails>
+    public partial class OpenApiAnonymousAuthDetails : OpenApiAuthDetails, IJsonModel<OpenApiAnonymousAuthDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

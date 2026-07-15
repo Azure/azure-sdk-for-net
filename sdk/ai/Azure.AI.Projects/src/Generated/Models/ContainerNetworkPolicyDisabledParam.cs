@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The ContainerNetworkPolicyDisabledParam. </summary>
-    internal partial class ContainerNetworkPolicyDisabledParam : InternalContainerNetworkPolicyParam
+    public partial class ContainerNetworkPolicyDisabledParam : InternalContainerNetworkPolicyParam
     {
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkPolicyDisabledParam"/>. </summary>
         public ContainerNetworkPolicyDisabledParam() : base(ContainerNetworkPolicyParamType.Disabled)

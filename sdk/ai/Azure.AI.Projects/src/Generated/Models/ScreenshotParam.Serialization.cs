@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> Screenshot. </summary>
-    internal partial class ScreenshotParam : InternalComputerAction, IJsonModel<ScreenshotParam>
+    public partial class ScreenshotParam : InternalComputerAction, IJsonModel<ScreenshotParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

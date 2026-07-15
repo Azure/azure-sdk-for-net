@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Computer screenshot. </summary>
-    internal partial class ComputerScreenshotContent : InternalMessageContent, IJsonModel<ComputerScreenshotContent>
+    public partial class ComputerScreenshotContent : InternalMessageContent, IJsonModel<ComputerScreenshotContent>
     {
         /// <summary> Initializes a new instance of <see cref="ComputerScreenshotContent"/> for deserialization. </summary>
         internal ComputerScreenshotContent()

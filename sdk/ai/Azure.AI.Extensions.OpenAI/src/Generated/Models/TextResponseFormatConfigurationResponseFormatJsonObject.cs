@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> JSON object. </summary>
-    internal partial class TextResponseFormatConfigurationResponseFormatJsonObject : TextResponseFormatConfiguration
+    public partial class TextResponseFormatConfigurationResponseFormatJsonObject : TextResponseFormatConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="TextResponseFormatConfigurationResponseFormatJsonObject"/>. </summary>
         internal TextResponseFormatConfigurationResponseFormatJsonObject() : base("json_object")

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Apply patch create file operation. </summary>
-    internal partial class ApplyPatchCreateFileOperation : InternalApplyPatchFileOperation
+    public partial class ApplyPatchCreateFileOperation : InternalApplyPatchFileOperation
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchCreateFileOperation"/>. </summary>
         /// <param name="path"> Path of the file to create. </param>

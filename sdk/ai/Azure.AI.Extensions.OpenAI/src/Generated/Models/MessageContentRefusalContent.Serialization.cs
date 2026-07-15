@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Refusal. </summary>
-    internal partial class MessageContentRefusalContent : InternalMessageContent, IJsonModel<MessageContentRefusalContent>
+    public partial class MessageContentRefusalContent : InternalMessageContent, IJsonModel<MessageContentRefusalContent>
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentRefusalContent"/> for deserialization. </summary>
         internal MessageContentRefusalContent()

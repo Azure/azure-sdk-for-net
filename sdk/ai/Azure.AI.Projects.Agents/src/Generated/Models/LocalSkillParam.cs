@@ -9,7 +9,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> The LocalSkillParam. </summary>
-    internal partial class LocalSkillParam
+    public partial class LocalSkillParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

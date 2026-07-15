@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.AI.Projects
 {
     /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
-    internal partial class AzureAISearchToolResource
+    public partial class AzureAISearchToolResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

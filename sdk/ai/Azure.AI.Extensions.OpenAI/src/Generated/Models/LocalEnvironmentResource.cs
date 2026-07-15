@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Local Environment. </summary>
-    internal partial class LocalEnvironmentResource : FunctionShellCallEnvironment
+    public partial class LocalEnvironmentResource : FunctionShellCallEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="LocalEnvironmentResource"/>. </summary>
         public LocalEnvironmentResource() : base(FunctionShellCallEnvironmentType.Local)

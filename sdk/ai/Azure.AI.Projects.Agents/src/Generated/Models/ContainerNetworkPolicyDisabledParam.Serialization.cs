@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> The ContainerNetworkPolicyDisabledParam. </summary>
-    internal partial class ContainerNetworkPolicyDisabledParam : ContainerNetworkPolicyParam, IJsonModel<ContainerNetworkPolicyDisabledParam>
+    public partial class ContainerNetworkPolicyDisabledParam : ContainerNetworkPolicyParam, IJsonModel<ContainerNetworkPolicyDisabledParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

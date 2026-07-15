@@ -9,7 +9,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> Scroll. </summary>
-    internal partial class ScrollParam : InternalComputerAction
+    public partial class ScrollParam : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="ScrollParam"/>. </summary>
         /// <param name="x"> The x-coordinate where the scroll occurred. </param>

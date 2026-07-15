@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> DoubleClick. </summary>
-    internal partial class DoubleClickAction : InternalComputerAction, IJsonModel<DoubleClickAction>
+    public partial class DoubleClickAction : InternalComputerAction, IJsonModel<DoubleClickAction>
     {
         /// <summary> Initializes a new instance of <see cref="DoubleClickAction"/> for deserialization. </summary>
         internal DoubleClickAction()

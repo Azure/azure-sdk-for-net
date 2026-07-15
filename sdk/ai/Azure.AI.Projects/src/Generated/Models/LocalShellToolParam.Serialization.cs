@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Local shell tool. </summary>
-    internal partial class LocalShellToolParam : InternalTool, IJsonModel<LocalShellToolParam>
+    public partial class LocalShellToolParam : InternalTool, IJsonModel<LocalShellToolParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

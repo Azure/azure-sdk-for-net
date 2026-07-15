@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Tool search tool. </summary>
-    internal partial class ToolSearchToolParam : InternalTool
+    public partial class ToolSearchToolParam : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="ToolSearchToolParam"/>. </summary>
         public ToolSearchToolParam() : base(ToolType.ToolSearch)

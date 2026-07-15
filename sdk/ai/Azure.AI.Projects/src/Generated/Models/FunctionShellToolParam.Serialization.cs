@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Shell tool. </summary>
-    internal partial class FunctionShellToolParam : InternalTool, IJsonModel<FunctionShellToolParam>
+    public partial class FunctionShellToolParam : InternalTool, IJsonModel<FunctionShellToolParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

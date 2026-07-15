@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Computer tool call. </summary>
-    internal partial class ItemFieldComputerToolCall : ItemField, IJsonModel<ItemFieldComputerToolCall>
+    public partial class ItemFieldComputerToolCall : ItemField, IJsonModel<ItemFieldComputerToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldComputerToolCall"/> for deserialization. </summary>
         internal ItemFieldComputerToolCall()

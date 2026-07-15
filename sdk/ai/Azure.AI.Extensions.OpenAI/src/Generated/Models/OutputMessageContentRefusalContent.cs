@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Refusal. </summary>
-    internal partial class OutputMessageContentRefusalContent : InternalOutputMessageContent
+    public partial class OutputMessageContentRefusalContent : InternalOutputMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentRefusalContent"/>. </summary>
         /// <param name="refusal"> The refusal explanation from the model. </param>

@@ -9,7 +9,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> Custom tool. </summary>
-    internal partial class ToolChoiceCustom : InternalToolChoiceParam
+    public partial class ToolChoiceCustom : InternalToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceCustom"/>. </summary>
         /// <param name="name"> The name of the custom tool to call. </param>

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Apply patch delete file operation. </summary>
-    internal partial class ApplyPatchDeleteFileOperationParam : ApplyPatchOperationParam, IJsonModel<ApplyPatchDeleteFileOperationParam>
+    public partial class ApplyPatchDeleteFileOperationParam : ApplyPatchOperationParam, IJsonModel<ApplyPatchDeleteFileOperationParam>
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchDeleteFileOperationParam"/> for deserialization. </summary>
         internal ApplyPatchDeleteFileOperationParam()

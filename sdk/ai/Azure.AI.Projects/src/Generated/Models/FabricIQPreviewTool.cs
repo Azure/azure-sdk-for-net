@@ -11,7 +11,7 @@ namespace Azure.AI.Projects
 {
     /// <summary> A FabricIQ server-side tool. </summary>
     [Experimental("AAIP001")]
-    internal partial class FabricIQPreviewTool : InternalTool
+    public partial class FabricIQPreviewTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="FabricIQPreviewTool"/>. </summary>
         /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>

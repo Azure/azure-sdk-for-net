@@ -13,7 +13,7 @@ namespace Azure.AI.Projects
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellToolParamEnvironmentLocalEnvironmentParam"/>, <see cref="FunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="ContainerAutoParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownFunctionShellToolParamEnvironment))]
-    internal abstract partial class FunctionShellToolParamEnvironment : IJsonModel<FunctionShellToolParamEnvironment>
+    public abstract partial class FunctionShellToolParamEnvironment : IJsonModel<FunctionShellToolParamEnvironment>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellToolParamEnvironment"/> for deserialization. </summary>
         internal FunctionShellToolParamEnvironment()

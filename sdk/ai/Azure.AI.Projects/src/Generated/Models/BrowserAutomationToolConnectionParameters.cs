@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
     [Experimental("AAIP001")]
-    internal partial class BrowserAutomationToolConnectionParameters
+    public partial class BrowserAutomationToolConnectionParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

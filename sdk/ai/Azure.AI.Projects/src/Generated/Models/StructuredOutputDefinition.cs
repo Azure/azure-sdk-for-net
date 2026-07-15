@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A structured output that can be produced by the agent. </summary>
-    internal partial class StructuredOutputDefinition
+    public partial class StructuredOutputDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

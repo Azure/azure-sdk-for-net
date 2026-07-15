@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Client request to clear the avatar output buffer. </summary>
-    internal partial class ClientEventOutputAudioBufferClear : ClientEvent, IJsonModel<ClientEventOutputAudioBufferClear>
+    public partial class ClientEventOutputAudioBufferClear : ClientEvent, IJsonModel<ClientEventOutputAudioBufferClear>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

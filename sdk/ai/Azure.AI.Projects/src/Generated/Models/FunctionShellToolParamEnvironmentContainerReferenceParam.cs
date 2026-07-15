@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The FunctionShellToolParamEnvironmentContainerReferenceParam. </summary>
-    internal partial class FunctionShellToolParamEnvironmentContainerReferenceParam : FunctionShellToolParamEnvironment
+    public partial class FunctionShellToolParamEnvironmentContainerReferenceParam : FunctionShellToolParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellToolParamEnvironmentContainerReferenceParam"/>. </summary>
         /// <param name="containerId"> The ID of the referenced container. </param>

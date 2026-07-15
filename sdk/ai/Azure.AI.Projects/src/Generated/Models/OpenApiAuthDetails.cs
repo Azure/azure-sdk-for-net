@@ -11,7 +11,7 @@ namespace Azure.AI.Projects
     /// authentication details for OpenApiFunctionDefinition
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenApiAnonymousAuthDetails"/>, <see cref="OpenApiProjectConnectionAuthDetails"/>, and <see cref="OpenApiManagedAuthDetails"/>.
     /// </summary>
-    internal abstract partial class OpenApiAuthDetails
+    public abstract partial class OpenApiAuthDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -10,7 +10,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> MCP list tools. </summary>
-    internal partial class ItemFieldMcpListTools : ItemField
+    public partial class ItemFieldMcpListTools : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldMcpListTools"/>. </summary>
         /// <param name="id"> The unique ID of the list. </param>

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Input file. </summary>
-    internal partial class MessageContentInputFileContent : InternalMessageContent
+    public partial class MessageContentInputFileContent : InternalMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentInputFileContent"/>. </summary>
         internal MessageContentInputFileContent() : base(MessageContentType.InputFile)

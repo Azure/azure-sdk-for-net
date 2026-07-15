@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Coordinate. </summary>
-    internal partial class CoordParam : IJsonModel<CoordParam>
+    public partial class CoordParam : IJsonModel<CoordParam>
     {
         /// <summary> Initializes a new instance of <see cref="CoordParam"/> for deserialization. </summary>
         internal CoordParam()

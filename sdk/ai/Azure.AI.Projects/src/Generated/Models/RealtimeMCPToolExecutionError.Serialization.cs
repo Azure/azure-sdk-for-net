@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Realtime MCP tool execution error. </summary>
-    internal partial class RealtimeMCPToolExecutionError : RealtimeMCPError, IJsonModel<RealtimeMCPToolExecutionError>
+    public partial class RealtimeMCPToolExecutionError : RealtimeMCPError, IJsonModel<RealtimeMCPToolExecutionError>
     {
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPToolExecutionError"/> for deserialization. </summary>
         internal RealtimeMCPToolExecutionError()

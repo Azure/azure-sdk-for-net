@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> Inline skill payload. </summary>
-    internal partial class InlineSkillSourceParam : IJsonModel<InlineSkillSourceParam>
+    public partial class InlineSkillSourceParam : IJsonModel<InlineSkillSourceParam>
     {
         /// <summary> Initializes a new instance of <see cref="InlineSkillSourceParam"/> for deserialization. </summary>
         internal InlineSkillSourceParam()

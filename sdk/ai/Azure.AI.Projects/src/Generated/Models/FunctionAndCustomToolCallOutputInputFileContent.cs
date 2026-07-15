@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Input file. </summary>
-    internal partial class FunctionAndCustomToolCallOutputInputFileContent : FunctionAndCustomToolCallOutput
+    public partial class FunctionAndCustomToolCallOutputInputFileContent : FunctionAndCustomToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputFileContent"/>. </summary>
         public FunctionAndCustomToolCallOutputInputFileContent() : base(FunctionAndCustomToolCallOutputType.InputFile)

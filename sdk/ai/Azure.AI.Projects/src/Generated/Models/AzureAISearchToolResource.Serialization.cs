@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
-    internal partial class AzureAISearchToolResource : IJsonModel<AzureAISearchToolResource>
+    public partial class AzureAISearchToolResource : IJsonModel<AzureAISearchToolResource>
     {
         /// <summary> Initializes a new instance of <see cref="AzureAISearchToolResource"/> for deserialization. </summary>
         internal AzureAISearchToolResource()

@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> Available query types for Azure AI Search tool. </summary>
-    internal readonly partial struct AzureAISearchQueryType : IEquatable<AzureAISearchQueryType>
+    public readonly partial struct AzureAISearchQueryType : IEquatable<AzureAISearchQueryType>
     {
         private readonly string _value;
         /// <summary> Query type `simple`. </summary>

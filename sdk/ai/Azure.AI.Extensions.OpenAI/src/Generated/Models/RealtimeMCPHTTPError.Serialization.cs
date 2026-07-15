@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Realtime MCP HTTP error. </summary>
-    internal partial class RealtimeMCPHTTPError : RealtimeMCPError, IJsonModel<RealtimeMCPHTTPError>
+    public partial class RealtimeMCPHTTPError : RealtimeMCPError, IJsonModel<RealtimeMCPHTTPError>
     {
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPHTTPError"/> for deserialization. </summary>
         internal RealtimeMCPHTTPError()

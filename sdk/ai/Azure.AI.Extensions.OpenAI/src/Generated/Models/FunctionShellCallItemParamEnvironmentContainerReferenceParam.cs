@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The FunctionShellCallItemParamEnvironmentContainerReferenceParam. </summary>
-    internal partial class FunctionShellCallItemParamEnvironmentContainerReferenceParam : FunctionShellCallItemParamEnvironment
+    public partial class FunctionShellCallItemParamEnvironmentContainerReferenceParam : FunctionShellCallItemParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallItemParamEnvironmentContainerReferenceParam"/>. </summary>
         /// <param name="containerId"> The ID of the referenced container. </param>

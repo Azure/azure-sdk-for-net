@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Drag. </summary>
-    internal partial class DragParam : InternalComputerAction, IJsonModel<DragParam>
+    public partial class DragParam : InternalComputerAction, IJsonModel<DragParam>
     {
         /// <summary> Initializes a new instance of <see cref="DragParam"/> for deserialization. </summary>
         internal DragParam()

@@ -5,7 +5,7 @@
 namespace OpenAI
 {
     /// <summary></summary>
-    internal enum GrammarSyntax1
+    public enum GrammarSyntax1
     {
         /// <summary> Lark. </summary>
         Lark,

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Refusal. </summary>
-    internal partial class OutputMessageContentRefusalContent : OutputMessageContent
+    public partial class OutputMessageContentRefusalContent : OutputMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentRefusalContent"/>. </summary>
         /// <param name="refusal"> The refusal explanation from the model. </param>

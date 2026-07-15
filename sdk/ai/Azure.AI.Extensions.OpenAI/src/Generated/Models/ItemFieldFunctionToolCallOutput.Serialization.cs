@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Function tool call output. </summary>
-    internal partial class ItemFieldFunctionToolCallOutput : ItemField, IJsonModel<ItemFieldFunctionToolCallOutput>
+    public partial class ItemFieldFunctionToolCallOutput : ItemField, IJsonModel<ItemFieldFunctionToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldFunctionToolCallOutput"/> for deserialization. </summary>
         internal ItemFieldFunctionToolCallOutput()

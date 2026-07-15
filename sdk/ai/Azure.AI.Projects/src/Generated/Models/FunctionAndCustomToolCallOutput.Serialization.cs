@@ -13,7 +13,7 @@ namespace Azure.AI.Projects
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionAndCustomToolCallOutputInputTextContent"/>, <see cref="FunctionAndCustomToolCallOutputInputImageContent"/>, and <see cref="FunctionAndCustomToolCallOutputInputFileContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownFunctionAndCustomToolCallOutput))]
-    internal abstract partial class FunctionAndCustomToolCallOutput : IJsonModel<FunctionAndCustomToolCallOutput>
+    public abstract partial class FunctionAndCustomToolCallOutput : IJsonModel<FunctionAndCustomToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutput"/> for deserialization. </summary>
         internal FunctionAndCustomToolCallOutput()

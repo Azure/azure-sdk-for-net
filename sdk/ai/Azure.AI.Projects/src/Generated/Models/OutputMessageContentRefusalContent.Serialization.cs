@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Refusal. </summary>
-    internal partial class OutputMessageContentRefusalContent : OutputMessageContent, IJsonModel<OutputMessageContentRefusalContent>
+    public partial class OutputMessageContentRefusalContent : OutputMessageContent, IJsonModel<OutputMessageContentRefusalContent>
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentRefusalContent"/> for deserialization. </summary>
         internal OutputMessageContentRefusalContent()

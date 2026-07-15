@@ -10,7 +10,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Computer tool call. </summary>
-    internal partial class ItemFieldComputerToolCall : ItemField
+    public partial class ItemFieldComputerToolCall : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldComputerToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the computer call. </param>
