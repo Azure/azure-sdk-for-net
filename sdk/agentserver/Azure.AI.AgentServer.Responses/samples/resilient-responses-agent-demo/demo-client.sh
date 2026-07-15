@@ -55,6 +55,14 @@ set -uo pipefail
 ENDPOINT="${ENDPOINT:-https://<account>.services.ai.azure.com/api/projects/<project>/agents/resilient-responses-agent-demo-dotnet/endpoint/protocols}"
 API_VERSION="${API_VERSION:-v1}"
 MODEL="${MODEL:-gpt-5.4-nano}"
+# Request tracing: when DEBUG_HTTP=1 (default) every outbound request prints its
+# method, full URL (including query params), headers (Authorization redacted) and
+# JSON body before it is sent, and start/crash also print the returned
+# x-agent-session-id. This makes it easy to correlate a client call with the
+# server logs and, crucially, to see WHICH sandbox a crash was routed to (one
+# agent_session_id == one sandbox; a crash that lands on a different replica than
+# the running response will not interrupt it). Set DEBUG_HTTP=0 to silence.
+DEBUG_HTTP="${DEBUG_HTTP:-1}"
 SESSION_FILE=".demo-session"
 # Well-known file holding the id of the CURRENTLY in-flight response. The stream
 # renderer writes it the instant the id is captured (mid-stream), so a `crash`
@@ -74,6 +82,37 @@ YELLOW='\033[33m'
 RED='\033[31m'
 CYAN='\033[36m'
 RESET='\033[0m'
+
+# ── Request tracing ───────────────────────────────────────────────────────────
+# debug_request METHOD URL BODY [HEADER ...]
+# Prints a compact trace of an outbound request to stderr (so it never pollutes
+# the SSE body piped to the renderer). Pass BODY="" for GET/DELETE. Header args
+# are human-readable descriptors — callers pass "Authorization: Bearer <redacted>"
+# so the bearer token is NEVER echoed. The URL is split into path + query params
+# so the api-version (and any future params) are easy to eyeball.
+debug_request() {
+    [[ "${DEBUG_HTTP:-1}" != "1" ]] && return 0
+    local method="$1" url="$2" body="${3:-}"
+    shift 3 2>/dev/null || shift $#
+    local base="${url%%\?*}" query=""
+    [[ "$url" == *"?"* ]] && query="${url#*\?}"
+    {
+        echo -e "${DIM}▷ ${method} ${base}${RESET}"
+        if [[ -n "$query" ]]; then
+            local IFS='&' kv
+            for kv in $query; do echo -e "${DIM}    ?${kv}${RESET}"; done
+        fi
+        local h
+        for h in "$@"; do echo -e "${DIM}    ${h}${RESET}"; done
+        [[ -n "$body" ]] && echo -e "${DIM}    body: ${body}${RESET}"
+    } >&2
+}
+
+# debug_response_header NAME VALUE — echo a captured response header in debug mode.
+debug_response_header() {
+    [[ "${DEBUG_HTTP:-1}" != "1" ]] && return 0
+    echo -e "${DIM}◁ ${1}: ${2:-<none>}${RESET}" >&2
+}
 
 # ── Command timing ──────────────────────────────────────────────────────────
 # Every command prints when it was triggered and when it ended (with elapsed
@@ -219,6 +258,12 @@ stream_sse() {
     if [[ "$method" == "POST" ]]; then
         curl_args+=(-X POST -H "Content-Type: application/json" --data "$post_body")
     fi
+    local dbg_headers=("Authorization: Bearer <redacted>"
+                       "Accept: text/event-stream"
+                       "Foundry-Features: HostedAgents=V1Preview")
+    [[ -n "$extra_header" ]] && dbg_headers+=("$extra_header")
+    [[ "$method" == "POST" ]] && dbg_headers+=("Content-Type: application/json")
+    debug_request "$method" "$url" "$post_body" "${dbg_headers[@]}"
     # -D dumps the response headers (incl. x-agent-session-id, which the
     # platform returns on every /responses call) while the SSE body streams
     # to the renderer pipe. We use it to confirm sandbox affinity afterwards.
@@ -360,6 +405,7 @@ print()
     if [[ -f "$hdr_file" ]]; then
         local sid
         sid=$(grep -i '^x-agent-session-id:' "$hdr_file" | tail -1 | tr -d '\r' | awk '{print $2}')
+        debug_response_header "x-agent-session-id" "$sid"
         if [[ -n "$sid" ]]; then
             if [[ -z "${SESSION_ID:-}" ]]; then
                 SESSION_ID="$sid"
@@ -508,6 +554,8 @@ cmd_cancel() {
     ensure_token
 
     echo -e "${YELLOW}Cancelling response ${RESPONSE_ID}${RESET}"
+    debug_request "POST" "${ENDPOINT}/responses/${RESPONSE_ID}/cancel?api-version=${API_VERSION}" "" \
+        "Authorization: Bearer <redacted>" "Foundry-Features: HostedAgents=V1Preview"
     curl -sS -X POST \
         -H "Authorization: Bearer $TOKEN" \
         -H "Foundry-Features: HostedAgents=V1Preview" \
@@ -676,6 +724,8 @@ print(json.dumps({
     # the in-flight RESPONSE_ID with the crash response's throwaway id).
     ensure_token
     local crash_sid
+    debug_request "POST" "${ENDPOINT}/responses?api-version=${API_VERSION}" "$body" \
+        "Authorization: Bearer <redacted>" "Content-Type: application/json" "Foundry-Features: HostedAgents=V1Preview"
     crash_sid=$(curl -sS -N -m 20 -D - -o /dev/null \
         -H "Authorization: Bearer ${TOKEN}" \
         -H "Content-Type: application/json" \
@@ -683,6 +733,7 @@ print(json.dumps({
         -X POST --data "$body" \
         "${ENDPOINT}/responses?api-version=${API_VERSION}" 2>/dev/null \
         | grep -i '^x-agent-session-id:' | tail -1 | tr -d '\r' | awk '{print $2}')
+    debug_response_header "x-agent-session-id" "$crash_sid"
     if [[ -n "$crash_sid" && "$crash_sid" != "$SESSION_ID" ]]; then
         echo -e "${YELLOW}⚠ crash routed to session ${crash_sid} != pinned ${SESSION_ID}${RESET}" >&2
     fi
@@ -716,6 +767,8 @@ cmd_delete() {
     ensure_token
 
     echo -e "${YELLOW}Deleting response ${RESPONSE_ID}${RESET}"
+    debug_request "DELETE" "${ENDPOINT}/responses/${RESPONSE_ID}?api-version=${API_VERSION}" "" \
+        "Authorization: Bearer <redacted>" "Foundry-Features: HostedAgents=V1Preview"
     curl -sS -X DELETE \
         -H "Authorization: Bearer $TOKEN" \
         -H "Foundry-Features: HostedAgents=V1Preview" \
@@ -733,6 +786,8 @@ cmd_status() {
     if [[ -n "${RESPONSE_ID:-}" ]]; then
         ensure_token
         echo -e "${BOLD}Server-side snapshot${RESET}"
+        debug_request "GET" "${ENDPOINT}/responses/${RESPONSE_ID}?api-version=${API_VERSION}" "" \
+            "Authorization: Bearer <redacted>" "Foundry-Features: HostedAgents=V1Preview"
         curl -sS \
             -H "Authorization: Bearer $TOKEN" \
             -H "Foundry-Features: HostedAgents=V1Preview" \
@@ -750,6 +805,7 @@ cmd_logs() {
     echo -e "${DIM}Note: a single monitor attach does not follow the container across a${RESET}"
     echo -e "${DIM}crash/restart. To watch a full crash→recover cycle use './demo-client.sh crash'${RESET}"
     echo -e "${DIM}(it re-attaches automatically and prints the recovery markers).${RESET}"
+    [[ "${DEBUG_HTTP:-1}" == "1" ]] && echo -e "${DIM}▷ exec azd ai agent monitor ${args[*]} $*${RESET}" >&2
     azd ai agent monitor "${args[@]}" "$@"
 }
 
