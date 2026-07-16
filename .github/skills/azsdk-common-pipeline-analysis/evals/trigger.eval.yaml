@@ -21,30 +21,45 @@ stimuli:
   # Should trigger
   - name: trigger-my-ci-pipeline-is-failing
     prompt: "my Azure SDK CI pipeline build 6447834 is failing, can you help troubleshoot what went wrong?"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-pipeline-analysis"]
   - name: trigger-debug-pipeline-build-error
     prompt: "debug the build error in my SDK generation pipeline, build 6447834"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-pipeline-analysis"]
   - name: trigger-pipeline-analysis-help
     prompt: "I'm stuck on a failing Azure SDK pipeline — can you help me troubleshoot it?"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-pipeline-analysis"]
   - name: trigger-analyze-failing-sdk-pipeline
     prompt: "analyze my failing Azure SDK generation pipeline https://dev.azure.com/azure-sdk/internal/_build/results?buildId=6447834 and tell me what went wrong"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-pipeline-analysis"]
   - name: trigger-ci-build-broke-after-my-change
     prompt: "the SDK CI build broke after my change, help me troubleshoot the pipeline"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:

@@ -20,30 +20,45 @@ scoring:
 stimuli:
   - name: trigger-release-my-sdk-package
     prompt: "release my SDK package"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-sdk-release"]
   - name: trigger-how-to-publish-a-new-sdk-version
     prompt: "how to publish a new SDK version"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-sdk-release"]
   - name: trigger-walk-me-through-sdk-release-process
     prompt: "walk me through SDK release process"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-sdk-release"]
   - name: trigger-release-a-new-version-of-azure-sdk
     prompt: "release a new version of azure-sdk"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-sdk-release"]
   - name: trigger-sdk-release-checklist
     prompt: "SDK release checklist"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
