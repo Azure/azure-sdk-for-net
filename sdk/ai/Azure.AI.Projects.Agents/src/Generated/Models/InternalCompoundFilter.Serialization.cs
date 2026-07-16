@@ -10,7 +10,8 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalCompoundFilter : IJsonModel<InternalCompoundFilter>
+    /// <summary> Compound Filter. </summary>
+    public partial class InternalCompoundFilter : IJsonModel<InternalCompoundFilter>
     {
         /// <summary> Initializes a new instance of <see cref="InternalCompoundFilter"/> for deserialization. </summary>
         internal InternalCompoundFilter()

@@ -8,7 +8,8 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalMCPToolFilter
+    /// <summary> MCP tool filter. </summary>
+    public partial class InternalMCPToolFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
