@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
@@ -190,6 +191,42 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
         }
 
         [Test]
+        public void TryResolve_ChainedTokenCredential_EnvironmentEntry_SurfacesUnavailableForFallthrough()
+        {
+            // EnvironmentCredential (like WorkloadIdentityCredential) does not consume
+            // IsChainedCredential — it surfaces an unconfigured environment as
+            // CredentialUnavailableException, which is what lets ChainedTokenCredential
+            // fall through. DefaultAzureCredentialFactory likewise does not set the flag
+            // for these credentials, so the behavior matches DefaultAzureCredential.
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_TENANT_ID", null },
+                { "AZURE_CLIENT_ID", null },
+                { "AZURE_CLIENT_SECRET", null },
+                { "AZURE_CLIENT_CERTIFICATE_PATH", null },
+                { "AZURE_USERNAME", null },
+                { "AZURE_PASSWORD", null },
+                { "AZURE_FEDERATED_TOKEN_FILE", null },
+            }))
+            {
+                var section = BuildSection(new Dictionary<string, string>
+                {
+                    ["MyClient:Credential:CredentialSource"] = "ChainedTokenCredential",
+                    ["MyClient:Credential:Sources:0:CredentialSource"] = "EnvironmentCredential",
+                });
+
+                var resolver = new AzureCredentialResolver();
+                Assert.IsTrue(resolver.TryResolve(section, out var provider));
+
+                TokenCredential[] sources = GetChainSources((ChainedTokenCredential)provider);
+                Assert.IsInstanceOf<EnvironmentCredential>(sources[0]);
+
+                var context = new TokenRequestContext(new[] { "https://management.azure.com/.default" });
+                Assert.Throws<CredentialUnavailableException>(() => sources[0].GetToken(context, default));
+            }
+        }
+
+        [Test]
         public void TryResolve_ChainedTokenCredential_NestedChain_IsRejected()
         {
             // A ChainedTokenCredential entry nested inside another chain is rejected
@@ -206,7 +243,9 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
             Assert.Throws<InvalidOperationException>(() => resolver.TryResolve(section, out _));
         }
 
-
+        [Test]
+        public void TryResolve_ChainedTokenCredential_UnclaimedCustomSource_ReturnsFalse()
+        {
             // No resolver claims the custom source and no chain callback is
             // available (single-arg overload), so the whole chain defers.
             var section = BuildSection(new Dictionary<string, string>
