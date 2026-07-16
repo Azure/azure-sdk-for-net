@@ -617,6 +617,36 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         }
 
         [Test]
+        public void ParseGetMessageSessionsResponseReportsAllInvalidIndexesInStringArray()
+        {
+            // Invalid entries at indexes 0 (null) and 2 (empty): the parser must finish iterating
+            // and report both, describing why each is invalid (covers the null and empty reasons).
+            var response = CreateGetSessionsResponse(
+                AmqpResponseStatusCode.OK, new[] { null, "session-2", "" });
+
+            Assert.That(
+                () => AmqpReceiver.ParseGetMessageSessionsResponse(response),
+                Throws.InstanceOf<ServiceBusException>()
+                    .With.Message.Contains("index 0").And.Message.Contains("was null")
+                    .And.Message.Contains("index 2"));
+        }
+
+        [Test]
+        public void ParseGetMessageSessionsResponseReportsAllInvalidIndexesInObjectArray()
+        {
+            // Invalid entries at indexes 0 (null), 2 (empty), and 3 (non-string): the parser must
+            // finish iterating and report all three, including the offending type.
+            var response = CreateGetSessionsResponse(
+                AmqpResponseStatusCode.OK, new object[] { null, "session-2", "", 5 });
+
+            Assert.That(
+                () => AmqpReceiver.ParseGetMessageSessionsResponse(response),
+                Throws.InstanceOf<ServiceBusException>()
+                    .With.Message.Contains("was null").And.Message.Contains("index 2")
+                    .And.Message.Contains("index 3").And.Message.Contains("Int32"));
+        }
+
+        [Test]
         public void ParseGetMessageSessionsResponseThrowsForNotFoundWithoutMessageNotFound()
         {
             var response = CreateGetSessionsResponse(

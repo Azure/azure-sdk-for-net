@@ -1668,29 +1668,53 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if (sessionsObj is string[] sessionArray)
                 {
+                    // Iterate the full array and collect every invalid entry rather than throwing on
+                    // the first, describing why each is invalid so all offending entries are reported.
+                    List<string> invalidDescriptions = null;
                     for (int i = 0; i < sessionArray.Length; i++)
                     {
                         if (string.IsNullOrEmpty(sessionArray[i]))
                         {
-                            throw new ServiceBusException(
-                                $"The management response contained an invalid session id at index {i}.",
-                                ServiceBusFailureReason.GeneralError);
+                            var reason = sessionArray[i] is null ? "was null" : "was an empty string";
+                            (invalidDescriptions ??= new List<string>()).Add($"index {i} {reason}");
                         }
+                    }
+                    if (invalidDescriptions != null)
+                    {
+                        throw new ServiceBusException(
+                            $"The management response contained invalid session ids ({string.Join(", ", invalidDescriptions)}).",
+                            ServiceBusFailureReason.GeneralError);
                     }
                     return sessionArray;
                 }
                 if (sessionsObj is object[] objectArray)
                 {
+                    // Iterate the full array and collect every invalid entry rather than throwing on
+                    // the first, describing why each is invalid so all offending entries are reported.
                     var result = new string[objectArray.Length];
+                    List<string> invalidDescriptions = null;
                     for (int i = 0; i < objectArray.Length; i++)
                     {
-                        if (objectArray[i] is not string sessionId || string.IsNullOrEmpty(sessionId))
+                        if (objectArray[i] is string sessionId && !string.IsNullOrEmpty(sessionId))
                         {
-                            throw new ServiceBusException(
-                                $"The management response contained an invalid session id at index {i}.",
-                                ServiceBusFailureReason.GeneralError);
+                            result[i] = sessionId;
                         }
-                        result[i] = sessionId;
+                        else
+                        {
+                            var reason = objectArray[i] switch
+                            {
+                                null => "was null",
+                                string => "was an empty string",
+                                var value => $"was of type {value.GetType().Name}"
+                            };
+                            (invalidDescriptions ??= new List<string>()).Add($"index {i} {reason}");
+                        }
+                    }
+                    if (invalidDescriptions != null)
+                    {
+                        throw new ServiceBusException(
+                            $"The management response contained invalid session ids ({string.Join(", ", invalidDescriptions)}).",
+                            ServiceBusFailureReason.GeneralError);
                     }
                     return result;
                 }
