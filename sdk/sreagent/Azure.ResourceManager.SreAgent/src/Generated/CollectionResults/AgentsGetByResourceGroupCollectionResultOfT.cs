@@ -14,7 +14,7 @@ using Azure.ResourceManager.SreAgent.Models;
 
 namespace Azure.ResourceManager.SreAgent
 {
-    internal partial class AgentsGetByResourceGroupCollectionResultOfT : Pageable<AgentData>
+    internal partial class AgentsGetByResourceGroupCollectionResultOfT : Pageable<SreAgentData>
     {
         private readonly Agents _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SreAgent
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AgentsGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<AgentData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<SreAgentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SreAgent
                 }
                 AgentListResult result = AgentListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<AgentData>.FromValues((IReadOnlyList<AgentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<SreAgentData>.FromValues((IReadOnlyList<SreAgentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

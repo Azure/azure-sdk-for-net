@@ -13,23 +13,23 @@ using Azure.ResourceManager.SreAgent;
 namespace Azure.ResourceManager.SreAgent.Models
 {
     /// <summary> Agent update model. </summary>
-    public partial class AgentPatch
+    public partial class SreAgentPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentPatch"/>. </summary>
-        public AgentPatch()
+        /// <summary> Initializes a new instance of <see cref="SreAgentPatch"/>. </summary>
+        public SreAgentPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SreAgentPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> Agent specific properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, AgentPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SreAgentPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, AgentPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;

@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.SreAgent.Models
             {
                 throw new FormatException($"The model {nameof(AgentIdentity)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Enabled))
+            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
+                writer.WriteStringValue(ClientId.Value);
             }
             writer.WritePropertyName("initialSponsorGroupId"u8);
             writer.WriteStringValue(InitialSponsorGroupId);
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.SreAgent.Models
             {
                 return null;
             }
-            bool? enabled = default;
-            string clientId = default;
+            bool? isEnabled = default;
+            Guid? clientId = default;
             string initialSponsorGroupId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -145,12 +145,16 @@ namespace Azure.ResourceManager.SreAgent.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("clientId"u8))
                 {
-                    clientId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("initialSponsorGroupId"u8))
@@ -163,7 +167,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentIdentity(enabled, clientId, initialSponsorGroupId, additionalBinaryDataProperties);
+            return new AgentIdentity(isEnabled, clientId, initialSponsorGroupId, additionalBinaryDataProperties);
         }
     }
 }

@@ -69,14 +69,14 @@ namespace Azure.ResourceManager.SreAgent.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AgentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AgentResource> GetAgentsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SreAgentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SreAgentResource> GetSreAgentsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgentData, AgentResource>(new AgentsGetBySubscriptionAsyncCollectionResultOfT(AgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSreAgentSubscriptionResource.GetAgents"), data => new AgentResource(Client, data));
+            return new AsyncPageableWrapper<SreAgentData, SreAgentResource>(new AgentsGetBySubscriptionAsyncCollectionResultOfT(AgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSreAgentSubscriptionResource.GetSreAgents"), data => new SreAgentResource(Client, data));
         }
 
         /// <summary>
@@ -97,14 +97,14 @@ namespace Azure.ResourceManager.SreAgent.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AgentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AgentResource> GetAgents(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SreAgentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SreAgentResource> GetSreAgents(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgentData, AgentResource>(new AgentsGetBySubscriptionCollectionResultOfT(AgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSreAgentSubscriptionResource.GetAgents"), data => new AgentResource(Client, data));
+            return new PageableWrapper<SreAgentData, SreAgentResource>(new AgentsGetBySubscriptionCollectionResultOfT(AgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSreAgentSubscriptionResource.GetSreAgents"), data => new SreAgentResource(Client, data));
         }
 
         /// <summary>

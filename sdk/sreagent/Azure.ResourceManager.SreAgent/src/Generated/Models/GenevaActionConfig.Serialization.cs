@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.SreAgent.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ApprovalRequired))
+            if (Optional.IsDefined(IsApprovalRequired))
             {
                 writer.WritePropertyName("approvalRequired"u8);
-                writer.WriteBooleanValue(ApprovalRequired.Value);
+                writer.WriteBooleanValue(IsApprovalRequired.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SreAgent.Models
             string actionName = default;
             string extension = default;
             IList<GenevaActionParameterInfo> actionParameters = default;
-            bool? approvalRequired = default;
+            bool? isApprovalRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                     {
                         continue;
                     }
-                    approvalRequired = prop.Value.GetBoolean();
+                    isApprovalRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GenevaActionConfig(actionName, extension, actionParameters ?? new ChangeTrackingList<GenevaActionParameterInfo>(), approvalRequired, additionalBinaryDataProperties);
+            return new GenevaActionConfig(actionName, extension, actionParameters ?? new ChangeTrackingList<GenevaActionParameterInfo>(), isApprovalRequired, additionalBinaryDataProperties);
         }
     }
 }

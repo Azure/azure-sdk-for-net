@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <summary> Initializes a new instance of <see cref="SupportedAgentModelProperties"/>. </summary>
         /// <param name="provider"> The provider name (e.g., MicrosoftFoundry, Anthropic). </param>
         /// <param name="model"> The model name (e.g., gpt-5.2, claude-sonnet-4-5). </param>
-        /// <param name="default"> Indicates whether this is the default model. </param>
-        internal SupportedAgentModelProperties(string provider, string model, bool @default)
+        /// <param name="isDefault"> Indicates whether this is the default model. </param>
+        internal SupportedAgentModelProperties(string provider, string model, bool isDefault)
         {
             Provider = provider;
             Model = model;
-            Default = @default;
+            IsDefault = isDefault;
         }
 
         /// <summary> Initializes a new instance of <see cref="SupportedAgentModelProperties"/>. </summary>
@@ -33,16 +33,16 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="model"> The model name (e.g., gpt-5.2, claude-sonnet-4-5). </param>
         /// <param name="modelDisplayName"> The display name of the model (e.g., GPT-5.2, Claude Sonnet 4.5). </param>
         /// <param name="multiplier"> Billing multiplier for the model (e.g., 1x, 2x). </param>
-        /// <param name="default"> Indicates whether this is the default model. </param>
+        /// <param name="isDefault"> Indicates whether this is the default model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SupportedAgentModelProperties(string provider, string providerDisplayName, string model, string modelDisplayName, string multiplier, bool @default, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SupportedAgentModelProperties(string provider, string providerDisplayName, string model, string modelDisplayName, string multiplier, bool isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provider = provider;
             ProviderDisplayName = providerDisplayName;
             Model = model;
             ModelDisplayName = modelDisplayName;
             Multiplier = multiplier;
-            Default = @default;
+            IsDefault = isDefault;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.SreAgent.Models
         public string Multiplier { get; }
 
         /// <summary> Indicates whether this is the default model. </summary>
-        public bool Default { get; }
+        public bool IsDefault { get; }
     }
 }

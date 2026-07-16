@@ -14,51 +14,51 @@ using Azure.ResourceManager.SreAgent;
 namespace Azure.ResourceManager.SreAgent.Models
 {
     /// <summary> Default AI model configuration. </summary>
-    public partial class DefaultModel : IJsonModel<DefaultModel>
+    public partial class SreAgentDefaultModel : IJsonModel<SreAgentDefaultModel>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DefaultModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SreAgentDefaultModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DefaultModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SreAgentDefaultModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDefaultModel(document.RootElement, options);
+                        return DeserializeSreAgentDefaultModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefaultModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SreAgentDefaultModel)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DefaultModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SreAgentDefaultModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSreAgentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DefaultModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SreAgentDefaultModel)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DefaultModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SreAgentDefaultModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DefaultModel IPersistableModel<DefaultModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SreAgentDefaultModel IPersistableModel<SreAgentDefaultModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DefaultModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SreAgentDefaultModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DefaultModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SreAgentDefaultModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DefaultModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SreAgentDefaultModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefaultModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SreAgentDefaultModel)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Provider))
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.SreAgent.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DefaultModel IJsonModel<DefaultModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SreAgentDefaultModel IJsonModel<SreAgentDefaultModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DefaultModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SreAgentDefaultModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DefaultModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SreAgentDefaultModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefaultModel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SreAgentDefaultModel)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDefaultModel(document.RootElement, options);
+            return DeserializeSreAgentDefaultModel(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DefaultModel DeserializeDefaultModel(JsonElement element, ModelReaderWriterOptions options)
+        internal static SreAgentDefaultModel DeserializeSreAgentDefaultModel(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DefaultModel(provider, name, additionalBinaryDataProperties);
+            return new SreAgentDefaultModel(provider, name, additionalBinaryDataProperties);
         }
     }
 }

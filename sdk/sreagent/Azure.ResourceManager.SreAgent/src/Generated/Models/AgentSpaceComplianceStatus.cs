@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <summary> Initializes a new instance of <see cref="AgentSpaceComplianceStatus"/>. </summary>
         /// <param name="isCompliant"> Indicates whether the Agent Space is compliant. </param>
         /// <param name="complianceIssues"> List of compliance issues found in the Agent Space. </param>
-        /// <param name="lastComplianceCheck"> Timestamp of the last compliance check. </param>
+        /// <param name="lastComplianceCheckOn"> Timestamp of the last compliance check. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentSpaceComplianceStatus(bool isCompliant, IReadOnlyList<string> complianceIssues, DateTimeOffset? lastComplianceCheck, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentSpaceComplianceStatus(bool isCompliant, IReadOnlyList<string> complianceIssues, DateTimeOffset? lastComplianceCheckOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsCompliant = isCompliant;
             ComplianceIssues = complianceIssues;
-            LastComplianceCheck = lastComplianceCheck;
+            LastComplianceCheckOn = lastComplianceCheckOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.SreAgent.Models
         public IReadOnlyList<string> ComplianceIssues { get; }
 
         /// <summary> Timestamp of the last compliance check. </summary>
-        public DateTimeOffset? LastComplianceCheck { get; }
+        public DateTimeOffset? LastComplianceCheckOn { get; }
     }
 }

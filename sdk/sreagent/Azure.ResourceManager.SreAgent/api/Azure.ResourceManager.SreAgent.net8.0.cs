@@ -1,22 +1,5 @@
 namespace Azure.ResourceManager.SreAgent
 {
-    public partial class AgentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SreAgent.AgentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SreAgent.AgentResource>, System.Collections.IEnumerable
-    {
-        protected AgentCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.AgentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string agentName, Azure.ResourceManager.SreAgent.AgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.AgentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string agentName, Azure.ResourceManager.SreAgent.AgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SreAgent.AgentResource> Get(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SreAgent.AgentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SreAgent.AgentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.AgentResource>> GetAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.SreAgent.AgentResource> GetIfExists(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SreAgent.AgentResource>> GetIfExistsAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SreAgent.AgentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SreAgent.AgentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SreAgent.AgentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SreAgent.AgentResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
     public partial class AgentConnectorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SreAgent.AgentConnectorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SreAgent.AgentConnectorResource>, System.Collections.IEnumerable
     {
         protected AgentConnectorCollection() { }
@@ -68,55 +51,6 @@ namespace Azure.ResourceManager.SreAgent
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.AgentConnectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.AgentConnectorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SreAgent.AgentConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.AgentConnectorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SreAgent.AgentConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AgentData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.AgentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.AgentData>
-    {
-        public AgentData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.SreAgent.Models.AgentProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.SreAgent.AgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.AgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.AgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SreAgent.AgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.AgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.AgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.AgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AgentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.AgentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.AgentData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AgentResource() { }
-        public virtual Azure.ResourceManager.SreAgent.AgentData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.SreAgent.AgentResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.AgentResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string agentName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SreAgent.AgentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SreAgent.AgentConnectorResource> GetAgentConnector(string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.AgentConnectorResource>> GetAgentConnectorAsync(string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.SreAgent.AgentConnectorCollection GetAgentConnectors() { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.AgentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SreAgent.Models.AgentConnectorList> GetWithSecretsByAgent(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.Models.AgentConnectorList>> GetWithSecretsByAgentAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SreAgent.AgentResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.AgentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SreAgent.AgentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.AgentResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.AgentResource> Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.AgentResource>> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.AgentResource> Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.AgentResource>> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.SreAgent.AgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.AgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.AgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SreAgent.AgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.AgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.AgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.AgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.AgentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SreAgent.Models.AgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.AgentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SreAgent.Models.AgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AgentSpaceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SreAgent.AgentSpaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SreAgent.AgentSpaceResource>, System.Collections.IEnumerable
     {
@@ -238,15 +172,41 @@ namespace Azure.ResourceManager.SreAgent
         public static Azure.ResourceManager.SreAgent.AzureResourceManagerSreAgentContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
+    public partial class SreAgentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SreAgent.SreAgentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SreAgent.SreAgentResource>, System.Collections.IEnumerable
+    {
+        protected SreAgentCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.SreAgentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string agentName, Azure.ResourceManager.SreAgent.SreAgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.SreAgentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string agentName, Azure.ResourceManager.SreAgent.SreAgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SreAgent.SreAgentResource> Get(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SreAgent.SreAgentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SreAgent.SreAgentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.SreAgentResource>> GetAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SreAgent.SreAgentResource> GetIfExists(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SreAgent.SreAgentResource>> GetIfExistsAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SreAgent.SreAgentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SreAgent.SreAgentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SreAgent.SreAgentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SreAgent.SreAgentResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SreAgentData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.SreAgentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.SreAgentData>
+    {
+        public SreAgentData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.SreAgent.Models.AgentProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.SreAgent.SreAgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.SreAgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.SreAgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SreAgent.SreAgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.SreAgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.SreAgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.SreAgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public static partial class SreAgentExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.SreAgent.AgentResource> GetAgent(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.AgentResource>> GetAgentAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SreAgent.AgentConnectorResource GetAgentConnectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.SreAgent.AgentResource GetAgentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.SreAgent.AgentCollection GetAgents(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.SreAgent.AgentResource> GetAgents(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.SreAgent.AgentResource> GetAgentsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SreAgent.AgentSpaceResource> GetAgentSpace(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string agentSpaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.AgentSpaceResource>> GetAgentSpaceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string agentSpaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SreAgent.AgentSpaceConnectorResource GetAgentSpaceConnectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -256,6 +216,46 @@ namespace Azure.ResourceManager.SreAgent
         public static Azure.AsyncPageable<Azure.ResourceManager.SreAgent.AgentSpaceResource> GetAgentSpacesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.SreAgent.Models.SupportedAgentModel> GetByLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.SreAgent.Models.SupportedAgentModel> GetByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SreAgent.SreAgentResource> GetSreAgent(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.SreAgentResource>> GetSreAgentAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.SreAgent.SreAgentResource GetSreAgentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SreAgent.SreAgentCollection GetSreAgents(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.SreAgent.SreAgentResource> GetSreAgents(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.SreAgent.SreAgentResource> GetSreAgentsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SreAgentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.SreAgentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.SreAgentData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SreAgentResource() { }
+        public virtual Azure.ResourceManager.SreAgent.SreAgentData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.SreAgent.SreAgentResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.SreAgentResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string agentName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SreAgent.SreAgentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SreAgent.AgentConnectorResource> GetAgentConnector(string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.AgentConnectorResource>> GetAgentConnectorAsync(string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SreAgent.AgentConnectorCollection GetAgentConnectors() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.SreAgentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SreAgent.Models.AgentConnectorList> GetWithSecretsByAgent(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.Models.AgentConnectorList>> GetWithSecretsByAgentAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SreAgent.SreAgentResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.SreAgentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SreAgent.SreAgentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.SreAgentResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.SreAgentResource> Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.SreAgentResource>> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.SreAgentResource> Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.SreAgentResource>> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SreAgent.SreAgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.SreAgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.SreAgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SreAgent.SreAgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.SreAgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.SreAgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.SreAgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.SreAgentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SreAgent.Models.SreAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SreAgent.SreAgentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SreAgent.Models.SreAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.SreAgent.Mocking
@@ -264,29 +264,29 @@ namespace Azure.ResourceManager.SreAgent.Mocking
     {
         protected MockableSreAgentArmClient() { }
         public virtual Azure.ResourceManager.SreAgent.AgentConnectorResource GetAgentConnectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.SreAgent.AgentResource GetAgentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SreAgent.AgentSpaceConnectorResource GetAgentSpaceConnectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SreAgent.AgentSpaceResource GetAgentSpaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SreAgent.SreAgentResource GetSreAgentResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableSreAgentResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableSreAgentResourceGroupResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.SreAgent.AgentResource> GetAgent(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.AgentResource>> GetAgentAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.SreAgent.AgentCollection GetAgents() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SreAgent.AgentSpaceResource> GetAgentSpace(string agentSpaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.AgentSpaceResource>> GetAgentSpaceAsync(string agentSpaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SreAgent.AgentSpaceCollection GetAgentSpaces() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SreAgent.SreAgentResource> GetSreAgent(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SreAgent.SreAgentResource>> GetSreAgentAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SreAgent.SreAgentCollection GetSreAgents() { throw null; }
     }
     public partial class MockableSreAgentSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableSreAgentSubscriptionResource() { }
-        public virtual Azure.Pageable<Azure.ResourceManager.SreAgent.AgentResource> GetAgents(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SreAgent.AgentResource> GetAgentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.SreAgent.AgentSpaceResource> GetAgentSpaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SreAgent.AgentSpaceResource> GetAgentSpacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.SreAgent.Models.SupportedAgentModel> GetByLocation(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SreAgent.Models.SupportedAgentModel> GetByLocationAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SreAgent.SreAgentResource> GetSreAgents(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SreAgent.SreAgentResource> GetSreAgentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.SreAgent.Models
@@ -363,9 +363,9 @@ namespace Azure.ResourceManager.SreAgent.Models
     public partial class AgentIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.AgentIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.AgentIdentity>
     {
         public AgentIdentity(string initialSponsorGroupId) { }
-        public string ClientId { get { throw null; } }
-        public bool? Enabled { get { throw null; } }
+        public System.Guid? ClientId { get { throw null; } }
         public string InitialSponsorGroupId { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } }
         protected virtual Azure.ResourceManager.SreAgent.Models.AgentIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.SreAgent.Models.AgentIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -394,29 +394,13 @@ namespace Azure.ResourceManager.SreAgent.Models
         public static bool operator !=(Azure.ResourceManager.SreAgent.Models.AgentMode left, Azure.ResourceManager.SreAgent.Models.AgentMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AgentPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.AgentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.AgentPatch>
-    {
-        public AgentPatch() { }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.SreAgent.Models.AgentPatchProperties Properties { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        protected virtual Azure.ResourceManager.SreAgent.Models.AgentPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.SreAgent.Models.AgentPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.SreAgent.Models.AgentPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.AgentPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.AgentPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SreAgent.Models.AgentPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.AgentPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.AgentPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.AgentPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class AgentPatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.AgentPatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.AgentPatchProperties>
     {
         public AgentPatchProperties() { }
         public Azure.ResourceManager.SreAgent.Models.ActionConfiguration ActionConfiguration { get { throw null; } set { } }
         public string AgentIdentityInitialSponsorGroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier AgentSpaceId { get { throw null; } set { } }
-        public Azure.ResourceManager.SreAgent.Models.DefaultModel DefaultModel { get { throw null; } set { } }
+        public Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel DefaultModel { get { throw null; } set { } }
         public Azure.ResourceManager.SreAgent.Models.IncidentManagementConfiguration IncidentManagementConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.SreAgent.Models.KnowledgeGraphConfiguration KnowledgeGraphConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.SreAgent.Models.ApplicationInsightsConfiguration LogApplicationInsightsConfiguration { get { throw null; } set { } }
@@ -455,7 +439,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         public string AgentEndpoint { get { throw null; } }
         public Azure.ResourceManager.SreAgent.Models.AgentIdentity AgentIdentity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier AgentSpaceId { get { throw null; } set { } }
-        public Azure.ResourceManager.SreAgent.Models.DefaultModel DefaultModel { get { throw null; } set { } }
+        public Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel DefaultModel { get { throw null; } set { } }
         public Azure.ResourceManager.SreAgent.Models.IncidentManagementConfiguration IncidentManagementConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.SreAgent.Models.KnowledgeGraphConfiguration KnowledgeGraphConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.SreAgent.Models.ApplicationInsightsConfiguration LogApplicationInsightsConfiguration { get { throw null; } set { } }
@@ -498,7 +482,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         internal AgentSpaceComplianceStatus() { }
         public System.Collections.Generic.IReadOnlyList<string> ComplianceIssues { get { throw null; } }
         public bool IsCompliant { get { throw null; } }
-        public System.DateTimeOffset? LastComplianceCheck { get { throw null; } }
+        public System.DateTimeOffset? LastComplianceCheckOn { get { throw null; } }
         protected virtual Azure.ResourceManager.SreAgent.Models.AgentSpaceComplianceStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.SreAgent.Models.AgentSpaceComplianceStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -640,12 +624,10 @@ namespace Azure.ResourceManager.SreAgent.Models
         public static Azure.ResourceManager.SreAgent.AgentConnectorData AgentConnectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SreAgent.Models.AgentConnectorProperties properties = null) { throw null; }
         public static Azure.ResourceManager.SreAgent.Models.AgentConnectorList AgentConnectorList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SreAgent.AgentConnectorData> value = null, System.Uri nextLink = null) { throw null; }
         public static Azure.ResourceManager.SreAgent.Models.AgentConnectorProperties AgentConnectorProperties(System.Uri endpoint = null, string dataSource = null, Azure.Core.ResourceIdentifier identity = null, Azure.ResourceManager.SreAgent.Models.ConnectorProvisioningState? provisioningState = default(Azure.ResourceManager.SreAgent.Models.ConnectorProvisioningState?), string deploymentError = null, System.Collections.Generic.IDictionary<string, System.BinaryData> extendedProperties = null, string dataConnectorType = null, string source = null) { throw null; }
-        public static Azure.ResourceManager.SreAgent.AgentData AgentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.SreAgent.Models.AgentProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.SreAgent.Models.AgentIdentity AgentIdentity(bool? enabled = default(bool?), string clientId = null, string initialSponsorGroupId = null) { throw null; }
-        public static Azure.ResourceManager.SreAgent.Models.AgentPatch AgentPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.SreAgent.Models.AgentPatchProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.SreAgent.Models.AgentPatchProperties AgentPatchProperties(Azure.Core.ResourceIdentifier agentSpaceId = null, Azure.ResourceManager.SreAgent.Models.KnowledgeGraphConfiguration knowledgeGraphConfiguration = null, Azure.ResourceManager.SreAgent.Models.ActionConfiguration actionConfiguration = null, Azure.ResourceManager.SreAgent.Models.ApplicationInsightsConfiguration logApplicationInsightsConfiguration = null, Azure.ResourceManager.SreAgent.Models.IncidentManagementConfiguration incidentManagementConfiguration = null, Azure.ResourceManager.SreAgent.Models.UpgradeChannel? upgradeChannel = default(Azure.ResourceManager.SreAgent.Models.UpgradeChannel?), string agentIdentityInitialSponsorGroupId = null, Azure.ResourceManager.SreAgent.Models.DefaultModel defaultModel = null) { throw null; }
-        public static Azure.ResourceManager.SreAgent.Models.AgentProperties AgentProperties(Azure.ResourceManager.SreAgent.Models.AgentProvisioningState? provisioningState = default(Azure.ResourceManager.SreAgent.Models.AgentProvisioningState?), string agentEndpoint = null, string runningState = null, Azure.ResourceManager.SreAgent.Models.AgentPowerState? powerState = default(Azure.ResourceManager.SreAgent.Models.AgentPowerState?), Azure.Core.ResourceIdentifier agentSpaceId = null, Azure.ResourceManager.SreAgent.Models.KnowledgeGraphConfiguration knowledgeGraphConfiguration = null, Azure.ResourceManager.SreAgent.Models.ActionConfiguration actionConfiguration = null, Azure.ResourceManager.SreAgent.Models.ApplicationInsightsConfiguration logApplicationInsightsConfiguration = null, Azure.ResourceManager.SreAgent.Models.IncidentManagementConfiguration incidentManagementConfiguration = null, Azure.ResourceManager.SreAgent.Models.UpgradeChannel? upgradeChannel = default(Azure.ResourceManager.SreAgent.Models.UpgradeChannel?), Azure.ResourceManager.SreAgent.Models.AgentIdentity agentIdentity = null, Azure.ResourceManager.SreAgent.Models.DefaultModel defaultModel = null) { throw null; }
-        public static Azure.ResourceManager.SreAgent.Models.AgentSpaceComplianceStatus AgentSpaceComplianceStatus(bool isCompliant = false, System.Collections.Generic.IEnumerable<string> complianceIssues = null, System.DateTimeOffset? lastComplianceCheck = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.SreAgent.Models.AgentIdentity AgentIdentity(bool? isEnabled = default(bool?), System.Guid? clientId = default(System.Guid?), string initialSponsorGroupId = null) { throw null; }
+        public static Azure.ResourceManager.SreAgent.Models.AgentPatchProperties AgentPatchProperties(Azure.Core.ResourceIdentifier agentSpaceId = null, Azure.ResourceManager.SreAgent.Models.KnowledgeGraphConfiguration knowledgeGraphConfiguration = null, Azure.ResourceManager.SreAgent.Models.ActionConfiguration actionConfiguration = null, Azure.ResourceManager.SreAgent.Models.ApplicationInsightsConfiguration logApplicationInsightsConfiguration = null, Azure.ResourceManager.SreAgent.Models.IncidentManagementConfiguration incidentManagementConfiguration = null, Azure.ResourceManager.SreAgent.Models.UpgradeChannel? upgradeChannel = default(Azure.ResourceManager.SreAgent.Models.UpgradeChannel?), string agentIdentityInitialSponsorGroupId = null, Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel defaultModel = null) { throw null; }
+        public static Azure.ResourceManager.SreAgent.Models.AgentProperties AgentProperties(Azure.ResourceManager.SreAgent.Models.AgentProvisioningState? provisioningState = default(Azure.ResourceManager.SreAgent.Models.AgentProvisioningState?), string agentEndpoint = null, string runningState = null, Azure.ResourceManager.SreAgent.Models.AgentPowerState? powerState = default(Azure.ResourceManager.SreAgent.Models.AgentPowerState?), Azure.Core.ResourceIdentifier agentSpaceId = null, Azure.ResourceManager.SreAgent.Models.KnowledgeGraphConfiguration knowledgeGraphConfiguration = null, Azure.ResourceManager.SreAgent.Models.ActionConfiguration actionConfiguration = null, Azure.ResourceManager.SreAgent.Models.ApplicationInsightsConfiguration logApplicationInsightsConfiguration = null, Azure.ResourceManager.SreAgent.Models.IncidentManagementConfiguration incidentManagementConfiguration = null, Azure.ResourceManager.SreAgent.Models.UpgradeChannel? upgradeChannel = default(Azure.ResourceManager.SreAgent.Models.UpgradeChannel?), Azure.ResourceManager.SreAgent.Models.AgentIdentity agentIdentity = null, Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel defaultModel = null) { throw null; }
+        public static Azure.ResourceManager.SreAgent.Models.AgentSpaceComplianceStatus AgentSpaceComplianceStatus(bool isCompliant = false, System.Collections.Generic.IEnumerable<string> complianceIssues = null, System.DateTimeOffset? lastComplianceCheckOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.SreAgent.AgentSpaceConnectorData AgentSpaceConnectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SreAgent.Models.AgentSpaceConnectorProperties properties = null) { throw null; }
         public static Azure.ResourceManager.SreAgent.Models.AgentSpaceConnectorList AgentSpaceConnectorList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SreAgent.AgentSpaceConnectorData> value = null, System.Uri nextLink = null) { throw null; }
         public static Azure.ResourceManager.SreAgent.Models.AgentSpaceConnectorProperties AgentSpaceConnectorProperties(System.Uri endpoint = null, string dataSource = null, Azure.Core.ResourceIdentifier identity = null, Azure.ResourceManager.SreAgent.Models.ConnectorProvisioningState? provisioningState = default(Azure.ResourceManager.SreAgent.Models.ConnectorProvisioningState?), string deploymentError = null, System.Collections.Generic.IDictionary<string, System.BinaryData> extendedProperties = null, string dataConnectorType = null) { throw null; }
@@ -654,15 +636,17 @@ namespace Azure.ResourceManager.SreAgent.Models
         public static Azure.ResourceManager.SreAgent.Models.AgentSpacePatchProperties AgentSpacePatchProperties(string description = null, Azure.ResourceManager.SreAgent.Models.GenevaActionsPolicyPatch policiesGenevaActionsConfiguration = null, int? maxAgentCount = default(int?), string serviceTreeId = null) { throw null; }
         public static Azure.ResourceManager.SreAgent.Models.AgentSpaceProperties AgentSpaceProperties(Azure.ResourceManager.SreAgent.Models.AgentSpaceProvisioningState? provisioningState = default(Azure.ResourceManager.SreAgent.Models.AgentSpaceProvisioningState?), int? currentAgentCount = default(int?), System.Collections.Generic.IEnumerable<string> memberAgents = null, System.DateTimeOffset? lastPolicyPropagation = default(System.DateTimeOffset?), Azure.ResourceManager.SreAgent.Models.AgentSpaceComplianceStatus complianceStatus = null, string description = null, Azure.ResourceManager.SreAgent.Models.GenevaActionsPolicy policiesGenevaActionsConfiguration = null, int? maxAgentCount = default(int?), string serviceTreeId = null) { throw null; }
         public static Azure.ResourceManager.SreAgent.Models.ApplicationInsightsConfiguration ApplicationInsightsConfiguration(string appId = null, string connectionString = null) { throw null; }
-        public static Azure.ResourceManager.SreAgent.Models.DefaultModel DefaultModel(string provider = null, string name = null) { throw null; }
-        public static Azure.ResourceManager.SreAgent.Models.GenevaActionConfig GenevaActionConfig(string actionName = null, string extension = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SreAgent.Models.GenevaActionParameterInfo> actionParameters = null, bool? approvalRequired = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.SreAgent.Models.GenevaActionConfig GenevaActionConfig(string actionName = null, string extension = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SreAgent.Models.GenevaActionParameterInfo> actionParameters = null, bool? isApprovalRequired = default(bool?)) { throw null; }
         public static Azure.ResourceManager.SreAgent.Models.GenevaActionParameterInfo GenevaActionParameterInfo(string name = null, string type = null) { throw null; }
         public static Azure.ResourceManager.SreAgent.Models.GenevaActionsPolicy GenevaActionsPolicy(System.Uri acisEndpoint = null, string clientId = null, string certificateSubjectName = null, Azure.ResourceManager.SreAgent.Models.GenevaActionAuthenticationMode? authenticationMode = default(Azure.ResourceManager.SreAgent.Models.GenevaActionAuthenticationMode?), string extensionName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SreAgent.Models.GenevaActionConfig> allowedActions = null, string certificateSubjectAlternativeName = null) { throw null; }
         public static Azure.ResourceManager.SreAgent.Models.GenevaActionsPolicyPatch GenevaActionsPolicyPatch(System.Uri acisEndpoint = null, string clientId = null, string certificateSubjectName = null, Azure.ResourceManager.SreAgent.Models.GenevaActionAuthenticationMode? authenticationMode = default(Azure.ResourceManager.SreAgent.Models.GenevaActionAuthenticationMode?), string extensionName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SreAgent.Models.GenevaActionConfig> allowedActions = null) { throw null; }
         public static Azure.ResourceManager.SreAgent.Models.IncidentManagementConfiguration IncidentManagementConfiguration(string type = null, string connectionName = null, string connectionUri = null, string connectionKey = null, string oboUser = null) { throw null; }
         public static Azure.ResourceManager.SreAgent.Models.KnowledgeGraphConfiguration KnowledgeGraphConfiguration(Azure.Core.ResourceIdentifier identity = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> managedResources = null) { throw null; }
+        public static Azure.ResourceManager.SreAgent.SreAgentData SreAgentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.SreAgent.Models.AgentProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel SreAgentDefaultModel(string provider = null, string name = null) { throw null; }
+        public static Azure.ResourceManager.SreAgent.Models.SreAgentPatch SreAgentPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.SreAgent.Models.AgentPatchProperties properties = null) { throw null; }
         public static Azure.ResourceManager.SreAgent.Models.SupportedAgentModel SupportedAgentModel(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SreAgent.Models.SupportedAgentModelProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.SreAgent.Models.SupportedAgentModelProperties SupportedAgentModelProperties(string provider = null, string providerDisplayName = null, string model = null, string modelDisplayName = null, string multiplier = null, bool @default = false) { throw null; }
+        public static Azure.ResourceManager.SreAgent.Models.SupportedAgentModelProperties SupportedAgentModelProperties(string provider = null, string providerDisplayName = null, string model = null, string modelDisplayName = null, string multiplier = null, bool isDefault = false) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConnectorProvisioningState : System.IEquatable<Azure.ResourceManager.SreAgent.Models.ConnectorProvisioningState>
@@ -683,21 +667,6 @@ namespace Azure.ResourceManager.SreAgent.Models
         public static implicit operator Azure.ResourceManager.SreAgent.Models.ConnectorProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SreAgent.Models.ConnectorProvisioningState left, Azure.ResourceManager.SreAgent.Models.ConnectorProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DefaultModel : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.DefaultModel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.DefaultModel>
-    {
-        public DefaultModel() { }
-        public string Name { get { throw null; } set { } }
-        public string Provider { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.SreAgent.Models.DefaultModel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.SreAgent.Models.DefaultModel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.SreAgent.Models.DefaultModel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.DefaultModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.DefaultModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SreAgent.Models.DefaultModel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.DefaultModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.DefaultModel>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.DefaultModel>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GenevaActionAuthenticationMode : System.IEquatable<Azure.ResourceManager.SreAgent.Models.GenevaActionAuthenticationMode>
@@ -721,8 +690,8 @@ namespace Azure.ResourceManager.SreAgent.Models
         public GenevaActionConfig() { }
         public string ActionName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SreAgent.Models.GenevaActionParameterInfo> ActionParameters { get { throw null; } }
-        public bool? ApprovalRequired { get { throw null; } set { } }
         public string Extension { get { throw null; } set { } }
+        public bool? IsApprovalRequired { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.SreAgent.Models.GenevaActionConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.SreAgent.Models.GenevaActionConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -820,6 +789,37 @@ namespace Azure.ResourceManager.SreAgent.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.KnowledgeGraphConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.KnowledgeGraphConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class SreAgentDefaultModel : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel>
+    {
+        public SreAgentDefaultModel() { }
+        public string Name { get { throw null; } set { } }
+        public string Provider { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.SreAgentDefaultModel>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SreAgentPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.SreAgentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.SreAgentPatch>
+    {
+        public SreAgentPatch() { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.SreAgent.Models.AgentPatchProperties Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.SreAgent.Models.SreAgentPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.SreAgent.Models.SreAgentPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.SreAgent.Models.SreAgentPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.SreAgentPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.SreAgentPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SreAgent.Models.SreAgentPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.SreAgentPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.SreAgentPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.SreAgentPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SupportedAgentModel : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.SupportedAgentModel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.SupportedAgentModel>
     {
         internal SupportedAgentModel() { }
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.SreAgent.Models
     public partial class SupportedAgentModelProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SreAgent.Models.SupportedAgentModelProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SreAgent.Models.SupportedAgentModelProperties>
     {
         internal SupportedAgentModelProperties() { }
-        public bool Default { get { throw null; } }
+        public bool IsDefault { get { throw null; } }
         public string Model { get { throw null; } }
         public string ModelDisplayName { get { throw null; } }
         public string Multiplier { get { throw null; } }

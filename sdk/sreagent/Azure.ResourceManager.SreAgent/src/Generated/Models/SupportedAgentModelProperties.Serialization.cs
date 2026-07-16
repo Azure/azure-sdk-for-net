@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                 writer.WriteStringValue(Multiplier);
             }
             writer.WritePropertyName("default"u8);
-            writer.WriteBooleanValue(Default);
+            writer.WriteBooleanValue(IsDefault);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SreAgent.Models
             string model = default;
             string modelDisplayName = default;
             string multiplier = default;
-            bool @default = default;
+            bool isDefault = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                 }
                 if (prop.NameEquals("default"u8))
                 {
-                    @default = prop.Value.GetBoolean();
+                    isDefault = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                 model,
                 modelDisplayName,
                 multiplier,
-                @default,
+                isDefault,
                 additionalBinaryDataProperties);
         }
     }

@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SreAgent.Models
             IncidentManagementConfiguration incidentManagementConfiguration = default;
             UpgradeChannel? upgradeChannel = default;
             AgentIdentityPatch agentIdentity = default;
-            DefaultModel defaultModel = default;
+            SreAgentDefaultModel defaultModel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                     {
                         continue;
                     }
-                    defaultModel = DefaultModel.DeserializeDefaultModel(prop.Value, options);
+                    defaultModel = SreAgentDefaultModel.DeserializeSreAgentDefaultModel(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

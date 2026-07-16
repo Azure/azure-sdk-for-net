@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.SreAgent.Mocking
         {
         }
 
-        /// <summary> Gets a collection of Agents in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Agents and their operations over a AgentResource. </returns>
-        public virtual AgentCollection GetAgents()
+        /// <summary> Gets a collection of SreAgents in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SreAgents and their operations over a SreAgentResource. </returns>
+        public virtual SreAgentCollection GetSreAgents()
         {
-            return GetCachedClient(client => new AgentCollection(client, Id));
+            return GetCachedClient(client => new SreAgentCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.SreAgent.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AgentResource>> GetAgentAsync(string agentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SreAgentResource>> GetSreAgentAsync(string agentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            return await GetAgents().GetAsync(agentName, cancellationToken).ConfigureAwait(false);
+            return await GetSreAgents().GetAsync(agentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.SreAgent.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AgentResource> GetAgent(string agentName, CancellationToken cancellationToken = default)
+        public virtual Response<SreAgentResource> GetSreAgent(string agentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            return GetAgents().Get(agentName, cancellationToken);
+            return GetSreAgents().Get(agentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AgentSpaces in the <see cref="ResourceGroupResource"/>. </summary>
