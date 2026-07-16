@@ -30,6 +30,53 @@ IterationCount=15  LaunchCount=3  WarmupCount=10
 
 ```
 
+## No-proxy path: `proxy-rw` vs `main` (Michael note 15)
+
+The feature must add **zero overhead when a customer registers no proxies** &mdash; the no-proxy path
+should be identical to `main`. To prove this, the self-contained `ProxyResolutionBaselineBenchmark`
+(which references only APIs that exist on **both** branches, i.e. no `AddProxy` / `ConditionalModelProxy`)
+was run on `proxy-rw` and again on `main` (commit `97e8a0bfd97`) using the identical benchmark file.
+
+**The `Allocated` column is the proof.** It is deterministic (run-to-run stable, independent of machine
+load and job config), and it is **byte-for-byte identical** across both branches:
+
+| Method                 | Allocated (`proxy-rw`) | Allocated (`main`) | Delta |
+|----------------------- |-----------------------:|-------------------:|:-----:|
+| Write_NoProxy          | 392 B                  | 392 B              | 0 B   |
+| Read_NoProxy           | 152 B                  | 152 B              | 0 B   |
+| ReadCollection_NoProxy | 4000 B                 | 4000 B             | 0 B   |
+
+Zero allocation delta &rarr; the proxy machinery (the `HasProxies` short-circuit plus the null-check in
+`ResolveProxy`) adds nothing to the no-proxy path a customer on `main` hits today.
+
+> **On the timings.** The two runs used *different* BenchmarkDotNet job configs: on `proxy-rw`,
+> `Program.cs` routes any `*ProxyResolution*` filter to a heavier out-of-process job
+> (`LaunchCount=3, WarmupCount=10, IterationCount=15`), while `main`'s `Program.cs` uses its default
+> job (`WarmupCount=1`, adaptive iteration time). They were also collected on a machine under active
+> load. So the absolute timings below are **not directly comparable** and are kept only for reference;
+> rely on the identical `Allocated` column above.
+
+Raw summaries &mdash; `proxy-rw`:
+
+| Method                 | Mean        | Median      | Allocated |
+|----------------------- |------------:|------------:|----------:|
+| Write_NoProxy          |    442.4 ns |    407.9 ns |     392 B |
+| Read_NoProxy           |    579.3 ns |    572.4 ns |     152 B |
+| ReadCollection_NoProxy | 11,194.7 ns | 11,150.3 ns |    4000 B |
+
+`main` (commit `97e8a0bfd97`):
+
+| Method                 | Mean        | Allocated |
+|----------------------- |------------:|----------:|
+| Write_NoProxy          |    895.0 ns |     392 B |
+| Read_NoProxy           |  1,282.6 ns |     152 B |
+| ReadCollection_NoProxy | 22,345.3 ns |    4000 B |
+
+To refresh: `dotnet run -c Release --framework net8.0 -- --filter *ProxyResolutionBaseline*` on each
+branch (the benchmark file is intentionally droppable onto `main` unchanged).
+
+---
+
 **Headline comparison (top three rows).** The same realistic deserialize path with no proxy, a
 proxy that declines (miss, so the base model handles it), and a proxy that handles it (hit). The
 payload is identical across all three, so the no-proxy &rarr; miss &rarr; hit deltas are directly
