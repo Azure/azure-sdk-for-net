@@ -77,7 +77,6 @@
   },
   "overrides": {
     "@vue/reactivity": "3.5.39",
-    "@vue/shared": "3.5.39",
     "fast-xml-parser": "5.8.0"
   },
   "azure-sdk/emitter-package-json-pinning": [
