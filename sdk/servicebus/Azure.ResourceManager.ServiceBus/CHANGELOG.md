@@ -5,7 +5,7 @@
 ### Features Added
 
 - Added support for the `2026-01-01` API version.
-- Added the `IpAddressType` property (`IPv4` / `DualStack`) to `ServiceBusNamespaceData`, enabling IPv4-only or dual-stack (IPv4 and IPv6) namespaces.
+- Added the `IPAddressType` property using `ServiceBusIPAddressType` (`IPv4` / `DualStack`) to `ServiceBusNamespaceData`, enabling IPv4-only or dual-stack (IPv4 and IPv6) namespaces.
 
 ### Breaking Changes
 

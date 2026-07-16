@@ -276,11 +276,11 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack). </summary>
         [WirePath("properties.ipAddressType")]
-        public IpAddressType? IpAddressType
+        public ServiceBusIPAddressType? IPAddressType
         {
             get
             {
-                return Properties is null ? default : Properties.IpAddressType;
+                return Properties is null ? default : Properties.IPAddressType;
             }
             set
             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBNamespaceProperties();
                 }
-                Properties.IpAddressType = value;
+                Properties.IPAddressType = value;
             }
         }
 

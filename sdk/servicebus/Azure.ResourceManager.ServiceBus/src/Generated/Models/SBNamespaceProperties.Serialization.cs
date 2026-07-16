@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WritePropertyName("geoDataReplication"u8);
                 writer.WriteObjectValue(GeoDataReplication, options);
             }
-            if (Optional.IsDefined(IpAddressType))
+            if (Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
-                writer.WriteStringValue(IpAddressType.Value.ToString());
+                writer.WriteStringValue(IPAddressType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             int? premiumMessagingPartitions = default;
             PlatformCapabilities platformCapabilities = default;
             GeoDataReplicationProperties geoDataReplication = default;
-            IpAddressType? ipAddressType = default;
+            ServiceBusIPAddressType? ipAddressType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    ipAddressType = new IpAddressType(prop.Value.GetString());
+                    ipAddressType = new ServiceBusIPAddressType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="geoDataReplication"> Geo Data Replication settings for the namespace. </param>
         /// <param name="ipAddressType"> The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SBNamespaceProperties(ServiceBusMinimumTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, bool? isZoneRedundant, ServiceBusEncryption encryption, IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, ServiceBusPublicNetworkAccess? publicNetworkAccess, int? premiumMessagingPartitions, PlatformCapabilities platformCapabilities, GeoDataReplicationProperties geoDataReplication, IpAddressType? ipAddressType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SBNamespaceProperties(ServiceBusMinimumTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, bool? isZoneRedundant, ServiceBusEncryption encryption, IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, ServiceBusPublicNetworkAccess? publicNetworkAccess, int? premiumMessagingPartitions, PlatformCapabilities platformCapabilities, GeoDataReplicationProperties geoDataReplication, ServiceBusIPAddressType? ipAddressType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MinimumTlsVersion = minimumTlsVersion;
             ProvisioningState = provisioningState;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             PremiumMessagingPartitions = premiumMessagingPartitions;
             PlatformCapabilities = platformCapabilities;
             GeoDataReplication = geoDataReplication;
-            IpAddressType = ipAddressType;
+            IPAddressType = ipAddressType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack). </summary>
         [WirePath("ipAddressType")]
-        public IpAddressType? IpAddressType { get; set; }
+        public ServiceBusIPAddressType? IPAddressType { get; set; }
 
         /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
         [WirePath("platformCapabilities.confidentialCompute.mode")]

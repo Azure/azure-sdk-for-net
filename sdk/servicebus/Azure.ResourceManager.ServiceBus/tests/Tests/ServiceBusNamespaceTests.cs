@@ -92,24 +92,24 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             string dualStackName = await CreateValidNamespaceName(namespacePrefix);
             var dualStackParameters = new ServiceBusNamespaceData(DefaultLocation)
             {
-                IpAddressType = IpAddressType.DualStack
+                IPAddressType = ServiceBusIPAddressType.DualStack
             };
             ServiceBusNamespaceResource dualStackNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, dualStackName, dualStackParameters)).Value;
             VerifyNamespaceProperties(dualStackNamespace, false);
-            Assert.AreEqual(IpAddressType.DualStack, dualStackNamespace.Data.IpAddressType);
+            Assert.AreEqual(ServiceBusIPAddressType.DualStack, dualStackNamespace.Data.IPAddressType);
             // re-fetch to confirm the value is persisted on the service
             dualStackNamespace = await namespaceCollection.GetAsync(dualStackName);
-            Assert.AreEqual(IpAddressType.DualStack, dualStackNamespace.Data.IpAddressType);
+            Assert.AreEqual(ServiceBusIPAddressType.DualStack, dualStackNamespace.Data.IPAddressType);
             await dualStackNamespace.DeleteAsync(WaitUntil.Completed);
 
             // 2) IPv4 (IPv4-only)
             string ipv4Name = await CreateValidNamespaceName(namespacePrefix);
             var ipv4Parameters = new ServiceBusNamespaceData(DefaultLocation)
             {
-                IpAddressType = IpAddressType.IPv4
+                IPAddressType = ServiceBusIPAddressType.IPv4
             };
             ServiceBusNamespaceResource ipv4Namespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, ipv4Name, ipv4Parameters)).Value;
-            Assert.AreEqual(IpAddressType.IPv4, ipv4Namespace.Data.IpAddressType);
+            Assert.AreEqual(ServiceBusIPAddressType.IPv4, ipv4Namespace.Data.IPAddressType);
             await ipv4Namespace.DeleteAsync(WaitUntil.Completed);
         }
 
