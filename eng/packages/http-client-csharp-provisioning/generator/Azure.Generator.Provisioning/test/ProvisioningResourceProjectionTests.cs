@@ -230,6 +230,25 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void ReadOnlyExtensionResourceRetainsScopeMetadata()
+        {
+            var model = CreateModel("ReadOnlyExtension");
+            var resource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/providers/Microsoft.Test/extensions/{extensionName}",
+                "Microsoft.Test/extensions",
+                ResourceScope.Extension,
+                ["2024-01-01"],
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.Extension)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = CreateResourceProvider(resource);
+
+            Assert.That(provider.ResourceProjection!.WritableScopes, Is.Empty);
+            Assert.That(provider.ResourceProjection.IsExtensionResource, Is.True);
+            Assert.That(provider.Properties.Any(property => property.Name == "Scope"), Is.True);
+        }
+
+        [Test]
         public void ReadOnlyResourceNameRemainsSettable()
         {
             var nameProperty = CreateProperty("Name", isRequired: true);
@@ -689,7 +708,7 @@ namespace Azure.Generator.Provisioning.Tests
             return new ArmResourceMetadata(
                 path,
                 resourceName ?? model.Name,
-                resourceType,
+                new ResourceTypePattern(resourceType),
                 model,
                 new ArmScopeInfo(scope, RequestPathPattern.GetFromScope(scope, path), null),
                 methods ?? [],
