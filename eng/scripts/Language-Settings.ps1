@@ -103,7 +103,8 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
   # silently ship an ApiCompat regression because the package is never rebuilt (see #60837).
   foreach ($pkg in (Get-PackagesFromEngFileChanges -DiffObj $diffObj -AllPkgProps $AllPkgProps)) {
     if ($LocatedPackages -notcontains $pkg -and $additionalValidationPackages -notcontains $pkg) {
-      Write-Host "Including '$($pkg.Name)' because one of its project-scoped engineering files changed."
+      $pkgDisplayName = if ($pkg.ArtifactName) { $pkg.ArtifactName } else { $pkg.Name }
+      Write-Host "Including '$pkgDisplayName' because one of its project-scoped engineering files changed."
       $pkg.IncludedForValidation = $true
       $additionalValidationPackages += $pkg
     }
