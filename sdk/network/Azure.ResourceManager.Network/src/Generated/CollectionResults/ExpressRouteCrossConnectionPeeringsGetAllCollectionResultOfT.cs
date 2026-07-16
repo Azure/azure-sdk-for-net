@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ExpressRouteCrossConnectionPeeringList result = ExpressRouteCrossConnectionPeeringList.FromResponse(response);
-                yield return Page<ExpressRouteCrossConnectionPeeringData>.FromValues((IReadOnlyList<ExpressRouteCrossConnectionPeeringData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ExpressRouteCrossConnectionPeeringData>.FromValues((IReadOnlyList<ExpressRouteCrossConnectionPeeringData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

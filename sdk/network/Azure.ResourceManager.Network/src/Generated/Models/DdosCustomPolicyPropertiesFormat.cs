@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         public DdosCustomPolicyPropertiesFormat()
         {
             DetectionRules = new ChangeTrackingList<DdosDetectionRule>();
-            FrontEndIpConfiguration = new ChangeTrackingList<NetworkSubResource>();
+            FrontEndIPConfiguration = new ChangeTrackingList<NetworkSubResource>();
             PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
         }
 
@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
         /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
         /// <param name="detectionRules"> The list of DDoS detection rules associated with the custom policy. </param>
-        /// <param name="frontEndIpConfiguration"> The list of frontend IP configurations associated with the custom policy. </param>
+        /// <param name="frontEndIPConfiguration"> The list of frontend IP configurations associated with the custom policy. </param>
         /// <param name="publicIPAddresses"> The list of public IP addresses associated with the custom policy. This list is read-only. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DdosCustomPolicyPropertiesFormat(Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<DdosDetectionRule> detectionRules, IList<NetworkSubResource> frontEndIpConfiguration, IReadOnlyList<WritableSubResource> publicIPAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DdosCustomPolicyPropertiesFormat(Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<DdosDetectionRule> detectionRules, IList<NetworkSubResource> frontEndIPConfiguration, IReadOnlyList<WritableSubResource> publicIPAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             DetectionRules = detectionRules;
-            FrontEndIpConfiguration = frontEndIpConfiguration;
+            FrontEndIPConfiguration = frontEndIPConfiguration;
             PublicIPAddresses = publicIPAddresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The list of frontend IP configurations associated with the custom policy. </summary>
         [WirePath("frontEndIpConfiguration")]
-        public IList<NetworkSubResource> FrontEndIpConfiguration { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<NetworkSubResource> FrontEndIPConfiguration { get; } = new ChangeTrackingList<NetworkSubResource>();
 
         /// <summary> The list of public IP addresses associated with the custom policy. This list is read-only. </summary>
         [WirePath("publicIPAddresses")]

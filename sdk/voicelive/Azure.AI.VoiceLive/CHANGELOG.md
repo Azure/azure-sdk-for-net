@@ -1,5 +1,22 @@
 # Release History
 
+## 1.2.0 (Unreleased)
+
+### Features Added
+
+- Added `AzureRealtimeNativeVoice` and `AzureRealtimeNativeVoiceName` with 12 new voice options (Aarti, Andrew, Ava, Denise, Diya, Elsa, Florian, Francisca, Meera, Xiaoxiao, Ximena, Yunxi).
+- Added `AllowParallelToolCalls` property on `VoiceLiveSessionOptions`.
+- Added `Channels` and `ReferenceSource` (`EchoCancellationReferenceSource`) properties on `AudioEchoCancellation`.
+- Added streaming text input events: `ClientEventInputTextDelta`, `ClientEventInputTextDone`.
+- Added `ServerEventResponseInvocationDelta` for streaming invocation deltas.
+- Added `ExpiresOn` property on `VoiceLiveSessionResponse` (server-set session expiration time).
+- Added the `2026-07-15` GA service version (`VoiceLiveClientOptions.ServiceVersion.V2026_07_15`), which is now the default.
+
+### Other Changes
+
+- Removed the following preview-only types that were added in `1.2.0-beta.1` and never shipped in a stable release: `SmartEndOfTurnDetection` (end-of-utterance detection with `ThresholdLevel` and `TimeoutMs`); RTC call support (`ClientEventRtcCallSdpCreate`, `ServerEventRtcCallSdpCreated`, `ServerEventRtcCallError`, `RtcCallErrorDetails`); and output audio buffer lifecycle events (`ServerEventOutputAudioBufferStarted`, `ServerEventOutputAudioBufferStopped`).
+- Updated samples to use `MCPApprovalKind`.
+
 ## 1.2.0-beta.2 (2026-06-16)
 
 ### Other Changes

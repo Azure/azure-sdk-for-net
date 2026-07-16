@@ -86,6 +86,10 @@ namespace Azure.Provisioning.Kubernetes
             _userSpecifiedVersion = DefineProperty<string>(nameof(UserSpecifiedVersion), new string[] { "userSpecifiedVersion" });
             _majorVersion = DefineProperty<int>(nameof(MajorVersion), new string[] { "majorVersion" });
             _currentVersion = DefineProperty<string>(nameof(CurrentVersion), new string[] { "currentVersion" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ConnectedClusterSystemComponent that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -56,6 +56,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _fixedScale = DefineModelProperty<BatchAccountFixedScaleSettings>(nameof(FixedScale), new string[] { "fixedScale" });
             _autoScale = DefineModelProperty<BatchAccountAutoScaleSettings>(nameof(AutoScale), new string[] { "autoScale" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchAccountPoolScaleSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

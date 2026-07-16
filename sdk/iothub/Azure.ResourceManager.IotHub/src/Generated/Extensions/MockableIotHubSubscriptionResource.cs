@@ -8,92 +8,86 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.IotHub;
 using Azure.ResourceManager.IotHub.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.IotHub.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableIotHubSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _iotHubDescriptionIotHubResourceClientDiagnostics;
-        private IotHubResourceRestOperations _iotHubDescriptionIotHubResourceRestClient;
+        private ClientDiagnostics _iotHubResourceClientDiagnostics;
+        private IotHubResource _iotHubResourceRestClient;
         private ClientDiagnostics _resourceProviderCommonClientDiagnostics;
-        private ResourceProviderCommonRestOperations _resourceProviderCommonRestClient;
+        private ResourceProviderCommon _resourceProviderCommonRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableIotHubSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableIotHubSubscriptionResource for mocking. </summary>
         protected MockableIotHubSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableIotHubSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableIotHubSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableIotHubSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics IotHubDescriptionIotHubResourceClientDiagnostics => _iotHubDescriptionIotHubResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotHub", IotHubDescriptionResource.ResourceType.Namespace, Diagnostics);
-        private IotHubResourceRestOperations IotHubDescriptionIotHubResourceRestClient => _iotHubDescriptionIotHubResourceRestClient ??= new IotHubResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IotHubDescriptionResource.ResourceType));
-        private ClientDiagnostics ResourceProviderCommonClientDiagnostics => _resourceProviderCommonClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotHub", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ResourceProviderCommonRestOperations ResourceProviderCommonRestClient => _resourceProviderCommonRestClient ??= new ResourceProviderCommonRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics IotHubResourceClientDiagnostics => _iotHubResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private IotHubResource IotHubResourceRestClient => _iotHubResourceRestClient ??= new IotHubResource(IotHubResourceClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+
+        private ClientDiagnostics ResourceProviderCommonClientDiagnostics => _resourceProviderCommonClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ResourceProviderCommon ResourceProviderCommonRestClient => _resourceProviderCommonRestClient ??= new ResourceProviderCommon(ResourceProviderCommonClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
         /// <summary>
         /// Get all the IoT hubs in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/IotHubs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Devices/IotHubs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotHubResource_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> IotHubDescriptions_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotHubDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotHubDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotHubDescriptionResource> GetIotHubDescriptionsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotHubDescriptionResource(Client, IotHubDescriptionData.DeserializeIotHubDescriptionData(e)), IotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "MockableIotHubSubscriptionResource.GetIotHubDescriptions", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<IotHubDescriptionData, IotHubDescriptionResource>(new IotHubResourceGetBySubscriptionAsyncCollectionResultOfT(IotHubResourceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotHubSubscriptionResource.GetIotHubDescriptions"), data => new IotHubDescriptionResource(Client, data));
         }
 
         /// <summary>
         /// Get all the IoT hubs in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/IotHubs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Devices/IotHubs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotHubResource_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> IotHubDescriptions_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -101,44 +95,52 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <returns> A collection of <see cref="IotHubDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotHubDescriptionResource> GetIotHubDescriptions(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotHubDescriptionResource(Client, IotHubDescriptionData.DeserializeIotHubDescriptionData(e)), IotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "MockableIotHubSubscriptionResource.GetIotHubDescriptions", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<IotHubDescriptionData, IotHubDescriptionResource>(new IotHubResourceGetBySubscriptionCollectionResultOfT(IotHubResourceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotHubSubscriptionResource.GetIotHubDescriptions"), data => new IotHubDescriptionResource(Client, data));
         }
 
         /// <summary>
         /// Check if an IoT hub name is available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotHubResource_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> IotHubResourceOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<IotHubNameAvailabilityResponse>> CheckIotHubNameAvailabilityAsync(IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = IotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("MockableIotHubSubscriptionResource.CheckIotHubNameAvailability");
+            using DiagnosticScope scope = IotHubResourceClientDiagnostics.CreateScope("MockableIotHubSubscriptionResource.CheckIotHubNameAvailability");
             scope.Start();
             try
             {
-                var response = await IotHubDescriptionIotHubResourceRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = IotHubResourceRestClient.CreateCheckIotHubNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), IotHubNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IotHubNameAvailabilityResponse> response = Response.FromValue(IotHubNameAvailabilityResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -152,35 +154,41 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// Check if an IoT hub name is available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotHubResource_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> IotHubResourceOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<IotHubNameAvailabilityResponse> CheckIotHubNameAvailability(IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = IotHubDescriptionIotHubResourceClientDiagnostics.CreateScope("MockableIotHubSubscriptionResource.CheckIotHubNameAvailability");
+            using DiagnosticScope scope = IotHubResourceClientDiagnostics.CreateScope("MockableIotHubSubscriptionResource.CheckIotHubNameAvailability");
             scope.Start();
             try
             {
-                var response = IotHubDescriptionIotHubResourceRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = IotHubResourceRestClient.CreateCheckIotHubNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), IotHubNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IotHubNameAvailabilityResponse> response = Response.FromValue(IotHubNameAvailabilityResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -194,41 +202,44 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// Get the number of free and paid iot hubs in the subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Devices/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceProviderCommon_GetSubscriptionQuota</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceProviderCommonOperationGroup_GetSubscriptionQuota. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotHubUserSubscriptionQuota"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotHubUserSubscriptionQuota"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuotaAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceProviderCommonRestClient.CreateGetSubscriptionQuotaRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota(e), ResourceProviderCommonClientDiagnostics, Pipeline, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ResourceProviderCommonGetIotHubUserSubscriptionQuotaAsyncCollectionResultOfT(ResourceProviderCommonRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota");
         }
 
         /// <summary>
         /// Get the number of free and paid iot hubs in the subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Devices/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceProviderCommon_GetSubscriptionQuota</description>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceProviderCommonOperationGroup_GetSubscriptionQuota. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,8 +247,11 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <returns> A collection of <see cref="IotHubUserSubscriptionQuota"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuota(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceProviderCommonRestClient.CreateGetSubscriptionQuotaRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => IotHubUserSubscriptionQuota.DeserializeIotHubUserSubscriptionQuota(e), ResourceProviderCommonClientDiagnostics, Pipeline, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ResourceProviderCommonGetIotHubUserSubscriptionQuotaCollectionResultOfT(ResourceProviderCommonRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableIotHubSubscriptionResource.GetIotHubUserSubscriptionQuota");
         }
     }
 }

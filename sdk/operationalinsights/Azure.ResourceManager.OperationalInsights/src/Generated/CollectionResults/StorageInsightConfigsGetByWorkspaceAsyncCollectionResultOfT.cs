@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.OperationalInsights
                     yield break;
                 }
                 StorageInsightListResult result = StorageInsightListResult.FromResponse(response);
-                yield return Page<StorageInsightData>.FromValues((IReadOnlyList<StorageInsightData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.OdataNextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                yield return Page<StorageInsightData>.FromValues((IReadOnlyList<StorageInsightData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

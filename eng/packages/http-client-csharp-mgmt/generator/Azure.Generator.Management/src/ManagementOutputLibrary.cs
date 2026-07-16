@@ -37,7 +37,10 @@ namespace Azure.Generator.Management
         internal TypeProvider WirePathAttributeDefinition => _wirePathAttributeProvider ??= new WirePathAttributeDefinition();
 
         private CodeGenResourceDataAttributeDefinition? _codeGenResourceDataAttributeProvider;
-        internal TypeProvider CodeGenResourceDataAttributeDefinition => _codeGenResourceDataAttributeProvider ??= new CodeGenResourceDataAttributeDefinition();
+        internal CustomCodeAttributeDefinition CodeGenResourceDataAttributeDefinition => _codeGenResourceDataAttributeProvider ??= new CodeGenResourceDataAttributeDefinition();
+
+        private CodeGenTagPatchHookAttributeDefinition? _codeGenTagPatchHookAttributeProvider;
+        internal CustomCodeAttributeDefinition CodeGenTagPatchHookAttributeDefinition => _codeGenTagPatchHookAttributeProvider ??= new CodeGenTagPatchHookAttributeDefinition();
 
         private CSharpType? _modelReaderWriterContextType;
         internal CSharpType ModelReaderWriterContextType => _modelReaderWriterContextType ??= new ModelReaderWriterContextDefinition().Type;
@@ -80,9 +83,30 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>>? _outputFlattenPropertyMap;
         internal IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>> OutputFlattenPropertyMap => _outputFlattenPropertyMap ??= BuildOutputFlattenPropertyMap();
         private IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>> BuildOutputFlattenPropertyMap()
-            => ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap.ToDictionary(
-                kv => ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!,
-                kv => kv.Value.Select(p => ManagementClientGenerator.Instance.TypeFactory.CreateProperty(p, ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!)!).ToHashSet());
+        {
+            Dictionary<ModelProvider, HashSet<PropertyProvider>> result = [];
+            foreach (var (inputModel, flattenedProperties) in ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap)
+            {
+                foreach (var model in ResolveFlattenTargetModels(inputModel))
+                {
+                    result[model] = flattenedProperties
+                        .Select(p => ManagementClientGenerator.Instance.TypeFactory.CreateProperty(p, model)!)
+                        .ToHashSet();
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Resolves output model providers that should receive flattenProperty customizations for an input model.
+        /// </summary>
+        /// <param name="inputModel">The input model that owns the decorated flattened properties.</param>
+        /// <returns>The output model providers that represent the input model.</returns>
+        protected virtual IReadOnlyList<ModelProvider> ResolveFlattenTargetModels(InputModelType inputModel)
+        {
+            var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+            return model is null ? [] : [model];
+        }
 
         private HashSet<ModelProvider>? _safeFlattenDisabledModels;
         /// <summary>
@@ -177,12 +201,10 @@ namespace Azure.Generator.Management
                 resourceMethodCategories,
                 ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
 
-            // Extract extension non-resource methods for MockableArmClientProvider
-            var extensionNonResourceMethods = resourcesAndMethodsPerScope.TryGetValue(ResourceScope.Extension, out var extensionScope)
-                ? extensionScope.NonResourceMethods
-                : [];
+            // Extract extension methods for MockableArmClientProvider
+            var extensionScope = resourcesAndMethodsPerScope[ResourceScope.Extension];
 
-            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionNonResourceMethods);
+            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionScope.ResourceMethods, extensionScope.NonResourceMethods);
             var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
@@ -306,7 +328,6 @@ namespace Azure.Generator.Management
             {
                 ManagementClientGenerator.Instance.AddTypeToKeep(mockableResource.Name);
             }
-            ManagementClientGenerator.Instance.AddTypeToKeep(CodeGenResourceDataAttributeDefinition.Name);
             ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
 
             // Extract array response collection results from all methods
@@ -315,7 +336,6 @@ namespace Azure.Generator.Management
             return [
                 .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
                 WirePathAttributeDefinition,
-                CodeGenResourceDataAttributeDefinition,
                 ArmOperation,
                 ArmOperationOfT,
                 .. OperationSourceDict.Values,

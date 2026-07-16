@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public IList<string> AutoExportPrefixes { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The status of the auto export. </summary>
-        internal AutoExportJobPropertiesStatus Status { get; set; }
+        internal AutoExportJobPropertiesStatus Status { get; }
 
         /// <summary> The operational state of auto export. InProgress indicates the export is running.  Disabling indicates the user has requested to disable the export but the disabling is still in progress. Disabled indicates auto export has been disabled.  DisableFailed indicates the disabling has failed.  Failed means the export was unable to continue, due to a fatal error. </summary>
         public AutoExportStatusType? State
@@ -56,14 +56,6 @@ namespace Azure.ResourceManager.StorageCache.Models
             get
             {
                 return Status is null ? default : Status.State;
-            }
-            set
-            {
-                if (Status is null)
-                {
-                    Status = new AutoExportJobPropertiesStatus();
-                }
-                Status.State = value;
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -16,12 +15,6 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ElasticSnapshotPolicyWeeklySchedule"/>. </summary>
-        public ElasticSnapshotPolicyWeeklySchedule()
-        {
-            Days = new ChangeTrackingList<DayOfWeek>();
-        }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSnapshotPolicyWeeklySchedule"/>. </summary>
         /// <param name="snapshotsToKeep"> Weekly snapshot count to keep. </param>
@@ -37,17 +30,5 @@ namespace Azure.ResourceManager.NetApp.Models
             Minute = minute;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Weekly snapshot count to keep. </summary>
-        public int? SnapshotsToKeep { get; set; }
-
-        /// <summary> Indicates which weekday(s) snapshot(s) should be taken, accepts a list of week day names in english. </summary>
-        public IList<DayOfWeek> Days { get; }
-
-        /// <summary> Indicates which hour in UTC timezone a snapshot should be taken. </summary>
-        public int? Hour { get; set; }
-
-        /// <summary> Indicates which minute snapshot should be taken. </summary>
-        public int? Minute { get; set; }
     }
 }

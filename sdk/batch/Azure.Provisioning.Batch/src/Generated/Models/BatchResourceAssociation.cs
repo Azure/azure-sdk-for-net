@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _name;
             }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the AccessMode. </summary>
+        /// <summary> Gets the AccessMode. </summary>
         public BicepValue<ResourceAssociationAccessMode> AccessMode
         {
             get
             {
                 Initialize();
                 return _accessMode;
-            }
-            set
-            {
-                Initialize();
-                _accessMode.Assign(value);
             }
         }
 
@@ -57,6 +47,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _accessMode = DefineProperty<ResourceAssociationAccessMode>(nameof(AccessMode), new string[] { "accessMode" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchResourceAssociation that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

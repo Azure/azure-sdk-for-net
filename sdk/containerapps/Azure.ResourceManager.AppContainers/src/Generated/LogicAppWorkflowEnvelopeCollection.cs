@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.AppContainers
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != "Microsoft.App/containerApps")
+            if (id.ResourceType != LogicAppResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.App/containerApps"), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, LogicAppResource.ResourceType), nameof(id));
             }
         }
 

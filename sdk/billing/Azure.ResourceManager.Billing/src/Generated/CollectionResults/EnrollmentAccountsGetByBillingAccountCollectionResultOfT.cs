@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Billing
                     yield break;
                 }
                 EnrollmentAccountListResult result = EnrollmentAccountListResult.FromResponse(response);
-                yield return Page<BillingEnrollmentAccountData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BillingEnrollmentAccountData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

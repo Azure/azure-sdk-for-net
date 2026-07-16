@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 HttpMessage message = _publishersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, PublisherData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridNetworkArmOperation<PublisherResource> operation = new HybridNetworkArmOperation<PublisherResource>(
-                    new PublisherOperationSource(Client),
+                    new PublisherResourceOperationSource(Client),
                     _publishersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 HttpMessage message = _publishersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, PublisherData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridNetworkArmOperation<PublisherResource> operation = new HybridNetworkArmOperation<PublisherResource>(
-                    new PublisherOperationSource(Client),
+                    new PublisherResourceOperationSource(Client),
                     _publishersClientDiagnostics,
                     Pipeline,
                     message.Request,

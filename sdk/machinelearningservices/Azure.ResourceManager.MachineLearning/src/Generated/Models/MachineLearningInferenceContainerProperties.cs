@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningInferenceContainerProperties. </summary>
     public partial class MachineLearningInferenceContainerProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningInferenceContainerProperties"/>. </summary>
         public MachineLearningInferenceContainerProperties()
@@ -54,23 +26,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="livenessRoute"> The route to check the liveness of the inference server container. </param>
         /// <param name="readinessRoute"> The route to check the readiness of the inference server container. </param>
         /// <param name="scoringRoute"> The port to send the scoring requests to, within the inference server container. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningInferenceContainerProperties(MachineLearningInferenceContainerRoute livenessRoute, MachineLearningInferenceContainerRoute readinessRoute, MachineLearningInferenceContainerRoute scoringRoute, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="startupRoute"> The route to check the startup of the application in the container. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningInferenceContainerProperties(MachineLearningInferenceContainerRoute livenessRoute, MachineLearningInferenceContainerRoute readinessRoute, MachineLearningInferenceContainerRoute scoringRoute, MachineLearningInferenceContainerRoute startupRoute, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LivenessRoute = livenessRoute;
             ReadinessRoute = readinessRoute;
             ScoringRoute = scoringRoute;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            StartupRoute = startupRoute;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The route to check the liveness of the inference server container. </summary>
         [WirePath("livenessRoute")]
         public MachineLearningInferenceContainerRoute LivenessRoute { get; set; }
+
         /// <summary> The route to check the readiness of the inference server container. </summary>
         [WirePath("readinessRoute")]
         public MachineLearningInferenceContainerRoute ReadinessRoute { get; set; }
+
         /// <summary> The port to send the scoring requests to, within the inference server container. </summary>
         [WirePath("scoringRoute")]
         public MachineLearningInferenceContainerRoute ScoringRoute { get; set; }
+
+        /// <summary> The route to check the startup of the application in the container. </summary>
+        [WirePath("startupRoute")]
+        public MachineLearningInferenceContainerRoute StartupRoute { get; set; }
     }
 }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 HttpMessage message = _networkServiceDesignVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, NetworkServiceDesignVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridNetworkArmOperation<NetworkServiceDesignVersionResource> operation = new HybridNetworkArmOperation<NetworkServiceDesignVersionResource>(
-                    new NetworkServiceDesignVersionOperationSource(Client),
+                    new NetworkServiceDesignVersionResourceOperationSource(Client),
                     _networkServiceDesignVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 HttpMessage message = _networkServiceDesignVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, NetworkServiceDesignVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridNetworkArmOperation<NetworkServiceDesignVersionResource> operation = new HybridNetworkArmOperation<NetworkServiceDesignVersionResource>(
-                    new NetworkServiceDesignVersionOperationSource(Client),
+                    new NetworkServiceDesignVersionResourceOperationSource(Client),
                     _networkServiceDesignVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,

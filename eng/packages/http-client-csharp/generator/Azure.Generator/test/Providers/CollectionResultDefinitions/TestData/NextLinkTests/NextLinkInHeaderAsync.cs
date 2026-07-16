@@ -48,17 +48,21 @@ namespace Samples
                     yield break;
                 }
                 global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
+                if ((response.Headers.TryGetValue("nextCat", out string value) && !string.IsNullOrEmpty(value)))
+                {
+                    nextPage = new global::System.Uri(value, global::System.UriKind.RelativeOrAbsolute);
+                }
+                else
+                {
+                    nextPage = null;
+                }
                 global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
                 foreach (var item in result.Cats)
                 {
                     items.Add(global::System.ClientModel.Primitives.ModelReaderWriter.Write(item, global::Samples.ModelSerializationExtensions.WireOptions, global::Samples.SamplesContext.Default));
                 }
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                if ((response.Headers.TryGetValue("nextCat", out string value) && !string.IsNullOrEmpty(value)))
-                {
-                    nextPage = new global::System.Uri(value, global::System.UriKind.RelativeOrAbsolute);
-                }
-                else
+                if ((nextPage == null))
                 {
                     yield break;
                 }

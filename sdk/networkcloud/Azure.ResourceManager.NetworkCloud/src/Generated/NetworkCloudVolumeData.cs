@@ -101,6 +101,15 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary> The assigned resource ID of the storage appliance that hosts the volume. </summary>
+        public ResourceIdentifier AssignedStorageApplianceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssignedStorageApplianceId;
+            }
+        }
+
         /// <summary> The list of resource IDs that attach the volume. It may include virtual machines and Hybrid AKS clusters. </summary>
         public IReadOnlyList<string> AttachedTo
         {

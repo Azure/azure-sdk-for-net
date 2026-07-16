@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Invokes the GetFirewallPolicyIdpsSignaturesFilterValue compatibility operation. </summary>
         public virtual Response<SignatureOverridesFilterValuesResult> GetFirewallPolicyIdpsSignaturesFilterValue(SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the UpdateAsync compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `FirewallPolicyCollection.CreateOrUpdateAsync` instead.", false)]
         public virtual Task<ArmOperation<FirewallPolicyResource>> UpdateAsync(WaitUntil waitUntil, FirewallPolicyData data, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the Update compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `FirewallPolicyCollection.CreateOrUpdate` instead.", false)]
         public virtual ArmOperation<FirewallPolicyResource> Update(WaitUntil waitUntil, FirewallPolicyData data, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }

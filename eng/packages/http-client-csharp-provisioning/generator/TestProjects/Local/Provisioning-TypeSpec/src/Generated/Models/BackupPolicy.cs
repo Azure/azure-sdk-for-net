@@ -60,6 +60,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             base.DefineProvisionableProperties();
             _retentionDays = DefineProperty<int>(nameof(RetentionDays), new string[] { "retentionDays" });
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BackupPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

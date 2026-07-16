@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryDatasetCollection : ArmCollection, IEnumerable<DataFactoryDatasetResource>, IAsyncEnumerable<DataFactoryDatasetResource>
     {
-        private readonly ClientDiagnostics _dataFactoryDatasetDatasetsClientDiagnostics;
-        private readonly DatasetsRestOperations _dataFactoryDatasetDatasetsRestClient;
+        private readonly ClientDiagnostics _datasetsClientDiagnostics;
+        private readonly Datasets _datasetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataFactoryDatasetCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataFactoryDatasetCollection for mocking. </summary>
         protected DataFactoryDatasetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataFactoryDatasetCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDatasetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataFactoryDatasetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataFactoryDatasetDatasetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryDatasetResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataFactoryDatasetResource.ResourceType, out string dataFactoryDatasetDatasetsApiVersion);
-            _dataFactoryDatasetDatasetsRestClient = new DatasetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryDatasetDatasetsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DataFactoryDatasetResource.ResourceType, out string dataFactoryDatasetApiVersion);
+            _datasetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryDatasetResource.ResourceType.Namespace, Diagnostics);
+            _datasetsRestClient = new Datasets(_datasetsClientDiagnostics, Pipeline, Endpoint, dataFactoryDatasetApiVersion ?? "2018-06-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DataFactoryResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataFactoryResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataFactoryResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a dataset.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datasets_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatasetResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryDatasetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="data"> Dataset resource definition. </param>
         /// <param name="ifMatch"> ETag of the dataset entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataFactoryDatasetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string datasetName, DataFactoryDatasetData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DataFactoryDatasetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string datasetName, DataFactoryDatasetData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _datasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataFactoryDatasetDatasetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _dataFactoryDatasetDatasetsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataFactoryArmOperation<DataFactoryDatasetResource>(Response.FromValue(new DataFactoryDatasetResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datasetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, datasetName, DataFactoryDatasetData.ToRequestContent(data), ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataFactoryDatasetData> response = Response.FromValue(DataFactoryDatasetData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataFactoryArmOperation<DataFactoryDatasetResource> operation = new DataFactoryArmOperation<DataFactoryDatasetResource>(Response.FromValue(new DataFactoryDatasetResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.DataFactory
         /// Creates or updates a dataset.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datasets_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatasetResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryDatasetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,23 +132,31 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="data"> Dataset resource definition. </param>
         /// <param name="ifMatch"> ETag of the dataset entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DataFactoryDatasetResource> CreateOrUpdate(WaitUntil waitUntil, string datasetName, DataFactoryDatasetData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DataFactoryDatasetResource> CreateOrUpdate(WaitUntil waitUntil, string datasetName, DataFactoryDatasetData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _datasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataFactoryDatasetDatasetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, data, ifMatch, cancellationToken);
-                var uri = _dataFactoryDatasetDatasetsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataFactoryArmOperation<DataFactoryDatasetResource>(Response.FromValue(new DataFactoryDatasetResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datasetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, datasetName, DataFactoryDatasetData.ToRequestContent(data), ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataFactoryDatasetData> response = Response.FromValue(DataFactoryDatasetData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataFactoryArmOperation<DataFactoryDatasetResource> operation = new DataFactoryArmOperation<DataFactoryDatasetResource>(Response.FromValue(new DataFactoryDatasetResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -159,39 +170,43 @@ namespace Azure.ResourceManager.DataFactory
         /// Gets a dataset.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datasets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatasetResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryDatasetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="datasetName"> The dataset name. </param>
         /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
-        public virtual async Task<Response<DataFactoryDatasetResource>> GetAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DataFactoryDatasetResource>> GetAsync(string datasetName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
 
-            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Get");
+            using DiagnosticScope scope = _datasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataFactoryDatasetDatasetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datasetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataFactoryDatasetData> response = Response.FromValue(DataFactoryDatasetData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataFactoryDatasetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,39 +220,43 @@ namespace Azure.ResourceManager.DataFactory
         /// Gets a dataset.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datasets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatasetResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryDatasetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="datasetName"> The dataset name. </param>
         /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
-        public virtual Response<DataFactoryDatasetResource> Get(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DataFactoryDatasetResource> Get(string datasetName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
 
-            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Get");
+            using DiagnosticScope scope = _datasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataFactoryDatasetDatasetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datasetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataFactoryDatasetData> response = Response.FromValue(DataFactoryDatasetData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataFactoryDatasetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -251,50 +270,50 @@ namespace Azure.ResourceManager.DataFactory
         /// Lists datasets.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datasets_ListByFactory</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatasetResources_ListByFactory. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryDatasetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryDatasetResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryDatasetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryDatasetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryDatasetDatasetsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryDatasetDatasetsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryDatasetResource(Client, DataFactoryDatasetData.DeserializeDataFactoryDatasetData(e)), _dataFactoryDatasetDatasetsClientDiagnostics, Pipeline, "DataFactoryDatasetCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataFactoryDatasetData, DataFactoryDatasetResource>(new DatasetsGetByFactoryAsyncCollectionResultOfT(
+                _datasetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataFactoryDatasetCollection.GetAll"), data => new DataFactoryDatasetResource(Client, data));
         }
 
         /// <summary>
         /// Lists datasets.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datasets_ListByFactory</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatasetResources_ListByFactory. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryDatasetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,46 +321,68 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> A collection of <see cref="DataFactoryDatasetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryDatasetResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryDatasetDatasetsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryDatasetDatasetsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryDatasetResource(Client, DataFactoryDatasetData.DeserializeDataFactoryDatasetData(e)), _dataFactoryDatasetDatasetsClientDiagnostics, Pipeline, "DataFactoryDatasetCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataFactoryDatasetData, DataFactoryDatasetResource>(new DatasetsGetByFactoryCollectionResultOfT(
+                _datasetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataFactoryDatasetCollection.GetAll"), data => new DataFactoryDatasetResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datasets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatasetResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryDatasetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="datasetName"> The dataset name. </param>
         /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string datasetName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
 
-            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Exists");
+            using DiagnosticScope scope = _datasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataFactoryDatasetDatasetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datasetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataFactoryDatasetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataFactoryDatasetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataFactoryDatasetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -355,37 +396,51 @@ namespace Azure.ResourceManager.DataFactory
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datasets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatasetResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryDatasetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="datasetName"> The dataset name. </param>
         /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
-        public virtual Response<bool> Exists(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string datasetName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
 
-            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Exists");
+            using DiagnosticScope scope = _datasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataFactoryDatasetDatasetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datasetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataFactoryDatasetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataFactoryDatasetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataFactoryDatasetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -399,39 +454,55 @@ namespace Azure.ResourceManager.DataFactory
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datasets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatasetResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryDatasetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="datasetName"> The dataset name. </param>
         /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
-        public virtual async Task<NullableResponse<DataFactoryDatasetResource>> GetIfExistsAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DataFactoryDatasetResource>> GetIfExistsAsync(string datasetName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
 
-            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.GetIfExists");
+            using DiagnosticScope scope = _datasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataFactoryDatasetDatasetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datasetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataFactoryDatasetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataFactoryDatasetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataFactoryDatasetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataFactoryDatasetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataFactoryDatasetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -445,39 +516,55 @@ namespace Azure.ResourceManager.DataFactory
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datasets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatasetResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryDatasetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="datasetName"> The dataset name. </param>
         /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
-        public virtual NullableResponse<DataFactoryDatasetResource> GetIfExists(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DataFactoryDatasetResource> GetIfExists(string datasetName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
 
-            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.GetIfExists");
+            using DiagnosticScope scope = _datasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataFactoryDatasetDatasetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datasetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataFactoryDatasetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataFactoryDatasetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataFactoryDatasetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataFactoryDatasetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataFactoryDatasetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -497,6 +584,7 @@ namespace Azure.ResourceManager.DataFactory
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataFactoryDatasetResource> IAsyncEnumerable<DataFactoryDatasetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

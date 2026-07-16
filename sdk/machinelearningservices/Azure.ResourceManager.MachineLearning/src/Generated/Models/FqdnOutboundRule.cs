@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,24 +15,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class FqdnOutboundRule : MachineLearningOutboundRule
     {
         /// <summary> Initializes a new instance of <see cref="FqdnOutboundRule"/>. </summary>
-        public FqdnOutboundRule()
+        public FqdnOutboundRule() : base(RuleType.FQDN)
         {
-            OutboundRuleType = OutboundRuleType.Fqdn;
         }
 
         /// <summary> Initializes a new instance of <see cref="FqdnOutboundRule"/>. </summary>
         /// <param name="category"> Category of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="status"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
-        /// <param name="outboundRuleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
+        /// <param name="errorInformation"> Error information about an outbound rule of a machine learning workspace if RuleStatus is failed. </param>
+        /// <param name="parentRuleNames"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="destination"></param>
-        internal FqdnOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, OutboundRuleType outboundRuleType, IDictionary<string, BinaryData> serializedAdditionalRawData, string destination) : base(category, status, outboundRuleType, serializedAdditionalRawData)
+        internal FqdnOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties, string destination) : base(category, status, @type, errorInformation, parentRuleNames, additionalBinaryDataProperties)
         {
             Destination = destination;
-            OutboundRuleType = outboundRuleType;
         }
 
-        /// <summary> Gets or sets the destination. </summary>
+        /// <summary> Gets or sets the Destination. </summary>
         [WirePath("destination")]
         public string Destination { get; set; }
     }

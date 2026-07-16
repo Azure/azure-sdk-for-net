@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedApplyMaintenanceWindow_Post. </description>
+        /// <description> ManagedApplyMaintenanceWindow_PostNoBody. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedApplyMaintenanceWindow_Post. </description>
+        /// <description> ManagedApplyMaintenanceWindow_PostNoBody. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

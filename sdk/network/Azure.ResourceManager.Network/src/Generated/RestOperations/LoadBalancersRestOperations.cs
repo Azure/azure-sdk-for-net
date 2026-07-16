@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateMigrateToIpBasedRequest(Guid subscriptionId, string groupName, string loadBalancerName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateMigrateToIPBasedRequest(Guid subscriptionId, string groupName, string loadBalancerName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

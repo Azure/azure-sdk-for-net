@@ -35,7 +35,7 @@ ProjectsAgentVersion agentVersion = (await projectClient.AgentAdministrationClie
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateRoutine_RoutinesCRUD_Sync
-RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+RoutineAction action = new AgentResponsesApiRoutineAction
 {
     AgentName = agentVersion.Name
 };
@@ -49,16 +49,16 @@ routineOptions.Triggers.Add("manual", new CustomRoutineTrigger(
 {
     EventName = "sample-event"
 });
-ProjectsRoutine created = routinesClient.CreateOrUpdateRoutine(
-    routineName: routineName,
+ProjectsRoutine created = routinesClient.CreateOrUpdate(
+    name: routineName,
     options: routineOptions
 );
-Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}");
+Console.WriteLine($"Created routine: {created.Name} enabled={created.IsEnabled}");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateRoutine_RoutinesCRUD_Async
-RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+RoutineAction action = new AgentResponsesApiRoutineAction
 {
     AgentName = agentVersion.Name
 };
@@ -72,53 +72,53 @@ routineOptions.Triggers.Add("manual", new CustomRoutineTrigger(
 {
     EventName = "sample-event"
 });
-ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
-    routineName: routineName,
+ProjectsRoutine created = await routinesClient.CreateOrUpdateAsync(
+    name: routineName,
     options: routineOptions
 );
-Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}");
+Console.WriteLine($"Created routine: {created.Name} enabled={created.IsEnabled}");
 ```
 
 4. Disable the routine.
 
 Synchronous sample:
 ```C# Snippet:Sample_DisableRoutine_RoutinesCRUD_Sync
-ProjectsRoutine disabled = routinesClient.DisableRoutine(routineName);
-Console.WriteLine($"Disabled routine: {disabled.Name} enabled={disabled.Enabled}");
+ProjectsRoutine disabled = routinesClient.Disable(routineName);
+Console.WriteLine($"Disabled routine: {disabled.Name} enabled={disabled.IsEnabled}");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DisableRoutine_RoutinesCRUD_Async
-ProjectsRoutine disabled = await routinesClient.DisableRoutineAsync(routineName);
-Console.WriteLine($"Disabled routine: {disabled.Name} enabled={disabled.Enabled}");
+ProjectsRoutine disabled = await routinesClient.DisableAsync(routineName);
+Console.WriteLine($"Disabled routine: {disabled.Name} enabled={disabled.IsEnabled}");
 ```
 
 5. Retrieve the routine to verify its state.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetRoutine_RoutinesCRUD_Sync
-ProjectsRoutine fetched = routinesClient.GetRoutine(routineName);
-Console.WriteLine($"Retrieved routine: {fetched.Name} enabled={fetched.Enabled} description={fetched.Description}");
+ProjectsRoutine fetched = routinesClient.Get(routineName);
+Console.WriteLine($"Retrieved routine: {fetched.Name} enabled={fetched.IsEnabled} description={fetched.Description}");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetRoutine_RoutinesCRUD_Async
-ProjectsRoutine fetched = await routinesClient.GetRoutineAsync(routineName);
-Console.WriteLine($"Retrieved routine: {fetched.Name} enabled={fetched.Enabled} description={fetched.Description}");
+ProjectsRoutine fetched = await routinesClient.GetAsync(routineName);
+Console.WriteLine($"Retrieved routine: {fetched.Name} enabled={fetched.IsEnabled} description={fetched.Description}");
 ```
 
 6. Re-enable the routine.
 
 Synchronous sample:
 ```C# Snippet:Sample_EnableRoutine_RoutinesCRUD_Sync
-ProjectsRoutine enabled = routinesClient.EnableRoutine(routineName);
-Console.WriteLine($"Enabled routine: {enabled.Name} enabled={enabled.Enabled}");
+ProjectsRoutine enabled = routinesClient.Enable(routineName);
+Console.WriteLine($"Enabled routine: {enabled.Name} enabled={enabled.IsEnabled}");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_EnableRoutine_RoutinesCRUD_Async
-ProjectsRoutine enabled = await routinesClient.EnableRoutineAsync(routineName);
-Console.WriteLine($"Enabled routine: {enabled.Name} enabled={enabled.Enabled}");
+ProjectsRoutine enabled = await routinesClient.EnableAsync(routineName);
+Console.WriteLine($"Enabled routine: {enabled.Name} enabled={enabled.IsEnabled}");
 ```
 
 7. List all routines.
@@ -127,7 +127,7 @@ Synchronous sample:
 ```C# Snippet:Sample_ListRoutines_RoutinesCRUD_Sync
 foreach (ProjectsRoutine routine in routinesClient.GetRoutines())
 {
-    Console.WriteLine($"  - {routine.Name} enabled={routine.Enabled}");
+    Console.WriteLine($"  - {routine.Name} enabled={routine.IsEnabled}");
 }
 ```
 
@@ -135,7 +135,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_ListRoutines_RoutinesCRUD_Async
 await foreach (ProjectsRoutine routine in routinesClient.GetRoutinesAsync())
 {
-    Console.WriteLine($"  - {routine.Name} enabled={routine.Enabled}");
+    Console.WriteLine($"  - {routine.Name} enabled={routine.IsEnabled}");
 }
 ```
 
@@ -143,12 +143,12 @@ await foreach (ProjectsRoutine routine in routinesClient.GetRoutinesAsync())
 
 Synchronous sample:
 ```C# Snippet:Sample_DeleteRoutine_RoutinesCRUD_Sync
-routinesClient.DeleteRoutine(routineName);
+routinesClient.Delete(routineName);
 Console.WriteLine("Routine deleted");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DeleteRoutine_RoutinesCRUD_Async
-await routinesClient.DeleteRoutineAsync(routineName);
+await routinesClient.DeleteAsync(routineName);
 Console.WriteLine("Routine deleted");
 ```

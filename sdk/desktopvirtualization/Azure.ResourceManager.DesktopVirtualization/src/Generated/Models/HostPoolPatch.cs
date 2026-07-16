@@ -463,5 +463,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 Properties.AllowRdpShortPathWithPrivateLink = value;
             }
         }
+
+        /// <summary> The conditional RDP properties of the host pool, serialized as a string in the format of `&lt;rdpPropertyName&gt;:&lt;type&gt;:&lt;value&gt;:&lt;conditionType&gt;:&lt;conditionValue&gt;`. </summary>
+        [WirePath("properties.conditionalRdpProperty")]
+        public string ConditionalRdpProperty
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConditionalRdpProperty;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HostPoolPatchProperties();
+                }
+                Properties.ConditionalRdpProperty = value;
+            }
+        }
     }
 }

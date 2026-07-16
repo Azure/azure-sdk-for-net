@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetP2sVpnConnectionHealthRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, RequestContext context)
+        internal HttpMessage CreateGetP2SVpnConnectionHealthRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetP2sVpnConnectionHealthDetailedRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetP2SVpnConnectionHealthDetailedRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateDisconnectP2sVpnConnectionsRequest(Guid subscriptionId, string resourceGroupName, string p2sVpnGatewayName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateDisconnectP2SVpnConnectionsRequest(Guid subscriptionId, string resourceGroupName, string p2sVpnGatewayName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

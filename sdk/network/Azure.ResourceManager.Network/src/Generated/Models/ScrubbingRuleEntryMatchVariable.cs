@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> RequestPostArgNames. </summary>
         private const string RequestPostArgNamesValue = "RequestPostArgNames";
         /// <summary> RequestJSONArgNames. </summary>
-        private const string RequestJSONArgNamesValue = "RequestJSONArgNames";
+        private const string RequestJsonArgNamesValue = "RequestJSONArgNames";
         /// <summary> RequestIPAddress. </summary>
         private const string RequestIPAddressValue = "RequestIPAddress";
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
         public static ScrubbingRuleEntryMatchVariable RequestPostArgNames { get; } = new ScrubbingRuleEntryMatchVariable(RequestPostArgNamesValue);
 
         /// <summary> RequestJSONArgNames. </summary>
-        public static ScrubbingRuleEntryMatchVariable RequestJSONArgNames { get; } = new ScrubbingRuleEntryMatchVariable(RequestJSONArgNamesValue);
+        public static ScrubbingRuleEntryMatchVariable RequestJsonArgNames { get; } = new ScrubbingRuleEntryMatchVariable(RequestJsonArgNamesValue);
 
         /// <summary> RequestIPAddress. </summary>
         public static ScrubbingRuleEntryMatchVariable RequestIPAddress { get; } = new ScrubbingRuleEntryMatchVariable(RequestIPAddressValue);

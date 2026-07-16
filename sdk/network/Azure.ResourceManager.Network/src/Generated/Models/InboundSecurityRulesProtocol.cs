@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
         /// <summary> TCP. </summary>
-        private const string TCPValue = "TCP";
+        private const string TcpValue = "TCP";
         /// <summary> UDP. </summary>
-        private const string UDPValue = "UDP";
+        private const string UdpValue = "UDP";
 
         /// <summary> Initializes a new instance of <see cref="InboundSecurityRulesProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> TCP. </summary>
-        public static InboundSecurityRulesProtocol TCP { get; } = new InboundSecurityRulesProtocol(TCPValue);
+        public static InboundSecurityRulesProtocol Tcp { get; } = new InboundSecurityRulesProtocol(TcpValue);
 
         /// <summary> UDP. </summary>
-        public static InboundSecurityRulesProtocol UDP { get; } = new InboundSecurityRulesProtocol(UDPValue);
+        public static InboundSecurityRulesProtocol Udp { get; } = new InboundSecurityRulesProtocol(UdpValue);
 
         /// <summary> Determines if two <see cref="InboundSecurityRulesProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

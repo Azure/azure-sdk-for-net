@@ -1,4 +1,6 @@
-commit: a0a2a2ccc3b8cbf61d6044db2b434091ec769acf
-repo: Azure/azure-rest-api-specs
 directory: specification/confidentialledger/Microsoft.CodeTransparency
+commit: 5b7d94b2e640022323b5da6dbf568f2fdfca2ab8
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

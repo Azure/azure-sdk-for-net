@@ -1,0 +1,61 @@
+# Hermetic workflow-scenario eval CI: runs the unit-tool + mock workflow-scenario evals in
+# tools/azsdk-cli/Azure.Sdk.Tools.Vally against the mock MCP (live tier runs in live-eval.yml).
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - tools/azsdk-cli/Azure.Sdk.Tools.Vally/**
+      - tools/azsdk-cli/Azure.Sdk.Tools.Mock/**
+      # Cli tool catalog + skills feed the eval results, so changes here must retrigger.
+      - tools/azsdk-cli/Azure.Sdk.Tools.Cli/**
+      - .github/skills/**
+      - eng/common/pipelines/workflow-eval.yml
+      - eng/common/pipelines/templates/jobs/**
+      - eng/common/pipelines/templates/steps/eval-invoke.yml
+      - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
+      - eng/common/pipelines/templates/stages/archetype-eval.yml
+      - eng/common/scripts/eval/**
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - tools/azsdk-cli/Azure.Sdk.Tools.Vally/**
+      - tools/azsdk-cli/Azure.Sdk.Tools.Mock/**
+      - tools/azsdk-cli/Azure.Sdk.Tools.Cli/**
+      - .github/skills/**
+      - eng/common/pipelines/workflow-eval.yml
+      - eng/common/pipelines/templates/jobs/**
+      - eng/common/pipelines/templates/steps/eval-invoke.yml
+      - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
+      - eng/common/pipelines/templates/stages/archetype-eval.yml
+      - eng/common/scripts/eval/**
+
+variables:
+  # Defines LINUXPOOL + LINUXVMIMAGE used by the archetype's jobs.
+  - template: /eng/pipelines/templates/variables/image.yml
+  # Provides the secret azuresdk-copilot-github-pat, mapped into GITHUB_TOKEN in the invoke step.
+  - group: AzSDK_Eval_Variable_group
+
+extends:
+  template: /eng/common/pipelines/templates/stages/archetype-eval.yml
+  parameters:
+    # Shared mock/live builder; select the mock tier.
+    mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
+    TestType: mock
+    vallyRoot: tools/azsdk-cli/Azure.Sdk.Tools.Vally
+    # Per-shard job timeout (report-only tier).
+    shardTimeoutInMinutes: 20
+    # Pass-rate gate for `vally eval`. This tier is report-only (failOnFailedTests defaults false),
+    # so the threshold only colors the verdict; a repo/team can raise or lower it here.
+    threshold: 0.8
+    # This repo needs no repo-specific setup (the mock MCP is built by the common BuildMcp job).
+    # A spec/language repo that must start its own bot / server / MCP copies the example hook and
+    # points these at it — see eng/common/pipelines/templates/steps/eval-hook-example.yml.
+    # preEvalTemplate: /eng/pipelines/eval/start-my-bot.yml
+    # postEvalTemplate: /eng/pipelines/eval/stop-my-bot.yml

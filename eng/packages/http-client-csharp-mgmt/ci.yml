@@ -85,7 +85,12 @@ extends:
         PublishDependsOnTest: false
         PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}
         HasNugetPackages: true
-      RegenerationJobCount: 5
+      # Workaround: keep regen groups small enough to avoid the public release
+      # pipeline's 1-hour timeout. Azure.ResourceManager.Network takes much
+      # longer than most packages and should be optimized eventually; the shared
+      # matrix generator only supports count-based batching, not per-package
+      # isolation.
+      RegenerationJobCount: 18
       MinimumPerJob: 10
       OnlyGenerateTypespec: true
       DirectoryFilterPattern: 'Azure.ResourceManager*,Azure.Provisioning*'

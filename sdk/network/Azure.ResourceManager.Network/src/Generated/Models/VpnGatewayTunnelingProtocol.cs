@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> IkeV2. </summary>
         private const string IkeV2Value = "IkeV2";
         /// <summary> OpenVPN. </summary>
-        private const string OpenVPNValue = "OpenVPN";
+        private const string OpenVpnValue = "OpenVPN";
 
         /// <summary> Initializes a new instance of <see cref="VpnGatewayTunnelingProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnGatewayTunnelingProtocol IkeV2 { get; } = new VpnGatewayTunnelingProtocol(IkeV2Value);
 
         /// <summary> OpenVPN. </summary>
-        public static VpnGatewayTunnelingProtocol OpenVPN { get; } = new VpnGatewayTunnelingProtocol(OpenVPNValue);
+        public static VpnGatewayTunnelingProtocol OpenVpn { get; } = new VpnGatewayTunnelingProtocol(OpenVpnValue);
 
         /// <summary> Determines if two <see cref="VpnGatewayTunnelingProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

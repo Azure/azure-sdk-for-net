@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Storage
                     yield break;
                 }
                 Models.LocalUsers result = Models.LocalUsers.FromResponse(response);
-                yield return Page<StorageAccountLocalUserData>.FromValues((IReadOnlyList<StorageAccountLocalUserData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<StorageAccountLocalUserData>.FromValues((IReadOnlyList<StorageAccountLocalUserData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

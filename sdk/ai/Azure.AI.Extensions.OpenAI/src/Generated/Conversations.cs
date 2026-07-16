@@ -22,10 +22,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Initializes a new instance of Conversations. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        internal Conversations(ClientPipeline pipeline, Uri endpoint)
+        internal Conversations(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
         }
@@ -33,6 +35,9 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary>
         /// [Protocol Method] Creates a new conversation resource.
         /// <list type="bullet">
@@ -42,14 +47,24 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult CreateConversation(BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
+        public virtual ClientResult CreateConversation(BinaryContent content, string userIdentity = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateConversationRequest(content, userIsolationKey, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Conversations.CreateConversation");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateConversationRequest(content, userIdentity, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -61,39 +76,49 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateConversationAsync(BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
+        public virtual async Task<ClientResult> CreateConversationAsync(BinaryContent content, string userIdentity = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateConversationRequest(content, userIsolationKey, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Conversations.CreateConversation");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateConversationRequest(content, userIdentity, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new conversation resource. </summary>
         /// <param name="metadata"></param>
         /// <param name="items"></param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectConversation> CreateConversation(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ProjectConversation> CreateConversation(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, string userIdentity = default, CancellationToken cancellationToken = default)
         {
             CreateConversationRequest spreadModel = new CreateConversationRequest(metadata, items?.ToList() as IList<InputItem> ?? new ChangeTrackingList<InputItem>(), default);
-            ClientResult result = CreateConversation(spreadModel, userIsolationKey, cancellationToken.ToRequestOptions());
+            ClientResult result = CreateConversation(spreadModel, userIdentity, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }
 
         /// <summary> Creates a new conversation resource. </summary>
         /// <param name="metadata"></param>
         /// <param name="items"></param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectConversation>> CreateConversationAsync(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ProjectConversation>> CreateConversationAsync(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, string userIdentity = default, CancellationToken cancellationToken = default)
         {
             CreateConversationRequest spreadModel = new CreateConversationRequest(metadata, items?.ToList() as IList<InputItem> ?? new ChangeTrackingList<InputItem>(), default);
-            ClientResult result = await CreateConversationAsync(spreadModel, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateConversationAsync(spreadModel, userIdentity, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }
 
@@ -107,14 +132,24 @@ namespace Azure.AI.Extensions.OpenAI
         /// </summary>
         /// <param name="conversationId"> The id of the conversation to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult UpdateConversation(string conversationId, BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
+        public virtual ClientResult UpdateConversation(string conversationId, BinaryContent content, string userIdentity = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, userIsolationKey, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Conversations.UpdateConversation");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, userIdentity, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -127,14 +162,24 @@ namespace Azure.AI.Extensions.OpenAI
         /// </summary>
         /// <param name="conversationId"> The id of the conversation to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> UpdateConversationAsync(string conversationId, BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
+        public virtual async Task<ClientResult> UpdateConversationAsync(string conversationId, BinaryContent content, string userIdentity = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, userIsolationKey, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Conversations.UpdateConversation");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, userIdentity, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Modifies the specified conversation's properties. </summary>
@@ -143,13 +188,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
         ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
         /// </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectConversation> UpdateConversation(string conversationId, InternalMetadataContainer metadata, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ProjectConversation> UpdateConversation(string conversationId, InternalMetadataContainer metadata, string userIdentity = default, CancellationToken cancellationToken = default)
         {
             UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
-            ClientResult result = UpdateConversation(conversationId, spreadModel, userIsolationKey, cancellationToken.ToRequestOptions());
+            ClientResult result = UpdateConversation(conversationId, spreadModel, userIdentity, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }
 
@@ -159,13 +204,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
         ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
         /// </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectConversation>> UpdateConversationAsync(string conversationId, InternalMetadataContainer metadata, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ProjectConversation>> UpdateConversationAsync(string conversationId, InternalMetadataContainer metadata, string userIdentity = default, CancellationToken cancellationToken = default)
         {
             UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
-            ClientResult result = await UpdateConversationAsync(conversationId, spreadModel, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await UpdateConversationAsync(conversationId, spreadModel, userIdentity, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }
     }

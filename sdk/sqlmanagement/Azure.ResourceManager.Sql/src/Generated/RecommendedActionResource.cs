@@ -6,48 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A Class representing a RecommendedAction along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RecommendedActionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetRecommendedActionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseAdvisorResource"/> using the GetRecommendedAction method.
+    /// A class representing a RecommendedAction along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RecommendedActionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseAdvisorResource"/> using the GetRecommendedActions method.
     /// </summary>
     public partial class RecommendedActionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RecommendedActionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="serverName"> The serverName. </param>
-        /// <param name="databaseName"> The databaseName. </param>
-        /// <param name="advisorName"> The advisorName. </param>
-        /// <param name="recommendedActionName"> The recommendedActionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _recommendedActionDatabaseRecommendedActionsClientDiagnostics;
-        private readonly DatabaseRecommendedActionsRestOperations _recommendedActionDatabaseRecommendedActionsRestClient;
+        private readonly ClientDiagnostics _databaseRecommendedActionsClientDiagnostics;
+        private readonly DatabaseRecommendedActions _databaseRecommendedActionsRestClient;
         private readonly RecommendedActionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/advisors/recommendedActions";
 
-        /// <summary> Initializes a new instance of the <see cref="RecommendedActionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RecommendedActionResource for mocking. </summary>
         protected RecommendedActionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecommendedActionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RecommendedActionResource(ArmClient client, RecommendedActionData data) : this(client, data.Id)
@@ -56,71 +43,95 @@ namespace Azure.ResourceManager.Sql
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecommendedActionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RecommendedActionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recommendedActionDatabaseRecommendedActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string recommendedActionDatabaseRecommendedActionsApiVersion);
-            _recommendedActionDatabaseRecommendedActionsRestClient = new DatabaseRecommendedActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recommendedActionDatabaseRecommendedActionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string recommendedActionApiVersion);
+            _databaseRecommendedActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            _databaseRecommendedActionsRestClient = new DatabaseRecommendedActions(_databaseRecommendedActionsClientDiagnostics, Pipeline, Endpoint, recommendedActionApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual RecommendedActionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="advisorName"> The advisorName. </param>
+        /// <param name="recommendedActionName"> The recommendedActionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a database recommended action.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseRecommendedActions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecommendedActions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecommendedActionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecommendedActionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RecommendedActionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionResource.Get");
+            using DiagnosticScope scope = _databaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionResource.Get");
             scope.Start();
             try
             {
-                var response = await _recommendedActionDatabaseRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseRecommendedActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RecommendedActionData> response = Response.FromValue(RecommendedActionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RecommendedActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +145,41 @@ namespace Azure.ResourceManager.Sql
         /// Gets a database recommended action.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseRecommendedActions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecommendedActions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecommendedActionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecommendedActionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RecommendedActionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionResource.Get");
+            using DiagnosticScope scope = _databaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionResource.Get");
             scope.Start();
             try
             {
-                var response = _recommendedActionDatabaseRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseRecommendedActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RecommendedActionData> response = Response.FromValue(RecommendedActionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RecommendedActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -174,20 +193,20 @@ namespace Azure.ResourceManager.Sql
         /// Updates a database recommended action.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseRecommendedActions_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecommendedActions_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecommendedActionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecommendedActionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,11 +217,21 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionResource.Update");
+            using DiagnosticScope scope = _databaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionResource.Update");
             scope.Start();
             try
             {
-                var response = await _recommendedActionDatabaseRecommendedActionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseRecommendedActionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RecommendedActionData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RecommendedActionData> response = Response.FromValue(RecommendedActionData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RecommendedActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -216,20 +245,20 @@ namespace Azure.ResourceManager.Sql
         /// Updates a database recommended action.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseRecommendedActions_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecommendedActions_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecommendedActionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecommendedActionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -240,11 +269,21 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionResource.Update");
+            using DiagnosticScope scope = _databaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionResource.Update");
             scope.Start();
             try
             {
-                var response = _recommendedActionDatabaseRecommendedActionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseRecommendedActionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RecommendedActionData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RecommendedActionData> response = Response.FromValue(RecommendedActionData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RecommendedActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

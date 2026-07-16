@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -15,93 +16,53 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class PredictionDriftMonitoringSignal : MonitoringSignalBase
     {
         /// <summary> Initializes a new instance of <see cref="PredictionDriftMonitoringSignal"/>. </summary>
-        /// <param name="metricThresholds">
-        /// [Required] A list of metrics to calculate and their associated thresholds.
-        /// Please note <see cref="PredictionDriftMetricThresholdBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CategoricalPredictionDriftMetricThreshold"/> and <see cref="NumericalPredictionDriftMetricThreshold"/>.
-        /// </param>
-        /// <param name="productionData">
-        /// [Required] The data which drift will be calculated for.
-        /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
-        /// </param>
-        /// <param name="referenceData">
-        /// [Required] The data to calculate drift against.
-        /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
-        /// </param>
+        /// <param name="metricThresholds"> [Required] A list of metrics to calculate and their associated thresholds. </param>
+        /// <param name="productionData"> [Required] The data which drift will be calculated for. </param>
+        /// <param name="referenceData"> [Required] The data to calculate drift against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricThresholds"/>, <paramref name="productionData"/> or <paramref name="referenceData"/> is null. </exception>
-        public PredictionDriftMonitoringSignal(IEnumerable<PredictionDriftMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData)
+        public PredictionDriftMonitoringSignal(IEnumerable<PredictionDriftMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData) : base(MonitoringSignalType.PredictionDrift)
         {
             Argument.AssertNotNull(metricThresholds, nameof(metricThresholds));
             Argument.AssertNotNull(productionData, nameof(productionData));
             Argument.AssertNotNull(referenceData, nameof(referenceData));
 
+            FeatureDataTypeOverride = new ChangeTrackingDictionary<string, MonitoringFeatureDataType>();
             MetricThresholds = metricThresholds.ToList();
             ProductionData = productionData;
             ReferenceData = referenceData;
-            FeatureDataTypeOverride = new ChangeTrackingDictionary<string, MonitoringFeatureDataType>();
-            SignalType = MonitoringSignalType.PredictionDrift;
         }
 
         /// <summary> Initializes a new instance of <see cref="PredictionDriftMonitoringSignal"/>. </summary>
-        /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
         /// <param name="notificationTypes"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="metricThresholds">
-        /// [Required] A list of metrics to calculate and their associated thresholds.
-        /// Please note <see cref="PredictionDriftMetricThresholdBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CategoricalPredictionDriftMetricThreshold"/> and <see cref="NumericalPredictionDriftMetricThreshold"/>.
-        /// </param>
-        /// <param name="productionData">
-        /// [Required] The data which drift will be calculated for.
-        /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
-        /// </param>
-        /// <param name="referenceData">
-        /// [Required] The data to calculate drift against.
-        /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
-        /// </param>
+        /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="featureDataTypeOverride"> A dictionary that maps feature names to their respective data types. </param>
-        internal PredictionDriftMonitoringSignal(MonitoringSignalType signalType, IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<PredictionDriftMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData, IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride) : base(signalType, notificationTypes, properties, serializedAdditionalRawData)
+        /// <param name="metricThresholds"> [Required] A list of metrics to calculate and their associated thresholds. </param>
+        /// <param name="productionData"> [Required] The data which drift will be calculated for. </param>
+        /// <param name="referenceData"> [Required] The data to calculate drift against. </param>
+        internal PredictionDriftMonitoringSignal(IList<MonitoringNotificationType> notificationTypes, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride, IList<PredictionDriftMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData) : base(notificationTypes, properties, signalType, additionalBinaryDataProperties)
         {
+            FeatureDataTypeOverride = featureDataTypeOverride;
             MetricThresholds = metricThresholds;
             ProductionData = productionData;
             ReferenceData = referenceData;
-            FeatureDataTypeOverride = featureDataTypeOverride;
-            SignalType = signalType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PredictionDriftMonitoringSignal"/> for deserialization. </summary>
-        internal PredictionDriftMonitoringSignal()
-        {
-        }
-
-        /// <summary>
-        /// [Required] A list of metrics to calculate and their associated thresholds.
-        /// Please note <see cref="PredictionDriftMetricThresholdBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CategoricalPredictionDriftMetricThreshold"/> and <see cref="NumericalPredictionDriftMetricThreshold"/>.
-        /// </summary>
-        [WirePath("metricThresholds")]
-        public IList<PredictionDriftMetricThresholdBase> MetricThresholds { get; }
-        /// <summary>
-        /// [Required] The data which drift will be calculated for.
-        /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
-        /// </summary>
-        [WirePath("productionData")]
-        public MonitoringInputDataBase ProductionData { get; set; }
-        /// <summary>
-        /// [Required] The data to calculate drift against.
-        /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FixedInputData"/>, <see cref="RollingInputData"/> and <see cref="StaticInputData"/>.
-        /// </summary>
-        [WirePath("referenceData")]
-        public MonitoringInputDataBase ReferenceData { get; set; }
         /// <summary> A dictionary that maps feature names to their respective data types. </summary>
         [WirePath("featureDataTypeOverride")]
         public IDictionary<string, MonitoringFeatureDataType> FeatureDataTypeOverride { get; set; }
+
+        /// <summary> [Required] A list of metrics to calculate and their associated thresholds. </summary>
+        [WirePath("metricThresholds")]
+        public IList<PredictionDriftMetricThresholdBase> MetricThresholds { get; }
+
+        /// <summary> [Required] The data which drift will be calculated for. </summary>
+        [WirePath("productionData")]
+        public MonitoringInputDataBase ProductionData { get; set; }
+
+        /// <summary> [Required] The data to calculate drift against. </summary>
+        [WirePath("referenceData")]
+        public MonitoringInputDataBase ReferenceData { get; set; }
     }
 }

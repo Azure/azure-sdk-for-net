@@ -109,18 +109,6 @@ public class BasicCdnTests
               name: endpointName
               location: 'global'
               properties: {
-                contentTypesToCompress: [
-                  'application/javascript'
-                  'application/json'
-                  'application/xml'
-                  'text/css'
-                  'text/html'
-                  'text/plain'
-                ]
-                isCompressionEnabled: true
-                isHttpAllowed: true
-                isHttpsAllowed: true
-                originHostHeader: originUrl
                 origins: [
                   {
                     name: 'origin1'
@@ -129,6 +117,18 @@ public class BasicCdnTests
                     }
                   }
                 ]
+                contentTypesToCompress: [
+                  'application/javascript'
+                  'application/json'
+                  'application/xml'
+                  'text/css'
+                  'text/html'
+                  'text/plain'
+                ]
+                originHostHeader: originUrl
+                isCompressionEnabled: true
+                isHttpAllowed: true
+                isHttpsAllowed: true
                 queryStringCachingBehavior: 'IgnoreQueryString'
               }
               parent: profile
@@ -258,15 +258,15 @@ public class BasicCdnTests
             resource originGroup 'Microsoft.Cdn/profiles/originGroups@2025-06-01' = {
               name: 'MyOriginGroup'
               properties: {
+                loadBalancingSettings: {
+                  sampleSize: 4
+                  successfulSamplesRequired: 3
+                }
                 healthProbeSettings: {
                   probePath: '/'
                   probeRequestType: 'HEAD'
                   probeProtocol: 'Http'
                   probeIntervalInSeconds: 100
-                }
-                loadBalancingSettings: {
-                  sampleSize: 4
-                  successfulSamplesRequired: 3
                 }
               }
               parent: profile
@@ -288,19 +288,19 @@ public class BasicCdnTests
             resource route 'Microsoft.Cdn/profiles/afdEndpoints/routes@2025-06-01' = {
               name: 'MyRoute'
               properties: {
-                forwardingProtocol: 'HttpsOnly'
-                httpsRedirect: 'Enabled'
-                linkToDefaultDomain: 'Enabled'
                 originGroup: {
                   id: originGroup.id
                 }
-                patternsToMatch: [
-                  '/*'
-                ]
                 supportedProtocols: [
                   'Http'
                   'Https'
                 ]
+                patternsToMatch: [
+                  '/*'
+                ]
+                forwardingProtocol: 'HttpsOnly'
+                linkToDefaultDomain: 'Enabled'
+                httpsRedirect: 'Enabled'
               }
               parent: endpoint
             }

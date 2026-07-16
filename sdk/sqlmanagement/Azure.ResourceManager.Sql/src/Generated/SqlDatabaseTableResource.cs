@@ -6,48 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A Class representing a SqlDatabaseTable along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlDatabaseTableResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSqlDatabaseTableResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseSchemaResource"/> using the GetSqlDatabaseTable method.
+    /// A class representing a SqlDatabaseTable along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlDatabaseTableResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseSchemaResource"/> using the GetSqlDatabaseTables method.
     /// </summary>
     public partial class SqlDatabaseTableResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SqlDatabaseTableResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="serverName"> The serverName. </param>
-        /// <param name="databaseName"> The databaseName. </param>
-        /// <param name="schemaName"> The schemaName. </param>
-        /// <param name="tableName"> The tableName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _sqlDatabaseTableDatabaseTablesClientDiagnostics;
-        private readonly DatabaseTablesRestOperations _sqlDatabaseTableDatabaseTablesRestClient;
+        private readonly ClientDiagnostics _databaseTablesClientDiagnostics;
+        private readonly DatabaseTables _databaseTablesRestClient;
         private readonly DatabaseTableData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/schemas/tables";
 
-        /// <summary> Initializes a new instance of the <see cref="SqlDatabaseTableResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SqlDatabaseTableResource for mocking. </summary>
         protected SqlDatabaseTableResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SqlDatabaseTableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseTableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlDatabaseTableResource(ArmClient client, DatabaseTableData data) : this(client, data.Id)
@@ -56,68 +43,160 @@ namespace Azure.ResourceManager.Sql
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SqlDatabaseTableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseTableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlDatabaseTableResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlDatabaseTableDatabaseTablesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string sqlDatabaseTableDatabaseTablesApiVersion);
-            _sqlDatabaseTableDatabaseTablesRestClient = new DatabaseTablesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseTableDatabaseTablesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string sqlDatabaseTableApiVersion);
+            _databaseTablesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            _databaseTablesRestClient = new DatabaseTables(_databaseTablesClientDiagnostics, Pipeline, Endpoint, sqlDatabaseTableApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DatabaseTableData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="schemaName"> The schemaName. </param>
+        /// <param name="tableName"> The tableName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
-        /// <summary> Gets a collection of SqlDatabaseColumnResources in the SqlDatabaseTable. </summary>
-        /// <returns> An object representing collection of SqlDatabaseColumnResources and their operations over a SqlDatabaseColumnResource. </returns>
+        /// <summary>
+        /// Get database table
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseTables_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SqlDatabaseTableResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SqlDatabaseTableResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _databaseTablesClientDiagnostics.CreateScope("SqlDatabaseTableResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseTablesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DatabaseTableData> response = Response.FromValue(DatabaseTableData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SqlDatabaseTableResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get database table
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseTables_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SqlDatabaseTableResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SqlDatabaseTableResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _databaseTablesClientDiagnostics.CreateScope("SqlDatabaseTableResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databaseTablesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DatabaseTableData> response = Response.FromValue(DatabaseTableData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SqlDatabaseTableResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a collection of SqlDatabaseColumns in the <see cref="SqlDatabaseTableResource"/>. </summary>
+        /// <returns> An object representing collection of SqlDatabaseColumns and their operations over a SqlDatabaseColumnResource. </returns>
         public virtual SqlDatabaseColumnCollection GetSqlDatabaseColumns()
         {
             return GetCachedClient(client => new SqlDatabaseColumnCollection(client, Id));
         }
 
-        /// <summary>
-        /// Get database column
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseColumns_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDatabaseColumnResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get database column. </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
@@ -125,30 +204,12 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public virtual async Task<Response<SqlDatabaseColumnResource>> GetSqlDatabaseColumnAsync(string columnName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+
             return await GetSqlDatabaseColumns().GetAsync(columnName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get database column
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseColumns_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDatabaseColumnResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get database column. </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
@@ -156,87 +217,9 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public virtual Response<SqlDatabaseColumnResource> GetSqlDatabaseColumn(string columnName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(columnName, nameof(columnName));
+
             return GetSqlDatabaseColumns().Get(columnName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get database table
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseTables_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDatabaseTableResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SqlDatabaseTableResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sqlDatabaseTableDatabaseTablesClientDiagnostics.CreateScope("SqlDatabaseTableResource.Get");
-            scope.Start();
-            try
-            {
-                var response = await _sqlDatabaseTableDatabaseTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabaseTableResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get database table
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseTables_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlDatabaseTableResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SqlDatabaseTableResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _sqlDatabaseTableDatabaseTablesClientDiagnostics.CreateScope("SqlDatabaseTableResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _sqlDatabaseTableDatabaseTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabaseTableResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

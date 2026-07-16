@@ -18,19 +18,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> None. </summary>
         private const string NoneValue = "None";
         /// <summary> PFS1. </summary>
-        private const string PFS1Value = "PFS1";
+        private const string Pfs1Value = "PFS1";
         /// <summary> PFS2. </summary>
-        private const string PFS2Value = "PFS2";
+        private const string Pfs2Value = "PFS2";
         /// <summary> PFS2048. </summary>
-        private const string PFS2048Value = "PFS2048";
+        private const string Pfs2048Value = "PFS2048";
         /// <summary> ECP256. </summary>
-        private const string ECP256Value = "ECP256";
+        private const string Ecp256Value = "ECP256";
         /// <summary> ECP384. </summary>
-        private const string ECP384Value = "ECP384";
+        private const string Ecp384Value = "ECP384";
         /// <summary> PFS24. </summary>
-        private const string PFS24Value = "PFS24";
+        private const string Pfs24Value = "PFS24";
         /// <summary> PFS14. </summary>
-        private const string PFS14Value = "PFS14";
+        private const string Pfs14Value = "PFS14";
         /// <summary> PFSMM. </summary>
         private const string PFSMMValue = "PFSMM";
 
@@ -48,25 +48,25 @@ namespace Azure.ResourceManager.Network.Models
         public static PfsGroup None { get; } = new PfsGroup(NoneValue);
 
         /// <summary> PFS1. </summary>
-        public static PfsGroup PFS1 { get; } = new PfsGroup(PFS1Value);
+        public static PfsGroup Pfs1 { get; } = new PfsGroup(Pfs1Value);
 
         /// <summary> PFS2. </summary>
-        public static PfsGroup PFS2 { get; } = new PfsGroup(PFS2Value);
+        public static PfsGroup Pfs2 { get; } = new PfsGroup(Pfs2Value);
 
         /// <summary> PFS2048. </summary>
-        public static PfsGroup PFS2048 { get; } = new PfsGroup(PFS2048Value);
+        public static PfsGroup Pfs2048 { get; } = new PfsGroup(Pfs2048Value);
 
         /// <summary> ECP256. </summary>
-        public static PfsGroup ECP256 { get; } = new PfsGroup(ECP256Value);
+        public static PfsGroup Ecp256 { get; } = new PfsGroup(Ecp256Value);
 
         /// <summary> ECP384. </summary>
-        public static PfsGroup ECP384 { get; } = new PfsGroup(ECP384Value);
+        public static PfsGroup Ecp384 { get; } = new PfsGroup(Ecp384Value);
 
         /// <summary> PFS24. </summary>
-        public static PfsGroup PFS24 { get; } = new PfsGroup(PFS24Value);
+        public static PfsGroup Pfs24 { get; } = new PfsGroup(Pfs24Value);
 
         /// <summary> PFS14. </summary>
-        public static PfsGroup PFS14 { get; } = new PfsGroup(PFS14Value);
+        public static PfsGroup Pfs14 { get; } = new PfsGroup(Pfs14Value);
 
         /// <summary> PFSMM. </summary>
         public static PfsGroup PFSMM { get; } = new PfsGroup(PFSMMValue);

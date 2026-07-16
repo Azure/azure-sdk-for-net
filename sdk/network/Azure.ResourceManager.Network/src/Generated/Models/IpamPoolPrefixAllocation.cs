@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="IpamPoolPrefixAllocation"/>. </summary>
         /// <param name="pool"></param>
-        /// <param name="numberOfIpAddresses"> Number of IP addresses to allocate. </param>
+        /// <param name="numberOfIPAddresses"> Number of IP addresses to allocate. </param>
         /// <param name="allocatedAddressPrefixes"> List of assigned IP address prefixes in the IpamPool of the associated resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpamPoolPrefixAllocation(IpamPoolPrefixAllocationPool pool, string numberOfIpAddresses, IReadOnlyList<string> allocatedAddressPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IpamPoolPrefixAllocation(IpamPoolPrefixAllocationPool pool, string numberOfIPAddresses, IReadOnlyList<string> allocatedAddressPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Pool = pool;
-            NumberOfIpAddresses = numberOfIpAddresses;
+            NumberOfIPAddresses = numberOfIPAddresses;
             AllocatedAddressPrefixes = allocatedAddressPrefixes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Number of IP addresses to allocate. </summary>
         [WirePath("numberOfIpAddresses")]
-        public string NumberOfIpAddresses { get; set; }
+        public string NumberOfIPAddresses { get; set; }
 
         /// <summary> List of assigned IP address prefixes in the IpamPool of the associated resource. </summary>
         [WirePath("allocatedAddressPrefixes")]

@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
         [WirePath("properties.ipsecPolicies")]
-        public IList<IPsecPolicy> IpsecPolicies
+        public IList<IPsecPolicy> IPsecPolicies
         {
             get
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VpnConnectionProperties();
                 }
-                return Properties.IpsecPolicies;
+                return Properties.IPsecPolicies;
             }
         }
 
@@ -264,11 +264,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Use local azure ip to initiate connection. </summary>
         [WirePath("properties.useLocalAzureIpAddress")]
-        public bool? UseLocalAzureIpAddress
+        public bool? UseLocalAzureIPAddress
         {
             get
             {
-                return Properties is null ? default : Properties.UseLocalAzureIpAddress;
+                return Properties is null ? default : Properties.UseLocalAzureIPAddress;
             }
             set
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VpnConnectionProperties();
                 }
-                Properties.UseLocalAzureIpAddress = value;
+                Properties.UseLocalAzureIPAddress = value;
             }
         }
 

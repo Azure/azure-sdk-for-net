@@ -7,11 +7,5 @@
     <PackageId>Azure.ResourceManager.MachineLearning</PackageId>
     <PackageTags>azure;management;machinelearning;machinelearningservices;aml;ml</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <!-- Link to preapproved, registered namespaces: https://azure.github.io/azure-sdk/registered_namespaces.html  -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 </Project>

@@ -11,6 +11,6 @@ namespace Azure.Provisioning.KeyVault
     public enum KeyVaultSkuFamily
     {
         /// <summary> A. </summary>
-        A
+        A = 0
     }
 }

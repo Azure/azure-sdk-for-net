@@ -174,18 +174,46 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 if (_transmissionStateManager.State == TransmissionState.Closed)
                 {
+                    var stopwatch = networkSdkStats != null ? System.Diagnostics.Stopwatch.StartNew() : null;
+
                     using var httpMessage = async ?
                     await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
                     _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).Result;
 
+                    stopwatch?.Stop();
+
                     result = HttpPipelineHelper.IsSuccess(httpMessage, telemetrySchemaTypeCounter);
 
-                    if (result == ExportResult.Success && networkSdkStats != null)
+                    if (networkSdkStats != null)
                     {
-                        // Record Network SDKStats Request_Success_Count for HTTP 200.
-                        // request.Uri reflects any redirect followed by IngestionRedirectPolicy,
-                        // so the host recorded matches the stamp that returned the response.
-                        networkSdkStats.TrackSuccess(httpMessage.Request.Uri.Host);
+                        var requestHost = httpMessage.Request.Uri.Host;
+
+                        if (httpMessage.HasResponse)
+                        {
+                            // Request_Duration is recorded for every request that received a
+                            // response, regardless of outcome.
+                            networkSdkStats.TrackDuration(requestHost, stopwatch!.Elapsed.TotalMilliseconds);
+                        }
+
+                        if (result == ExportResult.Success)
+                        {
+                            // Record Network SDKStats Request_Success_Count for HTTP 200.
+                            // request.Uri reflects any redirect followed by IngestionRedirectPolicy,
+                            // so the host recorded matches the stamp that returned the response.
+                            networkSdkStats.TrackSuccess(requestHost);
+                        }
+                        else if (httpMessage.HasResponse)
+                        {
+                            // Classify the top-level non-success response as retry / throttle /
+                            // failure. 206 partial-success per-envelope handling happens in
+                            // HttpPipelineHelper.HandlePartialSuccess.
+                            networkSdkStats.TrackResponseFailure(requestHost, httpMessage.Response.Status);
+                        }
+                        else
+                        {
+                            // No response code received: count as an exception.
+                            networkSdkStats.TrackException(requestHost, exceptionType: null);
+                        }
                     }
 
                     if (result == ExportResult.Failure && _fileBlobProvider != null)
@@ -221,6 +249,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
+                networkSdkStats?.TrackException(requestHost: null, exceptionType: ex.GetType().FullName);
                 AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _isAadEnabled, _connectionVars.InstrumentationKey, ex);
                 CustomerSdkStatsHelper.TrackDropped(telemetrySchemaTypeCounter, (int)DropCode.ClientException, CustomerSdkStatsHelper.GetDropReason(ex));
             }

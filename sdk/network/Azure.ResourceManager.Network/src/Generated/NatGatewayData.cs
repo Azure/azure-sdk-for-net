@@ -75,62 +75,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> An array of public ip addresses V4 associated with the nat gateway resource. </summary>
-        [WirePath("properties.publicIpAddresses")]
-        public IList<NetworkSubResource> PublicIpAddresses
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NatGatewayPropertiesFormat();
-                }
-                return Properties.PublicIpAddresses;
-            }
-        }
-
-        /// <summary> An array of public ip addresses V6 associated with the nat gateway resource. </summary>
-        [WirePath("properties.publicIpAddressesV6")]
-        public IList<NetworkSubResource> PublicIpAddressesV6
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NatGatewayPropertiesFormat();
-                }
-                return Properties.PublicIpAddressesV6;
-            }
-        }
-
-        /// <summary> An array of public ip prefixes V4 associated with the nat gateway resource. </summary>
-        [WirePath("properties.publicIpPrefixes")]
-        public IList<NetworkSubResource> PublicIpPrefixes
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NatGatewayPropertiesFormat();
-                }
-                return Properties.PublicIpPrefixes;
-            }
-        }
-
-        /// <summary> An array of public ip prefixes V6 associated with the nat gateway resource. </summary>
-        [WirePath("properties.publicIpPrefixesV6")]
-        public IList<NetworkSubResource> PublicIpPrefixesV6
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NatGatewayPropertiesFormat();
-                }
-                return Properties.PublicIpPrefixesV6;
-            }
-        }
-
         /// <summary> Whether Nat64 is enabled for the NAT gateway resource. </summary>
         [WirePath("properties.nat64")]
         public Nat64State? Nat64

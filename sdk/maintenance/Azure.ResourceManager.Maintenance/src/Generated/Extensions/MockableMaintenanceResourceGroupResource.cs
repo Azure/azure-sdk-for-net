@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
         private ClientDiagnostics ApplyUpdateForResourceGroupClientDiagnostics => _applyUpdateForResourceGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApplyUpdateForResourceGroup ApplyUpdateForResourceGroupRestClient => _applyUpdateForResourceGroupRestClient ??= new ApplyUpdateForResourceGroup(ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
+        private ApplyUpdateForResourceGroup ApplyUpdateForResourceGroupRestClient => _applyUpdateForResourceGroupRestClient ??= new ApplyUpdateForResourceGroup(ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
 
         /// <summary> Gets a collection of MaintenanceConfigurations in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of MaintenanceConfigurations and their operations over a MaintenanceConfigurationResource. </returns>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -24,36 +24,28 @@ namespace Azure.ResourceManager.Network
         /// <summary> Invokes the GenerateVpnClientPackage compatibility operation. </summary>
         public virtual ArmOperation<string> GenerateVpnClientPackage(WaitUntil waitUntil, VpnClientContent content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the GenerateVpnProfileAsync compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `GenerateVpnProfileAsync` with `VpnClientContent` instead.", false)]
         public virtual Task<ArmOperation<string>> GenerateVpnProfileAsync(WaitUntil waitUntil, VpnClientParameters content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the GenerateVpnProfile compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `GenerateVpnProfile` with `VpnClientContent` instead.", false)]
         public virtual ArmOperation<string> GenerateVpnProfile(WaitUntil waitUntil, VpnClientParameters content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the GeneratevpnclientpackageAsync compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `GeneratevpnclientpackageAsync` with `VpnClientContent` instead.", false)]
         public virtual Task<ArmOperation<string>> GeneratevpnclientpackageAsync(WaitUntil waitUntil, VpnClientParameters content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the Generatevpnclientpackage compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `Generatevpnclientpackage` with `VpnClientContent` instead.", false)]
         public virtual ArmOperation<string> Generatevpnclientpackage(WaitUntil waitUntil, VpnClientParameters content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
-        /// <summary> Invokes the GetVpnclientIPsecParametersAsync compatibility operation. </summary>
-        public virtual Task<ArmOperation<VpnClientIPsecParameters>> GetVpnclientIPsecParametersAsync(WaitUntil waitUntil, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
-        /// <summary> Invokes the GetVpnclientIPsecParameters compatibility operation. </summary>
-        public virtual ArmOperation<VpnClientIPsecParameters> GetVpnclientIPsecParameters(WaitUntil waitUntil, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
-        /// <summary> Invokes the SetVpnclientIPsecParametersAsync compatibility operation. </summary>
-        public virtual Task<ArmOperation<VpnClientIPsecParameters>> SetVpnclientIPsecParametersAsync(WaitUntil waitUntil, VpnClientIPsecParameters content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
-        /// <summary> Invokes the SetVpnclientIPsecParameters compatibility operation. </summary>
-        public virtual ArmOperation<VpnClientIPsecParameters> SetVpnclientIPsecParameters(WaitUntil waitUntil, VpnClientIPsecParameters content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the StartPacketCaptureAsync compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `StartPacketCaptureAsync` with `VpnPacketCaptureStartContent` instead.", false)]
         public virtual Task<ArmOperation<string>> StartPacketCaptureAsync(WaitUntil waitUntil, VpnPacketCaptureStartParameters content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the StartPacketCapture compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `StartPacketCapture` with `VpnPacketCaptureStartContent` instead.", false)]
         public virtual ArmOperation<string> StartPacketCapture(WaitUntil waitUntil, VpnPacketCaptureStartParameters content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the StopPacketCaptureAsync compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `StopPacketCaptureAsync` with `VpnPacketCaptureStopContent` instead.", false)]
         public virtual Task<ArmOperation<string>> StopPacketCaptureAsync(WaitUntil waitUntil, VpnPacketCaptureStopParameters content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the StopPacketCapture compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `StopPacketCapture` with `VpnPacketCaptureStopContent` instead.", false)]
         public virtual ArmOperation<string> StopPacketCapture(WaitUntil waitUntil, VpnPacketCaptureStopParameters content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }

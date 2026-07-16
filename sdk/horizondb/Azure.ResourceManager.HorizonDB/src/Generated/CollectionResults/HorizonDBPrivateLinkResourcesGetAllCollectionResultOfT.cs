@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.HorizonDB
                     yield break;
                 }
                 HorizonDbPrivateLinkResourceListResult result = HorizonDbPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<HorizonDBPrivateLinkResourceData>.FromValues((IReadOnlyList<HorizonDBPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HorizonDBPrivateLinkResourceData>.FromValues((IReadOnlyList<HorizonDBPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct AfdCustomizedCipherSuiteForTls12 : IEquatable<AfdCustomizedCipherSuiteForTls12>
     {
         private readonly string _value;
-        private const string ECDHERSAAES128GCMSHA256Value = "ECDHE_RSA_AES128_GCM_SHA256";
-        private const string ECDHERSAAES256GCMSHA384Value = "ECDHE_RSA_AES256_GCM_SHA384";
-        private const string DHERSAAES256GCMSHA384Value = "DHE_RSA_AES256_GCM_SHA384";
-        private const string DHERSAAES128GCMSHA256Value = "DHE_RSA_AES128_GCM_SHA256";
-        private const string ECDHERSAAES128SHA256Value = "ECDHE_RSA_AES128_SHA256";
-        private const string ECDHERSAAES256SHA384Value = "ECDHE_RSA_AES256_SHA384";
+        private const string Ecdhe_Rsa_Aes128_Gcm_Sha256Value = "ECDHE_RSA_AES128_GCM_SHA256";
+        private const string Ecdhe_Rsa_Aes256_Gcm_Sha384Value = "ECDHE_RSA_AES256_GCM_SHA384";
+        private const string Dhe_Rsa_Aes256_Gcm_Sha384Value = "DHE_RSA_AES256_GCM_SHA384";
+        private const string Dhe_Rsa_Aes128_Gcm_Sha256Value = "DHE_RSA_AES128_GCM_SHA256";
+        private const string Ecdhe_Rsa_Aes128_Sha256Value = "ECDHE_RSA_AES128_SHA256";
+        private const string Ecdhe_Rsa_Aes256_Sha384Value = "ECDHE_RSA_AES256_SHA384";
 
         /// <summary> Initializes a new instance of <see cref="AfdCustomizedCipherSuiteForTls12"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,6 +31,24 @@ namespace Azure.ResourceManager.Cdn.Models
 
             _value = value;
         }
+
+        /// <summary> Gets the Ecdhe_Rsa_Aes128_Gcm_Sha256. </summary>
+        public static AfdCustomizedCipherSuiteForTls12 Ecdhe_Rsa_Aes128_Gcm_Sha256 { get; } = new AfdCustomizedCipherSuiteForTls12(Ecdhe_Rsa_Aes128_Gcm_Sha256Value);
+
+        /// <summary> Gets the Ecdhe_Rsa_Aes256_Gcm_Sha384. </summary>
+        public static AfdCustomizedCipherSuiteForTls12 Ecdhe_Rsa_Aes256_Gcm_Sha384 { get; } = new AfdCustomizedCipherSuiteForTls12(Ecdhe_Rsa_Aes256_Gcm_Sha384Value);
+
+        /// <summary> Gets the Dhe_Rsa_Aes256_Gcm_Sha384. </summary>
+        public static AfdCustomizedCipherSuiteForTls12 Dhe_Rsa_Aes256_Gcm_Sha384 { get; } = new AfdCustomizedCipherSuiteForTls12(Dhe_Rsa_Aes256_Gcm_Sha384Value);
+
+        /// <summary> Gets the Dhe_Rsa_Aes128_Gcm_Sha256. </summary>
+        public static AfdCustomizedCipherSuiteForTls12 Dhe_Rsa_Aes128_Gcm_Sha256 { get; } = new AfdCustomizedCipherSuiteForTls12(Dhe_Rsa_Aes128_Gcm_Sha256Value);
+
+        /// <summary> Gets the Ecdhe_Rsa_Aes128_Sha256. </summary>
+        public static AfdCustomizedCipherSuiteForTls12 Ecdhe_Rsa_Aes128_Sha256 { get; } = new AfdCustomizedCipherSuiteForTls12(Ecdhe_Rsa_Aes128_Sha256Value);
+
+        /// <summary> Gets the Ecdhe_Rsa_Aes256_Sha384. </summary>
+        public static AfdCustomizedCipherSuiteForTls12 Ecdhe_Rsa_Aes256_Sha384 { get; } = new AfdCustomizedCipherSuiteForTls12(Ecdhe_Rsa_Aes256_Sha384Value);
 
         /// <summary> Determines if two <see cref="AfdCustomizedCipherSuiteForTls12"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

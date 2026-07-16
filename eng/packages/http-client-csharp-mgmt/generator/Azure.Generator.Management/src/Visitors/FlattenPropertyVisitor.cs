@@ -508,6 +508,7 @@ namespace Azure.Generator.Management.Visitors
         // This dictionary holds the flattened model types, where the key is the CSharpType of the model and the value is a dictionary of property names to flattened PropertyProvider.
         // So that, we can use this to update the model factory methods later.
         private readonly Dictionary<CSharpType, Dictionary<string, List<FlattenPropertyInfo>>> _flattenedModelTypes = new(new CSharpTypeNameComparer());
+        private readonly Dictionary<FlattenedSetterCacheKey, bool> _flattenedIntoParentWithLastContractSetterCache = [];
         private readonly HashSet<CSharpType> _visitedModelTypes = new();
         private void FlattenModel(ModelProvider model)
         {
@@ -634,9 +635,10 @@ namespace Azure.Generator.Management.Visitors
                 // leaves must be provided. When the parent is required, the property stays
                 // as the inner property's original type.
                 var shouldLiftToNullable = ShouldLiftToNullable(internalProperty);
+                var shouldPreserveSetter = ShouldPreserveLastContractSetter(model, flattenPropertyName);
                 var flattenPropertyBody = new MethodPropertyBody(
                     PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, propertyModel, innerProperty),
-                    !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(propertyModel, internalProperty, innerProperty, shouldLiftToNullable)
+                    !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(propertyModel, internalProperty, innerProperty, shouldLiftToNullable, shouldPreserveSetter)
                 );
 
                 var flattenedProperty =
@@ -702,6 +704,7 @@ namespace Azure.Generator.Management.Visitors
             var innerProperty = innerProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !IsObsoleteProperty(p));
             isFlattened = true;
 
+            UpdateFlattenTypeCollectionProperty(internalProperty, innerProperty, model);
             // flatten the single property to public and associate it with the internal property
             var (isFlattenedPropertyReadOnly, includeGetterNullCheck, includeSetterNullCheck) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
             var flattenPropertyName = PropertyHelpers.GetCombinedPropertyName(innerProperty, internalProperty); // TODO: handle name conflicts
@@ -710,10 +713,13 @@ namespace Azure.Generator.Management.Visitors
             // at runtime. Symmetric with PropertyFlatten — see ShouldLiftToNullable.
             var shouldLiftToNullable = ShouldLiftToNullable(internalProperty);
 
+            var shouldPreserveSetter = ShouldPreserveLastContractSetter(model, flattenPropertyName);
+            var shouldEmitCollectionSetter = shouldPreserveSetter
+                || IsFlattenedIntoParentWithLastContractSetter(model, flattenPropertyName);
             var flattenPropertyBody = new MethodPropertyBody(
                 PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty),
-                // if the flattened property is read-only or a collection, we don't generate a setter
-                isFlattenedPropertyReadOnly || innerProperty.Type.IsCollection ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, internalProperty, innerProperty, shouldLiftToNullable)
+                // Emit collection setters only when compatibility or parent delegation requires them.
+                isFlattenedPropertyReadOnly || (innerProperty.Type.IsCollection && !shouldEmitCollectionSetter) ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, internalProperty, innerProperty, shouldLiftToNullable)
             );
 
             var flattenedProperty =
@@ -744,6 +750,43 @@ namespace Azure.Generator.Management.Visitors
             }
             return isFlattened;
         }
+
+        private static bool ShouldPreserveLastContractSetter(ModelProvider model, string propertyName)
+        {
+            return model.LastContractView?.Properties.Any(p => p.Name == propertyName && p.Body.HasSetter) == true;
+        }
+
+        private bool IsFlattenedIntoParentWithLastContractSetter(ModelProvider model, string propertyName)
+        {
+            var cacheKey = new FlattenedSetterCacheKey(model.Type.Namespace, model.Type.Name, propertyName);
+            if (_flattenedIntoParentWithLastContractSetterCache.TryGetValue(cacheKey, out var result))
+            {
+                return result;
+            }
+
+            foreach (var parent in ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>())
+            {
+                if (parent == model || !ShouldPreserveLastContractSetter(parent, propertyName) || HasCustomSetter(parent, propertyName))
+                {
+                    continue;
+                }
+
+                if (ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(parent, out var propertiesToFlatten)
+                    && propertiesToFlatten.Any(p => p.Type.AreNamesEqual(model.Type)))
+                {
+                    _flattenedIntoParentWithLastContractSetterCache[cacheKey] = true;
+                    return true;
+                }
+            }
+
+            _flattenedIntoParentWithLastContractSetterCache[cacheKey] = false;
+            return false;
+        }
+
+        private sealed record FlattenedSetterCacheKey(string? Namespace, string Name, string PropertyName);
+
+        private static bool HasCustomSetter(ModelProvider model, string propertyName)
+            => model.CustomCodeView?.Properties.Any(p => p.Name == propertyName && p.Body.HasSetter) == true;
 
         private void UpdateFlattenTypeCollectionProperty(PropertyProvider internalProperty, PropertyProvider innerProperty, ModelProvider modelProvider)
         {

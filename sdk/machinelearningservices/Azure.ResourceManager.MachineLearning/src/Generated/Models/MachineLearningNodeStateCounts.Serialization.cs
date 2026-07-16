@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningNodeStateCounts : IUtf8JsonSerializable, IJsonModel<MachineLearningNodeStateCounts>
+    /// <summary> Counts of various compute node states on the amlCompute. </summary>
+    public partial class MachineLearningNodeStateCounts : IJsonModel<MachineLearningNodeStateCounts>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningNodeStateCounts>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningNodeStateCounts PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningNodeStateCounts>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMachineLearningNodeStateCounts(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningNodeStateCounts>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineLearningNodeStateCounts>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningNodeStateCounts IPersistableModel<MachineLearningNodeStateCounts>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningNodeStateCounts>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningNodeStateCounts>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningNodeStateCounts>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningNodeStateCounts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(IdleNodeCount))
             {
                 writer.WritePropertyName("idleNodeCount"u8);
@@ -65,15 +104,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("preemptedNodeCount"u8);
                 writer.WriteNumberValue(PreemptedNodeCount.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,22 +121,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        MachineLearningNodeStateCounts IJsonModel<MachineLearningNodeStateCounts>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningNodeStateCounts IJsonModel<MachineLearningNodeStateCounts>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningNodeStateCounts JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningNodeStateCounts>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningNodeStateCounts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineLearningNodeStateCounts(document.RootElement, options);
         }
 
-        internal static MachineLearningNodeStateCounts DeserializeMachineLearningNodeStateCounts(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineLearningNodeStateCounts DeserializeMachineLearningNodeStateCounts(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -108,70 +152,68 @@ namespace Azure.ResourceManager.MachineLearning.Models
             int? unusableNodeCount = default;
             int? leavingNodeCount = default;
             int? preemptedNodeCount = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("idleNodeCount"u8))
+                if (prop.NameEquals("idleNodeCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    idleNodeCount = property.Value.GetInt32();
+                    idleNodeCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("runningNodeCount"u8))
+                if (prop.NameEquals("runningNodeCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    runningNodeCount = property.Value.GetInt32();
+                    runningNodeCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("preparingNodeCount"u8))
+                if (prop.NameEquals("preparingNodeCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    preparingNodeCount = property.Value.GetInt32();
+                    preparingNodeCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("unusableNodeCount"u8))
+                if (prop.NameEquals("unusableNodeCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    unusableNodeCount = property.Value.GetInt32();
+                    unusableNodeCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("leavingNodeCount"u8))
+                if (prop.NameEquals("leavingNodeCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    leavingNodeCount = property.Value.GetInt32();
+                    leavingNodeCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("preemptedNodeCount"u8))
+                if (prop.NameEquals("preemptedNodeCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    preemptedNodeCount = property.Value.GetInt32();
+                    preemptedNodeCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningNodeStateCounts(
                 idleNodeCount,
                 runningNodeCount,
@@ -179,145 +221,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 unusableNodeCount,
                 leavingNodeCount,
                 preemptedNodeCount,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdleNodeCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  idleNodeCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IdleNodeCount))
-                {
-                    builder.Append("  idleNodeCount: ");
-                    builder.AppendLine($"{IdleNodeCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RunningNodeCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  runningNodeCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RunningNodeCount))
-                {
-                    builder.Append("  runningNodeCount: ");
-                    builder.AppendLine($"{RunningNodeCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreparingNodeCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  preparingNodeCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PreparingNodeCount))
-                {
-                    builder.Append("  preparingNodeCount: ");
-                    builder.AppendLine($"{PreparingNodeCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnusableNodeCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  unusableNodeCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UnusableNodeCount))
-                {
-                    builder.Append("  unusableNodeCount: ");
-                    builder.AppendLine($"{UnusableNodeCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeavingNodeCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  leavingNodeCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LeavingNodeCount))
-                {
-                    builder.Append("  leavingNodeCount: ");
-                    builder.AppendLine($"{LeavingNodeCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreemptedNodeCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  preemptedNodeCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PreemptedNodeCount))
-                {
-                    builder.Append("  preemptedNodeCount: ");
-                    builder.AppendLine($"{PreemptedNodeCount.Value}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<MachineLearningNodeStateCounts>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningNodeStateCounts>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MachineLearningNodeStateCounts IPersistableModel<MachineLearningNodeStateCounts>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningNodeStateCounts>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMachineLearningNodeStateCounts(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MachineLearningNodeStateCounts>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

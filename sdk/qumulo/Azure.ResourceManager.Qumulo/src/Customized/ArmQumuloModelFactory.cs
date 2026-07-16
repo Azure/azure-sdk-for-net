@@ -114,5 +114,22 @@ namespace Azure.ResourceManager.Qumulo.Models
                 termUnit: null,
                 marketplaceSubscriptionStatus != null ? new QumuloMarketplaceSubscriptionStatus(marketplaceSubscriptionStatus.Value.ToSerialString()) : null);
         }
+
+        /// <param name="marketplaceDetails"> Marketplace details. </param>
+        /// <param name="userDetailsEmail"> User Email. </param>
+        /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
+        /// <param name="clusterLoginUri"></param>
+        /// <param name="privateIPs"></param>
+        /// <returns> A new <see cref="Models.FileSystemResourceUpdateProperties"/> instance for mocking. </returns>
+        public static FileSystemResourceUpdateProperties FileSystemResourceUpdateProperties(MarketplaceDetails marketplaceDetails = default, string userDetailsEmail = default, ResourceIdentifier delegatedSubnetId = default, Uri clusterLoginUri = default, IEnumerable<string> privateIPs = default)
+        {
+            return FileSystemResourceUpdateProperties(
+                marketplaceDetails: marketplaceDetails,
+                userDetailsEmail: userDetailsEmail,
+                delegatedSubnetId: delegatedSubnetId,
+                performanceTier: default,
+                clusterLoginUri: clusterLoginUri,
+                privateIPs: privateIPs);
+        }
     }
 }

@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The TransparentDataEncryptionName. </summary>
+    /// <summary></summary>
     public readonly partial struct TransparentDataEncryptionName : IEquatable<TransparentDataEncryptionName>
     {
         private readonly string _value;
+        /// <summary> current. </summary>
+        private const string CurrentValue = "current";
 
         /// <summary> Initializes a new instance of <see cref="TransparentDataEncryptionName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TransparentDataEncryptionName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CurrentValue = "current";
+            _value = value;
+        }
 
         /// <summary> current. </summary>
         public static TransparentDataEncryptionName Current { get; } = new TransparentDataEncryptionName(CurrentValue);
+
         /// <summary> Determines if two <see cref="TransparentDataEncryptionName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TransparentDataEncryptionName left, TransparentDataEncryptionName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TransparentDataEncryptionName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TransparentDataEncryptionName left, TransparentDataEncryptionName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TransparentDataEncryptionName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TransparentDataEncryptionName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TransparentDataEncryptionName(string value) => new TransparentDataEncryptionName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TransparentDataEncryptionName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TransparentDataEncryptionName?(string value) => value == null ? null : new TransparentDataEncryptionName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TransparentDataEncryptionName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TransparentDataEncryptionName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
