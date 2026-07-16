@@ -91,9 +91,10 @@ released library and emits compatibility shims where they differ. It relies on t
   members and preserve them. (This is the same `LastContractView` the management visitors already
   consume, e.g. `ModelFactoryVisitor.cs:61`, `FlattenPropertyVisitor.cs:756`.)
 - **ApiCompat baseline awareness** — the accepted-breaking-change suppression file at
-  `eng/apicompatbaselines/<AssemblyName>.txt` (`TypesMustExist` / `MembersMustExist` /
-  `EnumValuesMustMatch`). The generator honors it so it does *not* resurrect a member whose
-  removal was intentionally reviewed and accepted.
+  `eng/apicompatbaselines/<AssemblyName>.txt` (e.g. `Azure.ResourceManager.Compute.txt`; the
+  file name is the assembly name without the `.dll` extension) with `TypesMustExist` /
+  `MembersMustExist` / `EnumValuesMustMatch` entries. The generator honors it so it does *not*
+  resurrect a member whose removal was intentionally reviewed and accepted.
 
 **Scenarios the base generator already handles today** (given `LastContractView`):
 
