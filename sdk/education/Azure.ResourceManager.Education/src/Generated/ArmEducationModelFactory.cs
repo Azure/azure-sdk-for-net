@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="invitationCode"> invitation code for redeemable lab. </param>
         /// <param name="totalBudget"> Total budget. </param>
         /// <param name="totalAllocatedBudget"> Total allocated budget. </param>
-        /// <returns> A new <see cref="Education.LabDetailsData"/> instance for mocking. </returns>
-        public static LabDetailsData LabDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, EducationAmount budgetPerStudent = default, string description = default, DateTimeOffset? expireOn = default, DateTimeOffset? effectiveOn = default, LabStatus? status = default, int? maxStudentCount = default, string invitationCode = default, EducationAmount totalBudget = default, EducationAmount totalAllocatedBudget = default)
+        /// <returns> A new <see cref="Education.EducationLabData"/> instance for mocking. </returns>
+        public static EducationLabData EducationLabData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, EducationAmount budgetPerStudent = default, string description = default, DateTimeOffset? expireOn = default, DateTimeOffset? effectiveOn = default, LabStatus? status = default, int? maxStudentCount = default, string invitationCode = default, EducationAmount totalBudget = default, EducationAmount totalAllocatedBudget = default)
         {
-            return new LabDetailsData(
+            return new EducationLabData(
                 id,
                 name,
                 resourceType,
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="effectiveOn"> Date student was added to the lab. </param>
         /// <param name="subscriptionAlias"> Subscription alias. </param>
         /// <param name="subscriptionInviteLastSentOn"> subscription invite last sent date. </param>
-        /// <returns> A new <see cref="Education.StudentDetailsData"/> instance for mocking. </returns>
-        public static StudentDetailsData StudentDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, StudentRole? role = default, EducationAmount budget = default, string subscriptionId = default, DateTimeOffset? expireOn = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string subscriptionAlias = default, DateTimeOffset? subscriptionInviteLastSentOn = default)
+        /// <returns> A new <see cref="Education.EducationStudentData"/> instance for mocking. </returns>
+        public static EducationStudentData EducationStudentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, StudentRole? role = default, EducationAmount budget = default, string subscriptionId = default, DateTimeOffset? expireOn = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string subscriptionAlias = default, DateTimeOffset? subscriptionInviteLastSentOn = default)
         {
-            return new StudentDetailsData(
+            return new EducationStudentData(
                 id,
                 name,
                 resourceType,

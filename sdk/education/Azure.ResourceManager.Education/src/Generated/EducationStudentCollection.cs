@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Education
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StudentDetailsResource"/> and their operations.
-    /// Each <see cref="StudentDetailsResource"/> in the collection will belong to the same instance of <see cref="LabDetailsResource"/>.
-    /// To get a <see cref="StudentDetailsCollection"/> instance call the GetStudentDetails method from an instance of <see cref="LabDetailsResource"/>.
+    /// A class representing a collection of <see cref="EducationStudentResource"/> and their operations.
+    /// Each <see cref="EducationStudentResource"/> in the collection will belong to the same instance of <see cref="EducationLabResource"/>.
+    /// To get a <see cref="EducationStudentCollection"/> instance call the GetEducationStudents method from an instance of <see cref="EducationLabResource"/>.
     /// </summary>
-    public partial class StudentDetailsCollection : ArmCollection, IEnumerable<StudentDetailsResource>, IAsyncEnumerable<StudentDetailsResource>
+    public partial class EducationStudentCollection : ArmCollection, IEnumerable<EducationStudentResource>, IAsyncEnumerable<EducationStudentResource>
     {
         private readonly ClientDiagnostics _studentsClientDiagnostics;
         private readonly Students _studentsRestClient;
 
-        /// <summary> Initializes a new instance of StudentDetailsCollection for mocking. </summary>
-        protected StudentDetailsCollection()
+        /// <summary> Initializes a new instance of EducationStudentCollection for mocking. </summary>
+        protected EducationStudentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StudentDetailsCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EducationStudentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal StudentDetailsCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EducationStudentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(StudentDetailsResource.ResourceType, out string studentDetailsApiVersion);
-            _studentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Education", StudentDetailsResource.ResourceType.Namespace, Diagnostics);
-            _studentsRestClient = new Students(_studentsClientDiagnostics, Pipeline, Endpoint, studentDetailsApiVersion ?? "2021-12-01-preview");
+            TryGetApiVersion(EducationStudentResource.ResourceType, out string educationStudentApiVersion);
+            _studentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Education", EducationStudentResource.ResourceType.Namespace, Diagnostics);
+            _studentsRestClient = new Students(_studentsClientDiagnostics, Pipeline, Endpoint, educationStudentApiVersion ?? "2021-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Education
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != LabDetailsResource.ResourceType)
+            if (id.ResourceType != EducationLabResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, LabDetailsResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EducationLabResource.ResourceType), nameof(id));
             }
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="studentAlias"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="studentAlias"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<StudentDetailsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string studentAlias, StudentDetailsData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EducationStudentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string studentAlias, EducationStudentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(studentAlias, nameof(studentAlias));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("StudentDetailsCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("EducationStudentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, StudentDetailsData.ToRequestContent(data), context);
+                HttpMessage message = _studentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, EducationStudentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StudentDetailsData> response = Response.FromValue(StudentDetailsData.FromResponse(result), result);
+                Response<EducationStudentData> response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                EducationArmOperation<StudentDetailsResource> operation = new EducationArmOperation<StudentDetailsResource>(Response.FromValue(new StudentDetailsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                EducationArmOperation<EducationStudentResource> operation = new EducationArmOperation<EducationStudentResource>(Response.FromValue(new EducationStudentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="studentAlias"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="studentAlias"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<StudentDetailsResource> CreateOrUpdate(WaitUntil waitUntil, string studentAlias, StudentDetailsData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EducationStudentResource> CreateOrUpdate(WaitUntil waitUntil, string studentAlias, EducationStudentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(studentAlias, nameof(studentAlias));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("StudentDetailsCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("EducationStudentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, StudentDetailsData.ToRequestContent(data), context);
+                HttpMessage message = _studentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, EducationStudentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StudentDetailsData> response = Response.FromValue(StudentDetailsData.FromResponse(result), result);
+                Response<EducationStudentData> response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                EducationArmOperation<StudentDetailsResource> operation = new EducationArmOperation<StudentDetailsResource>(Response.FromValue(new StudentDetailsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                EducationArmOperation<EducationStudentResource> operation = new EducationArmOperation<EducationStudentResource>(Response.FromValue(new EducationStudentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="studentAlias"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="studentAlias"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<StudentDetailsResource>> GetAsync(string studentAlias, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EducationStudentResource>> GetAsync(string studentAlias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(studentAlias, nameof(studentAlias));
 
-            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("StudentDetailsCollection.Get");
+            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("EducationStudentCollection.Get");
             scope.Start();
             try
             {
@@ -199,12 +199,12 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StudentDetailsData> response = Response.FromValue(StudentDetailsData.FromResponse(result), result);
+                Response<EducationStudentData> response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StudentDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EducationStudentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="studentAlias"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="studentAlias"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<StudentDetailsResource> Get(string studentAlias, CancellationToken cancellationToken = default)
+        public virtual Response<EducationStudentResource> Get(string studentAlias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(studentAlias, nameof(studentAlias));
 
-            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("StudentDetailsCollection.Get");
+            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("EducationStudentCollection.Get");
             scope.Start();
             try
             {
@@ -248,12 +248,12 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StudentDetailsData> response = Response.FromValue(StudentDetailsData.FromResponse(result), result);
+                Response<EducationStudentData> response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StudentDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EducationStudentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -281,21 +281,21 @@ namespace Azure.ResourceManager.Education
         /// </summary>
         /// <param name="includeDeleted"> May be used to show deleted items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StudentDetailsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StudentDetailsResource> GetAllAsync(bool? includeDeleted = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EducationStudentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EducationStudentResource> GetAllAsync(bool? includeDeleted = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StudentDetailsData, StudentDetailsResource>(new StudentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EducationStudentData, EducationStudentResource>(new StudentsGetAllAsyncCollectionResultOfT(
                 _studentsRestClient,
                 Id.Parent.Parent.Parent.Name,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 includeDeleted,
                 context,
-                "StudentDetailsCollection.GetAll"), data => new StudentDetailsResource(Client, data));
+                "EducationStudentCollection.GetAll"), data => new EducationStudentResource(Client, data));
         }
 
         /// <summary>
@@ -317,21 +317,21 @@ namespace Azure.ResourceManager.Education
         /// </summary>
         /// <param name="includeDeleted"> May be used to show deleted items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StudentDetailsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StudentDetailsResource> GetAll(bool? includeDeleted = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EducationStudentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EducationStudentResource> GetAll(bool? includeDeleted = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StudentDetailsData, StudentDetailsResource>(new StudentsGetAllCollectionResultOfT(
+            return new PageableWrapper<EducationStudentData, EducationStudentResource>(new StudentsGetAllCollectionResultOfT(
                 _studentsRestClient,
                 Id.Parent.Parent.Parent.Name,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 includeDeleted,
                 context,
-                "StudentDetailsCollection.GetAll"), data => new StudentDetailsResource(Client, data));
+                "EducationStudentCollection.GetAll"), data => new EducationStudentResource(Client, data));
         }
 
         /// <summary>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Education
         {
             Argument.AssertNotNullOrEmpty(studentAlias, nameof(studentAlias));
 
-            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("StudentDetailsCollection.Exists");
+            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("EducationStudentCollection.Exists");
             scope.Start();
             try
             {
@@ -370,14 +370,14 @@ namespace Azure.ResourceManager.Education
                 HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<StudentDetailsData> response = default;
+                Response<EducationStudentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StudentDetailsData.FromResponse(result), result);
+                        response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StudentDetailsData)null, result);
+                        response = Response.FromValue((EducationStudentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Education
         {
             Argument.AssertNotNullOrEmpty(studentAlias, nameof(studentAlias));
 
-            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("StudentDetailsCollection.Exists");
+            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("EducationStudentCollection.Exists");
             scope.Start();
             try
             {
@@ -427,14 +427,14 @@ namespace Azure.ResourceManager.Education
                 HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<StudentDetailsData> response = default;
+                Response<EducationStudentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StudentDetailsData.FromResponse(result), result);
+                        response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StudentDetailsData)null, result);
+                        response = Response.FromValue((EducationStudentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -469,11 +469,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="studentAlias"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="studentAlias"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<StudentDetailsResource>> GetIfExistsAsync(string studentAlias, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<EducationStudentResource>> GetIfExistsAsync(string studentAlias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(studentAlias, nameof(studentAlias));
 
-            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("StudentDetailsCollection.GetIfExists");
+            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("EducationStudentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -484,23 +484,23 @@ namespace Azure.ResourceManager.Education
                 HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<StudentDetailsData> response = default;
+                Response<EducationStudentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StudentDetailsData.FromResponse(result), result);
+                        response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StudentDetailsData)null, result);
+                        response = Response.FromValue((EducationStudentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<StudentDetailsResource>(response.GetRawResponse());
+                    return new NoValueResponse<EducationStudentResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new StudentDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EducationStudentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -530,11 +530,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="studentAlias"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="studentAlias"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<StudentDetailsResource> GetIfExists(string studentAlias, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<EducationStudentResource> GetIfExists(string studentAlias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(studentAlias, nameof(studentAlias));
 
-            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("StudentDetailsCollection.GetIfExists");
+            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("EducationStudentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -545,23 +545,23 @@ namespace Azure.ResourceManager.Education
                 HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<StudentDetailsData> response = default;
+                Response<EducationStudentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StudentDetailsData.FromResponse(result), result);
+                        response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StudentDetailsData)null, result);
+                        response = Response.FromValue((EducationStudentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<StudentDetailsResource>(response.GetRawResponse());
+                    return new NoValueResponse<EducationStudentResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new StudentDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EducationStudentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.Education
             }
         }
 
-        IEnumerator<StudentDetailsResource> IEnumerable<StudentDetailsResource>.GetEnumerator()
+        IEnumerator<EducationStudentResource> IEnumerable<EducationStudentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.Education
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<StudentDetailsResource> IAsyncEnumerable<StudentDetailsResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<EducationStudentResource> IAsyncEnumerable<EducationStudentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

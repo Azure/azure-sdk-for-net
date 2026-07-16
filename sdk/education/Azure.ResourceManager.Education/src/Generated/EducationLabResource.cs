@@ -18,40 +18,40 @@ using Azure.ResourceManager.Education.Models;
 namespace Azure.ResourceManager.Education
 {
     /// <summary>
-    /// A class representing a LabDetails along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LabDetailsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetLabDetails method.
+    /// A class representing a EducationLab along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EducationLabResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetEducationLab method.
     /// </summary>
-    public partial class LabDetailsResource : ArmResource
+    public partial class EducationLabResource : ArmResource
     {
         private readonly ClientDiagnostics _labsClientDiagnostics;
         private readonly Labs _labsRestClient;
-        private readonly LabDetailsData _data;
+        private readonly EducationLabData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Education/labs";
 
-        /// <summary> Initializes a new instance of LabDetailsResource for mocking. </summary>
-        protected LabDetailsResource()
+        /// <summary> Initializes a new instance of EducationLabResource for mocking. </summary>
+        protected EducationLabResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LabDetailsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EducationLabResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LabDetailsResource(ArmClient client, LabDetailsData data) : this(client, data.Id)
+        internal EducationLabResource(ArmClient client, EducationLabData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LabDetailsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EducationLabResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal LabDetailsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EducationLabResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string labDetailsApiVersion);
+            TryGetApiVersion(ResourceType, out string educationLabApiVersion);
             _labsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Education", ResourceType.Namespace, Diagnostics);
-            _labsRestClient = new Labs(_labsClientDiagnostics, Pipeline, Endpoint, labDetailsApiVersion ?? "2021-12-01-preview");
+            _labsRestClient = new Labs(_labsClientDiagnostics, Pipeline, Endpoint, educationLabApiVersion ?? "2021-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Education
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual LabDetailsData Data
+        public virtual EducationLabData Data
         {
             get
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="LabDetailsResource"/>. </description>
+        /// <description> <see cref="EducationLabResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="data"> Request parameters that are provided to create lab resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<LabDetailsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, LabDetailsData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EducationLabResource>> CreateOrUpdateAsync(WaitUntil waitUntil, EducationLabData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("LabDetailsResource.CreateOrUpdate");
+            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("EducationLabResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _labsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, LabDetailsData.ToRequestContent(data), context);
+                HttpMessage message = _labsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, EducationLabData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LabDetailsData> response = Response.FromValue(LabDetailsData.FromResponse(result), result);
+                Response<EducationLabData> response = Response.FromValue(EducationLabData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                EducationArmOperation<LabDetailsResource> operation = new EducationArmOperation<LabDetailsResource>(Response.FromValue(new LabDetailsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                EducationArmOperation<EducationLabResource> operation = new EducationArmOperation<EducationLabResource>(Response.FromValue(new EducationLabResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="LabDetailsResource"/>. </description>
+        /// <description> <see cref="EducationLabResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="data"> Request parameters that are provided to create lab resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<LabDetailsResource> CreateOrUpdate(WaitUntil waitUntil, LabDetailsData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EducationLabResource> CreateOrUpdate(WaitUntil waitUntil, EducationLabData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("LabDetailsResource.CreateOrUpdate");
+            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("EducationLabResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _labsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, LabDetailsData.ToRequestContent(data), context);
+                HttpMessage message = _labsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, EducationLabData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<LabDetailsData> response = Response.FromValue(LabDetailsData.FromResponse(result), result);
+                Response<EducationLabData> response = Response.FromValue(EducationLabData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                EducationArmOperation<LabDetailsResource> operation = new EducationArmOperation<LabDetailsResource>(Response.FromValue(new LabDetailsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                EducationArmOperation<EducationLabResource> operation = new EducationArmOperation<EducationLabResource>(Response.FromValue(new EducationLabResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -220,15 +220,15 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="LabDetailsResource"/>. </description>
+        /// <description> <see cref="EducationLabResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="includeBudget"> May be used to include budget information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LabDetailsResource>> GetAsync(bool? includeBudget = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EducationLabResource>> GetAsync(bool? includeBudget = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("LabDetailsResource.Get");
+            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("EducationLabResource.Get");
             scope.Start();
             try
             {
@@ -238,12 +238,12 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _labsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, includeBudget, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LabDetailsData> response = Response.FromValue(LabDetailsData.FromResponse(result), result);
+                Response<EducationLabData> response = Response.FromValue(EducationLabData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new LabDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EducationLabResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -269,15 +269,15 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="LabDetailsResource"/>. </description>
+        /// <description> <see cref="EducationLabResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="includeBudget"> May be used to include budget information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LabDetailsResource> Get(bool? includeBudget = default, CancellationToken cancellationToken = default)
+        public virtual Response<EducationLabResource> Get(bool? includeBudget = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("LabDetailsResource.Get");
+            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("EducationLabResource.Get");
             scope.Start();
             try
             {
@@ -287,12 +287,12 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _labsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, includeBudget, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<LabDetailsData> response = Response.FromValue(LabDetailsData.FromResponse(result), result);
+                Response<EducationLabData> response = Response.FromValue(EducationLabData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new LabDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EducationLabResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="LabDetailsResource"/>. </description>
+        /// <description> <see cref="EducationLabResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("LabDetailsResource.Delete");
+            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("EducationLabResource.Delete");
             scope.Start();
             try
             {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="LabDetailsResource"/>. </description>
+        /// <description> <see cref="EducationLabResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("LabDetailsResource.Delete");
+            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("EducationLabResource.Delete");
             scope.Start();
             try
             {
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="LabDetailsResource"/>. </description>
+        /// <description> <see cref="EducationLabResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -428,11 +428,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="onlyUpdateStudentCountParameter"> set this flag to true if you want to update student count without generating a new invite code. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<LabDetailsResource>> GenerateInviteCodeAsync(EducationInviteCodeGenerateContent content, bool? onlyUpdateStudentCountParameter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EducationLabResource>> GenerateInviteCodeAsync(EducationInviteCodeGenerateContent content, bool? onlyUpdateStudentCountParameter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("LabDetailsResource.GenerateInviteCode");
+            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("EducationLabResource.GenerateInviteCode");
             scope.Start();
             try
             {
@@ -442,12 +442,12 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _labsRestClient.CreateGenerateInviteCodeRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, EducationInviteCodeGenerateContent.ToRequestContent(content), onlyUpdateStudentCountParameter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LabDetailsData> response = Response.FromValue(LabDetailsData.FromResponse(result), result);
+                Response<EducationLabData> response = Response.FromValue(EducationLabData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new LabDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EducationLabResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="LabDetailsResource"/>. </description>
+        /// <description> <see cref="EducationLabResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -481,11 +481,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="onlyUpdateStudentCountParameter"> set this flag to true if you want to update student count without generating a new invite code. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<LabDetailsResource> GenerateInviteCode(EducationInviteCodeGenerateContent content, bool? onlyUpdateStudentCountParameter = default, CancellationToken cancellationToken = default)
+        public virtual Response<EducationLabResource> GenerateInviteCode(EducationInviteCodeGenerateContent content, bool? onlyUpdateStudentCountParameter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("LabDetailsResource.GenerateInviteCode");
+            using DiagnosticScope scope = _labsClientDiagnostics.CreateScope("EducationLabResource.GenerateInviteCode");
             scope.Start();
             try
             {
@@ -495,12 +495,12 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _labsRestClient.CreateGenerateInviteCodeRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, EducationInviteCodeGenerateContent.ToRequestContent(content), onlyUpdateStudentCountParameter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<LabDetailsData> response = Response.FromValue(LabDetailsData.FromResponse(result), result);
+                Response<EducationLabData> response = Response.FromValue(EducationLabData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new LabDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EducationLabResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Education
             }
         }
 
-        /// <summary> Gets a collection of JoinRequestDetails in the <see cref="LabDetailsResource"/>. </summary>
+        /// <summary> Gets a collection of JoinRequestDetails in the <see cref="EducationLabResource"/>. </summary>
         /// <returns> An object representing collection of JoinRequestDetails and their operations over a JoinRequestDetailsResource. </returns>
         public virtual JoinRequestDetailsCollection GetAllJoinRequestDetails()
         {
@@ -542,11 +542,11 @@ namespace Azure.ResourceManager.Education
             return GetAllJoinRequestDetails().Get(joinRequestName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StudentDetails in the <see cref="LabDetailsResource"/>. </summary>
-        /// <returns> An object representing collection of StudentDetails and their operations over a StudentDetailsResource. </returns>
-        public virtual StudentDetailsCollection GetAllStudentDetails()
+        /// <summary> Gets a collection of EducationStudents in the <see cref="EducationLabResource"/>. </summary>
+        /// <returns> An object representing collection of EducationStudents and their operations over a EducationStudentResource. </returns>
+        public virtual EducationStudentCollection GetEducationStudents()
         {
-            return GetCachedClient(client => new StudentDetailsCollection(client, Id));
+            return GetCachedClient(client => new EducationStudentCollection(client, Id));
         }
 
         /// <summary> Get the details for a specific student in the specified lab by student alias. </summary>
@@ -555,11 +555,11 @@ namespace Azure.ResourceManager.Education
         /// <exception cref="ArgumentNullException"> <paramref name="studentAlias"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="studentAlias"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StudentDetailsResource>> GetStudentDetailsAsync(string studentAlias, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EducationStudentResource>> GetEducationStudentAsync(string studentAlias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(studentAlias, nameof(studentAlias));
 
-            return await GetAllStudentDetails().GetAsync(studentAlias, cancellationToken).ConfigureAwait(false);
+            return await GetEducationStudents().GetAsync(studentAlias, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the details for a specific student in the specified lab by student alias. </summary>
@@ -568,11 +568,11 @@ namespace Azure.ResourceManager.Education
         /// <exception cref="ArgumentNullException"> <paramref name="studentAlias"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="studentAlias"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StudentDetailsResource> GetStudentDetails(string studentAlias, CancellationToken cancellationToken = default)
+        public virtual Response<EducationStudentResource> GetEducationStudent(string studentAlias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(studentAlias, nameof(studentAlias));
 
-            return GetAllStudentDetails().Get(studentAlias, cancellationToken);
+            return GetEducationStudents().Get(studentAlias, cancellationToken);
         }
     }
 }

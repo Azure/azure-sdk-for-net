@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Education
 {
     /// <summary>
     /// A class representing a collection of <see cref="JoinRequestDetailsResource"/> and their operations.
-    /// Each <see cref="JoinRequestDetailsResource"/> in the collection will belong to the same instance of <see cref="LabDetailsResource"/>.
-    /// To get a <see cref="JoinRequestDetailsCollection"/> instance call the GetJoinRequestDetails method from an instance of <see cref="LabDetailsResource"/>.
+    /// Each <see cref="JoinRequestDetailsResource"/> in the collection will belong to the same instance of <see cref="EducationLabResource"/>.
+    /// To get a <see cref="JoinRequestDetailsCollection"/> instance call the GetJoinRequestDetails method from an instance of <see cref="EducationLabResource"/>.
     /// </summary>
     public partial class JoinRequestDetailsCollection : ArmCollection, IEnumerable<JoinRequestDetailsResource>, IAsyncEnumerable<JoinRequestDetailsResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Education
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != LabDetailsResource.ResourceType)
+            if (id.ResourceType != EducationLabResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, LabDetailsResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EducationLabResource.ResourceType), nameof(id));
             }
         }
 

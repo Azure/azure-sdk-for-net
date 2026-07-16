@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Education
 {
     /// <summary>
-    /// A class representing a StudentDetails along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StudentDetailsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LabDetailsResource"/> using the GetAllStudentDetails method.
+    /// A class representing a EducationStudent along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EducationStudentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EducationLabResource"/> using the GetEducationStudents method.
     /// </summary>
-    public partial class StudentDetailsResource : ArmResource
+    public partial class EducationStudentResource : ArmResource
     {
         private readonly ClientDiagnostics _studentsClientDiagnostics;
         private readonly Students _studentsRestClient;
-        private readonly StudentDetailsData _data;
+        private readonly EducationStudentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Education/labs/students";
 
-        /// <summary> Initializes a new instance of StudentDetailsResource for mocking. </summary>
-        protected StudentDetailsResource()
+        /// <summary> Initializes a new instance of EducationStudentResource for mocking. </summary>
+        protected EducationStudentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StudentDetailsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EducationStudentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StudentDetailsResource(ArmClient client, StudentDetailsData data) : this(client, data.Id)
+        internal EducationStudentResource(ArmClient client, EducationStudentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StudentDetailsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EducationStudentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal StudentDetailsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EducationStudentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string studentDetailsApiVersion);
+            TryGetApiVersion(ResourceType, out string educationStudentApiVersion);
             _studentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Education", ResourceType.Namespace, Diagnostics);
-            _studentsRestClient = new Students(_studentsClientDiagnostics, Pipeline, Endpoint, studentDetailsApiVersion ?? "2021-12-01-preview");
+            _studentsRestClient = new Students(_studentsClientDiagnostics, Pipeline, Endpoint, educationStudentApiVersion ?? "2021-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Education
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual StudentDetailsData Data
+        public virtual EducationStudentData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StudentDetailsResource"/>. </description>
+        /// <description> <see cref="EducationStudentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StudentDetailsResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EducationStudentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("StudentDetailsResource.Get");
+            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("EducationStudentResource.Get");
             scope.Start();
             try
             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StudentDetailsData> response = Response.FromValue(StudentDetailsData.FromResponse(result), result);
+                Response<EducationStudentData> response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StudentDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EducationStudentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StudentDetailsResource"/>. </description>
+        /// <description> <see cref="EducationStudentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StudentDetailsResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<EducationStudentResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("StudentDetailsResource.Get");
+            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("EducationStudentResource.Get");
             scope.Start();
             try
             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.Education
                 };
                 HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StudentDetailsData> response = Response.FromValue(StudentDetailsData.FromResponse(result), result);
+                Response<EducationStudentData> response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StudentDetailsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EducationStudentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StudentDetailsResource"/>. </description>
+        /// <description> <see cref="EducationStudentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("StudentDetailsResource.Delete");
+            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("EducationStudentResource.Delete");
             scope.Start();
             try
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StudentDetailsResource"/>. </description>
+        /// <description> <see cref="EducationStudentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Education
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("StudentDetailsResource.Delete");
+            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("EducationStudentResource.Delete");
             scope.Start();
             try
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Education
         }
 
         /// <summary>
-        /// Update a StudentDetails.
+        /// Update a EducationStudent.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StudentDetailsResource"/>. </description>
+        /// <description> <see cref="EducationStudentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,11 +314,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="data"> Request parameters that are provided to update student properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<StudentDetailsResource>> UpdateAsync(WaitUntil waitUntil, StudentDetailsData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EducationStudentResource>> UpdateAsync(WaitUntil waitUntil, EducationStudentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("StudentDetailsResource.Update");
+            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("EducationStudentResource.Update");
             scope.Start();
             try
             {
@@ -326,12 +326,12 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, StudentDetailsData.ToRequestContent(data), context);
+                HttpMessage message = _studentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, EducationStudentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StudentDetailsData> response = Response.FromValue(StudentDetailsData.FromResponse(result), result);
+                Response<EducationStudentData> response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                EducationArmOperation<StudentDetailsResource> operation = new EducationArmOperation<StudentDetailsResource>(Response.FromValue(new StudentDetailsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                EducationArmOperation<EducationStudentResource> operation = new EducationArmOperation<EducationStudentResource>(Response.FromValue(new EducationStudentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Education
         }
 
         /// <summary>
-        /// Update a StudentDetails.
+        /// Update a EducationStudent.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Education
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StudentDetailsResource"/>. </description>
+        /// <description> <see cref="EducationStudentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,11 +370,11 @@ namespace Azure.ResourceManager.Education
         /// <param name="data"> Request parameters that are provided to update student properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<StudentDetailsResource> Update(WaitUntil waitUntil, StudentDetailsData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EducationStudentResource> Update(WaitUntil waitUntil, EducationStudentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("StudentDetailsResource.Update");
+            using DiagnosticScope scope = _studentsClientDiagnostics.CreateScope("EducationStudentResource.Update");
             scope.Start();
             try
             {
@@ -382,12 +382,12 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, StudentDetailsData.ToRequestContent(data), context);
+                HttpMessage message = _studentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, EducationStudentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StudentDetailsData> response = Response.FromValue(StudentDetailsData.FromResponse(result), result);
+                Response<EducationStudentData> response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                EducationArmOperation<StudentDetailsResource> operation = new EducationArmOperation<StudentDetailsResource>(Response.FromValue(new StudentDetailsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                EducationArmOperation<EducationStudentResource> operation = new EducationArmOperation<EducationStudentResource>(Response.FromValue(new EducationStudentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

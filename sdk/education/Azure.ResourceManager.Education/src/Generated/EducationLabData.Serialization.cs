@@ -17,69 +17,69 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Education
 {
-    /// <summary> Student details. </summary>
-    public partial class StudentDetailsData : ResourceData, IJsonModel<StudentDetailsData>
+    /// <summary> Lab details. </summary>
+    public partial class EducationLabData : ResourceData, IJsonModel<EducationLabData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StudentDetailsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationLabData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStudentDetailsData(document.RootElement, options);
+                        return DeserializeEducationLabData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StudentDetailsData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EducationLabData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StudentDetailsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationLabData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEducationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StudentDetailsData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EducationLabData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StudentDetailsData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EducationLabData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StudentDetailsData IPersistableModel<StudentDetailsData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StudentDetailsData)PersistableModelCreateCore(data, options);
+        EducationLabData IPersistableModel<EducationLabData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EducationLabData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StudentDetailsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EducationLabData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="studentDetailsData"> The <see cref="StudentDetailsData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(StudentDetailsData studentDetailsData)
+        /// <param name="educationLabData"> The <see cref="EducationLabData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(EducationLabData educationLabData)
         {
-            if (studentDetailsData == null)
+            if (educationLabData == null)
             {
                 return null;
             }
-            return RequestContent.Create(studentDetailsData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(educationLabData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StudentDetailsData"/> from. </param>
-        internal static StudentDetailsData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EducationLabData"/> from. </param>
+        internal static EducationLabData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeStudentDetailsData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeEducationLabData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StudentDetailsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EducationLabData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Education
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StudentDetailsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationLabData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StudentDetailsData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EducationLabData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -120,24 +120,24 @@ namespace Azure.ResourceManager.Education
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StudentDetailsData IJsonModel<StudentDetailsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StudentDetailsData)JsonModelCreateCore(ref reader, options);
+        EducationLabData IJsonModel<EducationLabData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EducationLabData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StudentDetailsData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationLabData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StudentDetailsData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EducationLabData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStudentDetailsData(document.RootElement, options);
+            return DeserializeEducationLabData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StudentDetailsData DeserializeStudentDetailsData(JsonElement element, ModelReaderWriterOptions options)
+        internal static EducationLabData DeserializeEducationLabData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Education
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            StudentProperties properties = default;
+            LabProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Education
                     {
                         continue;
                     }
-                    properties = StudentProperties.DeserializeStudentProperties(prop.Value, options);
+                    properties = LabProperties.DeserializeLabProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Education
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StudentDetailsData(
+            return new EducationLabData(
                 id,
                 name,
                 resourceType,

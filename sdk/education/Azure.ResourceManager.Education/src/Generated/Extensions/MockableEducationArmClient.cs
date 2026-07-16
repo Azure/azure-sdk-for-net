@@ -47,21 +47,21 @@ namespace Azure.ResourceManager.Education.Mocking
             return new GrantDetailsResource(Client, scope.AppendProviderResource("Microsoft.Education", "grants", "default"));
         }
 
-        /// <summary> Gets an object representing a <see cref="LabDetailsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="EducationLabResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabDetailsResource"/> object. </returns>
-        public virtual LabDetailsResource GetLabDetailsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EducationLabResource"/> object. </returns>
+        public virtual EducationLabResource GetEducationLabResource(ResourceIdentifier id)
         {
-            LabDetailsResource.ValidateResourceId(id);
-            return new LabDetailsResource(Client, id);
+            EducationLabResource.ValidateResourceId(id);
+            return new EducationLabResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="LabDetailsResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <summary> Gets an object representing a <see cref="EducationLabResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="LabDetailsResource"/> object. </returns>
-        public virtual LabDetailsResource GetLabDetails(ResourceIdentifier scope)
+        /// <returns> Returns a <see cref="EducationLabResource"/> object. </returns>
+        public virtual EducationLabResource GetEducationLab(ResourceIdentifier scope)
         {
-            return new LabDetailsResource(Client, scope.AppendProviderResource("Microsoft.Education", "labs", "default"));
+            return new EducationLabResource(Client, scope.AppendProviderResource("Microsoft.Education", "labs", "default"));
         }
 
         /// <summary> Gets an object representing a <see cref="JoinRequestDetailsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -109,35 +109,21 @@ namespace Azure.ResourceManager.Education.Mocking
             return await GetAllJoinRequestDetails(scope).GetAsync(joinRequestName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="StudentDetailsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="EducationStudentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StudentDetailsResource"/> object. </returns>
-        public virtual StudentDetailsResource GetStudentDetailsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EducationStudentResource"/> object. </returns>
+        public virtual EducationStudentResource GetEducationStudentResource(ResourceIdentifier id)
         {
-            StudentDetailsResource.ValidateResourceId(id);
-            return new StudentDetailsResource(Client, id);
+            EducationStudentResource.ValidateResourceId(id);
+            return new EducationStudentResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="StudentDetailsCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="EducationStudentCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="StudentDetailsResource"/> objects. </returns>
-        public virtual StudentDetailsCollection GetAllStudentDetails(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="EducationStudentResource"/> objects. </returns>
+        public virtual EducationStudentCollection GetEducationStudents(ResourceIdentifier scope)
         {
-            return new StudentDetailsCollection(Client, scope);
-        }
-
-        /// <summary> Get the details for a specific student in the specified lab by student alias. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="studentAlias"> The student alias. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="studentAlias"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="studentAlias"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<StudentDetailsResource> GetStudentDetails(ResourceIdentifier scope, string studentAlias, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(studentAlias, nameof(studentAlias));
-
-            return GetAllStudentDetails(scope).Get(studentAlias, cancellationToken);
+            return new EducationStudentCollection(Client, scope);
         }
 
         /// <summary> Get the details for a specific student in the specified lab by student alias. </summary>
@@ -147,11 +133,25 @@ namespace Azure.ResourceManager.Education.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="studentAlias"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="studentAlias"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StudentDetailsResource>> GetStudentDetailsAsync(ResourceIdentifier scope, string studentAlias, CancellationToken cancellationToken = default)
+        public virtual Response<EducationStudentResource> GetEducationStudent(ResourceIdentifier scope, string studentAlias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(studentAlias, nameof(studentAlias));
 
-            return await GetAllStudentDetails(scope).GetAsync(studentAlias, cancellationToken).ConfigureAwait(false);
+            return GetEducationStudents(scope).Get(studentAlias, cancellationToken);
+        }
+
+        /// <summary> Get the details for a specific student in the specified lab by student alias. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="studentAlias"> The student alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="studentAlias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="studentAlias"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EducationStudentResource>> GetEducationStudentAsync(ResourceIdentifier scope, string studentAlias, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(studentAlias, nameof(studentAlias));
+
+            return await GetEducationStudents(scope).GetAsync(studentAlias, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="StudentLabDetailsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
