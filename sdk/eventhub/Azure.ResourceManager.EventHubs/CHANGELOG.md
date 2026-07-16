@@ -9,9 +9,6 @@
 ### Breaking Changes
 
 - The namespace update (PATCH) operation is now synchronous in API version `2026-01-01`. The long-running `Update(WaitUntil, EventHubsNamespaceData, CancellationToken)` and `UpdateAsync(WaitUntil, EventHubsNamespaceData, CancellationToken)` overloads on `EventHubsNamespaceResource` have been removed; use `Update(EventHubsNamespaceData, CancellationToken)` / `UpdateAsync(EventHubsNamespaceData, CancellationToken)` instead.
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.3.0-beta.2 (2026-06-06)
 
