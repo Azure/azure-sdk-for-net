@@ -529,8 +529,12 @@ namespace Azure.Storage.Files.Shares.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public NfsFileType(string value) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.NfsFileType BlockDevice { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.NfsFileType CharacterDevice { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.NfsFileType Directory { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.NfsFileType Fifo { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.NfsFileType Regular { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.NfsFileType Socket { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.NfsFileType SymLink { get { throw null; } }
         public bool Equals(Azure.Storage.Files.Shares.Models.NfsFileType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
