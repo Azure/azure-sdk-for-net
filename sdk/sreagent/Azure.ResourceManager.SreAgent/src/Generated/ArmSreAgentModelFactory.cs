@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="agentIdentity"> Agent identity configuration for accessing resources. </param>
         /// <param name="defaultModel"> Default AI model configuration for the agent. </param>
         /// <returns> A new <see cref="Models.AgentProperties"/> instance for mocking. </returns>
-        public static AgentProperties AgentProperties(AgentProvisioningState? provisioningState = default, string agentEndpoint = default, string runningState = default, AgentPowerState? powerState = default, ResourceIdentifier agentSpaceId = default, KnowledgeGraphConfiguration knowledgeGraphConfiguration = default, ActionConfiguration actionConfiguration = default, ApplicationInsightsConfiguration logApplicationInsightsConfiguration = default, IncidentManagementConfiguration incidentManagementConfiguration = default, UpgradeChannel? upgradeChannel = default, AgentIdentity agentIdentity = default, SreAgentDefaultModel defaultModel = default)
+        public static AgentProperties AgentProperties(AgentProvisioningState? provisioningState = default, string agentEndpoint = default, string runningState = default, AgentPowerState? powerState = default, ResourceIdentifier agentSpaceId = default, AgentKnowledgeGraphConfiguration knowledgeGraphConfiguration = default, AgentActionConfiguration actionConfiguration = default, ApplicationInsightsConfiguration logApplicationInsightsConfiguration = default, AgentIncidentManagementConfiguration incidentManagementConfiguration = default, AgentUpgradeChannel? upgradeChannel = default, AgentIdentity agentIdentity = default, SreAgentDefaultModel defaultModel = default)
         {
             return new AgentProperties(
                 provisioningState,
@@ -76,27 +76,27 @@ namespace Azure.ResourceManager.SreAgent.Models
 
         /// <param name="identity"> The identity used to access the knowledge graph. </param>
         /// <param name="managedResources"> The list of resources managed by agent. </param>
-        /// <returns> A new <see cref="Models.KnowledgeGraphConfiguration"/> instance for mocking. </returns>
-        public static KnowledgeGraphConfiguration KnowledgeGraphConfiguration(ResourceIdentifier identity = default, IEnumerable<ResourceIdentifier> managedResources = default)
+        /// <returns> A new <see cref="Models.AgentKnowledgeGraphConfiguration"/> instance for mocking. </returns>
+        public static AgentKnowledgeGraphConfiguration AgentKnowledgeGraphConfiguration(ResourceIdentifier identity = default, IEnumerable<ResourceIdentifier> managedResources = default)
         {
             managedResources ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new KnowledgeGraphConfiguration(identity, (managedResources ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+            return new AgentKnowledgeGraphConfiguration(identity, (managedResources ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
         /// <param name="identity"> The identity used by the action. </param>
         /// <param name="mode"> The mode of the action. </param>
         /// <param name="accessLevel"> The access level of the action. </param>
-        /// <returns> A new <see cref="Models.ActionConfiguration"/> instance for mocking. </returns>
-        public static ActionConfiguration ActionConfiguration(ResourceIdentifier identity = default, AgentMode? mode = default, AgentAccessLevel? accessLevel = default)
+        /// <returns> A new <see cref="Models.AgentActionConfiguration"/> instance for mocking. </returns>
+        public static AgentActionConfiguration AgentActionConfiguration(ResourceIdentifier identity = default, AgentMode? mode = default, AgentAccessLevel? accessLevel = default)
         {
-            return new ActionConfiguration(identity, mode, accessLevel, default);
+            return new AgentActionConfiguration(identity, mode, accessLevel, default);
         }
 
         /// <param name="appId"> The Application ID for the Application Insights resource. </param>
         /// <param name="connectionString"> The connection string for the Application Insights resource. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsConfiguration"/> instance for mocking. </returns>
-        public static ApplicationInsightsConfiguration ApplicationInsightsConfiguration(string appId = default, string connectionString = default)
+        public static ApplicationInsightsConfiguration ApplicationInsightsConfiguration(Guid? appId = default, string connectionString = default)
         {
             return new ApplicationInsightsConfiguration(appId, connectionString, default);
         }
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="connectionUri"> The URL of the connection. </param>
         /// <param name="connectionKey"> The key for the connection. </param>
         /// <param name="oboUser"> The user for the connection. </param>
-        /// <returns> A new <see cref="Models.IncidentManagementConfiguration"/> instance for mocking. </returns>
-        public static IncidentManagementConfiguration IncidentManagementConfiguration(string @type = default, string connectionName = default, string connectionUri = default, string connectionKey = default, string oboUser = default)
+        /// <returns> A new <see cref="Models.AgentIncidentManagementConfiguration"/> instance for mocking. </returns>
+        public static AgentIncidentManagementConfiguration AgentIncidentManagementConfiguration(string @type = default, string connectionName = default, string connectionUri = default, string connectionKey = default, string oboUser = default)
         {
-            return new IncidentManagementConfiguration(
+            return new AgentIncidentManagementConfiguration(
                 @type,
                 connectionName,
                 connectionUri,
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="agentIdentityInitialSponsorGroupId"> Initial sponsor group ID (required for PUT but optional for PATCH). </param>
         /// <param name="defaultModel"> Default AI model configuration for the agent. </param>
         /// <returns> A new <see cref="Models.AgentPatchProperties"/> instance for mocking. </returns>
-        public static AgentPatchProperties AgentPatchProperties(ResourceIdentifier agentSpaceId = default, KnowledgeGraphConfiguration knowledgeGraphConfiguration = default, ActionConfiguration actionConfiguration = default, ApplicationInsightsConfiguration logApplicationInsightsConfiguration = default, IncidentManagementConfiguration incidentManagementConfiguration = default, UpgradeChannel? upgradeChannel = default, string agentIdentityInitialSponsorGroupId = default, SreAgentDefaultModel defaultModel = default)
+        public static AgentPatchProperties AgentPatchProperties(ResourceIdentifier agentSpaceId = default, AgentKnowledgeGraphConfiguration knowledgeGraphConfiguration = default, AgentActionConfiguration actionConfiguration = default, ApplicationInsightsConfiguration logApplicationInsightsConfiguration = default, AgentIncidentManagementConfiguration incidentManagementConfiguration = default, AgentUpgradeChannel? upgradeChannel = default, string agentIdentityInitialSponsorGroupId = default, SreAgentDefaultModel defaultModel = default)
         {
             return new AgentPatchProperties(
                 agentSpaceId,
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="dataConnectorType"> The type of the data connector. </param>
         /// <param name="source"> Source of the data connector - "Agent" when directly stored in agent, "AgentSpace" when inherited. </param>
         /// <returns> A new <see cref="Models.AgentConnectorProperties"/> instance for mocking. </returns>
-        public static AgentConnectorProperties AgentConnectorProperties(Uri endpoint = default, string dataSource = default, ResourceIdentifier identity = default, ConnectorProvisioningState? provisioningState = default, string deploymentError = default, IDictionary<string, BinaryData> extendedProperties = default, string dataConnectorType = default, string source = default)
+        public static AgentConnectorProperties AgentConnectorProperties(Uri endpoint = default, string dataSource = default, ResourceIdentifier identity = default, AgentConnectorProvisioningState? provisioningState = default, string deploymentError = default, IDictionary<string, BinaryData> extendedProperties = default, string dataConnectorType = default, string source = default)
         {
             extendedProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="allowedActions"> Collection of allowed Geneva actions. </param>
         /// <param name="certificateSubjectAlternativeName"> Subject alternative name of the certificate used for authentication. </param>
         /// <returns> A new <see cref="Models.GenevaActionsPolicy"/> instance for mocking. </returns>
-        public static GenevaActionsPolicy GenevaActionsPolicy(Uri acisEndpoint = default, string clientId = default, string certificateSubjectName = default, GenevaActionAuthenticationMode? authenticationMode = default, string extensionName = default, IEnumerable<GenevaActionConfig> allowedActions = default, string certificateSubjectAlternativeName = default)
+        public static GenevaActionsPolicy GenevaActionsPolicy(Uri acisEndpoint = default, Guid? clientId = default, string certificateSubjectName = default, GenevaActionAuthenticationMode? authenticationMode = default, string extensionName = default, IEnumerable<GenevaActionConfig> allowedActions = default, string certificateSubjectAlternativeName = default)
         {
             allowedActions ??= new ChangeTrackingList<GenevaActionConfig>();
 
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="extensionName"> Name of the Geneva extension. </param>
         /// <param name="allowedActions"> Collection of allowed Geneva actions. </param>
         /// <returns> A new <see cref="Models.GenevaActionsPolicyPatch"/> instance for mocking. </returns>
-        public static GenevaActionsPolicyPatch GenevaActionsPolicyPatch(Uri acisEndpoint = default, string clientId = default, string certificateSubjectName = default, GenevaActionAuthenticationMode? authenticationMode = default, string extensionName = default, IEnumerable<GenevaActionConfig> allowedActions = default)
+        public static GenevaActionsPolicyPatch GenevaActionsPolicyPatch(Uri acisEndpoint = default, Guid? clientId = default, string certificateSubjectName = default, GenevaActionAuthenticationMode? authenticationMode = default, string extensionName = default, IEnumerable<GenevaActionConfig> allowedActions = default)
         {
             allowedActions ??= new ChangeTrackingList<GenevaActionConfig>();
 
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="extendedProperties"> Additional properties for the data connector which can be used to store custom key-value pairs. </param>
         /// <param name="dataConnectorType"> The type of the data connector. </param>
         /// <returns> A new <see cref="Models.AgentSpaceConnectorProperties"/> instance for mocking. </returns>
-        public static AgentSpaceConnectorProperties AgentSpaceConnectorProperties(Uri endpoint = default, string dataSource = default, ResourceIdentifier identity = default, ConnectorProvisioningState? provisioningState = default, string deploymentError = default, IDictionary<string, BinaryData> extendedProperties = default, string dataConnectorType = default)
+        public static AgentSpaceConnectorProperties AgentSpaceConnectorProperties(Uri endpoint = default, string dataSource = default, ResourceIdentifier identity = default, AgentConnectorProvisioningState? provisioningState = default, string deploymentError = default, IDictionary<string, BinaryData> extendedProperties = default, string dataConnectorType = default)
         {
             extendedProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 

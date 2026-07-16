@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SreAgent.Models
             Uri endpoint = default;
             string dataSource = default;
             ResourceIdentifier identity = default;
-            ConnectorProvisioningState? provisioningState = default;
+            AgentConnectorProvisioningState? provisioningState = default;
             string deploymentError = default;
             IDictionary<string, BinaryData> extendedProperties = default;
             string dataConnectorType = default;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                     {
                         continue;
                     }
-                    provisioningState = new ConnectorProvisioningState(prop.Value.GetString());
+                    provisioningState = new AgentConnectorProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("deploymentError"u8))

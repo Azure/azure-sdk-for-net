@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="extendedProperties"> Additional properties for the data connector which can be used to store custom key-value pairs. </param>
         /// <param name="dataConnectorType"> The type of the data connector. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentSpaceConnectorProperties(Uri endpoint, string dataSource, ResourceIdentifier identity, ConnectorProvisioningState? provisioningState, string deploymentError, IDictionary<string, BinaryData> extendedProperties, string dataConnectorType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentSpaceConnectorProperties(Uri endpoint, string dataSource, ResourceIdentifier identity, AgentConnectorProvisioningState? provisioningState, string deploymentError, IDictionary<string, BinaryData> extendedProperties, string dataConnectorType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             DataSource = dataSource;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         public ResourceIdentifier Identity { get; set; }
 
         /// <summary> Provisioning state of the connector. </summary>
-        public ConnectorProvisioningState? ProvisioningState { get; }
+        public AgentConnectorProvisioningState? ProvisioningState { get; }
 
         /// <summary> Deployment error message if provisioning failed. </summary>
         public string DeploymentError { get; }

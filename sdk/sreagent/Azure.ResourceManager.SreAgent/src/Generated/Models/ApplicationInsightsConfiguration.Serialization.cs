@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SreAgent.Models
             if (Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
-                writer.WriteStringValue(AppId);
+                writer.WriteStringValue(AppId.Value);
             }
             if (Optional.IsDefined(ConnectionString))
             {
@@ -126,14 +126,18 @@ namespace Azure.ResourceManager.SreAgent.Models
             {
                 return null;
             }
-            string appId = default;
+            Guid? appId = default;
             string connectionString = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("appId"u8))
                 {
-                    appId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    appId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("connectionString"u8))

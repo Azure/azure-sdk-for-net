@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SreAgent.Models
 {
     /// <summary> Incident Management Configurations. </summary>
-    public partial class IncidentManagementConfiguration
+    public partial class AgentIncidentManagementConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IncidentManagementConfiguration"/>. </summary>
-        public IncidentManagementConfiguration()
+        /// <summary> Initializes a new instance of <see cref="AgentIncidentManagementConfiguration"/>. </summary>
+        public AgentIncidentManagementConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IncidentManagementConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentIncidentManagementConfiguration"/>. </summary>
         /// <param name="type"> The type of incident management system. </param>
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="connectionUri"> The URL of the connection. </param>
         /// <param name="connectionKey"> The key for the connection. </param>
         /// <param name="oboUser"> The user for the connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IncidentManagementConfiguration(string @type, string connectionName, string connectionUri, string connectionKey, string oboUser, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentIncidentManagementConfiguration(string @type, string connectionName, string connectionUri, string connectionKey, string oboUser, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ConnectionName = connectionName;

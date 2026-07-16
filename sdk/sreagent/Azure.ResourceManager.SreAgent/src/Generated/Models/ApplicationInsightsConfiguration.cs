@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="appId"> The Application ID for the Application Insights resource. </param>
         /// <param name="connectionString"> The connection string for the Application Insights resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsConfiguration(string appId, string connectionString, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationInsightsConfiguration(Guid? appId, string connectionString, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AppId = appId;
             ConnectionString = connectionString;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         }
 
         /// <summary> The Application ID for the Application Insights resource. </summary>
-        public string AppId { get; set; }
+        public Guid? AppId { get; set; }
 
         /// <summary> The connection string for the Application Insights resource. </summary>
         public string ConnectionString { get; set; }
