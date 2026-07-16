@@ -37,7 +37,7 @@ public class Program
         // The proxy resolution benchmarks (ProxyResolution*) measure sub-microsecond operations where
         // the in-process toolchain produces noisy, sometimes physically impossible results (for example
         // a proxy "miss" appearing faster than the no-proxy baseline). When the run targets those
-        // benchmarks - i.e. it is launched by Run-ProxyBenchmarks.ps1, which passes --filter
+        // benchmarks - i.e. the --filter argument passed on the command line contains
         // *ProxyResolution* - use the default out-of-process toolchain for accurate, isolated
         // measurements. Every other run keeps the fast in-process toolchain unchanged.
         bool proxyRun = args.Any(arg => arg.IndexOf("ProxyResolution", StringComparison.OrdinalIgnoreCase) >= 0);
