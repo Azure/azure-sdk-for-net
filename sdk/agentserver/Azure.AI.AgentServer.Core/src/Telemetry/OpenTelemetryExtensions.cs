@@ -76,6 +76,14 @@ internal static class OpenTelemetryExtensions
             if (!string.IsNullOrEmpty(FoundryEnvironment.AppInsightsConnectionString))
             {
                 exporters |= ExportTarget.AzureMonitor;
+
+                // When Entra-based auth is requested, export to Azure Monitor using a
+                // system-assigned managed identity (no client id) rather than relying
+                // on the connection string's instrumentation key alone.
+                if (FoundryEnvironment.IsAppInsightsEntraAuth)
+                {
+                    options.AzureMonitor.Credential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
+                }
             }
 
             if (!string.IsNullOrEmpty(FoundryEnvironment.OtlpEndpoint))
