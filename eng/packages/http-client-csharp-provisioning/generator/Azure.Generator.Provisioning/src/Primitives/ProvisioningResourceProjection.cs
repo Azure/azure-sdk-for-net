@@ -238,6 +238,6 @@ namespace Azure.Generator.Provisioning.Primitives
             => kind == ResourceOperationKind.Read;
 
         private static bool IsWritableOperation(ResourceOperationKind kind)
-            => kind == ResourceOperationKind.Create || kind == ResourceOperationKind.Update;
+            => kind == ResourceOperationKind.Create;
     }
 }
