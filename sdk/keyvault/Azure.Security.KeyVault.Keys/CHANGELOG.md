@@ -1,5 +1,15 @@
 # Release History
 
+## 4.11.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 4.11.0-beta.3 (2026-07-16)
 
 ### Features Added
