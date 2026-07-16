@@ -67,12 +67,67 @@ for reference:
 The scenarios below name the specific *gaps* where custom code is still required, and whether
 each gap is a valid candidate for further automation.
 
-The **data-plane** generator (`Azure.Generator`) automates far less of this today — notably it
-has *no* known-type renaming, inheritance-restoration, or model-factory backward-compat
-overload emission. It does rename the model factory itself
+The **data-plane** generator (`Azure.Generator`) automates far less of the *Azure-specific*
+pieces above — notably it has *no* known-type renaming, inheritance-restoration, or
+Azure-model-factory backward-compat overload emission. It does rename the model factory itself
 (`generator/Azure.Generator/src/Visitors/ModelFactoryRenamerVisitor.cs`), which is actually the
 *cause* of several data-plane shims rather than a back-compat helper. The
 [Data-plane libraries](#data-plane-libraries) section details these gaps.
+
+## Back-compat already provided by the base generator (both planes)
+
+Independently of the Azure-specific visitors above, a substantial back-compat layer already
+ships in the **upstream base generator** (`Microsoft.TypeSpec.Generator`, from
+[microsoft/typespec](https://github.com/microsoft/typespec/tree/main/packages/http-client-csharp)).
+Both `Azure.Generator` (data plane) and `Azure.Generator.Management` (management plane) inherit
+from it, so these behaviors apply to **all planes** — see the upstream reference:
+[backward-compatibility.md](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/generator/docs/backward-compatibility.md).
+
+**Mechanism.** The base generator compares the freshly generated code against the previously
+released library and emits compatibility shims where they differ. It relies on two inputs:
+
+- **`LastContractView`** — a compiled assembly of the last released version. When supplied, the
+  generator can see the previously shipped types, methods, properties, parameters, and enum
+  members and preserve them. (This is the same `LastContractView` the management visitors already
+  consume, e.g. `ModelFactoryVisitor.cs:61`, `FlattenPropertyVisitor.cs:756`.)
+- **ApiCompat baseline awareness** — the accepted-breaking-change suppression file at
+  `eng/apicompatbaselines/<AssemblyName>.txt` (`TypesMustExist` / `MembersMustExist` /
+  `EnumValuesMustMatch`). The generator honors it so it does *not* resurrect a member whose
+  removal was intentionally reviewed and accepted.
+
+**Scenarios the base generator already handles today** (given `LastContractView`):
+
+- **Model factory methods** — new-property overload (`[EditorBrowsable(Never)]` shorter
+  overload), parameter-reorder preservation, parameter/property **rename** preservation, and the
+  combined new-property-plus-rename case.
+- **Model property types** — preserves the previously shipped property type whenever the current
+  spec would change it (read-only↔read-write collections, nullability, scalar/enum/model type
+  changes), so a property type change is non-source-breaking by default.
+- **`AdditionalProperties` type preservation** — keeps `IDictionary<string, object>` when the
+  last contract used it (vs. a new `IDictionary<string, BinaryData>`).
+- **Fixed (integer-backed) enum members** — preserves explicit/non-contiguous values, re-adds a
+  member dropped from the spec at its original value/position, and honors baseline-accepted
+  removals.
+- **API-version enum** — preserves previously shipped service-version members.
+- **Non-abstract base models** — keeps a base model non-abstract when the last contract shipped
+  it that way.
+- **Model constructors** — restores a `public` constructor on an abstract base type when the last
+  contract had one (vs. a newly generated `private protected` ctor).
+- **Parameter naming** — preserves the last contract's parameter name/casing (page-size casing,
+  `top`→`maxCount`, and general per-method parameter-name preservation).
+- **Content-Type parameter ordering** — keeps `contentType` before the body parameter when the
+  last contract had that ordering.
+- **Client methods** — emits a hidden `[EditorBrowsable(Never)]` overload matching the previous
+  signature when the spec adds a new **optional non-body** parameter.
+
+**Why hand-written shims still exist despite this.** The scenarios below were, in many cases,
+authored before this base-generator support landed, or in libraries whose migration did not wire
+up a `LastContractView` assembly for the generator to diff against. Where the base generator
+*does* cover a scenario, the correct long-term fix is to feed it the last contract rather than to
+hand-write the shim. The [Scenarios](#scenarios) verdicts below therefore distinguish, per
+scenario, between **already covered by the base generator today** and the **residual gap** that
+still needs an Azure-specific visitor or a per-item hint. The
+[Summary](#summary) table adds a *Base generator today* column making this explicit.
 
 ## Legend
 
@@ -150,6 +205,10 @@ shim (rather than a hard rename) makes this automatic. Requires only old-name �
 The Obsolete message follows the repo template ("This property is deprecated … Please use XXX
 instead").
 
+**Base generator today:** ❌ not covered. The base generator preserves a renamed *parameter*
+name and a property's *type*, but does not keep a renamed **property** under its old name as an
+`[Obsolete]` forwarding shim — that remains an Azure-specific automation opportunity.
+
 ### 5. Method rename shim / overload forwarding (`[EditorBrowsable(Never)]`) — ✅ Automatable
 
 **What the custom code does:** keeps an old method name or an old parameter arity as a hidden
@@ -166,6 +225,12 @@ newly added optional parameter, calling the canonical method with a default).
 (added optional/`WaitUntil` parameter) or a pure rename. The old contract supplies the missing
 overloads to synthesize as hidden forwarders.
 
+**Base generator today:** ⚠️ partial. The base generator already emits a hidden
+`[EditorBrowsable(Never)]` overload when the spec adds a new **optional non-body** parameter, and
+already preserves a renamed **parameter** name from the last contract. The residual gap is a full
+**method-name** rename (e.g. keeping an old method name as a forwarder) and mgmt-specific
+`WaitUntil` arity shims, which the base generator does not synthesize.
+
 ### 6. Extensible-enum / enum value re-addition — ✅ Automatable
 
 **What the custom code does:** re-declares removed extensible-enum values (`readonly partial
@@ -180,6 +245,12 @@ service dropped but that shipped previously.
 **Automation approach:** the old contract lists the removed enum members; re-emitting them
 (with the standard extensible-enum boilerplate) is fully mechanical. Cross-references the
 provisioning enum work in [#60442](https://github.com/Azure/azure-sdk-for-net/issues/60442).
+
+**Base generator today:** ⚠️ partial. The base generator already re-adds dropped members of
+**integer-backed fixed enums** (preserving explicit values and honoring baseline-accepted
+removals). The citations here are **extensible enums** (`readonly partial struct`), which the
+base generator's fixed-enum path does not cover — so re-adding removed extensible-enum values is
+still the residual gap.
 
 ### 7. Collection initialization in the parameterless constructor — ✅ Automatable
 
@@ -205,6 +276,11 @@ shipped (read-only) surface.
 
 **Automation approach:** the old contract records the property's declared type; when only the
 mutability/collection-interface changed, the generator can preserve the read-only facade.
+
+**Base generator today:** ✅ covered. This is exactly the base generator's *Model property type*
+preservation — when the last contract shipped `IReadOnlyList<T>`/`IReadOnlyDictionary<K,V>` and
+the current spec would produce a mutable collection, it preserves the previous read-only type.
+Given a `LastContractView` assembly this scenario should no longer need hand-written code.
 
 ### 9. `IJsonModel<TData>` forwarding on resources — ✅ Automatable
 
@@ -245,6 +321,11 @@ when the change is a pure signature superset, but replacements that change behav
 intent. Where the replacement is only "call the new method with defaults," this collapses into
 scenario 5 (automatable).
 
+**Base generator today:** ⚠️ partial. When the "replacement" is only a hidden overload for a
+newly added optional non-body parameter, the base generator now emits it directly, so the
+`[CodeGenSuppress]` + hand-written forwarder is unnecessary. Behavior-changing replacements are
+still out of scope.
+
 ### 12. Property flatten/unflatten wrapper (custom get/set over nested model) — 🟡 Partially
 
 **What the custom code does:** re-exposes a property at the level the old API had it, wrapping a
@@ -277,6 +358,12 @@ already synthesize additive/nullability overloads from the last contract. Remain
 covers non-trivial type coercions (`string` ↔ `ResourceIdentifier`) and parameter reordering
 that need a type-conversion rule.
 
+**Base generator today:** ⚠️ partial. The base generator's *Model factory methods* support
+already covers new-property overloads, parameter reordering, and parameter/property renames from
+the last contract (the mgmt `ModelFactoryVisitor` builds on the same `LastContractView`). The
+residual gap is exactly the non-trivial **type coercion** overloads (`string` ↔
+`ResourceIdentifier`, `int?` ↔ `int`) that require a conversion rule.
+
 ### 14. Back-compat constructor with an old signature — 🟡 Partially
 
 **What the custom code does:** provides a constructor whose parameters match a previously
@@ -291,6 +378,12 @@ adding a required `AzureLocation`).
 **Why not fully automatable:** forwarding-only constructors (protected parameterless / arity
 supersets) are automatable from the old contract; constructors that convert between types need
 a conversion rule.
+
+**Base generator today:** ⚠️ partial. The base generator already restores a `public` constructor
+on an **abstract base type** when the last contract shipped one (vs. a generated
+`private protected` ctor) — covering the accessibility subset. Constructors that convert between
+type shapes (`WritableSubResource` → `SubResource`, adding a required `AzureLocation`) remain the
+residual gap.
 
 ### 15. Wire-name preservation via `[WirePath]` / `[CodeGenSerialization]` name-only — 🟡 Partially
 
@@ -358,10 +451,17 @@ folder; the patterns below also recur across `Azure.AI.Extensions.OpenAI`,
 `Azure.Compute.Batch`, and `Azure.AI.Vision.ImageAnalysis`.
 
 The key structural difference from the management plane is that the data-plane generator
-(`Azure.Generator`) does **not** yet ship the back-compat automation the management generator
-has (no `NameVisitor` known-type renaming, no `ModelFactoryVisitor` overloads, no
-inheritance-restoration), so scenarios that are already automated for management libraries are
-still hand-written for data-plane libraries.
+(`Azure.Generator`) does **not** yet ship the *Azure-specific* back-compat automation the
+management generator has (no `NameVisitor` known-type renaming, no `ModelFactoryVisitor`
+overloads, no inheritance-restoration), so scenarios that are already automated for management
+libraries are still hand-written for data-plane libraries.
+
+Note, however, that the **base-generator** `LastContractView` support described in
+[Back-compat already provided by the base generator](#back-compat-already-provided-by-the-base-generator-both-planes)
+applies to `Azure.Generator` too. So the model-factory rename/overload preservation, property
+type preservation, fixed-enum re-add, and constructor-accessibility behaviors are available on
+the data plane as well when the last contract is wired up — the D-scenarios below note where that
+already covers the shim (partially, as in the management taxonomy).
 
 ### D1. Public type rename via `[CodeGenType]` — ✅ Automatable (same as scenario 1)
 
@@ -464,33 +564,47 @@ generator-caused.
 
 ## Summary
 
-| # | Scenario | Mechanism | Automatable? |
-|---|----------|-----------|--------------|
-| 1 | Type rename to old name | `[CodeGenType]` | ✅ |
-| 2 | Restore removed base type | `partial : ResourceData` | ✅ |
-| 3 | Renamed-type deprecated alias | subclass + `[Obsolete]` | ✅ |
-| 4 | Renamed property shim | forwarding `[Obsolete]` property | ✅ |
-| 5 | Method rename / overload forwarder | hidden forwarding overload | ✅ |
-| 6 | Enum / extensible-enum value re-add | static members | ✅ |
-| 7 | Collection init in ctor | `ChangeTrackingList` init | ✅ |
-| 8 | Read-only collection surface | `IReadOnly*` facade | ✅ |
-| 9 | `IJsonModel<TData>` forwarding | delegate to `Data` | ✅ |
-| 10 | Suppress shared/common type | `[assembly: CodeGenSuppressType]` | 🟡 |
-| 11 | Suppress overload + replacement | `[CodeGenSuppress]` | 🟡 |
-| 12 | Flatten/unflatten wrapper | custom get/set | 🟡 |
-| 13 | Model-factory overload adaptation | `ArmXxxModelFactory` overload | 🟡 |
-| 14 | Back-compat constructor | old-signature ctor | 🟡 |
-| 15 | Wire-name preservation | `[WirePath]` / `[CodeGenSerialization]` name | 🟡 |
-| 16 | Custom serialization transform | serialization hooks / overrides | ❌ |
-| 17 | Incompatible type converters | hand-written converters | ❌ |
-| 18 | Removed-API throwing shims | `NotSupportedException` stubs | ❌ |
+| # | Scenario | Mechanism | Automatable? | Base generator today |
+|---|----------|-----------|--------------|----------------------|
+| 1 | Type rename to old name | `[CodeGenType]` | ✅ | ❌ not covered |
+| 2 | Restore removed base type | `partial : ResourceData` | ✅ | ❌ not covered |
+| 3 | Renamed-type deprecated alias | subclass + `[Obsolete]` | ✅ | ❌ not covered |
+| 4 | Renamed property shim | forwarding `[Obsolete]` property | ✅ | ❌ not covered |
+| 5 | Method rename / overload forwarder | hidden forwarding overload | ✅ | ⚠️ optional-param + param-rename covered |
+| 6 | Enum / extensible-enum value re-add | static members | ✅ | ⚠️ fixed enums covered; extensible not |
+| 7 | Collection init in ctor | `ChangeTrackingList` init | ✅ | ❌ not covered |
+| 8 | Read-only collection surface | `IReadOnly*` facade | ✅ | ✅ covered (property type preservation) |
+| 9 | `IJsonModel<TData>` forwarding | delegate to `Data` | ✅ | ❌ not covered |
+| 10 | Suppress shared/common type | `[assembly: CodeGenSuppressType]` | 🟡 | ❌ not covered |
+| 11 | Suppress overload + replacement | `[CodeGenSuppress]` | 🟡 | ⚠️ optional-param overload covered |
+| 12 | Flatten/unflatten wrapper | custom get/set | 🟡 | ❌ not covered |
+| 13 | Model-factory overload adaptation | `ArmXxxModelFactory` overload | 🟡 | ⚠️ additive/reorder/rename covered; coercion not |
+| 14 | Back-compat constructor | old-signature ctor | 🟡 | ⚠️ abstract-base ctor accessibility covered |
+| 15 | Wire-name preservation | `[WirePath]` / `[CodeGenSerialization]` name | 🟡 | ❌ not covered |
+| 16 | Custom serialization transform | serialization hooks / overrides | ❌ | ❌ not covered |
+| 17 | Incompatible type converters | hand-written converters | ❌ | ❌ not covered |
+| 18 | Removed-API throwing shims | `NotSupportedException` stubs | ❌ | ❌ not covered |
+
+> The *Base generator today* column reflects what
+> [`Microsoft.TypeSpec.Generator`](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/generator/docs/backward-compatibility.md)
+> already emits from `LastContractView` for **both planes** (see
+> [Back-compat already provided by the base generator](#back-compat-already-provided-by-the-base-generator-both-planes)).
+> The base generator additionally handles `AdditionalProperties` type preservation, API-version
+> enum preservation, non-abstract base models, and content-type/body parameter ordering — none of
+> which surfaced as hand-written custom code in this survey.
 
 **Valid cases (candidates for generator automation):** scenarios 1–9 are deterministic and are
 the highest-value targets, because they are also the most frequent custom-code patterns in the
 survey. They share a single enabler: the generator (or an emitter step) consuming the
 **previous public contract** that CI already tracks for breaking-change detection, plus a small
 set of rename/flatten hints, to emit renames, deprecated aliases/forwarders, restored bases,
-read-only facades, and re-added enum values automatically.
+read-only facades, and re-added enum values automatically. Notably, that same "previous
+contract" is precisely the base generator's `LastContractView` input — so scenario 8 (read-only
+surface) is **already produced today** when the last contract is supplied, and scenarios 5, 6,
+11, 13, and 14 are **partly** produced already (see the *Base generator today* column). The
+remaining Azure-specific gaps (whole-type renames, `ResourceData` base restore, deprecated type
+aliases, obsolete property forwarders, extensible-enum re-add, `IJsonModel<TData>` forwarding)
+are the net-new automation opportunities.
 
 Scenarios 10–15 are partially automatable: the generator can emit the boilerplate, but a
 per-item hint (ownership allowlist, flatten path, or type-conversion rule) is required.
