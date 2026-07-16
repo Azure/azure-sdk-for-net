@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A collection of keypresses the model would like to perform. </summary>
-    public partial class KeyPressAction : ComputerUseAction
+    internal partial class KeyPressAction : ComputerUseAction
     {
         /// <summary> Initializes a new instance of <see cref="KeyPressAction"/>. </summary>
         /// <param name="keys"> The combination of keys the model is requesting to be pressed. This is an array of strings, each representing a key. </param>

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A wait action. </summary>
-    public partial class WaitAction : ComputerUseAction, IJsonModel<WaitAction>
+    internal partial class WaitAction : ComputerUseAction, IJsonModel<WaitAction>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

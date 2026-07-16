@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Specifies how the tool choice will be used. </summary>
-    public readonly partial struct PersistentAgentsToolChoiceOptionMode : IEquatable<PersistentAgentsToolChoiceOptionMode>
+    internal readonly partial struct PersistentAgentsToolChoiceOptionMode : IEquatable<PersistentAgentsToolChoiceOptionMode>
     {
         private readonly string _value;
         /// <summary> The model will not call a function and instead generates a message. </summary>

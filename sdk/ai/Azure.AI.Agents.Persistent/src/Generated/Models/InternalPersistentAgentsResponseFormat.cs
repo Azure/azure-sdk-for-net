@@ -10,7 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
 {
-    internal partial class InternalPersistentAgentsResponseFormat
+    /// <summary>
+    /// An object describing the expected output of the model. If `json_object` only `function` type `tools` are allowed to be passed to the Run.
+    /// If `text` the model can return text or any value needed.
+    /// </summary>
+    public partial class InternalPersistentAgentsResponseFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
