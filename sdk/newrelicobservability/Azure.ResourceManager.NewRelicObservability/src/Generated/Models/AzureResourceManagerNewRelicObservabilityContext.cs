@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.NewRelicObservability
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResubscribeProperties))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagRuleListResult))]
     [ModelReaderWriterBuildable(typeof(TagRuleUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VMHostsListResponse))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerNewRelicObservabilityContext : ModelReaderWriterContext
     {
     }

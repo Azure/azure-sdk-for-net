@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// An abstract representation of a tool stored in a toolbox.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="WebSearchToolboxTool"/>, <see cref="MCPToolboxTool"/>, <see cref="AzureAISearchToolboxTool"/>, <see cref="OpenApiToolboxTool"/>, <see cref="A2APreviewToolboxTool"/>, <see cref="BrowserAutomationPreviewToolboxTool"/>, <see cref="ReminderPreviewToolboxTool"/>, <see cref="WorkIQPreviewToolboxTool"/>, <see cref="FabricIQPreviewToolboxTool"/>, and <see cref="ToolboxSearchPreviewToolboxTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FabricIQPreviewToolboxTool"/>, <see cref="CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="WebSearchToolboxTool"/>, <see cref="MCPToolboxTool"/>, <see cref="AzureAISearchToolboxTool"/>, <see cref="OpenApiToolboxTool"/>, <see cref="A2APreviewToolboxTool"/>, <see cref="BrowserAutomationPreviewToolboxTool"/>, <see cref="ReminderPreviewToolboxTool"/>, <see cref="WorkIQPreviewToolboxTool"/>, and <see cref="ToolboxSearchPreviewToolboxTool"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownToolboxTool))]
     public abstract partial class ToolboxTool : IJsonModel<ToolboxTool>
@@ -147,6 +147,8 @@ namespace Azure.AI.Projects.Agents
             {
                 switch (discriminator.GetString())
                 {
+                    case "fabric_iq_preview":
+                        return FabricIQPreviewToolboxTool.DeserializeFabricIQPreviewToolboxTool(element, options);
                     case "code_interpreter":
                         return CodeInterpreterToolboxTool.DeserializeCodeInterpreterToolboxTool(element, options);
                     case "file_search":
@@ -167,8 +169,6 @@ namespace Azure.AI.Projects.Agents
                         return ReminderPreviewToolboxTool.DeserializeReminderPreviewToolboxTool(element, options);
                     case "work_iq_preview":
                         return WorkIQPreviewToolboxTool.DeserializeWorkIQPreviewToolboxTool(element, options);
-                    case "fabric_iq_preview":
-                        return FabricIQPreviewToolboxTool.DeserializeFabricIQPreviewToolboxTool(element, options);
                     case "toolbox_search_preview":
                         return ToolboxSearchPreviewToolboxTool.DeserializeToolboxSearchPreviewToolboxTool(element, options);
                 }

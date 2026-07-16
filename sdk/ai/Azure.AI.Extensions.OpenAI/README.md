@@ -484,12 +484,6 @@ Console.WriteLine(response.GetOutputText());
 
 ### Hosted Agents
 
-**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
-
-```C#
-#pragma warning disable AAIP001
-```
-
 Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents).
 
 To create the hosted agent, please use the `HostedAgentDefinition` while creating the AgentVersion object.
@@ -551,7 +545,7 @@ PatchAgentOptions patchOptions = new()
 {
     AgentEndpoint = config,
 };
-ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.PatchAgentObject(
+ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.PatchAgent(
     agentName: agentVersion.Name,
     patchAgentOptions: patchOptions);
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
@@ -1690,7 +1684,7 @@ the Fabric IQ connection in Microsoft Foundry and use `FabricIQPreviewTool` in t
 ```C# Snippet:Sample_CreateAgent_FabricIQ_Async
 FabricIQPreviewTool fabricIQTool = new(projectConnectionId: fabricIQProjectConnectionId)
 {
-    RequireApproval = BinaryData.FromObjectAsJson("never"),
+    RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {

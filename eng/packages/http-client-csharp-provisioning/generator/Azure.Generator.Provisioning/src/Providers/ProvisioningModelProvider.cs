@@ -28,10 +28,12 @@ namespace Azure.Generator.Provisioning.Providers
     internal class ProvisioningModelProvider : ModelProvider, IProvisioningPropertyInfo
     {
         private readonly InputModelType _inputModel;
+        private readonly bool _hasSettableUsage;
 
         public ProvisioningModelProvider(InputModelType inputModel) : base(inputModel)
         {
             _inputModel = inputModel;
+            _hasSettableUsage = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(inputModel);
         }
 
         protected override string BuildNamespace()
@@ -63,7 +65,8 @@ namespace Azure.Generator.Provisioning.Providers
             return new ProvisioningPropertyInfo(
                 property.Name.ToIdentifierName(),
                 property.IsReadOnly,
-                property.IsRequired,
+                !property.IsReadOnly && _hasSettableUsage,
+                property.IsRequired && _hasSettableUsage,
                 [serializedName]);
         }
 
@@ -88,7 +91,7 @@ namespace Azure.Generator.Provisioning.Providers
                     if (prop.IsDiscriminator) continue;
                     if (!seen.Add(prop.Name)) continue;
 
-                    var property = CodeModelGenerator.Instance.TypeFactory.CreateProperty(prop, this);
+                    var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(prop, this);
                     if (property != null)
                         properties.Add(property);
                 }
@@ -186,6 +189,8 @@ namespace Azure.Generator.Provisioning.Providers
                 ).Terminate());
             }
 
+            statements.Add(This.Invoke("DefineAdditionalProperties").Terminate());
+
             var method = new MethodProvider(
                 new MethodSignature(
                     "DefineProvisionableProperties",
@@ -197,7 +202,20 @@ namespace Azure.Generator.Provisioning.Providers
                 statements,
                 this);
 
-            return [method];
+            return [method, BuildDefineAdditionalPropertiesMethod()];
+        }
+
+        private MethodProvider BuildDefineAdditionalPropertiesMethod()
+        {
+            var sig = new MethodSignature(
+                "DefineAdditionalProperties",
+                $"Define additional provisionable properties for {Name} that are not part of the generated code.",
+                MethodSignatureModifiers.Partial,
+                null,
+                null,
+                []);
+
+            return new MethodProvider(sig, this);
         }
 
         protected override TypeProvider[] BuildSerializationProviders()

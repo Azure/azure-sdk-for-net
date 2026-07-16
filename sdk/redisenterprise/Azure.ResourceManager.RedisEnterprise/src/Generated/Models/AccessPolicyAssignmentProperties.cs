@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AccessPolicyAssignmentProperties"/>. </summary>
-        /// <param name="accessPolicyName"> Name of access policy under specific access policy assignment. Only "default" policy is supported for now. </param>
+        /// <param name="accessPolicyName"> <b>Deprecated.</b> This property always returns "default". Use `accessString` to configure custom Redis ACL permissions instead. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyName"/> is null. </exception>
         public AccessPolicyAssignmentProperties(string accessPolicyName)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Initializes a new instance of <see cref="AccessPolicyAssignmentProperties"/>. </summary>
         /// <param name="provisioningState"> Current provisioning status of the access policy assignment. </param>
-        /// <param name="accessPolicyName"> Name of access policy under specific access policy assignment. Only "default" policy is supported for now. </param>
+        /// <param name="accessPolicyName"> <b>Deprecated.</b> This property always returns "default". Use `accessString` to configure custom Redis ACL permissions instead. </param>
         /// <param name="user"> The user associated with the access policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AccessPolicyAssignmentProperties(RedisEnterpriseProvisioningStatus? provisioningState, string accessPolicyName, AccessPolicyAssignmentPropertiesUser user, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         [WirePath("provisioningState")]
         public RedisEnterpriseProvisioningStatus? ProvisioningState { get; }
 
-        /// <summary> Name of access policy under specific access policy assignment. Only "default" policy is supported for now. </summary>
+        /// <summary> <b>Deprecated.</b> This property always returns "default". Use `accessString` to configure custom Redis ACL permissions instead. </summary>
         [WirePath("accessPolicyName")]
         public string AccessPolicyName { get; set; }
 

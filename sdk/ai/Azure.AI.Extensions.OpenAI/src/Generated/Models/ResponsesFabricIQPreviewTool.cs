@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A FabricIQ server-side tool. </summary>
+    [Experimental("AAIP001")]
     public partial class ResponsesFabricIQPreviewTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesFabricIQPreviewTool"/>. </summary>
@@ -26,13 +28,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
         /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
-        /// <param name="serverUrl"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
+        /// <param name="serverUri"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
         /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
-        internal ResponsesFabricIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId, string serverLabel, Uri serverUrl, BinaryData requireApproval) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesFabricIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId, string serverLabel, Uri serverUri, BinaryData requireApproval) : base(@type, additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             ServerLabel = serverLabel;
-            ServerUrl = serverUrl;
+            ServerUri = serverUri;
             RequireApproval = requireApproval;
         }
 
@@ -43,7 +45,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string ServerLabel { get; set; }
 
         /// <summary> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </summary>
-        public Uri ServerUrl { get; set; }
+        public Uri ServerUri { get; set; }
 
         /// <summary>
         /// (Optional) Whether the agent requires approval before executing actions. Default is always.

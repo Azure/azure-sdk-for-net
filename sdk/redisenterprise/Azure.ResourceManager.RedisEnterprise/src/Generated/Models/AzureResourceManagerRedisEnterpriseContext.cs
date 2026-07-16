@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.RedisEnterprise
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationData))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationProperties))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationResource))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationValidationDisparity))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationValidationError))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationValidationRequestContent))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationValidationResponseResult))]
+    [ModelReaderWriterBuildable(typeof(RedisEnterpriseMigrationValidationWarning))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseModule))]
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseOperationStatus))]
     [ModelReaderWriterBuildable(typeof(RedisEnterprisePrivateEndpointConnectionData))]
@@ -73,9 +78,9 @@ namespace Azure.ResourceManager.RedisEnterprise
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseSkuDetailsList))]
     [ModelReaderWriterBuildable(typeof(RedisPersistenceSettings))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownRedisEnterpriseMigrationProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerRedisEnterpriseContext : ModelReaderWriterContext
     {
     }

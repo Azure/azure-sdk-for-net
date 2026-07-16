@@ -21,13 +21,6 @@ namespace Azure.ResourceManager.NetApp
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppElasticVolumeData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        public NetAppElasticVolumeData(AzureLocation location) : base(location)
-        {
-            Zones = new ChangeTrackingList<string>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetAppElasticVolumeData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -45,14 +38,5 @@ namespace Azure.ResourceManager.NetApp
             Zones = zones;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public ElasticVolumeProperties Properties { get; set; }
-
-        /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
-        public ETag? ETag { get; }
-
-        /// <summary> The availability zones. </summary>
-        public IList<string> Zones { get; }
     }
 }

@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.Subscription
     [ModelReaderWriterBuildable(typeof(SubscriptionAliasProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAliasResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionName))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetDirectoryContent))]
     [ModelReaderWriterBuildable(typeof(TargetDirectoryProperties))]
     [ModelReaderWriterBuildable(typeof(TargetDirectoryResultData))]
@@ -44,7 +45,6 @@ namespace Azure.ResourceManager.Subscription
     [ModelReaderWriterBuildable(typeof(TenantPolicyData))]
     [ModelReaderWriterBuildable(typeof(TenantPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(TenantPolicyResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerSubscriptionContext : ModelReaderWriterContext
     {
     }

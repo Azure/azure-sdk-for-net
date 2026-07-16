@@ -134,35 +134,35 @@ public partial class ProjectAgentSkills
 
     /// <summary> Downloads a skill package, save it to file and return as a Binary data. </summary>
     /// <param name="skillName"> The unique name of the skill. </param>
-    /// <param name="path"> The path to save the skill content to. </param>
+    /// <param name="localPath"> The path to save the skill content to. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> or <paramref name="path"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="skillName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> or <paramref name="localPath"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="skillName"/> or <paramref name="localPath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public BinaryData GetSkillContent(string skillName, string path, CancellationToken cancellationToken = default)
+    public virtual ClientResult<BinaryData> GetSkillContent(string skillName, string localPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
-        Argument.AssertNotNullOrEmpty(path, nameof(path));
+        Argument.AssertNotNullOrEmpty(localPath, nameof(localPath));
 
-        BinaryData result = GetSkillContent(skillName, cancellationToken);
-        FileHelper.SaveAndUnzipData(path, result);
+        ClientResult<BinaryData> result = GetSkillContent(skillName, cancellationToken);
+        FileHelper.SaveAndUnzipData(localPath, result);
         return result;
     }
 
     /// <summary> Downloads a skill package, save it to file and return as a Binary data. </summary>
     /// <param name="skillName"> The unique name of the skill. </param>
-    /// <param name="path"> The path to save the skill content to. </param>
+    /// <param name="localPath"> The path to save the skill content to. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> or <paramref name="path"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="skillName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> or <paramref name="localPath"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="skillName"/> or <paramref name="localPath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<BinaryData> GetSkillContentAsync(string skillName, string path, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<BinaryData>> GetSkillContentAsync(string skillName, string localPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
-        Argument.AssertNotNullOrEmpty(path, nameof(path));
+        Argument.AssertNotNullOrEmpty(localPath, nameof(localPath));
 
-        BinaryData result = await GetSkillContentAsync(skillName, cancellationToken).ConfigureAwait(false);
-        FileHelper.SaveAndUnzipData(path, result);
+        ClientResult<BinaryData> result = await GetSkillContentAsync(skillName, cancellationToken).ConfigureAwait(false);
+        FileHelper.SaveAndUnzipData(localPath, result);
         return result;
     }
 }

@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.Dns
     [ModelReaderWriterBuildable(typeof(DSRecordDigest))]
     [ModelReaderWriterBuildable(typeof(RecordSetListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(ZoneListResult))]
     [ModelReaderWriterBuildable(typeof(ZoneProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerDnsContext : ModelReaderWriterContext
     {
     }

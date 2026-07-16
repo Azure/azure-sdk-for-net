@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A single routine run returned from the run history API. </summary>
+    [Experimental("AAIP001")]
     public partial class RoutineRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -45,7 +47,7 @@ namespace Azure.AI.Projects
         /// <param name="errorType"> The fully qualified error type captured for a failed attempt, when available. </param>
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutineRun(string id, BinaryData statusInternal, RoutineRunPhase? phase, RoutineTriggerType? triggerType, string triggerName, IDictionary<string, BinaryData> triggerEventPayload, RoutineAttemptSource? attemptSource, RoutineActionType? actionType, string agentId, string agentEndpointId, string conversationId, string sessionId, DateTimeOffset? triggeredAt, DateTimeOffset? scheduledFireAt, DateTimeOffset? startedAt, DateTimeOffset? endedAt, string dispatchId, string actionCorrelationId, string responseId, string taskId, int? errorStatusCode, string errorType, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutineRun(string id, BinaryData statusInternal, RoutineRunPhase? phase, RoutineTriggerKind? triggerType, string triggerName, IDictionary<string, BinaryData> triggerEventPayload, RoutineAttemptSource? attemptSource, RoutineActionKind? actionType, string agentId, string agentEndpointId, string conversationId, string sessionId, DateTimeOffset? triggeredAt, DateTimeOffset? scheduledFireAt, DateTimeOffset? startedAt, DateTimeOffset? endedAt, string dispatchId, string actionCorrelationId, string responseId, string taskId, int? errorStatusCode, string errorType, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             StatusInternal = statusInternal;
@@ -80,7 +82,7 @@ namespace Azure.AI.Projects
         public RoutineRunPhase? Phase { get; }
 
         /// <summary> The trigger type that produced the routine attempt. </summary>
-        public RoutineTriggerType? TriggerType { get; }
+        public RoutineTriggerKind? TriggerType { get; }
 
         /// <summary> The configured trigger name that produced the routine attempt. </summary>
         public string TriggerName { get; }
@@ -117,7 +119,7 @@ namespace Azure.AI.Projects
         public RoutineAttemptSource? AttemptSource { get; }
 
         /// <summary> The action type dispatched for the routine attempt. </summary>
-        public RoutineActionType? ActionType { get; }
+        public RoutineActionKind? ActionType { get; }
 
         /// <summary> The project-scoped agent identifier recorded for the routine attempt. </summary>
         public string AgentId { get; }

@@ -255,11 +255,11 @@ namespace Azure.AI.Projects
             string id = default;
             BinaryData statusInternal = default;
             RoutineRunPhase? phase = default;
-            RoutineTriggerType? triggerType = default;
+            RoutineTriggerKind? triggerType = default;
             string triggerName = default;
             IDictionary<string, BinaryData> triggerEventPayload = default;
             RoutineAttemptSource? attemptSource = default;
-            RoutineActionType? actionType = default;
+            RoutineActionKind? actionType = default;
             string agentId = default;
             string agentEndpointId = default;
             string conversationId = default;
@@ -307,7 +307,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    triggerType = new RoutineTriggerType(prop.Value.GetString());
+                    triggerType = new RoutineTriggerKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("trigger_name"u8))
@@ -351,7 +351,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    actionType = new RoutineActionType(prop.Value.GetString());
+                    actionType = new RoutineActionKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("agent_id"u8))

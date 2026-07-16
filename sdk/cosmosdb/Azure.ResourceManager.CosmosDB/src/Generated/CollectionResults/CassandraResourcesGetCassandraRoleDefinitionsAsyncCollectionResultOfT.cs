@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 CassandraRoleDefinitionListResult result = CassandraRoleDefinitionListResult.FromResponse(response);
-                yield return Page<CassandraRoleDefinitionData>.FromValues((IReadOnlyList<CassandraRoleDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CassandraRoleDefinitionData>.FromValues((IReadOnlyList<CassandraRoleDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

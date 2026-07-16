@@ -18,11 +18,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticVolumeBackupProperties"/>. </summary>
-        public ElasticVolumeBackupProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ElasticVolumeBackupProperties"/>. </summary>
         /// <param name="elasticBackupPolicyResourceId"> ResourceId used to identify Elastic Backup Policy. </param>
         /// <param name="policyEnforcement"> The property to decide policy is enforced or not on the volume. </param>
         /// <param name="elasticBackupVaultResourceId"> ResourceId used to identify Elastic Backup Vault. </param>
@@ -34,14 +29,5 @@ namespace Azure.ResourceManager.NetApp.Models
             ElasticBackupVaultResourceId = elasticBackupVaultResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> ResourceId used to identify Elastic Backup Policy. </summary>
-        public ResourceIdentifier ElasticBackupPolicyResourceId { get; set; }
-
-        /// <summary> The property to decide policy is enforced or not on the volume. </summary>
-        public ElasticVolumePolicyEnforcement? PolicyEnforcement { get; set; }
-
-        /// <summary> ResourceId used to identify Elastic Backup Vault. </summary>
-        public ResourceIdentifier ElasticBackupVaultResourceId { get; set; }
     }
 }

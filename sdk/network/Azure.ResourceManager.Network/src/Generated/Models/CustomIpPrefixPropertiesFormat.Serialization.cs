@@ -95,16 +95,16 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("authorizationMessage"u8);
                 writer.WriteStringValue(AuthorizationMessage);
             }
-            if (Optional.IsDefined(CustomIpPrefixParent))
+            if (Optional.IsDefined(CustomIPPrefixParent))
             {
                 writer.WritePropertyName("customIpPrefixParent"u8);
-                writer.WriteStringValue(CustomIpPrefixParent);
+                writer.WriteStringValue(CustomIPPrefixParent);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ChildCustomIpPrefixes))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ChildCustomIPPrefixes))
             {
                 writer.WritePropertyName("childCustomIpPrefixes"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in ChildCustomIpPrefixes)
+                foreach (NetworkSubResource item in ChildCustomIPPrefixes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -135,11 +135,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("prefixType"u8);
                 writer.WriteStringValue(PrefixType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PublicIpPrefixes))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PublicIPPrefixes))
             {
                 writer.WritePropertyName("publicIpPrefixes"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in PublicIpPrefixes)
+                foreach (NetworkSubResource item in PublicIPPrefixes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -206,14 +206,14 @@ namespace Azure.ResourceManager.Network.Models
             string cidr = default;
             string signedMessage = default;
             string authorizationMessage = default;
-            ResourceIdentifier customIpPrefixParent = default;
-            IReadOnlyList<NetworkSubResource> childCustomIpPrefixes = default;
+            ResourceIdentifier customIPPrefixParent = default;
+            IReadOnlyList<NetworkSubResource> childCustomIPPrefixes = default;
             CommissionedState? commissionedState = default;
             bool? expressRouteAdvertise = default;
             CidrAdvertisingGeoCode? geo = default;
             bool? noInternetAdvertise = default;
             CustomIPPrefixType? prefixType = default;
-            IReadOnlyList<NetworkSubResource> publicIpPrefixes = default;
+            IReadOnlyList<NetworkSubResource> publicIPPrefixes = default;
             Guid? resourceGuid = default;
             string failedReason = default;
             NetworkProvisioningState? provisioningState = default;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    customIpPrefixParent = new ResourceIdentifier(prop.Value.GetString());
+                    customIPPrefixParent = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("childCustomIpPrefixes"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
                     }
-                    childCustomIpPrefixes = array;
+                    childCustomIPPrefixes = array;
                     continue;
                 }
                 if (prop.NameEquals("commissionedState"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
                     }
-                    publicIpPrefixes = array;
+                    publicIPPrefixes = array;
                     continue;
                 }
                 if (prop.NameEquals("resourceGuid"u8))
@@ -355,14 +355,14 @@ namespace Azure.ResourceManager.Network.Models
                 cidr,
                 signedMessage,
                 authorizationMessage,
-                customIpPrefixParent,
-                childCustomIpPrefixes ?? new ChangeTrackingList<NetworkSubResource>(),
+                customIPPrefixParent,
+                childCustomIPPrefixes ?? new ChangeTrackingList<NetworkSubResource>(),
                 commissionedState,
                 expressRouteAdvertise,
                 geo,
                 noInternetAdvertise,
                 prefixType,
-                publicIpPrefixes ?? new ChangeTrackingList<NetworkSubResource>(),
+                publicIPPrefixes ?? new ChangeTrackingList<NetworkSubResource>(),
                 resourceGuid,
                 failedReason,
                 provisioningState,

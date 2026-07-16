@@ -61,7 +61,7 @@ namespace Azure.AI.VoiceLive.Tests
             var fromWire = TestUtilities.DeserializeViaIJsonModel(
                 """{"type":"azure-realtime-native","name":"andrew"}""",
                 new AzureRealtimeNativeVoice(AzureRealtimeNativeVoiceName.Ava));
-            Assert.That(fromWire.Type, Is.EqualTo("azure-realtime-native"));
+            Assert.That(fromWire.Kind, Is.EqualTo("azure-realtime-native"));
             Assert.That(fromWire.Name, Is.EqualTo(AzureRealtimeNativeVoiceName.Andrew));
         }
     }

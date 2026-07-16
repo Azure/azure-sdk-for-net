@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceIpGroups))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups"u8);
                 writer.WriteStartArray();
-                foreach (string item in SourceIpGroups)
+                foreach (string item in SourceIPGroups)
                 {
                     if (item == null)
                     {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<string> targetFqdns = default;
             IList<string> targetUrls = default;
             IList<string> fqdnTags = default;
-            IList<string> sourceIpGroups = default;
+            IList<string> sourceIPGroups = default;
             bool? terminateTLS = default;
             IList<string> webCategories = default;
             IList<FirewallPolicyHttpHeaderToInsert> httpHeadersToInsert = default;
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    sourceIpGroups = array;
+                    sourceIPGroups = array;
                     continue;
                 }
                 if (prop.NameEquals("terminateTLS"u8))
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Network.Models
                 targetFqdns ?? new ChangeTrackingList<string>(),
                 targetUrls ?? new ChangeTrackingList<string>(),
                 fqdnTags ?? new ChangeTrackingList<string>(),
-                sourceIpGroups ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
                 terminateTLS,
                 webCategories ?? new ChangeTrackingList<string>(),
                 httpHeadersToInsert ?? new ChangeTrackingList<FirewallPolicyHttpHeaderToInsert>());

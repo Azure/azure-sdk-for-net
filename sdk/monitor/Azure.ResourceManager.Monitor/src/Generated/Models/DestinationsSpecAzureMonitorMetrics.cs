@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DestinationsSpecAzureMonitorMetrics(string name, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DestinationsSpecAzureMonitorMetrics(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, additionalBinaryDataProperties)
         {
         }
     }

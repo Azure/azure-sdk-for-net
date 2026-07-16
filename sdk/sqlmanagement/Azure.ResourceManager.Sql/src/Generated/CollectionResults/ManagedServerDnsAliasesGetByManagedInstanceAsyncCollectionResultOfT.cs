@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ManagedServerDnsAliasListResult result = ManagedServerDnsAliasListResult.FromResponse(response);
-                yield return Page<ManagedServerDnsAliasData>.FromValues((IReadOnlyList<ManagedServerDnsAliasData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedServerDnsAliasData>.FromValues((IReadOnlyList<ManagedServerDnsAliasData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

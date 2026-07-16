@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("pool"u8);
                 writer.WriteObjectValue(Pool, options);
             }
-            if (Optional.IsDefined(NumberOfIpAddresses))
+            if (Optional.IsDefined(NumberOfIPAddresses))
             {
                 writer.WritePropertyName("numberOfIpAddresses"u8);
-                writer.WriteStringValue(NumberOfIpAddresses);
+                writer.WriteStringValue(NumberOfIPAddresses);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AllocatedAddressPrefixes))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IpamPoolPrefixAllocationPool pool = default;
-            string numberOfIpAddresses = default;
+            string numberOfIPAddresses = default;
             IReadOnlyList<string> allocatedAddressPrefixes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("numberOfIpAddresses"u8))
                 {
-                    numberOfIpAddresses = prop.Value.GetString();
+                    numberOfIPAddresses = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("allocatedAddressPrefixes"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IpamPoolPrefixAllocation(pool, numberOfIpAddresses, allocatedAddressPrefixes ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new IpamPoolPrefixAllocation(pool, numberOfIPAddresses, allocatedAddressPrefixes ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -24,6 +24,22 @@ namespace Azure.SdkAnalyzers.Tests
     public class AllowListDiagnosticSuppressorTests
     {
         [Test]
+        public void SupportedSuppressions_IncludeAzc0014()
+        {
+            var suppressor = new AllowListDiagnosticSuppressor();
+            IEnumerable<string> ids = suppressor.SupportedSuppressions.Select(s => s.SuppressedDiagnosticId);
+            Assert.That(ids, Does.Contain("AZC0014"), "AZC0014 should be opted into scoped suppression.");
+        }
+
+        [Test]
+        public void SupportedSuppressions_IncludeAzc0012()
+        {
+            var suppressor = new AllowListDiagnosticSuppressor();
+            IEnumerable<string> ids = suppressor.SupportedSuppressions.Select(s => s.SuppressedDiagnosticId);
+            Assert.That(ids, Does.Contain("AZC0012"), "AZC0012 should be opted into scoped suppression.");
+        }
+
+        [Test]
         public async Task TypeTarget_SuppressesOnlyMatchingType()
         {
             const string source = @"

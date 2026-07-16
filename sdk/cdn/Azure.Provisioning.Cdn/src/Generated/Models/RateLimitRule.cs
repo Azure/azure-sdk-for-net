@@ -142,6 +142,10 @@ namespace Azure.Provisioning.Cdn
             _priority = DefineProperty<int>(nameof(Priority), new string[] { "priority" }, isRequired: true);
             _matchConditions = DefineListProperty<CustomRuleMatchCondition>(nameof(MatchConditions), new string[] { "matchConditions" }, isRequired: true);
             _action = DefineProperty<OverrideActionType>(nameof(Action), new string[] { "action" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for RateLimitRule that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.PureStorageBlock
                     yield break;
                 }
                 AvsVmListResult result = AvsVmListResult.FromResponse(response);
-                yield return Page<PureStorageAvsVmData>.FromValues((IReadOnlyList<PureStorageAvsVmData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PureStorageAvsVmData>.FromValues((IReadOnlyList<PureStorageAvsVmData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

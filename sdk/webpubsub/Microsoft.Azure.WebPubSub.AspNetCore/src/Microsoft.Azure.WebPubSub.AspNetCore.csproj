@@ -2,14 +2,13 @@
   <PropertyGroup>
     <Description>Azure SDK client library for the WebPubSub service</Description>
     <AssemblyTitle>Azure SDK for WebPubSub</AssemblyTitle>
-    <Version>1.6.0</Version>
+    <Version>1.6.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.5.0</ApiCompatVersion>
     <PackageTags>Azure, WebPubSub</PackageTags>
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <SupportsNetStandard20>false</SupportsNetStandard20>
-    <NoWarn>$(NoWarn);419</NoWarn>
     <GenerateAPIListing>true</GenerateAPIListing>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>

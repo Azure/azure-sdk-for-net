@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Search
     [ModelReaderWriterBuildable(typeof(SharedSearchServicePrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(SharedSearchServicePrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(SharedSearchServicePrivateLinkResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownSearchDataIdentity))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerSearchContext : ModelReaderWriterContext
     {
     }

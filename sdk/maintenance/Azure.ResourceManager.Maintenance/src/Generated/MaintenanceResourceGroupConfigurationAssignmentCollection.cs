@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             TryGetApiVersion(MaintenanceResourceGroupConfigurationAssignmentResource.ResourceType, out string maintenanceResourceGroupConfigurationAssignmentApiVersion);
             _configurationAssignmentsForResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceResourceGroupConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _configurationAssignmentsForResourceGroupRestClient = new ConfigurationAssignmentsForResourceGroup(_configurationAssignmentsForResourceGroupClientDiagnostics, Pipeline, Endpoint, maintenanceResourceGroupConfigurationAssignmentApiVersion ?? "2023-10-01-preview");
+            _configurationAssignmentsForResourceGroupRestClient = new ConfigurationAssignmentsForResourceGroup(_configurationAssignmentsForResourceGroupClientDiagnostics, Pipeline, Endpoint, maintenanceResourceGroupConfigurationAssignmentApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

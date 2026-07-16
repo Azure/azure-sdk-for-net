@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                     yield break;
                 }
                 LoadBalancerListResult result = LoadBalancerListResult.FromResponse(response);
-                yield return Page<ConnectedClusterLoadBalancerData>.FromValues((IReadOnlyList<ConnectedClusterLoadBalancerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ConnectedClusterLoadBalancerData>.FromValues((IReadOnlyList<ConnectedClusterLoadBalancerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

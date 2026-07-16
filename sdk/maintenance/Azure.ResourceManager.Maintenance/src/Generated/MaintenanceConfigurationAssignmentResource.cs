@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             TryGetApiVersion(ResourceType, out string maintenanceConfigurationAssignmentApiVersion);
             _configurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
-            _configurationAssignmentsRestClient = new ConfigurationAssignments(_configurationAssignmentsClientDiagnostics, Pipeline, Endpoint, maintenanceConfigurationAssignmentApiVersion ?? "2023-10-01-preview");
+            _configurationAssignmentsRestClient = new ConfigurationAssignments(_configurationAssignmentsClientDiagnostics, Pipeline, Endpoint, maintenanceConfigurationAssignmentApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<MaintenanceConfigurationAssignmentResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentResource.Delete");
             scope.Start();
@@ -225,14 +225,13 @@ namespace Azure.ResourceManager.Maintenance
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _configurationAssignmentsRestClient.CreateDeleteConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<MaintenanceConfigurationAssignmentResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationAssignmentResource>(Response.FromValue(new MaintenanceConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MaintenanceArmOperation operation = new MaintenanceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -256,7 +255,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -266,7 +265,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<MaintenanceConfigurationAssignmentResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentResource.Delete");
             scope.Start();
@@ -277,14 +276,13 @@ namespace Azure.ResourceManager.Maintenance
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _configurationAssignmentsRestClient.CreateDeleteConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
+                Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<MaintenanceConfigurationAssignmentResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationAssignmentResource>(Response.FromValue(new MaintenanceConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MaintenanceArmOperation operation = new MaintenanceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
             }
@@ -308,7 +306,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -364,7 +362,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

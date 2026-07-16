@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ListVirtualWANsResult result = ListVirtualWANsResult.FromResponse(response);
-                yield return Page<VirtualWanData>.FromValues((IReadOnlyList<VirtualWanData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualWanData>.FromValues((IReadOnlyList<VirtualWanData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

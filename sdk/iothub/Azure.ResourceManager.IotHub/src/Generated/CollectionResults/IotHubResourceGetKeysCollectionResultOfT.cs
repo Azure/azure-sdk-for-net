@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.IotHub
                     yield break;
                 }
                 SharedAccessSignatureAuthorizationRuleListResult result = SharedAccessSignatureAuthorizationRuleListResult.FromResponse(response);
-                yield return Page<SharedAccessSignatureAuthorizationRule>.FromValues((IReadOnlyList<SharedAccessSignatureAuthorizationRule>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SharedAccessSignatureAuthorizationRule>.FromValues((IReadOnlyList<SharedAccessSignatureAuthorizationRule>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

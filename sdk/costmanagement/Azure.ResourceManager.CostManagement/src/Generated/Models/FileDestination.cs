@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Destination of the view data. Currently only CSV format is supported. </summary>
-        public IList<ScheduledActionFileFormat> FileFormats { get; }
+        public IList<ScheduledActionFileFormat> FileFormats { get; } = new ChangeTrackingList<ScheduledActionFileFormat>();
     }
 }

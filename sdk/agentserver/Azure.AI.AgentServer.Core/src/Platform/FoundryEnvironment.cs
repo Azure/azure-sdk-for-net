@@ -17,6 +17,14 @@ public static class FoundryEnvironment
     public static string? AgentName { get; private set; }
 
     /// <summary>
+    /// The agent's stable identifier (GUID). Sourced from the <c>FOUNDRY_AGENT_ID</c>
+    /// environment variable. Available for container-side logic such as per-agent
+    /// routing, telemetry tagging, or custom storage partitioning. Stable across
+    /// all requests to the same agent.
+    /// </summary>
+    public static string? AgentId { get; private set; }
+
+    /// <summary>
     /// The agent version. Sourced from the <c>FOUNDRY_AGENT_VERSION</c> environment variable.
     /// </summary>
     public static string? AgentVersion { get; private set; }
@@ -124,6 +132,7 @@ public static class FoundryEnvironment
     internal static void Reload()
     {
         AgentName = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_NAME");
+        AgentId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_ID");
         AgentVersion = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_VERSION");
         ProjectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         ProjectArmId = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID");

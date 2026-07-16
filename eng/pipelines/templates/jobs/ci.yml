@@ -138,7 +138,7 @@ jobs:
               enabled: true
             codeql:
               # Need to specify the language because we clone after the codeql initialize step
-              language: csharp, javascript
+              language: csharp, javascript, python
               compiled:
                 enabled: true
 
@@ -189,15 +189,6 @@ jobs:
         - template: /eng/common/pipelines/templates/steps/check-spelling.yml
           parameters:
             ScriptToValidateUpgrade: eng/scripts/spell-check-public-api.ps1
-
-        - template: /eng/common/pipelines/templates/steps/verify-links.yml
-          parameters:
-            ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-              Directory: ''
-              Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
-            ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-              Directory: sdk/${{ parameters.ServiceDirectory }}
-            CheckLinkGuidance: $true
 
         - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
           parameters:

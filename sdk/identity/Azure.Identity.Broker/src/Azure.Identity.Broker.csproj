@@ -8,11 +8,11 @@
     <PackageTags>Microsoft Azure Identity Broker;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOsPlatform('Windows'))">$(TargetFrameworks);$(NetFxTargetFramework)</TargetFrameworks>
-    <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Microsoft.Identity.Client.Broker" />
+    <PackageReference Include="Microsoft.Identity.Client.KeyAttestation" />
   </ItemGroup>
 </Project>

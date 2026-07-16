@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Billing
                     yield break;
                 }
                 BillingRoleDefinitionListResult result = BillingRoleDefinitionListResult.FromResponse(response);
-                yield return Page<BillingRoleDefinitionData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BillingRoleDefinitionData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

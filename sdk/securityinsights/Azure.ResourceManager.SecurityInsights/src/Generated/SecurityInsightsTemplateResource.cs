@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A Class representing a SecurityInsightsTemplate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsTemplateResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsTemplateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> using the GetSecurityInsightsTemplate method.
+    /// A class representing a SecurityInsightsTemplate along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsTemplateResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetSecurityInsightsTemplates method.
     /// </summary>
     public partial class SecurityInsightsTemplateResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsTemplateResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        /// <param name="templateId"> The templateId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string templateId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _securityInsightsTemplateContentTemplateClientDiagnostics;
-        private readonly ContentTemplateRestOperations _securityInsightsTemplateContentTemplateRestClient;
+        private readonly ClientDiagnostics _contentTemplateClientDiagnostics;
+        private readonly ContentTemplate _contentTemplateRestClient;
         private readonly SecurityInsightsTemplateData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/contentTemplates";
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsTemplateResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsTemplateResource for mocking. </summary>
         protected SecurityInsightsTemplateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsTemplateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsTemplateResource(ArmClient client, SecurityInsightsTemplateData data) : this(client, data.Id)
@@ -54,74 +43,95 @@ namespace Azure.ResourceManager.SecurityInsights
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsTemplateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityInsightsTemplateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityInsightsTemplateContentTemplateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string securityInsightsTemplateContentTemplateApiVersion);
-            _securityInsightsTemplateContentTemplateRestClient = new ContentTemplateRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsTemplateContentTemplateApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string securityInsightsTemplateApiVersion);
+            _contentTemplateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            _contentTemplateRestClient = new ContentTemplate(_contentTemplateClientDiagnostics, Pipeline, Endpoint, securityInsightsTemplateApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SecurityInsightsTemplateData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="templateId"> The templateId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string templateId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a template byt its identifier.
         /// Expandable properties:
-        /// - properties/mainTemplate
-        /// - properties/dependantTemplates
+        /// <list type="bullet"><item><description>properties/mainTemplate</description></item><item><description>properties/dependantTemplates</description></item></list>
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentTemplate_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TemplateModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsTemplateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsTemplateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecurityInsightsTemplateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsTemplateContentTemplateClientDiagnostics.CreateScope("SecurityInsightsTemplateResource.Get");
+            using DiagnosticScope scope = _contentTemplateClientDiagnostics.CreateScope("SecurityInsightsTemplateResource.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsTemplateContentTemplateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsTemplateData> response = Response.FromValue(SecurityInsightsTemplateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,37 +144,44 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary>
         /// Gets a template byt its identifier.
         /// Expandable properties:
-        /// - properties/mainTemplate
-        /// - properties/dependantTemplates
+        /// <list type="bullet"><item><description>properties/mainTemplate</description></item><item><description>properties/dependantTemplates</description></item></list>
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentTemplate_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TemplateModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsTemplateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsTemplateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecurityInsightsTemplateResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsTemplateContentTemplateClientDiagnostics.CreateScope("SecurityInsightsTemplateResource.Get");
+            using DiagnosticScope scope = _contentTemplateClientDiagnostics.CreateScope("SecurityInsightsTemplateResource.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsTemplateContentTemplateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsTemplateData> response = Response.FromValue(SecurityInsightsTemplateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -178,20 +195,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Delete an installed template.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentTemplate_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> TemplateModels_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsTemplateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsTemplateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,16 +216,23 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsTemplateContentTemplateClientDiagnostics.CreateScope("SecurityInsightsTemplateResource.Delete");
+            using DiagnosticScope scope = _contentTemplateClientDiagnostics.CreateScope("SecurityInsightsTemplateResource.Delete");
             scope.Start();
             try
             {
-                var response = await _securityInsightsTemplateContentTemplateRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsTemplateContentTemplateRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentTemplateRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -222,20 +246,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Delete an installed template.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentTemplate_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> TemplateModels_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsTemplateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsTemplateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,16 +267,23 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsTemplateContentTemplateClientDiagnostics.CreateScope("SecurityInsightsTemplateResource.Delete");
+            using DiagnosticScope scope = _contentTemplateClientDiagnostics.CreateScope("SecurityInsightsTemplateResource.Delete");
             scope.Start();
             try
             {
-                var response = _securityInsightsTemplateContentTemplateRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _securityInsightsTemplateContentTemplateRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentTemplateRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -263,23 +294,23 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Install a template.
+        /// Update a SecurityInsightsTemplate.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentTemplate_Install</description>
+        /// <term> Operation Id. </term>
+        /// <description> TemplateModels_Install. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsTemplateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsTemplateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,16 +322,24 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsTemplateContentTemplateClientDiagnostics.CreateScope("SecurityInsightsTemplateResource.Update");
+            using DiagnosticScope scope = _contentTemplateClientDiagnostics.CreateScope("SecurityInsightsTemplateResource.Update");
             scope.Start();
             try
             {
-                var response = await _securityInsightsTemplateContentTemplateRestClient.InstallAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsTemplateContentTemplateRestClient.CreateInstallRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsTemplateResource>(Response.FromValue(new SecurityInsightsTemplateResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentTemplateRestClient.CreateInstallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsTemplateData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsTemplateData> response = Response.FromValue(SecurityInsightsTemplateData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsTemplateResource> operation = new SecurityInsightsArmOperation<SecurityInsightsTemplateResource>(Response.FromValue(new SecurityInsightsTemplateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -311,23 +350,23 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Install a template.
+        /// Update a SecurityInsightsTemplate.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ContentTemplate_Install</description>
+        /// <term> Operation Id. </term>
+        /// <description> TemplateModels_Install. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsTemplateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsTemplateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -339,16 +378,24 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsTemplateContentTemplateClientDiagnostics.CreateScope("SecurityInsightsTemplateResource.Update");
+            using DiagnosticScope scope = _contentTemplateClientDiagnostics.CreateScope("SecurityInsightsTemplateResource.Update");
             scope.Start();
             try
             {
-                var response = _securityInsightsTemplateContentTemplateRestClient.Install(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _securityInsightsTemplateContentTemplateRestClient.CreateInstallRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsTemplateResource>(Response.FromValue(new SecurityInsightsTemplateResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _contentTemplateRestClient.CreateInstallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsTemplateData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsTemplateData> response = Response.FromValue(SecurityInsightsTemplateData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsTemplateResource> operation = new SecurityInsightsArmOperation<SecurityInsightsTemplateResource>(Response.FromValue(new SecurityInsightsTemplateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

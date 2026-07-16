@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 InferenceGroupTrackedResourceArmPaginatedResult result = InferenceGroupTrackedResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<InferenceGroupData>.FromValues((IReadOnlyList<InferenceGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<InferenceGroupData>.FromValues((IReadOnlyList<InferenceGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

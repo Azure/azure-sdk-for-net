@@ -29,11 +29,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of AgentSessionFiles. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AgentSessionFiles(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AgentSessionFiles(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -42,6 +44,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary>
         /// [Protocol Method] Uploads binary file content to the specified path in the session sandbox.
         /// The service stores the file relative to the session home directory and rejects payloads larger than 50 MB.
@@ -58,10 +63,20 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult UploadSessionFile(string agentName, string agentSessionId, string path, BinaryContent content, RequestOptions options = null)
+        internal virtual ClientResult Upload(string agentName, string agentSessionId, string path, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.Upload");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateUploadRequest(agentName, agentSessionId, path, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -80,10 +95,20 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> UploadSessionFileAsync(string agentName, string agentSessionId, string path, BinaryContent content, RequestOptions options = null)
+        internal virtual async Task<ClientResult> UploadAsync(string agentName, string agentSessionId, string path, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.Upload");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateUploadRequest(agentName, agentSessionId, path, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -96,9 +121,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<SessionFileWriteResponse> UploadSessionFile(string agentName, string agentSessionId, string path, BinaryData content, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<SessionFileWriteResponse> Upload(string agentName, string agentSessionId, string path, BinaryData content, CancellationToken cancellationToken = default)
         {
-            ClientResult result = UploadSessionFile(agentName, agentSessionId, path, BinaryContent.Create(content), cancellationToken.ToRequestOptions());
+            ClientResult result = Upload(agentName, agentSessionId, path, BinaryContent.Create(content), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((SessionFileWriteResponse)result, result.GetRawResponse());
         }
 
@@ -112,9 +137,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<SessionFileWriteResponse>> UploadSessionFileAsync(string agentName, string agentSessionId, string path, BinaryData content, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<SessionFileWriteResponse>> UploadAsync(string agentName, string agentSessionId, string path, BinaryData content, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await UploadSessionFileAsync(agentName, agentSessionId, path, BinaryContent.Create(content), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await UploadAsync(agentName, agentSessionId, path, BinaryContent.Create(content), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((SessionFileWriteResponse)result, result.GetRawResponse());
         }
 
@@ -133,10 +158,20 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DownloadSessionFile(string agentName, string agentSessionId, string path, RequestOptions options)
+        internal virtual ClientResult Download(string agentName, string agentSessionId, string path, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, agentSessionId, path, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.Download");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDownloadRequest(agentName, agentSessionId, path, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -154,10 +189,20 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DownloadSessionFileAsync(string agentName, string agentSessionId, string path, RequestOptions options)
+        internal virtual async Task<ClientResult> DownloadAsync(string agentName, string agentSessionId, string path, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, agentSessionId, path, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.Download");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDownloadRequest(agentName, agentSessionId, path, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -169,9 +214,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="path"> The file path to download from the sandbox, relative to the session home directory. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<BinaryData> DownloadSessionFile(string agentName, string agentSessionId, string path, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<BinaryData> Download(string agentName, string agentSessionId, string path, CancellationToken cancellationToken = default)
         {
-            ClientResult result = DownloadSessionFile(agentName, agentSessionId, path, cancellationToken.ToRequestOptions());
+            ClientResult result = Download(agentName, agentSessionId, path, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
@@ -184,9 +229,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="path"> The file path to download from the sandbox, relative to the session home directory. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<BinaryData>> DownloadSessionFileAsync(string agentName, string agentSessionId, string path, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<BinaryData>> DownloadAsync(string agentName, string agentSessionId, string path, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await DownloadSessionFileAsync(agentName, agentSessionId, path, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await DownloadAsync(agentName, agentSessionId, path, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
@@ -206,10 +251,20 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DeleteSessionFile(string agentName, string agentSessionId, string path, bool? recursive, RequestOptions options)
+        internal virtual ClientResult Delete(string agentName, string agentSessionId, string path, bool? recursive, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, agentSessionId, path, recursive, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.Delete");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteRequest(agentName, agentSessionId, path, recursive, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -228,10 +283,50 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteSessionFileAsync(string agentName, string agentSessionId, string path, bool? recursive, RequestOptions options)
+        internal virtual async Task<ClientResult> DeleteAsync(string agentName, string agentSessionId, string path, bool? recursive, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, agentSessionId, path, recursive, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentSessionFiles.Delete");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteRequest(agentName, agentSessionId, path, recursive, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the specified file or directory from the session sandbox.
+        /// When `recursive` is false, deleting a non-empty directory returns 409 Conflict.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
+        /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
+        /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult Delete(string agentName, string agentSessionId, string path, bool? recursive = default, CancellationToken cancellationToken = default)
+        {
+            return Delete(agentName, agentSessionId, path, recursive, cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary>
+        /// Deletes the specified file or directory from the session sandbox.
+        /// When `recursive` is false, deleting a non-empty directory returns 409 Conflict.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
+        /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
+        /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<ClientResult> DeleteAsync(string agentName, string agentSessionId, string path, bool? recursive = default, CancellationToken cancellationToken = default)
+        {
+            return await DeleteAsync(agentName, agentSessionId, path, recursive, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
     }
 }

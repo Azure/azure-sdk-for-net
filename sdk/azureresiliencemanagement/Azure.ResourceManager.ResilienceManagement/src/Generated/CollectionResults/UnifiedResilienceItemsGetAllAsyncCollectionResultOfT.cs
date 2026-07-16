@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ResilienceManagement
                     yield break;
                 }
                 UnifiedResilienceItemListResult result = UnifiedResilienceItemListResult.FromResponse(response);
-                yield return Page<UnifiedResilienceItemData>.FromValues((IReadOnlyList<UnifiedResilienceItemData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<UnifiedResilienceItemData>.FromValues((IReadOnlyList<UnifiedResilienceItemData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

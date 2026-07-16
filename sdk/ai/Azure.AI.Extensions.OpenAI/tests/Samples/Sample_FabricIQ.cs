@@ -11,7 +11,7 @@ using NUnit.Framework;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
-
+#pragma warning disable AAIP001
 public class Sample_FabricIQ : ProjectsOpenAITestBase
 {
     [Test]
@@ -35,7 +35,7 @@ public class Sample_FabricIQ : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_FabricIQ_Async
         FabricIQPreviewTool fabricIQTool = new(projectConnectionId: fabricIQProjectConnectionId)
         {
-            RequireApproval = BinaryData.FromObjectAsJson("never"),
+            RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
         };
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -84,7 +84,7 @@ public class Sample_FabricIQ : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_FabricIQ_Sync
         FabricIQPreviewTool fabricIQTool = new(projectConnectionId: fabricIQProjectConnectionId)
         {
-            RequireApproval = BinaryData.FromObjectAsJson("never"),
+            RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
         };
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {

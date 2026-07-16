@@ -6,48 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a SiteInstanceProcessModule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteInstanceProcessModuleResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSiteInstanceProcessModuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteInstanceProcessResource"/> using the GetSiteInstanceProcessModule method.
+    /// A class representing a SiteInstanceProcessModule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteInstanceProcessModuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteInstanceProcessResource"/> using the GetSiteInstanceProcessModules method.
     /// </summary>
     public partial class SiteInstanceProcessModuleResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SiteInstanceProcessModuleResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="instanceId"> The instanceId. </param>
-        /// <param name="processId"> The processId. </param>
-        /// <param name="baseAddress"> The baseAddress. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, string baseAddress)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _siteInstanceProcessModuleWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _siteInstanceProcessModuleWebAppsRestClient;
+        private readonly ClientDiagnostics _processModuleInfosClientDiagnostics;
+        private readonly ProcessModuleInfos _processModuleInfosRestClient;
         private readonly ProcessModuleInfoData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/instances/processes/modules";
 
-        /// <summary> Initializes a new instance of the <see cref="SiteInstanceProcessModuleResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteInstanceProcessModuleResource for mocking. </summary>
         protected SiteInstanceProcessModuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteInstanceProcessModuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteInstanceProcessModuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteInstanceProcessModuleResource(ArmClient client, ProcessModuleInfoData data) : this(client, data.Id)
@@ -56,71 +43,95 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteInstanceProcessModuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteInstanceProcessModuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteInstanceProcessModuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteInstanceProcessModuleWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string siteInstanceProcessModuleWebAppsApiVersion);
-            _siteInstanceProcessModuleWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteInstanceProcessModuleWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string siteInstanceProcessModuleApiVersion);
+            _processModuleInfosClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _processModuleInfosRestClient = new ProcessModuleInfos(_processModuleInfosClientDiagnostics, Pipeline, Endpoint, siteInstanceProcessModuleApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ProcessModuleInfoData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="instanceId"> The instanceId. </param>
+        /// <param name="processId"> The processId. </param>
+        /// <param name="baseAddress"> The baseAddress. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, string baseAddress)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetInstanceProcessModule</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProcessModuleInfos_GetInstanceProcessModule. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteInstanceProcessModuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteInstanceProcessModuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SiteInstanceProcessModuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleResource.Get");
+            using DiagnosticScope scope = _processModuleInfosClientDiagnostics.CreateScope("SiteInstanceProcessModuleResource.Get");
             scope.Start();
             try
             {
-                var response = await _siteInstanceProcessModuleWebAppsRestClient.GetInstanceProcessModuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _processModuleInfosRestClient.CreateGetInstanceProcessModuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ProcessModuleInfoData> response = Response.FromValue(ProcessModuleInfoData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteInstanceProcessModuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +145,41 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetInstanceProcessModule</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProcessModuleInfos_GetInstanceProcessModule. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteInstanceProcessModuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteInstanceProcessModuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteInstanceProcessModuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleResource.Get");
+            using DiagnosticScope scope = _processModuleInfosClientDiagnostics.CreateScope("SiteInstanceProcessModuleResource.Get");
             scope.Start();
             try
             {
-                var response = _siteInstanceProcessModuleWebAppsRestClient.GetInstanceProcessModule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _processModuleInfosRestClient.CreateGetInstanceProcessModuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ProcessModuleInfoData> response = Response.FromValue(ProcessModuleInfoData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteInstanceProcessModuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ListVirtualHubBgpConnectionResults result = ListVirtualHubBgpConnectionResults.FromResponse(response);
-                yield return Page<BgpConnectionData>.FromValues((IReadOnlyList<BgpConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BgpConnectionData>.FromValues((IReadOnlyList<BgpConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

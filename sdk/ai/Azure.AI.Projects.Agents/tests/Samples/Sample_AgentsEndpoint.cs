@@ -80,7 +80,7 @@ public class Sample_AgentsEndpoint : SamplesBase
             AgentEndpoint = config,
             AgentCard = card
         };
-        ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentObjectAsync(
+        ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentAsync(
             agentName: hostedAgentName,
             patchAgentOptions: patchOptions);
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
@@ -139,7 +139,7 @@ public class Sample_AgentsEndpoint : SamplesBase
             AgentEndpoint = config,
             AgentCard = card
         };
-        ProjectsAgentRecord patchedRecord = agentsClient.PatchAgentObject(
+        ProjectsAgentRecord patchedRecord = agentsClient.PatchAgent(
             agentName: hostedAgentName,
             patchAgentOptions: patchOptions);
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");

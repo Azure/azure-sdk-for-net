@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class NotificationContent : IUtf8JsonSerializable, IJsonModel<NotificationContent>
+    /// <summary> The request body which contain contact detail metadata. </summary>
+    public partial class NotificationContent : IJsonModel<NotificationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="NotificationContent"/> for deserialization. </summary>
+        internal NotificationContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NotificationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNotificationContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NotificationContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NotificationContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NotificationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NotificationContent IPersistableModel<NotificationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NotificationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="notificationContent"> The <see cref="NotificationContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NotificationContent notificationContent)
+        {
+            if (notificationContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(notificationContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NotificationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,19 +85,18 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("alertType"u8);
             writer.WriteStringValue(AlertType);
             if (Optional.IsCollectionDefined(EmailReceivers))
             {
                 writer.WritePropertyName("emailReceivers"u8);
                 writer.WriteStartArray();
-                foreach (var item in EmailReceivers)
+                foreach (MonitorEmailReceiver item in EmailReceivers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -50,7 +106,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("smsReceivers"u8);
                 writer.WriteStartArray();
-                foreach (var item in SmsReceivers)
+                foreach (MonitorSmsReceiver item in SmsReceivers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -60,7 +116,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("webhookReceivers"u8);
                 writer.WriteStartArray();
-                foreach (var item in WebhookReceivers)
+                foreach (MonitorWebhookReceiver item in WebhookReceivers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -70,7 +126,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("itsmReceivers"u8);
                 writer.WriteStartArray();
-                foreach (var item in ItsmReceivers)
+                foreach (MonitorItsmReceiver item in ItsmReceivers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -80,7 +136,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("azureAppPushReceivers"u8);
                 writer.WriteStartArray();
-                foreach (var item in AzureAppPushReceivers)
+                foreach (MonitorAzureAppPushReceiver item in AzureAppPushReceivers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -90,7 +146,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("automationRunbookReceivers"u8);
                 writer.WriteStartArray();
-                foreach (var item in AutomationRunbookReceivers)
+                foreach (MonitorAutomationRunbookReceiver item in AutomationRunbookReceivers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -100,7 +156,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("voiceReceivers"u8);
                 writer.WriteStartArray();
-                foreach (var item in VoiceReceivers)
+                foreach (MonitorVoiceReceiver item in VoiceReceivers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -110,7 +166,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("logicAppReceivers"u8);
                 writer.WriteStartArray();
-                foreach (var item in LogicAppReceivers)
+                foreach (MonitorLogicAppReceiver item in LogicAppReceivers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -120,7 +176,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("azureFunctionReceivers"u8);
                 writer.WriteStartArray();
-                foreach (var item in AzureFunctionReceivers)
+                foreach (MonitorAzureFunctionReceiver item in AzureFunctionReceivers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -130,7 +186,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("armRoleReceivers"u8);
                 writer.WriteStartArray();
-                foreach (var item in ArmRoleReceivers)
+                foreach (MonitorArmRoleReceiver item in ArmRoleReceivers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,7 +196,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("eventHubReceivers"u8);
                 writer.WriteStartArray();
-                foreach (var item in EventHubReceivers)
+                foreach (MonitorEventHubReceiver item in EventHubReceivers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -150,21 +206,21 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("incidentReceivers"u8);
                 writer.WriteStartArray();
-                foreach (var item in IncidentReceivers)
+                foreach (MonitorIncidentReceiver item in IncidentReceivers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -173,22 +229,27 @@ namespace Azure.ResourceManager.Monitor.Models
             }
         }
 
-        NotificationContent IJsonModel<NotificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NotificationContent IJsonModel<NotificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NotificationContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNotificationContent(document.RootElement, options);
         }
 
-        internal static NotificationContent DeserializeNotificationContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NotificationContent DeserializeNotificationContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -205,190 +266,188 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<MonitorAzureFunctionReceiver> azureFunctionReceivers = default;
             IList<MonitorArmRoleReceiver> armRoleReceivers = default;
             IList<MonitorEventHubReceiver> eventHubReceivers = default;
-            IList<IncidentReceiver> incidentReceivers = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<MonitorIncidentReceiver> incidentReceivers = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("alertType"u8))
+                if (prop.NameEquals("alertType"u8))
                 {
-                    alertType = property.Value.GetString();
+                    alertType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("emailReceivers"u8))
+                if (prop.NameEquals("emailReceivers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitorEmailReceiver> array = new List<MonitorEmailReceiver>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MonitorEmailReceiver.DeserializeMonitorEmailReceiver(item, options));
                     }
                     emailReceivers = array;
                     continue;
                 }
-                if (property.NameEquals("smsReceivers"u8))
+                if (prop.NameEquals("smsReceivers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitorSmsReceiver> array = new List<MonitorSmsReceiver>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MonitorSmsReceiver.DeserializeMonitorSmsReceiver(item, options));
                     }
                     smsReceivers = array;
                     continue;
                 }
-                if (property.NameEquals("webhookReceivers"u8))
+                if (prop.NameEquals("webhookReceivers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitorWebhookReceiver> array = new List<MonitorWebhookReceiver>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MonitorWebhookReceiver.DeserializeMonitorWebhookReceiver(item, options));
                     }
                     webhookReceivers = array;
                     continue;
                 }
-                if (property.NameEquals("itsmReceivers"u8))
+                if (prop.NameEquals("itsmReceivers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitorItsmReceiver> array = new List<MonitorItsmReceiver>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MonitorItsmReceiver.DeserializeMonitorItsmReceiver(item, options));
                     }
                     itsmReceivers = array;
                     continue;
                 }
-                if (property.NameEquals("azureAppPushReceivers"u8))
+                if (prop.NameEquals("azureAppPushReceivers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitorAzureAppPushReceiver> array = new List<MonitorAzureAppPushReceiver>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MonitorAzureAppPushReceiver.DeserializeMonitorAzureAppPushReceiver(item, options));
                     }
                     azureAppPushReceivers = array;
                     continue;
                 }
-                if (property.NameEquals("automationRunbookReceivers"u8))
+                if (prop.NameEquals("automationRunbookReceivers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitorAutomationRunbookReceiver> array = new List<MonitorAutomationRunbookReceiver>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MonitorAutomationRunbookReceiver.DeserializeMonitorAutomationRunbookReceiver(item, options));
                     }
                     automationRunbookReceivers = array;
                     continue;
                 }
-                if (property.NameEquals("voiceReceivers"u8))
+                if (prop.NameEquals("voiceReceivers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitorVoiceReceiver> array = new List<MonitorVoiceReceiver>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MonitorVoiceReceiver.DeserializeMonitorVoiceReceiver(item, options));
                     }
                     voiceReceivers = array;
                     continue;
                 }
-                if (property.NameEquals("logicAppReceivers"u8))
+                if (prop.NameEquals("logicAppReceivers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitorLogicAppReceiver> array = new List<MonitorLogicAppReceiver>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MonitorLogicAppReceiver.DeserializeMonitorLogicAppReceiver(item, options));
                     }
                     logicAppReceivers = array;
                     continue;
                 }
-                if (property.NameEquals("azureFunctionReceivers"u8))
+                if (prop.NameEquals("azureFunctionReceivers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitorAzureFunctionReceiver> array = new List<MonitorAzureFunctionReceiver>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MonitorAzureFunctionReceiver.DeserializeMonitorAzureFunctionReceiver(item, options));
                     }
                     azureFunctionReceivers = array;
                     continue;
                 }
-                if (property.NameEquals("armRoleReceivers"u8))
+                if (prop.NameEquals("armRoleReceivers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitorArmRoleReceiver> array = new List<MonitorArmRoleReceiver>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MonitorArmRoleReceiver.DeserializeMonitorArmRoleReceiver(item, options));
                     }
                     armRoleReceivers = array;
                     continue;
                 }
-                if (property.NameEquals("eventHubReceivers"u8))
+                if (prop.NameEquals("eventHubReceivers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitorEventHubReceiver> array = new List<MonitorEventHubReceiver>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MonitorEventHubReceiver.DeserializeMonitorEventHubReceiver(item, options));
                     }
                     eventHubReceivers = array;
                     continue;
                 }
-                if (property.NameEquals("incidentReceivers"u8))
+                if (prop.NameEquals("incidentReceivers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<IncidentReceiver> array = new List<IncidentReceiver>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<MonitorIncidentReceiver> array = new List<MonitorIncidentReceiver>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IncidentReceiver.DeserializeIncidentReceiver(item, options));
+                        array.Add(MonitorIncidentReceiver.DeserializeMonitorIncidentReceiver(item, options));
                     }
                     incidentReceivers = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NotificationContent(
                 alertType,
                 emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>(),
@@ -402,39 +461,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>(),
                 armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>(),
                 eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>(),
-                incidentReceivers ?? new ChangeTrackingList<IncidentReceiver>(),
-                serializedAdditionalRawData);
+                incidentReceivers ?? new ChangeTrackingList<MonitorIncidentReceiver>(),
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<NotificationContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NotificationContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NotificationContent IPersistableModel<NotificationContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNotificationContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NotificationContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NotificationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

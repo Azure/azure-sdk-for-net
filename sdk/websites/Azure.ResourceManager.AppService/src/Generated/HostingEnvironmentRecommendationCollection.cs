@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -21,51 +23,49 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class HostingEnvironmentRecommendationCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _hostingEnvironmentRecommendationRecommendationsClientDiagnostics;
-        private readonly RecommendationsRestOperations _hostingEnvironmentRecommendationRecommendationsRestClient;
+        private readonly ClientDiagnostics _recommendationRulesClientDiagnostics;
+        private readonly RecommendationRules _recommendationRulesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentRecommendationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HostingEnvironmentRecommendationCollection for mocking. </summary>
         protected HostingEnvironmentRecommendationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentRecommendationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostingEnvironmentRecommendationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HostingEnvironmentRecommendationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hostingEnvironmentRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentRecommendationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HostingEnvironmentRecommendationResource.ResourceType, out string hostingEnvironmentRecommendationRecommendationsApiVersion);
-            _hostingEnvironmentRecommendationRecommendationsRestClient = new RecommendationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hostingEnvironmentRecommendationRecommendationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HostingEnvironmentRecommendationResource.ResourceType, out string hostingEnvironmentRecommendationApiVersion);
+            _recommendationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentRecommendationResource.ResourceType.Namespace, Diagnostics);
+            _recommendationRulesRestClient = new RecommendationRules(_recommendationRulesClientDiagnostics, Pipeline, Endpoint, hostingEnvironmentRecommendationApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != AppServiceEnvironmentResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppServiceEnvironmentResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppServiceEnvironmentResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Get a recommendation rule for an app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecommendationRules_GetRuleDetailsByHostingEnvironment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentRecommendationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -73,19 +73,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<HostingEnvironmentRecommendationResource>> GetAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<HostingEnvironmentRecommendationResource>> GetAsync(string name, bool? updateSeen = default, string recommendationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Get");
+            using DiagnosticScope scope = _recommendationRulesClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hostingEnvironmentRecommendationRecommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recommendationRulesRestClient.CreateGetRuleDetailsByHostingEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RecommendationRuleData> response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HostingEnvironmentRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -99,20 +107,16 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get a recommendation rule for an app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecommendationRules_GetRuleDetailsByHostingEnvironment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentRecommendationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,19 +124,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<HostingEnvironmentRecommendationResource> Get(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<HostingEnvironmentRecommendationResource> Get(string name, bool? updateSeen = default, string recommendationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Get");
+            using DiagnosticScope scope = _recommendationRulesClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Get");
             scope.Start();
             try
             {
-                var response = _hostingEnvironmentRecommendationRecommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recommendationRulesRestClient.CreateGetRuleDetailsByHostingEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RecommendationRuleData> response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HostingEnvironmentRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,20 +158,16 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecommendationRules_GetRuleDetailsByHostingEnvironment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentRecommendationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,17 +175,35 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string name, bool? updateSeen = default, string recommendationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Exists");
+            using DiagnosticScope scope = _recommendationRulesClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hostingEnvironmentRecommendationRecommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recommendationRulesRestClient.CreateGetRuleDetailsByHostingEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RecommendationRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RecommendationRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +217,16 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecommendationRules_GetRuleDetailsByHostingEnvironment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentRecommendationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,17 +234,35 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> Exists(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string name, bool? updateSeen = default, string recommendationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Exists");
+            using DiagnosticScope scope = _recommendationRulesClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hostingEnvironmentRecommendationRecommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recommendationRulesRestClient.CreateGetRuleDetailsByHostingEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RecommendationRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RecommendationRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -236,20 +276,16 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecommendationRules_GetRuleDetailsByHostingEnvironment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentRecommendationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -257,19 +293,39 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<NullableResponse<HostingEnvironmentRecommendationResource>> GetIfExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<HostingEnvironmentRecommendationResource>> GetIfExistsAsync(string name, bool? updateSeen = default, string recommendationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.GetIfExists");
+            using DiagnosticScope scope = _recommendationRulesClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _hostingEnvironmentRecommendationRecommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recommendationRulesRestClient.CreateGetRuleDetailsByHostingEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RecommendationRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RecommendationRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HostingEnvironmentRecommendationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HostingEnvironmentRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -283,20 +339,16 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecommendationRules_GetRuleDetailsByHostingEnvironment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostingEnvironmentRecommendationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,19 +356,39 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual NullableResponse<HostingEnvironmentRecommendationResource> GetIfExists(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<HostingEnvironmentRecommendationResource> GetIfExists(string name, bool? updateSeen = default, string recommendationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.GetIfExists");
+            using DiagnosticScope scope = _recommendationRulesClientDiagnostics.CreateScope("HostingEnvironmentRecommendationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _hostingEnvironmentRecommendationRecommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recommendationRulesRestClient.CreateGetRuleDetailsByHostingEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RecommendationRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RecommendationRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HostingEnvironmentRecommendationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HostingEnvironmentRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

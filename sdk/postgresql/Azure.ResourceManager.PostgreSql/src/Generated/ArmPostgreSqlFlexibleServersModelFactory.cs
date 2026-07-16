@@ -474,17 +474,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="dataEncryption"> Data encryption properties of a server. </param>
         /// <param name="availabilityZone"> Availability zone of a server. </param>
         /// <param name="createMode"> Update mode of an existing server. </param>
+        /// <param name="sourceServerResourceId"> Identifier of the server to be used as the source of the new server. </param>
         /// <param name="replicationRole"> Role of the server in a replication set. </param>
         /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
         /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
         /// <param name="cluster"> Cluster properties of a server. </param>
         /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerPatch"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerPatch PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku = default, PostgreSqlFlexibleServerUserAssignedIdentity identity = default, string administratorLogin = default, string administratorLoginPassword = default, PostgreSqlFlexibleServerVersion? version = default, PostgreSqlFlexibleServerStorage storage = default, PostgreSqlFlexibleServerBackupProperties backup = default, PostgreSqlFlexibleServerHighAvailability highAvailability = default, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = default, PostgreSqlFlexibleServerAuthConfig authConfig = default, PostgreSqlFlexibleServerDataEncryption dataEncryption = default, string availabilityZone = default, PostgreSqlFlexibleServerCreateModeForUpdate? createMode = default, PostgreSqlFlexibleServerReplicationRole? replicationRole = default, PostgreSqlFlexibleServersReplica replica = default, PostgreSqlFlexibleServerNetwork network = default, PostgreSqlFlexibleServerClusterProperties cluster = default, IDictionary<string, string> tags = default)
+        public static PostgreSqlFlexibleServerPatch PostgreSqlFlexibleServerPatch(PostgreSqlFlexibleServerSku sku = default, PostgreSqlFlexibleServerUserAssignedIdentity identity = default, string administratorLogin = default, string administratorLoginPassword = default, PostgreSqlFlexibleServerVersion? version = default, PostgreSqlFlexibleServerStorage storage = default, PostgreSqlFlexibleServerBackupProperties backup = default, PostgreSqlFlexibleServerHighAvailability highAvailability = default, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = default, PostgreSqlFlexibleServerAuthConfig authConfig = default, PostgreSqlFlexibleServerDataEncryption dataEncryption = default, string availabilityZone = default, PostgreSqlFlexibleServerCreateModeForUpdate? createMode = default, ResourceIdentifier sourceServerResourceId = default, PostgreSqlFlexibleServerReplicationRole? replicationRole = default, PostgreSqlFlexibleServersReplica replica = default, PostgreSqlFlexibleServerNetwork network = default, PostgreSqlFlexibleServerClusterProperties cluster = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PostgreSqlFlexibleServerPatch(sku, identity, administratorLogin is null && administratorLoginPassword is null && version is null && storage is null && backup is null && highAvailability is null && maintenanceWindow is null && authConfig is null && dataEncryption is null && availabilityZone is null && createMode is null && replicationRole is null && replica is null && network is null && cluster is null ? default : new ServerPropertiesForPatch(
+            return new PostgreSqlFlexibleServerPatch(sku, identity, administratorLogin is null && administratorLoginPassword is null && version is null && storage is null && backup is null && highAvailability is null && maintenanceWindow is null && authConfig is null && dataEncryption is null && availabilityZone is null && createMode is null && sourceServerResourceId is null && replicationRole is null && replica is null && network is null && cluster is null ? default : new ServerPropertiesForPatch(
                 administratorLogin,
                 administratorLoginPassword,
                 version,
@@ -496,6 +497,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 dataEncryption,
                 availabilityZone,
                 createMode,
+                sourceServerResourceId,
                 replicationRole,
                 replica,
                 network,

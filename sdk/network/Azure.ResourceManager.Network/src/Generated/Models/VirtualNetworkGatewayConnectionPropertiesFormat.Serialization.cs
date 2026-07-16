@@ -200,31 +200,31 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableBgp"u8);
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (Optional.IsCollectionDefined(GatewayCustomBgpIpAddresses))
+            if (Optional.IsCollectionDefined(GatewayCustomBgpIPAddresses))
             {
                 writer.WritePropertyName("gatewayCustomBgpIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (GatewayCustomBgpIPAddressIPConfiguration item in GatewayCustomBgpIpAddresses)
+                foreach (GatewayCustomBgpIPAddressIPConfiguration item in GatewayCustomBgpIPAddresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UseLocalAzureIpAddress))
+            if (Optional.IsDefined(UseLocalAzureIPAddress))
             {
                 writer.WritePropertyName("useLocalAzureIpAddress"u8);
-                writer.WriteBooleanValue(UseLocalAzureIpAddress.Value);
+                writer.WriteBooleanValue(UseLocalAzureIPAddress.Value);
             }
             if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
             {
                 writer.WritePropertyName("usePolicyBasedTrafficSelectors"u8);
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
-            if (Optional.IsCollectionDefined(IpsecPolicies))
+            if (Optional.IsCollectionDefined(IPsecPolicies))
             {
                 writer.WritePropertyName("ipsecPolicies"u8);
                 writer.WriteStartArray();
-                foreach (IPsecPolicy item in IpsecPolicies)
+                foreach (IPsecPolicy item in IPsecPolicies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -336,10 +336,10 @@ namespace Azure.ResourceManager.Network.Models
             long? ingressBytesTransferred = default;
             NetworkSubResource peer = default;
             bool? enableBgp = default;
-            IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIpAddresses = default;
-            bool? useLocalAzureIpAddress = default;
+            IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses = default;
+            bool? useLocalAzureIPAddress = default;
             bool? usePolicyBasedTrafficSelectors = default;
-            IList<IPsecPolicy> ipsecPolicies = default;
+            IList<IPsecPolicy> iPsecPolicies = default;
             IList<TrafficSelectorPolicy> trafficSelectorPolicies = default;
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(GatewayCustomBgpIPAddressIPConfiguration.DeserializeGatewayCustomBgpIPAddressIPConfiguration(item, options));
                     }
-                    gatewayCustomBgpIpAddresses = array;
+                    gatewayCustomBgpIPAddresses = array;
                     continue;
                 }
                 if (prop.NameEquals("useLocalAzureIpAddress"u8))
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    useLocalAzureIpAddress = prop.Value.GetBoolean();
+                    useLocalAzureIPAddress = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("usePolicyBasedTrafficSelectors"u8))
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
                     }
-                    ipsecPolicies = array;
+                    iPsecPolicies = array;
                     continue;
                 }
                 if (prop.NameEquals("trafficSelectorPolicies"u8))
@@ -688,10 +688,10 @@ namespace Azure.ResourceManager.Network.Models
                 ingressBytesTransferred,
                 peer,
                 enableBgp,
-                gatewayCustomBgpIpAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(),
-                useLocalAzureIpAddress,
+                gatewayCustomBgpIPAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(),
+                useLocalAzureIPAddress,
                 usePolicyBasedTrafficSelectors,
-                ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
+                iPsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
                 trafficSelectorPolicies ?? new ChangeTrackingList<TrafficSelectorPolicy>(),
                 resourceGuid,
                 provisioningState,

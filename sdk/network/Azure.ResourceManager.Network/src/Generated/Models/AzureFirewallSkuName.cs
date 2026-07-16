@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
         /// <summary> AZFW_VNet. </summary>
-        private const string AZFWVNetValue = "AZFW_VNet";
+        private const string AzfwVnetValue = "AZFW_VNet";
         /// <summary> AZFW_Hub. </summary>
-        private const string AZFWHubValue = "AZFW_Hub";
+        private const string AzfwHubValue = "AZFW_Hub";
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> AZFW_VNet. </summary>
-        public static AzureFirewallSkuName AZFWVNet { get; } = new AzureFirewallSkuName(AZFWVNetValue);
+        public static AzureFirewallSkuName AzfwVnet { get; } = new AzureFirewallSkuName(AzfwVnetValue);
 
         /// <summary> AZFW_Hub. </summary>
-        public static AzureFirewallSkuName AZFWHub { get; } = new AzureFirewallSkuName(AZFWHubValue);
+        public static AzureFirewallSkuName AzfwHub { get; } = new AzureFirewallSkuName(AzfwHubValue);
 
         /// <summary> Determines if two <see cref="AzureFirewallSkuName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.OracleDatabase
                     yield break;
                 }
                 ExascaleDbNodeListResult result = ExascaleDbNodeListResult.FromResponse(response);
-                yield return Page<ExascaleDBNodeData>.FromValues((IReadOnlyList<ExascaleDBNodeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ExascaleDBNodeData>.FromValues((IReadOnlyList<ExascaleDBNodeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -6,272 +6,105 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal partial class VerifiedPartnersRestOperations
+    internal partial class VerifiedPartners
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of VerifiedPartnersRestOperations. </summary>
+        /// <summary> Initializes a new instance of VerifiedPartners for mocking. </summary>
+        protected VerifiedPartners()
+        {
+        }
+
+        /// <summary> Initializes a new instance of VerifiedPartners. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public VerifiedPartnersRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal VerifiedPartners(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-04-01-preview";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string verifiedPartnerName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string verifiedPartnerName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.EventGrid/verifiedPartners/", false);
             uri.AppendPath(verifiedPartnerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string verifiedPartnerName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.EventGrid/verifiedPartners/", false);
-            uri.AppendPath(verifiedPartnerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get properties of a verified partner. </summary>
-        /// <param name="verifiedPartnerName"> Name of the verified partner. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VerifiedPartnerData>> GetAsync(string verifiedPartnerName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetAllRequest(string filter, int? top, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
-
-            using var message = CreateGetRequest(verifiedPartnerName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VerifiedPartnerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = VerifiedPartnerData.DeserializeVerifiedPartnerData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((VerifiedPartnerData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get properties of a verified partner. </summary>
-        /// <param name="verifiedPartnerName"> Name of the verified partner. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="verifiedPartnerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VerifiedPartnerData> Get(string verifiedPartnerName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
-
-            using var message = CreateGetRequest(verifiedPartnerName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VerifiedPartnerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = VerifiedPartnerData.DeserializeVerifiedPartnerData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((VerifiedPartnerData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListRequestUri(string filter, int? top)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.EventGrid/verifiedPartners", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
             if (top != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string filter, int? top)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.EventGrid/verifiedPartners", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get a list of all verified partners. </summary>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<VerifiedPartnersListResult>> ListAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string filter, int? top, RequestContext context)
         {
-            using var message = CreateListRequest(filter, top);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        VerifiedPartnersListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = VerifiedPartnersListResult.DeserializeVerifiedPartnersListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Get a list of all verified partners. </summary>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<VerifiedPartnersListResult> List(string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListRequest(filter, top);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        VerifiedPartnersListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = VerifiedPartnersListResult.DeserializeVerifiedPartnersListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string filter, int? top)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string filter, int? top)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> Get a list of all verified partners. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<VerifiedPartnersListResult>> ListNextPageAsync(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListNextPageRequest(nextLink, filter, top);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VerifiedPartnersListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = VerifiedPartnersListResult.DeserializeVerifiedPartnersListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a list of all verified partners. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<VerifiedPartnersListResult> ListNextPage(string nextLink, string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListNextPageRequest(nextLink, filter, top);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VerifiedPartnersListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = VerifiedPartnersListResult.DeserializeVerifiedPartnersListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }
