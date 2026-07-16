@@ -4,29 +4,41 @@ Tracks [#61063](https://github.com/Azure/azure-sdk-for-net/issues/61063).
 
 ## Purpose
 
-When an existing management-plane library is migrated from AutoRest/Swagger generation to
-TypeSpec generation, the newly generated public API surface almost never matches the
-previously shipped surface exactly. To avoid breaking changes, migration authors hand-write
-compatibility code under each package's `src/Custom/` folder.
+When an existing library — **management-plane** (`Azure.ResourceManager.*`) or **data-plane**
+(`Azure.*` client libraries) — is migrated from AutoRest/Swagger generation to TypeSpec
+generation, the newly generated public API surface almost never matches the previously shipped
+surface exactly. To avoid breaking changes, migration authors hand-write compatibility code
+under each package's `src/Custom/` folder.
 
-This document is an investigation of that hand-written back-compat code. It catalogs the
-recurring **scenarios**, and for each one records whether the generator could produce the
-same code automatically. Scenarios that the generator *can* automate are documented here as
-**valid cases** — candidates for a generator feature or TypeSpec customization so that future
-migrations do not need to hand-write them.
+This document is an investigation of that hand-written back-compat code across **both planes**.
+It catalogs the recurring **scenarios**, and for each one records whether the generator could
+produce the same code automatically. Scenarios that the generator *can* automate are documented
+here as **valid cases** — candidates for a generator feature or TypeSpec customization so that
+future migrations do not need to hand-write them.
+
+The taxonomy in [Scenarios](#scenarios) was built from the management-plane survey; the
+[Data-plane libraries](#data-plane-libraries) section then cross-checks the same scenarios
+against data-plane custom code and records the data-plane–specific automation gaps.
 
 ## Scope and method
 
-- **In scope:** code under `sdk/**/src/Custom/` in management-plane libraries
-  (`Azure.ResourceManager.*`) that already have a `tsp-location.yaml` (i.e. TypeSpec-migrated).
-  84 such packages were surveyed.
-- **Out of scope:** generated code under `Generated/`, data-plane libraries, and provisioning
+- **In scope:** hand-written back-compat code under `sdk/**/src/Custom/` in TypeSpec-migrated
+  libraries (those that already have a `tsp-location.yaml`):
+  - **Management plane** — `Azure.ResourceManager.*`; 84 such packages surveyed. This is the
+    primary source for the scenario taxonomy below.
+  - **Data plane** — `Azure.*` client libraries; 14 such packages surveyed. Covered in the
+    [Data-plane libraries](#data-plane-libraries) section.
+- **Out of scope:** generated code under `Generated/`, non-migrated libraries, and provisioning
   libraries (`Azure.Provisioning.*`). Provisioning has its own compatibility tracking, e.g.
   enum shims in [#60442](https://github.com/Azure/azure-sdk-for-net/issues/60442).
 - **Method:** every distinct *kind* of hand-written customization under `src/Custom/` was
   identified and, for each, we assessed whether it is deterministic enough to be emitted by
   the generator (given information the generator already has, or given the previous public API
-  contract that CI already tracks for breaking-change detection).
+  contract that CI already tracks for breaking-change detection). The management-plane
+  (`Azure.Generator.Management`) and data-plane (`Azure.Generator`) generators share the same
+  underlying `Microsoft.TypeSpec.Generator` customization primitives (`[CodeGenType]`,
+  `[CodeGenMember]`, `[CodeGenSuppress]`, `[CodeGenSerialization]`), so the same scenarios
+  recur in both planes.
 
 The customization mechanisms observed are: `[CodeGenType]`, `[CodeGenMember]`,
 `[CodeGenSuppress]` / `[assembly: CodeGenSuppressType]`, `[CodeGenSerialization]`,
@@ -36,7 +48,7 @@ model-factory overloads, and hand-written enum / extensible-enum types.
 
 ## What the generator already automates today
 
-Several back-compat behaviors are *already* produced by the management generator, so the
+Several back-compat behaviors are *already* produced by the **management** generator, so the
 categories below focus on what still requires hand-written custom code. Existing automation
 for reference:
 
@@ -54,6 +66,13 @@ for reference:
 
 The scenarios below name the specific *gaps* where custom code is still required, and whether
 each gap is a valid candidate for further automation.
+
+The **data-plane** generator (`Azure.Generator`) automates far less of this today — notably it
+has *no* known-type renaming, inheritance-restoration, or model-factory backward-compat
+overload emission. It does rename the model factory itself
+(`generator/Azure.Generator/src/Visitors/ModelFactoryRenamerVisitor.cs`), which is actually the
+*cause* of several data-plane shims rather than a back-compat helper. The
+[Data-plane libraries](#data-plane-libraries) section details these gaps.
 
 ## Legend
 
@@ -327,6 +346,122 @@ the spec).
 
 ---
 
+## Data-plane libraries
+
+The 14 TypeSpec-migrated data-plane packages with `src/Custom/` were surveyed the same way.
+The **same scenario taxonomy applies** — data-plane back-compat code is dominated by type
+renames, model-factory rename shims, re-added extensible enums, property-type shims,
+parameter-type overloads, and restored constructors. The clearest example is
+`Azure.AI.Agents.Persistent`, which collects its shims in a dedicated `src/Custom/BackwardCompat/`
+folder; the patterns below also recur across `Azure.AI.Extensions.OpenAI`,
+`Azure.AI.AgentServer.Responses`, `Azure.AI.Projects.Agents`, `Azure.Analytics.Purview.DataMap`,
+`Azure.Compute.Batch`, and `Azure.AI.Vision.ImageAnalysis`.
+
+The key structural difference from the management plane is that the data-plane generator
+(`Azure.Generator`) does **not** yet ship the back-compat automation the management generator
+has (no `NameVisitor` known-type renaming, no `ModelFactoryVisitor` overloads, no
+inheritance-restoration), so scenarios that are already automated for management libraries are
+still hand-written for data-plane libraries.
+
+### D1. Public type rename via `[CodeGenType]` — ✅ Automatable (same as scenario 1)
+
+**What the custom code does:** applies `[CodeGenType("NewGeneratedName")]` to an empty partial
+so a generated type keeps the previously shipped name.
+
+**Citations:**
+- `sdk/ai/Azure.AI.Extensions.OpenAI/src/Custom/CodeGenStubs.cs:9` —
+  `[CodeGenType("WorkflowActionOutputItemStatus")] … AgentWorkflowPreviewActionStatus`
+- `sdk/ai/Azure.AI.Extensions.OpenAI/src/Custom/CodeGenStubs.cs:10-12` — three more rename stubs.
+
+**Automation:** identical to management scenario 1 — deterministic given the previous
+public contract. The data-plane generator has no known-type/rename visitor at all, so this is
+a net-new automation opportunity for `Azure.Generator`.
+
+### D2. Model-factory rename back-compat shims — ✅ Automatable (same as scenarios 5 / 13)
+
+**What the custom code does:** the generated model factory is renamed (by
+`ModelFactoryRenamerVisitor`) from the previously shipped `*ModelFactory` name to
+`{ResourceProviderName}ModelFactory`, so a hand-written static partial restores the old factory
+name and forwards each method to the new class.
+
+**Citations:**
+- `sdk/ai/Azure.AI.Agents.Persistent/src/Custom/BackwardCompat/ModelFactoryShims.cs:17,24-25` —
+  `PersistentAgentsModelFactory` forwards to `AgentsPersistentModelFactory`.
+- `sdk/agentserver/Azure.AI.AgentServer.Responses/src/Custom/ResponsesModelFactory.cs` and
+  `AgentServerResponsesModelFactory.cs` — old/new factory pair.
+- Similar model-factory renames are handled with `[CodeGenType]` on the factory itself in
+  `Azure.Analytics.Purview.DataMap` (`AnalyticsPurviewDataMapModelFactory.cs:8` —
+  `[CodeGenType("PurviewDataMapModelFactory")]`), `Azure.Compute.Batch`
+  (`ComputeBatchModelFactory.cs:9` — `[CodeGenType("BatchModelFactory")]`), and
+  `Azure.AI.Vision.ImageAnalysis` (`AIVisionImageAnalysisModelFactory.cs:8` —
+  `[CodeGenType("VisionImageAnalysisModelFactory")]`); `Azure.AI.Projects.Agents`
+  (`ProjectsAgentsModelFactory.cs`) hand-writes a factory partial.
+
+**Automation:** deterministic. `ModelFactoryRenamerVisitor.cs:18` already knows both the old
+name (the type's original name) and the new name, so the generator could emit the hidden
+forwarding overloads under the old name automatically — the same capability
+`Azure.Generator.Management/src/Visitors/ModelFactoryVisitor.cs` already provides for management
+libraries. This is the single highest-value data-plane gap because the rename is generator-caused.
+
+### D3. Re-add internalized / removed extensible enums — ✅ Automatable (same as scenario 6)
+
+**What the custom code does:** re-declares extensible-enum structs that shipped in the prior GA
+but the new emitter internalized or dropped.
+
+**Citations:**
+- `sdk/ai/Azure.AI.Agents.Persistent/src/Custom/BackwardCompat/MissingTypes.cs:12,38,64,90,116,142,168,194`
+  — eight re-added `readonly partial struct` extensible enums (`AzureFunctionBindingType`, …).
+
+**Automation:** deterministic given the previous contract (the shipped members are known);
+mirrors management scenario 6.
+
+### D4. Property-type shims via `[CodeGenSuppress]` + restore — 🟡 Partially (same as scenario 12)
+
+**What the custom code does:** suppresses a generated `string` property and restores the
+previously shipped extensible-enum-typed property.
+
+**Citations:**
+- `sdk/ai/Azure.AI.Agents.Persistent/src/Custom/BackwardCompat/PropertyShims.cs:25-32` —
+  `[CodeGenSuppress("Type")]` + restored `AzureFunctionBindingType Type` property.
+
+**Automation:** the suppression + property skeleton is boilerplate the generator could emit, but
+the string→enum mapping is a per-property hint. Same verdict as management scenario 12.
+
+### D5. Parameter-type back-compat overloads — 🟡 Partially (same as scenarios 5 / 11)
+
+**What the custom code does:** the new generator changed a parameter type (e.g.
+`IReadOnlyDictionary<string,string>` → `IDictionary<string,string>`); a hidden overload keeps
+the old signature and delegates.
+
+**Citations:**
+- `sdk/ai/Azure.AI.Agents.Persistent/src/Custom/BackwardCompat/ClientMethodShims.cs:6,35-53` —
+  `CreateAgent`/`CreateAgentAsync` overloads accepting the old `IReadOnlyDictionary` signature.
+
+**Automation:** the generator can emit the overload skeleton, but the parameter-type adaptation
+(the `ToDict` conversion) is a per-parameter hint. Same verdict as management scenario 11.
+
+### D6. Restored constructor signatures — 🟡 Partially (same as scenario 14)
+
+**What the custom code does:** suppresses the generated private-protected discriminator ctor and
+restores the previously shipped parameterless `protected` constructor.
+
+**Citations:**
+- `sdk/ai/Azure.AI.Agents.Persistent/src/Custom/BackwardCompat/AbstractTypeConstructors.cs:14-17`
+  — `[CodeGenSuppress("MessageContent")]` + `protected MessageContent()`.
+
+**Automation:** the suppression + ctor skeleton is boilerplate, but the delegated argument
+(`this((string)null)` vs `this(default(MessageBlockType))`) is a per-type hint. Same verdict as
+management scenario 14.
+
+**Data-plane takeaway:** every data-plane back-compat scenario observed maps onto an existing
+management-plane scenario; none are unique to the data plane. The distinguishing fact is that
+`Azure.Generator` has not yet adopted the automation `Azure.Generator.Management` already ships,
+so D1–D3 (renames, model-factory forwarders, re-added enums) are the highest-value data-plane
+automation targets, and D2 is especially compelling because the model-factory rename is
+generator-caused.
+
+---
+
 ## Summary
 
 | # | Scenario | Mechanism | Automatable? |
@@ -362,3 +497,12 @@ per-item hint (ownership allowlist, flatten path, or type-conversion rule) is re
 
 Scenarios 16–18 remain hand-written because they encode domain logic or breaking-change policy
 that cannot be derived from the spec.
+
+**Data plane:** the data-plane survey (see [Data-plane libraries](#data-plane-libraries))
+surfaced no scenarios outside this taxonomy — every data-plane shift maps onto one of the
+scenarios above (D1→1, D2→5/13, D3→6, D4→12, D5→5/11, D6→14). The difference is coverage: the
+data-plane generator (`Azure.Generator`) has not yet adopted the management generator's
+automation, so renames (D1), model-factory forwarders (D2), and re-added enums (D3) are still
+hand-written there and are the highest-value data-plane automation targets. D2 is the strongest
+candidate because the model-factory rename is generator-caused
+(`Azure.Generator/src/Visitors/ModelFactoryRenamerVisitor.cs`).
