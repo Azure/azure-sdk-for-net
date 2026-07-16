@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
-using Azure.Core;
 
 namespace Azure.AI.Projects
 {
@@ -1751,31 +1750,6 @@ namespace Azure.AI.Projects
         public static DeleteMemoryStoreResponse DeleteMemoryStoreResponse(string name = default, bool isDeleted = default)
         {
             return new DeleteMemoryStoreResponse("memory_store.deleted", name, isDeleted, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Input text. </summary>
-        /// <param name="text"> The text input to the model. </param>
-        /// <returns> A new <see cref="Projects.InputTextContentParam"/> instance for mocking. </returns>
-        public static InputTextContentParam InputTextContentParam(string text = default)
-        {
-            return new InputTextContentParam("input_text", text, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Input file. </summary>
-        /// <param name="fileId"></param>
-        /// <param name="filename"></param>
-        /// <param name="fileData"></param>
-        /// <param name="fileUri"></param>
-        /// <returns> A new <see cref="Projects.InputFileContentParam"/> instance for mocking. </returns>
-        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUri = default)
-        {
-            return new InputFileContentParam(
-                "input_file",
-                fileId,
-                filename,
-                fileData,
-                fileUri,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Memory search response. </summary>

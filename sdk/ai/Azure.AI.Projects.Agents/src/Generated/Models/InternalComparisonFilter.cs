@@ -8,7 +8,8 @@ using System.Text.Json;
 
 namespace OpenAI
 {
-    internal partial class InternalComparisonFilter
+    /// <summary> Comparison Filter. </summary>
+    public partial class InternalComparisonFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
