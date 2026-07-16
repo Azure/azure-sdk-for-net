@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Role assignment create parameters. </summary>
     public partial class RoleAssignmentCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RoleAssignmentCreateOrUpdateContent"/>. </summary>
         /// <param name="roleDefinitionId"> The role definition ID. </param>
@@ -54,81 +26,140 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
-            RoleDefinitionId = roleDefinitionId;
-            PrincipalId = principalId;
+            Properties = new RoleAssignmentProperties(roleDefinitionId, principalId);
         }
 
         /// <summary> Initializes a new instance of <see cref="RoleAssignmentCreateOrUpdateContent"/>. </summary>
-        /// <param name="scope"> The role assignment scope. </param>
-        /// <param name="roleDefinitionId"> The role definition ID. </param>
-        /// <param name="principalId"> The principal ID. </param>
-        /// <param name="principalType"> The principal type of the assigned principal ID. </param>
-        /// <param name="description"> Description of role assignment. </param>
-        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
-        /// <param name="conditionVersion"> Version of the condition. Currently the only accepted value is '2.0'. </param>
-        /// <param name="createdOn"> Time it was created. </param>
-        /// <param name="updatedOn"> Time it was updated. </param>
-        /// <param name="createdBy"> Id of the user who created the assignment. </param>
-        /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
-        /// <param name="delegatedManagedIdentityResourceId"> Id of the delegated managed identity resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoleAssignmentCreateOrUpdateContent(string scope, ResourceIdentifier roleDefinitionId, Guid principalId, RoleManagementPrincipalType? principalType, string description, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string createdBy, string updatedBy, ResourceIdentifier delegatedManagedIdentityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Role assignment properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RoleAssignmentCreateOrUpdateContent(RoleAssignmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Scope = scope;
-            RoleDefinitionId = roleDefinitionId;
-            PrincipalId = principalId;
-            PrincipalType = principalType;
-            Description = description;
-            Condition = condition;
-            ConditionVersion = conditionVersion;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            CreatedBy = createdBy;
-            UpdatedBy = updatedBy;
-            DelegatedManagedIdentityResourceId = delegatedManagedIdentityResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoleAssignmentCreateOrUpdateContent"/> for deserialization. </summary>
-        internal RoleAssignmentCreateOrUpdateContent()
-        {
-        }
+        /// <summary> Role assignment properties. </summary>
+        [WirePath("properties")]
+        internal RoleAssignmentProperties Properties { get; }
 
         /// <summary> The role assignment scope. </summary>
         [WirePath("properties.scope")]
-        public string Scope { get; }
+        public string Scope
+        {
+            get
+            {
+                return Properties.Scope;
+            }
+        }
+
         /// <summary> The role definition ID. </summary>
         [WirePath("properties.roleDefinitionId")]
-        public ResourceIdentifier RoleDefinitionId { get; }
+        public ResourceIdentifier RoleDefinitionId
+        {
+            get
+            {
+                return Properties.RoleDefinitionId;
+            }
+        }
+
         /// <summary> The principal ID. </summary>
         [WirePath("properties.principalId")]
-        public Guid PrincipalId { get; }
+        public Guid PrincipalId
+        {
+            get
+            {
+                return Properties.PrincipalId;
+            }
+        }
+
         /// <summary> The principal type of the assigned principal ID. </summary>
         [WirePath("properties.principalType")]
-        public RoleManagementPrincipalType? PrincipalType { get; set; }
+        public RoleManagementPrincipalType? PrincipalType
+        {
+            get
+            {
+                return Properties.PrincipalType;
+            }
+        }
+
         /// <summary> Description of role assignment. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties.Description;
+            }
+        }
+
         /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </summary>
         [WirePath("properties.condition")]
-        public string Condition { get; set; }
+        public string Condition
+        {
+            get
+            {
+                return Properties.Condition;
+            }
+        }
+
         /// <summary> Version of the condition. Currently the only accepted value is '2.0'. </summary>
         [WirePath("properties.conditionVersion")]
-        public string ConditionVersion { get; set; }
+        public string ConditionVersion
+        {
+            get
+            {
+                return Properties.ConditionVersion;
+            }
+        }
+
         /// <summary> Time it was created. </summary>
         [WirePath("properties.createdOn")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Time it was updated. </summary>
         [WirePath("properties.updatedOn")]
-        public DateTimeOffset? UpdatedOn { get; }
+        public DateTimeOffset? UpdatedOn
+        {
+            get
+            {
+                return Properties.UpdatedOn;
+            }
+        }
+
         /// <summary> Id of the user who created the assignment. </summary>
         [WirePath("properties.createdBy")]
-        public string CreatedBy { get; }
+        public string CreatedBy
+        {
+            get
+            {
+                return Properties.CreatedBy;
+            }
+        }
+
         /// <summary> Id of the user who updated the assignment. </summary>
         [WirePath("properties.updatedBy")]
-        public string UpdatedBy { get; }
+        public string UpdatedBy
+        {
+            get
+            {
+                return Properties.UpdatedBy;
+            }
+        }
+
         /// <summary> Id of the delegated managed identity resource. </summary>
         [WirePath("properties.delegatedManagedIdentityResourceId")]
-        public ResourceIdentifier DelegatedManagedIdentityResourceId { get; set; }
+        public ResourceIdentifier DelegatedManagedIdentityResourceId
+        {
+            get
+            {
+                return Properties.DelegatedManagedIdentityResourceId;
+            }
+        }
     }
 }

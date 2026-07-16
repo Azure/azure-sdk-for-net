@@ -8,44 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Expanded info of resource scope, role definition and policy. </summary>
-    public partial class PolicyAssignmentProperties : ResourceData
+    public partial class PolicyAssignmentProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PolicyAssignmentProperties"/>. </summary>
         internal PolicyAssignmentProperties()
@@ -53,60 +24,118 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyAssignmentProperties"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="policyId"> Id of the policy. </param>
-        /// <param name="lastModifiedBy"> The name of the entity last modified it. </param>
-        /// <param name="lastModifiedOn"> The last modified date time. </param>
-        /// <param name="roleDefinitionId"> Id of the role definition. </param>
-        /// <param name="roleDefinitionDisplayName"> Display name of the role definition. </param>
-        /// <param name="roleType"> The role type. </param>
-        /// <param name="scopeId"> Scope id of the resource. </param>
-        /// <param name="scopeDisplayName"> Display name of the resource. </param>
-        /// <param name="scopeType"> Type of the scope. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyAssignmentProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyId, RoleManagementPrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, AuthorizationRoleType? roleType, ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="scope"> Details of the resource scope. </param>
+        /// <param name="roleDefinition"> Details of role definition. </param>
+        /// <param name="policy"> Details of the policy. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyAssignmentProperties(PolicyAssignmentPropertiesScope scope, PolicyAssignmentPropertiesRoleDefinition roleDefinition, PolicyAssignmentPropertiesPolicy policy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PolicyId = policyId;
-            LastModifiedBy = lastModifiedBy;
-            LastModifiedOn = lastModifiedOn;
-            RoleDefinitionId = roleDefinitionId;
-            RoleDefinitionDisplayName = roleDefinitionDisplayName;
-            RoleType = roleType;
-            ScopeId = scopeId;
-            ScopeDisplayName = scopeDisplayName;
-            ScopeType = scopeType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Scope = scope;
+            RoleDefinition = roleDefinition;
+            Policy = policy;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Details of the resource scope. </summary>
+        [WirePath("scope")]
+        internal PolicyAssignmentPropertiesScope Scope { get; }
+
+        /// <summary> Details of role definition. </summary>
+        [WirePath("roleDefinition")]
+        internal PolicyAssignmentPropertiesRoleDefinition RoleDefinition { get; }
+
+        /// <summary> Details of the policy. </summary>
+        [WirePath("policy")]
+        internal PolicyAssignmentPropertiesPolicy Policy { get; }
+
+        /// <summary> Scope id of the resource. </summary>
+        [WirePath("scope.id")]
+        public ResourceIdentifier ScopeId
+        {
+            get
+            {
+                return Scope is null ? default : Scope.ScopeId;
+            }
+        }
+
+        /// <summary> Display name of the resource. </summary>
+        [WirePath("scope.displayName")]
+        public string ScopeDisplayName
+        {
+            get
+            {
+                return Scope is null ? default : Scope.ScopeDisplayName;
+            }
+        }
+
+        /// <summary> Type of the resource. </summary>
+        [WirePath("scope.type")]
+        public RoleManagementScopeType? ScopeType
+        {
+            get
+            {
+                return Scope is null ? default : Scope.ScopeType;
+            }
+        }
+
+        /// <summary> Id of the role definition. </summary>
+        [WirePath("roleDefinition.id")]
+        public ResourceIdentifier RoleDefinitionId
+        {
+            get
+            {
+                return RoleDefinition is null ? default : RoleDefinition.RoleDefinitionId;
+            }
+        }
+
+        /// <summary> Display name of the role definition. </summary>
+        [WirePath("roleDefinition.displayName")]
+        public string RoleDefinitionDisplayName
+        {
+            get
+            {
+                return RoleDefinition is null ? default : RoleDefinition.RoleDefinitionDisplayName;
+            }
+        }
+
+        /// <summary> Type of the role definition. </summary>
+        [WirePath("roleDefinition.type")]
+        public AuthorizationRoleType? RoleType
+        {
+            get
+            {
+                return RoleDefinition is null ? default : RoleDefinition.RoleType;
+            }
         }
 
         /// <summary> Id of the policy. </summary>
         [WirePath("policy.id")]
-        public ResourceIdentifier PolicyId { get; }
+        public ResourceIdentifier PolicyId
+        {
+            get
+            {
+                return Policy is null ? default : Policy.PolicyId;
+            }
+        }
+
         /// <summary> The name of the entity last modified it. </summary>
         [WirePath("policy.lastModifiedBy")]
-        public RoleManagementPrincipal LastModifiedBy { get; }
+        public RoleManagementPrincipal LastModifiedBy
+        {
+            get
+            {
+                return Policy is null ? default : Policy.LastModifiedBy;
+            }
+        }
+
         /// <summary> The last modified date time. </summary>
         [WirePath("policy.lastModifiedDateTime")]
-        public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> Id of the role definition. </summary>
-        [WirePath("roleDefinition.id")]
-        public ResourceIdentifier RoleDefinitionId { get; }
-        /// <summary> Display name of the role definition. </summary>
-        [WirePath("roleDefinition.displayName")]
-        public string RoleDefinitionDisplayName { get; }
-        /// <summary> The role type. </summary>
-        [WirePath("roleDefinition.type")]
-        public AuthorizationRoleType? RoleType { get; }
-        /// <summary> Scope id of the resource. </summary>
-        [WirePath("scope.id")]
-        public ResourceIdentifier ScopeId { get; }
-        /// <summary> Display name of the resource. </summary>
-        [WirePath("scope.displayName")]
-        public string ScopeDisplayName { get; }
-        /// <summary> Type of the scope. </summary>
-        [WirePath("scope.type")]
-        public RoleManagementScopeType? ScopeType { get; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Policy is null ? default : Policy.LastModifiedOn;
+            }
+        }
     }
 }

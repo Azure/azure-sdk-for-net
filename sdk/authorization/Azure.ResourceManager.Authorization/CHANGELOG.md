@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated code generation from Swagger/AutoRest to TypeSpec.
+
 ## 1.1.7 (2026-06-02)
 
 ### Other Changes

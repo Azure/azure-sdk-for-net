@@ -9,48 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    /// <summary>
-    /// A class representing the AuthorizationProviderOperationsMetadata data model.
-    /// Provider Operations metadata
-    /// </summary>
-    public partial class AuthorizationProviderOperationsMetadataData : ResourceData
+    /// <summary> Provider Operations metadata. </summary>
+    public partial class AuthorizationProviderOperationsMetadataData : SettableResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationsMetadataData"/>. </summary>
         internal AuthorizationProviderOperationsMetadataData()
         {
@@ -59,30 +23,30 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationsMetadataData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> The provider ID. </param>
+        /// <param name="name"> The provider name. </param>
+        /// <param name="type"> The provider type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="displayName"> The provider display name. </param>
         /// <param name="resourceTypes"> The provider resource types. </param>
         /// <param name="operations"> The provider operations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationProviderOperationsMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<AuthorizationProviderResourceType> resourceTypes, IReadOnlyList<AuthorizationProviderOperationInfo> operations, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AuthorizationProviderOperationsMetadataData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, IList<AuthorizationProviderResourceType> resourceTypes, IList<AuthorizationProviderOperationInfo> operations) : base(id, name, @type, additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             ResourceTypes = resourceTypes;
             Operations = operations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provider display name. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
+
         /// <summary> The provider resource types. </summary>
         [WirePath("resourceTypes")]
-        public IReadOnlyList<AuthorizationProviderResourceType> ResourceTypes { get; }
+        public IList<AuthorizationProviderResourceType> ResourceTypes { get; }
+
         /// <summary> The provider operations. </summary>
         [WirePath("operations")]
-        public IReadOnlyList<AuthorizationProviderOperationInfo> Operations { get; }
+        public IList<AuthorizationProviderOperationInfo> Operations { get; }
     }
 }

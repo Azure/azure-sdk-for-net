@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The assignment level to which rule is applied. </summary>
+    /// <summary></summary>
     public readonly partial struct RoleManagementAssignmentLevel : IEquatable<RoleManagementAssignmentLevel>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RoleManagementAssignmentLevel"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RoleManagementAssignmentLevel(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AssignmentValue = "Assignment";
         private const string EligibilityValue = "Eligibility";
 
-        /// <summary> Assignment. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementAssignmentLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RoleManagementAssignmentLevel(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Assignment. </summary>
         public static RoleManagementAssignmentLevel Assignment { get; } = new RoleManagementAssignmentLevel(AssignmentValue);
-        /// <summary> Eligibility. </summary>
+
+        /// <summary> Gets the Eligibility. </summary>
         public static RoleManagementAssignmentLevel Eligibility { get; } = new RoleManagementAssignmentLevel(EligibilityValue);
+
         /// <summary> Determines if two <see cref="RoleManagementAssignmentLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoleManagementAssignmentLevel left, RoleManagementAssignmentLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoleManagementAssignmentLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoleManagementAssignmentLevel left, RoleManagementAssignmentLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleManagementAssignmentLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoleManagementAssignmentLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoleManagementAssignmentLevel(string value) => new RoleManagementAssignmentLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoleManagementAssignmentLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoleManagementAssignmentLevel?(string value) => value == null ? null : new RoleManagementAssignmentLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoleManagementAssignmentLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoleManagementAssignmentLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

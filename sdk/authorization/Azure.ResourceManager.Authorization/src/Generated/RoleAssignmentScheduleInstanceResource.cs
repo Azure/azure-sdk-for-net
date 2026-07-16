@@ -6,44 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A Class representing a RoleAssignmentScheduleInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleAssignmentScheduleInstanceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetRoleAssignmentScheduleInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetRoleAssignmentScheduleInstance method.
+    /// A class representing a RoleAssignmentScheduleInstance along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleAssignmentScheduleInstanceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetRoleAssignmentScheduleInstances method.
     /// </summary>
     public partial class RoleAssignmentScheduleInstanceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RoleAssignmentScheduleInstanceResource"/> instance. </summary>
-        /// <param name="scope"> The scope. </param>
-        /// <param name="roleAssignmentScheduleInstanceName"> The roleAssignmentScheduleInstanceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string scope, string roleAssignmentScheduleInstanceName)
-        {
-            var resourceId = $"{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _roleAssignmentScheduleInstanceClientDiagnostics;
-        private readonly RoleAssignmentScheduleInstancesRestOperations _roleAssignmentScheduleInstanceRestClient;
+        private readonly ClientDiagnostics _roleAssignmentScheduleInstancesClientDiagnostics;
+        private readonly RoleAssignmentScheduleInstances _roleAssignmentScheduleInstancesRestClient;
         private readonly RoleAssignmentScheduleInstanceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleAssignmentScheduleInstances";
 
-        /// <summary> Initializes a new instance of the <see cref="RoleAssignmentScheduleInstanceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RoleAssignmentScheduleInstanceResource for mocking. </summary>
         protected RoleAssignmentScheduleInstanceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RoleAssignmentScheduleInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RoleAssignmentScheduleInstanceResource(ArmClient client, RoleAssignmentScheduleInstanceData data) : this(client, data.Id)
@@ -52,71 +43,91 @@ namespace Azure.ResourceManager.Authorization
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RoleAssignmentScheduleInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RoleAssignmentScheduleInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _roleAssignmentScheduleInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string roleAssignmentScheduleInstanceApiVersion);
-            _roleAssignmentScheduleInstanceRestClient = new RoleAssignmentScheduleInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, roleAssignmentScheduleInstanceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _roleAssignmentScheduleInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
+            _roleAssignmentScheduleInstancesRestClient = new RoleAssignmentScheduleInstances(_roleAssignmentScheduleInstancesClientDiagnostics, Pipeline, Endpoint, roleAssignmentScheduleInstanceApiVersion ?? "2024-09-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual RoleAssignmentScheduleInstanceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="roleAssignmentScheduleInstanceName"> The roleAssignmentScheduleInstanceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string roleAssignmentScheduleInstanceName)
+        {
+            string resourceId = $"{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the specified role assignment schedule instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignmentScheduleInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoleAssignmentScheduleInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleAssignmentScheduleInstanceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RoleAssignmentScheduleInstanceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RoleAssignmentScheduleInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _roleAssignmentScheduleInstanceClientDiagnostics.CreateScope("RoleAssignmentScheduleInstanceResource.Get");
+            using DiagnosticScope scope = _roleAssignmentScheduleInstancesClientDiagnostics.CreateScope("RoleAssignmentScheduleInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = await _roleAssignmentScheduleInstanceRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleAssignmentScheduleInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RoleAssignmentScheduleInstanceData> response = Response.FromValue(RoleAssignmentScheduleInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoleAssignmentScheduleInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +141,41 @@ namespace Azure.ResourceManager.Authorization
         /// Gets the specified role assignment schedule instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignmentScheduleInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoleAssignmentScheduleInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleAssignmentScheduleInstanceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RoleAssignmentScheduleInstanceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RoleAssignmentScheduleInstanceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _roleAssignmentScheduleInstanceClientDiagnostics.CreateScope("RoleAssignmentScheduleInstanceResource.Get");
+            using DiagnosticScope scope = _roleAssignmentScheduleInstancesClientDiagnostics.CreateScope("RoleAssignmentScheduleInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = _roleAssignmentScheduleInstanceRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleAssignmentScheduleInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RoleAssignmentScheduleInstanceData> response = Response.FromValue(RoleAssignmentScheduleInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoleAssignmentScheduleInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
