@@ -56,11 +56,17 @@ function buildResourceProjections(
   codeModel: CodeModel,
   armProviderSchema: ArmProviderSchema
 ): ResourceProjection[] {
+  // Resource metadata identifies body models by cross-language ID, while the
+  // reachability analysis below needs the actual model instances.
   const modelsById = new Map(
     codeModel.models.map((model) => [model.crossLanguageDefinitionId, model])
   );
   const groups = new Map<string, ArmResourceSchema[]>();
 
+  // A logical provisioning resource can have multiple ARM metadata entries,
+  // such as different request paths or scopes. Collapse entries only when both
+  // the serialized resource type and body model match; the C# generator later
+  // resolves the complete set through their resource ID patterns.
   for (const resource of armProviderSchema.resources) {
     const key = `${resource.metadata.resourceType}\0${resource.resourceModelId}`;
     const group = groups.get(key);
@@ -79,6 +85,9 @@ function buildResourceProjections(
       );
     }
 
+    // Like Bicep, treat the projection as deployable/settable only when at
+    // least one grouped resource has a Create (PUT) operation. PATCH-only
+    // resources remain reachable for existing-resource scenarios.
     return {
       resources,
       resourceModel,
