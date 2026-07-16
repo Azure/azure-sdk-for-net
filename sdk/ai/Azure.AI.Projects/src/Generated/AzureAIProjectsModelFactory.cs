@@ -831,6 +831,8 @@ namespace Azure.AI.Projects
         /// <param name="supportedEvaluationLevels"> Evaluation levels this evaluator supports (e.g., `turn`, `conversation`). When omitted on create, the service defaults to `["turn"]`. On update, omitting this field leaves it unchanged; an empty list is rejected. Custom code-based evaluators support only `turn`; custom prompt-based evaluators support exactly one level (`turn` or `conversation`). </param>
         /// <param name="definition"> Definition of the evaluator. </param>
         /// <param name="generationArtifacts"> Provenance artifacts from the generation pipeline. Read-only; present only on evaluator versions created via an EvaluatorGenerationJob. Each artifact resolves to a versioned Foundry Dataset. </param>
+        /// <param name="generationJobId"> Read-only provenance link back to the EvaluatorGenerationJob that produced this version. Present only on evaluator versions created via the generation pipeline; absent for manually-created versions and unaffected by subsequent `PATCH` calls. </param>
+        /// <param name="warnings"> Categories of warnings surfaced on this generated evaluator version. Present only on versions created via an EvaluatorGenerationJob when the paired job produced non-empty warnings. Absent (treat as no warnings) when the version is not from generation, when the paired job was clean, or when a subsequent `PATCH` to `definition` cleared the paired job's advisories. Follow `generation_job_id` to fetch the detailed warning payloads. </param>
         /// <param name="createdBy"> Creator of the evaluator. </param>
         /// <param name="createdAt"> Creation date/time of the evaluator. </param>
         /// <param name="modifiedAt"> Last modified date/time of the evaluator. </param>
@@ -841,11 +843,12 @@ namespace Azure.AI.Projects
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorVersion"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, IEnumerable<ProjectsEvaluationLevel> supportedEvaluationLevels = default, EvaluatorDefinition definition = default, EvaluatorGenerationArtifacts generationArtifacts = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, IEnumerable<ProjectsEvaluationLevel> supportedEvaluationLevels = default, EvaluatorDefinition definition = default, EvaluatorGenerationArtifacts generationArtifacts = default, string generationJobId = default, IEnumerable<GenerationWarningType> warnings = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             categories ??= new ChangeTrackingList<EvaluatorCategory>();
             supportedEvaluationLevels ??= new ChangeTrackingList<ProjectsEvaluationLevel>();
+            warnings ??= new ChangeTrackingList<GenerationWarningType>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new EvaluatorVersion(
@@ -856,6 +859,8 @@ namespace Azure.AI.Projects
                 supportedEvaluationLevels.ToList(),
                 definition,
                 generationArtifacts,
+                generationJobId,
+                warnings.ToList(),
                 createdBy,
                 createdAt,
                 modifiedAt,
@@ -1133,6 +1138,24 @@ namespace Azure.AI.Projects
         public static EvaluatorGenerationTokenUsage EvaluatorGenerationTokenUsage(long inputTokens = default, long outputTokens = default, long totalTokens = default)
         {
             return new EvaluatorGenerationTokenUsage(inputTokens, outputTokens, totalTokens, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A non-fatal advisory produced during rubric evaluator generation when resolved inputs are technically valid but likely too weak to produce a high-quality rubric. Read-only; service-generated. Persisted with the terminal EvaluatorGenerationJob. </summary>
+        /// <param name="code"> Stable searchable machine-readable warning code. </param>
+        /// <param name="severity"> Advisory severity. Initial values: `warning`. </param>
+        /// <param name="message"> Human-readable message suitable for direct SDK/CLI/UI display. Must not include raw prompt, instruction, dataset, or trace text. </param>
+        /// <param name="source"> Which source category the warning applies to. `aggregate` is used only for cross-source warnings. </param>
+        /// <param name="sourceIndex"> Zero-based index into `EvaluatorGenerationJob.inputs.sources` when the warning applies to a specific source. Omitted for aggregate warnings and for warnings not tied to one source. </param>
+        /// <returns> A new <see cref="Projects.RubricGenerationInputQualityWarning"/> instance for mocking. </returns>
+        public static RubricGenerationInputQualityWarning RubricGenerationInputQualityWarning(RubricGenerationInputQualityWarningCode code = default, RubricGenerationInputQualityWarningSeverity severity = default, string message = default, RubricGenerationInputQualityWarningSource source = default, int? sourceIndex = default)
+        {
+            return new RubricGenerationInputQualityWarning(
+                code,
+                severity,
+                message,
+                source,
+                sourceIndex,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The response body for cluster insights. </summary>
@@ -2452,7 +2475,7 @@ namespace Azure.AI.Projects
         [Experimental("AAIP001")]
         public static EvaluatorVersion EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, EvaluatorDefinition definition, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags)
         {
-            return EvaluatorVersion(displayName: displayName, metadata: metadata, evaluatorType: evaluatorType, categories: categories, supportedEvaluationLevels: default, definition: definition, generationArtifacts: default, createdBy: createdBy, createdAt: createdAt, modifiedAt: modifiedAt, id: id, name: name, version: version, description: description, tags: tags);
+            return EvaluatorVersion(displayName: displayName, metadata: metadata, evaluatorType: evaluatorType, categories: categories, supportedEvaluationLevels: default, definition: definition, generationArtifacts: default, generationJobId: default, warnings: default, createdBy: createdBy, createdAt: createdAt, modifiedAt: modifiedAt, id: id, name: name, version: version, description: description, tags: tags);
         }
 
         /// <summary> Evaluator Metric. </summary>

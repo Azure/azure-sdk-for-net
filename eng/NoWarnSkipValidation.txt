@@ -16,21 +16,17 @@
 #
 # To remove a project from this list, see the workflow in eng/analyzerallowlist/README.md.
 Azure.AI.Agents.Persistent
-Azure.AI.AnomalyDetector
 Azure.AI.Inference
 Azure.AI.Language.QuestionAnswering.Inference
 Azure.AI.OpenAI
 Azure.AI.OpenAI.Assistants
 Azure.AI.TextAnalytics
 Azure.AI.VoiceLive.Snippets
-Azure.Analytics.Purview.DataMap
 Azure.Analytics.Synapse.Artifacts
-Azure.Core.Experimental
 Azure.Identity
 Azure.Messaging.EventGrid
 Azure.Messaging.EventGrid.SystemEvents
 Azure.Messaging.ServiceBus
-Azure.Monitor.Ingestion
 Azure.Monitor.OpenTelemetry.AspNetCore
 Azure.Projects
 Azure.Projects.AI
@@ -39,7 +35,6 @@ Azure.Provisioning
 Azure.Provisioning.Deployment
 Azure.Provisioning.Dns
 Azure.ResourceManager.InformaticaDataManagement
-Azure.Verticals.AgriFood.Farming
 Microsoft.Azure.WebJobs.Extensions.EventGrid
 Microsoft.Azure.WebJobs.Extensions.EventHubs
 Microsoft.Azure.WebJobs.Extensions.ServiceBus

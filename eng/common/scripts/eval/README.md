@@ -1,6 +1,6 @@
 # eval-scripts (CI glue + pinned Vally CLI)
 
-This folder holds the JavaScript glue the Vally eval CI runs (matrix sharding, the shard
+This folder holds the TypeScript glue the Vally eval CI runs (matrix sharding, the shard
 runner, the JUnit summary) **and** pins the [`@microsoft/vally-cli`](https://www.npmjs.com/package/@microsoft/vally-cli)
 version those shards install. The CLI and its full transitive dependency tree are locked by
 the committed `package-lock.json` instead of resolved fresh from semver ranges on every run.
@@ -9,6 +9,23 @@ templates.
 
 - The only dependency should be `@microsoft/vally-cli`, pinned to the version CI should evaluate with.
 - `package-lock.json` must be committed so `npm ci` is deterministic.
+
+## TypeScript (no build step)
+
+The `*.ts` sources run directly through Node's native type stripping (erasable syntax only —
+no `enum`/`namespace`/parameter properties, no emit). CI pins Node `22.x`, which strips types
+unflagged on `>=22.18`; the pipeline `node` invocations and the `npm test` script pass
+`--experimental-strip-types` so the same sources also run on older local Node (`>=22.6`), which
+prints a harmless `ExperimentalWarning`. Relative imports use explicit `.ts` specifiers, as Node requires.
+
+## Vendored files
+
+- `lib/exec.ts` was **copied from azure-rest-api-specs** (`.github/shared/src/exec.js`
+  @ `ef7dd74c13aa9ca12b67b33b9dc4b5d1419a46f0`) and ported to TypeScript. It lives here under
+  `eng/common` (rather than the specs repo's `.github/shared` path) so it travels with the
+  eng/common sync into the language repos. Re-vendor from upstream rather than editing locally;
+  see [azure-sdk-tools#16296](https://github.com/Azure/azure-sdk-tools/issues/16296) for the plan
+  to share these primitives instead of copying.
 
 ## Updating the Vally CLI version
 

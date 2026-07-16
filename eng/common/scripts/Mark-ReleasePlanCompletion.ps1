@@ -49,7 +49,24 @@ function Process-Package([string]$packageInfoPath)
 
     Write-Host "Marking release completion for package, name: $PackageName"
     $PackageVersion = $pkgInfo.Version
-    $releaseArgs = @("release-plan", "update-release-status", "--package-name", $PackageName, "--language", $LanguageDisplayName, "--status", "Released")
+    $version = [AzureEngSemanticVersion]::ParseVersionString($PackageVersion)
+    if (!$version)
+    {
+        Write-Host "Failed to parse version string '$($PackageVersion)' for package '$PackageName'. Skipping the release plan status update."
+        return
+    }
+
+    $sdkReleaseType = ""
+    if ($version.IsPrerelease)
+    {
+        $sdkReleaseType = "beta"
+    }
+    else
+    {
+        $sdkReleaseType = "stable"
+    }
+
+    $releaseArgs = @("release-plan", "update-release-status", "--package-name", $PackageName, "--language", $LanguageDisplayName, "--status", "Released", "--sdk-release-type", $sdkReleaseType)
     if ($PackageVersion)
     {
         $releaseArgs += @("--package-version", $PackageVersion)
