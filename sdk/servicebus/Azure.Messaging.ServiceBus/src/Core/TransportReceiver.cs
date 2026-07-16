@@ -238,8 +238,10 @@ namespace Azure.Messaging.ServiceBus.Core
             CancellationToken cancellationToken);
 
         /// <summary>
-        /// Lists the IDs of sessions that have active messages or whose session state was updated after
-        /// the specified time.
+        /// Lists the IDs of sessions for the requested page. The set returned depends on
+        /// <paramref name="lastUpdatedTime"/>: pass <see cref="DateTimeOffset.MaxValue"/> to list all
+        /// sessions that have active messages, or a real timestamp to list only sessions whose session
+        /// state was set or updated after that time.
         /// </summary>
         ///
         /// <param name="lastUpdatedTime">Filter timestamp. Pass <see cref="DateTimeOffset.MaxValue"/>
