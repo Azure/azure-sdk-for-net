@@ -9,7 +9,7 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Feature flag label fields to retrieve when getting feature flag labels. </summary>
-    public readonly partial struct FeatureFlagLabelFields : IEquatable<FeatureFlagLabelFields>
+    public readonly struct FeatureFlagLabelFields : IEquatable<FeatureFlagLabelFields>
     {
         private readonly string _value;
         /// <summary> Name field. </summary>
