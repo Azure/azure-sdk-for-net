@@ -8,17 +8,20 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Authorization;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Classic Administrators. </summary>
-    public partial class AuthorizationClassicAdministrator : IJsonModel<AuthorizationClassicAdministrator>
+    public partial class AuthorizationClassicAdministrator : ResourceData, IJsonModel<AuthorizationClassicAdministrator>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AuthorizationClassicAdministrator PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AuthorizationClassicAdministrator>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -51,7 +54,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AuthorizationClassicAdministrator IPersistableModel<AuthorizationClassicAdministrator>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AuthorizationClassicAdministrator IPersistableModel<AuthorizationClassicAdministrator>.Create(BinaryData data, ModelReaderWriterOptions options) => (AuthorizationClassicAdministrator)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AuthorizationClassicAdministrator>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -67,28 +70,14 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AuthorizationClassicAdministrator>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AuthorizationClassicAdministrator)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -113,11 +102,11 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AuthorizationClassicAdministrator IJsonModel<AuthorizationClassicAdministrator>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AuthorizationClassicAdministrator IJsonModel<AuthorizationClassicAdministrator>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AuthorizationClassicAdministrator)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AuthorizationClassicAdministrator JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AuthorizationClassicAdministrator>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -136,16 +125,21 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
             ClassicAdministratorProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -155,7 +149,20 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAuthorizationContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -172,7 +179,13 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AuthorizationClassicAdministrator(id, name, @type, properties, additionalBinaryDataProperties);
+            return new AuthorizationClassicAdministrator(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                additionalBinaryDataProperties);
         }
     }
 }

@@ -174,7 +174,6 @@ namespace Azure.ResourceManager.Authorization
     [ModelReaderWriterBuildable(typeof(ScopeAccessReviewHistoryDefinitionResource))]
     [ModelReaderWriterBuildable(typeof(ScopeAccessReviewInstanceResource))]
     [ModelReaderWriterBuildable(typeof(ScopeAccessReviewScheduleDefinitionResource))]
-    [ModelReaderWriterBuildable(typeof(SettableResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TooManyOwnersAssignedToResourceAlertConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(TooManyOwnersAssignedToResourceAlertIncidentProperties))]

@@ -1043,6 +1043,10 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="scopeId"> Scope id of the resource. </param>
         /// <param name="scopeDisplayName"> Display name of the resource. </param>
         /// <param name="scopeType"> Type of the resource. </param>
@@ -1053,9 +1057,17 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="lastModifiedBy"> The name of the entity last modified it. </param>
         /// <param name="lastModifiedOn"> The last modified date time. </param>
         /// <returns> A new <see cref="Models.PolicyAssignmentProperties"/> instance for mocking. </returns>
-        public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier policyId = default, RoleManagementPrincipal lastModifiedBy = default, DateTimeOffset? lastModifiedOn = default)
+        public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier policyId = default, RoleManagementPrincipal lastModifiedBy = default, DateTimeOffset? lastModifiedOn = default)
         {
-            return new PolicyAssignmentProperties(scopeId is null && scopeDisplayName is null && scopeType is null ? default : new PolicyAssignmentPropertiesScope(scopeId, scopeDisplayName, scopeType, default), roleDefinitionId is null && roleDefinitionDisplayName is null && roleType is null ? default : new PolicyAssignmentPropertiesRoleDefinition(roleDefinitionId, roleDefinitionDisplayName, roleType, default), policyId is null && lastModifiedBy is null && lastModifiedOn is null ? default : new PolicyAssignmentPropertiesPolicy(policyId, lastModifiedBy, lastModifiedOn, default), default);
+            return new PolicyAssignmentProperties(
+                id,
+                name,
+                resourceType,
+                systemData,
+                scopeId is null && scopeDisplayName is null && scopeType is null ? default : new PolicyAssignmentPropertiesScope(scopeId, scopeDisplayName, scopeType, default),
+                roleDefinitionId is null && roleDefinitionDisplayName is null && roleType is null ? default : new PolicyAssignmentPropertiesRoleDefinition(roleDefinitionId, roleDefinitionDisplayName, roleType, default),
+                policyId is null && lastModifiedBy is null && lastModifiedOn is null ? default : new PolicyAssignmentPropertiesPolicy(policyId, lastModifiedBy, lastModifiedOn, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1698,25 +1710,33 @@ namespace Azure.ResourceManager.Authorization.Models
             return new EligibleChildResource(id, name, resourceType, default);
         }
 
-        /// <param name="id"> The ID of the administrator. </param>
-        /// <param name="name"> The name of the administrator. </param>
-        /// <param name="type"> The type of the administrator. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="emailAddress"> The email address of the administrator. </param>
         /// <param name="role"> The role of the administrator. </param>
         /// <returns> A new <see cref="Models.AuthorizationClassicAdministrator"/> instance for mocking. </returns>
-        public static AuthorizationClassicAdministrator AuthorizationClassicAdministrator(string id = default, string name = default, string @type = default, string emailAddress = default, string role = default)
+        public static AuthorizationClassicAdministrator AuthorizationClassicAdministrator(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string emailAddress = default, string role = default)
         {
-            return new AuthorizationClassicAdministrator(id, name, @type, emailAddress is null && role is null ? default : new ClassicAdministratorProperties(emailAddress, role, default), default);
+            return new AuthorizationClassicAdministrator(
+                id,
+                name,
+                resourceType,
+                systemData,
+                emailAddress is null && role is null ? default : new ClassicAdministratorProperties(emailAddress, role, default),
+                default);
         }
 
-        /// <param name="id"> The provider ID. </param>
-        /// <param name="name"> The provider name. </param>
-        /// <param name="type"> The provider type. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="displayName"> The provider display name. </param>
         /// <param name="resourceTypes"> The provider resource types. </param>
         /// <param name="operations"> The provider operations. </param>
         /// <returns> A new <see cref="Authorization.AuthorizationProviderOperationsMetadataData"/> instance for mocking. </returns>
-        public static AuthorizationProviderOperationsMetadataData AuthorizationProviderOperationsMetadataData(ResourceIdentifier id = default, string name = default, string @type = default, string displayName = default, IEnumerable<AuthorizationProviderResourceType> resourceTypes = default, IEnumerable<AuthorizationProviderOperationInfo> operations = default)
+        public static AuthorizationProviderOperationsMetadataData AuthorizationProviderOperationsMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, IEnumerable<AuthorizationProviderResourceType> resourceTypes = default, IEnumerable<AuthorizationProviderOperationInfo> operations = default)
         {
             resourceTypes ??= new ChangeTrackingList<AuthorizationProviderResourceType>();
             operations ??= new ChangeTrackingList<AuthorizationProviderOperationInfo>();
@@ -1724,11 +1744,12 @@ namespace Azure.ResourceManager.Authorization.Models
             return new AuthorizationProviderOperationsMetadataData(
                 id,
                 name,
-                @type,
-                default,
+                resourceType,
+                systemData,
                 displayName,
                 (resourceTypes ?? new ChangeTrackingList<AuthorizationProviderResourceType>()).ToList(),
-                (operations ?? new ChangeTrackingList<AuthorizationProviderOperationInfo>()).ToList());
+                (operations ?? new ChangeTrackingList<AuthorizationProviderOperationInfo>()).ToList(),
+                default);
         }
 
         /// <param name="name"> The resource type name. </param>
@@ -1759,29 +1780,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 properties,
                 isDataAction,
                 default);
-        }
-
-        /// <param name="id"> The provider ID. </param>
-        /// <param name="name"> The provider name. </param>
-        /// <param name="type"> The provider type. </param>
-        /// <returns> A new <see cref="Models.SettableResource"/> instance for mocking. </returns>
-        public static SettableResource SettableResource(ResourceIdentifier id = default, string name = default, string @type = default)
-        {
-            return new SettableResource(id, name, @type, default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AuthorizationClassicAdministrator"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="emailAddress"> The email address of the administrator. </param>
-        /// <param name="role"> The role of the administrator. </param>
-        /// <returns> A new <see cref="Models.AuthorizationClassicAdministrator"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AuthorizationClassicAdministrator AuthorizationClassicAdministrator(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string emailAddress = default, string role = default)
-        {
-            return new AuthorizationClassicAdministrator(default, name, default, emailAddress is null && role is null ? default : new ClassicAdministratorProperties(emailAddress, role, default), default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Authorization.DenyAssignmentData"/>. </summary>
@@ -1824,28 +1822,6 @@ namespace Azure.ResourceManager.Authorization.Models
                     default,
                     default),
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authorization.AuthorizationProviderOperationsMetadataData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> The provider display name. </param>
-        /// <param name="resourceTypes"> The provider resource types. </param>
-        /// <param name="operations"> The provider operations. </param>
-        /// <returns> A new <see cref="Authorization.AuthorizationProviderOperationsMetadataData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AuthorizationProviderOperationsMetadataData AuthorizationProviderOperationsMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, IEnumerable<AuthorizationProviderResourceType> resourceTypes = default, IEnumerable<AuthorizationProviderOperationInfo> operations = default)
-        {
-            return new AuthorizationProviderOperationsMetadataData(
-                id,
-                name,
-                default,
-                default,
-                displayName,
-                (resourceTypes ?? new ChangeTrackingList<AuthorizationProviderResourceType>()).ToList(),
-                (operations ?? new ChangeTrackingList<AuthorizationProviderOperationInfo>()).ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Authorization.AuthorizationRoleDefinitionData"/>. </summary>
@@ -1917,7 +1893,15 @@ namespace Azure.ResourceManager.Authorization.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier policyId = default, RoleManagementPrincipal lastModifiedBy = default, DateTimeOffset? lastModifiedOn = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default)
         {
-            return new PolicyAssignmentProperties(scopeId is null && scopeDisplayName is null && scopeType is null ? default : new PolicyAssignmentPropertiesScope(scopeId, scopeDisplayName, scopeType, default), roleDefinitionId is null && roleDefinitionDisplayName is null && roleType is null ? default : new PolicyAssignmentPropertiesRoleDefinition(roleDefinitionId, roleDefinitionDisplayName, roleType, default), policyId is null && lastModifiedBy is null && lastModifiedOn is null ? default : new PolicyAssignmentPropertiesPolicy(policyId, lastModifiedBy, lastModifiedOn, default), default);
+            return new PolicyAssignmentProperties(
+                id,
+                name,
+                resourceType,
+                systemData,
+                scopeId is null && scopeDisplayName is null && scopeType is null ? default : new PolicyAssignmentPropertiesScope(scopeId, scopeDisplayName, scopeType, default),
+                roleDefinitionId is null && roleDefinitionDisplayName is null && roleType is null ? default : new PolicyAssignmentPropertiesRoleDefinition(roleDefinitionId, roleDefinitionDisplayName, roleType, default),
+                policyId is null && lastModifiedBy is null && lastModifiedOn is null ? default : new PolicyAssignmentPropertiesPolicy(policyId, lastModifiedBy, lastModifiedOn, default),
+                default);
         }
     }
 }

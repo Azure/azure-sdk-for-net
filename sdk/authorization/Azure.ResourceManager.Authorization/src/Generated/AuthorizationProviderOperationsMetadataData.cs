@@ -9,12 +9,16 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary> Provider Operations metadata. </summary>
-    public partial class AuthorizationProviderOperationsMetadataData : SettableResource
+    public partial class AuthorizationProviderOperationsMetadataData : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationsMetadataData"/>. </summary>
         internal AuthorizationProviderOperationsMetadataData()
         {
@@ -23,18 +27,20 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationsMetadataData"/>. </summary>
-        /// <param name="id"> The provider ID. </param>
-        /// <param name="name"> The provider name. </param>
-        /// <param name="type"> The provider type. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="displayName"> The provider display name. </param>
         /// <param name="resourceTypes"> The provider resource types. </param>
         /// <param name="operations"> The provider operations. </param>
-        internal AuthorizationProviderOperationsMetadataData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string displayName, IList<AuthorizationProviderResourceType> resourceTypes, IList<AuthorizationProviderOperationInfo> operations) : base(id, name, @type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationProviderOperationsMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<AuthorizationProviderResourceType> resourceTypes, IReadOnlyList<AuthorizationProviderOperationInfo> operations, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             ResourceTypes = resourceTypes;
             Operations = operations;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provider display name. </summary>
@@ -43,10 +49,10 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> The provider resource types. </summary>
         [WirePath("resourceTypes")]
-        public IList<AuthorizationProviderResourceType> ResourceTypes { get; }
+        public IReadOnlyList<AuthorizationProviderResourceType> ResourceTypes { get; }
 
         /// <summary> The provider operations. </summary>
         [WirePath("operations")]
-        public IList<AuthorizationProviderOperationInfo> Operations { get; }
+        public IReadOnlyList<AuthorizationProviderOperationInfo> Operations { get; }
     }
 }
