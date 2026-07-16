@@ -4146,44 +4146,248 @@
           "arguments": {
             "resourceProjections": [
               {
+                "resourceModelId": "ProvisioningTypeSpec.ConfigurationStore",
+                "resourceName": "ConfigurationStore",
+                "resourceType": "ProvisioningTypeSpec/configurationStores",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
                 "resourceIdPatterns": [
                   "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}"
-                ]
+                ],
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
+                "methodIds": [
+                  "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate",
+                  "ProvisioningTypeSpec.ConfigurationStores.get",
+                  "ProvisioningTypeSpec.ConfigurationStores.update",
+                  "ProvisioningTypeSpec.ConfigurationStores.delete",
+                  "ProvisioningTypeSpec.ConfigurationStores.list",
+                  "ProvisioningTypeSpec.ConfigurationStores.listBySubscription"
+                ],
+                "rbacRoles": [
+                  {
+                    "name": "ConfigStoreContributor",
+                    "value": "00000000-0000-0000-0000-000000000001"
+                  },
+                  {
+                    "name": "ConfigStoreReader",
+                    "value": "00000000-0000-0000-0000-000000000002"
+                  },
+                  {
+                    "name": "ConfigStoreDataOperator",
+                    "value": "00000000-0000-0000-0000-000000000003"
+                  }
+                ],
+                "readableScopes": [
+                  "ResourceGroup"
+                ],
+                "writableScopes": [
+                  "ResourceGroup"
+                ],
+                "isExtensionResource": false
               },
               {
+                "resourceModelId": "ProvisioningTypeSpec.KeyValue",
+                "resourceName": "KeyValue",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/keyValues",
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
                 "resourceIdPatterns": [
                   "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/keyValues/{keyValueName}"
-                ]
+                ],
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
+                "methodIds": [
+                  "ProvisioningTypeSpec.KeyValues.createOrUpdate",
+                  "ProvisioningTypeSpec.KeyValues.get",
+                  "ProvisioningTypeSpec.KeyValues.delete",
+                  "ProvisioningTypeSpec.KeyValues.list"
+                ],
+                "rbacRoles": [],
+                "readableScopes": [
+                  "ResourceGroup"
+                ],
+                "writableScopes": [
+                  "ResourceGroup"
+                ],
+                "isExtensionResource": false
               },
               {
+                "resourceModelId": "ProvisioningTypeSpec.Item",
+                "resourceName": "Item",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/items",
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
                 "resourceIdPatterns": [
                   "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/items/{itemName}"
-                ]
+                ],
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
+                "methodIds": [
+                  "ProvisioningTypeSpec.Items.createOrUpdate",
+                  "ProvisioningTypeSpec.Items.get",
+                  "ProvisioningTypeSpec.Items.list"
+                ],
+                "rbacRoles": [],
+                "readableScopes": [
+                  "ResourceGroup"
+                ],
+                "writableScopes": [
+                  "ResourceGroup"
+                ],
+                "isExtensionResource": false
               },
               {
+                "resourceModelId": "ProvisioningTypeSpec.Profile",
+                "resourceName": "Profile",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/profiles",
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
                 "resourceIdPatterns": [
                   "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}"
-                ]
+                ],
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
+                "methodIds": [
+                  "ProvisioningTypeSpec.Profiles.createOrUpdate",
+                  "ProvisioningTypeSpec.Profiles.get",
+                  "ProvisioningTypeSpec.Profiles.delete",
+                  "ProvisioningTypeSpec.Profiles.list"
+                ],
+                "rbacRoles": [],
+                "readableScopes": [
+                  "ResourceGroup"
+                ],
+                "writableScopes": [
+                  "ResourceGroup"
+                ],
+                "isExtensionResource": false
               },
               {
+                "resourceModelId": "ProvisioningTypeSpec.Profile",
+                "resourceName": "ProfileRevision",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/profiles/revisions",
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
                 "resourceIdPatterns": [
                   "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/profiles/{profileName}/revisions/{revisionNumber}"
-                ]
+                ],
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
+                "methodIds": [
+                  "ProvisioningTypeSpec.ProfileRevisions.getByRevisionNumber"
+                ],
+                "rbacRoles": [],
+                "readableScopes": [
+                  "ResourceGroup"
+                ],
+                "writableScopes": [],
+                "isExtensionResource": false
               },
               {
+                "resourceModelId": "ProvisioningTypeSpec.ExtensionAssignment",
+                "resourceName": "ExtensionAssignment",
+                "resourceType": "ProvisioningTypeSpec/extensionAssignments",
+                "nameConstraints": {},
                 "resourceIdPatterns": [
                   "/{scope}/providers/ProvisioningTypeSpec/extensionAssignments/{extensionAssignmentName}"
-                ]
+                ],
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
+                "methodIds": [
+                  "ProvisioningTypeSpec.ExtensionAssignments.createOrUpdate",
+                  "ProvisioningTypeSpec.ExtensionAssignments.get"
+                ],
+                "rbacRoles": [],
+                "readableScopes": [
+                  "Extension"
+                ],
+                "writableScopes": [
+                  "Extension"
+                ],
+                "isExtensionResource": true
               },
               {
+                "resourceModelId": "ProvisioningTypeSpec.SingletonSetting",
+                "resourceName": "SingletonSetting",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/settings",
+                "singletonResourceName": "default",
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
                 "resourceIdPatterns": [
                   "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/settings/default"
-                ]
+                ],
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
+                "methodIds": [
+                  "ProvisioningTypeSpec.SingletonSettings.createOrUpdate",
+                  "ProvisioningTypeSpec.SingletonSettings.get"
+                ],
+                "rbacRoles": [],
+                "readableScopes": [
+                  "ResourceGroup"
+                ],
+                "writableScopes": [
+                  "ResourceGroup"
+                ],
+                "isExtensionResource": false
               },
               {
+                "resourceModelId": "ProvisioningTypeSpec.ConfigurationStorePrivateLinkResource",
+                "resourceName": "ConfigurationStorePrivateLinkResource",
+                "resourceType": "ProvisioningTypeSpec/configurationStores/privateLinkResources",
+                "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
+                "nameConstraints": {},
                 "resourceIdPatterns": [
                   "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}/privateLinkResources/{privateLinkResourceName}"
-                ]
+                ],
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
+                "methodIds": [
+                  "ProvisioningTypeSpec.ConfigurationStorePrivateLinkResources.get",
+                  "ProvisioningTypeSpec.ConfigurationStorePrivateLinkResources.list"
+                ],
+                "rbacRoles": [],
+                "readableScopes": [
+                  "ResourceGroup"
+                ],
+                "writableScopes": [],
+                "isExtensionResource": false
               }
             ],
             "modelSettableUsage": [

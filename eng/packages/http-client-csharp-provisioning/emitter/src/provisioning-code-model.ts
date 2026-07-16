@@ -6,17 +6,35 @@ import { CodeModel, InputModelType } from "@typespec/http-client-csharp";
 
 type ArmProviderSchema = Parameters<ManagementCodeModelTransformer>[2];
 type ArmResourceSchema = ArmProviderSchema["resources"][number];
+type ArmResourceMetadata = ArmResourceSchema["metadata"];
+type ResourceScopeKind = ArmResourceMetadata["scope"]["kind"];
+type ResourceNameConstraints = ArmResourceMetadata["nameConstraints"];
+type ResourceRbacRole = ArmResourceMetadata["rbacRoles"][number];
+type ResourcePath = ArmResourceMetadata["resourceIdPattern"];
 type InputModelProperty = InputModelType["properties"][number];
 type InputType = InputModelProperty["type"];
 type InputEnumType = Extract<InputType, { kind: "enum" }>;
+type ProjectionScopeOperation = "Create" | "Read";
 
 const provisioningProviderSchema =
   "Azure.ClientGenerator.Core.@provisioningProviderSchema";
 
 interface ResourceProjection {
-  resources: ArmResourceSchema[];
   resourceModel: InputModelType;
   isSettable: boolean;
+  resourceModelId: string;
+  resourceName: string;
+  resourceType: string;
+  singletonResourceName?: string;
+  parentResourceId?: string;
+  nameConstraints: ResourceNameConstraints;
+  resourceIdPatterns: string[];
+  apiVersions: string[];
+  methodIds: string[];
+  rbacRoles: ResourceRbacRole[];
+  readableScopes: ResourceScopeKind[];
+  writableScopes: ResourceScopeKind[];
+  isExtensionResource: boolean;
 }
 
 export function updateProvisioningCodeModel(
@@ -37,9 +55,19 @@ export function updateProvisioningCodeModel(
       name: provisioningProviderSchema,
       arguments: {
         resourceProjections: projections.map((projection) => ({
-          resourceIdPatterns: projection.resources.map(
-            (resource) => resource.metadata.resourceIdPattern.path
-          )
+          resourceModelId: projection.resourceModelId,
+          resourceName: projection.resourceName,
+          resourceType: projection.resourceType,
+          singletonResourceName: projection.singletonResourceName,
+          parentResourceId: projection.parentResourceId,
+          nameConstraints: projection.nameConstraints,
+          resourceIdPatterns: projection.resourceIdPatterns,
+          apiVersions: projection.apiVersions,
+          methodIds: projection.methodIds,
+          rbacRoles: projection.rbacRoles,
+          readableScopes: projection.readableScopes,
+          writableScopes: projection.writableScopes,
+          isExtensionResource: projection.isExtensionResource
         })),
         modelSettableUsage: Array.from(
           modelSettableUsage,
@@ -88,14 +116,140 @@ function buildResourceProjections(
     // Like Bicep, treat the projection as deployable/settable only when at
     // least one grouped resource has a Create (PUT) operation. PATCH-only
     // resources remain reachable for existing-resource scenarios.
-    return {
+    const projection = buildResourceProjectionMetadata(
       resources,
+      resourceModel.name
+    );
+    return {
+      ...projection,
       resourceModel,
-      isSettable: resources.some((resource) =>
-        resource.metadata.methods.some((method) => method.kind === "Create")
-      )
+      isSettable: projection.writableScopes.length > 0
     };
   });
+}
+
+export function buildResourceProjectionMetadata(
+  resources: ArmResourceSchema[],
+  defaultResourceName: string
+): Omit<ResourceProjection, "resourceModel" | "isSettable"> {
+  const first = resources[0];
+  const writableScopes = collectScopes(resources, "Create");
+
+  return {
+    resourceModelId: first.resourceModelId,
+    resourceName: getConsistentValue(
+      resources.map((resource) => resource.metadata.resourceName),
+      defaultResourceName
+    ),
+    resourceType: first.metadata.resourceType,
+    singletonResourceName: getConsistentValue(
+      resources.map((resource) => resource.metadata.singletonResourceName),
+      undefined
+    ),
+    parentResourceId: getConsistentValue(
+      resources.map((resource) => resource.metadata.parentResourceId),
+      undefined,
+      resourcePathsEqual
+    )?.path,
+    nameConstraints: getConsistentValue(
+      resources.map((resource) => resource.metadata.nameConstraints),
+      {},
+      nameConstraintsEqual
+    ),
+    resourceIdPatterns: distinctResourcePaths(
+      resources.map((resource) => resource.metadata.resourceIdPattern)
+    ).map((path) => path.path),
+    apiVersions: distinct(
+      resources.flatMap((resource) => resource.metadata.apiVersions)
+    ),
+    methodIds: distinct(
+      resources.flatMap((resource) =>
+        resource.metadata.methods.map((method) => method.methodId)
+      )
+    ),
+    rbacRoles: distinctBy(
+      resources.flatMap((resource) => resource.metadata.rbacRoles),
+      (role) => `${role.name}\0${role.value}`
+    ),
+    readableScopes: collectScopes(resources, "Read"),
+    writableScopes,
+    isExtensionResource: writableScopes.some(isExtensionScope)
+  };
+}
+
+function resourcePathsEqual(
+  left: ResourcePath | undefined,
+  right: ResourcePath | undefined
+): boolean {
+  if (!left || !right) {
+    return left === right;
+  }
+  return left.equals(right);
+}
+
+function distinctResourcePaths(paths: ResourcePath[]): ResourcePath[] {
+  const distinctPaths: ResourcePath[] = [];
+  for (const path of paths) {
+    if (!distinctPaths.some((existing) => existing.equals(path))) {
+      distinctPaths.push(path);
+    }
+  }
+  return distinctPaths;
+}
+
+function isExtensionScope(scope: ResourceScopeKind): boolean {
+  return scope.toString() === "Extension";
+}
+
+function getConsistentValue<T>(
+  values: T[],
+  fallback: T,
+  equals: (left: T, right: T) => boolean = Object.is
+): T {
+  const first = values[0];
+  return values.every((value) => equals(value, first)) ? first : fallback;
+}
+
+function nameConstraintsEqual(
+  left: ResourceNameConstraints,
+  right: ResourceNameConstraints
+): boolean {
+  return (
+    left.pattern === right.pattern &&
+    left.minLength === right.minLength &&
+    left.maxLength === right.maxLength
+  );
+}
+
+function distinct<T>(values: T[]): T[] {
+  return Array.from(new Set(values));
+}
+
+function distinctBy<T>(values: T[], getKey: (value: T) => string): T[] {
+  const seen = new Set<string>();
+  return values.filter((value) => {
+    const key = getKey(value);
+    if (seen.has(key)) {
+      return false;
+    }
+    seen.add(key);
+    return true;
+  });
+}
+
+function collectScopes(
+  resources: ArmResourceSchema[],
+  operationKind: ProjectionScopeOperation
+): ResourceScopeKind[] {
+  return distinct(
+    resources
+      .filter((resource) =>
+        resource.metadata.methods.some(
+          (method) => method.kind === operationKind
+        )
+      )
+      .map((resource) => resource.metadata.scope.kind)
+  );
 }
 
 function collectReachableTypes(projections: ResourceProjection[]) {

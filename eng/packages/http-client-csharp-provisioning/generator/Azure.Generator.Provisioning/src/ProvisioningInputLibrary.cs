@@ -69,27 +69,27 @@ namespace Azure.Generator.Provisioning
             var arguments = decorator.Arguments
                 ?? throw new InvalidOperationException($"The '{ProvisioningProviderSchemaDecoratorName}' decorator does not contain arguments.");
 
-            var resourcesByIdPattern = ArmProviderSchema.Resources.ToDictionary(
-                resource => resource.ResourceIdPattern.SerializedPath,
-                StringComparer.Ordinal);
+            var modelsById = new Dictionary<string, InputModelType>(StringComparer.Ordinal);
+            foreach (var model in InputNamespace.Models)
+            {
+                modelsById.TryAdd(model.CrossLanguageDefinitionId, model);
+            }
+            var methodsById = new Dictionary<string, ResourceMethod>(StringComparer.Ordinal);
+            foreach (var resource in ArmProviderSchema.Resources)
+            {
+                foreach (var method in resource.Methods)
+                {
+                    methodsById.TryAdd(method.InputMethod.CrossLanguageDefinitionId, method);
+                }
+            }
+
             var projections = new List<ProvisioningResourceProjection>();
             if (arguments.TryGetValue("resourceProjections", out var projectionsData))
             {
                 using var document = JsonDocument.Parse(projectionsData);
                 foreach (var projectionElement in document.RootElement.EnumerateArray())
                 {
-                    var resources = new List<ArmResourceMetadata>();
-                    foreach (var resourceIdElement in projectionElement.GetProperty("resourceIdPatterns").EnumerateArray())
-                    {
-                        var resourceIdPattern = resourceIdElement.GetString()
-                            ?? throw new JsonException("A provisioning resource ID pattern cannot be null.");
-                        if (!resourcesByIdPattern.TryGetValue(resourceIdPattern, out var resource))
-                        {
-                            throw new JsonException($"Provisioning resource ID pattern '{resourceIdPattern}' was not found in the ARM provider schema.");
-                        }
-                        resources.Add(resource);
-                    }
-                    projections.Add(ProvisioningResourceProjection.Create(resources).Single());
+                    projections.Add(ProvisioningResourceProjection.Deserialize(projectionElement, modelsById, methodsById));
                 }
             }
 
