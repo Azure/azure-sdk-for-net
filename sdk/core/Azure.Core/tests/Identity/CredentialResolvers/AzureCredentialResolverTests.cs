@@ -190,8 +190,23 @@ namespace Azure.Core.Tests.Identity.CredentialResolvers
         }
 
         [Test]
-        public void TryResolve_ChainedTokenCredential_UnclaimedCustomSource_ReturnsFalse()
+        public void TryResolve_ChainedTokenCredential_NestedChain_IsRejected()
         {
+            // A ChainedTokenCredential entry nested inside another chain is rejected
+            // (consistent with ChainedTokenCredentialFactory) rather than recursively
+            // building a nested chain.
+            var section = BuildSection(new Dictionary<string, string>
+            {
+                ["MyClient:Credential:CredentialSource"] = "ChainedTokenCredential",
+                ["MyClient:Credential:Sources:0:CredentialSource"] = "ChainedTokenCredential",
+                ["MyClient:Credential:Sources:0:Sources:0:CredentialSource"] = "AzureCliCredential",
+            });
+
+            var resolver = new AzureCredentialResolver();
+            Assert.Throws<InvalidOperationException>(() => resolver.TryResolve(section, out _));
+        }
+
+
             // No resolver claims the custom source and no chain callback is
             // available (single-arg overload), so the whole chain defers.
             var section = BuildSection(new Dictionary<string, string>

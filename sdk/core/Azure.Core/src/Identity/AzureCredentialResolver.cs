@@ -87,21 +87,21 @@ namespace Azure.Identity
                 return false;
             }
 
-            if (source == Constants.ChainedTokenCredential)
-            {
-                return TryResolveChain(credentialSection, resolveChild, out provider);
-            }
-
-            // When the section is flagged as a chain entry (by TryResolveChain, via
-            // ChainedChildSection), build the credential with IsChainedCredential=true
-            // so transient failures surface as CredentialUnavailableException and the
-            // enclosing ChainedTokenCredential falls through to the next entry.
-            // ChainedTokenCredentialFactory handles every recognized source (including
-            // the broker reflection hop) with that flag set.
+            // A chain entry (flagged by TryResolveChain via ChainedChildSection) is built
+            // with IsChainedCredential=true so transient failures surface as
+            // CredentialUnavailableException and the enclosing ChainedTokenCredential falls
+            // through to the next entry. This is checked before the ChainedTokenCredential
+            // branch so a nested chain entry is routed to CreateCredential, which rejects
+            // nesting, rather than recursively building a nested chain.
             if (IsChainEntry(credentialSection))
             {
                 provider = ChainedTokenCredentialFactory.CreateCredential(new DefaultAzureCredentialOptions(settings, credentialSection));
                 return true;
+            }
+
+            if (source == Constants.ChainedTokenCredential)
+            {
+                return TryResolveChain(credentialSection, resolveChild, out provider);
             }
 
             // Top-level single source: build the concrete credential directly through
