@@ -70,36 +70,54 @@ stimuli:
   # this analysis-only skill (see each skill's DO NOT USE FOR boundary).
   - name: anti-trigger-auto-fix-and-commit
     prompt: "auto-fix the failing tests in my pipeline and commit the changes to my PR"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-write-a-typespec-definition
     prompt: "write a TypeSpec definition"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-create-a-new-skill
     prompt: "create a new skill"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-optimize-markdown-tokens
     prompt: "optimize markdown tokens"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-how-do-i-release-an-sdk-package
     prompt: "how do I release an SDK package"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-resolve-apiview-feedback
     prompt: "resolve APIView feedback"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:

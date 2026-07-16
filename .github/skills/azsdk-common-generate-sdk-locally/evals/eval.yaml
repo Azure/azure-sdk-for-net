@@ -32,6 +32,9 @@ stimuli:
 
   - name: sdk-local-negative-001
     prompt: "I want to use the Azure DevOps pipeline to generate SDKs automatically and have PRs created for me. I don't want to set up local tools."
+    environment:
+      skills:
+        - ..
     graders:
       - type: tool-calls
         config:

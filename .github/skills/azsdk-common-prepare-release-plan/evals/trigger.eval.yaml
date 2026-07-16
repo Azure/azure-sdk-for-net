@@ -66,30 +66,45 @@ stimuli:
 
   - name: anti-trigger-deploy-my-azure-function
     prompt: "deploy my Azure Function"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-prepare-release-plan"]
   - name: anti-trigger-fix-my-pipeline-build-error
     prompt: "fix my pipeline build error"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-prepare-release-plan"]
   - name: anti-trigger-create-a-new-typespec-definition
     prompt: "create a new TypeSpec definition"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-prepare-release-plan"]
   - name: anti-trigger-configure-azure-logging
     prompt: "configure Azure logging"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-prepare-release-plan"]
   - name: anti-trigger-resolve-apiview-feedback
     prompt: "resolve APIView feedback"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:

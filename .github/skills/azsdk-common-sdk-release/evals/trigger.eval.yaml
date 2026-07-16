@@ -66,30 +66,45 @@ stimuli:
 
   - name: anti-trigger-write-unit-tests
     prompt: "write unit tests"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-sdk-release"]
   - name: anti-trigger-fix-my-pipeline-build-error
     prompt: "fix my pipeline build error"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-sdk-release"]
   - name: anti-trigger-create-a-new-typespec-definition
     prompt: "create a new TypeSpec definition"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-sdk-release"]
   - name: anti-trigger-optimize-markdown-tokens
     prompt: "optimize markdown tokens"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-sdk-release"]
   - name: anti-trigger-resolve-apiview-feedback
     prompt: "resolve APIView feedback"
+    environment:
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
