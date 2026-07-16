@@ -106,7 +106,7 @@ namespace Azure.Generator.Provisioning.Primitives
         /// Gets whether this resource should be emitted as a Bicep extension
         /// resource with a language-level <c>scope</c> relationship.
         /// </summary>
-        internal bool IsExtensionResource => Metadata.Any(resource => resource.Scope.Kind == ResourceScope.Extension);
+        internal bool IsExtensionResource => WritableScopes.Contains(ResourceScope.Extension);
 
         internal static IReadOnlyList<ProvisioningResourceProjection> Create(IReadOnlyList<ArmResourceMetadata> metadata)
         {

@@ -230,7 +230,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void ReadOnlyExtensionResourceRetainsScopeMetadata()
+        public void ReadOnlyExtensionResourceDoesNotExposeScopeMetadata()
         {
             var model = CreateModel("ReadOnlyExtension");
             var resource = CreateMetadata(
@@ -244,6 +244,29 @@ namespace Azure.Generator.Provisioning.Tests
             var provider = CreateResourceProvider(resource);
 
             Assert.That(provider.ResourceProjection!.WritableScopes, Is.Empty);
+            Assert.That(provider.ResourceProjection.IsExtensionResource, Is.False);
+            Assert.That(provider.Properties.Any(property => property.Name == "Scope"), Is.False);
+        }
+
+        [Test]
+        public void WritableExtensionResourceExposesScopeMetadata()
+        {
+            var model = CreateModel("WritableExtension");
+            var resource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/providers/Microsoft.Test/extensions/{extensionName}",
+                "Microsoft.Test/extensions",
+                ResourceScope.Extension,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.Extension),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.Extension)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = CreateResourceProvider(resource);
+
+            Assert.That(provider.ResourceProjection!.WritableScopes, Does.Contain(ResourceScope.Extension));
             Assert.That(provider.ResourceProjection.IsExtensionResource, Is.True);
             Assert.That(provider.Properties.Any(property => property.Name == "Scope"), Is.True);
         }
