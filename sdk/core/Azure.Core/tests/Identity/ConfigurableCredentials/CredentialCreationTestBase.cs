@@ -94,8 +94,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
                 var settings = config.GetAzureClientSettings<E2ETestSettings>("MyClient");
                 Assert.IsNotNull(settings.CredentialProvider, $"CredentialProvider should be set for {CredentialSource}");
 
-                // GetAzureClientSettings returns the concrete credential type
-                // (wrapped in DefaultAzureCredential for single-source dispatch).
+                // GetAzureClientSettings returns the concrete credential type directly.
                 TCredential underlying = GetUnderlyingFromTokenProvider(settings.CredentialProvider);
                 Assert.IsNotNull(underlying, $"Underlying credential should be {typeof(TCredential).Name} for {CredentialSource}");
             }
