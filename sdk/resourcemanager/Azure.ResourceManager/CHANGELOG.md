@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `ArmEnvironment.AzureBleuCloud` (`https://management.sovcloud-api.fr`) for Bleu Cloud, the national partner cloud for France.
+
 ### Breaking Changes
 
 ### Bugs Fixed
