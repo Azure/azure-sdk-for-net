@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DnsZoneResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string zoneName, DnsZoneData data, ETag? ifMatch, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-            => await CreateOrUpdateAsync(waitUntil, zoneName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = new ETag(ifNoneMatch) }, cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, zoneName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : default(ETag?) }, cancellationToken).ConfigureAwait(false);
 
         // This method is added to meet the api compatibility requirement for the existing method CreateOrUpdate(string, DnsZoneData, ETag?, string, CancellationToken) in DnsZoneCollection. The existing method is not following the standard pattern for accepting MatchConditions and it is causing confusion for the users. This new method follows the standard pattern and accepts MatchConditions as a parameter. The existing method will be marked as obsolete in the future and will call this new method internally to avoid breaking changes for the users.
         /// <summary>
@@ -86,6 +86,6 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DnsZoneResource> CreateOrUpdate(WaitUntil waitUntil, string zoneName, DnsZoneData data, ETag? ifMatch, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-            => CreateOrUpdate(waitUntil, zoneName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = new ETag(ifNoneMatch) }, cancellationToken);
+            => CreateOrUpdate(waitUntil, zoneName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : default(ETag?) }, cancellationToken);
     }
 }

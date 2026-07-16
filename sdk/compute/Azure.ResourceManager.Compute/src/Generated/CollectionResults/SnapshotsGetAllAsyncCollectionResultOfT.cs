@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 SnapshotList result = SnapshotList.FromResponse(response);
-                yield return Page<SnapshotData>.FromValues((IReadOnlyList<SnapshotData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SnapshotData>.FromValues((IReadOnlyList<SnapshotData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

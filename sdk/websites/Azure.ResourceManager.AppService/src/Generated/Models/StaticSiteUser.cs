@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Static Site User ARM resource.
-    /// Serialized Name: StaticSiteUserARMResource
-    /// </summary>
+    /// <summary> Static Site User ARM resource. </summary>
     public partial class StaticSiteUser : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteUser"/>. </summary>
         public StaticSiteUser()
@@ -56,70 +25,74 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteUser"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provider">
-        /// The identity provider for the static site user.
-        /// Serialized Name: StaticSiteUserARMResource.properties.provider
-        /// </param>
-        /// <param name="userId">
-        /// The user id for the static site user.
-        /// Serialized Name: StaticSiteUserARMResource.properties.userId
-        /// </param>
-        /// <param name="displayName">
-        /// The display name for the static site user.
-        /// Serialized Name: StaticSiteUserARMResource.properties.displayName
-        /// </param>
-        /// <param name="roles">
-        /// The roles for the static site user, in free-form string format
-        /// Serialized Name: StaticSiteUserARMResource.properties.roles
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteUser(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provider, string userId, string displayName, string roles, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> StaticSiteUserARMResource resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteUser(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StaticSiteUserARMResourceProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Provider = provider;
-            UserId = userId;
-            DisplayName = displayName;
-            Roles = roles;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The identity provider for the static site user.
-        /// Serialized Name: StaticSiteUserARMResource.properties.provider
-        /// </summary>
-        [WirePath("properties.provider")]
-        public string Provider { get; }
-        /// <summary>
-        /// The user id for the static site user.
-        /// Serialized Name: StaticSiteUserARMResource.properties.userId
-        /// </summary>
-        [WirePath("properties.userId")]
-        public string UserId { get; }
-        /// <summary>
-        /// The display name for the static site user.
-        /// Serialized Name: StaticSiteUserARMResource.properties.displayName
-        /// </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; }
-        /// <summary>
-        /// The roles for the static site user, in free-form string format
-        /// Serialized Name: StaticSiteUserARMResource.properties.roles
-        /// </summary>
-        [WirePath("properties.roles")]
-        public string Roles { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> StaticSiteUserARMResource resource specific properties. </summary>
+        [WirePath("properties")]
+        internal StaticSiteUserARMResourceProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> The identity provider for the static site user. </summary>
+        [WirePath("properties.provider")]
+        public string Provider
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Provider;
+            }
+        }
+
+        /// <summary> The user id for the static site user. </summary>
+        [WirePath("properties.userId")]
+        public string UserId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserId;
+            }
+        }
+
+        /// <summary> The display name for the static site user. </summary>
+        [WirePath("properties.displayName")]
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
+
+        /// <summary> The roles for the static site user, in free-form string format. </summary>
+        [WirePath("properties.roles")]
+        public string Roles
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Roles;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteUserARMResourceProperties();
+                }
+                Properties.Roles = value;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,21 +15,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class ServiceTagOutboundRule : MachineLearningOutboundRule
     {
         /// <summary> Initializes a new instance of <see cref="ServiceTagOutboundRule"/>. </summary>
-        public ServiceTagOutboundRule()
+        public ServiceTagOutboundRule() : base(RuleType.ServiceTag)
         {
-            OutboundRuleType = OutboundRuleType.ServiceTag;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceTagOutboundRule"/>. </summary>
         /// <param name="category"> Category of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="status"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
-        /// <param name="outboundRuleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
+        /// <param name="errorInformation"> Error information about an outbound rule of a machine learning workspace if RuleStatus is failed. </param>
+        /// <param name="parentRuleNames"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="destination"> Service Tag destination for a Service Tag Outbound Rule for the managed network of a machine learning workspace. </param>
-        internal ServiceTagOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, OutboundRuleType outboundRuleType, IDictionary<string, BinaryData> serializedAdditionalRawData, ServiceTagDestination destination) : base(category, status, outboundRuleType, serializedAdditionalRawData)
+        internal ServiceTagOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceTagDestination destination) : base(category, status, @type, errorInformation, parentRuleNames, additionalBinaryDataProperties)
         {
             Destination = destination;
-            OutboundRuleType = outboundRuleType;
         }
 
         /// <summary> Service Tag destination for a Service Tag Outbound Rule for the managed network of a machine learning workspace. </summary>

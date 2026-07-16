@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.Compute.BulkActions.csproj" />
+  <Project Path="tests/Azure.ResourceManager.Compute.BulkActions.Tests.csproj" />
+</Solution>

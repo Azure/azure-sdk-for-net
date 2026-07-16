@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.ResilienceManagement
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != "Microsoft.Management/serviceGroups")
+            if (id.ResourceType != ResilienceManagementDrillResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Management/serviceGroups"), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResilienceManagementDrillResource.ResourceType), nameof(id));
             }
         }
 

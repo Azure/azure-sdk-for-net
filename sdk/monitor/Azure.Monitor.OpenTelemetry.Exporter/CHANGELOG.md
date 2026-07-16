@@ -4,15 +4,32 @@
 
 ### Features Added
 
-- Added support for the Microsoft OpenTelemetry distro's SDK statistics: a new internal meter subscription and an AppContext switch (`Azure.Monitor.OpenTelemetry.Exporter.RouteSdkStatsToDistroEndpoint`) that lets the distro redirect SDK statistics to its own ingestion path. The ingestion destination and an on/off signal are resolved at startup by fetching a remote configuration; on success the configured destination is used, an explicit remote disable signal turns SDK statistics off, and any other outcome falls back to the existing region-derived ingestion endpoint so SDK statistics keep flowing. The AppContext switch has no effect on Statsbeat for callers that do not opt in.
-
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
 
+## 1.8.2 (2026-06-30)
+
+### Features Added
+
+- Added support for the Microsoft OpenTelemetry distro's SDK statistics: a new internal meter subscription and an AppContext switch (`Azure.Monitor.OpenTelemetry.Exporter.RouteSdkStatsToDistroEndpoint`) that lets the distro redirect SDK statistics to its own ingestion path. The ingestion destination and an on/off signal are resolved at startup by fetching a remote configuration; on success the configured destination is used, an explicit remote disable signal turns SDK statistics off, and any other outcome falls back to the existing region-derived ingestion endpoint so SDK statistics keep flowing. The AppContext switch has no effect on Statsbeat for callers that do not opt in.
+  ([#59811](https://github.com/Azure/azure-sdk-for-net/pull/59811))
+
+- Subscribed the Statsbeat `MeterProvider` to the Microsoft OpenTelemetry distro's Network SDKStats meter (`MicrosoftOpenTelemetryNetworkSdkStatsMeter`) so distro-emitted Network statistics flow through the existing Statsbeat cadence when the distro runs with a non-Azure-Monitor exporter.
+  ([#60209](https://github.com/Azure/azure-sdk-for-net/pull/60209))
+
+- Subscribed the Statsbeat `MeterProvider` to the Microsoft OpenTelemetry distro's Feature SDKStats meter (`MicrosoftOpenTelemetryFeatureSdkStatsMeter`) so distro-emitted Feature statistics reach the Statsbeat ingestion path. The distro uses an independent, spec-aligned bit map to avoid collisions with the classic Application Insights SDK's `FeatureStatsbeatMeter`.
+  ([#59529](https://github.com/Azure/azure-sdk-for-net/pull/59529))
+
+- Added Network SDKStats reporting, emitting the short-interval Network statistics defined in the Application Insights SDKStats spec on a 15-minute cadence: `Request_Success_Count`, `Request_Failure_Count`, `Request_Duration`, `Retry_Count`, `Throttle_Count`, and `Exception_Count`, each with the spec-defined dimensions (including `host`, `statusCode`, and `exceptionType`).
+  ([#59909](https://github.com/Azure/azure-sdk-for-net/pull/59909), [#60018](https://github.com/Azure/azure-sdk-for-net/pull/60018))
+
+### Other Changes
+
 - Updated customer SDK stats dimension key names to use camelCase (`computeType`, `telemetryType`, `dropCode`, `dropReason`, `retryCode`, `retryReason`).
+  ([#59902](https://github.com/Azure/azure-sdk-for-net/pull/59902))
 
 ## 1.8.1 (2026-05-20)
 

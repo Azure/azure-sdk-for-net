@@ -11,9 +11,9 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class KeyVaultSecretStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this KeyVaultSecretStatus value) => value switch
         {
-            KeyVaultSecretStatus.Unknown => "Unknown",
             KeyVaultSecretStatus.Initialized => "Initialized",
             KeyVaultSecretStatus.WaitingOnCertificateOrder => "WaitingOnCertificateOrder",
             KeyVaultSecretStatus.Succeeded => "Succeeded",
@@ -24,22 +24,57 @@ namespace Azure.ResourceManager.AppService.Models
             KeyVaultSecretStatus.KeyVaultSecretDoesNotExist => "KeyVaultSecretDoesNotExist",
             KeyVaultSecretStatus.UnknownError => "UnknownError",
             KeyVaultSecretStatus.ExternalPrivateKey => "ExternalPrivateKey",
+            KeyVaultSecretStatus.Unknown => "Unknown",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultSecretStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static KeyVaultSecretStatus ToKeyVaultSecretStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return KeyVaultSecretStatus.Unknown;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Initialized")) return KeyVaultSecretStatus.Initialized;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WaitingOnCertificateOrder")) return KeyVaultSecretStatus.WaitingOnCertificateOrder;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return KeyVaultSecretStatus.Succeeded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CertificateOrderFailed")) return KeyVaultSecretStatus.CertificateOrderFailed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OperationNotPermittedOnKeyVault")) return KeyVaultSecretStatus.OperationNotPermittedOnKeyVault;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureServiceUnauthorizedToAccessKeyVault")) return KeyVaultSecretStatus.AzureServiceUnauthorizedToAccessKeyVault;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "KeyVaultDoesNotExist")) return KeyVaultSecretStatus.KeyVaultDoesNotExist;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "KeyVaultSecretDoesNotExist")) return KeyVaultSecretStatus.KeyVaultSecretDoesNotExist;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UnknownError")) return KeyVaultSecretStatus.UnknownError;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ExternalPrivateKey")) return KeyVaultSecretStatus.ExternalPrivateKey;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Initialized"))
+            {
+                return KeyVaultSecretStatus.Initialized;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WaitingOnCertificateOrder"))
+            {
+                return KeyVaultSecretStatus.WaitingOnCertificateOrder;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded"))
+            {
+                return KeyVaultSecretStatus.Succeeded;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CertificateOrderFailed"))
+            {
+                return KeyVaultSecretStatus.CertificateOrderFailed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OperationNotPermittedOnKeyVault"))
+            {
+                return KeyVaultSecretStatus.OperationNotPermittedOnKeyVault;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureServiceUnauthorizedToAccessKeyVault"))
+            {
+                return KeyVaultSecretStatus.AzureServiceUnauthorizedToAccessKeyVault;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "KeyVaultDoesNotExist"))
+            {
+                return KeyVaultSecretStatus.KeyVaultDoesNotExist;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "KeyVaultSecretDoesNotExist"))
+            {
+                return KeyVaultSecretStatus.KeyVaultSecretDoesNotExist;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UnknownError"))
+            {
+                return KeyVaultSecretStatus.UnknownError;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ExternalPrivateKey"))
+            {
+                return KeyVaultSecretStatus.ExternalPrivateKey;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown"))
+            {
+                return KeyVaultSecretStatus.Unknown;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultSecretStatus value.");
         }
     }

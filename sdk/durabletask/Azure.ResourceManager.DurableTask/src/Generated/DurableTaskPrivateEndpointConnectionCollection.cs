@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DurableTask
     /// <summary>
     /// A class representing a collection of <see cref="DurableTaskPrivateEndpointConnectionResource"/> and their operations.
     /// Each <see cref="DurableTaskPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="DurableTaskSchedulerResource"/>.
-    /// To get a <see cref="DurableTaskPrivateEndpointConnectionCollection"/> instance call the GetPrivateEndpointConnections method from an instance of <see cref="DurableTaskSchedulerResource"/>.
+    /// To get a <see cref="DurableTaskPrivateEndpointConnectionCollection"/> instance call the GetDurableTaskPrivateEndpointConnections method from an instance of <see cref="DurableTaskSchedulerResource"/>.
     /// </summary>
     public partial class DurableTaskPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<DurableTaskPrivateEndpointConnectionResource>, IAsyncEnumerable<DurableTaskPrivateEndpointConnectionResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DurableTaskPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DurableTaskPrivateEndpointConnectionResource.ResourceType, out string privateEndpointConnectionApiVersion);
+            TryGetApiVersion(DurableTaskPrivateEndpointConnectionResource.ResourceType, out string durableTaskPrivateEndpointConnectionApiVersion);
             _schedulersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", DurableTaskPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Endpoint, privateEndpointConnectionApiVersion ?? "2026-02-01");
+            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Endpoint, durableTaskPrivateEndpointConnectionApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

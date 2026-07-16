@@ -91,17 +91,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
         /// <param name="snapshotComposition">
         /// The composition type describes how the key-values within the snapshot are
-        ///             composed. The 'key' composition type ensures there are no two key-values
-        ///             containing the same key. The 'key_label' composition type ensures there are no
-        ///             two key-values containing the same key and label.
+        ///                         composed. The 'key' composition type ensures there are no two key-values
+        ///                         containing the same key. The 'key_label' composition type ensures there are no
+        ///                         two key-values containing the same key and label.
         /// </param>
         /// <param name="createdOn"> The time that the snapshot was created. </param>
         /// <param name="expiresOn"> The time that the snapshot will expire. </param>
         /// <param name="retentionPeriod">
         /// The amount of time, in seconds, that a snapshot will remain in the archived
-        ///             state before expiring. This property is only writable during the creation of a
-        ///             snapshot. If not specified, the default lifetime of key-value revisions will be
-        ///             used.
+        ///                         state before expiring. This property is only writable during the creation of a
+        ///                         snapshot. If not specified, the default lifetime of key-value revisions will be
+        ///                         used.
         /// </param>
         /// <param name="sizeInBytes"> The size in bytes of the snapshot. </param>
         /// <param name="itemCount"> The amount of key-values in the snapshot. </param>

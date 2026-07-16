@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="microsoftPeeringConfig"> The Microsoft peering configuration. </param>
         /// <param name="stats"> The peering stats of express route circuit. </param>
         /// <param name="provisioningState"> The provisioning state of the express route circuit peering resource. </param>
-        /// <param name="gatewayManagerEtag"> The GatewayManager Etag. </param>
+        /// <param name="gatewayManagerETag"> The GatewayManager Etag. </param>
         /// <param name="lastModifiedBy"> Who was the last to modify the peering. </param>
         /// <param name="routeFilter"> The reference to the RouteFilter resource. </param>
-        /// <param name="ipv6PeeringConfig"> The IPv6 peering configuration. </param>
+        /// <param name="iPv6PeeringConfig"> The IPv6 peering configuration. </param>
         /// <param name="expressRouteConnection"> The ExpressRoute connection. </param>
         /// <param name="connections"> The list of circuit connections associated with Azure Private Peering for this circuit. </param>
         /// <param name="peeredConnections"> The list of peered circuit connections associated with Azure Private Peering for this circuit. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteCircuitPeeringPropertiesFormat(ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, ExpressRouteCircuitStats stats, NetworkProvisioningState? provisioningState, string gatewayManagerEtag, string lastModifiedBy, NetworkSubResource routeFilter, IPv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig, ResourceIdentifier expressRouteConnection, IList<ExpressRouteCircuitConnectionData> connections, IReadOnlyList<PeerExpressRouteCircuitConnectionData> peeredConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteCircuitPeeringPropertiesFormat(ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, ExpressRouteCircuitStats stats, NetworkProvisioningState? provisioningState, string gatewayManagerETag, string lastModifiedBy, NetworkSubResource routeFilter, IPv6ExpressRouteCircuitPeeringConfig iPv6PeeringConfig, ResourceIdentifier expressRouteConnection, IList<ExpressRouteCircuitConnectionData> connections, IReadOnlyList<PeerExpressRouteCircuitConnectionData> peeredConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PeeringType = peeringType;
             State = state;
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.Network.Models
             MicrosoftPeeringConfig = microsoftPeeringConfig;
             Stats = stats;
             ProvisioningState = provisioningState;
-            GatewayManagerEtag = gatewayManagerEtag;
+            GatewayManagerETag = gatewayManagerETag;
             LastModifiedBy = lastModifiedBy;
             RouteFilter = routeFilter;
-            Ipv6PeeringConfig = ipv6PeeringConfig;
+            IPv6PeeringConfig = iPv6PeeringConfig;
             ExpressRouteConnection = expressRouteConnection;
             Connections = connections;
             PeeredConnections = peeredConnections;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The GatewayManager Etag. </summary>
         [WirePath("gatewayManagerEtag")]
-        public string GatewayManagerEtag { get; set; }
+        public string GatewayManagerETag { get; set; }
 
         /// <summary> Who was the last to modify the peering. </summary>
         [WirePath("lastModifiedBy")]
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The IPv6 peering configuration. </summary>
         [WirePath("ipv6PeeringConfig")]
-        public IPv6ExpressRouteCircuitPeeringConfig Ipv6PeeringConfig { get; set; }
+        public IPv6ExpressRouteCircuitPeeringConfig IPv6PeeringConfig { get; set; }
 
         /// <summary> The ExpressRoute connection. </summary>
         [WirePath("expressRouteConnection")]

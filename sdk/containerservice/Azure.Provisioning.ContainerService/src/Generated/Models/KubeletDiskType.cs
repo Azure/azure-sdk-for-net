@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum KubeletDiskType
     {
         /// <summary> Kubelet will use the OS disk for its data. </summary>
-        OS,
+        OS = 0,
         /// <summary> Kubelet will use the temporary disk for its data. </summary>
-        Temporary
+        Temporary = 1
     }
 }

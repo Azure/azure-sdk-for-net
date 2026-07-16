@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ServiceEndpointPolicyListResult result = ServiceEndpointPolicyListResult.FromResponse(response);
-                yield return Page<ServiceEndpointPolicyData>.FromValues((IReadOnlyList<ServiceEndpointPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ServiceEndpointPolicyData>.FromValues((IReadOnlyList<ServiceEndpointPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

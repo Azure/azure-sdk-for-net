@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerInstance
         {
             base.DefineProvisionableProperties();
             _volumeMounts = DefineListProperty<ContainerVolumeMount>(nameof(VolumeMounts), new string[] { "volumeMounts" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NGroupCGPropertyContainerProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

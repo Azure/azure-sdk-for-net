@@ -84,7 +84,7 @@ namespace Azure.AI.Extensions.OpenAI
             if (Optional.IsDefined(SearchContextSize))
             {
                 writer.WritePropertyName("search_context_size"u8);
-                writer.WriteStringValue(SearchContextSize.Value.ToSerialString());
+                writer.WriteStringValue(SearchContextSize.Value.ToString());
             }
             if (Optional.IsDefined(Name))
             {
@@ -181,7 +181,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    searchContextSize = prop.Value.GetString().ToResponsesWebSearchToolSearchContextSize();
+                    searchContextSize = new ResponsesWebSearchToolSearchContextSize(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

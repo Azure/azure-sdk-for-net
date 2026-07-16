@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                     yield break;
                 }
                 VMHostsListResponse result = VMHostsListResponse.FromResponse(response);
-                yield return Page<NewRelicObservabilityVmInfo>.FromValues((IReadOnlyList<NewRelicObservabilityVmInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NewRelicObservabilityVmInfo>.FromValues((IReadOnlyList<NewRelicObservabilityVmInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

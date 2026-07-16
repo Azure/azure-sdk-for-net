@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A single item in an inline dataset. </summary>
+    [Experimental("AAIP001")]
     public partial class OptimizationDatasetItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -22,14 +24,14 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="OptimizationDatasetItem"/>. </summary>
         /// <param name="query"> The user query / prompt. </param>
         /// <param name="groundTruth"> Expected ground truth answer. </param>
-        /// <param name="desiredNumTurns"> Desired number of conversation turns for simulation mode (1-20). </param>
+        /// <param name="desiredTurnCount"> Desired number of conversation turns for simulation mode (1-20). </param>
         /// <param name="criteria"> Per-item evaluation criteria. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationDatasetItem(string query, string groundTruth, int? desiredNumTurns, IList<OptimizationDatasetCriterion> criteria, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationDatasetItem(string query, string groundTruth, int? desiredTurnCount, IList<OptimizationDatasetCriterion> criteria, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Query = query;
             GroundTruth = groundTruth;
-            DesiredNumTurns = desiredNumTurns;
+            DesiredTurnCount = desiredTurnCount;
             Criteria = criteria;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -41,7 +43,7 @@ namespace Azure.AI.Projects.Agents
         public string GroundTruth { get; set; }
 
         /// <summary> Desired number of conversation turns for simulation mode (1-20). </summary>
-        public int? DesiredNumTurns { get; set; }
+        public int? DesiredTurnCount { get; set; }
 
         /// <summary> Per-item evaluation criteria. </summary>
         public IList<OptimizationDatasetCriterion> Criteria { get; }

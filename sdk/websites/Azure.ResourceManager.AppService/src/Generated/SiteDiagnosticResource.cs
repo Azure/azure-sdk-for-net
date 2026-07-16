@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a SiteDiagnostic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteDiagnosticResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSiteDiagnosticResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetSiteDiagnostic method.
+    /// A class representing a SiteDiagnostic along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteDiagnosticResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetSiteDiagnostics method.
     /// </summary>
     public partial class SiteDiagnosticResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SiteDiagnosticResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="siteName"> The siteName. </param>
-        /// <param name="diagnosticCategory"> The diagnosticCategory. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string diagnosticCategory)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _siteDiagnosticDiagnosticsClientDiagnostics;
-        private readonly DiagnosticsRestOperations _siteDiagnosticDiagnosticsRestClient;
+        private readonly ClientDiagnostics _diagnosticCategoriesClientDiagnostics;
+        private readonly DiagnosticCategories _diagnosticCategoriesRestClient;
         private readonly DiagnosticCategoryData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/diagnostics";
 
-        /// <summary> Initializes a new instance of the <see cref="SiteDiagnosticResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteDiagnosticResource for mocking. </summary>
         protected SiteDiagnosticResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteDiagnosticResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteDiagnosticResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteDiagnosticResource(ArmClient client, DiagnosticCategoryData data) : this(client, data.Id)
@@ -54,68 +43,158 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteDiagnosticResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteDiagnosticResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteDiagnosticResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteDiagnosticDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string siteDiagnosticDiagnosticsApiVersion);
-            _siteDiagnosticDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteDiagnosticDiagnosticsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string siteDiagnosticApiVersion);
+            _diagnosticCategoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _diagnosticCategoriesRestClient = new DiagnosticCategories(_diagnosticCategoriesClientDiagnostics, Pipeline, Endpoint, siteDiagnosticApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DiagnosticCategoryData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="siteName"> The siteName. </param>
+        /// <param name="diagnosticCategory"> The diagnosticCategory. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string diagnosticCategory)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
-        /// <summary> Gets a collection of SiteDiagnosticAnalysisResources in the SiteDiagnostic. </summary>
-        /// <returns> An object representing collection of SiteDiagnosticAnalysisResources and their operations over a SiteDiagnosticAnalysisResource. </returns>
+        /// <summary>
+        /// Description for Get Diagnostics Category
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticCategories_GetSiteDiagnosticCategory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteDiagnosticResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SiteDiagnosticResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnosticCategoriesClientDiagnostics.CreateScope("SiteDiagnosticResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticCategoriesRestClient.CreateGetSiteDiagnosticCategoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DiagnosticCategoryData> response = Response.FromValue(DiagnosticCategoryData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SiteDiagnosticResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get Diagnostics Category
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticCategories_GetSiteDiagnosticCategory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteDiagnosticResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SiteDiagnosticResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnosticCategoriesClientDiagnostics.CreateScope("SiteDiagnosticResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticCategoriesRestClient.CreateGetSiteDiagnosticCategoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DiagnosticCategoryData> response = Response.FromValue(DiagnosticCategoryData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SiteDiagnosticResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a collection of SiteDiagnosticAnalyses in the <see cref="SiteDiagnosticResource"/>. </summary>
+        /// <returns> An object representing collection of SiteDiagnosticAnalyses and their operations over a SiteDiagnosticAnalysisResource. </returns>
         public virtual SiteDiagnosticAnalysisCollection GetSiteDiagnosticAnalyses()
         {
             return GetCachedClient(client => new SiteDiagnosticAnalysisCollection(client, Id));
         }
 
-        /// <summary>
-        /// Description for Get Site Analysis
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/analyses/{analysisName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetSiteAnalysis</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteDiagnosticAnalysisResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Description for Get Site Analysis. </summary>
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
@@ -123,30 +202,12 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteDiagnosticAnalysisResource>> GetSiteDiagnosticAnalysisAsync(string analysisName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
+
             return await GetSiteDiagnosticAnalyses().GetAsync(analysisName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Description for Get Site Analysis
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/analyses/{analysisName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetSiteAnalysis</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteDiagnosticAnalysisResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Description for Get Site Analysis. </summary>
         /// <param name="analysisName"> Analysis Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
@@ -154,37 +215,19 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public virtual Response<SiteDiagnosticAnalysisResource> GetSiteDiagnosticAnalysis(string analysisName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
+
             return GetSiteDiagnosticAnalyses().Get(analysisName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteDiagnosticDetectorResources in the SiteDiagnostic. </summary>
-        /// <returns> An object representing collection of SiteDiagnosticDetectorResources and their operations over a SiteDiagnosticDetectorResource. </returns>
+        /// <summary> Gets a collection of SiteDiagnosticDetectors in the <see cref="SiteDiagnosticResource"/>. </summary>
+        /// <returns> An object representing collection of SiteDiagnosticDetectors and their operations over a SiteDiagnosticDetectorResource. </returns>
         public virtual SiteDiagnosticDetectorCollection GetSiteDiagnosticDetectors()
         {
             return GetCachedClient(client => new SiteDiagnosticDetectorCollection(client, Id));
         }
 
-        /// <summary>
-        /// Description for Get Detector
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetSiteDetector</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteDiagnosticDetectorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Description for Get Detector. </summary>
         /// <param name="detectorName"> Detector Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
@@ -192,30 +235,12 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteDiagnosticDetectorResource>> GetSiteDiagnosticDetectorAsync(string detectorName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
             return await GetSiteDiagnosticDetectors().GetAsync(detectorName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Description for Get Detector
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetSiteDetector</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteDiagnosticDetectorResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Description for Get Detector. </summary>
         /// <param name="detectorName"> Detector Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
@@ -223,87 +248,9 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public virtual Response<SiteDiagnosticDetectorResource> GetSiteDiagnosticDetector(string detectorName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
             return GetSiteDiagnosticDetectors().Get(detectorName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Get Diagnostics Category
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetSiteDiagnosticCategory</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteDiagnosticResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SiteDiagnosticResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticResource.Get");
-            scope.Start();
-            try
-            {
-                var response = await _siteDiagnosticDiagnosticsRestClient.GetSiteDiagnosticCategoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteDiagnosticResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Get Diagnostics Category
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetSiteDiagnosticCategory</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteDiagnosticResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteDiagnosticResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _siteDiagnosticDiagnosticsRestClient.GetSiteDiagnosticCategory(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteDiagnosticResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

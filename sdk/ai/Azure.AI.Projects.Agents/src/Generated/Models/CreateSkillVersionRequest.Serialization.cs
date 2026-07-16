@@ -10,7 +10,6 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The CreateSkillVersionRequest. </summary>
     internal partial class CreateSkillVersionRequest : IJsonModel<CreateSkillVersionRequest>
     {
         /// <param name="data"> The data to parse. </param>
@@ -86,10 +85,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("inline_content"u8);
                 writer.WriteObjectValue(InlineContent, options);
             }
-            if (Optional.IsDefined(Default))
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("default"u8);
-                writer.WriteBooleanValue(Default.Value);
+                writer.WriteBooleanValue(IsDefault.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -134,7 +133,7 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             SkillInlineContent inlineContent = default;
-            bool? @default = default;
+            bool? isDefault = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +152,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    @default = prop.Value.GetBoolean();
+                    isDefault = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +160,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CreateSkillVersionRequest(inlineContent, @default, additionalBinaryDataProperties);
+            return new CreateSkillVersionRequest(inlineContent, isDefault, additionalBinaryDataProperties);
         }
     }
 }

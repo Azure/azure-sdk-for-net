@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A Class representing a SqlServerVirtualNetworkRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerVirtualNetworkRuleResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerVirtualNetworkRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlServerVirtualNetworkRule method.
+    /// A class representing a SqlServerVirtualNetworkRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerVirtualNetworkRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlServerVirtualNetworkRules method.
     /// </summary>
     public partial class SqlServerVirtualNetworkRuleResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SqlServerVirtualNetworkRuleResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="serverName"> The serverName. </param>
-        /// <param name="virtualNetworkRuleName"> The virtualNetworkRuleName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string virtualNetworkRuleName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics;
-        private readonly VirtualNetworkRulesRestOperations _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient;
+        private readonly ClientDiagnostics _virtualNetworkRulesClientDiagnostics;
+        private readonly VirtualNetworkRules _virtualNetworkRulesRestClient;
         private readonly SqlServerVirtualNetworkRuleData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/virtualNetworkRules";
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerVirtualNetworkRuleResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SqlServerVirtualNetworkRuleResource for mocking. </summary>
         protected SqlServerVirtualNetworkRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerVirtualNetworkRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerVirtualNetworkRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerVirtualNetworkRuleResource(ArmClient client, SqlServerVirtualNetworkRuleData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.Sql
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerVirtualNetworkRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerVirtualNetworkRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlServerVirtualNetworkRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string sqlServerVirtualNetworkRuleVirtualNetworkRulesApiVersion);
-            _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient = new VirtualNetworkRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerVirtualNetworkRuleVirtualNetworkRulesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string sqlServerVirtualNetworkRuleApiVersion);
+            _virtualNetworkRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            _virtualNetworkRulesRestClient = new VirtualNetworkRules(_virtualNetworkRulesClientDiagnostics, Pipeline, Endpoint, sqlServerVirtualNetworkRuleApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SqlServerVirtualNetworkRuleData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="virtualNetworkRuleName"> The virtualNetworkRuleName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string virtualNetworkRuleName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a virtual network rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerVirtualNetworkRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SqlServerVirtualNetworkRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SqlServerVirtualNetworkRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleResource.Get");
+            using DiagnosticScope scope = _virtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleResource.Get");
             scope.Start();
             try
             {
-                var response = await _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualNetworkRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SqlServerVirtualNetworkRuleData> response = Response.FromValue(SqlServerVirtualNetworkRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerVirtualNetworkRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.Sql
         /// Gets a virtual network rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerVirtualNetworkRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SqlServerVirtualNetworkRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SqlServerVirtualNetworkRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleResource.Get");
+            using DiagnosticScope scope = _virtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleResource.Get");
             scope.Start();
             try
             {
-                var response = _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualNetworkRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SqlServerVirtualNetworkRuleData> response = Response.FromValue(SqlServerVirtualNetworkRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerVirtualNetworkRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.Sql
         /// Deletes the virtual network rule with the given name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkRules_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkRules_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerVirtualNetworkRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SqlServerVirtualNetworkRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,21 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleResource.Delete");
+            using DiagnosticScope scope = _virtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = await _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualNetworkRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SqlArmOperation operation = new SqlArmOperation(_virtualNetworkRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.Sql
         /// Deletes the virtual network rule with the given name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkRules_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkRules_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerVirtualNetworkRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SqlServerVirtualNetworkRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +261,21 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleResource.Delete");
+            using DiagnosticScope scope = _virtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleResource.Delete");
             scope.Start();
             try
             {
-                var response = _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(_sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualNetworkRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SqlArmOperation operation = new SqlArmOperation(_virtualNetworkRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -253,23 +286,23 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates an existing virtual network rule.
+        /// Update a SqlServerVirtualNetworkRule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkRules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerVirtualNetworkRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SqlServerVirtualNetworkRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,14 +314,27 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleResource.Update");
+            using DiagnosticScope scope = _virtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleResource.Update");
             scope.Start();
             try
             {
-                var response = await _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerVirtualNetworkRuleResource>(new SqlServerVirtualNetworkRuleOperationSource(Client), _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlServerVirtualNetworkRuleData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SqlArmOperation<SqlServerVirtualNetworkRuleResource> operation = new SqlArmOperation<SqlServerVirtualNetworkRuleResource>(
+                    new SqlServerVirtualNetworkRuleResourceOperationSource(Client),
+                    _virtualNetworkRulesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -299,23 +345,23 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates an existing virtual network rule.
+        /// Update a SqlServerVirtualNetworkRule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkRules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerVirtualNetworkRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SqlServerVirtualNetworkRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,14 +373,27 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleResource.Update");
+            using DiagnosticScope scope = _virtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleResource.Update");
             scope.Start();
             try
             {
-                var response = _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerVirtualNetworkRuleResource>(new SqlServerVirtualNetworkRuleOperationSource(Client), _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlServerVirtualNetworkRuleData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SqlArmOperation<SqlServerVirtualNetworkRuleResource> operation = new SqlArmOperation<SqlServerVirtualNetworkRuleResource>(
+                    new SqlServerVirtualNetworkRuleResourceOperationSource(Client),
+                    _virtualNetworkRulesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

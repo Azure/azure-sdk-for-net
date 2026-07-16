@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Subnets = new ChangeTrackingList<SubnetData>();
             VirtualNetworkPeerings = new ChangeTrackingList<VirtualNetworkPeeringData>();
-            IpAllocations = new ChangeTrackingList<NetworkSubResource>();
+            IPAllocations = new ChangeTrackingList<NetworkSubResource>();
             FlowLogs = new ChangeTrackingList<FlowLogData>();
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
             DdosProtectionPlan = ddosProtectionPlan;
             BgpCommunities = bgpCommunities;
             Encryption = encryption;
-            IpAllocations = ipAllocations;
+            IPAllocations = ipAllocations;
             FlowLogs = flowLogs;
             PrivateEndpointVNetPolicies = privateEndpointVNetPolicies;
             DefaultPublicNatGateway = defaultPublicNatGateway;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Array of IpAllocation which reference this VNET. </summary>
         [WirePath("ipAllocations")]
-        public IList<NetworkSubResource> IpAllocations { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<NetworkSubResource> IPAllocations { get; } = new ChangeTrackingList<NetworkSubResource>();
 
         /// <summary> A collection of references to flow log resources. </summary>
         [WirePath("flowLogs")]

@@ -50,6 +50,9 @@ namespace Azure.Generator.Management
         private ResourceDataCustomizationResolver? _resourceDataCustomizationResolver;
         internal ResourceDataCustomizationResolver ResourceDataCustomizationResolver => _resourceDataCustomizationResolver ??= new();
 
+        private TagPatchHookCustomizationResolver? _tagPatchHookCustomizationResolver;
+        internal TagPatchHookCustomizationResolver TagPatchHookCustomizationResolver => _tagPatchHookCustomizationResolver ??= new();
+
         /// <inheritdoc/>
         public override TypeProviderWriter GetWriter(TypeProvider provider)
         {
@@ -79,6 +82,7 @@ namespace Azure.Generator.Management
         protected override void Configure()
         {
             AddCustomCodeAttributeProvider(OutputLibrary.CodeGenResourceDataAttributeDefinition);
+            AddCustomCodeAttributeProvider(OutputLibrary.CodeGenTagPatchHookAttributeDefinition);
             base.Configure();
             // Include Azure.ResourceManager
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));

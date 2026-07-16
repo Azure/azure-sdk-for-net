@@ -3,9 +3,13 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Compatibility declaration for the NetworkVirtualApplianceData type. </summary>
+    [CodeGenSuppress("InternetIngressPublicIPs")]
+    [CodeGenSuppress("PrivateIPAddress")]
     public partial class NetworkVirtualApplianceData
     {
         /// <summary> Compatibility member. </summary>

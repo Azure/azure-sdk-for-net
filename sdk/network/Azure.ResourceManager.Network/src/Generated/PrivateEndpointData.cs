@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Specifies the IP version type for the private IPs of the private endpoint. If not defined, this defaults to IPv4. </summary>
         [WirePath("properties.ipVersionType")]
-        public PrivateEndpointIPVersionType? IpVersionType
+        public PrivateEndpointIPVersionType? IPVersionType
         {
             get
             {
-                return Properties is null ? default : Properties.IpVersionType;
+                return Properties is null ? default : Properties.IPVersionType;
             }
             set
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new PrivateEndpointProperties();
                 }
-                Properties.IpVersionType = value;
+                Properties.IPVersionType = value;
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> A list of IP configurations of the private endpoint. This will be used to map to the First Party Service's endpoints. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IList<PrivateEndpointIPConfiguration> IpConfigurations
+        public IList<PrivateEndpointIPConfiguration> IPConfigurations
         {
             get
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new PrivateEndpointProperties();
                 }
-                return Properties.IpConfigurations;
+                return Properties.IPConfigurations;
             }
         }
 

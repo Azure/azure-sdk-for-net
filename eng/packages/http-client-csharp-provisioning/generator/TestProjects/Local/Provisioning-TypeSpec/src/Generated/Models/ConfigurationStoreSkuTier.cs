@@ -13,12 +13,15 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     public enum ConfigurationStoreSkuTier
     {
         /// <summary> The free tier. </summary>
-        Free,
+        Free = 0,
         /// <summary> Standard tier with S1 throughput. </summary>
         [DataMember(Name = "Standard_S1")]
-        StandardS1,
+        StandardS1 = 7,
         /// <summary> Premium tier with P1 throughput. </summary>
         [DataMember(Name = "Premium_P1")]
-        PremiumP1
+        PremiumP1 = 1,
+        /// <summary> LegacyTier. </summary>
+        [DataMember(Name = "legacy_tier")]
+        LegacyTier = 3
     }
 }

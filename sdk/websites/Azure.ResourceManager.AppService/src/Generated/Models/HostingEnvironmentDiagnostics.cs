@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Diagnostics for an App Service Environment.
-    /// Serialized Name: HostingEnvironmentDiagnostics
-    /// </summary>
+    /// <summary> Diagnostics for an App Service Environment. </summary>
     public partial class HostingEnvironmentDiagnostics
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HostingEnvironmentDiagnostics"/>. </summary>
         internal HostingEnvironmentDiagnostics()
@@ -54,32 +23,21 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HostingEnvironmentDiagnostics"/>. </summary>
-        /// <param name="name">
-        /// Name/identifier of the diagnostics.
-        /// Serialized Name: HostingEnvironmentDiagnostics.name
-        /// </param>
-        /// <param name="diagnosticsOutput">
-        /// Diagnostics output.
-        /// Serialized Name: HostingEnvironmentDiagnostics.diagnosticsOutput
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HostingEnvironmentDiagnostics(string name, string diagnosticsOutput, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="name"> Name/identifier of the diagnostics. </param>
+        /// <param name="diagnosticsOutput"> Diagnostics output. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HostingEnvironmentDiagnostics(string name, string diagnosticsOutput, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DiagnosticsOutput = diagnosticsOutput;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Name/identifier of the diagnostics.
-        /// Serialized Name: HostingEnvironmentDiagnostics.name
-        /// </summary>
+        /// <summary> Name/identifier of the diagnostics. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// Diagnostics output.
-        /// Serialized Name: HostingEnvironmentDiagnostics.diagnosticsOutput
-        /// </summary>
+
+        /// <summary> Diagnostics output. </summary>
         [WirePath("diagnosticsOutput")]
         public string DiagnosticsOutput { get; }
     }

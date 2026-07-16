@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("lifecycleHooks"u8);
                 writer.WriteStartArray();
-                foreach (LifecycleHook item in LifecycleHooks)
+                foreach (VirtualMachineScaleSetLifecycleHook item in LifecycleHooks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<LifecycleHook> lifecycleHooks = default;
+            IList<VirtualMachineScaleSetLifecycleHook> lifecycleHooks = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<LifecycleHook> array = new List<LifecycleHook>();
+                    List<VirtualMachineScaleSetLifecycleHook> array = new List<VirtualMachineScaleSetLifecycleHook>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LifecycleHook.DeserializeLifecycleHook(item, options));
+                        array.Add(VirtualMachineScaleSetLifecycleHook.DeserializeVirtualMachineScaleSetLifecycleHook(item, options));
                     }
                     lifecycleHooks = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LifecycleHooksProfile(lifecycleHooks ?? new ChangeTrackingList<LifecycleHook>(), additionalBinaryDataProperties);
+            return new LifecycleHooksProfile(lifecycleHooks ?? new ChangeTrackingList<VirtualMachineScaleSetLifecycleHook>(), additionalBinaryDataProperties);
         }
     }
 }

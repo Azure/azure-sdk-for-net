@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class StaticSiteBasicAuthPropertyCollection : ArmCollection, IEnumerable<StaticSiteBasicAuthPropertyResource>, IAsyncEnumerable<StaticSiteBasicAuthPropertyResource>
     {
-        private readonly ClientDiagnostics _staticSiteBasicAuthPropertyStaticSitesClientDiagnostics;
-        private readonly StaticSitesRestOperations _staticSiteBasicAuthPropertyStaticSitesRestClient;
+        private readonly ClientDiagnostics _staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics;
+        private readonly StaticSiteBasicAuthPropertiesARMResources _staticSiteBasicAuthPropertiesARMResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="StaticSiteBasicAuthPropertyCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of StaticSiteBasicAuthPropertyCollection for mocking. </summary>
         protected StaticSiteBasicAuthPropertyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StaticSiteBasicAuthPropertyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteBasicAuthPropertyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StaticSiteBasicAuthPropertyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _staticSiteBasicAuthPropertyStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBasicAuthPropertyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(StaticSiteBasicAuthPropertyResource.ResourceType, out string staticSiteBasicAuthPropertyStaticSitesApiVersion);
-            _staticSiteBasicAuthPropertyStaticSitesRestClient = new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteBasicAuthPropertyStaticSitesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(StaticSiteBasicAuthPropertyResource.ResourceType, out string staticSiteBasicAuthPropertyApiVersion);
+            _staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBasicAuthPropertyResource.ResourceType.Namespace, Diagnostics);
+            _staticSiteBasicAuthPropertiesARMResourcesRestClient = new StaticSiteBasicAuthPropertiesARMResources(_staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics, Pipeline, Endpoint, staticSiteBasicAuthPropertyApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != StaticSiteResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Adds or updates basic auth for a static site.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_CreateOrUpdateBasicAuth</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteBasicAuthPropertiesARMResources_CreateOrUpdateBasicAuth. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,16 +81,24 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _staticSiteBasicAuthPropertyStaticSitesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _staticSiteBasicAuthPropertyStaticSitesRestClient.CreateOrUpdateBasicAuthAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, basicAuthName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _staticSiteBasicAuthPropertyStaticSitesRestClient.CreateCreateOrUpdateBasicAuthRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, basicAuthName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<StaticSiteBasicAuthPropertyResource>(Response.FromValue(new StaticSiteBasicAuthPropertyResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateCreateOrUpdateBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), StaticSiteBasicAuthPropertyData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StaticSiteBasicAuthPropertyData> response = Response.FromValue(StaticSiteBasicAuthPropertyData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<StaticSiteBasicAuthPropertyResource> operation = new AppServiceArmOperation<StaticSiteBasicAuthPropertyResource>(Response.FromValue(new StaticSiteBasicAuthPropertyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +112,16 @@ namespace Azure.ResourceManager.AppService
         /// Description for Adds or updates basic auth for a static site.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_CreateOrUpdateBasicAuth</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteBasicAuthPropertiesARMResources_CreateOrUpdateBasicAuth. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,16 +134,24 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _staticSiteBasicAuthPropertyStaticSitesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _staticSiteBasicAuthPropertyStaticSitesRestClient.CreateOrUpdateBasicAuth(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, basicAuthName, data, cancellationToken);
-                var uri = _staticSiteBasicAuthPropertyStaticSitesRestClient.CreateCreateOrUpdateBasicAuthRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, basicAuthName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppServiceArmOperation<StaticSiteBasicAuthPropertyResource>(Response.FromValue(new StaticSiteBasicAuthPropertyResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateCreateOrUpdateBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), StaticSiteBasicAuthPropertyData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StaticSiteBasicAuthPropertyData> response = Response.FromValue(StaticSiteBasicAuthPropertyData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppServiceArmOperation<StaticSiteBasicAuthPropertyResource> operation = new AppServiceArmOperation<StaticSiteBasicAuthPropertyResource>(Response.FromValue(new StaticSiteBasicAuthPropertyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,20 +165,16 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets the basic auth properties for a static site.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBasicAuth</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteBasicAuthPropertiesARMResources_GetBasicAuth. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -175,13 +182,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StaticSiteBasicAuthPropertyResource>> GetAsync(StaticSiteBasicAuthName basicAuthName, CancellationToken cancellationToken = default)
         {
-            using var scope = _staticSiteBasicAuthPropertyStaticSitesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.Get");
+            using DiagnosticScope scope = _staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _staticSiteBasicAuthPropertyStaticSitesRestClient.GetBasicAuthAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, basicAuthName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StaticSiteBasicAuthPropertyData> response = Response.FromValue(StaticSiteBasicAuthPropertyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteBasicAuthPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,20 +210,16 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets the basic auth properties for a static site.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBasicAuth</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteBasicAuthPropertiesARMResources_GetBasicAuth. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,13 +227,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StaticSiteBasicAuthPropertyResource> Get(StaticSiteBasicAuthName basicAuthName, CancellationToken cancellationToken = default)
         {
-            using var scope = _staticSiteBasicAuthPropertyStaticSitesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.Get");
+            using DiagnosticScope scope = _staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.Get");
             scope.Start();
             try
             {
-                var response = _staticSiteBasicAuthPropertyStaticSitesRestClient.GetBasicAuth(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, basicAuthName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StaticSiteBasicAuthPropertyData> response = Response.FromValue(StaticSiteBasicAuthPropertyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteBasicAuthPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -236,50 +255,50 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets the basic auth properties for a static site as a collection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_ListBasicAuth</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteBasicAuthPropertiesARMResources_ListBasicAuth. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StaticSiteBasicAuthPropertyResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StaticSiteBasicAuthPropertyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSiteBasicAuthPropertyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBasicAuthPropertyStaticSitesRestClient.CreateListBasicAuthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBasicAuthPropertyStaticSitesRestClient.CreateListBasicAuthNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBasicAuthPropertyResource(Client, StaticSiteBasicAuthPropertyData.DeserializeStaticSiteBasicAuthPropertyData(e)), _staticSiteBasicAuthPropertyStaticSitesClientDiagnostics, Pipeline, "StaticSiteBasicAuthPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<StaticSiteBasicAuthPropertyData, StaticSiteBasicAuthPropertyResource>(new StaticSiteBasicAuthPropertiesARMResourcesGetBasicAuthAsyncCollectionResultOfT(
+                _staticSiteBasicAuthPropertiesARMResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StaticSiteBasicAuthPropertyCollection.GetAll"), data => new StaticSiteBasicAuthPropertyResource(Client, data));
         }
 
         /// <summary>
         /// Description for Gets the basic auth properties for a static site as a collection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_ListBasicAuth</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteBasicAuthPropertiesARMResources_ListBasicAuth. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,29 +306,33 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="StaticSiteBasicAuthPropertyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSiteBasicAuthPropertyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteBasicAuthPropertyStaticSitesRestClient.CreateListBasicAuthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteBasicAuthPropertyStaticSitesRestClient.CreateListBasicAuthNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StaticSiteBasicAuthPropertyResource(Client, StaticSiteBasicAuthPropertyData.DeserializeStaticSiteBasicAuthPropertyData(e)), _staticSiteBasicAuthPropertyStaticSitesClientDiagnostics, Pipeline, "StaticSiteBasicAuthPropertyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<StaticSiteBasicAuthPropertyData, StaticSiteBasicAuthPropertyResource>(new StaticSiteBasicAuthPropertiesARMResourcesGetBasicAuthCollectionResultOfT(
+                _staticSiteBasicAuthPropertiesARMResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StaticSiteBasicAuthPropertyCollection.GetAll"), data => new StaticSiteBasicAuthPropertyResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBasicAuth</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteBasicAuthPropertiesARMResources_GetBasicAuth. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,11 +340,29 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(StaticSiteBasicAuthName basicAuthName, CancellationToken cancellationToken = default)
         {
-            using var scope = _staticSiteBasicAuthPropertyStaticSitesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.Exists");
+            using DiagnosticScope scope = _staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _staticSiteBasicAuthPropertyStaticSitesRestClient.GetBasicAuthAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, basicAuthName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StaticSiteBasicAuthPropertyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteBasicAuthPropertyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteBasicAuthPropertyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -335,20 +376,16 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBasicAuth</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteBasicAuthPropertiesARMResources_GetBasicAuth. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,11 +393,29 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(StaticSiteBasicAuthName basicAuthName, CancellationToken cancellationToken = default)
         {
-            using var scope = _staticSiteBasicAuthPropertyStaticSitesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.Exists");
+            using DiagnosticScope scope = _staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _staticSiteBasicAuthPropertyStaticSitesRestClient.GetBasicAuth(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, basicAuthName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StaticSiteBasicAuthPropertyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteBasicAuthPropertyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteBasicAuthPropertyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -374,20 +429,16 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBasicAuth</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteBasicAuthPropertiesARMResources_GetBasicAuth. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,13 +446,33 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<StaticSiteBasicAuthPropertyResource>> GetIfExistsAsync(StaticSiteBasicAuthName basicAuthName, CancellationToken cancellationToken = default)
         {
-            using var scope = _staticSiteBasicAuthPropertyStaticSitesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.GetIfExists");
+            using DiagnosticScope scope = _staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _staticSiteBasicAuthPropertyStaticSitesRestClient.GetBasicAuthAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, basicAuthName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StaticSiteBasicAuthPropertyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteBasicAuthPropertyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteBasicAuthPropertyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<StaticSiteBasicAuthPropertyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteBasicAuthPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -415,20 +486,16 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBasicAuth</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteBasicAuthPropertiesARMResources_GetBasicAuth. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -436,13 +503,33 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<StaticSiteBasicAuthPropertyResource> GetIfExists(StaticSiteBasicAuthName basicAuthName, CancellationToken cancellationToken = default)
         {
-            using var scope = _staticSiteBasicAuthPropertyStaticSitesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.GetIfExists");
+            using DiagnosticScope scope = _staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics.CreateScope("StaticSiteBasicAuthPropertyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _staticSiteBasicAuthPropertyStaticSitesRestClient.GetBasicAuth(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, basicAuthName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StaticSiteBasicAuthPropertyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteBasicAuthPropertyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteBasicAuthPropertyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<StaticSiteBasicAuthPropertyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteBasicAuthPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -462,6 +549,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<StaticSiteBasicAuthPropertyResource> IAsyncEnumerable<StaticSiteBasicAuthPropertyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

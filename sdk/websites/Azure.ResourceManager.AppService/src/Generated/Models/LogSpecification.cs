@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Log Definition of a single resource metric.
-    /// Serialized Name: LogSpecification
-    /// </summary>
+    /// <summary> Log Definition of a single resource metric. </summary>
     public partial class LogSpecification
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LogSpecification"/>. </summary>
         internal LogSpecification()
@@ -54,30 +23,33 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LogSpecification"/>. </summary>
-        /// <param name="name"> Serialized Name: LogSpecification.name. </param>
-        /// <param name="displayName"> Serialized Name: LogSpecification.displayName. </param>
-        /// <param name="blobDuration"> Serialized Name: LogSpecification.blobDuration. </param>
-        /// <param name="logFilterPattern"> Serialized Name: LogSpecification.logFilterPattern. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LogSpecification(string name, string displayName, TimeSpan? blobDuration, string logFilterPattern, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="name"></param>
+        /// <param name="displayName"></param>
+        /// <param name="blobDuration"></param>
+        /// <param name="logFilterPattern"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LogSpecification(string name, string displayName, TimeSpan? blobDuration, string logFilterPattern, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
             BlobDuration = blobDuration;
             LogFilterPattern = logFilterPattern;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Serialized Name: LogSpecification.name. </summary>
+        /// <summary> Gets the Name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Serialized Name: LogSpecification.displayName. </summary>
+
+        /// <summary> Gets the DisplayName. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; }
-        /// <summary> Serialized Name: LogSpecification.blobDuration. </summary>
+
+        /// <summary> Gets the BlobDuration. </summary>
         [WirePath("blobDuration")]
         public TimeSpan? BlobDuration { get; }
-        /// <summary> Serialized Name: LogSpecification.logFilterPattern. </summary>
+
+        /// <summary> Gets the LogFilterPattern. </summary>
         [WirePath("logFilterPattern")]
         public string LogFilterPattern { get; }
     }

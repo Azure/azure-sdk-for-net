@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 BgpServiceCommunityListResult result = BgpServiceCommunityListResult.FromResponse(response);
-                yield return Page<BgpServiceCommunity>.FromValues((IReadOnlyList<BgpServiceCommunity>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BgpServiceCommunity>.FromValues((IReadOnlyList<BgpServiceCommunity>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

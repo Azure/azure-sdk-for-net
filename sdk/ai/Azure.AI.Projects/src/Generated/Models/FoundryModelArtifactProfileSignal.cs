@@ -4,11 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Signals detected in the model artifact. </summary>
-    internal readonly partial struct FoundryModelArtifactProfileSignal : IEquatable<FoundryModelArtifactProfileSignal>
+    [Experimental("AAIP001")]
+    public readonly partial struct FoundryModelArtifactProfileSignal : IEquatable<FoundryModelArtifactProfileSignal>
     {
         private readonly string _value;
         /// <summary> Pickle deserialization detected. </summary>

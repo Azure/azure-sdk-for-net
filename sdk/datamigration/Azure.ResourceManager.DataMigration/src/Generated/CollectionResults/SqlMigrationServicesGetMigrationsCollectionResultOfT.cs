@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.DataMigration
                     yield break;
                 }
                 DatabaseMigrationListResult result = DatabaseMigrationListResult.FromResponse(response);
-                yield return Page<DatabaseMigration>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DatabaseMigration>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

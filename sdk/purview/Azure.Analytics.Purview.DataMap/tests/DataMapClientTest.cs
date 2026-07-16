@@ -25,14 +25,14 @@ namespace Azure.Analytics.Purview.DataMap.Tests
             QueryConfig sg = new QueryConfig();
             sg.Keywords = "Glossary";
             sg.Limit = 1;
-            Response<QueryResult> result = await client.GetDiscoveryClient().QueryAsync(sg);
+            Response<QueryResult> result = await client.GetDataMapDiscoveryClient().QueryAsync(sg);
             Assert.That(result.GetRawResponse().Status, Is.EqualTo(200));
         }
 
         [RecordedTest]
         public async Task GetGlossary()
         {
-            var client = GetDataMapClient().GetGlossaryClient();
+            var client = GetDataMapClient().GetDataMapGlossaryClient();
             Response fetchResponse = await client.BatchGetAsync(1, null, null, true, new RequestContext());
             // Console.WriteLine(fetchResponse.Content);
             Assert.That(fetchResponse.Status, Is.EqualTo(200));

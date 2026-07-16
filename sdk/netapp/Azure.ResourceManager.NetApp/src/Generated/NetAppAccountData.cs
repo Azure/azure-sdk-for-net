@@ -76,23 +76,6 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Entra ID configuration for the account. </summary>
-        public EntraIdConfig EntraIdConfig
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EntraIdConfig;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AccountProperties();
-                }
-                Properties.EntraIdConfig = value;
-            }
-        }
-
         /// <summary> Encryption settings. </summary>
         public NetAppAccountEncryption Encryption
         {
@@ -142,23 +125,6 @@ namespace Azure.ResourceManager.NetApp
             get
             {
                 return Properties is null ? default : Properties.MultiAdStatus;
-            }
-        }
-
-        /// <summary> LDAP Configuration for the account. </summary>
-        public LdapConfiguration LdapConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LdapConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AccountProperties();
-                }
-                Properties.LdapConfiguration = value;
             }
         }
     }

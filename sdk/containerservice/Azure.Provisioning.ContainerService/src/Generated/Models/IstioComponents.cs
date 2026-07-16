@@ -74,6 +74,10 @@ namespace Azure.Provisioning.ContainerService
             _ingressGateways = DefineListProperty<IstioIngressGateway>(nameof(IngressGateways), new string[] { "ingressGateways" });
             _egressGateways = DefineListProperty<IstioEgressGateway>(nameof(EgressGateways), new string[] { "egressGateways" });
             _proxyRedirectionMechanism = DefineProperty<ProxyRedirectionMechanism>(nameof(ProxyRedirectionMechanism), new string[] { "proxyRedirectionMechanism" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for IstioComponents that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

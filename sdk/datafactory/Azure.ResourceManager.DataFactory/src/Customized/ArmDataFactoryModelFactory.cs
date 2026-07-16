@@ -4,9 +4,11 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -15,6 +17,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     // for the dual-view rationale). Because the spec does not define a separate ManagedIdentityCredential
     // resource, the MPG generator emits only DataFactoryServiceCredentialData on the model factory;
     // this partial keeps the upstream factory signature available for mocking/back-compat consumers.
+    // Suppress model factory methods for Azure.Core.Expressions.DataFactory types because they belong to
+    // the shared core package, not this ARM package. Track generator fix in
+    // https://github.com/Azure/azure-sdk-for-net/issues/60178.
+    [CodeGenSuppress("DataFactoryLinkedServiceReference", typeof(LinkedServiceReferenceType), typeof(string), typeof(IDictionary<string, BinaryData>))]
+    [CodeGenSuppress("DataFactorySecretString", typeof(string))]
+    [CodeGenSuppress("DataFactorySecret", typeof(string))]
     public static partial class ArmDataFactoryModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="DataFactoryManagedIdentityCredentialData"/>. </summary>

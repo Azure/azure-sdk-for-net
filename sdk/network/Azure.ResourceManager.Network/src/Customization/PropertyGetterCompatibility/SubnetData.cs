@@ -3,9 +3,12 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Compatibility declaration for the SubnetData type. </summary>
+    [CodeGenSuppress("IPAllocations")]
     public partial class SubnetData
     {
         /// <summary> Compatibility member. </summary>
@@ -13,7 +16,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.Models.NetworkIPConfigurationProfile> IPConfigurationProfiles { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.NetworkIPConfigurationProfile>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.Models.NetworkIPConfiguration> IPConfigurations => Properties is null ? default : Properties.IpConfigurations;
+        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.Models.NetworkIPConfiguration> IPConfigurations => Properties is null ? default : Properties.IPConfigurations;
         /// <summary> Compatibility member. </summary>
         public global::System.Nullable<global::Azure.ResourceManager.Network.Models.VirtualNetworkPrivateEndpointNetworkPolicy> PrivateEndpointNetworkPolicy { get; set; }
         /// <summary> Compatibility member. </summary>

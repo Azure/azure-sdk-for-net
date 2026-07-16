@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.HybridCompute
                     yield break;
                 }
                 GatewaysListResult result = GatewaysListResult.FromResponse(response);
-                yield return Page<ArcGatewayData>.FromValues((IReadOnlyList<ArcGatewayData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ArcGatewayData>.FromValues((IReadOnlyList<ArcGatewayData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

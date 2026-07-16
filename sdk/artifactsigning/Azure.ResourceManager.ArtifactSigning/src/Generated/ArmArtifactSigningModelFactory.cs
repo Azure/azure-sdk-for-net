@@ -106,6 +106,15 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                 default);
         }
 
+        /// <param name="revokeCertificates"> List of certificates to be revoked in a certificate profile. </param>
+        /// <returns> A new <see cref="Models.RevokeCertificateList"/> instance for mocking. </returns>
+        public static RevokeCertificateList RevokeCertificateList(IEnumerable<RevokeCertificateContent> revokeCertificates = default)
+        {
+            revokeCertificates ??= new ChangeTrackingList<RevokeCertificateContent>();
+
+            return new RevokeCertificateList((revokeCertificates ?? new ChangeTrackingList<RevokeCertificateContent>()).ToList(), default);
+        }
+
         /// <param name="serialNumber"> Serial number of the certificate. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
         /// <param name="effectiveOn"> The timestamp when the revocation is effective. </param>

@@ -541,23 +541,6 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        /// <summary> Specifies the type of LDAP server for a given NFS volume. </summary>
-        public NetAppLdapServerType? LdapServerType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LdapServerType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VolumeProperties();
-                }
-                Properties.LdapServerType = value;
-            }
-        }
-
         /// <summary> Specifies whether Cool Access(tiering) is enabled for the volume. </summary>
         public bool? IsCoolAccessEnabled
         {
@@ -890,27 +873,6 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        /// <summary>
-        /// Specifies the type of the Large Volume. When set to 'LargeVolume', the large volume is created with standard configuration.
-        /// If it is set to 'ExtraLargeVolume7Dot2PiB', the extra large volume is created with higher capacity limit 7.2PiB with cool access enabled,
-        /// delivering higher capacity limit with lower costs.
-        /// </summary>
-        public LargeVolumeType? LargeVolumeType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LargeVolumeType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VolumeProperties();
-                }
-                Properties.LargeVolumeType = value;
-            }
-        }
-
         /// <summary> Id of the snapshot or backup that the volume is restored from. </summary>
         public ResourceIdentifier OriginatingResourceId
         {
@@ -926,40 +888,6 @@ namespace Azure.ResourceManager.NetApp.Models
             get
             {
                 return Properties is null ? default : Properties.InheritedSizeInBytes;
-            }
-        }
-
-        /// <summary> Language supported for volume. </summary>
-        public NetAppVolumeLanguage? Language
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Language;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VolumeProperties();
-                }
-                Properties.Language = value;
-            }
-        }
-
-        /// <summary> Specifies whether the volume operates in Breakthrough Mode. </summary>
-        public BreakthroughMode? BreakthroughMode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.BreakthroughMode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VolumeProperties();
-                }
-                Properties.BreakthroughMode = value;
             }
         }
 

@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.PolicyInsights
                     yield break;
                 }
                 Models.PolicyMetadataCollection result = Models.PolicyMetadataCollection.FromResponse(response);
-                yield return Page<SlimPolicyMetadata>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SlimPolicyMetadata>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

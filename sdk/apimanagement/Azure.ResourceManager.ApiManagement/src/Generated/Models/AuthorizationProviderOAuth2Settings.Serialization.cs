@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class AuthorizationProviderOAuth2Settings : IUtf8JsonSerializable, IJsonModel<AuthorizationProviderOAuth2Settings>
+    /// <summary> OAuth2 settings details. </summary>
+    public partial class AuthorizationProviderOAuth2Settings : IJsonModel<AuthorizationProviderOAuth2Settings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthorizationProviderOAuth2Settings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AuthorizationProviderOAuth2Settings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AuthorizationProviderOAuth2Settings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAuthorizationProviderOAuth2Settings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AuthorizationProviderOAuth2Settings)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AuthorizationProviderOAuth2Settings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AuthorizationProviderOAuth2Settings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AuthorizationProviderOAuth2Settings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AuthorizationProviderOAuth2Settings IPersistableModel<AuthorizationProviderOAuth2Settings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AuthorizationProviderOAuth2Settings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AuthorizationProviderOAuth2Settings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationProviderOAuth2Settings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AuthorizationProviderOAuth2Settings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AuthorizationProviderOAuth2Settings)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(RedirectUri))
             {
                 writer.WritePropertyName("redirectUrl"u8);
@@ -45,15 +84,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("grantTypes"u8);
                 writer.WriteObjectValue(GrantTypes, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(KeyVault))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("keyVault"u8);
+                writer.WriteObjectValue(KeyVault, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FederatedIdentityCredentialsProperties))
+            {
+                writer.WritePropertyName("federatedIdentityCredentialsProperties"u8);
+                writer.WriteObjectValue(FederatedIdentityCredentialsProperties, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -62,135 +111,80 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        AuthorizationProviderOAuth2Settings IJsonModel<AuthorizationProviderOAuth2Settings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AuthorizationProviderOAuth2Settings IJsonModel<AuthorizationProviderOAuth2Settings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AuthorizationProviderOAuth2Settings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationProviderOAuth2Settings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AuthorizationProviderOAuth2Settings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AuthorizationProviderOAuth2Settings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAuthorizationProviderOAuth2Settings(document.RootElement, options);
         }
 
-        internal static AuthorizationProviderOAuth2Settings DeserializeAuthorizationProviderOAuth2Settings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AuthorizationProviderOAuth2Settings DeserializeAuthorizationProviderOAuth2Settings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Uri redirectUri = default;
             AuthorizationProviderOAuth2GrantTypes grantTypes = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            AuthorizationProviderKeyVaultContract keyVault = default;
+            AuthorizationProviderFederatedIdentityCredentialsProperties federatedIdentityCredentialsProperties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("redirectUrl"u8))
+                if (prop.NameEquals("redirectUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    redirectUri = new Uri(property.Value.GetString());
+                    redirectUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (property.NameEquals("grantTypes"u8))
+                if (prop.NameEquals("grantTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    grantTypes = AuthorizationProviderOAuth2GrantTypes.DeserializeAuthorizationProviderOAuth2GrantTypes(property.Value, options);
+                    grantTypes = AuthorizationProviderOAuth2GrantTypes.DeserializeAuthorizationProviderOAuth2GrantTypes(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("keyVault"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVault = AuthorizationProviderKeyVaultContract.DeserializeAuthorizationProviderKeyVaultContract(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("federatedIdentityCredentialsProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    federatedIdentityCredentialsProperties = AuthorizationProviderFederatedIdentityCredentialsProperties.DeserializeAuthorizationProviderFederatedIdentityCredentialsProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AuthorizationProviderOAuth2Settings(redirectUri, grantTypes, serializedAdditionalRawData);
+            return new AuthorizationProviderOAuth2Settings(redirectUri, grantTypes, keyVault, federatedIdentityCredentialsProperties, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RedirectUri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  redirectUrl: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RedirectUri))
-                {
-                    builder.Append("  redirectUrl: ");
-                    builder.AppendLine($"'{RedirectUri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GrantTypes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  grantTypes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(GrantTypes))
-                {
-                    builder.Append("  grantTypes: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, GrantTypes, options, 2, false, "  grantTypes: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<AuthorizationProviderOAuth2Settings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationProviderOAuth2Settings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(AuthorizationProviderOAuth2Settings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AuthorizationProviderOAuth2Settings IPersistableModel<AuthorizationProviderOAuth2Settings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationProviderOAuth2Settings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAuthorizationProviderOAuth2Settings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AuthorizationProviderOAuth2Settings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AuthorizationProviderOAuth2Settings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
