@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             ServiceBusNamespaceFailOver serviceBusNamespaceFailOver = new ServiceBusNamespaceFailOver
             {
                 PrimaryLocation = "centralus",
-                Force = true,
+                IsForced = true,
             };
             ArmOperation<ServiceBusNamespaceFailOver> lro = await serviceBusNamespace.FailoverAsync(WaitUntil.Completed, serviceBusNamespaceFailOver);
             ServiceBusNamespaceFailOver result = lro.Value;
