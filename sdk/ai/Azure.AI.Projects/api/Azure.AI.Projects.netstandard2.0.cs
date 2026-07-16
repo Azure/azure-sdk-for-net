@@ -653,7 +653,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.Evaluation.EvaluatorMetric EvaluatorMetric(Azure.AI.Projects.Evaluation.EvaluatorMetricType? type, Azure.AI.Projects.Evaluation.EvaluatorMetricDirection? desirableDirection, float? minValue, float? maxValue, bool? isPrimary) { throw null; }
         public static Azure.AI.Projects.Evaluation.EvaluatorMetric EvaluatorMetric(Azure.AI.Projects.Evaluation.EvaluatorMetricType? type = default(Azure.AI.Projects.Evaluation.EvaluatorMetricType?), Azure.AI.Projects.Evaluation.EvaluatorMetricDirection? desirableDirection = default(Azure.AI.Projects.Evaluation.EvaluatorMetricDirection?), float? minValue = default(float?), float? maxValue = default(float?), float? threshold = default(float?), bool? isPrimary = default(bool?)) { throw null; }
         public static Azure.AI.Projects.Evaluation.EvaluatorVersion EvaluatorVersion(string displayName, System.Collections.Generic.IDictionary<string, string> metadata, Azure.AI.Projects.EvaluatorType evaluatorType, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.EvaluatorCategory> categories, Azure.AI.Projects.Evaluation.EvaluatorDefinition definition, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, System.Collections.Generic.IDictionary<string, string> tags) { throw null; }
-        public static Azure.AI.Projects.Evaluation.EvaluatorVersion EvaluatorVersion(string displayName = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.AI.Projects.EvaluatorType evaluatorType = default(Azure.AI.Projects.EvaluatorType), System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.EvaluatorCategory> categories = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.ProjectsEvaluationLevel> supportedEvaluationLevels = null, Azure.AI.Projects.Evaluation.EvaluatorDefinition definition = null, Azure.AI.Projects.Evaluation.EvaluatorGenerationArtifacts generationArtifacts = null, string createdBy = null, string createdAt = null, string modifiedAt = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.AI.Projects.Evaluation.EvaluatorVersion EvaluatorVersion(string displayName = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.AI.Projects.EvaluatorType evaluatorType = default(Azure.AI.Projects.EvaluatorType), System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.EvaluatorCategory> categories = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.ProjectsEvaluationLevel> supportedEvaluationLevels = null, Azure.AI.Projects.Evaluation.EvaluatorDefinition definition = null, Azure.AI.Projects.Evaluation.EvaluatorGenerationArtifacts generationArtifacts = null, string generationJobId = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.GenerationWarningType> warnings = null, string createdBy = null, string createdAt = null, string modifiedAt = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.AI.Projects.FileDataGenerationJobOutput FileDataGenerationJobOutput(string id = null, string filename = null) { throw null; }
         public static Azure.AI.Projects.FileDataGenerationJobSource FileDataGenerationJobSource(string description = null, string id = null) { throw null; }
         public static Azure.AI.Projects.FileDataset FileDataset(System.Uri dataUri = null, bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
@@ -721,6 +721,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.RoutineRun RoutineRun(string id = null, System.BinaryData statusInternal = null, Azure.AI.Projects.RoutineRunPhase? phase = default(Azure.AI.Projects.RoutineRunPhase?), Azure.AI.Projects.RoutineTriggerKind? triggerType = default(Azure.AI.Projects.RoutineTriggerKind?), string triggerName = null, System.Collections.Generic.IDictionary<string, System.BinaryData> triggerEventPayload = null, Azure.AI.Projects.RoutineAttemptSource? attemptSource = default(Azure.AI.Projects.RoutineAttemptSource?), Azure.AI.Projects.RoutineActionKind? actionType = default(Azure.AI.Projects.RoutineActionKind?), string agentId = null, string agentEndpointId = null, string conversationId = null, string sessionId = null, System.DateTimeOffset? triggeredAt = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledFireAt = default(System.DateTimeOffset?), System.DateTimeOffset? startedAt = default(System.DateTimeOffset?), System.DateTimeOffset? endedAt = default(System.DateTimeOffset?), string dispatchId = null, string actionCorrelationId = null, string responseId = null, string taskId = null, int? errorStatusCode = default(int?), string errorType = null, string errorMessage = null) { throw null; }
         public static Azure.AI.Projects.RoutineTrigger RoutineTrigger(string type = null) { throw null; }
         public static Azure.AI.Projects.RubricBasedEvaluatorDefinition RubricBasedEvaluatorDefinition(System.BinaryData initParameters = null, System.BinaryData dataSchema = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Evaluation.EvaluatorMetric> metrics = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.EvaluationsDimension> dimensions = null, float? passThreshold = default(float?)) { throw null; }
+        public static Azure.AI.Projects.RubricGenerationInputQualityWarning RubricGenerationInputQualityWarning(Azure.AI.Projects.RubricGenerationInputQualityWarningCode code = default(Azure.AI.Projects.RubricGenerationInputQualityWarningCode), Azure.AI.Projects.RubricGenerationInputQualityWarningSeverity severity = default(Azure.AI.Projects.RubricGenerationInputQualityWarningSeverity), string message = null, Azure.AI.Projects.RubricGenerationInputQualityWarningSource source = default(Azure.AI.Projects.RubricGenerationInputQualityWarningSource), int? sourceIndex = default(int?)) { throw null; }
         public static Azure.AI.Projects.ScheduleRoutineTrigger ScheduleRoutineTrigger(string cronExpression = null, string timeZone = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.ScheduleRun ScheduleRun(string runId = null, string scheduleId = null, bool success = false, System.DateTimeOffset? triggerTime = default(System.DateTimeOffset?), string error = null, System.Collections.Generic.IReadOnlyDictionary<string, string> properties = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.ScheduleTrigger ScheduleTrigger(string type = null) { throw null; }
@@ -1304,6 +1305,22 @@ namespace Azure.AI.Projects
         public static implicit operator Azure.AI.Projects.FoundryModelWeightType (string value) { throw null; }
         public static implicit operator Azure.AI.Projects.FoundryModelWeightType? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.FoundryModelWeightType left, Azure.AI.Projects.FoundryModelWeightType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct GenerationWarningType : System.IEquatable<Azure.AI.Projects.GenerationWarningType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public GenerationWarningType(string value) { throw null; }
+        public static Azure.AI.Projects.GenerationWarningType InputQuality { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.GenerationWarningType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.GenerationWarningType left, Azure.AI.Projects.GenerationWarningType right) { throw null; }
+        public static implicit operator Azure.AI.Projects.GenerationWarningType (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.GenerationWarningType? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.GenerationWarningType left, Azure.AI.Projects.GenerationWarningType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1923,6 +1940,82 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.RubricBasedEvaluatorDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.RubricBasedEvaluatorDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.RubricBasedEvaluatorDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.RubricBasedEvaluatorDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RubricGenerationInputQualityWarning : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.RubricGenerationInputQualityWarning>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.RubricGenerationInputQualityWarning>
+    {
+        internal RubricGenerationInputQualityWarning() { }
+        public Azure.AI.Projects.RubricGenerationInputQualityWarningCode Code { get { throw null; } }
+        public string Message { get { throw null; } }
+        public Azure.AI.Projects.RubricGenerationInputQualityWarningSeverity Severity { get { throw null; } }
+        public Azure.AI.Projects.RubricGenerationInputQualityWarningSource Source { get { throw null; } }
+        public int? SourceIndex { get { throw null; } }
+        protected virtual Azure.AI.Projects.RubricGenerationInputQualityWarning JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Projects.RubricGenerationInputQualityWarning PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.RubricGenerationInputQualityWarning System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.RubricGenerationInputQualityWarning>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.RubricGenerationInputQualityWarning>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.RubricGenerationInputQualityWarning System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.RubricGenerationInputQualityWarning>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.RubricGenerationInputQualityWarning>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.RubricGenerationInputQualityWarning>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RubricGenerationInputQualityWarningCode : System.IEquatable<Azure.AI.Projects.RubricGenerationInputQualityWarningCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RubricGenerationInputQualityWarningCode(string value) { throw null; }
+        public static Azure.AI.Projects.RubricGenerationInputQualityWarningCode EmptyAgentInstructions { get { throw null; } }
+        public static Azure.AI.Projects.RubricGenerationInputQualityWarningCode EmptyDatasetContent { get { throw null; } }
+        public static Azure.AI.Projects.RubricGenerationInputQualityWarningCode EmptyPrompt { get { throw null; } }
+        public static Azure.AI.Projects.RubricGenerationInputQualityWarningCode InsufficientTotalInput { get { throw null; } }
+        public static Azure.AI.Projects.RubricGenerationInputQualityWarningCode LowTraceCount { get { throw null; } }
+        public static Azure.AI.Projects.RubricGenerationInputQualityWarningCode ShortAgentInstructions { get { throw null; } }
+        public static Azure.AI.Projects.RubricGenerationInputQualityWarningCode ShortDatasetContent { get { throw null; } }
+        public static Azure.AI.Projects.RubricGenerationInputQualityWarningCode ShortPrompt { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.RubricGenerationInputQualityWarningCode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.RubricGenerationInputQualityWarningCode left, Azure.AI.Projects.RubricGenerationInputQualityWarningCode right) { throw null; }
+        public static implicit operator Azure.AI.Projects.RubricGenerationInputQualityWarningCode (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.RubricGenerationInputQualityWarningCode? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.RubricGenerationInputQualityWarningCode left, Azure.AI.Projects.RubricGenerationInputQualityWarningCode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RubricGenerationInputQualityWarningSeverity : System.IEquatable<Azure.AI.Projects.RubricGenerationInputQualityWarningSeverity>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RubricGenerationInputQualityWarningSeverity(string value) { throw null; }
+        public static Azure.AI.Projects.RubricGenerationInputQualityWarningSeverity Warning { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.RubricGenerationInputQualityWarningSeverity other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.RubricGenerationInputQualityWarningSeverity left, Azure.AI.Projects.RubricGenerationInputQualityWarningSeverity right) { throw null; }
+        public static implicit operator Azure.AI.Projects.RubricGenerationInputQualityWarningSeverity (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.RubricGenerationInputQualityWarningSeverity? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.RubricGenerationInputQualityWarningSeverity left, Azure.AI.Projects.RubricGenerationInputQualityWarningSeverity right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RubricGenerationInputQualityWarningSource : System.IEquatable<Azure.AI.Projects.RubricGenerationInputQualityWarningSource>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RubricGenerationInputQualityWarningSource(string value) { throw null; }
+        public static Azure.AI.Projects.RubricGenerationInputQualityWarningSource Agent { get { throw null; } }
+        public static Azure.AI.Projects.RubricGenerationInputQualityWarningSource Aggregate { get { throw null; } }
+        public static Azure.AI.Projects.RubricGenerationInputQualityWarningSource Dataset { get { throw null; } }
+        public static Azure.AI.Projects.RubricGenerationInputQualityWarningSource Prompt { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.RubricGenerationInputQualityWarningSource other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.RubricGenerationInputQualityWarningSource left, Azure.AI.Projects.RubricGenerationInputQualityWarningSource right) { throw null; }
+        public static implicit operator Azure.AI.Projects.RubricGenerationInputQualityWarningSource (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.RubricGenerationInputQualityWarningSource? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.RubricGenerationInputQualityWarningSource left, Azure.AI.Projects.RubricGenerationInputQualityWarningSource right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ScheduleRoutineTrigger : Azure.AI.Projects.RoutineTrigger, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ScheduleRoutineTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ScheduleRoutineTrigger>
     {
@@ -2809,6 +2902,7 @@ namespace Azure.AI.Projects.Evaluation
         public System.DateTimeOffset CreatedAt { get { throw null; } }
         public System.DateTimeOffset? FinishedAt { get { throw null; } }
         public string Id { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.RubricGenerationInputQualityWarning> InputQualityWarnings { get { throw null; } }
         public Azure.AI.Projects.Evaluation.EvaluatorGenerationInputs Inputs { get { throw null; } set { } }
         public Azure.AI.Projects.Evaluation.EvaluatorVersion Result { get { throw null; } }
         public Azure.AI.Projects.ProjectsJobStatus Status { get { throw null; } }
@@ -2935,6 +3029,7 @@ namespace Azure.AI.Projects.Evaluation
         public string DisplayName { get { throw null; } set { } }
         public Azure.AI.Projects.EvaluatorType EvaluatorType { get { throw null; } set { } }
         public Azure.AI.Projects.Evaluation.EvaluatorGenerationArtifacts GenerationArtifacts { get { throw null; } }
+        public string GenerationJobId { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ModifiedAt { get { throw null; } }
@@ -2942,6 +3037,7 @@ namespace Azure.AI.Projects.Evaluation
         public System.Collections.Generic.IList<Azure.AI.Projects.Evaluation.ProjectsEvaluationLevel> SupportedEvaluationLevels { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string Version { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.GenerationWarningType> Warnings { get { throw null; } }
         protected virtual Azure.AI.Projects.Evaluation.EvaluatorVersion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.AI.Projects.Evaluation.EvaluatorVersion (System.ClientModel.ClientResult result) { throw null; }
