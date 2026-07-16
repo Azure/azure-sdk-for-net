@@ -147,11 +147,15 @@ def terminal_from_events(events: list[dict]) -> str | None:
 def post_stream(b: dict, sse_path: Path, max_s: int = TERMINAL_TIMEOUT_S) -> dict:
     """POST a streaming create; tee raw SSE to file; return summary."""
     sid = rid = None
+    content_type = None
+    status_code = None
     chunks: list[str] = []
     t0 = time.time()
     with httpx.Client(http2=False, timeout=httpx.Timeout(max_s, read=max_s)) as c:
         with c.stream("POST", url("/responses"), headers=headers(), json=b) as r:
             sid = r.headers.get("x-agent-session-id")
+            content_type = r.headers.get("content-type")
+            status_code = r.status_code
             with sse_path.open("w") as f:
                 for line in r.iter_lines():
                     f.write(line + "\n")
@@ -174,6 +178,8 @@ def post_stream(b: dict, sse_path: Path, max_s: int = TERMINAL_TIMEOUT_S) -> dic
     return {
         "session_id": sid,
         "response_id": rid,
+        "content_type": content_type,
+        "status_code": status_code,
         "events": events,
         "event_types": event_types(events),
         "elapsed": round(time.time() - t0, 1),
@@ -633,6 +639,56 @@ def case_steering(d: Path, combo: dict) -> dict:
     }
 
 
+def case_steering_stream(d: Path, combo: dict) -> dict:
+    """Steer an in-flight run with a STREAMING follow-up turn.
+
+    Regression guard for the queued-streaming bug: a POST /responses that sets
+    stream:true AND carries previous_response_id is queued behind the active
+    turn, but MUST still return an SSE stream (text/event-stream) — not a JSON
+    'queued' envelope. The stream stays open (keep-alives only) until the
+    in-flight turn winds down, then emits response.created / … for the steered
+    turn and drives it to terminal.
+    """
+    b = body("Research topic: the history of lighthouses [steer-stream-A]", store=True, background=True, stream=True)
+    (d / "request.json").write_text(json.dumps({"url": url("/responses"), "body": b}, indent=2))
+    p = wait_progress_stream(b, d / "streamA.sse", want_items=1, max_wait=120)
+    rid, sid = p["response_id"], p["session_id"]
+    log(f"  steering rid={rid} with a STREAMING follow-up (pinned session={sid}) ...")
+    sb = body(
+        "Actually research the engineering of Fresnel lenses instead [steer-stream-B]",
+        store=True,
+        background=True,
+        stream=True,
+        prev=rid,
+        session_id=sid,
+    )
+    (d / "steer.request.json").write_text(json.dumps(sb, indent=2))
+    # The steered POST is queued behind turn A. The critical assertion: the
+    # response is an SSE stream, not a JSON 'queued' envelope.
+    steer = post_stream(sb, d / "steer.stream.sse")
+    ctype = (steer.get("content_type") or "").lower()
+    is_sse = "text/event-stream" in ctype
+    steered_rid = steer["response_id"]
+    steered_terminal = steer.get("terminal")
+    # If the streamed POST connection ended before terminal, confirm via poll.
+    if steered_terminal not in TERMINAL_STATES and steered_rid:
+        term_res = poll_terminal(steered_rid, d / "poll.steered.jsonl")
+        steered_terminal = term_res.get("json", {}).get("status")
+    orig = get_response(rid)
+    return {
+        "ok": is_sse and steered_terminal == "completed",
+        "content_type": steer.get("content_type"),
+        "returned_sse_not_json": is_sse,
+        "terminal": steered_terminal,
+        "response_id": rid,
+        "steered_response_id": steered_rid,
+        "session_id": sid,
+        "steered_event_types": steer.get("event_types"),
+        "orig_status": orig["json"].get("status") if isinstance(orig["json"], dict) else None,
+        "assert": "queued streaming steer returns SSE (text/event-stream), not JSON; steered turn completes",
+    }
+
+
 def case_steering_crash(d: Path, combo: dict) -> dict:
     from verify_crash import ContinuousLogCapture  # lazy: avoid import cycle
 
@@ -905,9 +961,11 @@ CASES = {
     "T14": ("C7", {"id": "C7", "store": True, "background": True}, case_oversized_steering),
     "T15": ("C7", {"id": "C7", "store": True, "background": True}, case_oversized_crash_recovery),
     "T16": ("C8", {"id": "C8", "store": True, "background": True}, case_mark_failed),
+    # ── Queued-streaming steer: SSE-not-JSON regression guard ──
+    "T17": ("C1", {"id": "C1", "store": True, "background": True}, case_steering_stream),
 }
 
-ORDER = [f"T{i}" for i in range(1, 17)]
+ORDER = [f"T{i}" for i in range(1, 18)]
 
 
 def run_case(run_dir: Path, name: str) -> dict:
