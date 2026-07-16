@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Caller-supplied inputs for an evaluator generation job. </summary>
+    [Experimental("AAIP001")]
     public partial class EvaluatorGenerationInputs
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

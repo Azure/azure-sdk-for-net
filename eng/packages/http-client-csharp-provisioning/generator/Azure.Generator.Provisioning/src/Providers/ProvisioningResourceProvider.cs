@@ -35,19 +35,13 @@ namespace Azure.Generator.Provisioning.Providers
     internal class ProvisioningResourceProvider : ModelProvider, IProvisioningPropertyInfo
     {
         // System properties that should always be output-only
-        private static readonly HashSet<string> OutputOnlyProperties = new(StringComparer.OrdinalIgnoreCase)
+        private static readonly HashSet<string> OutputOnlyProperties = new(StringComparer.Ordinal)
         {
             "id", "systemData", "type"
         };
 
-        // System properties that should always be required, even when marked readOnly (path parameters)
-        private static readonly HashSet<string> RequiredInputProperties = new(StringComparer.OrdinalIgnoreCase)
-        {
-            "name"
-        };
-
         // Properties to skip entirely (type is implied by the resource type)
-        private static readonly HashSet<string> SkipProperties = new(StringComparer.OrdinalIgnoreCase)
+        private static readonly HashSet<string> SkipProperties = new(StringComparer.Ordinal)
         {
             "type"
         };
@@ -55,6 +49,7 @@ namespace Azure.Generator.Provisioning.Providers
         private readonly InputModelType _inputModel;
         private readonly ProvisioningResourceProjection? _resourceProjection;
         private readonly string? _defaultApiVersion;
+        private readonly bool _isSettableResource;
         /// <summary>
         /// All collected properties for the resource, including flattened and inherited ones,
         /// with their resolved isOutput/isRequired/bicepPath metadata.
@@ -99,9 +94,11 @@ namespace Azure.Generator.Provisioning.Providers
         {
             if (!_propertyLookup.TryGetValue(inputProp, out var propInfo))
                 return null;
+
             return new ProvisioningPropertyInfo(
                 propInfo.PropertyName,
                 propInfo.IsOutput,
+                propInfo.IsSettable,
                 propInfo.IsRequired,
                 propInfo.BicepPath,
                 propInfo.DefaultValue,
@@ -119,6 +116,7 @@ namespace Azure.Generator.Provisioning.Providers
             _defaultApiVersion = projection.ApiVersions.Count > 0
                 ? projection.ApiVersions.Last()
                 : null;
+            _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(projection.ResourceModel);
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _allProperties = CollectAllProperties();
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);
@@ -133,6 +131,7 @@ namespace Azure.Generator.Provisioning.Providers
             _inputModel = inputModel;
             _resourceProjection = null;
             _defaultApiVersion = null;
+            _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(inputModel);
             _createBodyWritableProperties = [];
             _allProperties = CollectAllProperties();
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);
@@ -196,7 +195,7 @@ namespace Azure.Generator.Provisioning.Providers
             var properties = new List<PropertyProvider>();
             foreach (var propInfo in _allProperties)
             {
-                var property = CodeModelGenerator.Instance.TypeFactory.CreateProperty(propInfo.Property, this);
+                var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(propInfo.Property, this);
                 if (property != null)
                     properties.Add(property);
             }
@@ -288,7 +287,7 @@ namespace Azure.Generator.Provisioning.Providers
                 var sig = new ConstructorSignature(
                     Type,
                     $"Creates a new {Name}.",
-                    MethodSignatureModifiers.Public,
+                    _isSettableResource ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
                     [bicepIdentifierParam, resourceVersionParam],
                     null,
                     initializer);
@@ -312,7 +311,7 @@ namespace Azure.Generator.Provisioning.Providers
             var baseSig = new ConstructorSignature(
                 Type,
                 $"Creates a new {Name}.",
-                MethodSignatureModifiers.Public,
+                _isSettableResource ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
                 [bicepIdentifierParam, resourceVersionParam],
                 null,
                 baseInitializer);
@@ -394,7 +393,7 @@ namespace Azure.Generator.Provisioning.Providers
         /// </summary>
         private HashSet<string> BuildCreateBodyWritableProperties()
         {
-            var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var result = new HashSet<string>(StringComparer.Ordinal);
             if (_resourceProjection == null) return result;
 
             var createMethod = _resourceProjection.Methods
@@ -438,7 +437,7 @@ namespace Azure.Generator.Provisioning.Providers
                 return CollectOwnProperties();
 
             var result = new List<ResourcePropertyInfo>();
-            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var seen = new HashSet<string>(StringComparer.Ordinal);
 
             // Collect from the base chain first (top-most ancestor → immediate base),
             // then from the resource model itself. This ensures inherited ARM common
@@ -479,7 +478,7 @@ namespace Azure.Generator.Provisioning.Providers
                 // Skip "type" property and extension-resource language-level scope.
                 if (SkipProperties.Contains(serializedName)
                     || (_resourceProjection?.IsExtensionResource == true
-                        && string.Equals(serializedName, "scope", StringComparison.OrdinalIgnoreCase)))
+                        && serializedName == "scope"))
                 {
                     continue;
                 }
@@ -488,31 +487,38 @@ namespace Azure.Generator.Provisioning.Providers
                     ? [.. basePath, serializedName]
                     : new[] { serializedName };
 
-                var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
-                        && !_createBodyWritableProperties.Contains(serializedName))
+                // ARM resource name metadata is the wire property exactly named "name".
+                // Keep this comparison case-sensitive so unrelated body properties like "Name" are not treated as metadata.
+                var isResourceName = serializedName == "name";
+                var isOutput = (prop.IsReadOnly && !isResourceName && !_createBodyWritableProperties.Contains(serializedName))
                     || OutputOnlyProperties.Contains(serializedName);
-                var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
+                // Read-only resources are referenced through FromExisting, so Name must remain settable.
+                // Other non-output properties are settable only when the resource has a writable scope.
+                var isSettable = !isOutput && (_isSettableResource || isResourceName);
+                // Read-only resources should not require body properties that users cannot set.
+                // Metadata inputs such as resource name remain required even without writable scopes.
+                var isRequired = isResourceName || (prop.IsRequired && _isSettableResource);
 
                 var propertyName = prop.Name.ToIdentifierName();
-                // For singleton resources, the "name" property is output-only with a default value
+                // For singleton resources, the "name" property has one fixed default value and is not settable.
                 string? defaultValue = null;
-                if (serializedName == "name"
-                    && _resourceProjection?.SingletonResourceName is not null)
+                if (isResourceName
+                    && _resourceProjection?.SingletonResourceName is string singletonResourceName)
                 {
-                    defaultValue = _resourceProjection.SingletonResourceName;
-                    isOutput = true;
+                    defaultValue = singletonResourceName;
+                    isSettable = false;
                 }
                 // Ensure "location" at the resource level always uses AzureLocation,
                 // even when the TypeSpec defines it as plain string.
                 // TODO - this is currently a workaround until we have a more reliable way to detect such violations from the spec level.
                 CSharpType? typeOverride = null;
                 if (basePath is null
-                    && string.Equals(serializedName, "location", StringComparison.OrdinalIgnoreCase))
+                    && serializedName == "location")
                 {
                     typeOverride = new CSharpType(typeof(BicepValue<>), typeof(Azure.Core.AzureLocation));
                 }
 
-                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue, typeOverride));
+                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isSettable, isRequired, defaultValue, typeOverride));
             }
         }
 
@@ -683,16 +689,7 @@ namespace Azure.Generator.Provisioning.Providers
             int minLength = constraints.MinLength ?? 1;
             int maxLength = constraints.MaxLength ?? 24;
 
-            // Parse valid characters from pattern, or use conservative default
-            var validCharacters = constraints.Pattern != null
-                ? constraints.Pattern.ParsePatternToResourceNameCharacters()
-                : ResourceNameCharacters.LowercaseLetters;
-
-            // If parsing produced no characters, fall back to conservative default
-            if (validCharacters == (ResourceNameCharacters)0)
-            {
-                validCharacters = ResourceNameCharacters.LowercaseLetters;
-            }
+            var validCharacters = constraints.ToResourceNameCharacters();
 
             // Build the flags expression by OR-ing the individual flag values
             ValueExpression flagsExpression = BuildResourceNameCharactersExpression(validCharacters);
@@ -913,6 +910,7 @@ namespace Azure.Generator.Provisioning.Providers
                     prop.Name.ToIdentifierName(),
                     bicepPath,
                     prop.IsReadOnly,
+                    !prop.IsReadOnly && _isSettableResource,
                     prop.IsRequired));
             }
             return result;
@@ -940,6 +938,7 @@ namespace Azure.Generator.Provisioning.Providers
             string PropertyName,
             string[] BicepPath,
             bool IsOutput,
+            bool IsSettable,
             bool IsRequired,
             string? DefaultValue = null,
             CSharpType? TypeOverride = null);

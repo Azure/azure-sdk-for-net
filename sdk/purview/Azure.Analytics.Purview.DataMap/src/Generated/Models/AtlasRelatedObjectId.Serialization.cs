@@ -185,7 +185,7 @@ namespace Azure.Analytics.Purview.DataMap
             string typeName = default;
             IDictionary<string, BinaryData> uniqueAttributes = default;
             string displayText = default;
-            EntityStatus? entityStatus = default;
+            DataMapEntityStatus? entityStatus = default;
             string relationshipType = default;
             AtlasStruct relationshipAttributes = default;
             Guid? relationshipGuid = default;
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    entityStatus = new EntityStatus(prop.Value.GetString());
+                    entityStatus = new DataMapEntityStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("relationshipType"u8))

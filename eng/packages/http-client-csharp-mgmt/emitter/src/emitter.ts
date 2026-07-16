@@ -3,8 +3,6 @@
 
 import { EmitContext } from "@typespec/compiler";
 
-import { CodeModel, CSharpEmitterContext } from "@typespec/http-client-csharp";
-
 import { emitAzureCodeModel } from "@azure-typespec/http-client-csharp";
 import {
   azureSDKContextOptions,
@@ -22,6 +20,11 @@ import {
   deduplicateApiVersionEnums,
   fixClientApiVersions
 } from "./api-version-fixer.js";
+import type {
+  CodeModel,
+  CodeModelMutator,
+  CSharpEmitterContext
+} from "./code-model-types.js";
 
 export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   context.options["generator-name"] ??= "ManagementClientGenerator";
@@ -34,7 +37,7 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   function updateCodeModel(
     codeModel: CodeModel,
     sdkContext: CSharpEmitterContext
-  ): CodeModel {
+  ): ReturnType<CodeModelMutator> {
     // Transform subscriptionId parameters from client scope to method scope
     // This must happen before other transformations that may depend on method parameters
     transformSubscriptionIdParameters(codeModel);

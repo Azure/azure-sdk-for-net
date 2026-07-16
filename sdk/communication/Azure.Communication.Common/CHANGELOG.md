@@ -7,9 +7,13 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Added support for Teams Extension sovereign (GCCH) Entra scopes using `https://auth.msft.communication.azure.us/` in `EntraCommunicationTokenCredentialOptions`.
 
 ### Other Changes
+
+## 1.4.1 (2026-07-10)
+
+### Bugs Fixed
+- Added support for Teams Extension sovereign (GCCH) Entra scopes using `https://auth.msft.communication.azure.us/` in `EntraCommunicationTokenCredentialOptions`.
 
 ## 1.4.0 (2025-06-04)
 

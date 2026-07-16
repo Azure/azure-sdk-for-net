@@ -87,12 +87,18 @@ namespace Azure.ResourceManager.Sql.Models
 
         private static DataMaskingFunction? FromSqlDataMaskingFunction(SqlDataMaskingFunction value)
         {
-            if (value == SqlDataMaskingFunction.Default) return Models.DataMaskingFunction.Default;
-            if (value == SqlDataMaskingFunction.Ccn) return Models.DataMaskingFunction.Ccn;
-            if (value == SqlDataMaskingFunction.Email) return Models.DataMaskingFunction.Email;
-            if (value == SqlDataMaskingFunction.Number) return Models.DataMaskingFunction.Number;
-            if (value == SqlDataMaskingFunction.Ssn) return Models.DataMaskingFunction.Ssn;
-            if (value == SqlDataMaskingFunction.Text) return Models.DataMaskingFunction.Text;
+            if (value == SqlDataMaskingFunction.Default)
+                return Models.DataMaskingFunction.Default;
+            if (value == SqlDataMaskingFunction.Ccn)
+                return Models.DataMaskingFunction.Ccn;
+            if (value == SqlDataMaskingFunction.Email)
+                return Models.DataMaskingFunction.Email;
+            if (value == SqlDataMaskingFunction.Number)
+                return Models.DataMaskingFunction.Number;
+            if (value == SqlDataMaskingFunction.Ssn)
+                return Models.DataMaskingFunction.Ssn;
+            if (value == SqlDataMaskingFunction.Text)
+                return Models.DataMaskingFunction.Text;
             return null;
         }
     }
