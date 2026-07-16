@@ -535,6 +535,45 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.IsFalse(proxyDisabled.CreateWasCalled, "Proxy should decline when the options flag is off.");
         }
 
+        [Test]
+        public void ConditionalProxy_CustomPlainTextFormat_WritesPlainText()
+        {
+            // A proxy can take over for a caller-defined, non-JSON format. When the "PT" (plain text)
+            // format is chosen, the proxy writes a plain-text representation instead of JSON.
+            var options = new ModelReaderWriterOptions("PT");
+            options.AddProxy<PlainTextModel>(new PlainTextFormatProxy());
+
+            BinaryData data = ModelReaderWriter.Write(new PlainTextModel { Value = "hello" }, options);
+
+            Assert.AreEqual("PlainText: hello", data.ToString());
+        }
+
+        [Test]
+        public void ConditionalProxy_CustomPlainTextFormat_RoundTrips()
+        {
+            var options = new ModelReaderWriterOptions("PT");
+            options.AddProxy<PlainTextModel>(new PlainTextFormatProxy());
+
+            BinaryData data = ModelReaderWriter.Write(new PlainTextModel { Value = "world" }, options);
+            PlainTextModel? read = ModelReaderWriter.Read<PlainTextModel>(data, options);
+
+            Assert.AreEqual("PlainText: world", data.ToString());
+            Assert.IsNotNull(read);
+            Assert.AreEqual("world", read!.Value);
+        }
+
+        [Test]
+        public void ConditionalProxy_CustomPlainTextFormat_DeclinesForJsonFormat()
+        {
+            // The same proxy declines when the format is not "PT", so the base model writes JSON.
+            var options = new ModelReaderWriterOptions("J");
+            options.AddProxy<PlainTextModel>(new PlainTextFormatProxy());
+
+            BinaryData data = ModelReaderWriter.Write(new PlainTextModel { Value = "hello" }, options);
+
+            Assert.AreEqual("{\"value\":\"hello\"}", data.ToString());
+        }
+
         /// <summary>
         /// A derived options type carrying a custom flag the proxy conditions on.
         /// </summary>
@@ -660,6 +699,71 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             BinaryData IPersistableModel<SimpleModel>.Write(ModelReaderWriterOptions options)
                 => ModelReaderWriter.Write(this, options);
+        }
+
+        /// <summary>
+        /// A model that serializes to JSON by default but can be routed to a custom "plain text"
+        /// format by a proxy. Used to prove a proxy works with formats other than JSON (note 8).
+        /// </summary>
+        private class PlainTextModel : IJsonModel<PlainTextModel>
+        {
+            public string Value { get; set; } = "";
+
+            PlainTextModel IJsonModel<PlainTextModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            {
+                using var doc = JsonDocument.ParseValue(ref reader);
+                return new PlainTextModel { Value = doc.RootElement.TryGetProperty("value", out var v) ? v.GetString() ?? "" : "" };
+            }
+
+            PlainTextModel IPersistableModel<PlainTextModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                using var doc = JsonDocument.Parse(data);
+                return new PlainTextModel { Value = doc.RootElement.TryGetProperty("value", out var v) ? v.GetString() ?? "" : "" };
+            }
+
+            string IPersistableModel<PlainTextModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+            void IJsonModel<PlainTextModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                writer.WriteStartObject();
+                writer.WriteString("value"u8, Value);
+                writer.WriteEndObject();
+            }
+
+            BinaryData IPersistableModel<PlainTextModel>.Write(ModelReaderWriterOptions options)
+                => BinaryData.FromString($"{{\"value\":\"{Value}\"}}");
+        }
+
+        /// <summary>
+        /// A conditional proxy that takes over only when the caller-chosen format is "PT" (plain text),
+        /// producing a plain-text representation instead of JSON. The condition reads
+        /// <see cref="ModelReaderWriterOptions.Format"/>, proving a proxy can key on the format.
+        /// </summary>
+        private class PlainTextFormatProxy : ConditionalModelProxy<PlainTextModel>
+        {
+            public PlainTextFormatProxy() : base(new PlainTextFormatModel()) { }
+
+            public override bool CanHandle(PlainTextModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+                => options.Format == "PT";
+
+            public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+                => options.Format == "PT";
+
+            private class PlainTextFormatModel : IPersistableModel<PlainTextModel>
+            {
+                private const string Prefix = "PlainText: ";
+
+                PlainTextModel IPersistableModel<PlainTextModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+                {
+                    string s = data.ToString();
+                    return new PlainTextModel { Value = s.StartsWith(Prefix, StringComparison.Ordinal) ? s.Substring(Prefix.Length) : s };
+                }
+
+                BinaryData IPersistableModel<PlainTextModel>.Write(ModelReaderWriterOptions options)
+                    => BinaryData.FromString($"{Prefix}{((PlainTextModel)options.ProxiedModel!).Value}");
+
+                string IPersistableModel<PlainTextModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "PT";
+            }
         }
 
         private class TrackingModel : IJsonModel<SimpleModel>
