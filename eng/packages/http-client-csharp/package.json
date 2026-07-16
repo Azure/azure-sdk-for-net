@@ -75,6 +75,11 @@
     "typescript-eslint": "^7.8.0",
     "vitest": "^3.0.5"
   },
+  "overrides": {
+    "@vue/reactivity": "3.5.39",
+    "@vue/shared": "3.5.39",
+    "fast-xml-parser": "5.8.0"
+  },
   "azure-sdk/emitter-package-json-pinning": [
     "@azure-tools/typespec-azure-core",
     "@azure-tools/typespec-azure-resource-manager",
