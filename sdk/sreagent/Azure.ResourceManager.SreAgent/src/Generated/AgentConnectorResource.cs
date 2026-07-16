@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SreAgent
     /// <summary>
     /// A class representing a AgentConnector along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AgentConnectorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AgentResource"/> using the GetAgentConnectors method.
+    /// Otherwise you can get one from its parent resource <see cref="SreAgentResource"/> using the GetAgentConnectors method.
     /// </summary>
     public partial class AgentConnectorResource : ArmResource
     {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SreAgent.Models
 
         /// <summary> Initializes a new instance of <see cref="AgentListResult"/>. </summary>
         /// <param name="value"> The Agent items on this page. </param>
-        internal AgentListResult(IEnumerable<AgentData> value)
+        internal AgentListResult(IEnumerable<SreAgentData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="value"> The Agent items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentListResult(IList<AgentData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentListResult(IList<SreAgentData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         }
 
         /// <summary> The Agent items on this page. </summary>
-        public IList<AgentData> Value { get; }
+        public IList<SreAgentData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

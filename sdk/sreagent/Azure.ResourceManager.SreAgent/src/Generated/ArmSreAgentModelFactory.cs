@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="SreAgent.AgentData"/> instance for mocking. </returns>
-        public static AgentData AgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AgentProperties properties = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="SreAgent.SreAgentData"/> instance for mocking. </returns>
+        public static SreAgentData SreAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AgentProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AgentData(
+            return new SreAgentData(
                 id,
                 name,
                 resourceType,
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="agentIdentity"> Agent identity configuration for accessing resources. </param>
         /// <param name="defaultModel"> Default AI model configuration for the agent. </param>
         /// <returns> A new <see cref="Models.AgentProperties"/> instance for mocking. </returns>
-        public static AgentProperties AgentProperties(AgentProvisioningState? provisioningState = default, string agentEndpoint = default, string runningState = default, AgentPowerState? powerState = default, ResourceIdentifier agentSpaceId = default, KnowledgeGraphConfiguration knowledgeGraphConfiguration = default, ActionConfiguration actionConfiguration = default, ApplicationInsightsConfiguration logApplicationInsightsConfiguration = default, IncidentManagementConfiguration incidentManagementConfiguration = default, UpgradeChannel? upgradeChannel = default, AgentIdentity agentIdentity = default, DefaultModel defaultModel = default)
+        public static AgentProperties AgentProperties(AgentProvisioningState? provisioningState = default, string agentEndpoint = default, string runningState = default, AgentPowerState? powerState = default, ResourceIdentifier agentSpaceId = default, KnowledgeGraphConfiguration knowledgeGraphConfiguration = default, ActionConfiguration actionConfiguration = default, ApplicationInsightsConfiguration logApplicationInsightsConfiguration = default, IncidentManagementConfiguration incidentManagementConfiguration = default, UpgradeChannel? upgradeChannel = default, AgentIdentity agentIdentity = default, SreAgentDefaultModel defaultModel = default)
         {
             return new AgentProperties(
                 provisioningState,
@@ -118,32 +118,32 @@ namespace Azure.ResourceManager.SreAgent.Models
                 default);
         }
 
-        /// <param name="enabled"> Indicates whether the agent identity is enabled. </param>
+        /// <param name="isEnabled"> Indicates whether the agent identity is enabled. </param>
         /// <param name="clientId"> Client ID (GUID) for the agent identity. </param>
         /// <param name="initialSponsorGroupId"> Initial sponsor group ID (required for agent identity). </param>
         /// <returns> A new <see cref="Models.AgentIdentity"/> instance for mocking. </returns>
-        public static AgentIdentity AgentIdentity(bool? enabled = default, string clientId = default, string initialSponsorGroupId = default)
+        public static AgentIdentity AgentIdentity(bool? isEnabled = default, Guid? clientId = default, string initialSponsorGroupId = default)
         {
-            return new AgentIdentity(enabled, clientId, initialSponsorGroupId, default);
+            return new AgentIdentity(isEnabled, clientId, initialSponsorGroupId, default);
         }
 
         /// <param name="provider"> AI provider name (e.g., MicrosoftFoundry, Anthropic). </param>
         /// <param name="name"> Model name (e.g., gpt-5, claude-opus-4-5, claude-sonnet-4-5). </param>
-        /// <returns> A new <see cref="Models.DefaultModel"/> instance for mocking. </returns>
-        public static DefaultModel DefaultModel(string provider = default, string name = default)
+        /// <returns> A new <see cref="Models.SreAgentDefaultModel"/> instance for mocking. </returns>
+        public static SreAgentDefaultModel SreAgentDefaultModel(string provider = default, string name = default)
         {
-            return new DefaultModel(provider, name, default);
+            return new SreAgentDefaultModel(provider, name, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> Agent specific properties. </param>
-        /// <returns> A new <see cref="Models.AgentPatch"/> instance for mocking. </returns>
-        public static AgentPatch AgentPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, AgentPatchProperties properties = default)
+        /// <returns> A new <see cref="Models.SreAgentPatch"/> instance for mocking. </returns>
+        public static SreAgentPatch SreAgentPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, AgentPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AgentPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, default);
+            return new SreAgentPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, default);
         }
 
         /// <param name="agentSpaceId"> The agent space ID referenced by the agent. </param>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="agentIdentityInitialSponsorGroupId"> Initial sponsor group ID (required for PUT but optional for PATCH). </param>
         /// <param name="defaultModel"> Default AI model configuration for the agent. </param>
         /// <returns> A new <see cref="Models.AgentPatchProperties"/> instance for mocking. </returns>
-        public static AgentPatchProperties AgentPatchProperties(ResourceIdentifier agentSpaceId = default, KnowledgeGraphConfiguration knowledgeGraphConfiguration = default, ActionConfiguration actionConfiguration = default, ApplicationInsightsConfiguration logApplicationInsightsConfiguration = default, IncidentManagementConfiguration incidentManagementConfiguration = default, UpgradeChannel? upgradeChannel = default, string agentIdentityInitialSponsorGroupId = default, DefaultModel defaultModel = default)
+        public static AgentPatchProperties AgentPatchProperties(ResourceIdentifier agentSpaceId = default, KnowledgeGraphConfiguration knowledgeGraphConfiguration = default, ActionConfiguration actionConfiguration = default, ApplicationInsightsConfiguration logApplicationInsightsConfiguration = default, IncidentManagementConfiguration incidentManagementConfiguration = default, UpgradeChannel? upgradeChannel = default, string agentIdentityInitialSponsorGroupId = default, SreAgentDefaultModel defaultModel = default)
         {
             return new AgentPatchProperties(
                 agentSpaceId,
@@ -275,13 +275,13 @@ namespace Azure.ResourceManager.SreAgent.Models
 
         /// <param name="isCompliant"> Indicates whether the Agent Space is compliant. </param>
         /// <param name="complianceIssues"> List of compliance issues found in the Agent Space. </param>
-        /// <param name="lastComplianceCheck"> Timestamp of the last compliance check. </param>
+        /// <param name="lastComplianceCheckOn"> Timestamp of the last compliance check. </param>
         /// <returns> A new <see cref="Models.AgentSpaceComplianceStatus"/> instance for mocking. </returns>
-        public static AgentSpaceComplianceStatus AgentSpaceComplianceStatus(bool isCompliant = default, IEnumerable<string> complianceIssues = default, DateTimeOffset? lastComplianceCheck = default)
+        public static AgentSpaceComplianceStatus AgentSpaceComplianceStatus(bool isCompliant = default, IEnumerable<string> complianceIssues = default, DateTimeOffset? lastComplianceCheckOn = default)
         {
             complianceIssues ??= new ChangeTrackingList<string>();
 
-            return new AgentSpaceComplianceStatus(isCompliant, (complianceIssues ?? new ChangeTrackingList<string>()).ToList(), lastComplianceCheck, default);
+            return new AgentSpaceComplianceStatus(isCompliant, (complianceIssues ?? new ChangeTrackingList<string>()).ToList(), lastComplianceCheckOn, default);
         }
 
         /// <param name="acisEndpoint"> ACIS (Azure Container Instance Service) endpoint URL. </param>
@@ -310,13 +310,13 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="actionName"> Name of the Geneva action. </param>
         /// <param name="extension"> Extension associated with the action. </param>
         /// <param name="actionParameters"> Parameters for the Geneva action. </param>
-        /// <param name="approvalRequired"> Indicates whether approval is required for this action. </param>
+        /// <param name="isApprovalRequired"> Indicates whether approval is required for this action. </param>
         /// <returns> A new <see cref="Models.GenevaActionConfig"/> instance for mocking. </returns>
-        public static GenevaActionConfig GenevaActionConfig(string actionName = default, string extension = default, IEnumerable<GenevaActionParameterInfo> actionParameters = default, bool? approvalRequired = default)
+        public static GenevaActionConfig GenevaActionConfig(string actionName = default, string extension = default, IEnumerable<GenevaActionParameterInfo> actionParameters = default, bool? isApprovalRequired = default)
         {
             actionParameters ??= new ChangeTrackingList<GenevaActionParameterInfo>();
 
-            return new GenevaActionConfig(actionName, extension, (actionParameters ?? new ChangeTrackingList<GenevaActionParameterInfo>()).ToList(), approvalRequired, default);
+            return new GenevaActionConfig(actionName, extension, (actionParameters ?? new ChangeTrackingList<GenevaActionParameterInfo>()).ToList(), isApprovalRequired, default);
         }
 
         /// <param name="name"> Name of the parameter. </param>
@@ -441,9 +441,9 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="model"> The model name (e.g., gpt-5.2, claude-sonnet-4-5). </param>
         /// <param name="modelDisplayName"> The display name of the model (e.g., GPT-5.2, Claude Sonnet 4.5). </param>
         /// <param name="multiplier"> Billing multiplier for the model (e.g., 1x, 2x). </param>
-        /// <param name="default"> Indicates whether this is the default model. </param>
+        /// <param name="isDefault"> Indicates whether this is the default model. </param>
         /// <returns> A new <see cref="Models.SupportedAgentModelProperties"/> instance for mocking. </returns>
-        public static SupportedAgentModelProperties SupportedAgentModelProperties(string provider = default, string providerDisplayName = default, string model = default, string modelDisplayName = default, string multiplier = default, bool @default = default)
+        public static SupportedAgentModelProperties SupportedAgentModelProperties(string provider = default, string providerDisplayName = default, string model = default, string modelDisplayName = default, string multiplier = default, bool isDefault = default)
         {
             return new SupportedAgentModelProperties(
                 provider,
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                 model,
                 modelDisplayName,
                 multiplier,
-                @default,
+                isDefault,
                 default);
         }
     }

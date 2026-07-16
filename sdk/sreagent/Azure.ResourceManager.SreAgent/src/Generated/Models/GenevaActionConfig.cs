@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="actionName"> Name of the Geneva action. </param>
         /// <param name="extension"> Extension associated with the action. </param>
         /// <param name="actionParameters"> Parameters for the Geneva action. </param>
-        /// <param name="approvalRequired"> Indicates whether approval is required for this action. </param>
+        /// <param name="isApprovalRequired"> Indicates whether approval is required for this action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GenevaActionConfig(string actionName, string extension, IList<GenevaActionParameterInfo> actionParameters, bool? approvalRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GenevaActionConfig(string actionName, string extension, IList<GenevaActionParameterInfo> actionParameters, bool? isApprovalRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionName = actionName;
             Extension = extension;
             ActionParameters = actionParameters;
-            ApprovalRequired = approvalRequired;
+            IsApprovalRequired = isApprovalRequired;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.SreAgent.Models
         public IList<GenevaActionParameterInfo> ActionParameters { get; }
 
         /// <summary> Indicates whether approval is required for this action. </summary>
-        public bool? ApprovalRequired { get; set; }
+        public bool? IsApprovalRequired { get; set; }
     }
 }

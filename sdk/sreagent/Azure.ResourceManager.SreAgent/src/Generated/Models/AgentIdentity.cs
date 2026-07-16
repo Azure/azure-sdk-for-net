@@ -28,23 +28,23 @@ namespace Azure.ResourceManager.SreAgent.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentIdentity"/>. </summary>
-        /// <param name="enabled"> Indicates whether the agent identity is enabled. </param>
+        /// <param name="isEnabled"> Indicates whether the agent identity is enabled. </param>
         /// <param name="clientId"> Client ID (GUID) for the agent identity. </param>
         /// <param name="initialSponsorGroupId"> Initial sponsor group ID (required for agent identity). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentIdentity(bool? enabled, string clientId, string initialSponsorGroupId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentIdentity(bool? isEnabled, Guid? clientId, string initialSponsorGroupId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             ClientId = clientId;
             InitialSponsorGroupId = initialSponsorGroupId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether the agent identity is enabled. </summary>
-        public bool? Enabled { get; }
+        public bool? IsEnabled { get; }
 
         /// <summary> Client ID (GUID) for the agent identity. </summary>
-        public string ClientId { get; }
+        public Guid? ClientId { get; }
 
         /// <summary> Initial sponsor group ID (required for agent identity). </summary>
         public string InitialSponsorGroupId { get; set; }

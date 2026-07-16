@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="agentIdentity"> Agent identity configuration for accessing resources. </param>
         /// <param name="defaultModel"> Default AI model configuration for the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPatchProperties(ResourceIdentifier agentSpaceId, KnowledgeGraphConfiguration knowledgeGraphConfiguration, ActionConfiguration actionConfiguration, LogConfiguration logConfiguration, IncidentManagementConfiguration incidentManagementConfiguration, UpgradeChannel? upgradeChannel, AgentIdentityPatch agentIdentity, DefaultModel defaultModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPatchProperties(ResourceIdentifier agentSpaceId, KnowledgeGraphConfiguration knowledgeGraphConfiguration, ActionConfiguration actionConfiguration, LogConfiguration logConfiguration, IncidentManagementConfiguration incidentManagementConfiguration, UpgradeChannel? upgradeChannel, AgentIdentityPatch agentIdentity, SreAgentDefaultModel defaultModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentSpaceId = agentSpaceId;
             KnowledgeGraphConfiguration = knowledgeGraphConfiguration;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         internal AgentIdentityPatch AgentIdentity { get; set; }
 
         /// <summary> Default AI model configuration for the agent. </summary>
-        public DefaultModel DefaultModel { get; set; }
+        public SreAgentDefaultModel DefaultModel { get; set; }
 
         /// <summary> Application Insights Configuration. </summary>
         public ApplicationInsightsConfiguration LogApplicationInsightsConfiguration

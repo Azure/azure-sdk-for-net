@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="agentIdentity"> Agent identity configuration for accessing resources. </param>
         /// <param name="defaultModel"> Default AI model configuration for the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentProperties(AgentProvisioningState? provisioningState, string agentEndpoint, string runningState, AgentPowerState? powerState, ResourceIdentifier agentSpaceId, KnowledgeGraphConfiguration knowledgeGraphConfiguration, ActionConfiguration actionConfiguration, LogConfiguration logConfiguration, IncidentManagementConfiguration incidentManagementConfiguration, UpgradeChannel? upgradeChannel, AgentIdentity agentIdentity, DefaultModel defaultModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentProperties(AgentProvisioningState? provisioningState, string agentEndpoint, string runningState, AgentPowerState? powerState, ResourceIdentifier agentSpaceId, KnowledgeGraphConfiguration knowledgeGraphConfiguration, ActionConfiguration actionConfiguration, LogConfiguration logConfiguration, IncidentManagementConfiguration incidentManagementConfiguration, UpgradeChannel? upgradeChannel, AgentIdentity agentIdentity, SreAgentDefaultModel defaultModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AgentEndpoint = agentEndpoint;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         public AgentIdentity AgentIdentity { get; set; }
 
         /// <summary> Default AI model configuration for the agent. </summary>
-        public DefaultModel DefaultModel { get; set; }
+        public SreAgentDefaultModel DefaultModel { get; set; }
 
         /// <summary> Application Insights Configuration. </summary>
         public ApplicationInsightsConfiguration LogApplicationInsightsConfiguration
