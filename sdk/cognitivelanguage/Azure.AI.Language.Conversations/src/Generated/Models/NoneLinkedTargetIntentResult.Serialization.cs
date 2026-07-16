@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> A wrap up of non-linked intent response. </summary>
-    public partial class NoneLinkedTargetIntentResult : TargetIntentResult, IJsonModel<NoneLinkedTargetIntentResult>
+    internal partial class NoneLinkedTargetIntentResult : TargetIntentResult, IJsonModel<NoneLinkedTargetIntentResult>
     {
         /// <summary> Initializes a new instance of <see cref="NoneLinkedTargetIntentResult"/> for deserialization. </summary>
         internal NoneLinkedTargetIntentResult()

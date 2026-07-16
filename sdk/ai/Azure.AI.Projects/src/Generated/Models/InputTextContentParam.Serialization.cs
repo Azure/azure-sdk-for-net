@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Input text. </summary>
-    public partial class InputTextContentParam : IJsonModel<InputTextContentParam>
+    internal partial class InputTextContentParam : IJsonModel<InputTextContentParam>
     {
         /// <summary> Initializes a new instance of <see cref="InputTextContentParam"/> for deserialization. </summary>
         internal InputTextContentParam()

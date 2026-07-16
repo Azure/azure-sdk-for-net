@@ -10,7 +10,8 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalMCPToolFilter : IJsonModel<InternalMCPToolFilter>
+    /// <summary> MCP tool filter. </summary>
+    public partial class InternalMCPToolFilter : IJsonModel<InternalMCPToolFilter>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

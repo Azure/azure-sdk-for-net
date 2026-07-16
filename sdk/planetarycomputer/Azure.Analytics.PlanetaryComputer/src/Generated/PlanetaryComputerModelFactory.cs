@@ -1246,6 +1246,16 @@ namespace Azure.Analytics.PlanetaryComputer
             return new AssetStatisticsResponse(additionalProperties);
         }
 
+        /// <summary> Map of band names to their statistics. </summary>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="PlanetaryComputer.BandStatisticsMap"/> instance for mocking. </returns>
+        public static BandStatisticsMap BandStatisticsMap(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new BandStatisticsMap(additionalProperties);
+        }
+
         /// <summary> Statistical information about a data band. </summary>
         /// <param name="minimum"> Minimum value in the band. </param>
         /// <param name="maximum"> Maximum value in the band. </param>

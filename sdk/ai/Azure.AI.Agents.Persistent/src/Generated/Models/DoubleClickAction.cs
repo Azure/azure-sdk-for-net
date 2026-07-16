@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A double click action. </summary>
-    public partial class DoubleClickAction : ComputerUseAction
+    internal partial class DoubleClickAction : ComputerUseAction
     {
         /// <summary> Initializes a new instance of <see cref="DoubleClickAction"/>. </summary>
         /// <param name="x"> The x-coordinate where the double click occurred. </param>

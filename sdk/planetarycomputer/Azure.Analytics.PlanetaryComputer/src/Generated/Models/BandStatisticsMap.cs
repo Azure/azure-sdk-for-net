@@ -8,25 +8,24 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Azure.AI.Language.Conversations;
 
-namespace Azure.AI.Language.Conversations.Models
+namespace Azure.Analytics.PlanetaryComputer
 {
-    /// <summary> It is the response from a LUIS Generally Available application. </summary>
-    internal partial class LuisResult
+    /// <summary> Map of band names to their statistics. </summary>
+    public partial class BandStatisticsMap
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LuisResult"/>. </summary>
-        internal LuisResult()
+        /// <summary> Initializes a new instance of <see cref="BandStatisticsMap"/>. </summary>
+        internal BandStatisticsMap()
         {
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LuisResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BandStatisticsMap"/>. </summary>
         /// <param name="additionalProperties"></param>
-        internal LuisResult(IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal BandStatisticsMap(IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
         }

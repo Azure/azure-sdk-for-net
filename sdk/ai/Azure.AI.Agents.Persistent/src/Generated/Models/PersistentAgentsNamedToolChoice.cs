@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Specifies a tool the model should use. Use to force the model to call a specific tool. </summary>
-    public partial class PersistentAgentsNamedToolChoice
+    internal partial class PersistentAgentsNamedToolChoice
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

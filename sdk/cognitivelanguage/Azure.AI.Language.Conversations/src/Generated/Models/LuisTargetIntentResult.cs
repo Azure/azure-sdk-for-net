@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> It is a wrap up of LUIS Generally Available response. </summary>
-    public partial class LuisTargetIntentResult : TargetIntentResult
+    internal partial class LuisTargetIntentResult : TargetIntentResult
     {
         /// <summary> Initializes a new instance of <see cref="LuisTargetIntentResult"/>. </summary>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>

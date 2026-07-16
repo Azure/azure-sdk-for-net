@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The detailed information for a computer use tool invocation. </summary>
-    public partial class RequiredComputerUseToolCallDetails
+    internal partial class RequiredComputerUseToolCallDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Figure containing a diagram, such as a flowchart or network diagram. </summary>
-    public partial class DocumentMermaidFigure : DocumentFigure, IJsonModel<DocumentMermaidFigure>
+    internal partial class DocumentMermaidFigure : DocumentFigure, IJsonModel<DocumentMermaidFigure>
     {
         /// <summary> Initializes a new instance of <see cref="DocumentMermaidFigure"/> for deserialization. </summary>
         internal DocumentMermaidFigure()
