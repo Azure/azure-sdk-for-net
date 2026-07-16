@@ -33595,13 +33595,13 @@
                 "2024-04-01",
                 "2024-05-01"
               ],
-              "doc": "A long-running resource action.",
+              "doc": "",
               "operation": {
                 "$id": "2465",
                 "name": "fooAction",
                 "isExactName": false,
                 "resourceName": "Foos",
-                "doc": "A long-running resource action.",
+                "doc": "",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -34513,13 +34513,13 @@
                 "2024-04-01",
                 "2024-05-01"
               ],
-              "doc": "A long-running resource action.",
+              "doc": "",
               "operation": {
                 "$id": "2511",
                 "name": "splitDependencies",
                 "isExactName": false,
                 "resourceName": "Foos",
-                "doc": "A long-running resource action.",
+                "doc": "",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -51052,11 +51052,13 @@
                 "2024-04-01",
                 "2024-05-01"
               ],
+              "doc": "",
               "operation": {
                 "$id": "3340",
                 "name": "checkNameAvailability",
                 "isExactName": false,
                 "resourceName": "CheckNameAvailabilityOperationGroup",
+                "doc": "",
                 "accessibility": "public",
                 "parameters": [
                   {
