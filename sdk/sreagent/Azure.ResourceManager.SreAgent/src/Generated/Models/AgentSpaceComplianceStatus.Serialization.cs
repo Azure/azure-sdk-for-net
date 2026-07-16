@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.SreAgent.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastComplianceCheck))
+            if (options.Format != "W" && Optional.IsDefined(LastComplianceCheckOn))
             {
                 writer.WritePropertyName("lastComplianceCheck"u8);
-                writer.WriteStringValue(LastComplianceCheck.Value, "O");
+                writer.WriteStringValue(LastComplianceCheckOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SreAgent.Models
             }
             bool isCompliant = default;
             IReadOnlyList<string> complianceIssues = default;
-            DateTimeOffset? lastComplianceCheck = default;
+            DateTimeOffset? lastComplianceCheckOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                     {
                         continue;
                     }
-                    lastComplianceCheck = prop.Value.GetDateTimeOffset("O");
+                    lastComplianceCheckOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentSpaceComplianceStatus(isCompliant, complianceIssues ?? new ChangeTrackingList<string>(), lastComplianceCheck, additionalBinaryDataProperties);
+            return new AgentSpaceComplianceStatus(isCompliant, complianceIssues ?? new ChangeTrackingList<string>(), lastComplianceCheckOn, additionalBinaryDataProperties);
         }
     }
 }

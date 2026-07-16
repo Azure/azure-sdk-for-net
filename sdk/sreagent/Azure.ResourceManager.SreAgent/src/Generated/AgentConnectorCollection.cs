@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SreAgent
 {
     /// <summary>
     /// A class representing a collection of <see cref="AgentConnectorResource"/> and their operations.
-    /// Each <see cref="AgentConnectorResource"/> in the collection will belong to the same instance of <see cref="AgentResource"/>.
-    /// To get a <see cref="AgentConnectorCollection"/> instance call the GetAgentConnectors method from an instance of <see cref="AgentResource"/>.
+    /// Each <see cref="AgentConnectorResource"/> in the collection will belong to the same instance of <see cref="SreAgentResource"/>.
+    /// To get a <see cref="AgentConnectorCollection"/> instance call the GetAgentConnectors method from an instance of <see cref="SreAgentResource"/>.
     /// </summary>
     public partial class AgentConnectorCollection : ArmCollection, IEnumerable<AgentConnectorResource>, IAsyncEnumerable<AgentConnectorResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.SreAgent
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AgentResource.ResourceType)
+            if (id.ResourceType != SreAgentResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AgentResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SreAgentResource.ResourceType), nameof(id));
             }
         }
 

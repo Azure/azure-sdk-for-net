@@ -20,44 +20,44 @@ using Azure.ResourceManager.SreAgent.Models;
 namespace Azure.ResourceManager.SreAgent
 {
     /// <summary>
-    /// A class representing a Agent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AgentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAgents method.
+    /// A class representing a SreAgent along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SreAgentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSreAgents method.
     /// </summary>
-    public partial class AgentResource : ArmResource
+    public partial class SreAgentResource : ArmResource
     {
         private readonly ClientDiagnostics _agentsClientDiagnostics;
         private readonly Agents _agentsRestClient;
         private readonly ClientDiagnostics _agentsConnectorsClientDiagnostics;
         private readonly AgentsConnectors _agentsConnectorsRestClient;
-        private readonly AgentData _data;
+        private readonly SreAgentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/agents";
 
-        /// <summary> Initializes a new instance of AgentResource for mocking. </summary>
-        protected AgentResource()
+        /// <summary> Initializes a new instance of SreAgentResource for mocking. </summary>
+        protected SreAgentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SreAgentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AgentResource(ArmClient client, AgentData data) : this(client, data.Id)
+        internal SreAgentResource(ArmClient client, SreAgentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SreAgentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AgentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SreAgentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string agentApiVersion);
+            TryGetApiVersion(ResourceType, out string sreAgentApiVersion);
             _agentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SreAgent", ResourceType.Namespace, Diagnostics);
-            _agentsRestClient = new Agents(_agentsClientDiagnostics, Pipeline, Endpoint, agentApiVersion ?? "2026-01-01");
+            _agentsRestClient = new Agents(_agentsClientDiagnostics, Pipeline, Endpoint, sreAgentApiVersion ?? "2026-01-01");
             _agentsConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SreAgent", ResourceType.Namespace, Diagnostics);
-            _agentsConnectorsRestClient = new AgentsConnectors(_agentsConnectorsClientDiagnostics, Pipeline, Endpoint, agentApiVersion ?? "2026-01-01");
+            _agentsConnectorsRestClient = new AgentsConnectors(_agentsConnectorsClientDiagnostics, Pipeline, Endpoint, sreAgentApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SreAgent
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AgentData Data
+        public virtual SreAgentData Data
         {
             get
             {
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.SreAgent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AgentResource"/>. </description>
+        /// <description> <see cref="SreAgentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AgentResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SreAgentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.Get");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.Get");
             scope.Start();
             try
             {
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.SreAgent
                 };
                 HttpMessage message = _agentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AgentData> response = Response.FromValue(AgentData.FromResponse(result), result);
+                Response<SreAgentData> response = Response.FromValue(SreAgentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AgentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SreAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.SreAgent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AgentResource"/>. </description>
+        /// <description> <see cref="SreAgentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AgentResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SreAgentResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.Get");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.Get");
             scope.Start();
             try
             {
@@ -179,12 +179,12 @@ namespace Azure.ResourceManager.SreAgent
                 };
                 HttpMessage message = _agentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AgentData> response = Response.FromValue(AgentData.FromResponse(result), result);
+                Response<SreAgentData> response = Response.FromValue(SreAgentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AgentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SreAgentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.SreAgent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AgentResource"/>. </description>
+        /// <description> <see cref="SreAgentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,11 +218,11 @@ namespace Azure.ResourceManager.SreAgent
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<AgentResource>> UpdateAsync(WaitUntil waitUntil, AgentPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SreAgentResource>> UpdateAsync(WaitUntil waitUntil, SreAgentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.Update");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.Update");
             scope.Start();
             try
             {
@@ -230,10 +230,10 @@ namespace Azure.ResourceManager.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AgentPatch.ToRequestContent(patch), context);
+                HttpMessage message = _agentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SreAgentPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                SreAgentArmOperation<AgentResource> operation = new SreAgentArmOperation<AgentResource>(
-                    new AgentResourceOperationSource(Client),
+                SreAgentArmOperation<SreAgentResource> operation = new SreAgentArmOperation<SreAgentResource>(
+                    new SreAgentResourceOperationSource(Client),
                     _agentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.SreAgent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AgentResource"/>. </description>
+        /// <description> <see cref="SreAgentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.SreAgent
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<AgentResource> Update(WaitUntil waitUntil, AgentPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SreAgentResource> Update(WaitUntil waitUntil, SreAgentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.Update");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.Update");
             scope.Start();
             try
             {
@@ -289,10 +289,10 @@ namespace Azure.ResourceManager.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AgentPatch.ToRequestContent(patch), context);
+                HttpMessage message = _agentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SreAgentPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                SreAgentArmOperation<AgentResource> operation = new SreAgentArmOperation<AgentResource>(
-                    new AgentResourceOperationSource(Client),
+                SreAgentArmOperation<SreAgentResource> operation = new SreAgentArmOperation<SreAgentResource>(
+                    new SreAgentResourceOperationSource(Client),
                     _agentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.SreAgent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AgentResource"/>. </description>
+        /// <description> <see cref="SreAgentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.SreAgent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.Delete");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.Delete");
             scope.Start();
             try
             {
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.SreAgent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AgentResource"/>. </description>
+        /// <description> <see cref="SreAgentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.SreAgent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.Delete");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.Delete");
             scope.Start();
             try
             {
@@ -426,15 +426,15 @@ namespace Azure.ResourceManager.SreAgent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AgentResource"/>. </description>
+        /// <description> <see cref="SreAgentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<AgentResource>> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SreAgentResource>> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.Start");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.Start");
             scope.Start();
             try
             {
@@ -444,8 +444,8 @@ namespace Azure.ResourceManager.SreAgent
                 };
                 HttpMessage message = _agentsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                SreAgentArmOperation<AgentResource> operation = new SreAgentArmOperation<AgentResource>(
-                    new AgentResourceOperationSource(Client),
+                SreAgentArmOperation<SreAgentResource> operation = new SreAgentArmOperation<SreAgentResource>(
+                    new SreAgentResourceOperationSource(Client),
                     _agentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -481,15 +481,15 @@ namespace Azure.ResourceManager.SreAgent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AgentResource"/>. </description>
+        /// <description> <see cref="SreAgentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<AgentResource> Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SreAgentResource> Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.Start");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.Start");
             scope.Start();
             try
             {
@@ -499,8 +499,8 @@ namespace Azure.ResourceManager.SreAgent
                 };
                 HttpMessage message = _agentsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                SreAgentArmOperation<AgentResource> operation = new SreAgentArmOperation<AgentResource>(
-                    new AgentResourceOperationSource(Client),
+                SreAgentArmOperation<SreAgentResource> operation = new SreAgentArmOperation<SreAgentResource>(
+                    new SreAgentResourceOperationSource(Client),
                     _agentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -536,15 +536,15 @@ namespace Azure.ResourceManager.SreAgent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AgentResource"/>. </description>
+        /// <description> <see cref="SreAgentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<AgentResource>> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SreAgentResource>> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.Stop");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.Stop");
             scope.Start();
             try
             {
@@ -554,8 +554,8 @@ namespace Azure.ResourceManager.SreAgent
                 };
                 HttpMessage message = _agentsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                SreAgentArmOperation<AgentResource> operation = new SreAgentArmOperation<AgentResource>(
-                    new AgentResourceOperationSource(Client),
+                SreAgentArmOperation<SreAgentResource> operation = new SreAgentArmOperation<SreAgentResource>(
+                    new SreAgentResourceOperationSource(Client),
                     _agentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -591,15 +591,15 @@ namespace Azure.ResourceManager.SreAgent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AgentResource"/>. </description>
+        /// <description> <see cref="SreAgentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<AgentResource> Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SreAgentResource> Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.Stop");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.Stop");
             scope.Start();
             try
             {
@@ -609,8 +609,8 @@ namespace Azure.ResourceManager.SreAgent
                 };
                 HttpMessage message = _agentsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                SreAgentArmOperation<AgentResource> operation = new SreAgentArmOperation<AgentResource>(
-                    new AgentResourceOperationSource(Client),
+                SreAgentArmOperation<SreAgentResource> operation = new SreAgentArmOperation<SreAgentResource>(
+                    new SreAgentResourceOperationSource(Client),
                     _agentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -646,14 +646,14 @@ namespace Azure.ResourceManager.SreAgent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AgentResource"/>. </description>
+        /// <description> <see cref="SreAgentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AgentConnectorList>> GetWithSecretsByAgentAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentsConnectorsClientDiagnostics.CreateScope("AgentResource.GetWithSecretsByAgent");
+            using DiagnosticScope scope = _agentsConnectorsClientDiagnostics.CreateScope("SreAgentResource.GetWithSecretsByAgent");
             scope.Start();
             try
             {
@@ -694,14 +694,14 @@ namespace Azure.ResourceManager.SreAgent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AgentResource"/>. </description>
+        /// <description> <see cref="SreAgentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AgentConnectorList> GetWithSecretsByAgent(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _agentsConnectorsClientDiagnostics.CreateScope("AgentResource.GetWithSecretsByAgent");
+            using DiagnosticScope scope = _agentsConnectorsClientDiagnostics.CreateScope("SreAgentResource.GetWithSecretsByAgent");
             scope.Start();
             try
             {
@@ -730,12 +730,12 @@ namespace Azure.ResourceManager.SreAgent
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<AgentResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SreAgentResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.AddTag");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.AddTag");
             scope.Start();
             try
             {
@@ -750,19 +750,19 @@ namespace Azure.ResourceManager.SreAgent
                     };
                     HttpMessage message = _agentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AgentData> response = Response.FromValue(AgentData.FromResponse(result), result);
-                    return Response.FromValue(new AgentResource(Client, response.Value), response.GetRawResponse());
+                    Response<SreAgentData> response = Response.FromValue(SreAgentData.FromResponse(result), result);
+                    return Response.FromValue(new SreAgentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AgentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    AgentPatch patch = new AgentPatch();
+                    SreAgentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SreAgentPatch patch = new SreAgentPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<AgentResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<SreAgentResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -778,12 +778,12 @@ namespace Azure.ResourceManager.SreAgent
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<AgentResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<SreAgentResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.AddTag");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.AddTag");
             scope.Start();
             try
             {
@@ -798,19 +798,19 @@ namespace Azure.ResourceManager.SreAgent
                     };
                     HttpMessage message = _agentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AgentData> response = Response.FromValue(AgentData.FromResponse(result), result);
-                    return Response.FromValue(new AgentResource(Client, response.Value), response.GetRawResponse());
+                    Response<SreAgentData> response = Response.FromValue(SreAgentData.FromResponse(result), result);
+                    return Response.FromValue(new SreAgentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AgentData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    AgentPatch patch = new AgentPatch();
+                    SreAgentData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SreAgentPatch patch = new SreAgentPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<AgentResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<SreAgentResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -825,11 +825,11 @@ namespace Azure.ResourceManager.SreAgent
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<AgentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SreAgentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.SetTags");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.SetTags");
             scope.Start();
             try
             {
@@ -845,15 +845,15 @@ namespace Azure.ResourceManager.SreAgent
                     };
                     HttpMessage message = _agentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AgentData> response = Response.FromValue(AgentData.FromResponse(result), result);
-                    return Response.FromValue(new AgentResource(Client, response.Value), response.GetRawResponse());
+                    Response<SreAgentData> response = Response.FromValue(SreAgentData.FromResponse(result), result);
+                    return Response.FromValue(new SreAgentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AgentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    AgentPatch patch = new AgentPatch();
+                    SreAgentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SreAgentPatch patch = new SreAgentPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<AgentResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<SreAgentResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -868,11 +868,11 @@ namespace Azure.ResourceManager.SreAgent
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<AgentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<SreAgentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.SetTags");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.SetTags");
             scope.Start();
             try
             {
@@ -888,15 +888,15 @@ namespace Azure.ResourceManager.SreAgent
                     };
                     HttpMessage message = _agentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AgentData> response = Response.FromValue(AgentData.FromResponse(result), result);
-                    return Response.FromValue(new AgentResource(Client, response.Value), response.GetRawResponse());
+                    Response<SreAgentData> response = Response.FromValue(SreAgentData.FromResponse(result), result);
+                    return Response.FromValue(new SreAgentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AgentData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    AgentPatch patch = new AgentPatch();
+                    SreAgentData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SreAgentPatch patch = new SreAgentPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<AgentResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<SreAgentResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -911,11 +911,11 @@ namespace Azure.ResourceManager.SreAgent
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<AgentResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SreAgentResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.RemoveTag");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.RemoveTag");
             scope.Start();
             try
             {
@@ -930,19 +930,19 @@ namespace Azure.ResourceManager.SreAgent
                     };
                     HttpMessage message = _agentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AgentData> response = Response.FromValue(AgentData.FromResponse(result), result);
-                    return Response.FromValue(new AgentResource(Client, response.Value), response.GetRawResponse());
+                    Response<SreAgentData> response = Response.FromValue(SreAgentData.FromResponse(result), result);
+                    return Response.FromValue(new SreAgentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AgentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    AgentPatch patch = new AgentPatch();
+                    SreAgentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SreAgentPatch patch = new SreAgentPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<AgentResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<SreAgentResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -957,11 +957,11 @@ namespace Azure.ResourceManager.SreAgent
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<AgentResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<SreAgentResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("AgentResource.RemoveTag");
+            using DiagnosticScope scope = _agentsClientDiagnostics.CreateScope("SreAgentResource.RemoveTag");
             scope.Start();
             try
             {
@@ -976,19 +976,19 @@ namespace Azure.ResourceManager.SreAgent
                     };
                     HttpMessage message = _agentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AgentData> response = Response.FromValue(AgentData.FromResponse(result), result);
-                    return Response.FromValue(new AgentResource(Client, response.Value), response.GetRawResponse());
+                    Response<SreAgentData> response = Response.FromValue(SreAgentData.FromResponse(result), result);
+                    return Response.FromValue(new SreAgentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AgentData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    AgentPatch patch = new AgentPatch();
+                    SreAgentData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SreAgentPatch patch = new SreAgentPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<AgentResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<SreAgentResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.SreAgent
             }
         }
 
-        /// <summary> Gets a collection of AgentConnectors in the <see cref="AgentResource"/>. </summary>
+        /// <summary> Gets a collection of AgentConnectors in the <see cref="SreAgentResource"/>. </summary>
         /// <returns> An object representing collection of AgentConnectors and their operations over a AgentConnectorResource. </returns>
         public virtual AgentConnectorCollection GetAgentConnectors()
         {

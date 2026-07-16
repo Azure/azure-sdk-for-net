@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.SreAgent.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="AgentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SreAgentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AgentResource"/> object. </returns>
-        public virtual AgentResource GetAgentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SreAgentResource"/> object. </returns>
+        public virtual SreAgentResource GetSreAgentResource(ResourceIdentifier id)
         {
-            AgentResource.ValidateResourceId(id);
-            return new AgentResource(Client, id);
+            SreAgentResource.ValidateResourceId(id);
+            return new SreAgentResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="AgentConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>

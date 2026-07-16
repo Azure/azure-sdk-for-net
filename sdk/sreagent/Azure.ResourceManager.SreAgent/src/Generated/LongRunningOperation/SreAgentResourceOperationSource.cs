@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SreAgent
 {
     /// <summary></summary>
-    internal partial class AgentResourceOperationSource : IOperationSource<AgentResource>
+    internal partial class SreAgentResourceOperationSource : IOperationSource<SreAgentResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal AgentResourceOperationSource(ArmClient client)
+        internal SreAgentResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.SreAgent
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        AgentResource IOperationSource<AgentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SreAgentResource IOperationSource<SreAgentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AgentData data = AgentData.DeserializeAgentData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AgentResource(_client, data);
+            SreAgentData data = SreAgentData.DeserializeSreAgentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SreAgentResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<AgentResource> IOperationSource<AgentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SreAgentResource> IOperationSource<SreAgentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AgentData data = AgentData.DeserializeAgentData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AgentResource(_client, data);
+            SreAgentData data = SreAgentData.DeserializeSreAgentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SreAgentResource(_client, data);
         }
     }
 }

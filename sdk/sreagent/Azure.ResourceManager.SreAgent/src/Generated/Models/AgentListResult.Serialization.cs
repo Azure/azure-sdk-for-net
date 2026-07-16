@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SreAgent.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AgentData item in Value)
+            foreach (SreAgentData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.SreAgent.Models
             {
                 return null;
             }
-            IList<AgentData> value = default;
+            IList<SreAgentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AgentData> array = new List<AgentData>();
+                    List<SreAgentData> array = new List<SreAgentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentData.DeserializeAgentData(item, options));
+                        array.Add(SreAgentData.DeserializeSreAgentData(item, options));
                     }
                     value = array;
                     continue;

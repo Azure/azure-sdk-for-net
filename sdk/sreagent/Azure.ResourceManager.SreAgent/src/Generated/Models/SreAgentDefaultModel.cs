@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SreAgent.Models
 {
     /// <summary> Default AI model configuration. </summary>
-    public partial class DefaultModel
+    public partial class SreAgentDefaultModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DefaultModel"/>. </summary>
-        public DefaultModel()
+        /// <summary> Initializes a new instance of <see cref="SreAgentDefaultModel"/>. </summary>
+        public SreAgentDefaultModel()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DefaultModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SreAgentDefaultModel"/>. </summary>
         /// <param name="provider"> AI provider name (e.g., MicrosoftFoundry, Anthropic). </param>
         /// <param name="name"> Model name (e.g., gpt-5, claude-opus-4-5, claude-sonnet-4-5). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultModel(string provider, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SreAgentDefaultModel(string provider, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provider = provider;
             Name = name;
