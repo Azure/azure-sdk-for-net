@@ -13,22 +13,22 @@ using Azure.ResourceManager.SreAgent;
 namespace Azure.ResourceManager.SreAgent.Models
 {
     /// <summary> Knowledge graph configuration for agent. </summary>
-    public partial class KnowledgeGraphConfiguration
+    public partial class AgentKnowledgeGraphConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeGraphConfiguration"/>. </summary>
-        public KnowledgeGraphConfiguration()
+        /// <summary> Initializes a new instance of <see cref="AgentKnowledgeGraphConfiguration"/>. </summary>
+        public AgentKnowledgeGraphConfiguration()
         {
             ManagedResources = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeGraphConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentKnowledgeGraphConfiguration"/>. </summary>
         /// <param name="identity"> The identity used to access the knowledge graph. </param>
         /// <param name="managedResources"> The list of resources managed by agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeGraphConfiguration(ResourceIdentifier identity, IList<ResourceIdentifier> managedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentKnowledgeGraphConfiguration(ResourceIdentifier identity, IList<ResourceIdentifier> managedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             ManagedResources = managedResources;

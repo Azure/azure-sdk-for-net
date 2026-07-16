@@ -12,22 +12,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.SreAgent.Models
 {
     /// <summary> Configuration for action. </summary>
-    public partial class ActionConfiguration
+    public partial class AgentActionConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActionConfiguration"/>. </summary>
-        public ActionConfiguration()
+        /// <summary> Initializes a new instance of <see cref="AgentActionConfiguration"/>. </summary>
+        public AgentActionConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentActionConfiguration"/>. </summary>
         /// <param name="identity"> The identity used by the action. </param>
         /// <param name="mode"> The mode of the action. </param>
         /// <param name="accessLevel"> The access level of the action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActionConfiguration(ResourceIdentifier identity, AgentMode? mode, AgentAccessLevel? accessLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentActionConfiguration(ResourceIdentifier identity, AgentMode? mode, AgentAccessLevel? accessLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Mode = mode;

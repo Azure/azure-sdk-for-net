@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SreAgent
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ActionConfiguration))]
+    [ModelReaderWriterBuildable(typeof(AgentActionConfiguration))]
     [ModelReaderWriterBuildable(typeof(AgentConnectorData))]
     [ModelReaderWriterBuildable(typeof(AgentConnectorList))]
     [ModelReaderWriterBuildable(typeof(AgentConnectorListResult))]
@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.SreAgent
     [ModelReaderWriterBuildable(typeof(AgentConnectorResource))]
     [ModelReaderWriterBuildable(typeof(AgentIdentity))]
     [ModelReaderWriterBuildable(typeof(AgentIdentityPatch))]
+    [ModelReaderWriterBuildable(typeof(AgentIncidentManagementConfiguration))]
+    [ModelReaderWriterBuildable(typeof(AgentKnowledgeGraphConfiguration))]
     [ModelReaderWriterBuildable(typeof(AgentListResult))]
     [ModelReaderWriterBuildable(typeof(AgentPatchProperties))]
     [ModelReaderWriterBuildable(typeof(AgentProperties))]
@@ -46,8 +48,6 @@ namespace Azure.ResourceManager.SreAgent
     [ModelReaderWriterBuildable(typeof(GenevaActionParameterInfo))]
     [ModelReaderWriterBuildable(typeof(GenevaActionsPolicy))]
     [ModelReaderWriterBuildable(typeof(GenevaActionsPolicyPatch))]
-    [ModelReaderWriterBuildable(typeof(IncidentManagementConfiguration))]
-    [ModelReaderWriterBuildable(typeof(KnowledgeGraphConfiguration))]
     [ModelReaderWriterBuildable(typeof(LogConfiguration))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
