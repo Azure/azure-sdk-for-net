@@ -58,7 +58,7 @@
     "@typespec/library-linter": "0.84.0",
     "@typespec/openapi": "1.14.0",
     "@typespec/rest": "0.84.0",
-    "@typespec/spec-api": "0.1.0-alpha.14",
+    "@typespec/spec-api": "0.1.0-alpha.15",
     "@typespec/spector": "0.1.0-alpha.26",
     "@typespec/sse": "0.84.0",
     "@typespec/streams": "0.84.0",
@@ -77,7 +77,6 @@
   },
   "overrides": {
     "@vue/reactivity": "3.5.39",
-    "@typespec/spec-api": "0.1.0-alpha.14",
     "fast-xml-parser": "5.8.0"
   },
   "azure-sdk/emitter-package-json-pinning": [
