@@ -4,6 +4,8 @@
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
@@ -92,6 +94,27 @@ namespace Azure.Generator.Provisioning.Utilities
             if (defaultValue is not null)
             {
                 args.Add(new PositionalParameterReferenceExpression("defaultValue", Literal(defaultValue)));
+            }
+            return [.. args];
+        }
+
+        /// <summary>
+        /// Builds arguments for a model property, including a resource instance when the
+        /// model is also emitted as a provisionable resource.
+        /// </summary>
+        public static ValueExpression[] BuildDefineModelPropertyArgs(
+            InputModelType? modelType,
+            string propertyName,
+            string[] bicepPath,
+            bool isOutput,
+            bool isRequired,
+            string? defaultValue = null)
+        {
+            var args = BuildDefinePropertyArgs(propertyName, bicepPath, isOutput, isRequired, defaultValue).ToList();
+            if (modelType is not null
+                && ProvisioningGenerator.Instance.TypeFactory.CreateModel(modelType) is Providers.ProvisioningResourceProvider resource)
+            {
+                args.Insert(2, New.Instance(resource.Type, [Literal(resource.Name.ToVariableName())]));
             }
             return [.. args];
         }
