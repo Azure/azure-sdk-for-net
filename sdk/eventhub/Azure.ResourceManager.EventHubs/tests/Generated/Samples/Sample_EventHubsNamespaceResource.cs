@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 },
                 },
             };
-            EventHubsNamespaceResource result = await eventHubsNamespace.UpdateAsync(data);
+            EventHubsNamespaceResource result = (await eventHubsNamespace.UpdateAsync(data)).Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
