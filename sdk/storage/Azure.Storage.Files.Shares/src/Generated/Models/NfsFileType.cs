@@ -21,6 +21,14 @@ namespace Azure.Storage.Files.Shares.Models
         private const string DirectoryValue = "Directory";
         /// <summary> SymLink. </summary>
         private const string SymLinkValue = "SymLink";
+        /// <summary> BlockDevice. </summary>
+        private const string BlockDeviceValue = "BlockDevice";
+        /// <summary> CharacterDevice. </summary>
+        private const string CharacterDeviceValue = "CharacterDevice";
+        /// <summary> Socket. </summary>
+        private const string SocketValue = "Socket";
+        /// <summary> Fifo. </summary>
+        private const string FifoValue = "Fifo";
 
         /// <summary> Initializes a new instance of <see cref="NfsFileType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +48,18 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> SymLink. </summary>
         public static NfsFileType SymLink { get; } = new NfsFileType(SymLinkValue);
+
+        /// <summary> BlockDevice. </summary>
+        public static NfsFileType BlockDevice { get; } = new NfsFileType(BlockDeviceValue);
+
+        /// <summary> CharacterDevice. </summary>
+        public static NfsFileType CharacterDevice { get; } = new NfsFileType(CharacterDeviceValue);
+
+        /// <summary> Socket. </summary>
+        public static NfsFileType Socket { get; } = new NfsFileType(SocketValue);
+
+        /// <summary> Fifo. </summary>
+        public static NfsFileType Fifo { get; } = new NfsFileType(FifoValue);
 
         /// <summary> Determines if two <see cref="NfsFileType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

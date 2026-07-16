@@ -143,6 +143,24 @@ namespace Azure.Storage.Files.Shares.Models
                 writer.WriteValue(ETag);
                 writer.WriteEndElement();
             }
+            if (Optional.IsDefined(Owner))
+            {
+                writer.WriteStartElement("Uid");
+                writer.WriteValue(Owner);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(Group))
+            {
+                writer.WriteStartElement("Gid");
+                writer.WriteValue(Group);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(FileMode))
+            {
+                writer.WriteStartElement("Mode");
+                writer.WriteValue(FileMode);
+                writer.WriteEndElement();
+            }
         }
 
         /// <param name="element"> The xml element to deserialize. </param>
@@ -161,6 +179,9 @@ namespace Azure.Storage.Files.Shares.Models
             DateTimeOffset? changeTime = default;
             DateTimeOffset? lastModified = default;
             string eTag = default;
+            string owner = default;
+            string @group = default;
+            string fileMode = default;
 
             foreach (var child in element.Elements())
             {
@@ -200,6 +221,21 @@ namespace Azure.Storage.Files.Shares.Models
                     eTag = (string)child;
                     continue;
                 }
+                if (localName == "Uid")
+                {
+                    owner = (string)child;
+                    continue;
+                }
+                if (localName == "Gid")
+                {
+                    @group = (string)child;
+                    continue;
+                }
+                if (localName == "Mode")
+                {
+                    fileMode = (string)child;
+                    continue;
+                }
             }
             return new FileProperty(
                 contentLength,
@@ -208,7 +244,10 @@ namespace Azure.Storage.Files.Shares.Models
                 lastWriteTime,
                 changeTime,
                 lastModified,
-                eTag);
+                eTag,
+                owner,
+                @group,
+                fileMode);
         }
 
         /// <param name="writer"> The XML writer. </param>
