@@ -131,7 +131,9 @@ public static class ActivityServer
         configureAgent(agentApp);
 
         var builder = AgentHost.CreateBuilder(args);
-        builder.AddActivity(agentApp, configureOptions);
+        // Host the already-built application with the already-resolved options so the options
+        // callback is not invoked a second time.
+        builder.AddActivity(agentApp, options);
         configure?.Invoke(builder);
         builder.Build().Run();
     }
@@ -156,21 +158,9 @@ public static class ActivityServer
         // Custom-handler mode: register only the Activity package services (for the session-id /
         // baggage stamping) and map the custom delegate; the M365 SDK stack is not initialized.
         builder.Services.AddActivityServerServices();
-        builder.RegisterProtocol("Activity", endpoints => MapCustomEndpoints(endpoints, requestHandler));
+        builder.RegisterProtocol("Activity", endpoints => endpoints.MapFoundryActivity(requestHandler));
 
         configure?.Invoke(builder);
         builder.Build().Run();
-    }
-
-    private static void MapCustomEndpoints(IEndpointRouteBuilder endpoints, RequestDelegate requestHandler)
-    {
-        foreach (var path in FoundryActivityEndpointRouteBuilderExtensions.ActivityPaths)
-        {
-            endpoints.MapPost(path, async (HttpContext context, ActivityEndpointHandler endpointHandler) =>
-            {
-                endpointHandler.StampSessionAndBaggage(context);
-                await requestHandler(context).ConfigureAwait(false);
-            }).AddEndpointFilter<ActivityErrorSourceFilter>();
-        }
     }
 }

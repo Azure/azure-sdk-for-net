@@ -15,6 +15,7 @@ using Microsoft.Agents.Hosting.AspNetCore;
 using Microsoft.Agents.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -142,5 +143,56 @@ public class FoundryActivityHostingTests
         Assert.That((int)response.StatusCode, Is.EqualTo(200));
 
         await app.StopAsync();
+    }
+
+    [Test]
+    public async Task MapFoundryActivity_RawHandler_InvokesDelegateAndStampsSessionHeader()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+
+        // Only the Activity package services are needed for the session/baggage stamping; the
+        // Microsoft 365 Agents SDK stack is not initialized on the raw-handler path.
+        builder.Services.AddActivityServer();
+
+        using var app = builder.Build();
+        app.UseAgentServerCore();
+
+        // Own the request pipeline: read the request and write the response yourself.
+        ((Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)app).MapFoundryActivity(async context =>
+        {
+            using var reader = new System.IO.StreamReader(context.Request.Body);
+            var body = await reader.ReadToEndAsync();
+            context.Response.StatusCode = 200;
+            await context.Response.WriteAsync($"handled:{body.Length}");
+        });
+
+        await app.StartAsync();
+
+        var client = app.GetTestClient();
+        var response = await client.PostAsync("/activity/messages",
+            new StringContent("{\"type\":\"message\",\"text\":\"hi\"}", System.Text.Encoding.UTF8, "application/json"));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That((int)response.StatusCode, Is.EqualTo(200));
+            Assert.That(response.Headers.Contains(Core.PlatformHeaders.SessionId), Is.True);
+        });
+
+        var text = await response.Content.ReadAsStringAsync();
+        Assert.That(text, Does.StartWith("handled:"));
+
+        await app.StopAsync();
+    }
+
+    [Test]
+    public void MapFoundryActivity_RawHandler_NullHandler_Throws()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.Services.AddActivityServer();
+        using var app = builder.Build();
+
+        Assert.Throws<ArgumentNullException>(
+            () => ((Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)app).MapFoundryActivity((Microsoft.AspNetCore.Http.RequestDelegate)null!));
     }
 }

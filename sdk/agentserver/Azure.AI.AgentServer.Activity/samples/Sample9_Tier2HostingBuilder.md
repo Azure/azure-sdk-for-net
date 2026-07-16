@@ -91,8 +91,7 @@ app.Run();
 
 When you need full control over how the application is constructed — while still having access to
 the `IServiceProvider` — use the factory overload. This mirrors the Microsoft 365 Agents SDK's
-`builder.AddAgent(sp => ...)` and the sibling protocols' `builder.AddResponses(factory)` /
-`builder.AddInvocations(factory)`:
+`builder.AddAgent(sp => ...)` factory registration:
 
 ```C# Snippet:Activity_Sample9_BuilderWithFactory
 var builder = AgentHost.CreateBuilder(args);

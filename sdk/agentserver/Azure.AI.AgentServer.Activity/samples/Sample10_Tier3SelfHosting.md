@@ -5,9 +5,8 @@ HTTP host and use `AddActivityServer()` + `MapActivityServer()` to add Activity 
 your own routes. This is useful when you have an existing ASP.NET Core application and want to add a
 Microsoft 365 Agents SDK agent without adopting the Core framework one-liner.
 
-> `AddActivityServer()` / `MapActivityServer()` are the sibling-parity aliases (matching
-> `AddResponsesServer` / `AddInvocationsServer`) for `AddFoundryActivity()` / `MapFoundryActivity()`.
-> Use whichever names you prefer — they are identical.
+> `AddActivityServer()` / `MapActivityServer()` are aliases for `AddFoundryActivity()` /
+> `MapFoundryActivity()`. Use whichever names you prefer — they are identical.
 
 ## Prerequisites
 
@@ -42,8 +41,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddAgent<EchoAgent>();
 builder.Services.AddSingleton<IStorage, MemoryStorage>();
 
-// Add the Activity protocol to your own host. AddActivityServer() is the sibling-parity
-// alias for AddFoundryActivity() (matching AddResponsesServer / AddInvocationsServer).
+// Add the Activity protocol to your own host. AddActivityServer() is the alias for
+// AddFoundryActivity().
 builder.AddActivityServer();
 
 var app = builder.Build();
@@ -52,7 +51,7 @@ var app = builder.Build();
 app.MapGet("/", () => "My existing app");
 
 // Map the Activity endpoints (/activity/messages + /api/messages) and /readiness.
-// MapActivityServer() is the sibling-parity alias for MapFoundryActivity().
+// MapActivityServer() is the alias for MapFoundryActivity().
 app.MapActivityServer();
 
 app.Run();
@@ -96,6 +95,51 @@ app.MapGet("/", () => "My existing app");
 
 app.Run();
 ```
+
+## Own the request pipeline — a raw handler (no Microsoft 365 adapter)
+
+When you want to receive each inbound activity as a raw `HttpContext` and write the response
+yourself — without the Microsoft 365 Agents SDK adapter — pass a `RequestDelegate` to the
+`IEndpointRouteBuilder` overload of `MapFoundryActivity()` (aliased as `MapActivityServer()`). The
+Microsoft 365 Agents SDK is **not** initialized on this path, but the platform still stamps the
+session-id response header, correlation baggage, and error-source classification around your handler.
+
+```C# Snippet:Activity_Sample10_RawHandler
+var builder = WebApplication.CreateBuilder(args);
+
+// Register only the Activity package services (for the session-id / baggage stamping).
+// The Microsoft 365 Agents SDK is not initialized on the raw-handler path.
+builder.Services.AddActivityServer();
+
+var app = builder.Build();
+
+// Foundry platform middleware (request-id, correlation baggage, inbound logging).
+app.UseAgentServerCore();
+app.MapHealthChecks("/readiness");
+
+// Your existing endpoints coexist with the Activity endpoints.
+app.MapGet("/", () => "My existing app");
+
+// Own the request pipeline: map the Activity endpoints to your own RequestDelegate.
+// You read the request and write the response yourself — no Microsoft 365 adapter —
+// while the platform still stamps the session-id header, correlation baggage, and
+// error-source classification around your handler.
+((IEndpointRouteBuilder)app).MapFoundryActivity(async context =>
+{
+    using var reader = new System.IO.StreamReader(context.Request.Body);
+    var body = await reader.ReadToEndAsync();
+
+    context.Response.StatusCode = StatusCodes.Status200OK;
+    await context.Response.WriteAsync($"Received {body.Length} bytes.");
+});
+
+app.Run();
+```
+
+> This is the Tier 3 counterpart of `ActivityServer.Run(RequestDelegate)` (see
+> [Custom Request Handler](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Activity/samples/Sample5_CustomRequestHandler.md)):
+> the Tier 1 one-liner owns the host for you, while this overload maps the raw handler onto a host
+> you already own.
 
 
 ```bash

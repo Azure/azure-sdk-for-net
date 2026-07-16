@@ -12,7 +12,7 @@ using Microsoft.Extensions.Options;
 namespace Azure.AI.AgentServer.Activity;
 
 /// <summary>
-/// Tier 2 extension methods for <see cref="AgentHostBuilder"/> that register the Activity protocol
+/// Extension methods for <see cref="AgentHostBuilder"/> that register the Activity protocol
 /// on the Foundry Core host builder. It composes the Activity protocol onto a host built with
 /// <see cref="AgentHost.CreateBuilder(string[])"/>, giving you full control over service
 /// registration, configuration, and tracing while still leveraging the Core framework
@@ -63,7 +63,27 @@ public static class ActivityBuilderExtensions
         ArgumentNullException.ThrowIfNull(builder);
         ArgumentNullException.ThrowIfNull(agentApp);
 
-        var options = BuildOptions(builder, configure);
+        var options = new ActivityServerOptions();
+        configure?.Invoke(options);
+        return builder.AddActivity(agentApp, options);
+    }
+
+    /// <summary>
+    /// Registers the Activity protocol with a pre-built Microsoft 365 Agents SDK
+    /// <see cref="AgentApplication"/> instance and a pre-resolved <see cref="ActivityServerOptions"/>
+    /// (the options callback has already been applied). Used by the entry points that build the
+    /// options and the application before the host builder exists, so the callback is not run twice.
+    /// </summary>
+    internal static AgentHostBuilder AddActivity(
+        this AgentHostBuilder builder,
+        AgentApplication agentApp,
+        ActivityServerOptions options)
+    {
+        ArgumentNullException.ThrowIfNull(builder);
+        ArgumentNullException.ThrowIfNull(agentApp);
+        ArgumentNullException.ThrowIfNull(options);
+
+        OverlayConnectionConfiguration(builder, options);
         RegisterActivityServices(builder, options);
 
         builder.Services.AddSingleton(agentApp);
@@ -110,14 +130,22 @@ public static class ActivityBuilderExtensions
         var options = new ActivityServerOptions();
         configure?.Invoke(options);
 
-        // Overlay the derived Microsoft 365 connection settings (CONNECTIONS__*) onto the host
-        // configuration so the SDK adapter and the Foundry connection provider read them.
+        OverlayConnectionConfiguration(builder, options);
+
+        return options;
+    }
+
+    /// <summary>
+    /// Overlays the derived Microsoft 365 connection settings (<c>CONNECTIONS__*</c>) onto the host
+    /// configuration so the SDK adapter and the Foundry connection provider read them. Never mutates
+    /// the process environment.
+    /// </summary>
+    private static void OverlayConnectionConfiguration(AgentHostBuilder builder, ActivityServerOptions options)
+    {
         if (builder.WebApplicationBuilder.Configuration is IConfigurationBuilder configurationBuilder)
         {
             configurationBuilder.AddInMemoryCollection(ActivityStack.GetConnectionConfiguration(options));
         }
-
-        return options;
     }
 
     private static void RegisterActivityServices(AgentHostBuilder builder, ActivityServerOptions options)

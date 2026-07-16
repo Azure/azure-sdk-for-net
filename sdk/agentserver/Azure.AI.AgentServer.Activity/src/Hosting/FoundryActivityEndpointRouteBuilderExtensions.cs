@@ -85,6 +85,44 @@ public static class FoundryActivityEndpointRouteBuilderExtensions
     }
 
     /// <summary>
+    /// Maps the Foundry Activity protocol endpoints (<c>POST /api/messages</c> and
+    /// <c>POST /activity/messages</c>) onto an existing endpoint route builder, routing each request
+    /// to the supplied <paramref name="requestHandler"/> instead of the Microsoft 365 Agents SDK
+    /// adapter. Use this to own the request pipeline in a self-hosted app while still getting the
+    /// Foundry platform contract (session-id response header, correlation baggage, and error-source
+    /// classification). The Microsoft 365 Agents SDK is <b>not</b> used on this path.
+    /// </summary>
+    /// <param name="endpoints">The endpoint route builder.</param>
+    /// <param name="requestHandler">The request handler invoked for each inbound activity request.</param>
+    /// <returns>The endpoint route builder, for chaining.</returns>
+    public static IEndpointRouteBuilder MapFoundryActivity(
+        this IEndpointRouteBuilder endpoints,
+        RequestDelegate requestHandler)
+    {
+        ArgumentNullException.ThrowIfNull(endpoints);
+        ArgumentNullException.ThrowIfNull(requestHandler);
+
+        // Register the Activity protocol identity with the version registry (if available).
+        var registry = endpoints.ServiceProvider.GetService<ServerVersionRegistry>();
+        registry?.Register(ServerVersionRegistry.BuildIdentityString(
+            "azure-ai-agentserver-activity",
+            typeof(FoundryActivityEndpointRouteBuilderExtensions).Assembly));
+
+        foreach (var path in ActivityPaths)
+        {
+            endpoints.MapPost(path, async (HttpContext context, ActivityEndpointHandler handler) =>
+            {
+                // Apply the Foundry platform response contract (session-id header + baggage) around
+                // the caller's handler; the caller owns reading the request and writing the response.
+                handler.StampSessionAndBaggage(context);
+                await requestHandler(context).ConfigureAwait(false);
+            }).AddEndpointFilter<ActivityErrorSourceFilter>();
+        }
+
+        return endpoints;
+    }
+
+    /// <summary>
     /// Alias for <see cref="MapFoundryActivity(WebApplication)"/>.
     /// </summary>
     /// <param name="app">The web application.</param>
@@ -98,4 +136,15 @@ public static class FoundryActivityEndpointRouteBuilderExtensions
     /// <returns>The endpoint route builder, for chaining.</returns>
     public static IEndpointRouteBuilder MapActivityServer(this IEndpointRouteBuilder endpoints) =>
         endpoints.MapFoundryActivity();
+
+    /// <summary>
+    /// Alias for <see cref="MapFoundryActivity(IEndpointRouteBuilder, RequestDelegate)"/>.
+    /// </summary>
+    /// <param name="endpoints">The endpoint route builder.</param>
+    /// <param name="requestHandler">The request handler invoked for each inbound activity request.</param>
+    /// <returns>The endpoint route builder, for chaining.</returns>
+    public static IEndpointRouteBuilder MapActivityServer(
+        this IEndpointRouteBuilder endpoints,
+        RequestDelegate requestHandler) =>
+        endpoints.MapFoundryActivity(requestHandler);
 }

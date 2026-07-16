@@ -11,6 +11,7 @@ using Microsoft.Agents.Core.Models;
 using Microsoft.Agents.Hosting.AspNetCore;
 using Microsoft.Agents.Storage;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenTelemetry;
@@ -53,8 +54,8 @@ namespace Azure.AI.AgentServer.Activity.Tests.Snippets
             builder.AddAgent<EchoAgent>();
             builder.Services.AddSingleton<IStorage, MemoryStorage>();
 
-            // Add the Activity protocol to your own host. AddActivityServer() is the sibling-parity
-            // alias for AddFoundryActivity() (matching AddResponsesServer / AddInvocationsServer).
+            // Add the Activity protocol to your own host. AddActivityServer() is the alias for
+            // AddFoundryActivity().
             builder.AddActivityServer();
 
             var app = builder.Build();
@@ -63,7 +64,7 @@ namespace Azure.AI.AgentServer.Activity.Tests.Snippets
             app.MapGet("/", () => "My existing app");
 
             // Map the Activity endpoints (/activity/messages + /api/messages) and /readiness.
-            // MapActivityServer() is the sibling-parity alias for MapFoundryActivity().
+            // MapActivityServer() is the alias for MapFoundryActivity().
             app.MapActivityServer();
 
             app.Run();
@@ -102,6 +103,43 @@ namespace Azure.AI.AgentServer.Activity.Tests.Snippets
             // Map only the Activity endpoints via the IEndpointRouteBuilder overload (no bundled
             // middleware/health — you wired those above).
             ((IEndpointRouteBuilder)app).MapActivityServer();
+
+            app.Run();
+
+            #endregion
+        }
+
+        public void SelfHostRawHandler(string[] args)
+        {
+            #region Snippet:Activity_Sample10_RawHandler
+
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Register only the Activity package services (for the session-id / baggage stamping).
+            // The Microsoft 365 Agents SDK is not initialized on the raw-handler path.
+            builder.Services.AddActivityServer();
+
+            var app = builder.Build();
+
+            // Foundry platform middleware (request-id, correlation baggage, inbound logging).
+            app.UseAgentServerCore();
+            app.MapHealthChecks("/readiness");
+
+            // Your existing endpoints coexist with the Activity endpoints.
+            app.MapGet("/", () => "My existing app");
+
+            // Own the request pipeline: map the Activity endpoints to your own RequestDelegate.
+            // You read the request and write the response yourself — no Microsoft 365 adapter —
+            // while the platform still stamps the session-id header, correlation baggage, and
+            // error-source classification around your handler.
+            ((IEndpointRouteBuilder)app).MapFoundryActivity(async context =>
+            {
+                using var reader = new System.IO.StreamReader(context.Request.Body);
+                var body = await reader.ReadToEndAsync();
+
+                context.Response.StatusCode = StatusCodes.Status200OK;
+                await context.Response.WriteAsync($"Received {body.Length} bytes.");
+            });
 
             app.Run();
 

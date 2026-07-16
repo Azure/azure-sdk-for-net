@@ -32,8 +32,10 @@ namespace Azure.AI.AgentServer.Activity
     {
         public static Microsoft.AspNetCore.Builder.WebApplication MapActivityServer(this Microsoft.AspNetCore.Builder.WebApplication app) { throw null; }
         public static Microsoft.AspNetCore.Routing.IEndpointRouteBuilder MapActivityServer(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder endpoints) { throw null; }
+        public static Microsoft.AspNetCore.Routing.IEndpointRouteBuilder MapActivityServer(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder endpoints, Microsoft.AspNetCore.Http.RequestDelegate requestHandler) { throw null; }
         public static Microsoft.AspNetCore.Builder.WebApplication MapFoundryActivity(this Microsoft.AspNetCore.Builder.WebApplication app) { throw null; }
         public static Microsoft.AspNetCore.Routing.IEndpointRouteBuilder MapFoundryActivity(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder endpoints) { throw null; }
+        public static Microsoft.AspNetCore.Routing.IEndpointRouteBuilder MapFoundryActivity(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder endpoints, Microsoft.AspNetCore.Http.RequestDelegate requestHandler) { throw null; }
     }
     public static partial class FoundryActivityHostingExtensions
     {
