@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Compute
     public enum LinuxVmGuestPatchMode
     {
         /// <summary> ImageDefault. </summary>
-        ImageDefault,
+        ImageDefault = 0,
         /// <summary> AutomaticByPlatform. </summary>
-        AutomaticByPlatform
+        AutomaticByPlatform = 1
     }
 }

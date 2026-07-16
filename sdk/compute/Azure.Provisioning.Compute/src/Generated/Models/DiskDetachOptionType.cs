@@ -11,6 +11,6 @@ namespace Azure.Provisioning.Compute
     public enum DiskDetachOptionType
     {
         /// <summary> ForceDetach. </summary>
-        ForceDetach
+        ForceDetach = 0
     }
 }

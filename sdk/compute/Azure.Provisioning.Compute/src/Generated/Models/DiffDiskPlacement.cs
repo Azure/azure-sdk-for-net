@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Compute
     public enum DiffDiskPlacement
     {
         /// <summary> CacheDisk. </summary>
-        CacheDisk,
+        CacheDisk = 0,
         /// <summary> ResourceDisk. </summary>
-        ResourceDisk,
+        ResourceDisk = 1,
         /// <summary> NvmeDisk. </summary>
-        NvmeDisk
+        NvmeDisk = 2
     }
 }

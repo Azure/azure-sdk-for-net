@@ -11,6 +11,6 @@ namespace Azure.Provisioning.Compute
     public enum DiffDiskOption
     {
         /// <summary> Local. </summary>
-        Local
+        Local = 0
     }
 }
