@@ -75,7 +75,6 @@
     "typescript-eslint": "^7.8.0",
     "vitest": "^3.0.5"
   },
-  "//": "Pin transitive versions available in the Azure SDK npm feed; fast-xml-parser 5.10.1 and Vue 3.5.40 are not mirrored.",
   "overrides": {
     "@vue/reactivity": "3.5.39",
     "fast-xml-parser": "5.8.0"
