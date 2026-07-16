@@ -1,11 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// The TypeSpec management generator intentionally does not generate generic ArmResource extensions;
-// this custom partial type preserves the shipped GA API.
+// The TypeSpec management generator omits generic ArmResource extensions, while AutoRest mapped
+// roleDefinitionId to ResourceIdentifier although the service parameter is a name string; this partial preserves both GA compatibility surfaces.
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,6 +17,28 @@ namespace Azure.ResourceManager.Authorization
 {
     public static partial class AuthorizationExtensions
     {
+        /// <inheritdoc cref="GetAuthorizationRoleDefinition(ArmClient, ResourceIdentifier, string, CancellationToken)"/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("this method is deprecated and will be removed in a future version, please use GetAuthorizationRoleDefinition(ResourceIdentifier scope, string roleDefinitionId, CancellationToken cancellationToken = default) instead.")]
+        [ForwardsClientCalls]
+        public static Response<AuthorizationRoleDefinitionResource> GetAuthorizationRoleDefinition(this ArmClient client, ResourceIdentifier scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+
+            return GetMockableAuthorizationArmClient(client).GetAuthorizationRoleDefinition(scope, roleDefinitionId, cancellationToken);
+        }
+
+        /// <inheritdoc cref="GetAuthorizationRoleDefinitionAsync(ArmClient, ResourceIdentifier, string, CancellationToken)"/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("this method is deprecated and will be removed in a future version, please use GetAuthorizationRoleDefinitionAsync(ResourceIdentifier scope, string roleDefinitionId, CancellationToken cancellationToken = default) instead.")]
+        [ForwardsClientCalls]
+        public static async Task<Response<AuthorizationRoleDefinitionResource>> GetAuthorizationRoleDefinitionAsync(this ArmClient client, ResourceIdentifier scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+
+            return await GetMockableAuthorizationArmClient(client).GetAuthorizationRoleDefinitionAsync(scope, roleDefinitionId, cancellationToken).ConfigureAwait(false);
+        }
+
         private static MockableAuthorizationArmResource GetMockableAuthorizationArmResource(ArmResource resource)
         {
             return resource.GetCachedClient(client => new MockableAuthorizationArmResource(client, resource.Id));
