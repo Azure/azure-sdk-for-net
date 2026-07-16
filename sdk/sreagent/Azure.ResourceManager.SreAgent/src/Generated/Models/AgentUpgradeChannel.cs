@@ -12,7 +12,7 @@ using Azure.ResourceManager.SreAgent;
 namespace Azure.ResourceManager.SreAgent.Models
 {
     /// <summary> Upgrade channel for Agent. </summary>
-    public readonly partial struct UpgradeChannel : IEquatable<UpgradeChannel>
+    public readonly partial struct AgentUpgradeChannel : IEquatable<AgentUpgradeChannel>
     {
         private readonly string _value;
         /// <summary> Preview upgrade channel. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <summary> Stable upgrade channel. </summary>
         private const string StableValue = "Stable";
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeChannel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentUpgradeChannel"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UpgradeChannel(string value)
+        public AgentUpgradeChannel(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.SreAgent.Models
         }
 
         /// <summary> Preview upgrade channel. </summary>
-        public static UpgradeChannel Preview { get; } = new UpgradeChannel(PreviewValue);
+        public static AgentUpgradeChannel Preview { get; } = new AgentUpgradeChannel(PreviewValue);
 
         /// <summary> Stable upgrade channel. </summary>
-        public static UpgradeChannel Stable { get; } = new UpgradeChannel(StableValue);
+        public static AgentUpgradeChannel Stable { get; } = new AgentUpgradeChannel(StableValue);
 
-        /// <summary> Determines if two <see cref="UpgradeChannel"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AgentUpgradeChannel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(UpgradeChannel left, UpgradeChannel right) => left.Equals(right);
+        public static bool operator ==(AgentUpgradeChannel left, AgentUpgradeChannel right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="UpgradeChannel"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AgentUpgradeChannel"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(UpgradeChannel left, UpgradeChannel right) => !left.Equals(right);
+        public static bool operator !=(AgentUpgradeChannel left, AgentUpgradeChannel right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="UpgradeChannel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AgentUpgradeChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeChannel(string value) => new UpgradeChannel(value);
+        public static implicit operator AgentUpgradeChannel(string value) => new AgentUpgradeChannel(value);
 
-        /// <summary> Converts a string to a <see cref="UpgradeChannel"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AgentUpgradeChannel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator UpgradeChannel?(string value) => value == null ? null : new UpgradeChannel(value);
+        public static implicit operator AgentUpgradeChannel?(string value) => value == null ? null : new AgentUpgradeChannel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is UpgradeChannel other && Equals(other);
+        public override bool Equals(object obj) => obj is AgentUpgradeChannel other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(UpgradeChannel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AgentUpgradeChannel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

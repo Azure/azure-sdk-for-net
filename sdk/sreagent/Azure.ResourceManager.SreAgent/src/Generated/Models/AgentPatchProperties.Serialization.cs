@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.SreAgent.Models
                 return null;
             }
             ResourceIdentifier agentSpaceId = default;
-            KnowledgeGraphConfiguration knowledgeGraphConfiguration = default;
-            ActionConfiguration actionConfiguration = default;
+            AgentKnowledgeGraphConfiguration knowledgeGraphConfiguration = default;
+            AgentActionConfiguration actionConfiguration = default;
             LogConfiguration logConfiguration = default;
-            IncidentManagementConfiguration incidentManagementConfiguration = default;
-            UpgradeChannel? upgradeChannel = default;
+            AgentIncidentManagementConfiguration incidentManagementConfiguration = default;
+            AgentUpgradeChannel? upgradeChannel = default;
             AgentIdentityPatch agentIdentity = default;
             SreAgentDefaultModel defaultModel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                     {
                         continue;
                     }
-                    knowledgeGraphConfiguration = KnowledgeGraphConfiguration.DeserializeKnowledgeGraphConfiguration(prop.Value, options);
+                    knowledgeGraphConfiguration = AgentKnowledgeGraphConfiguration.DeserializeAgentKnowledgeGraphConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("actionConfiguration"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                     {
                         continue;
                     }
-                    actionConfiguration = ActionConfiguration.DeserializeActionConfiguration(prop.Value, options);
+                    actionConfiguration = AgentActionConfiguration.DeserializeAgentActionConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("logConfiguration"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                     {
                         continue;
                     }
-                    incidentManagementConfiguration = IncidentManagementConfiguration.DeserializeIncidentManagementConfiguration(prop.Value, options);
+                    incidentManagementConfiguration = AgentIncidentManagementConfiguration.DeserializeAgentIncidentManagementConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("upgradeChannel"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                     {
                         continue;
                     }
-                    upgradeChannel = new UpgradeChannel(prop.Value.GetString());
+                    upgradeChannel = new AgentUpgradeChannel(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("agentIdentity"u8))

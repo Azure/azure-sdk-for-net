@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="agentIdentity"> Agent identity configuration for accessing resources. </param>
         /// <param name="defaultModel"> Default AI model configuration for the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentProperties(AgentProvisioningState? provisioningState, string agentEndpoint, string runningState, AgentPowerState? powerState, ResourceIdentifier agentSpaceId, KnowledgeGraphConfiguration knowledgeGraphConfiguration, ActionConfiguration actionConfiguration, LogConfiguration logConfiguration, IncidentManagementConfiguration incidentManagementConfiguration, UpgradeChannel? upgradeChannel, AgentIdentity agentIdentity, SreAgentDefaultModel defaultModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentProperties(AgentProvisioningState? provisioningState, string agentEndpoint, string runningState, AgentPowerState? powerState, ResourceIdentifier agentSpaceId, AgentKnowledgeGraphConfiguration knowledgeGraphConfiguration, AgentActionConfiguration actionConfiguration, LogConfiguration logConfiguration, AgentIncidentManagementConfiguration incidentManagementConfiguration, AgentUpgradeChannel? upgradeChannel, AgentIdentity agentIdentity, SreAgentDefaultModel defaultModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AgentEndpoint = agentEndpoint;
@@ -69,19 +69,19 @@ namespace Azure.ResourceManager.SreAgent.Models
         public ResourceIdentifier AgentSpaceId { get; set; }
 
         /// <summary> Knowledge graph configuration for agent. </summary>
-        public KnowledgeGraphConfiguration KnowledgeGraphConfiguration { get; set; }
+        public AgentKnowledgeGraphConfiguration KnowledgeGraphConfiguration { get; set; }
 
         /// <summary> Configuration for action. </summary>
-        public ActionConfiguration ActionConfiguration { get; set; }
+        public AgentActionConfiguration ActionConfiguration { get; set; }
 
         /// <summary> Log configurations. </summary>
         internal LogConfiguration LogConfiguration { get; set; }
 
         /// <summary> Incident management configurations. </summary>
-        public IncidentManagementConfiguration IncidentManagementConfiguration { get; set; }
+        public AgentIncidentManagementConfiguration IncidentManagementConfiguration { get; set; }
 
         /// <summary> The upgrade channel of the agent. </summary>
-        public UpgradeChannel? UpgradeChannel { get; set; }
+        public AgentUpgradeChannel? UpgradeChannel { get; set; }
 
         /// <summary> Agent identity configuration for accessing resources. </summary>
         public AgentIdentity AgentIdentity { get; set; }

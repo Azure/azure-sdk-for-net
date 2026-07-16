@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SreAgent.Models
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
+                writer.WriteStringValue(ClientId.Value);
             }
             if (Optional.IsDefined(CertificateSubjectName))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SreAgent.Models
                 return null;
             }
             Uri acisEndpoint = default;
-            string clientId = default;
+            Guid? clientId = default;
             string certificateSubjectName = default;
             GenevaActionAuthenticationMode? authenticationMode = default;
             string extensionName = default;
@@ -171,7 +171,11 @@ namespace Azure.ResourceManager.SreAgent.Models
                 }
                 if (prop.NameEquals("clientId"u8))
                 {
-                    clientId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("certificateSubjectName"u8))

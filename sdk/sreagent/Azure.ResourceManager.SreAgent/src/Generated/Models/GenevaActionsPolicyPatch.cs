@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <param name="extensionName"> Name of the Geneva extension. </param>
         /// <param name="allowedActions"> Collection of allowed Geneva actions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GenevaActionsPolicyPatch(Uri acisEndpoint, string clientId, string certificateSubjectName, GenevaActionAuthenticationMode? authenticationMode, string extensionName, IList<GenevaActionConfig> allowedActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GenevaActionsPolicyPatch(Uri acisEndpoint, Guid? clientId, string certificateSubjectName, GenevaActionAuthenticationMode? authenticationMode, string extensionName, IList<GenevaActionConfig> allowedActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AcisEndpoint = acisEndpoint;
             ClientId = clientId;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SreAgent.Models
         public Uri AcisEndpoint { get; set; }
 
         /// <summary> Client ID for authentication. </summary>
-        public string ClientId { get; set; }
+        public Guid? ClientId { get; set; }
 
         /// <summary> Subject name of the certificate used for authentication. </summary>
         public string CertificateSubjectName { get; set; }

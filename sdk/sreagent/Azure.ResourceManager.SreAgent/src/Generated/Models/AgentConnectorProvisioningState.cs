@@ -12,7 +12,7 @@ using Azure.ResourceManager.SreAgent;
 namespace Azure.ResourceManager.SreAgent.Models
 {
     /// <summary> Provisioning state of a connector. </summary>
-    public readonly partial struct ConnectorProvisioningState : IEquatable<ConnectorProvisioningState>
+    public readonly partial struct AgentConnectorProvisioningState : IEquatable<AgentConnectorProvisioningState>
     {
         private readonly string _value;
         /// <summary> The connector provisioning succeeded. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.SreAgent.Models
         /// <summary> The connector is being deleted. </summary>
         private const string DeletingValue = "Deleting";
 
-        /// <summary> Initializes a new instance of <see cref="ConnectorProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentConnectorProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnectorProvisioningState(string value)
+        public AgentConnectorProvisioningState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,44 +37,44 @@ namespace Azure.ResourceManager.SreAgent.Models
         }
 
         /// <summary> The connector provisioning succeeded. </summary>
-        public static ConnectorProvisioningState Succeeded { get; } = new ConnectorProvisioningState(SucceededValue);
+        public static AgentConnectorProvisioningState Succeeded { get; } = new AgentConnectorProvisioningState(SucceededValue);
 
         /// <summary> The connector provisioning failed. </summary>
-        public static ConnectorProvisioningState Failed { get; } = new ConnectorProvisioningState(FailedValue);
+        public static AgentConnectorProvisioningState Failed { get; } = new AgentConnectorProvisioningState(FailedValue);
 
         /// <summary> The connector provisioning was canceled. </summary>
-        public static ConnectorProvisioningState Canceled { get; } = new ConnectorProvisioningState(CanceledValue);
+        public static AgentConnectorProvisioningState Canceled { get; } = new AgentConnectorProvisioningState(CanceledValue);
 
         /// <summary> The connector is being provisioned. </summary>
-        public static ConnectorProvisioningState InProgress { get; } = new ConnectorProvisioningState(InProgressValue);
+        public static AgentConnectorProvisioningState InProgress { get; } = new AgentConnectorProvisioningState(InProgressValue);
 
         /// <summary> The connector is being deleted. </summary>
-        public static ConnectorProvisioningState Deleting { get; } = new ConnectorProvisioningState(DeletingValue);
+        public static AgentConnectorProvisioningState Deleting { get; } = new AgentConnectorProvisioningState(DeletingValue);
 
-        /// <summary> Determines if two <see cref="ConnectorProvisioningState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AgentConnectorProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ConnectorProvisioningState left, ConnectorProvisioningState right) => left.Equals(right);
+        public static bool operator ==(AgentConnectorProvisioningState left, AgentConnectorProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ConnectorProvisioningState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AgentConnectorProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ConnectorProvisioningState left, ConnectorProvisioningState right) => !left.Equals(right);
+        public static bool operator !=(AgentConnectorProvisioningState left, AgentConnectorProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ConnectorProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AgentConnectorProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectorProvisioningState(string value) => new ConnectorProvisioningState(value);
+        public static implicit operator AgentConnectorProvisioningState(string value) => new AgentConnectorProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="ConnectorProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AgentConnectorProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectorProvisioningState?(string value) => value == null ? null : new ConnectorProvisioningState(value);
+        public static implicit operator AgentConnectorProvisioningState?(string value) => value == null ? null : new AgentConnectorProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ConnectorProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is AgentConnectorProvisioningState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ConnectorProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AgentConnectorProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
