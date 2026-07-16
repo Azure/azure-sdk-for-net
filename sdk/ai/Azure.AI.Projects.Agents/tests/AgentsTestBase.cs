@@ -363,10 +363,8 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             return;
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(
-            new TestPipelinePolicy(message =>
-            {
-                message.Request.Headers.Set(FOUNDRY_HEADER, FOUNDRY_HEADER_VALUE);
-            }),
+            new HeaderTestPolicy(new Dictionary<string, string>()
+            { {FOUNDRY_HEADER, FOUNDRY_HEADER_VALUE} }),
             PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider(), options);
 
