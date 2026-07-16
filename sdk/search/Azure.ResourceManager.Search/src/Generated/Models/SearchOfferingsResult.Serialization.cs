@@ -14,59 +14,59 @@ using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Response containing the list of offerings available in Azure AI Search, organized by region. </summary>
-    internal partial class OfferingsListResult : IJsonModel<OfferingsListResult>
+    /// <summary> Response containing the available Azure AI Search offerings, organized by region, along with the recommended default region for creating new services. </summary>
+    public partial class SearchOfferingsResult : IJsonModel<SearchOfferingsResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OfferingsListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SearchOfferingsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfferingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchOfferingsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOfferingsListResult(document.RootElement, options);
+                        return DeserializeSearchOfferingsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OfferingsListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchOfferingsResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfferingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchOfferingsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSearchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OfferingsListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchOfferingsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OfferingsListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SearchOfferingsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OfferingsListResult IPersistableModel<OfferingsListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SearchOfferingsResult IPersistableModel<SearchOfferingsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OfferingsListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SearchOfferingsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OfferingsListResult"/> from. </param>
-        internal static OfferingsListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SearchOfferingsResult"/> from. </param>
+        internal static SearchOfferingsResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeOfferingsListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSearchOfferingsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OfferingsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SearchOfferingsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,25 +77,25 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfferingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchOfferingsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfferingsListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchOfferingsResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && Optional.IsDefined(DefaultRegion))
             {
-                writer.WritePropertyName("value"u8);
+                writer.WritePropertyName("defaultRegion"u8);
+                writer.WriteStringValue(DefaultRegion);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Regions))
+            {
+                writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
-                foreach (SearchOfferingsByRegion item in Value)
+                foreach (SearchOfferingsByRegion item in Regions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -116,35 +116,40 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OfferingsListResult IJsonModel<OfferingsListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SearchOfferingsResult IJsonModel<SearchOfferingsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OfferingsListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SearchOfferingsResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfferingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchOfferingsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfferingsListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchOfferingsResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOfferingsListResult(document.RootElement, options);
+            return DeserializeSearchOfferingsResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OfferingsListResult DeserializeOfferingsListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static SearchOfferingsResult DeserializeSearchOfferingsResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<SearchOfferingsByRegion> value = default;
-            string nextLink = default;
+            string defaultRegion = default;
+            IReadOnlyList<SearchOfferingsByRegion> regions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("value"u8))
+                if (prop.NameEquals("defaultRegion"u8))
+                {
+                    defaultRegion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("regions"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -155,12 +160,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         array.Add(SearchOfferingsByRegion.DeserializeSearchOfferingsByRegion(item, options));
                     }
-                    value = array;
-                    continue;
-                }
-                if (prop.NameEquals("nextLink"u8))
-                {
-                    nextLink = prop.Value.GetString();
+                    regions = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Search.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OfferingsListResult(value ?? new ChangeTrackingList<SearchOfferingsByRegion>(), nextLink, additionalBinaryDataProperties);
+            return new SearchOfferingsResult(defaultRegion, regions ?? new ChangeTrackingList<SearchOfferingsByRegion>(), additionalBinaryDataProperties);
         }
     }
 }

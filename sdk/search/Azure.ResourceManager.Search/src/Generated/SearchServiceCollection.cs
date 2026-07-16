@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Search
         {
             TryGetApiVersion(SearchServiceResource.ResourceType, out string searchServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

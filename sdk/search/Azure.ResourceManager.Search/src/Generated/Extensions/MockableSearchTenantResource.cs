@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -36,62 +38,94 @@ namespace Azure.ResourceManager.Search.Mocking
 
         private ClientDiagnostics OfferingsClientDiagnostics => _offeringsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Offerings OfferingsRestClient => _offeringsRestClient ??= new Offerings(OfferingsClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+        private Offerings OfferingsRestClient => _offeringsRestClient ??= new Offerings(OfferingsClientDiagnostics, Pipeline, Endpoint, "2026-09-01-preview");
 
         /// <summary>
-        /// Lists all of the features and SKUs offered by the Azure AI Search service in each region. Note: This API returns a non-ARM resource collection and is not RPC-compliant. It will be replaced with an action-style API in the next preview as a breaking change. Customers should avoid taking new dependencies on the current shape.
+        /// Fetches the features and SKUs offered by the Azure AI Search service in each region, along with the recommended default region for creating new services.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Search/offerings. </description>
+        /// <description> /providers/Microsoft.Search/fetchOfferings. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Offerings_List. </description>
+        /// <description> Offerings_Fetch. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SearchOfferingsByRegion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SearchOfferingsByRegion> GetOfferingsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchOfferingsResult>> FetchOfferingsAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
+            using DiagnosticScope scope = OfferingsClientDiagnostics.CreateScope("MockableSearchTenantResource.FetchOfferings");
+            scope.Start();
+            try
             {
-                CancellationToken = cancellationToken
-            };
-            return new OfferingsGetOfferingsAsyncCollectionResultOfT(OfferingsRestClient, context, "MockableSearchTenantResource.GetOfferings");
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OfferingsRestClient.CreateFetchOfferingsRequest(context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SearchOfferingsResult> response = Response.FromValue(SearchOfferingsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Lists all of the features and SKUs offered by the Azure AI Search service in each region. Note: This API returns a non-ARM resource collection and is not RPC-compliant. It will be replaced with an action-style API in the next preview as a breaking change. Customers should avoid taking new dependencies on the current shape.
+        /// Fetches the features and SKUs offered by the Azure AI Search service in each region, along with the recommended default region for creating new services.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Search/offerings. </description>
+        /// <description> /providers/Microsoft.Search/fetchOfferings. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Offerings_List. </description>
+        /// <description> Offerings_Fetch. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SearchOfferingsByRegion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SearchOfferingsByRegion> GetOfferings(CancellationToken cancellationToken = default)
+        public virtual Response<SearchOfferingsResult> FetchOfferings(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
+            using DiagnosticScope scope = OfferingsClientDiagnostics.CreateScope("MockableSearchTenantResource.FetchOfferings");
+            scope.Start();
+            try
             {
-                CancellationToken = cancellationToken
-            };
-            return new OfferingsGetOfferingsCollectionResultOfT(OfferingsRestClient, context, "MockableSearchTenantResource.GetOfferings");
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OfferingsRestClient.CreateFetchOfferingsRequest(context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SearchOfferingsResult> response = Response.FromValue(SearchOfferingsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
