@@ -1,14 +1,10 @@
 # Release History
 
-## 1.17.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.17.0 (2026-07-16)
 
 ### Other Changes
+
+- Upgraded the code generation tooling (azure-typespec/http-client-csharp-mgmt) for improved code quality.
 
 ## 1.16.0 (2026-07-01)
 
