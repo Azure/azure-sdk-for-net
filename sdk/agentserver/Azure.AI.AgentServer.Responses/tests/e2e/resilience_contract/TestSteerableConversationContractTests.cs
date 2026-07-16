@@ -661,6 +661,117 @@ public class TestSteerableConversationContractTests
         }
     }
 
+    // ---- Real end-to-end composition: a QUEUED streaming turn must still return an SSE stream ----
+    [Test]
+    public async Task RealComposition_QueuedStreamingTurn_ReturnsSseNotJson()
+    {
+        // Regression: POST /responses with stream=true carrying a queued (steered) turn must yield an
+        // SSE stream (text/event-stream) — NOT a JSON queued envelope. stream=true has to be honored
+        // regardless of whether the turn runs immediately or is enqueued behind an active turn; the
+        // stream stays open and emits response.created/… once the queued turn drains. (Only the
+        // NON-streaming queued paths return the JSON queued envelope.)
+        var root = Path.Combine(Path.GetTempPath(), "steer-stream-e2e-" + Guid.NewGuid().ToString("N"));
+        var tasksDir = Path.Combine(root, "tasks");
+        var responsesDir = Path.Combine(root, "responses");
+        Directory.CreateDirectory(tasksDir);
+        Directory.CreateDirectory(responsesDir);
+
+        var gate = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var firstTurnEntered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var steeredTurnEntered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        ResponseContext? activeContext = null;
+
+        var handler = new TestHandler
+        {
+            EventFactory = (request, context, ct) =>
+            {
+                if (context.IsSteeredTurn)
+                {
+                    steeredTurnEntered.TrySetResult();
+                }
+                else
+                {
+                    activeContext = context;
+                }
+
+                return EmitGatedAsync(request, context, gate, firstTurnEntered, ct);
+            },
+        };
+
+        try
+        {
+            using var factory = new TestWebApplicationFactory(
+                handler,
+                configureOptions: o =>
+                {
+                    o.SteerableConversations = true;
+                    o.ResilientBackground = true;
+                },
+                configureTestServices: services =>
+                {
+                    services.AddSingleton<ITaskStore>(_ => new LocalTaskStore(tasksDir));
+                    services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
+                });
+            using var client = factory.CreateClient();
+
+            // Turn 1: background turn that enters the handler and blocks so the chain stays in-flight.
+            var turn1 = await client.PostAsync(
+                "/responses",
+                Json(new { model = "test", background = true, conversation = "conv-stream-queue" }));
+            Assert.That(turn1.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            await firstTurnEntered.Task.WaitAsync(TimeSpan.FromSeconds(10));
+
+            // Turn 2 on the same conversation, STREAMING: it is enqueued behind the active turn. Fire it
+            // with ResponseHeadersRead — the SSE headers flush once the queued turn drains and emits its
+            // first event, so complete the send only after releasing the active turn below.
+            var turn2Request = new HttpRequestMessage(HttpMethod.Post, "/responses")
+            {
+                Content = Json(new
+                {
+                    model = "test",
+                    background = true,
+                    stream = true,
+                    conversation = "conv-stream-queue",
+                }),
+            };
+            var turn2SendTask = client.SendAsync(turn2Request, HttpCompletionOption.ResponseHeadersRead);
+
+            // Confirm the streaming turn was enqueued as steering behind the active turn.
+            await AssertEventuallyAsync(
+                () => activeContext?.PendingInputCount >= 1,
+                TimeSpan.FromSeconds(10),
+                "the streaming turn should be enqueued as a steering input behind the active turn");
+
+            // Release the active turn; the queued streaming turn then drains as a steered re-entry and
+            // publishes its events onto the per-response wire stream the SSE result is relaying.
+            gate.SetResult();
+            await steeredTurnEntered.Task.WaitAsync(TimeSpan.FromSeconds(15));
+
+            using var turn2 = await turn2SendTask.WaitAsync(TimeSpan.FromSeconds(15));
+            Assert.That(turn2.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(
+                turn2.Content.Headers.ContentType?.MediaType,
+                Is.EqualTo("text/event-stream"),
+                "a queued streaming turn must return an SSE stream, not a JSON queued envelope");
+
+            var body = await turn2.Content.ReadAsStringAsync();
+            Assert.That(
+                body, Does.Contain("response.created"),
+                "the queued streaming turn's SSE body should emit response.created once it drains");
+        }
+        finally
+        {
+            gate.TrySetResult();
+            try
+            {
+                Directory.Delete(root, recursive: true);
+            }
+            catch (IOException)
+            {
+            }
+        }
+    }
+
     // ---- Real end-to-end composition: FOREGROUND concurrent overlap (Finding D, FR-052) ----
     [Test]
     public async Task RealComposition_ForegroundConcurrentTurn_OneSucceedsOtherLocked()

@@ -333,14 +333,18 @@ internal sealed class ResponseEndpointHandler
                         httpContext, request, responseId, chainId, pickMultiTurn,
                         platformContext, clientHeaders, queryParameters);
 
-                    // A steered turn queued behind an active turn returns the queued envelope
-                    // immediately; it drains later inside Core as a steered re-entry.
-                    if (run.IsQueued)
-                    {
-                        _tracker.TryEvict(responseId);
-                        return JsonForClient(BuildQueuedEnvelope(request, context, responseId));
-                    }
-
+                    // A steered turn queued behind an active turn does NOT short-circuit to a JSON
+                    // queued envelope when the caller asked to stream: stream=true must always yield an
+                    // SSE stream regardless of whether the turn runs immediately or is queued (the JSON
+                    // queued envelope is reserved for the NON-streaming queued paths below). We keep the
+                    // endpoint-created execution (RelayViaRegistry=true was set just above) rather than
+                    // evicting it, so when the queued input drains later inside Core the re-entry REUSES
+                    // this execution (tracker.TryGet) and its handler publishes response.created /
+                    // in_progress / … onto the per-response wire stream — for foreground turns too, which
+                    // would otherwise get a NullPublisher if the drain created a fresh execution. The SSE
+                    // result below subscribes to that wire stream immediately (GetOrCreateAsync) and stays
+                    // open, relaying nothing until the turn starts, then emitting events as they arrive.
+                    // run.GetResultAsync resolves when the queued turn's steered re-entry completes.
                     execution.ExecutionTask = run.GetResultAsync(CancellationToken.None);
 
                     // Relay the per-response wire stream immediately — do NOT await
