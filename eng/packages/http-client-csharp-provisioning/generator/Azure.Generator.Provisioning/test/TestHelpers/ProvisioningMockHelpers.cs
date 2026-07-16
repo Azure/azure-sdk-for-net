@@ -8,9 +8,10 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using Azure.Generator.Management;
 using Azure.Generator.Management.Models;
+using Azure.Generator.Provisioning.Primitives;
 
 namespace Azure.Generator.Provisioning.Tests.TestHelpers
 {
@@ -41,24 +42,18 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
                 inputNsModels,
                 inputNsClients,
                 new InputAuth(null, null));
-            var mockManagementInputLibrary = new Mock<ManagementInputLibrary>(_configFilePath) { CallBase = true };
-            mockManagementInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNamespace.Object);
             var mockInputLibrary = new Mock<ProvisioningInputLibrary>(_configFilePath);
-            if (armProviderSchema is null)
-            {
-                mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNamespace.Object);
-            }
-            else
-            {
-                mockInputLibrary.Setup(p => p.InputNamespace).CallBase();
-            }
-            mockInputLibrary.Setup(p => p.ArmProviderSchema).Returns(() => mockManagementInputLibrary.Object.ArmProviderSchema);
-            typeof(ProvisioningInputLibrary)
-                .GetField("_managementInputLibrary", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(mockInputLibrary.Object, mockManagementInputLibrary.Object);
+            mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNamespace.Object);
             if (armProviderSchema is not null)
             {
-                mockManagementInputLibrary.Setup(p => p.ArmProviderSchema).Returns(armProviderSchema());
+                typeof(ProvisioningInputLibrary)
+                    .GetField("_resourceProjections", BindingFlags.Instance | BindingFlags.NonPublic)!
+                    .SetValue(mockInputLibrary.Object, ProvisioningResourceProjection.Create(armProviderSchema().Resources));
+                typeof(ProvisioningInputLibrary)
+                    .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
+                    .SetValue(
+                        mockInputLibrary.Object,
+                        inputNsModels.ToDictionary(model => model.CrossLanguageDefinitionId, _ => true));
             }
 
             var loadMethod = typeof(Configuration).GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic);

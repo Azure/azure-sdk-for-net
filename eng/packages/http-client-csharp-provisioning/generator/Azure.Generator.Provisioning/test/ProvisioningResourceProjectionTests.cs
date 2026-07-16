@@ -205,6 +205,32 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void UpdateOnlyResourcePropertiesAreNotSettable()
+        {
+            var writableProperty = CreateProperty("WritableValue");
+            var model = CreateModel("UpdateOnlyWidget", [writableProperty]);
+            var updateOnlyResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Update, ResourceScope.ResourceGroup)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = CreateResourceProvider(updateOnlyResource);
+
+            var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(writableProperty);
+
+            Assert.That(provider.ResourceProjection!.WritableScopes, Is.Empty);
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsSettable, Is.False);
+        }
+
+        [Test]
         public void ReadOnlyResourceNameRemainsSettable()
         {
             var nameProperty = CreateProperty("Name", isRequired: true);
@@ -664,7 +690,7 @@ namespace Azure.Generator.Provisioning.Tests
             return new ArmResourceMetadata(
                 path,
                 resourceName ?? model.Name,
-                new ResourceTypePattern(resourceType),
+                resourceType,
                 model,
                 new ArmScopeInfo(scope, RequestPathPattern.GetFromScope(scope, path), null),
                 methods ?? [],
@@ -784,19 +810,94 @@ namespace Azure.Generator.Provisioning.Tests
         private static void RegisterResourceProjections(IReadOnlyList<ProvisioningResourceProjection> resourceProjections)
         {
             var inputLibrary = ProvisioningGenerator.Instance.InputLibrary;
-            Mock.Get(inputLibrary)
-                .Setup(library => library.InputNamespace)
-                .CallBase();
-
             typeof(ProvisioningInputLibrary)
                 .GetField("_resourceProjections", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(inputLibrary, resourceProjections);
             typeof(ProvisioningInputLibrary)
-                .GetField("_provisioningInputNamespace", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(inputLibrary, null);
-            typeof(ProvisioningInputLibrary)
                 .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(inputLibrary, null);
+                .SetValue(inputLibrary, CollectModelSettableUsage(resourceProjections));
+        }
+
+        private static Dictionary<string, bool> CollectModelSettableUsage(IReadOnlyList<ProvisioningResourceProjection> projections)
+        {
+            var projectionsByModel = projections
+                .GroupBy(projection => projection.ResourceModel)
+                .ToDictionary(group => group.Key, group => group.ToList());
+            var usage = new Dictionary<string, bool>();
+            var visited = new HashSet<(InputType Type, bool IsSettable)>();
+            var queue = new Queue<(InputType Type, bool IsSettable)>(
+                projections.Select(projection => ((InputType)projection.ResourceModel, projection.WritableScopes.Count > 0)));
+
+            while (queue.TryDequeue(out var item))
+            {
+                if (!visited.Add(item))
+                {
+                    continue;
+                }
+
+                switch (item.Type)
+                {
+                    case InputModelType model:
+                        var isSettable = item.IsSettable ||
+                            (projectionsByModel.TryGetValue(model, out var modelProjections) &&
+                             modelProjections.Any(projection => projection.WritableScopes.Count > 0));
+                        usage[model.CrossLanguageDefinitionId] = isSettable ||
+                            (usage.TryGetValue(model.CrossLanguageDefinitionId, out var existing) && existing);
+                        if (model.BaseModel != null)
+                        {
+                            queue.Enqueue((model.BaseModel, isSettable));
+                        }
+                        foreach (var derived in model.DiscriminatedSubtypes.Values)
+                        {
+                            queue.Enqueue((derived, isSettable));
+                        }
+                        foreach (var property in GetProperties(model, projectionsByModel.ContainsKey(model)))
+                        {
+                            queue.Enqueue((property.Type, isSettable && !property.IsReadOnly));
+                        }
+                        if (!projectionsByModel.ContainsKey(model) && model.AdditionalProperties != null)
+                        {
+                            queue.Enqueue((model.AdditionalProperties, isSettable));
+                        }
+                        break;
+                    case InputArrayType array:
+                        queue.Enqueue((array.ValueType, item.IsSettable));
+                        break;
+                    case InputDictionaryType dictionary:
+                        queue.Enqueue((dictionary.KeyType, item.IsSettable));
+                        queue.Enqueue((dictionary.ValueType, item.IsSettable));
+                        break;
+                    case InputNullableType nullable:
+                        queue.Enqueue((nullable.Type, item.IsSettable));
+                        break;
+                    case InputLiteralType literal:
+                        queue.Enqueue((literal.ValueType, item.IsSettable));
+                        break;
+                    case InputUnionType union:
+                        foreach (var variant in union.VariantTypes)
+                        {
+                            queue.Enqueue((variant, item.IsSettable));
+                        }
+                        break;
+                }
+            }
+
+            return usage;
+        }
+
+        private static IEnumerable<InputModelProperty> GetProperties(InputModelType model, bool includeBaseProperties)
+        {
+            if (!includeBaseProperties)
+            {
+                return model.Properties;
+            }
+
+            var hierarchy = new Stack<InputModelType>();
+            for (var current = model; current != null; current = current.BaseModel)
+            {
+                hierarchy.Push(current);
+            }
+            return hierarchy.SelectMany(type => type.Properties);
         }
 
         private static void AddDiscriminatedSubtype(InputModelType baseModel, InputModelType derivedModel)

@@ -62,11 +62,11 @@ import { AzureMgmtEmitterOptions } from "./options.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 import { $lib } from "./lib/lib.js";
 
-export async function updateClients(
+export function updateClients(
   codeModel: CodeModel,
   sdkContext: CSharpEmitterContext,
   options: AzureMgmtEmitterOptions
-) {
+): ArmProviderSchema {
   let armProviderSchema: ArmProviderSchema;
 
   if (options?.["use-legacy-resource-detection"] === false) {
@@ -76,6 +76,7 @@ export async function updateClients(
   }
 
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
+  return armProviderSchema;
 }
 
 /**
@@ -526,11 +527,11 @@ function assignRemainingOperations(
       const scope = buildScopeInfoFromPath(operationPath);
       const isCollectionAction = isResourceCollectionAction(sdkMethod);
       const target = isCollectionAction
-        ? (findCollectionActionTargetResource(
+        ? findCollectionActionTargetResource(
             resources,
             operationPath,
             actionTarget
-          ) ?? actionTarget)
+          ) ?? actionTarget
         : actionTarget;
       target.metadata.methods.push({
         methodId,
