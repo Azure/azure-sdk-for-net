@@ -1,4 +1,4 @@
 directory: specification/alertsmanagement/resource-manager/Microsoft.AlertsManagement/AlertRuleRecommendations
-commit: 2319481c2ce2b38e1e6656186aa8963465797f54
+commit: d2e511e5f4e39617ca74306e7d51562de18f2cd1
 repo: mzhongl524/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
