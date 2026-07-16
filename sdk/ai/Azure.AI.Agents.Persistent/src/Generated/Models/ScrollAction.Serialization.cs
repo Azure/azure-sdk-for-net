@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A scroll action. </summary>
-    public partial class ScrollAction : ComputerUseAction, IJsonModel<ScrollAction>
+    internal partial class ScrollAction : ComputerUseAction, IJsonModel<ScrollAction>
     {
         /// <summary> Initializes a new instance of <see cref="ScrollAction"/> for deserialization. </summary>
         internal ScrollAction()

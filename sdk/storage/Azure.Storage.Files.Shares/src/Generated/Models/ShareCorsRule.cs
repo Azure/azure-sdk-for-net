@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
@@ -14,6 +16,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// APIs in a different domain; CORS provides a secure way to allow one domain (the
     /// origin domain) to call APIs in another domain.
     /// </summary>
+    [Core.CodeGenModelAttribute("CorsRule")]
     public partial class ShareCorsRule
     {
         /// <summary>

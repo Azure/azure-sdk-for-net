@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.Communication.Messages
@@ -14,6 +15,7 @@ namespace Azure.Communication.Messages
     /// The message template as returned from the service.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Channels.WhatsAppMessageTemplateItem"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownMessageTemplateItem))]
     public abstract partial class MessageTemplateItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.ContentUnderstanding
@@ -14,6 +15,7 @@ namespace Azure.AI.ContentUnderstanding
     /// Figure in a document.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DocumentChartFigure"/> and <see cref="DocumentMermaidFigure"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownDocumentFigure))]
     public abstract partial class DocumentFigure
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

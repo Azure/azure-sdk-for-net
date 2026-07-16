@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.AI.ContentSafety
 {
     /// <summary> Client options for clients in this library. </summary>
+    [Core.CodeGenModelAttribute("AzureAIContentSafetyClientOptions")]
     public partial class ContentSafetyClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_09_01;

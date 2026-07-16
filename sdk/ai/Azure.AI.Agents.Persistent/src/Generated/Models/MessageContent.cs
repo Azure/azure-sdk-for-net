@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
@@ -14,6 +15,7 @@ namespace Azure.AI.Agents.Persistent
     /// An abstract representation of a single item of thread message content.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageTextContent"/> and <see cref="MessageImageFileContent"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownMessageContent))]
     public abstract partial class MessageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

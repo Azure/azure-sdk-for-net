@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Translation job status response. </summary>
+    [Core.CodeGenModelAttribute("TranslationStatus")]
     public partial class TranslationStatusResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

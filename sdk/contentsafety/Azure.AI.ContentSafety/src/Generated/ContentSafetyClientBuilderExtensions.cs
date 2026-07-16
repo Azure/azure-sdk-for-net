@@ -9,11 +9,13 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.AI.ContentSafety;
+using Azure.Core;
 using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+    [global::Azure.Core.CodeGenModelAttribute("AIContentSafetyClientBuilderExtensions")]
     public static partial class ContentSafetyClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="ContentSafetyClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>

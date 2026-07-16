@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
@@ -14,6 +15,7 @@ namespace Azure.AI.VoiceLive
     /// Base for any response item; discriminated by `type`.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, <see cref="ResponseFunctionCallOutputItem"/>, <see cref="SessionResponseMcpListToolItem"/>, <see cref="SessionResponseMcpCallItem"/>, <see cref="SessionResponseMcpApprovalRequestItem"/>, <see cref="SessionResponseMcpApprovalResponseItem"/>, <see cref="ResponseWebSearchCallItem"/>, and <see cref="ResponseFileSearchCallItem"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownSessionResponseItem))]
     public abstract partial class SessionResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

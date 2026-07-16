@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> The permission copy mode type. </summary>
+    [Core.CodeGenModelAttribute("PermissionCopyModeType")]
     public enum PermissionCopyMode
     {
         /// <summary> source. </summary>

@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The access policy. </summary>
+    [Core.CodeGenModelAttribute("AccessPolicy")]
     public partial class QueueAccessPolicy
     {
         /// <summary> Initializes a new instance of <see cref="QueueAccessPolicy"/>. </summary>

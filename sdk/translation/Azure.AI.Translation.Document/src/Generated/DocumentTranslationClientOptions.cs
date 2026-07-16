@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Client options for clients in this library. </summary>
+    [Core.CodeGenModelAttribute("AzureAITranslationDocumentClientOptions")]
     public partial class DocumentTranslationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_12_01_Preview;

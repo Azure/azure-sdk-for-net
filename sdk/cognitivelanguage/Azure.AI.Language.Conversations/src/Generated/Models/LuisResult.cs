@@ -13,7 +13,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> It is the response from a LUIS Generally Available application. </summary>
-    public partial class LuisResult
+    internal partial class LuisResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

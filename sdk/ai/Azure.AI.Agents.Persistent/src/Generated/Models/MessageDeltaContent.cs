@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
@@ -14,6 +15,7 @@ namespace Azure.AI.Agents.Persistent
     /// The abstract base representation of a partial streamed message content payload.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageDeltaImageFileContent"/> and <see cref="MessageDeltaTextContent"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownMessageDeltaContent))]
     public abstract partial class MessageDeltaContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -12,6 +12,7 @@ using Azure.Core;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary></summary>
+    [Core.CodeGenClientAttribute("Runs")]
     public partial class ThreadRuns
     {
         private static ResponseClassifier _pipelineMessageClassifier200;

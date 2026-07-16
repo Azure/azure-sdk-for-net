@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,6 +16,7 @@ namespace Azure.Communication.Messages
     /// Details of the message to send.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TextNotificationContent"/>, <see cref="MediaNotificationContent"/>, <see cref="ImageNotificationContent"/>, <see cref="DocumentNotificationContent"/>, <see cref="VideoNotificationContent"/>, <see cref="AudioNotificationContent"/>, <see cref="ReactionNotificationContent"/>, <see cref="StickerNotificationContent"/>, <see cref="InteractiveNotificationContent"/>, and <see cref="TemplateNotificationContent"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownNotificationContent))]
     public abstract partial class NotificationContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

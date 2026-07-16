@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -14,6 +15,7 @@ namespace Azure.Search.Documents.Models
     /// The query parameters for vector and hybrid search queries.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorizedQuery"/>, <see cref="VectorizableTextQuery"/>, <see cref="VectorizableImageUrlQuery"/>, and <see cref="VectorizableImageBinaryQuery"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownVectorQuery))]
     public abstract partial class VectorQuery
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

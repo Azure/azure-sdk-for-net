@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A wait action. </summary>
-    public partial class WaitAction : ComputerUseAction
+    internal partial class WaitAction : ComputerUseAction
     {
         /// <summary> Initializes a new instance of <see cref="WaitAction"/>. </summary>
         internal WaitAction() : base("wait")

@@ -15,6 +15,7 @@ using Azure.Developer.DevCenter;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
+    [Core.CodeGenClientAttribute("DeveloperDevCenterModelFactory")]
     public static partial class DevCenterModelFactory
     {
 

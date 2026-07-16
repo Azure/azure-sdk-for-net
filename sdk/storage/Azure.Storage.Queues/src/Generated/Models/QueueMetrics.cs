@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The metrics properties. </summary>
+    [Core.CodeGenModelAttribute("Metrics")]
     public partial class QueueMetrics
     {
         /// <summary> Initializes a new instance of <see cref="QueueMetrics"/>. </summary>

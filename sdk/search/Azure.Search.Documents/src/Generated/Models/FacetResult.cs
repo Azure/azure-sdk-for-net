@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary> A single bucket of a facet query result. Reports the number of documents with a field value falling within a particular range or having a particular value or interval. </summary>
+    [DefaultMember("Item")]
     public partial class FacetResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

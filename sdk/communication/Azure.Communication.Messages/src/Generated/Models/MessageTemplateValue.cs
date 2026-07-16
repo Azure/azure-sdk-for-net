@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.Communication.Messages
@@ -14,6 +15,7 @@ namespace Azure.Communication.Messages
     /// The class describes a parameter of a template.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageTemplateText"/>, <see cref="MessageTemplateImage"/>, <see cref="MessageTemplateDocument"/>, <see cref="MessageTemplateVideo"/>, <see cref="MessageTemplateLocation"/>, and <see cref="MessageTemplateQuickAction"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownMessageTemplateValue))]
     public abstract partial class MessageTemplateValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

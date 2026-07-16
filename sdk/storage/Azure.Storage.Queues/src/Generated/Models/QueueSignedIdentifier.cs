@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The signed identifier. </summary>
+    [Core.CodeGenModelAttribute("SignedIdentifier")]
     public partial class QueueSignedIdentifier
     {
         /// <summary> The unique ID for the signed identifier. </summary>

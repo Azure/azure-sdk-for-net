@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
@@ -14,6 +15,7 @@ namespace Azure.AI.Agents.Persistent
     /// An abstract representation of a vector store chunking strategy configuration.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorStoreAutoChunkingStrategyResponse"/> and <see cref="VectorStoreStaticChunkingStrategyResponse"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownVectorStoreChunkingStrategyResponse))]
     public abstract partial class VectorStoreChunkingStrategyResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

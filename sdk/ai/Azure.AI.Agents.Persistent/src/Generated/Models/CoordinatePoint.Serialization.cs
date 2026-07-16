@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A coordinate point with x and y values. </summary>
-    public partial class CoordinatePoint : IJsonModel<CoordinatePoint>
+    internal partial class CoordinatePoint : IJsonModel<CoordinatePoint>
     {
         /// <summary> Initializes a new instance of <see cref="CoordinatePoint"/> for deserialization. </summary>
         internal CoordinatePoint()

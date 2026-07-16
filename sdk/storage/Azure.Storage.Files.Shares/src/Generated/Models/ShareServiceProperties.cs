@@ -6,10 +6,12 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Storage service properties. </summary>
+    [Core.CodeGenModelAttribute("StorageServiceProperties")]
     public partial class ShareServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="ShareServiceProperties"/>. </summary>

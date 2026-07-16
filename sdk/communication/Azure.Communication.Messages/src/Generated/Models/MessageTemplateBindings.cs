@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.Communication.Messages
@@ -14,6 +15,7 @@ namespace Azure.Communication.Messages
     /// The binding object to link values to the template specific locations
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Channels.WhatsAppMessageTemplateBindings"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownMessageTemplateBindings))]
     public abstract partial class MessageTemplateBindings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

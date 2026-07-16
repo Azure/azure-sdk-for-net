@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
+    [DefaultMember("Item")]
     public partial class IndexingParametersConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

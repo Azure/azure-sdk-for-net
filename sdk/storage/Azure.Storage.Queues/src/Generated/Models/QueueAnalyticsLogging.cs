@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> Azure Analytics Logging settings. </summary>
+    [Core.CodeGenModelAttribute("Logging")]
     public partial class QueueAnalyticsLogging
     {
         /// <summary> The version of the logging properties. </summary>

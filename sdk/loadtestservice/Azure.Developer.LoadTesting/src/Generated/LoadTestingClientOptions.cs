@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Client options for clients in this library. </summary>
+    [Core.CodeGenClientAttribute("AzureLoadTestingClientOptions")]
     public partial class LoadTestingClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_11_01_Preview;

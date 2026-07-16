@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary> File Format. </summary>
+    [Core.CodeGenModelAttribute("FileFormat")]
     public partial class DocumentTranslationFileFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

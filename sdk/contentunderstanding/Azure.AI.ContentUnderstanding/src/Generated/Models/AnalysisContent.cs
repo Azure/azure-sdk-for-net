@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.ContentUnderstanding
@@ -14,6 +15,7 @@ namespace Azure.AI.ContentUnderstanding
     /// Media content base class.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DocumentContent"/> and <see cref="AudioVisualContent"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownAnalysisContent))]
     public abstract partial class AnalysisContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

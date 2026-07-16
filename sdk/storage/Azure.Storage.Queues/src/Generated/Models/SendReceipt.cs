@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The sent queue message. </summary>
+    [Core.CodeGenModelAttribute("EnqueuedMessage")]
     public partial class SendReceipt
     {
         /// <summary> Initializes a new instance of <see cref="SendReceipt"/>. </summary>

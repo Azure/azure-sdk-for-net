@@ -15,6 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A collection of file‐related operations under `/files`. </summary>
+    [Core.CodeGenClientAttribute("Files")]
     public partial class PersistentAgentsFiles
     {
         private readonly Uri _endpoint;

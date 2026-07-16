@@ -9,10 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
+    [Core.CodeGenModelAttribute("CommunicationJobRouterModelFactory")]
     public static partial class JobRouterModelFactory
     {
         /// <summary> Policy governing how jobs are distributed to workers. </summary>

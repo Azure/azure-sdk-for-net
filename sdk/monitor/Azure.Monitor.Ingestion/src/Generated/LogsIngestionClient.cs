@@ -15,6 +15,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Monitor.Ingestion
 {
     /// <summary> Azure Monitor data collection client. </summary>
+    [Core.CodeGenClientAttribute("IngestionUsingDataCollectionRulesClient")]
     public partial class LogsIngestionClient
     {
         private readonly Uri _endpoint;

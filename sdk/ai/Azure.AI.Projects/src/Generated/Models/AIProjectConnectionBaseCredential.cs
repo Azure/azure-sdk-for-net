@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Projects
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects
     /// A base class for connection credentials
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AIProjectConnectionApiKeyCredential"/>, <see cref="AIProjectConnectionEntraIdCredential"/>, <see cref="AIProjectConnectionCustomCredential"/>, <see cref="AIProjectConnectionSasCredential"/>, <see cref="NoAuthenticationCredentials"/>, and <see cref="AgenticIdentityPreviewCredentials"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownAIProjectConnectionBaseCredential))]
     public abstract partial class AIProjectConnectionBaseCredential
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

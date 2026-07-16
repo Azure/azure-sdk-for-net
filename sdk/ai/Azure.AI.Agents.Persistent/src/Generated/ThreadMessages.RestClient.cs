@@ -11,6 +11,7 @@ using Azure.Core;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary></summary>
+    [Core.CodeGenModelAttribute("Messages")]
     public partial class ThreadMessages
     {
         private static ResponseClassifier _pipelineMessageClassifier200;

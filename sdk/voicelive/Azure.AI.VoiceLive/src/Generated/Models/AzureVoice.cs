@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
@@ -14,6 +15,7 @@ namespace Azure.AI.VoiceLive
     /// Base for Azure voice configurations.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCustomVoice"/>, <see cref="AzureStandardVoice"/>, <see cref="AzurePersonalVoice"/>, and <see cref="AzureAvatarSyncVoice"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownAzureVoice))]
     public abstract partial class AzureVoice : VoiceProvider
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

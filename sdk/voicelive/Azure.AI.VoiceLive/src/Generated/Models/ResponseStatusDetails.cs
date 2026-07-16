@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
@@ -14,6 +15,7 @@ namespace Azure.AI.VoiceLive
     /// Base for all non-success response details.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponseCancelledDetails"/>, <see cref="ResponseIncompleteDetails"/>, and <see cref="ResponseFailedDetails"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownResponseStatusDetails))]
     public abstract partial class ResponseStatusDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
