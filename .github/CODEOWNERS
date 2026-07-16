@@ -82,10 +82,10 @@
 /sdk/ai/Azure.AI.Projects.Agents/    @rhurey
 
 # PRLabel: %AI Agents
-/sdk/agentserver/    @ankitbko @RaviPidaparthi @vangarp
+/sdk/agentserver/    @ankitbko @RaviPidaparthi @vangarp @Shivakishore14
 
 # ServiceLabel: %AI Agents
-# ServiceOwners: @ankitbko @RaviPidaparthi @vangarp
+# ServiceOwners: @ankitbko @RaviPidaparthi @vangarp @Shivakishore14
 
 # PRLabel: %AI Model Inference %AI Projects
 /sdk/ai/    @dargilco @glharper @nick863 @trangevi @trrwilson
