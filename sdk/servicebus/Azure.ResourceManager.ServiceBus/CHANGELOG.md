@@ -10,9 +10,6 @@
 
 - Removed the `ClusterArmId` property from `ServiceBusNamespaceReplicaLocation`. This property had no effect for Service Bus namespaces.
 - The namespace update (PATCH) operation is now synchronous in API version `2026-01-01`. The long-running `Update(WaitUntil, ServiceBusNamespacePatch, CancellationToken)` and `UpdateAsync(WaitUntil, ServiceBusNamespacePatch, CancellationToken)` overloads on `ServiceBusNamespaceResource` have been removed; use `Update(ServiceBusNamespacePatch, CancellationToken)` / `UpdateAsync(ServiceBusNamespacePatch, CancellationToken)` instead.
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.0-beta.2 (2026-06-30)
 
