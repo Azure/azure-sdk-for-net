@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The function name that will be used, if using the `function` tool. </summary>
-    public partial class PersistentAgentsFunctionName : IJsonModel<PersistentAgentsFunctionName>
+    internal partial class PersistentAgentsFunctionName : IJsonModel<PersistentAgentsFunctionName>
     {
         /// <summary> Initializes a new instance of <see cref="PersistentAgentsFunctionName"/> for deserialization. </summary>
         internal PersistentAgentsFunctionName()

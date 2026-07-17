@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Agents.Persistent
@@ -739,23 +737,6 @@ namespace Azure.AI.Agents.Persistent
         public static Truncation Truncation(TruncationStrategy @type = default, int? lastMessages = default)
         {
             return new Truncation(@type, lastMessages, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Specifies a tool the model should use. Use to force the model to call a specific tool. </summary>
-        /// <param name="type"> the type of tool. If type is `function`, the function name must be set. </param>
-        /// <param name="function"> The name of the function to call. </param>
-        /// <returns> A new <see cref="Persistent.PersistentAgentsNamedToolChoice"/> instance for mocking. </returns>
-        public static PersistentAgentsNamedToolChoice PersistentAgentsNamedToolChoice(PersistentAgentsNamedToolChoiceType @type = default, PersistentAgentsFunctionName function = default)
-        {
-            return new PersistentAgentsNamedToolChoice(@type, function, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The function name that will be used, if using the `function` tool. </summary>
-        /// <param name="name"> The name of the function to call. </param>
-        /// <returns> A new <see cref="Persistent.PersistentAgentsFunctionName"/> instance for mocking. </returns>
-        public static PersistentAgentsFunctionName PersistentAgentsFunctionName(string name = default)
-        {
-            return new PersistentAgentsFunctionName(name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Data representing a single evaluation run of an agent thread. </summary>

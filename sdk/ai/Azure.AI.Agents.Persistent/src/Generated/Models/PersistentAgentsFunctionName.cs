@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The function name that will be used, if using the `function` tool. </summary>
-    public partial class PersistentAgentsFunctionName
+    internal partial class PersistentAgentsFunctionName
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
