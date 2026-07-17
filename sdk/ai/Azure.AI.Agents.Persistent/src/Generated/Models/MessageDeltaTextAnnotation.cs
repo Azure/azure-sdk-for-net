@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
@@ -14,6 +15,7 @@ namespace Azure.AI.Agents.Persistent
     /// The abstract base representation of a streamed text content part's text annotation.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageDeltaTextUriCitationAnnotation"/>, <see cref="MessageDeltaTextFileCitationAnnotation"/>, and <see cref="MessageDeltaTextFilePathAnnotation"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownMessageDeltaTextAnnotation))]
     public abstract partial class MessageDeltaTextAnnotation
     {
         /// <summary> Initializes a new instance of <see cref="MessageDeltaTextAnnotation"/>. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
@@ -14,6 +15,7 @@ namespace Azure.AI.Agents.Persistent
     /// Represents a single run step detail item in a streaming run step's delta payload.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepDeltaMessageCreation"/>, <see cref="RunStepDeltaToolCallObject"/>, <see cref="RunStepDeltaMCPObject"/>, and <see cref="RunStepDeltaOpenAPIObject"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownRunStepDeltaDetail))]
     public abstract partial class RunStepDeltaDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

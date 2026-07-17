@@ -9,7 +9,8 @@ using System.Text.Json;
 
 namespace OpenAI
 {
-    internal partial class InternalCompoundFilter
+    /// <summary> Compound Filter. </summary>
+    public partial class InternalCompoundFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

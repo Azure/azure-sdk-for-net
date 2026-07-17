@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
@@ -14,6 +15,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// Base type for reasoning effort.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>, <see cref="KnowledgeRetrievalLowReasoningEffort"/>, and <see cref="KnowledgeRetrievalMediumReasoningEffort"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownKnowledgeRetrievalReasoningEffort))]
     public abstract partial class KnowledgeRetrievalReasoningEffort
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

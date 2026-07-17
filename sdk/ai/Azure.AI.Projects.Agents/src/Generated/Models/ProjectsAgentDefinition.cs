@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Agents
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects.Agents
     /// The ProjectsAgentDefinition.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HostedAgentDefinition"/>, <see cref="DeclarativeAgentDefinition"/>, <see cref="WorkflowAgentDefinition"/>, and <see cref="ExternalAgentDefinition"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownAgentDefinition))]
     public abstract partial class ProjectsAgentDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

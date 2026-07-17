@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Client options for clients in this library. </summary>
+    [Core.CodeGenModelAttribute("AzureAIDocumentIntelligenceClientOptions")]
     public partial class DocumentIntelligenceClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_30;

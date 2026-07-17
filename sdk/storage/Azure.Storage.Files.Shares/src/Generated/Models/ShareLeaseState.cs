@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Lease state of the share. </summary>
+    [Core.CodeGenModelAttribute("LeaseStateType")]
     public enum ShareLeaseState
     {
         /// <summary> available. </summary>

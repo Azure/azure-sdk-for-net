@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
@@ -14,6 +15,7 @@ namespace Azure.AI.VoiceLive
     /// Top-level union for end-of-utterance (EOU) semantic detection configuration.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSemanticEouDetection"/>, <see cref="AzureSemanticEouDetectionEn"/>, and <see cref="AzureSemanticEouDetectionMultilingual"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownEouDetection))]
     public abstract partial class EouDetection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

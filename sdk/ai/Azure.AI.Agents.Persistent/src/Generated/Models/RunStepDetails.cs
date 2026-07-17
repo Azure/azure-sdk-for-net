@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
@@ -14,6 +15,7 @@ namespace Azure.AI.Agents.Persistent
     /// An abstract representation of the details for a run step.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepMessageCreationDetails"/>, <see cref="RunStepToolCallDetails"/>, and <see cref="RunStepActivityDetails"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownRunStepDetails))]
     public abstract partial class RunStepDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

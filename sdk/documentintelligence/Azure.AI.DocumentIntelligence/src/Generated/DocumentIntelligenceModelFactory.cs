@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
+    [Core.CodeGenModelAttribute("AIDocumentIntelligenceModelFactory")]
     public static partial class DocumentIntelligenceModelFactory
     {
 

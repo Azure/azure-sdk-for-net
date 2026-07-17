@@ -7,10 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Kind of environment where app service plan is. </summary>
+    [Core.CodeGenModelAttribute("StampKind")]
     public readonly partial struct StampKind : IEquatable<StampKind>
     {
         private readonly string _value;

@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Prompt for an answer. </summary>
-    public partial class KnowledgeBaseAnswerPrompt : IJsonModel<KnowledgeBaseAnswerPrompt>
+    internal partial class KnowledgeBaseAnswerPrompt : IJsonModel<KnowledgeBaseAnswerPrompt>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

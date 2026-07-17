@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
@@ -14,6 +15,7 @@ namespace Azure.AI.VoiceLive
     /// Base for any message content part; discriminated by `type`.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InputTextContentPart"/>, <see cref="InputAudioContentPart"/>, and <see cref="OutputTextContentPart"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownMessageContentPart))]
     public abstract partial class MessageContentPart
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

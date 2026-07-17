@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Developer.DevCenter
 {
     /// <summary> Client options for clients in this library. </summary>
+    [Core.CodeGenClientAttribute("AzureDeveloperDevCenterClientOptions")]
     public partial class DevCenterClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_04_01;

@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Source of the input documents. </summary>
+    [Core.CodeGenModelAttribute("SourceInput")]
     public partial class TranslationSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
 
@@ -15,6 +16,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// Base type for knowledge source runtime parameters.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSourceParams"/>, <see cref="AzureBlobKnowledgeSourceParams"/>, <see cref="IndexedSharePointKnowledgeSourceParams"/>, <see cref="IndexedOneLakeKnowledgeSourceParams"/>, <see cref="WebKnowledgeSourceParams"/>, <see cref="RemoteSharePointKnowledgeSourceParams"/>, <see cref="WorkIQKnowledgeSourceParams"/>, <see cref="FabricDataAgentKnowledgeSourceParams"/>, <see cref="FabricOntologyKnowledgeSourceParams"/>, <see cref="McpServerKnowledgeSourceParams"/>, <see cref="FileKnowledgeSourceParams"/>, and <see cref="IndexedSqlKnowledgeSourceParams"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownKnowledgeSourceParams))]
     public abstract partial class KnowledgeSourceParams
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

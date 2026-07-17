@@ -9,11 +9,13 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.AI.DocumentIntelligence;
+using Azure.Core;
 using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+    [global::Azure.Core.CodeGenModelAttribute("AIDocumentIntelligenceClientBuilderExtensions")]
     public static partial class DocumentIntelligenceClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="DocumentIntelligenceClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>

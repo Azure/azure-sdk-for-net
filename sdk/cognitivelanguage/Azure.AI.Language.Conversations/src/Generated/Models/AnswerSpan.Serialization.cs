@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Answer span object of QnA. </summary>
-    public partial class AnswerSpan : IJsonModel<AnswerSpan>
+    internal partial class AnswerSpan : IJsonModel<AnswerSpan>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

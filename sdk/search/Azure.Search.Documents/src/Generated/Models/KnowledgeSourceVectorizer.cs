@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
 
@@ -15,6 +16,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// Specifies the vectorization method to be used for knowledge source embedding model.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeSourceAzureOpenAIVectorizer"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownKnowledgeSourceVectorizer))]
     public abstract partial class KnowledgeSourceVectorizer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

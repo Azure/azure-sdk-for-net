@@ -7,11 +7,13 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 using Azure.Storage.Queues;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> Error codes returned by the service. </summary>
+    [Core.CodeGenModelAttribute("StorageErrorCode")]
     public readonly partial struct QueueErrorCode : IEquatable<QueueErrorCode>
     {
         private readonly string _value;

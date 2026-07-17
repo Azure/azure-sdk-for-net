@@ -8,8 +8,12 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
+    /// <summary>
+    /// The InternalFunctionAndCustomToolCallOutput.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownInternalFunctionAndCustomToolCallOutput))]
-    internal abstract partial class InternalFunctionAndCustomToolCallOutput : IJsonModel<InternalFunctionAndCustomToolCallOutput>
+    public abstract partial class InternalFunctionAndCustomToolCallOutput : IJsonModel<InternalFunctionAndCustomToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="InternalFunctionAndCustomToolCallOutput"/> for deserialization. </summary>
         internal InternalFunctionAndCustomToolCallOutput()

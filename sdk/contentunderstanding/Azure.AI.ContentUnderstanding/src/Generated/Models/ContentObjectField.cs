@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Object field extracted from the content. </summary>
+    [DefaultMember("Item")]
     public partial class ContentObjectField : ContentField
     {
         /// <summary> Initializes a new instance of <see cref="ContentObjectField"/>. </summary>

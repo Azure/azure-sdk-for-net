@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Projects
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects
     /// DatasetVersion Definition
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileDataset"/> and <see cref="FolderDataset"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownAIProjectDataset))]
     public abstract partial class AIProjectDataset
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

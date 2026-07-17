@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Communication.Messages;
+using Azure.Core;
 
 namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> The template bindings for WhatsApp. </summary>
+    [Core.CodeGenModelAttribute("WhatsAppMessageTemplateBindings")]
     public partial class WhatsAppMessageTemplateBindings : MessageTemplateBindings
     {
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindings"/>. </summary>

@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -13,6 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UserProfileMemoryItem"/>, <see cref="ChatSummaryMemoryItem"/>, and <see cref="ProceduralMemoryItem"/>.
     /// </summary>
     [Experimental("AAIP001")]
+    [PersistableModelProxy(typeof(UnknownMemoryOutputItem))]
     public abstract partial class MemoryOutputItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

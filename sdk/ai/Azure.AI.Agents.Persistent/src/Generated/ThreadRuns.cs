@@ -17,6 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A collection of run operations under `/threads/{threadId}/runs`. </summary>
+    [Core.CodeGenClientAttribute("Runs")]
     public partial class ThreadRuns
     {
         private readonly Uri _endpoint;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
@@ -14,6 +15,7 @@ namespace Azure.AI.VoiceLive
     /// Base for any response item; discriminated by `type`.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageItem"/>, <see cref="FunctionCallItem"/>, and <see cref="FunctionCallOutputItem"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownConversationRequestItem))]
     public abstract partial class ConversationRequestItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

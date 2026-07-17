@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Projects
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects
     /// Index resource Definition
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAISearchIndex"/>, <see cref="ManagedAzureAISearchIndex"/>, and <see cref="AIProjectCosmosDBIndex"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownAIProjectIndex))]
     public abstract partial class AIProjectIndex
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.ContentUnderstanding
@@ -14,6 +15,7 @@ namespace Azure.AI.ContentUnderstanding
     /// Knowledge source.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LabeledDataKnowledgeSource"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownKnowledgeSource))]
     public abstract partial class KnowledgeSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

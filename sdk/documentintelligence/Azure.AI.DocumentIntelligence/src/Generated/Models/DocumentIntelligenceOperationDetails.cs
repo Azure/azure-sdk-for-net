@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.DocumentIntelligence
@@ -14,6 +15,7 @@ namespace Azure.AI.DocumentIntelligence
     /// Operation info.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DocumentModelBuildOperationDetails"/>, <see cref="DocumentModelComposeOperationDetails"/>, <see cref="DocumentModelCopyToOperationDetails"/>, <see cref="DocumentClassifierCopyToOperationDetails"/>, and <see cref="DocumentClassifierBuildOperationDetails"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownDocumentIntelligenceOperationDetails))]
     public abstract partial class DocumentIntelligenceOperationDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

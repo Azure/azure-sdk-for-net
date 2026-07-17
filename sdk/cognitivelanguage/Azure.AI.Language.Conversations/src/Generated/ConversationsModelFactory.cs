@@ -768,7 +768,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary>
         /// This is the base class of an intent prediction
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LuisTargetIntentResult"/>, <see cref="Models.QuestionAnsweringTargetIntentResult"/>, <see cref="Models.NoneLinkedTargetIntentResult"/>, and <see cref="Models.ConversationTargetIntentResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LuisTargetIntentResult"/>, <see cref="QuestionAnsweringTargetIntentResult"/>, <see cref="NoneLinkedTargetIntentResult"/>, and <see cref="ConversationTargetIntentResult"/>.
         /// </summary>
         /// <param name="targetProjectKind"> This is the base class of an intent prediction. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
@@ -777,135 +777,6 @@ namespace Azure.AI.Language.Conversations
         public static TargetIntentResult TargetIntentResult(string targetProjectKind = default, string apiVersion = default, double confidence = default)
         {
             return new UnknownTargetIntentResult(new TargetProjectKind(targetProjectKind), apiVersion, confidence, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> It is a wrap up of LUIS Generally Available response. </summary>
-        /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        /// <param name="result"> The actual response from a LUIS Generally Available application. </param>
-        /// <returns> A new <see cref="Models.LuisTargetIntentResult"/> instance for mocking. </returns>
-        public static LuisTargetIntentResult LuisTargetIntentResult(string apiVersion = default, double confidence = default, LuisResult result = default)
-        {
-            return new LuisTargetIntentResult(TargetProjectKind.Luis, apiVersion, confidence, additionalBinaryDataProperties: null, result);
-        }
-
-        /// <summary> It is the response from a LUIS Generally Available application. </summary>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.LuisResult"/> instance for mocking. </returns>
-        public static LuisResult LuisResult(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new LuisResult(additionalProperties);
-        }
-
-        /// <summary> It is a wrap up a Question Answering KB response. </summary>
-        /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        /// <param name="result"> The generated answer by a Question Answering KB. </param>
-        /// <returns> A new <see cref="Models.QuestionAnsweringTargetIntentResult"/> instance for mocking. </returns>
-        public static QuestionAnsweringTargetIntentResult QuestionAnsweringTargetIntentResult(string apiVersion = default, double confidence = default, AnswersResult result = default)
-        {
-            return new QuestionAnsweringTargetIntentResult(TargetProjectKind.QuestionAnswering, apiVersion, confidence, additionalBinaryDataProperties: null, result);
-        }
-
-        /// <summary> Represents List of Question Answers. </summary>
-        /// <param name="answers"> Represents Answer Result list. </param>
-        /// <returns> A new <see cref="Models.AnswersResult"/> instance for mocking. </returns>
-        public static AnswersResult AnswersResult(IEnumerable<KnowledgeBaseAnswer> answers = default)
-        {
-            answers ??= new ChangeTrackingList<KnowledgeBaseAnswer>();
-
-            return new AnswersResult(answers.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents knowledge base answer. </summary>
-        /// <param name="questions"> List of questions associated with the answer. </param>
-        /// <param name="answer"> Answer text. </param>
-        /// <param name="confidence"> Answer confidence score, value ranges from 0 to 1. </param>
-        /// <param name="qnaId"> ID of the QnA result. </param>
-        /// <param name="source"> Source of QnA result. </param>
-        /// <param name="metadata"> Metadata associated with the answer, useful to categorize or filter question answers. </param>
-        /// <param name="dialog"> Dialog associated with Answer. </param>
-        /// <param name="shortAnswer"> Answer span object of QnA with respect to user's question. </param>
-        /// <returns> A new <see cref="Models.KnowledgeBaseAnswer"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswer KnowledgeBaseAnswer(IEnumerable<string> questions = default, string answer = default, double? confidence = default, int? qnaId = default, string source = default, IDictionary<string, string> metadata = default, KnowledgeBaseAnswerDialog dialog = default, AnswerSpan shortAnswer = default)
-        {
-            questions ??= new ChangeTrackingList<string>();
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new KnowledgeBaseAnswer(
-                questions.ToList(),
-                answer,
-                confidence,
-                qnaId,
-                source,
-                metadata,
-                dialog,
-                shortAnswer,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Dialog associated with Answer. </summary>
-        /// <param name="isContextOnly"> To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result. </param>
-        /// <param name="prompts"> List of prompts associated with the answer. </param>
-        /// <returns> A new <see cref="Models.KnowledgeBaseAnswerDialog"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerDialog KnowledgeBaseAnswerDialog(bool? isContextOnly = default, IEnumerable<KnowledgeBaseAnswerPrompt> prompts = default)
-        {
-            prompts ??= new ChangeTrackingList<KnowledgeBaseAnswerPrompt>();
-
-            return new KnowledgeBaseAnswerDialog(isContextOnly, prompts.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Prompt for an answer. </summary>
-        /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
-        /// <param name="qnaId"> QnA ID corresponding to the prompt. </param>
-        /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
-        /// <returns> A new <see cref="Models.KnowledgeBaseAnswerPrompt"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = default, int? qnaId = default, string displayText = default)
-        {
-            return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Answer span object of QnA. </summary>
-        /// <param name="text"> Predicted text of answer span. </param>
-        /// <param name="confidenceScore"> Predicted score of answer span, value ranges from 0 to 1. </param>
-        /// <param name="offset"> The answer span offset from the start of answer. </param>
-        /// <param name="length"> The length of the answer span. </param>
-        /// <returns> A new <see cref="Models.AnswerSpan"/> instance for mocking. </returns>
-        public static AnswerSpan AnswerSpan(string text = default, double? confidenceScore = default, int? offset = default, int? length = default)
-        {
-            return new AnswerSpan(text, confidenceScore, offset, length, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A wrap up of non-linked intent response. </summary>
-        /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        /// <param name="result"> The actual response from a Conversation project. </param>
-        /// <returns> A new <see cref="Models.NoneLinkedTargetIntentResult"/> instance for mocking. </returns>
-        public static NoneLinkedTargetIntentResult NoneLinkedTargetIntentResult(string apiVersion = default, double confidence = default, ConversationResult result = default)
-        {
-            return new NoneLinkedTargetIntentResult(TargetProjectKind.NonLinked, apiVersion, confidence, additionalBinaryDataProperties: null, result);
-        }
-
-        /// <summary> The response returned by a Conversation project. </summary>
-        /// <param name="query"> The same query given in request. </param>
-        /// <param name="detectedLanguage"> The detected language from the query in BCP 47 language representation. </param>
-        /// <param name="prediction"> The predicted result for the query. </param>
-        /// <returns> A new <see cref="Models.ConversationResult"/> instance for mocking. </returns>
-        public static ConversationResult ConversationResult(string query = default, string detectedLanguage = default, ConversationPrediction prediction = default)
-        {
-            return new ConversationResult(query, detectedLanguage, prediction, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A wrap up of Conversation project response. </summary>
-        /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        /// <param name="result"> The actual response from a Conversation project. </param>
-        /// <returns> A new <see cref="Models.ConversationTargetIntentResult"/> instance for mocking. </returns>
-        public static ConversationTargetIntentResult ConversationTargetIntentResult(string apiVersion = default, double confidence = default, ConversationResult result = default)
-        {
-            return new ConversationTargetIntentResult(TargetProjectKind.Conversation, apiVersion, confidence, additionalBinaryDataProperties: null, result);
         }
 
         /// <summary> The error object. </summary>

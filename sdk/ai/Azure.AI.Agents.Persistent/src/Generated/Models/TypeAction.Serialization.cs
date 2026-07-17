@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> An action to type in text. </summary>
-    public partial class TypeAction : ComputerUseAction, IJsonModel<TypeAction>
+    internal partial class TypeAction : ComputerUseAction, IJsonModel<TypeAction>
     {
         /// <summary> Initializes a new instance of <see cref="TypeAction"/> for deserialization. </summary>
         internal TypeAction()

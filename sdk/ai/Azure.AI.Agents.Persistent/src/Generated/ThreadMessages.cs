@@ -17,6 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A collection of message operations under `/threads/{threadId}/messages`. </summary>
+    [Core.CodeGenModelAttribute("Messages")]
     public partial class ThreadMessages
     {
         private readonly Uri _endpoint;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
@@ -14,6 +15,7 @@ namespace Azure.AI.VoiceLive
     /// Base model for interim response configuration.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StaticInterimResponseConfig"/> and <see cref="LlmInterimResponseConfig"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownInterimResponseConfigBase))]
     public abstract partial class InterimResponseConfigBase
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -17,6 +17,7 @@ namespace Azure.Analytics.PlanetaryComputer
     [ModelReaderWriterBuildable(typeof(AssetMetadata))]
     [ModelReaderWriterBuildable(typeof(AssetStatisticsResponse))]
     [ModelReaderWriterBuildable(typeof(BandStatistics))]
+    [ModelReaderWriterBuildable(typeof(BandStatisticsMap))]
     [ModelReaderWriterBuildable(typeof(ClassMapLegendResponse))]
     [ModelReaderWriterBuildable(typeof(DefaultLocation))]
     [ModelReaderWriterBuildable(typeof(ErrorInfo))]

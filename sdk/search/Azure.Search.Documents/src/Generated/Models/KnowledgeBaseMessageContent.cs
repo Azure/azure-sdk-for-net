@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
@@ -14,6 +15,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     /// Specifies the type of the message content.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseMessageTextContent"/> and <see cref="KnowledgeBaseMessageImageContent"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownKnowledgeBaseMessageContent))]
     public abstract partial class KnowledgeBaseMessageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

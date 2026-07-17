@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Figure containing a chart, such as a bar chart, line chart, or pie chart. </summary>
-    public partial class DocumentChartFigure : DocumentFigure, IJsonModel<DocumentChartFigure>
+    internal partial class DocumentChartFigure : DocumentFigure, IJsonModel<DocumentChartFigure>
     {
         /// <summary> Initializes a new instance of <see cref="DocumentChartFigure"/> for deserialization. </summary>
         internal DocumentChartFigure()

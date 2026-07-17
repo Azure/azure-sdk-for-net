@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Evaluation
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects.Evaluation
     /// Base class for targets with discriminator support.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAIModelTarget"/> and <see cref="AzureAIAgentTarget"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownEvaluationTarget))]
     public abstract partial class EvaluationTarget
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

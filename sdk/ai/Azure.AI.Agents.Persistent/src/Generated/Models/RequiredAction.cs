@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
@@ -14,6 +15,7 @@ namespace Azure.AI.Agents.Persistent
     /// An abstract representation of a required action for an agent thread run to continue.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SubmitToolOutputsAction"/> and <see cref="SubmitToolApprovalAction"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownRequiredAction))]
     public abstract partial class RequiredAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

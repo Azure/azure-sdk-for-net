@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Agents
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects.Agents
     /// authentication details for OpenApiFunctionDefinition
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAPIAnonymousAuthenticationDetails"/>, <see cref="OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenAPIManagedAuthenticationDetails"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownOpenApiAuthenticationDetails))]
     public abstract partial class OpenApiAuthenticationDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -6,10 +6,12 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The service properties. </summary>
+    [Core.CodeGenModelAttribute("StorageServiceProperties")]
     public partial class QueueServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="QueueServiceProperties"/>. </summary>

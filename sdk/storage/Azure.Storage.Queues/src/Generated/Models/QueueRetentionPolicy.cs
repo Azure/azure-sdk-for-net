@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The retention policy. </summary>
+    [Core.CodeGenModelAttribute("RetentionPolicy")]
     public partial class QueueRetentionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="QueueRetentionPolicy"/>. </summary>

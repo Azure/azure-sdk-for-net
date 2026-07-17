@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.ContentUnderstanding
@@ -14,6 +15,7 @@ namespace Azure.AI.ContentUnderstanding
     /// Field extracted from the content.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentStringField"/>, <see cref="ContentDateTimeOffsetField"/>, <see cref="ContentTimeField"/>, <see cref="ContentNumberField"/>, <see cref="ContentIntegerField"/>, <see cref="ContentBooleanField"/>, <see cref="ContentArrayField"/>, <see cref="ContentObjectField"/>, and <see cref="ContentJsonField"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownContentField))]
     public abstract partial class ContentField
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

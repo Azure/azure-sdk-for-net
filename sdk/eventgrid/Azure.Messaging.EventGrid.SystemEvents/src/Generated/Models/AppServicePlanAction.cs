@@ -7,10 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Type of action on the app service plan. </summary>
+    [Core.CodeGenModelAttribute("AppServicePlanAction")]
     public readonly partial struct AppServicePlanAction : IEquatable<AppServicePlanAction>
     {
         private readonly string _value;

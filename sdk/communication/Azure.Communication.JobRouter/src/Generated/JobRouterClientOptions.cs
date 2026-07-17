@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Client options for clients in this library. </summary>
+    [Core.CodeGenModelAttribute("AzureCommunicationJobRouterClientOptions")]
     public partial class JobRouterClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_01_18_Preview;

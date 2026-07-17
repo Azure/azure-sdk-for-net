@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The CORS rules. </summary>
+    [Core.CodeGenModelAttribute("CorsRule")]
     public partial class QueueCorsRule
     {
         /// <summary> The allowed origins. </summary>

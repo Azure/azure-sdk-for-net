@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -14,6 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// Contains configuration options specific to the compression method used during indexing or querying.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScalarQuantizationCompression"/> and <see cref="BinaryQuantizationCompression"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownVectorSearchCompression))]
     public abstract partial class VectorSearchCompression
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

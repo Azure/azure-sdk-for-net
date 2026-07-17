@@ -10,6 +10,7 @@ using Azure.Core;
 namespace Azure.Monitor.Ingestion
 {
     /// <summary></summary>
+    [Core.CodeGenClientAttribute("IngestionUsingDataCollectionRulesClient")]
     public partial class LogsIngestionClient
     {
         private static ResponseClassifier _pipelineMessageClassifier204;

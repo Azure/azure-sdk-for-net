@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
@@ -14,6 +15,7 @@ namespace Azure.AI.Agents.Persistent
     /// An abstract representation of a detailed tool call as recorded within a run step for an existing run.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFileSearchToolCall"/>, <see cref="RunStepBingGroundingToolCall"/>, <see cref="RunStepAzureAISearchToolCall"/>, <see cref="RunStepBrowserAutomationToolCall"/>, <see cref="RunStepMcpToolCall"/>, <see cref="RunStepComputerUseToolCall"/>, <see cref="RunStepSharepointToolCall"/>, <see cref="RunStepMicrosoftFabricToolCall"/>, <see cref="RunStepBingCustomSearchToolCall"/>, <see cref="RunStepAzureFunctionToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="RunStepOpenAPIToolCall"/>, <see cref="RunStepDeepResearchToolCall"/>, and <see cref="RunStepConnectedAgentToolCall"/>.
     /// </summary>
+    [PersistableModelProxy(typeof(UnknownRunStepToolCall))]
     public abstract partial class RunStepToolCall
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

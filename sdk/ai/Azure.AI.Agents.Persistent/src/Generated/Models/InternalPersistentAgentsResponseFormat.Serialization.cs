@@ -12,7 +12,11 @@ using System.Text.Json;
 
 namespace Azure.AI.Agents.Persistent
 {
-    internal partial class InternalPersistentAgentsResponseFormat : IJsonModel<InternalPersistentAgentsResponseFormat>
+    /// <summary>
+    /// An object describing the expected output of the model. If `json_object` only `function` type `tools` are allowed to be passed to the Run.
+    /// If `text` the model can return text or any value needed.
+    /// </summary>
+    public partial class InternalPersistentAgentsResponseFormat : IJsonModel<InternalPersistentAgentsResponseFormat>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
