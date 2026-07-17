@@ -22,6 +22,7 @@
 ### Bugs Fixed
 
 - Fixed a regression (introduced with managed identity host capability detection) where `DefaultAzureCredential` could throw an `AuthenticationFailedException` and stop evaluating the credential chain on hosts without a managed identity — for example, a developer machine running in Visual Studio where the IMDS endpoint (169.254.169.254) is unreachable. When `ManagedIdentityCredential` is part of a chain, a failure to detect the managed identity source/capabilities is now surfaced as a `CredentialUnavailableException`, allowing the chain to continue to the next credential.
+- Fixed a related case where `DefaultAzureCredential` could still abort the credential chain with an `AuthenticationFailedException` when managed identity source detection succeeded but the subsequent token acquisition reported that all managed identity sources were unavailable (MSAL `managed_identity_all_sources_unavailable`). When `ManagedIdentityCredential` is part of a chain, this is now surfaced as a `CredentialUnavailableException` so the chain continues to the next credential.
 
 ## 1.59.0 (2026-06-09)
 

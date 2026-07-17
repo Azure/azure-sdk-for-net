@@ -15,63 +15,63 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Paged collection of NetworkRuleSet items. </summary>
-    public partial class NetworkRuleSetListResult : IJsonModel<NetworkRuleSetListResult>
+    public partial class EventHubsNetworkRuleSetListResult : IJsonModel<EventHubsNetworkRuleSetListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkRuleSetListResult"/> for deserialization. </summary>
-        internal NetworkRuleSetListResult()
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetListResult"/> for deserialization. </summary>
+        internal EventHubsNetworkRuleSetListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkRuleSetListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EventHubsNetworkRuleSetListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSetListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNetworkRuleSetListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNetworkRuleSetListResult(document.RootElement, options);
+                        return DeserializeEventHubsNetworkRuleSetListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkRuleSetListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsNetworkRuleSetListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSetListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNetworkRuleSetListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkRuleSetListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsNetworkRuleSetListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetworkRuleSetListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EventHubsNetworkRuleSetListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkRuleSetListResult IPersistableModel<NetworkRuleSetListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EventHubsNetworkRuleSetListResult IPersistableModel<EventHubsNetworkRuleSetListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetworkRuleSetListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EventHubsNetworkRuleSetListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetworkRuleSetListResult"/> from. </param>
-        internal static NetworkRuleSetListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EventHubsNetworkRuleSetListResult"/> from. </param>
+        internal static EventHubsNetworkRuleSetListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNetworkRuleSetListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeEventHubsNetworkRuleSetListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetworkRuleSetListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EventHubsNetworkRuleSetListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSetListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNetworkRuleSetListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkRuleSetListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsNetworkRuleSetListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkRuleSetListResult IJsonModel<NetworkRuleSetListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EventHubsNetworkRuleSetListResult IJsonModel<EventHubsNetworkRuleSetListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkRuleSetListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EventHubsNetworkRuleSetListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSetListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNetworkRuleSetListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkRuleSetListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsNetworkRuleSetListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkRuleSetListResult(document.RootElement, options);
+            return DeserializeEventHubsNetworkRuleSetListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NetworkRuleSetListResult DeserializeNetworkRuleSetListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static EventHubsNetworkRuleSetListResult DeserializeEventHubsNetworkRuleSetListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkRuleSetListResult(value, nextLink, additionalBinaryDataProperties);
+            return new EventHubsNetworkRuleSetListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

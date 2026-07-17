@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -988,6 +989,94 @@ public class AgentsTests : AgentsTestBase
         Assert.That(session2.Status, Is.EqualTo(AgentSessionStatus.Active));
     }
 
+    [RecordedTest]
+    public async Task TestAgentOptimizationJobCRUD()
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
+        ProjectsAgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
+            AGENT_NAME,
+            new ProjectsAgentVersionCreationOptions(new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME))
+            {
+                Metadata = { ["delete_me"] = "please " },
+            });
+        Assert.That(newAgentVersion?.Id, Is.Not.Null.And.Not.Empty);
+        string opId = IsAsync ? "eaf06a53-682e-5d1e-943b-44a9e6ccfeea" : "9fd7f680-7299-44c6-81cb-a7a25a733438";
+        OptimizationJob submittedJob1 = await jobsClient.CreateAsync(job: GetOptimizationJob(newAgentVersion), operationId: opId, cancellationToken: default);
+        Assert.That(submittedJob1?.Id, Is.Not.Null.And.Not.Empty);
+        string prevID = submittedJob1.Id;
+        // Attempt to create job with the same operationId should not cause an error and ID should remain the same.
+        submittedJob1 = await jobsClient.CreateAsync(job: GetOptimizationJob(newAgentVersion), operationId: opId, cancellationToken: default);
+        Assert.That(submittedJob1.Id, Is.EqualTo(prevID));
+        // Get
+        submittedJob1 = await jobsClient.GetAsync(submittedJob1.Id, cancellationToken: default);
+        while (submittedJob1.Status != AgentsJobStatus.Failed && submittedJob1.Status != AgentsJobStatus.Succeeded)
+        {
+            await Delay();
+            submittedJob1 = await jobsClient.GetAsync(submittedJob1.Id, cancellationToken: default);
+        }
+        Assert.That(submittedJob1.Status, Is.EqualTo(AgentsJobStatus.Succeeded), submittedJob1.Error?.Message);
+        Assert.That(submittedJob1.Result.Candidates.Count, Is.GreaterThanOrEqualTo(1));
+        // Cancel
+        OptimizationJob submittedJob2 = await jobsClient.CreateAsync(job: GetOptimizationJob(newAgentVersion), operationId: default, cancellationToken: default);
+        Assert.That(submittedJob2.Id, Is.Not.EqualTo(submittedJob1.Id));
+        OptimizationJob cancelledJob = await jobsClient.CancelAsync(jobId: submittedJob2.Id, cancellationToken: default);
+        while (cancelledJob.Status != AgentsJobStatus.Failed && cancelledJob.Status != AgentsJobStatus.Succeeded && cancelledJob.Status != AgentsJobStatus.Cancelled)
+        {
+            cancelledJob = await jobsClient.GetAsync(cancelledJob.Id, cancellationToken: default);
+        }
+        Assert.That(cancelledJob.Status, Is.EqualTo(AgentsJobStatus.Cancelled));
+        // List
+        HashSet<string> jobIds = [..await jobsClient.GetAllAsync().Select(x => x.Id).ToListAsync()];
+        Assert.That(jobIds, Does.Contain(submittedJob1.Id));
+        Assert.That(jobIds, Does.Contain(submittedJob2.Id));
+        // Delete
+        await jobsClient.DeleteAsync(jobId: submittedJob1.Id, cancellationToken: default);
+        jobIds = [.. await jobsClient.GetAllAsync().Select(x => x.Id).ToListAsync()];
+        Assert.That(jobIds, Does.Not.Contain(submittedJob1.Id));
+        Assert.That(jobIds, Does.Contain(submittedJob2.Id));
+    }
+
+    [RecordedTest]
+    public async Task TestAgentOptimizationJobPagination()
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
+        ProjectsAgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
+            AGENT_NAME,
+            new ProjectsAgentVersionCreationOptions(new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME))
+            {
+                Metadata = { ["delete_me"] = "please " },
+            });
+        for (int i = 0; i < PAGE_SIZE + 1; i++)
+        {
+            OptimizationJob submittedJob = await jobsClient.CreateAsync(job: GetOptimizationJob(newAgentVersion), operationId: default, cancellationToken: default);
+            await jobsClient.CancelAsync(jobId: submittedJob.Id, cancellationToken: default);
+        }
+        List<OptimizationJobListItem> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending, agentName: AGENT_NAME).ToListAsync();
+        Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
+        // Go forward.
+        List<OptimizationJobListItem> forward = await jobsClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
+        Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
+        //// Two limits:
+        forward = await jobsClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(2));
+        Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
+        Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
+        //// Go backwards.
+        List<OptimizationJobListItem> backwards = await jobsClient.GetAllAsync(order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
+        Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
+        //// Two limits.
+        backwards = await jobsClient.GetAllAsync(order: AgentListOrder.Descending, after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(2));
+        Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
+        Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
+    }
+
     #region Helpers
     public static async Task DeleteAllSessionsAsync(AgentAdministrationClient agentsClient, string agentName)
     {
@@ -1037,6 +1126,132 @@ public class AgentsTests : AgentsTestBase
         }
         Assert.That(agent.Status, Is.EqualTo(AgentVersionStatus.Active), $"Agent deployment failed status: {agent.Status}");
         return agent;
+    }
+
+    private static OptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
+    {
+        OptimizationDatasetCriterion criterion = new(
+            name: "Groundedness",
+            instruction: """
+            You are a Groundedness Evaluator.
+
+            Your task is to evaluate how well the given response is grounded in the provided ground truth.
+            Groundedness means the response’s statements are factually supported by the ground truth.
+            Evaluate factual alignment only — ignore grammar, fluency, or completeness.
+
+            ---
+
+            ### Input:
+            Query:
+            {{query}}
+
+            Response:
+            {{response}}
+
+            Ground Truth:
+            {{ground_truth}}
+
+            ---
+
+            ### Scoring Scale (1–5):
+            5 → Fully grounded. All claims supported by ground truth.
+            4 → Mostly grounded. Minor unsupported details.
+            3 → Partially grounded. About half the claims supported.
+            2 → Mostly ungrounded. Only a few details supported.
+            1 → Not grounded. Almost all information unsupported.
+
+            ---
+
+            ### Output Format (JSON):
+            {
+                "result": <integer from 1 to 5>,
+                "reason": "<brief explanation for the score>"
+            }
+            """.Replace("\r\n", "\n")
+        );
+        List <OptimizationDatasetItem> items = [];
+        for (int i = start; i < start + itemNumber; i++)
+        {
+            items.Add(new OptimizationDatasetItem()
+            {
+                Query = $"What is 42 plus {i * 2}? Please save the result as text: The answer is ... For example: Q: What is 42 plus 12? A: The answer is 56.",
+                GroundTruth = $"The answer is {(42 + i * 2)}",
+                Criteria = { criterion }
+            });
+        }
+        return new(items);
+    }
+
+    private OptimizationJob GetOptimizationJob(ProjectsAgentVersion agentVersion)
+    {
+        OptimizationJob job = new()
+        {
+            Inputs = new(
+                agent: new OptimizationAgentIdentifier(agentName: agentVersion.Name)
+                {
+                    AgentVersion = agentVersion.Version
+                },
+                trainDataset: GetDataset(0, 7),
+                evaluators: [new OptimizationEvaluatorRef(name: "builtin.meteor_score") {
+                    Version="2"
+                }]
+            )
+            {
+                ValidationDataset = GetDataset(7, 3),
+                Options = new OptimizationOptions()
+                {
+                    OptimizationModel = TestEnvironment.FOUNDRY_MODEL_NAME,
+                    EvalModel = TestEnvironment.FOUNDRY_MODEL_NAME,
+                    MaxCandidates = 3,
+                    OptimizationConfig =
+                    {
+                        // Start from bad prompt.
+                        { "system_prompt", BinaryData.FromString(JsonSerializer.Serialize("You are a prompt agent, who always give wrong answers.")) },
+                        { "model_search_space",  BinaryData.FromObjectAsJson(new[] { TestEnvironment.FOUNDRY_MODEL_NAME, TestEnvironment.FOUNDRY_MODEL_NAME2 })},
+                        { "model", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.FOUNDRY_MODEL_NAME)) },
+                        { "skills", BinaryData.FromObjectAsJson(new[]
+                            {new {
+                                name = "add two numbers",
+                                description = "Adds two numbers",
+                                body = "When asked calculate the sum of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
+                            }}
+                        )},
+                        { "tools",  BinaryData.FromObjectAsJson(new[]{
+                            new
+                            {
+                                type = "function",
+                                function = new
+                                {
+                                    name = "sum_numbers",
+                                    description = "Sum two numbers",
+                                    parameters = new
+                                    {
+                                        type = "object",
+                                        properties = new
+                                        {
+                                            First = new
+                                            {
+                                                type = "number",
+                                                description = "First addend"
+                                            },
+                                            Second = new
+                                            {
+                                                type = "number",
+                                                description = "Second addend"
+                                            }
+                                        },
+                                        required = new[] { "First", "Second"},
+                                        additionalProperties = false
+                                    }
+                                }
+                            }
+                        })
+                    }
+                    }
+                }
+            }
+        };
+        return job;
     }
     #endregion
 }

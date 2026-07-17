@@ -13,12 +13,12 @@ namespace Azure.Provisioning.Compute
     public enum DedicatedHostLicenseType
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> WindowsServerHybrid. </summary>
         [DataMember(Name = "Windows_Server_Hybrid")]
-        WindowsServerHybrid,
+        WindowsServerHybrid = 1,
         /// <summary> WindowsServerPerpetual. </summary>
         [DataMember(Name = "Windows_Server_Perpetual")]
-        WindowsServerPerpetual
+        WindowsServerPerpetual = 2
     }
 }

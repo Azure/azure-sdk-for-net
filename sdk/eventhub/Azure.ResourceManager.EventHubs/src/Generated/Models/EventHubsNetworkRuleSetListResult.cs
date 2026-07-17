@@ -13,23 +13,23 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Paged collection of NetworkRuleSet items. </summary>
-    public partial class NetworkRuleSetListResult
+    public partial class EventHubsNetworkRuleSetListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkRuleSetListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetListResult"/>. </summary>
         /// <param name="value"> The NetworkRuleSet items on this page. </param>
-        internal NetworkRuleSetListResult(IEnumerable<EventHubsNetworkRuleSetData> value)
+        internal EventHubsNetworkRuleSetListResult(IEnumerable<EventHubsNetworkRuleSetData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkRuleSetListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetListResult"/>. </summary>
         /// <param name="value"> The NetworkRuleSet items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkRuleSetListResult(IList<EventHubsNetworkRuleSetData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubsNetworkRuleSetListResult(IList<EventHubsNetworkRuleSetData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
