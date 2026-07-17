@@ -669,7 +669,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             Assert.That(
                 () => AmqpReceiver.ParseGetMessageSessionsResponse(response),
-                Throws.InstanceOf<Exception>());
+                Throws.InstanceOf<ServiceBusException>());
         }
 
         [Test]
@@ -679,7 +679,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             Assert.That(
                 () => AmqpReceiver.ParseGetMessageSessionsResponse(response),
-                Throws.InstanceOf<Exception>());
+                Throws.InstanceOf<ServiceBusException>());
         }
 
         private AmqpReceiver CreateReceiver() =>
