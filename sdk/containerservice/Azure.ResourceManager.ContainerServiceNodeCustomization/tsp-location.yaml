@@ -1,0 +1,6 @@
+directory: specification/containerservice/resource-manager/Microsoft.ContainerService/nodecustomization
+commit: acb3fd88c99dd4cfd09098a3e410ac8c01c07da3
+repo: Azure/azure-rest-api-specs
+additionalDirectories:
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
