@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.ComputeLimit
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource>> GetSharedLimitCapAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.SharedLimitCapResource GetSharedLimitCapResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.SharedLimitCapCollection GetSharedLimitCaps(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource> GetTrustedHostSubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string hostSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource>> GetTrustedHostSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string hostSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource GetTrustedHostSubscriptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionCollection GetTrustedHostSubscriptions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location) { throw null; }
     }
     public partial class ComputeLimitFeatureCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ComputeLimit.ComputeLimitFeatureResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeLimit.ComputeLimitFeatureResource>, System.Collections.IEnumerable
     {
@@ -329,6 +333,55 @@ namespace Azure.ResourceManager.ComputeLimit
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ComputeLimit.SharedLimitCapData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ComputeLimit.SharedLimitCapData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class TrustedHostSubscriptionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource>, System.Collections.IEnumerable
+    {
+        protected TrustedHostSubscriptionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string hostSubscriptionId, Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string hostSubscriptionId, Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string hostSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string hostSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource> Get(string hostSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource>> GetAsync(string hostSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource> GetIfExists(string hostSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource>> GetIfExistsAsync(string hostSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class TrustedHostSubscriptionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData>
+    {
+        public TrustedHostSubscriptionData() { }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TrustedHostSubscriptionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected TrustedHostSubscriptionResource() { }
+        public virtual Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string hostSubscriptionId) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.ComputeLimit.Mocking
 {
@@ -341,6 +394,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         public virtual Azure.ResourceManager.ComputeLimit.ComputeLimitVmFamilyResource GetComputeLimitVmFamilyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ComputeLimit.MemberCapOverrideResource GetMemberCapOverrideResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ComputeLimit.SharedLimitCapResource GetSharedLimitCapResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource GetTrustedHostSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableComputeLimitSubscriptionResource : Azure.ResourceManager.ArmResource
     {
@@ -360,6 +414,9 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource> GetSharedLimitCap(Azure.Core.AzureLocation location, string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.SharedLimitCapResource>> GetSharedLimitCapAsync(Azure.Core.AzureLocation location, string vmFamilyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ComputeLimit.SharedLimitCapCollection GetSharedLimitCaps(Azure.Core.AzureLocation location) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource> GetTrustedHostSubscription(Azure.Core.AzureLocation location, string hostSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionResource>> GetTrustedHostSubscriptionAsync(Azure.Core.AzureLocation location, string hostSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionCollection GetTrustedHostSubscriptions(Azure.Core.AzureLocation location) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ComputeLimit.Models
@@ -382,6 +439,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         public static Azure.ResourceManager.ComputeLimit.Models.SetMemberCapOverridesResult SetMemberCapOverridesResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeLimit.Models.MemberCap> memberCapOverrides = null) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.SharedLimitCapData SharedLimitCapData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.Models.SharedLimitCapProperties SharedLimitCapProperties(int? defaultMemberCap = default(int?), bool isBoundedCap = false, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.TrustedHostSubscriptionData TrustedHostSubscriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
     }
     public partial class ComputeLimitFeatureEnableContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitFeatureEnableContent>
     {
