@@ -1589,8 +1589,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Lists the IDs of sessions that have active messages or whose session state was updated
-        /// since the given time. Wraps the raw AMQP management request with the receiver's retry policy.
+        /// Lists the IDs of sessions for the requested page. The set returned depends on
+        /// <paramref name="lastUpdatedTime"/>: pass <see cref="DateTimeOffset.MaxValue"/> to list all
+        /// sessions that have active messages, or a real timestamp to list only sessions whose session
+        /// state was set or updated after that time. Wraps the raw AMQP management request with the
+        /// receiver's retry policy.
         /// </summary>
         ///
         /// <param name="lastUpdatedTime">
