@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.CommvaultContentStore
                     yield break;
                 }
                 CommvaultPlanListResult result = CommvaultPlanListResult.FromResponse(response);
-                yield return Page<CommvaultPlanData>.FromValues((IReadOnlyList<CommvaultPlanData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CommvaultPlanData>.FromValues((IReadOnlyList<CommvaultPlanData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

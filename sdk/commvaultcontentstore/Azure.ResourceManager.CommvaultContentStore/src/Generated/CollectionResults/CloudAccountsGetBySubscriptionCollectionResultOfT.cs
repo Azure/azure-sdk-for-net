@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.CommvaultContentStore
                     yield break;
                 }
                 CloudAccountListResult result = CloudAccountListResult.FromResponse(response);
-                yield return Page<CloudAccountData>.FromValues((IReadOnlyList<CloudAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CloudAccountData>.FromValues((IReadOnlyList<CloudAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

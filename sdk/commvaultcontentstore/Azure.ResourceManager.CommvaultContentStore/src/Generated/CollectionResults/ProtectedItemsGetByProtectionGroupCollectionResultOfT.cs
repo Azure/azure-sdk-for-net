@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.CommvaultContentStore
                     yield break;
                 }
                 ProtectedItemListResult result = ProtectedItemListResult.FromResponse(response);
-                yield return Page<ProtectedItemData>.FromValues((IReadOnlyList<ProtectedItemData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ProtectedItemData>.FromValues((IReadOnlyList<ProtectedItemData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

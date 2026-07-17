@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> List of information on VMs. </summary>
-        public IList<VmInfo> VmInfoList { get; }
+        public IList<VmInfo> VmInfoList { get; } = new ChangeTrackingList<VmInfo>();
     }
 }
