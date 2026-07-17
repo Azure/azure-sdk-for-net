@@ -8,12 +8,15 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Configuration;
 
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Represents the settings used to configure a <see cref="ConfigurationClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
     [Experimental("SCME0002")]
+    [NullableContext(2)]
+    [Nullable(0)]
     public partial class ConfigurationClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the ConnectionString. </summary>
