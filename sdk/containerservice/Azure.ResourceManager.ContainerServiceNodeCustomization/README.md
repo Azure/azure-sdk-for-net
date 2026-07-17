@@ -1,4 +1,4 @@
-# Azure.ResourceManager.ContainerServiceNodeCustomization management client library for .NET
+# Microsoft Azure Container Service Node Customization management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
