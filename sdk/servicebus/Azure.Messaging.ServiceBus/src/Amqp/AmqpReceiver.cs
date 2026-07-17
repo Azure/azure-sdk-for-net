@@ -1672,14 +1672,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 if (sessionsObj is string[] sessionArray)
                 {
                     // Iterate the full array and collect every invalid entry rather than throwing on
-                    // the first, so all offending entries are reported. Empty string is a valid
-                    // session id (see ServiceBusMessage.SessionId), so only null entries are rejected.
+                    // the first, describing why each is invalid so all offending entries are reported.
+                    // A valid session id is always a non-empty string: the broker rejects a send whose
+                    // SessionId is null or empty on a session entity, so the service never returns either.
                     List<string> invalidDescriptions = null;
                     for (int i = 0; i < sessionArray.Length; i++)
                     {
-                        if (sessionArray[i] is null)
+                        if (string.IsNullOrEmpty(sessionArray[i]))
                         {
-                            (invalidDescriptions ??= new List<string>()).Add($"index {i} was null");
+                            var reason = sessionArray[i] is null ? "was null" : "was an empty string";
+                            (invalidDescriptions ??= new List<string>()).Add($"index {i} {reason}");
                         }
                     }
                     if (invalidDescriptions != null)
@@ -1694,20 +1696,24 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     // Iterate the full array and collect every invalid entry rather than throwing on
                     // the first, describing why each is invalid so all offending entries are reported.
-                    // Empty string is a valid session id, so only null and non-string entries are rejected.
+                    // A valid session id is always a non-empty string: the broker rejects a send whose
+                    // SessionId is null or empty on a session entity, so the service never returns either.
                     var result = new string[objectArray.Length];
                     List<string> invalidDescriptions = null;
                     for (int i = 0; i < objectArray.Length; i++)
                     {
-                        if (objectArray[i] is string sessionId)
+                        if (objectArray[i] is string sessionId && !string.IsNullOrEmpty(sessionId))
                         {
                             result[i] = sessionId;
                         }
                         else
                         {
-                            var reason = objectArray[i] is null
-                                ? "was null"
-                                : $"was of type {objectArray[i].GetType().Name}";
+                            var reason = objectArray[i] switch
+                            {
+                                null => "was null",
+                                string => "was an empty string",
+                                var value => $"was of type {value.GetType().Name}"
+                            };
                             (invalidDescriptions ??= new List<string>()).Add($"index {i} {reason}");
                         }
                     }
