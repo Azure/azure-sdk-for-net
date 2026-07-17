@@ -3,10 +3,14 @@
     <LangVersion>12</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\applicationinsights\Azure.Provisioning.ApplicationInsights\src\Azure.Provisioning.ApplicationInsights.csproj" />
+    <ProjectReference Include="..\..\..\containerregistry\Azure.Provisioning.ContainerRegistry\src\Azure.Provisioning.ContainerRegistry.csproj" />
     <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
+    <ProjectReference Include="..\..\..\keyvault\Azure.Provisioning.KeyVault\src\Azure.Provisioning.KeyVault.csproj" />
     <ProjectReference Include="..\..\..\provisioning\Azure.Provisioning\src\Azure.Provisioning.csproj" />
     <ProjectReference Include="..\src\Azure.Provisioning.MachineLearning.csproj" />
     <ProjectReference Include="..\..\..\provisioning\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj" />
+    <ProjectReference Include="..\..\..\storage\Azure.Provisioning.Storage\src\Azure.Provisioning.Storage.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\..\common\ProvisioningTestShared\*.cs" LinkBase="Shared\ProvisioningTestShared" />

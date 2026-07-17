@@ -24,22 +24,93 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
-### Create a Machine Learning workspace
+### Create a Machine Learning workspace with required dependencies
 
-This example demonstrates how to create an Azure Machine Learning workspace.
+This example creates an Azure Machine Learning workspace with Azure Storage, Azure Key Vault, Application Insights, and Azure Container Registry, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.machinelearningservices/machine-learning-workspace/main.bicep).
 
 ```C# Snippet:MachineLearningWorkspaceBasic
 Infrastructure infra = new();
 
+ProvisioningVariable tenantId =
+    new(nameof(tenantId), typeof(string))
+    {
+        Value = BicepFunction.GetSubscription().TenantId
+    };
+infra.Add(tenantId);
+
+StorageAccount storage =
+    new(nameof(storage), StorageAccount.ResourceVersions.V2022_05_01)
+    {
+        Kind = StorageKind.StorageV2,
+        Sku = new StorageSku { Name = StorageSkuName.StandardRagrs },
+        AllowBlobPublicAccess = false,
+        EnableHttpsTrafficOnly = true,
+        Encryption =
+            new StorageAccountEncryption
+            {
+                Services =
+                    new StorageAccountEncryptionServices
+                    {
+                        Blob = new StorageEncryptionService { IsEnabled = true },
+                        File = new StorageEncryptionService { IsEnabled = true },
+                    },
+                KeySource = StorageAccountKeySource.Storage,
+            },
+        MinimumTlsVersion = StorageMinimumTlsVersion.Tls1_2,
+        NetworkRuleSet =
+            new StorageAccountNetworkRuleSet
+            {
+                DefaultAction = StorageNetworkDefaultAction.Deny,
+            },
+    };
+infra.Add(storage);
+
+KeyVaultService vault =
+    new(nameof(vault), KeyVaultService.ResourceVersions.V2022_07_01)
+    {
+        Properties =
+            new Azure.Provisioning.KeyVault.KeyVaultProperties
+            {
+                TenantId = tenantId,
+                Sku = new KeyVaultSku
+                {
+                    Family = KeyVaultSkuFamily.A,
+                    Name = KeyVaultSkuName.Standard,
+                },
+                AccessPolicies = new BicepList<KeyVaultAccessPolicy>([]),
+                EnableSoftDelete = true,
+            },
+    };
+infra.Add(vault);
+
+ApplicationInsightsComponent applicationInsight =
+    new(nameof(applicationInsight), ApplicationInsightsComponent.ResourceVersions.V2020_02_02)
+    {
+        Kind = "web",
+        ApplicationType = ApplicationInsightsApplicationType.Web,
+    };
+infra.Add(applicationInsight);
+
+ContainerRegistryService registry =
+    new(nameof(registry), ContainerRegistryService.ResourceVersions.V2022_12_01)
+    {
+        Sku = new ContainerRegistrySku { Name = ContainerRegistrySkuName.Standard },
+        IsAdminUserEnabled = false,
+    };
+infra.Add(registry);
+
 MachineLearningWorkspace workspace =
     new(nameof(workspace), MachineLearningWorkspace.ResourceVersions.V2026_05_01)
     {
+        ApplicationInsights = applicationInsight.Id,
+        ContainerRegistry = registry.Id,
+        FriendlyName = "Machine Learning workspace",
         Identity = new ManagedServiceIdentity
         {
             ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned
         },
-        PublicNetworkAccess = PublicNetworkAccess.Enabled,
-        Tags = { ["environment"] = "test" },
+        KeyVault = vault.Id,
+        StorageAccount = storage.Id,
     };
 infra.Add(workspace);
 ```
