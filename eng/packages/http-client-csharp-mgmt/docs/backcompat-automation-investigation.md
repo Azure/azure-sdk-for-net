@@ -142,22 +142,60 @@ still needs an Azure-specific visitor or a per-item hint. The
 
 ## Scenarios
 
-### 1. Type rename back to the previously shipped name — ✅ Automatable
+### 1. Type rename back to the previously shipped name — 🟡 Partially automatable (✅ for discriminator `Unknown*` fallbacks)
 
-**What the custom code does:** applies `[CodeGenType("OldGeneratedName")]` to a partial so the
-generated type keeps the name the library shipped previously. Extremely common for
-discriminator `Unknown*` types and `*UpdateProperties` models whose TypeSpec name differs from
-the AutoRest name.
+**What the custom code does:** applies `[CodeGenType("NewGeneratedName")]` to a partial so the
+generated type keeps the name the library shipped previously. The attribute argument is the name
+the current TypeSpec generation *would* emit; the partial's own class name is the name that was
+previously shipped. Extremely common for discriminator `Unknown*` types and `*UpdateProperties`
+models whose TypeSpec name differs from the AutoRest name.
 
 **Citations:**
 - `sdk/astronomer/Azure.ResourceManager.Astro/src/Custom/Models/AstroOrganizationUpdateProperties.cs:10` — `[CodeGenType("OrganizationResourceUpdateProperties")]`
-- `sdk/cosmosdb/Azure.ResourceManager.CosmosDB/src/Custom/Models/UnknownBackupPolicy.cs:13`
+- `sdk/cosmosdb/Azure.ResourceManager.CosmosDB/src/Custom/Models/UnknownBackupPolicy.cs:13` — `[CodeGenType("UnknownCosmosDBAccountBackupPolicy")]`, with an inline comment recording the shipped name
 - `sdk/eventhub/Azure.ResourceManager.EventHubs/src/Custom/Models/UnknownApplicationGroupPolicy.cs`
-- `sdk/standbypool/Azure.ResourceManager.StandbyPool/src/Custom/Models/StandbyVirtualMachinePoolUpdateProperties.cs:7`
+- `sdk/standbypool/Azure.ResourceManager.StandbyPool/src/Custom/Models/StandbyVirtualMachinePoolUpdateProperties.cs:7` — `[CodeGenType("StandbyVirtualMachinePoolResourceUpdateProperties")]`
 
-**Automation approach:** the previous public contract (already tracked for breaking-change
-detection) provides the old name; a name-mapping step could apply it automatically, extending
-the existing `NameVisitor`. This is the single most frequent custom-code pattern in the survey.
+**How we determined a rename was intended (and not, say, a net-new type).** For each citation the
+`[CodeGenType]` argument is the name the current generation produces, and it differs from the
+partial's class name. That class name is confirmed to be a *previously shipped* public type by
+checking it against the committed API contract (`api/*.cs`), which is the last-GA surface CI diffs
+for breaking changes — e.g. `AstroOrganizationUpdateProperties` appears in
+`sdk/astronomer/Azure.ResourceManager.Astro/api/Azure.ResourceManager.Astro.net8.0.cs`. The
+`UnknownBackupPolicy` file makes the intent explicit in a comment ("1.4.0 GA referenced the
+discriminator fallback as `UnknownBackupPolicy` … MPG names it `UnknownCosmosDBAccountBackupPolicy`.
+Rename … to match the shipped contract"). So the signal that "the previous version was named
+differently" is: *a name in the frozen last-GA contract that the current generation no longer
+produces, whose replacement the author manually paired via `[CodeGenType]`.*
+
+**Feasibility — how would the generator know a new type maps to an old one when the names differ?**
+This is the crux, and it splits the scenario:
+
+- **Discriminator `Unknown*` fallbacks — deterministic, ✅.** The name is mechanically derived from
+  the (unchanged) discriminated base type: shipped `Unknown{Base}` vs. generated
+  `Unknown{Prefix}{Base}`. Because the base type name is preserved across the migration, the old
+  fallback name can be reconstructed from the base without any semantic guess. This subset is
+  genuinely automatable.
+
+- **Arbitrary spec-driven renames (`*UpdateProperties` and similar) — 🟡, needs an anchor.** By
+  definition the .NET names differ, so name matching cannot recover the correspondence. Automation
+  would have to match the newly generated type to a last-GA type by a **stable structural anchor
+  that survives the AutoRest→TypeSpec migration**, e.g.: the JSON schema shape (set of serialized
+  property names/types), the wire discriminator value, or — most reliably for these `properties`
+  bags — the *position in the type graph* (the owning property is still `Patch.Properties`, so the
+  type referenced there in the old contract identifies the target). Where such an anchor is unique
+  the mapping is deterministic; where several last-GA types share an identical shape, or the shape
+  itself changed in the same release, the match is ambiguous and a per-type hint (effectively the
+  `[CodeGenType]` the author writes today) is unavoidable. So this subset is *boilerplate-generable
+  given a mapping*, not *mapping-inferable from names alone*.
+
+**Automation approach:** teach the emitter/generator to consume the frozen last-GA contract and
+match generated types to it by structural anchor (graph position + serialized shape), applying the
+old name via the existing `NameVisitor` when the match is unique; fall back to the deterministic
+`Unknown{Base}` reconstruction for discriminator fallbacks, and to an explicit per-type hint when
+the anchor is ambiguous. This is the single most frequent custom-code pattern in the survey, but the
+verdict is *partial* rather than fully automatable because recovering the new→old identity — not
+emitting the rename once known — is the hard part.
 
 ### 2. Restore a removed base type (`: ResourceData`, other bases) — ✅ Automatable
 
@@ -464,7 +502,7 @@ type preservation, fixed-enum re-add, and constructor-accessibility behaviors ar
 the data plane as well when the last contract is wired up — the D-scenarios below note where that
 already covers the shim (partially, as in the management taxonomy).
 
-### D1. Public type rename via `[CodeGenType]` — ✅ Automatable (same as scenario 1)
+### D1. Public type rename via `[CodeGenType]` — 🟡 Partially automatable (same as scenario 1)
 
 **What the custom code does:** applies `[CodeGenType("NewGeneratedName")]` to an empty partial
 so a generated type keeps the previously shipped name.
@@ -474,9 +512,11 @@ so a generated type keeps the previously shipped name.
   `[CodeGenType("WorkflowActionOutputItemStatus")] … AgentWorkflowPreviewActionStatus`
 - `sdk/ai/Azure.AI.Extensions.OpenAI/src/Custom/CodeGenStubs.cs:10-12` — three more rename stubs.
 
-**Automation:** identical to management scenario 1 — deterministic given the previous
-public contract. The data-plane generator has no known-type/rename visitor at all, so this is
-a net-new automation opportunity for `Azure.Generator`.
+**Automation:** identical to management scenario 1 — the rename is trivial to *emit* once known,
+but recovering the new→old identity when the .NET names differ is the hard part and needs a
+structural anchor (serialized shape / graph position) or a per-type hint. The data-plane generator
+has no known-type/rename visitor at all, so this is a net-new automation opportunity for
+`Azure.Generator`.
 
 ### D2. Model-factory rename back-compat shims — ✅ Automatable (same as scenarios 5 / 13)
 
@@ -567,7 +607,7 @@ generator-caused.
 
 | # | Scenario | Mechanism | Automatable? | Base generator today |
 |---|----------|-----------|--------------|----------------------|
-| 1 | Type rename to old name | `[CodeGenType]` | ✅ | ❌ not covered |
+| 1 | Type rename to old name | `[CodeGenType]` | 🟡 (✅ `Unknown*`) | ❌ not covered |
 | 2 | Restore removed base type | `partial : ResourceData` | ✅ | ❌ not covered |
 | 3 | Renamed-type deprecated alias | subclass + `[Obsolete]` | ✅ | ❌ not covered |
 | 4 | Renamed property shim | forwarding `[Obsolete]` property | ✅ | ❌ not covered |
@@ -594,16 +634,21 @@ generator-caused.
 > enum preservation, non-abstract base models, and content-type/body parameter ordering — none of
 > which surfaced as hand-written custom code in this survey.
 
-**Valid cases (candidates for generator automation):** scenarios 1–9 are deterministic and are
-the highest-value targets, because they are also the most frequent custom-code patterns in the
-survey. They share a single enabler: the generator (or an emitter step) consuming the
-**previous public contract** that CI already tracks for breaking-change detection, plus a small
+**Valid cases (candidates for generator automation):** scenarios 2–9 are deterministic and are
+among the highest-value targets, because they are also some of the most frequent custom-code
+patterns in the survey. Scenario 1 (type rename) is the single most frequent pattern but is only
+*partially* automatable: the discriminator `Unknown*` fallback subset is deterministic (the old
+name reconstructs from the preserved base type), while arbitrary spec-driven renames require
+matching the newly generated type to a last-GA type by a structural anchor (graph position +
+serialized shape) and fall back to a per-type hint when that anchor is ambiguous. These cases
+share a single enabler: the generator (or an emitter step) consuming the **previous public
+contract** that CI already tracks for breaking-change detection, plus a small
 set of rename/flatten hints, to emit renames, deprecated aliases/forwarders, restored bases,
 read-only facades, and re-added enum values automatically. Notably, that same "previous
 contract" is precisely the base generator's `LastContractView` input — so scenario 8 (read-only
 surface) is **already produced today** when the last contract is supplied, and scenarios 5, 6,
 11, 13, and 14 are **partly** produced already (see the *Base generator today* column). The
-remaining Azure-specific gaps (whole-type renames, `ResourceData` base restore, deprecated type
+remaining Azure-specific gaps (`Unknown*`/anchored type renames, `ResourceData` base restore, deprecated type
 aliases, obsolete property forwarders, extensible-enum re-add, `IJsonModel<TData>` forwarding)
 are the net-new automation opportunities.
 
