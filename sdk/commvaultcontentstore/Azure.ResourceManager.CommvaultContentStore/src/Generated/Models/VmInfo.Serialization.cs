@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("targetVmGuid"u8);
                 writer.WriteStringValue(TargetVmGuid);
             }
-            if (Optional.IsCollectionDefined(Vmtags))
+            if (Optional.IsCollectionDefined(VmTags))
             {
                 writer.WritePropertyName("vmtags"u8);
                 writer.WriteStartArray();
-                foreach (VmTag item in Vmtags)
+                foreach (VmTag item in VmTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             string subnetId = default;
             bool? attachAndSwapOsDisk = default;
             string targetVmGuid = default;
-            IList<VmTag> vmtags = default;
+            IList<VmTag> vmTags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         array.Add(VmTag.DeserializeVmTag(item, options));
                     }
-                    vmtags = array;
+                    vmTags = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 subnetId,
                 attachAndSwapOsDisk,
                 targetVmGuid,
-                vmtags ?? new ChangeTrackingList<VmTag>(),
+                vmTags ?? new ChangeTrackingList<VmTag>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
             SourceVmGuid = sourceVmGuid;
             StorageAccountId = storageAccountId;
-            Vmtags = new ChangeTrackingList<VmTag>();
+            VmTags = new ChangeTrackingList<VmTag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VmInfo"/>. </summary>
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="subnetId"> The subnet Id of the VM. </param>
         /// <param name="attachAndSwapOsDisk"> The identifier to check if to attach and swap disk of the VM. </param>
         /// <param name="targetVmGuid"> The GUID of target VM used in DISK ATTACH. </param>
-        /// <param name="vmtags"> The vmTag of the VM. </param>
+        /// <param name="vmTags"> The vmTag of the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmInfo(string sourceVmGuid, string storageAccountId, bool? powerOnVmAfterRestore, string name, string resourceGroup, string region, string networkId, string subnetId, bool? attachAndSwapOsDisk, string targetVmGuid, IList<VmTag> vmtags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmInfo(string sourceVmGuid, string storageAccountId, bool? powerOnVmAfterRestore, string name, string resourceGroup, string region, string networkId, string subnetId, bool? attachAndSwapOsDisk, string targetVmGuid, IList<VmTag> vmTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceVmGuid = sourceVmGuid;
             StorageAccountId = storageAccountId;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             SubnetId = subnetId;
             AttachAndSwapOsDisk = attachAndSwapOsDisk;
             TargetVmGuid = targetVmGuid;
-            Vmtags = vmtags;
+            VmTags = vmTags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -91,6 +91,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public string TargetVmGuid { get; set; }
 
         /// <summary> The vmTag of the VM. </summary>
-        public IList<VmTag> Vmtags { get; }
+        public IList<VmTag> VmTags { get; }
     }
 }
