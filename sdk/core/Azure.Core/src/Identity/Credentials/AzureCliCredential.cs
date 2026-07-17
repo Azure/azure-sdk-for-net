@@ -236,11 +236,13 @@ namespace Azure.Identity
         private static void GetFileNameAndArguments(string resource, string tenantId, string subscriptionId, out string fileName, out string argument)
         {
             // Azure CLI does not support both --tenant and --subscription simultaneously.
-            // When subscription is specified it already implies a specific tenant, so omit --tenant.
-            string command = !string.IsNullOrEmpty(subscriptionId) switch
+            // A requested tenant (for example, one surfaced by a challenge-based auth response) is
+            // authoritative for the issued token, so it takes precedence. --subscription is only used
+            // when no tenant is requested.
+            string command = !string.IsNullOrEmpty(tenantId) switch
             {
-                true => $"az account get-access-token --output json --resource {resource} --subscription \"{subscriptionId}\"",
-                false when tenantId != null => $"az account get-access-token --output json --resource {resource} --tenant {tenantId}",
+                true => $"az account get-access-token --output json --resource {resource} --tenant {tenantId}",
+                false when !string.IsNullOrEmpty(subscriptionId) => $"az account get-access-token --output json --resource {resource} --subscription \"{subscriptionId}\"",
                 _ => $"az account get-access-token --output json --resource {resource}"
             };
 

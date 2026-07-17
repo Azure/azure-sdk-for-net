@@ -112,25 +112,22 @@ namespace Azure.Core.Tests.Identity
             Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
 
             // Azure CLI does not support both --tenant and --subscription simultaneously.
-            // When subscription is set, --tenant must be omitted because the subscription implies a tenant.
-            if (subscription != null)
+            // A requested tenant is authoritative and takes precedence; --subscription is only used
+            // when no tenant is requested.
+            if (expectedTenantId != null)
+            {
+                Assert.That(testProcess.StartInfo.Arguments, Does.Contain($"--tenant {expectedTenantId}"));
+                Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--subscription"), "Azure CLI does not support --tenant and --subscription together");
+            }
+            else if (subscription != null)
             {
                 Assert.That(testProcess.StartInfo.Arguments, Does.Contain($"--subscription \"{subscription}\""));
-                Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--tenant"), "Azure CLI does not support --tenant and --subscription together");
+                Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--tenant"));
             }
             else
             {
                 Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--subscription"));
-
-                var expectTenantId = expectedTenantId != null;
-                if (expectTenantId)
-                {
-                    Assert.That(testProcess.StartInfo.Arguments, Does.Contain($"-tenant {expectedTenantId}"));
-                }
-                else
-                {
-                    Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("-tenant"));
-                }
+                Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--tenant"));
             }
         }
 
