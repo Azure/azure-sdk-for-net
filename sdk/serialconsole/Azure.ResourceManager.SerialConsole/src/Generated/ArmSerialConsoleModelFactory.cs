@@ -26,30 +26,30 @@ namespace Azure.ResourceManager.SerialConsole.Models
 
         /// <param name="value"> A list of Serial Console operations. </param>
         /// <returns> A new <see cref="Models.SerialConsoleOperations"/> instance for mocking. </returns>
-        public static SerialConsoleOperations SerialConsoleOperations(IEnumerable<SerialConsoleOperationsValueItem> value = default)
+        public static SerialConsoleOperations SerialConsoleOperations(IEnumerable<SerialConsoleOperationInfo> value = default)
         {
-            value ??= new ChangeTrackingList<SerialConsoleOperationsValueItem>();
+            value ??= new ChangeTrackingList<SerialConsoleOperationInfo>();
 
-            return new SerialConsoleOperations((value ?? new ChangeTrackingList<SerialConsoleOperationsValueItem>()).ToList(), default);
+            return new SerialConsoleOperations((value ?? new ChangeTrackingList<SerialConsoleOperationInfo>()).ToList(), default);
         }
 
         /// <param name="name"></param>
         /// <param name="isDataAction"></param>
         /// <param name="display"></param>
-        /// <returns> A new <see cref="Models.SerialConsoleOperationsValueItem"/> instance for mocking. </returns>
-        public static SerialConsoleOperationsValueItem SerialConsoleOperationsValueItem(string name = default, string isDataAction = default, SerialConsoleOperationsValueItemDisplay display = default)
+        /// <returns> A new <see cref="Models.SerialConsoleOperationInfo"/> instance for mocking. </returns>
+        public static SerialConsoleOperationInfo SerialConsoleOperationInfo(string name = default, bool? isDataAction = default, SerialConsoleOperationDisplay display = default)
         {
-            return new SerialConsoleOperationsValueItem(name, isDataAction, display, default);
+            return new SerialConsoleOperationInfo(name, isDataAction, display, default);
         }
 
         /// <param name="provider"></param>
         /// <param name="resource"></param>
         /// <param name="operation"></param>
         /// <param name="description"></param>
-        /// <returns> A new <see cref="Models.SerialConsoleOperationsValueItemDisplay"/> instance for mocking. </returns>
-        public static SerialConsoleOperationsValueItemDisplay SerialConsoleOperationsValueItemDisplay(string provider = default, string resource = default, string operation = default, string description = default)
+        /// <returns> A new <see cref="Models.SerialConsoleOperationDisplay"/> instance for mocking. </returns>
+        public static SerialConsoleOperationDisplay SerialConsoleOperationDisplay(string provider = default, string resource = default, string operation = default, string description = default)
         {
-            return new SerialConsoleOperationsValueItemDisplay(provider, resource, operation, description, default);
+            return new SerialConsoleOperationDisplay(provider, resource, operation, description, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

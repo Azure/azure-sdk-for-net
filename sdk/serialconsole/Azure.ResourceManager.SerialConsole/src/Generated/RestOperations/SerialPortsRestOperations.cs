@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SerialConsole
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/", false);
             uri.AppendPath(resourceProviderNamespace, true);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SerialConsole
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/", false);
             uri.AppendPath(resourceProviderNamespace, true);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SerialConsole
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/", false);
             uri.AppendPath(resourceProviderNamespace, true);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SerialConsole
             return message;
         }
 
-        internal HttpMessage CreateGetBySubscriptionsRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetSerialPortsRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SerialConsole
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/", false);
             uri.AppendPath(resourceProviderNamespace, true);

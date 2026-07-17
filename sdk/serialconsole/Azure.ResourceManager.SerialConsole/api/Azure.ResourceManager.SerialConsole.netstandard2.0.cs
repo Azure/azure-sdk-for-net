@@ -8,22 +8,22 @@ namespace Azure.ResourceManager.SerialConsole
     }
     public static partial class SerialConsoleExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.SerialConsole.Models.DisableSerialConsoleResult> DisableConsole(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.DisableSerialConsoleResult>> DisableConsoleAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SerialConsole.Models.EnableSerialConsoleResult> EnableConsole(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.EnableSerialConsoleResult>> EnableConsoleAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SerialConsole.Models.DisableSerialConsoleResult> DisableConsole(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.DisableSerialConsoleResult>> DisableConsoleAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SerialConsole.Models.EnableSerialConsoleResult> EnableConsole(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.EnableSerialConsoleResult>> EnableConsoleAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialPortListResult> GetAll(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialPortListResult>> GetAllAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialPortListResult> GetBySubscriptions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialPortListResult>> GetBySubscriptionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialConsoleStatus> GetConsoleStatus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialConsoleStatus>> GetConsoleStatusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialConsoleStatus> GetConsoleStatus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialConsoleStatus>> GetConsoleStatusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperations> GetOperations(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperations>> GetOperationsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SerialConsole.SerialPortResource> GetSerialPort(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string serialPort, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.SerialPortResource>> GetSerialPortAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string serialPort, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SerialConsole.SerialPortResource GetSerialPortResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SerialConsole.SerialPortCollection GetSerialPorts(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialPortListResult> GetSerialPorts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialPortListResult>> GetSerialPortsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SerialPortCollection : Azure.ResourceManager.ArmCollection
     {
@@ -87,14 +87,14 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
     public partial class MockableSerialConsoleSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableSerialConsoleSubscriptionResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.SerialConsole.Models.DisableSerialConsoleResult> DisableConsole(string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.DisableSerialConsoleResult>> DisableConsoleAsync(string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SerialConsole.Models.EnableSerialConsoleResult> EnableConsole(string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.EnableSerialConsoleResult>> EnableConsoleAsync(string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialPortListResult> GetBySubscriptions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialPortListResult>> GetBySubscriptionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialConsoleStatus> GetConsoleStatus(string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialConsoleStatus>> GetConsoleStatusAsync(string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SerialConsole.Models.DisableSerialConsoleResult> DisableConsole(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.DisableSerialConsoleResult>> DisableConsoleAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SerialConsole.Models.EnableSerialConsoleResult> EnableConsole(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.EnableSerialConsoleResult>> EnableConsoleAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialConsoleStatus> GetConsoleStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialConsoleStatus>> GetConsoleStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialPortListResult> GetSerialPorts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SerialConsole.Models.SerialPortListResult>> GetSerialPortsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MockableSerialConsoleTenantResource : Azure.ResourceManager.ArmResource
     {
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.SerialConsole.Models
     {
         public static Azure.ResourceManager.SerialConsole.Models.DisableSerialConsoleResult DisableSerialConsoleResult(bool? disabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.SerialConsole.Models.EnableSerialConsoleResult EnableSerialConsoleResult(bool? disabled = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperations SerialConsoleOperations(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItem> value = null) { throw null; }
-        public static Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItem SerialConsoleOperationsValueItem(string name = null, string isDataAction = null, Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItemDisplay display = null) { throw null; }
-        public static Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItemDisplay SerialConsoleOperationsValueItemDisplay(string provider = null, string resource = null, string operation = null, string description = null) { throw null; }
+        public static Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationDisplay SerialConsoleOperationDisplay(string provider = null, string resource = null, string operation = null, string description = null) { throw null; }
+        public static Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationInfo SerialConsoleOperationInfo(string name = null, bool? isDataAction = default(bool?), Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationDisplay display = null) { throw null; }
+        public static Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperations SerialConsoleOperations(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationInfo> value = null) { throw null; }
         public static Azure.ResourceManager.SerialConsole.Models.SerialConsoleStatus SerialConsoleStatus(bool? disabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.SerialConsole.Models.SerialPortConnectResult SerialPortConnectResult(string connectionString = null) { throw null; }
         public static Azure.ResourceManager.SerialConsole.SerialPortData SerialPortData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SerialConsole.Models.SerialPortState? state = default(Azure.ResourceManager.SerialConsole.Models.SerialPortState?), Azure.ResourceManager.SerialConsole.Models.SerialPortConnectionState? connectionState = default(Azure.ResourceManager.SerialConsole.Models.SerialPortConnectionState?)) { throw null; }
@@ -145,10 +145,43 @@ namespace Azure.ResourceManager.SerialConsole.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.EnableSerialConsoleResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.EnableSerialConsoleResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class SerialConsoleOperationDisplay : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationDisplay>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationDisplay>
+    {
+        internal SerialConsoleOperationDisplay() { }
+        public string Description { get { throw null; } }
+        public string Operation { get { throw null; } }
+        public string Provider { get { throw null; } }
+        public string Resource { get { throw null; } }
+        protected virtual Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationDisplay JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationDisplay PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationDisplay System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationDisplay>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationDisplay>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationDisplay System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationDisplay>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationDisplay>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationDisplay>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SerialConsoleOperationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationInfo>
+    {
+        internal SerialConsoleOperationInfo() { }
+        public Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationDisplay Display { get { throw null; } }
+        public bool? IsDataAction { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SerialConsoleOperations : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperations>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperations>
     {
         internal SerialConsoleOperations() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItem> Value { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationInfo> Value { get { throw null; } }
         protected virtual Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperations JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperations PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -158,39 +191,6 @@ namespace Azure.ResourceManager.SerialConsole.Models
         Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperations System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperations>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperations>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperations>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SerialConsoleOperationsValueItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItem>
-    {
-        internal SerialConsoleOperationsValueItem() { }
-        public Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItemDisplay Display { get { throw null; } }
-        public string IsDataAction { get { throw null; } }
-        public string Name { get { throw null; } }
-        protected virtual Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SerialConsoleOperationsValueItemDisplay : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItemDisplay>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItemDisplay>
-    {
-        internal SerialConsoleOperationsValueItemDisplay() { }
-        public string Description { get { throw null; } }
-        public string Operation { get { throw null; } }
-        public string Provider { get { throw null; } }
-        public string Resource { get { throw null; } }
-        protected virtual Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItemDisplay JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItemDisplay PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItemDisplay System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItemDisplay>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItemDisplay>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItemDisplay System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItemDisplay>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItemDisplay>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleOperationsValueItemDisplay>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SerialConsoleStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SerialConsole.Models.SerialConsoleStatus>
     {

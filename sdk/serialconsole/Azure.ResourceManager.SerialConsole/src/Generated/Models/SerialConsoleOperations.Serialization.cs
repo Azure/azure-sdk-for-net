@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SerialConsole.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (SerialConsoleOperationsValueItem item in Value)
+                foreach (SerialConsoleOperationInfo item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SerialConsole.Models
             {
                 return null;
             }
-            IList<SerialConsoleOperationsValueItem> value = default;
+            IList<SerialConsoleOperationInfo> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.SerialConsole.Models
                     {
                         continue;
                     }
-                    List<SerialConsoleOperationsValueItem> array = new List<SerialConsoleOperationsValueItem>();
+                    List<SerialConsoleOperationInfo> array = new List<SerialConsoleOperationInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SerialConsoleOperationsValueItem.DeserializeSerialConsoleOperationsValueItem(item, options));
+                        array.Add(SerialConsoleOperationInfo.DeserializeSerialConsoleOperationInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SerialConsole.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SerialConsoleOperations(value ?? new ChangeTrackingList<SerialConsoleOperationsValueItem>(), additionalBinaryDataProperties);
+            return new SerialConsoleOperations(value ?? new ChangeTrackingList<SerialConsoleOperationInfo>(), additionalBinaryDataProperties);
         }
     }
 }

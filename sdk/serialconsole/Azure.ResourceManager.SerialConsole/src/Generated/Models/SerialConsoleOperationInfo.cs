@@ -10,23 +10,23 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SerialConsole.Models
 {
-    /// <summary> The SerialConsoleOperationsValueItem. </summary>
-    public partial class SerialConsoleOperationsValueItem
+    /// <summary> The SerialConsoleOperationInfo. </summary>
+    public partial class SerialConsoleOperationInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SerialConsoleOperationsValueItem"/>. </summary>
-        internal SerialConsoleOperationsValueItem()
+        /// <summary> Initializes a new instance of <see cref="SerialConsoleOperationInfo"/>. </summary>
+        internal SerialConsoleOperationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SerialConsoleOperationsValueItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SerialConsoleOperationInfo"/>. </summary>
         /// <param name="name"></param>
         /// <param name="isDataAction"></param>
         /// <param name="display"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SerialConsoleOperationsValueItem(string name, string isDataAction, SerialConsoleOperationsValueItemDisplay display, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SerialConsoleOperationInfo(string name, bool? isDataAction, SerialConsoleOperationDisplay display, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             IsDataAction = isDataAction;
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.SerialConsole.Models
         public string Name { get; }
 
         /// <summary> Gets the IsDataAction. </summary>
-        public string IsDataAction { get; }
+        public bool? IsDataAction { get; }
 
         /// <summary> Gets the Display. </summary>
-        public SerialConsoleOperationsValueItemDisplay Display { get; }
+        public SerialConsoleOperationDisplay Display { get; }
     }
 }

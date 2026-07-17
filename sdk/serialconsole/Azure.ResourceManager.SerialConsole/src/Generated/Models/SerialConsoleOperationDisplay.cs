@@ -10,24 +10,24 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SerialConsole.Models
 {
-    /// <summary> The SerialConsoleOperationsValueItemDisplay. </summary>
-    public partial class SerialConsoleOperationsValueItemDisplay
+    /// <summary> The SerialConsoleOperationDisplay. </summary>
+    public partial class SerialConsoleOperationDisplay
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SerialConsoleOperationsValueItemDisplay"/>. </summary>
-        internal SerialConsoleOperationsValueItemDisplay()
+        /// <summary> Initializes a new instance of <see cref="SerialConsoleOperationDisplay"/>. </summary>
+        internal SerialConsoleOperationDisplay()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SerialConsoleOperationsValueItemDisplay"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SerialConsoleOperationDisplay"/>. </summary>
         /// <param name="provider"></param>
         /// <param name="resource"></param>
         /// <param name="operation"></param>
         /// <param name="description"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SerialConsoleOperationsValueItemDisplay(string provider, string resource, string operation, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SerialConsoleOperationDisplay(string provider, string resource, string operation, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provider = provider;
             Resource = resource;

@@ -69,14 +69,9 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> Default parameter. Leave the value as "default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="default"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="default"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SerialConsoleStatus>> GetConsoleStatusAsync(string @default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SerialConsoleStatus>> GetConsoleStatusAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(@default, nameof(@default));
-
             using DiagnosticScope scope = SerialConsoleClientClientDiagnostics.CreateScope("MockableSerialConsoleSubscriptionResource.GetConsoleStatus");
             scope.Start();
             try
@@ -85,7 +80,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SerialConsoleClientRestClient.CreateGetConsoleStatusRequest(Guid.Parse(Id.SubscriptionId), @default, context);
+                HttpMessage message = SerialConsoleClientRestClient.CreateGetConsoleStatusRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SerialConsoleStatus> response = Response.FromValue(SerialConsoleStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -118,14 +113,9 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="default"> Default parameter. Leave the value as "default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="default"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="default"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SerialConsoleStatus> GetConsoleStatus(string @default, CancellationToken cancellationToken = default)
+        public virtual Response<SerialConsoleStatus> GetConsoleStatus(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(@default, nameof(@default));
-
             using DiagnosticScope scope = SerialConsoleClientClientDiagnostics.CreateScope("MockableSerialConsoleSubscriptionResource.GetConsoleStatus");
             scope.Start();
             try
@@ -134,7 +124,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SerialConsoleClientRestClient.CreateGetConsoleStatusRequest(Guid.Parse(Id.SubscriptionId), @default, context);
+                HttpMessage message = SerialConsoleClientRestClient.CreateGetConsoleStatusRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SerialConsoleStatus> response = Response.FromValue(SerialConsoleStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -168,9 +158,9 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SerialPortListResult>> GetBySubscriptionsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SerialPortListResult>> GetSerialPortsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = SerialPortsClientDiagnostics.CreateScope("MockableSerialConsoleSubscriptionResource.GetBySubscriptions");
+            using DiagnosticScope scope = SerialPortsClientDiagnostics.CreateScope("MockableSerialConsoleSubscriptionResource.GetSerialPorts");
             scope.Start();
             try
             {
@@ -178,7 +168,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SerialPortsRestClient.CreateGetBySubscriptionsRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = SerialPortsRestClient.CreateGetSerialPortsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SerialPortListResult> response = Response.FromValue(SerialPortListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -212,9 +202,9 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SerialPortListResult> GetBySubscriptions(CancellationToken cancellationToken = default)
+        public virtual Response<SerialPortListResult> GetSerialPorts(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = SerialPortsClientDiagnostics.CreateScope("MockableSerialConsoleSubscriptionResource.GetBySubscriptions");
+            using DiagnosticScope scope = SerialPortsClientDiagnostics.CreateScope("MockableSerialConsoleSubscriptionResource.GetSerialPorts");
             scope.Start();
             try
             {
@@ -222,205 +212,9 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SerialPortsRestClient.CreateGetBySubscriptionsRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = SerialPortsRestClient.CreateGetSerialPortsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SerialPortListResult> response = Response.FromValue(SerialPortListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Disables the Serial Console service for all VMs and VM scale sets in the provided subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SerialConsole/consoleServices/{default}/disableConsole. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SerialConsoleOperationGroup_DisableConsole. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="default"> Default parameter. Leave the value as "default". </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="default"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="default"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DisableSerialConsoleResult>> DisableConsoleAsync(string @default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(@default, nameof(@default));
-
-            using DiagnosticScope scope = SerialConsoleOperationGroupClientDiagnostics.CreateScope("MockableSerialConsoleSubscriptionResource.DisableConsole");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SerialConsoleOperationGroupRestClient.CreateDisableConsoleRequest(Guid.Parse(Id.SubscriptionId), @default, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DisableSerialConsoleResult> response = Response.FromValue(DisableSerialConsoleResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Disables the Serial Console service for all VMs and VM scale sets in the provided subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SerialConsole/consoleServices/{default}/disableConsole. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SerialConsoleOperationGroup_DisableConsole. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="default"> Default parameter. Leave the value as "default". </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="default"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="default"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DisableSerialConsoleResult> DisableConsole(string @default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(@default, nameof(@default));
-
-            using DiagnosticScope scope = SerialConsoleOperationGroupClientDiagnostics.CreateScope("MockableSerialConsoleSubscriptionResource.DisableConsole");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SerialConsoleOperationGroupRestClient.CreateDisableConsoleRequest(Guid.Parse(Id.SubscriptionId), @default, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DisableSerialConsoleResult> response = Response.FromValue(DisableSerialConsoleResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Enables the Serial Console service for all VMs and VM scale sets in the provided subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SerialConsole/consoleServices/{default}/enableConsole. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SerialConsoleOperationGroup_EnableConsole. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="default"> Default parameter. Leave the value as "default". </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="default"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="default"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<EnableSerialConsoleResult>> EnableConsoleAsync(string @default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(@default, nameof(@default));
-
-            using DiagnosticScope scope = SerialConsoleOperationGroupClientDiagnostics.CreateScope("MockableSerialConsoleSubscriptionResource.EnableConsole");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SerialConsoleOperationGroupRestClient.CreateEnableConsoleRequest(Guid.Parse(Id.SubscriptionId), @default, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EnableSerialConsoleResult> response = Response.FromValue(EnableSerialConsoleResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Enables the Serial Console service for all VMs and VM scale sets in the provided subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SerialConsole/consoleServices/{default}/enableConsole. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SerialConsoleOperationGroup_EnableConsole. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="default"> Default parameter. Leave the value as "default". </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="default"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="default"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<EnableSerialConsoleResult> EnableConsole(string @default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(@default, nameof(@default));
-
-            using DiagnosticScope scope = SerialConsoleOperationGroupClientDiagnostics.CreateScope("MockableSerialConsoleSubscriptionResource.EnableConsole");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SerialConsoleOperationGroupRestClient.CreateEnableConsoleRequest(Guid.Parse(Id.SubscriptionId), @default, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<EnableSerialConsoleResult> response = Response.FromValue(EnableSerialConsoleResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

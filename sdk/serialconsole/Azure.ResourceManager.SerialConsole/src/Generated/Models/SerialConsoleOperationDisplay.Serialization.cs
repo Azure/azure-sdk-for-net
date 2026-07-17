@@ -13,52 +13,52 @@ using Azure.ResourceManager.SerialConsole;
 
 namespace Azure.ResourceManager.SerialConsole.Models
 {
-    /// <summary> The SerialConsoleOperationsValueItemDisplay. </summary>
-    public partial class SerialConsoleOperationsValueItemDisplay : IJsonModel<SerialConsoleOperationsValueItemDisplay>
+    /// <summary> The SerialConsoleOperationDisplay. </summary>
+    public partial class SerialConsoleOperationDisplay : IJsonModel<SerialConsoleOperationDisplay>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SerialConsoleOperationsValueItemDisplay PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SerialConsoleOperationDisplay PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SerialConsoleOperationsValueItemDisplay>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SerialConsoleOperationDisplay>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSerialConsoleOperationsValueItemDisplay(document.RootElement, options);
+                        return DeserializeSerialConsoleOperationDisplay(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SerialConsoleOperationsValueItemDisplay)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SerialConsoleOperationDisplay)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SerialConsoleOperationsValueItemDisplay>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SerialConsoleOperationDisplay>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSerialConsoleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SerialConsoleOperationsValueItemDisplay)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SerialConsoleOperationDisplay)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SerialConsoleOperationsValueItemDisplay>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SerialConsoleOperationDisplay>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SerialConsoleOperationsValueItemDisplay IPersistableModel<SerialConsoleOperationsValueItemDisplay>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SerialConsoleOperationDisplay IPersistableModel<SerialConsoleOperationDisplay>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SerialConsoleOperationsValueItemDisplay>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SerialConsoleOperationDisplay>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SerialConsoleOperationsValueItemDisplay>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SerialConsoleOperationDisplay>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.SerialConsole.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SerialConsoleOperationsValueItemDisplay>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SerialConsoleOperationDisplay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SerialConsoleOperationsValueItemDisplay)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SerialConsoleOperationDisplay)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Provider))
             {
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.SerialConsole.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SerialConsoleOperationsValueItemDisplay IJsonModel<SerialConsoleOperationsValueItemDisplay>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SerialConsoleOperationDisplay IJsonModel<SerialConsoleOperationDisplay>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SerialConsoleOperationsValueItemDisplay JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SerialConsoleOperationDisplay JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SerialConsoleOperationsValueItemDisplay>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SerialConsoleOperationDisplay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SerialConsoleOperationsValueItemDisplay)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SerialConsoleOperationDisplay)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSerialConsoleOperationsValueItemDisplay(document.RootElement, options);
+            return DeserializeSerialConsoleOperationDisplay(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SerialConsoleOperationsValueItemDisplay DeserializeSerialConsoleOperationsValueItemDisplay(JsonElement element, ModelReaderWriterOptions options)
+        internal static SerialConsoleOperationDisplay DeserializeSerialConsoleOperationDisplay(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SerialConsole.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SerialConsoleOperationsValueItemDisplay(provider, resource, operation, description, additionalBinaryDataProperties);
+            return new SerialConsoleOperationDisplay(provider, resource, operation, description, additionalBinaryDataProperties);
         }
     }
 }
