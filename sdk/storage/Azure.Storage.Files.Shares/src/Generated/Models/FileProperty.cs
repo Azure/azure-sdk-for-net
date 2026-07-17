@@ -36,10 +36,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="changeTime"> The change time. </param>
         /// <param name="lastModified"> The last modified time. </param>
         /// <param name="eTag"> The ETag of the file. </param>
-        /// <param name="owner"> NFS only. The owner user identifier (UID) of the file. </param>
-        /// <param name="group"> NFS only. The owner group identifier (GID) of the file. </param>
-        /// <param name="fileMode"> NFS only. The file mode of the file. </param>
-        internal FileProperty(long contentLength, DateTimeOffset? creationTime, DateTimeOffset? lastAccessTime, DateTimeOffset? lastWriteTime, DateTimeOffset? changeTime, DateTimeOffset? lastModified, string eTag, string owner, string @group, string fileMode)
+        internal FileProperty(long contentLength, DateTimeOffset? creationTime, DateTimeOffset? lastAccessTime, DateTimeOffset? lastWriteTime, DateTimeOffset? changeTime, DateTimeOffset? lastModified, string eTag)
         {
             ContentLength = contentLength;
             CreationTime = creationTime;
@@ -48,9 +45,6 @@ namespace Azure.Storage.Files.Shares.Models
             ChangeTime = changeTime;
             LastModified = lastModified;
             ETag = eTag;
-            Owner = owner;
-            Group = @group;
-            FileMode = fileMode;
         }
 
         /// <summary>
@@ -78,14 +72,5 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> The ETag of the file. </summary>
         public string ETag { get; }
-
-        /// <summary> NFS only. The owner user identifier (UID) of the file. </summary>
-        public string Owner { get; }
-
-        /// <summary> NFS only. The owner group identifier (GID) of the file. </summary>
-        public string Group { get; }
-
-        /// <summary> NFS only. The file mode of the file. </summary>
-        public string FileMode { get; }
     }
 }
